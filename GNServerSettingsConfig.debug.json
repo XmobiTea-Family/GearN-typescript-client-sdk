@@ -1,0 +1,21 @@
+{
+    "name": "debug",
+    "options": {
+        "serverAddress": "127.0.0.1",
+        "serverPort": 2202,
+        "useSsl": false,
+        "useSocket": true,
+        "useHttp": true,
+        
+        "sendRate": 20,
+        "reconnectDelay": 5000,
+        "pingInterval": 20000,
+        "pingTimeout": 20000,
+
+        "codeCanSendNotAuthorized": [
+            -1, 1, 2, 3
+        ],
+        "gnServerSourcePath": "./../GNServer/",
+        "logType": 4
+    }
+}
