@@ -164,10 +164,6 @@ export abstract class PeerBase implements IPeer {
                 operationResponse.setInvalidMembers(invalidMembers);
             }
 
-            GNDebug.log("[GN RECV] " + operationResponse.toString());
-
-            operationPending.getCallback()?.invoke(operationResponse);
-
             if (!operationResponse.hasError()) {
                 this.addPing(operationPending.getExecuteTimerInMs());
 
@@ -189,6 +185,10 @@ export abstract class PeerBase implements IPeer {
                     }
                 }
             }
+
+            GNDebug.log("[GN RECV] " + operationResponse.toString());
+
+            operationPending.getCallback()?.invoke(operationResponse);
         }
         else {
             GNDebug.logError("[GN] OnResponseHandler, un available request id " + obj);

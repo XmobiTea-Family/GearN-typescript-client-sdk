@@ -5,10 +5,12 @@ import { GNDebug } from "./../logger/GNDebug";
 import { NetworkingPeerBase, SocketPacket } from "./NetworkingPeerBase";
 import { GNNetwork } from "./../GNNetwork";
 import { OperationHelper } from "./../entity/OperationHelper";
+import { Manager, Socket } from "socket.io-client";
+import { encode } from "@msgpack/msgpack";
 
 export class NetworkingPeerSocket extends NetworkingPeerBase {
-    private socketManager: any;
-    private socket: any;
+    private socketManager: Manager;
+    private socket: Socket;
     private isConnected: boolean;
 
     isWsConnected: boolean;
@@ -25,7 +27,7 @@ export class NetworkingPeerSocket extends NetworkingPeerBase {
         super.reInitNewSocket();
 
         if (this.socketManager == null) {
-            this.socketManager = new globalThis.exports.Manager(this.url + "/socket.io/", {
+            this.socketManager = new Manager(this.url + "/socket.io/", {
                 reconnection: true,
                 reconnectionDelay: this.reconnectDelay,
                 timeout: this.pingTimeout,
@@ -117,7 +119,7 @@ export class NetworkingPeerSocket extends NetworkingPeerBase {
 
         let dataSend = OperationHelper.toSocketData(operationRequest);
         if (operationRequest.isEncrypted())
-            socket.emit(Commands.RequestCmd_MsgPack, globalThis.exports.encode(dataSend));
+            socket.emit(Commands.RequestCmd_MsgPack, encode(dataSend));
         else
             socket.emit(Commands.RequestCmd_Json, dataSend);
     }

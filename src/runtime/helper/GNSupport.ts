@@ -9,7 +9,7 @@ export class GNSupport {
             if (!globalThis.exports) globalThis.exports = {};
 
             let LocalStorage = require('node-localstorage').LocalStorage;
-            globalThis.exports.localStorage = new LocalStorage('./scratch');
+            globalThis.exports.localStorage = new LocalStorage(__dirname + '/../../../.././scratch');
 
             let crypto = require("crypto");
             globalThis.exports.crypto = crypto;

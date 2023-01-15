@@ -1,4 +1,4 @@
-const VERSION: string = "0.0.1";
+const VERSION: string = "0.0.4";
 
 import { Action0 } from "./common/Action0";
 import { Action1 } from "./common/Action1";
@@ -28,15 +28,6 @@ import { NetworkingPeer } from "./networking/NetworkingPeer";
 import { CodeHelper } from "./helper/CodeHelper";
 import { CustomOperationRequest } from "./entity/request/CustomOperationRequest";
 import { CustomOperationResponse } from "./entity/response/CustomOperationResponse";
-import { test } from "mocha";
-
-interface test {
-    b: string
-}
-
-let a: test = {
-    b: ""
-};
 
 export class GNNetwork {
 
@@ -107,14 +98,12 @@ export class GNNetwork {
             return;
         }
 
+        GNDebug.log("GNNetwork init on " + GNSupport.isBrowser() ? "browser." : "server.");
+
         this.gnServerSettings = gnServerSettings;
 
         GNSupport.init();
         CodeHelper.init();
-    }
-
-    public static run(): void {
-        GNDebug.log("GNNetwork init on " + GNSupport.isBrowser() ? "browser." : "server.");
 
         this.initServerSettings();
         this.initGNDebug();

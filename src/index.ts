@@ -267,3 +267,9 @@ export { CodeHelper };
 // GN["CodeHelper"] = CodeHelper;
 
 // export { GN };
+
+import { IGNObject, ConvertService } from "./runtime/helper/ConverterService";
+export { IGNObject, ConvertService };
+
+import { DataMember, StringDataMember, BooleanDataMember, GNHashtableDataMember, GNArrayDataMember, NumberDataMember } from "./runtime/entity/DataMember";
+export { DataMember, StringDataMember, BooleanDataMember, GNHashtableDataMember, GNArrayDataMember, NumberDataMember };

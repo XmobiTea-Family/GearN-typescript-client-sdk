@@ -62,8 +62,9 @@ export class HttpPeer extends PeerBase {
 
         let authToken = GNNetwork.getAuthToken();
 
-        if (authToken) {
+        if (!authToken) {
             if (GNNetwork.getGNServerSettings().getCodeCanSendNotAuthorized().indexOf(operationRequest.getOperationCode()) == -1) {
+
                 let obj = new GNArray();
 
                 obj.add(ReturnCode.OperationNotAuthorized);
