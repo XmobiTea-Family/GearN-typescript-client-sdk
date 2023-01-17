@@ -1,6 +1,5 @@
 import { GNArray, GNHashtable, GNData } from "./../common/GNData";
-import { getObjectMetadata } from "@clairejs/core";
-import { EnhancedFieldMetadata, EnhancedObjectMedata, FieldType } from "./../entity/DataMember";
+import { getGNObjectMetadata, GNEnhancedObjectFieldMetadata, GNEnhancedObjectMetadata, GNFieldDataType } from "./../entity/DataMember";
 import { InvalidMemberType } from "./../constant/enumType/InvalidMemberType";
 
 type Constructor<T> = { new(...args: any[]): T };
@@ -11,12 +10,12 @@ export interface IGNObject {
 }
 
 export class ConvertService {
-    private readonly declaredFieldsMap: { [k: string]: EnhancedFieldMetadata[] };
+    private readonly declaredFieldsMap: { [k: string]: GNEnhancedObjectFieldMetadata[] };
 
     public convertObject<T extends IGNObject>(parameters: GNHashtable, cls: Constructor<T>): T {
         let declaredFields = this.declaredFieldsMap[cls.name];
         if (declaredFields == null) {
-            declaredFields = getObjectMetadata<EnhancedObjectMedata>(cls).fields;
+            declaredFields = getGNObjectMetadata<GNEnhancedObjectMetadata>(cls).fields;
             this.declaredFieldsMap[cls.name] = declaredFields;
         }
 
@@ -28,7 +27,7 @@ export class ConvertService {
 
         for (let i = 0; i < declaredFields.length; i++) {
             let field = declaredFields[i];
-            let fieldType = field.fieldType;
+            let gnFieldType = field.gnFieldType;
 
             let containsKey = parameters.containsKey(field.code);
             let value = parameters.getObject(field.code);
@@ -37,7 +36,7 @@ export class ConvertService {
 
             if (field.isOptional) {
                 if (containsKey && value != null) {
-                    if (fieldType == FieldType.GNHashtable) {
+                    if (gnFieldType == GNFieldDataType.GNHashtable) {
                         if (value instanceof GNHashtable) {
                             let lastValue = value as GNHashtable;
 
@@ -86,7 +85,7 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.GNArray) {
+                    else if (gnFieldType == GNFieldDataType.GNArray) {
                         if (value instanceof GNArray) {
                             let lastValue = value as GNArray;
 
@@ -135,7 +134,7 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.Boolean) {
+                    else if (gnFieldType == GNFieldDataType.Boolean) {
                         if (typeof value === "boolean") {
                             let lastValue: boolean = value as any as boolean;
 
@@ -155,7 +154,7 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.Number) {
+                    else if (gnFieldType == GNFieldDataType.Number) {
                         if (typeof value === "number") {
                             let lastValue: number = value as any as number;
 
@@ -208,7 +207,7 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.String) {
+                    else if (gnFieldType == GNFieldDataType.String) {
                         if (typeof value === "string") {
                             let lastValue: string = value as any as string;
 
@@ -259,34 +258,34 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.Other) {
+                    else if (gnFieldType == GNFieldDataType.Other) {
                         let lastValue = value;
 
                         answerAny[field.name] = lastValue;
                     }
                 }
                 else {
-                    if (fieldType == FieldType.GNHashtable || fieldType == FieldType.GNArray) {
+                    if (gnFieldType == GNFieldDataType.GNHashtable || gnFieldType == GNFieldDataType.GNArray) {
                         let lastValue: GNData = field.defaultValue;
 
                         answerAny[field.name] = lastValue;
                     }
-                    else if (fieldType == FieldType.Boolean) {
+                    else if (gnFieldType == GNFieldDataType.Boolean) {
                         let lastValue: boolean = field.defaultValue;
 
                         answerAny[field.name] = lastValue;
                     }
-                    else if (fieldType == FieldType.Number) {
+                    else if (gnFieldType == GNFieldDataType.Number) {
                         let lastValue: number = field.defaultValue;
 
                         answerAny[field.name] = lastValue;
                     }
-                    else if (fieldType == FieldType.String) {
+                    else if (gnFieldType == GNFieldDataType.String) {
                         let lastValue: string = field.defaultValue;
 
                         answerAny[field.name] = lastValue;
                     }
-                    else if (fieldType == FieldType.Other) {
+                    else if (gnFieldType == GNFieldDataType.Other) {
                         let lastValue = field.defaultValue;
 
                         answerAny[field.name] = lastValue;
@@ -305,7 +304,7 @@ export class ConvertService {
                 }
 
                 if (value != null) {
-                    if (fieldType == FieldType.GNHashtable) {
+                    if (gnFieldType == GNFieldDataType.GNHashtable) {
                         if (value instanceof GNHashtable) {
                             let lastValue = value as GNHashtable;
 
@@ -356,7 +355,7 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.GNArray) {
+                    else if (gnFieldType == GNFieldDataType.GNArray) {
                         if (value instanceof GNArray) {
                             let lastValue = value as GNArray;
 
@@ -407,7 +406,7 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.Boolean) {
+                    else if (gnFieldType == GNFieldDataType.Boolean) {
                         if (typeof value === "boolean") {
                             let lastValue: boolean = value as any as boolean;
 
@@ -423,7 +422,7 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.Number) {
+                    else if (gnFieldType == GNFieldDataType.Number) {
                         if (typeof value === "number") {
                             let lastValue: number = value as any as number;
 
@@ -472,7 +471,7 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.String) {
+                    else if (gnFieldType == GNFieldDataType.String) {
                         if (typeof value === "string") {
                             let lastValue: string = value as any as string;
 
@@ -523,21 +522,21 @@ export class ConvertService {
                             break;
                         }
                     }
-                    else if (fieldType == FieldType.Other) {
+                    else if (gnFieldType == GNFieldDataType.Other) {
                         let lastValue = value;
 
                         answerAny[field.name] = lastValue;
                     }
                 }
                 else {
-                    if (fieldType == FieldType.GNHashtable || fieldType == FieldType.GNArray) {
+                    if (gnFieldType == GNFieldDataType.GNHashtable || gnFieldType == GNFieldDataType.GNArray) {
                         let lastValue: GNData = null;
                         if (field.defaultValue != null) lastValue = field.defaultValue;
 
                         if (field.activeConditionValid) {
                             if (field.mustNonNull) {
                                 if (lastValue == null) {
-                                    let invalidMemberType = fieldType == FieldType.GNHashtable ? InvalidMemberType.GNHashtableNull : InvalidMemberType.GNArrayNull;
+                                    let invalidMemberType = gnFieldType == GNFieldDataType.GNHashtable ? InvalidMemberType.GNHashtableNull : InvalidMemberType.GNArrayNull;
                                     answerAny.invalidMembers.push({
                                         code: field.code,
                                         invalidMemberType: invalidMemberType
@@ -550,7 +549,7 @@ export class ConvertService {
 
                             if (lastValue != null) {
                                 if (lastValue.count() < field.minLength) {
-                                    let invalidMemberType = fieldType == FieldType.GNHashtable ? InvalidMemberType.GNHashtableMinLength : InvalidMemberType.GNArrayMinLength;
+                                    let invalidMemberType = gnFieldType == GNFieldDataType.GNHashtable ? InvalidMemberType.GNHashtableMinLength : InvalidMemberType.GNArrayMinLength;
                                     answerAny.invalidMembers.push({
                                         code: field.code,
                                         invalidMemberType: invalidMemberType
@@ -560,7 +559,7 @@ export class ConvertService {
                                     break;
                                 }
                                 else if (lastValue.count() > field.maxLength) {
-                                    let invalidMemberType = fieldType == FieldType.GNHashtable ? InvalidMemberType.GNHashtableMaxLength : InvalidMemberType.GNArrayMaxLength;
+                                    let invalidMemberType = gnFieldType == GNFieldDataType.GNHashtable ? InvalidMemberType.GNHashtableMaxLength : InvalidMemberType.GNArrayMaxLength;
                                     answerAny.invalidMembers.push({
                                         code: field.code,
                                         invalidMemberType: invalidMemberType
@@ -574,7 +573,7 @@ export class ConvertService {
 
                         answerAny[field.name] = lastValue;
                     }
-                    else if (fieldType == FieldType.Boolean) {
+                    else if (gnFieldType == GNFieldDataType.Boolean) {
                         answerAny.invalidMembers.push({
                             code: field.code,
                             invalidMemberType: InvalidMemberType.TypeInvalid
@@ -583,7 +582,7 @@ export class ConvertService {
                         isValidRequest = false;
                         break;
                     }
-                    else if (fieldType == FieldType.Number) {
+                    else if (gnFieldType == GNFieldDataType.Number) {
                         answerAny.invalidMembers.push({
                             code: field.code,
                             invalidMemberType: InvalidMemberType.TypeInvalid
@@ -592,7 +591,7 @@ export class ConvertService {
                         isValidRequest = false;
                         break;
                     }
-                    else if (fieldType == FieldType.String) {
+                    else if (gnFieldType == GNFieldDataType.String) {
                         let lastValue: string = null;
                         if (field.defaultValue != null) lastValue = field.defaultValue;
 
@@ -633,7 +632,7 @@ export class ConvertService {
 
                         answerAny[field.name] = lastValue;
                     }
-                    else if (fieldType == FieldType.Other) {
+                    else if (gnFieldType == GNFieldDataType.Other) {
                         let lastValue = null;
                         if (field.defaultValue != null) lastValue = field.defaultValue;
 

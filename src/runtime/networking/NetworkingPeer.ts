@@ -1,3 +1,4 @@
+import { Commands } from "./../constant/Commands";
 import { Action0 } from "./../common/Action0";
 import { Action1 } from "./../common/Action1";
 import { GNArray, GNHashtable } from "./../common/GNData";
@@ -41,8 +42,8 @@ export class NetworkingPeer {
     static readonly UPLOAD_FILE: string = "upload";
     static readonly DOWNLOAD_FILE: string = "upload";
     static readonly GET_CONFIG: string = "getConfig";
-    static readonly API_JSON: string = "api/0";
-    static readonly API_MSG_PACK: string = "api/1";
+    static readonly API_JSON: string = "api/" + Commands.RequestCmd_Json;
+    static readonly API_MSG_PACK: string = "api/" + Commands.RequestCmd_MsgPack;
 
     private socketPeer: IPeer;
     private httpPeer: IPeer;

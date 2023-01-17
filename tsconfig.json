@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
+        "target": "ES6",
+        "module": "CommonJS",
         "declaration": true,
         "strict": false,
         "noImplicitAny": true,
@@ -18,7 +18,7 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "forceConsistentCasingInFileNames": true,
-        "lib": ["es6", "dom"],
+        "lib": ["ES6", "DOM"],
         "allowSyntheticDefaultImports": true,
         "stripInternal": true,
         "skipLibCheck": true,

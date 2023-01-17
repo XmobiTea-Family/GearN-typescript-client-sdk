@@ -72,7 +72,7 @@ export class OperationRequest {
     }
 
     public toString(): string {
-        return "Code: " + CodeHelper.getOperationCodeName(this.operationCode) + ", requestId: " + this.requestId + ", parameters " + this.parameters + ", encrypted " + this.encrypted;
+        return "Code: " + CodeHelper.getOperationCodeName(this.operationCode) + " (" + this.operationCode + ")" + ", requestId: " + this.requestId + ", parameters " + this.parameters + ", encrypted " + this.encrypted;
     }
 
 }

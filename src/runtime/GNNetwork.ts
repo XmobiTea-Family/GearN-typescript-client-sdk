@@ -1,4 +1,4 @@
-const VERSION: string = "0.0.4";
+const VERSION: string = "1.0.1";
 
 import { Action0 } from "./common/Action0";
 import { Action1 } from "./common/Action1";
@@ -28,6 +28,7 @@ import { NetworkingPeer } from "./networking/NetworkingPeer";
 import { CodeHelper } from "./helper/CodeHelper";
 import { CustomOperationRequest } from "./entity/request/CustomOperationRequest";
 import { CustomOperationResponse } from "./entity/response/CustomOperationResponse";
+import store from "store";
 
 export class GNNetwork {
 
@@ -53,7 +54,7 @@ export class GNNetwork {
     public static setAuthToken(authToken: string): void {
         this.peer.authToken = authToken;
 
-        globalThis.exports.localStorage.setItem(GNNetwork.AUTH_TOKEN_KEY, authToken);
+        store.set(GNNetwork.AUTH_TOKEN_KEY, authToken);
 
         this.peer.sendRequestAuthSocket();
     }
@@ -65,7 +66,7 @@ export class GNNetwork {
     public static setUserId(userId: string): void {
         this.peer.userId = userId;
 
-        globalThis.exports.localStorage.setItem(GNNetwork.USER_ID_KEY, userId);
+        store.set(GNNetwork.USER_ID_KEY, userId);
     }
 
     public static getUserId(): string {
@@ -76,12 +77,31 @@ export class GNNetwork {
         return 17;
     }
 
+    private static generateRandomDeviceId(): string {
+        const RandomCharacter: string = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        const MaxLength: number = 16;
+
+        let answer = "";
+
+        while (answer.length < MaxLength) {
+            answer += RandomCharacter[Math.floor(Math.random() * (RandomCharacter.length - 0) + 0)];
+
+            if (answer.length == 8
+                || answer.length == 13
+                || answer.length == 18
+                || answer.length == 23)
+                answer += '-';
+        }
+
+        return answer;
+    }
+
     public static getDeviceId(): string {
-        let deviceId = globalThis.exports.localStorage.getItem(GNNetwork.DEVICE_ID_KEY);
+        let deviceId = store.get(GNNetwork.DEVICE_ID_KEY);
 
         if (!deviceId) {
-            deviceId = globalThis.exports.crypto.randomUUID();
-            globalThis.exports.localStorage.setItem(GNNetwork.DEVICE_ID_KEY, deviceId);
+            deviceId = this.generateRandomDeviceId();
+            store.set(GNNetwork.DEVICE_ID_KEY, deviceId);
         }
 
         return deviceId;
@@ -98,26 +118,22 @@ export class GNNetwork {
             return;
         }
 
+        GNSupport.init();
+        CodeHelper.init();
+
         GNDebug.log("GNNetwork init on " + GNSupport.isBrowser() ? "browser." : "server.");
 
         this.gnServerSettings = gnServerSettings;
-
-        GNSupport.init();
-        CodeHelper.init();
 
         this.initServerSettings();
         this.initGNDebug();
 
         this.initGNSocketObject();
 
-        let authToken = globalThis.exports.localStorage.getItem(GNNetwork.AUTH_TOKEN_KEY);
-        if (!authToken)
-            authToken = "";
+        let authToken = store.get(GNNetwork.AUTH_TOKEN_KEY, "");
         this.peer.authToken = authToken;
 
-        let userId = globalThis.exports.localStorage.getItem(GNNetwork.USER_ID_KEY);
-        if (!userId)
-            userId = "";
+        let userId = store.get(GNNetwork.USER_ID_KEY, "");
         this.peer.userId = userId;
     }
 

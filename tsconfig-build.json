@@ -6,5 +6,5 @@
         "rootDir": "./src",
         "outDir": "./dist"
     },
-    "exclude": ["./test/", "./node_modules/", "./webpack.config.js", "./index.js", "./GNTypescriptClientSDK.js", "./plugins/"]
+    "exclude": ["./test/", "./node_modules/", "webpack.config.udm.js", "webpack.config.js", "./dist/index.js", "./dist/gn.js.client.min.js", "./index.js"]
 }

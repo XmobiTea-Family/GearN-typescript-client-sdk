@@ -10,6 +10,8 @@ import { OperationPending } from "./OperationPending";
 import { PeerBase } from "./PeerBase";
 import { NetworkingPeerBase } from "./NetworkingPeerBase";
 import { GNSupport } from "./../helper/GNSupport";
+import msgpack from "@msgpack/msgpack";
+import axios from "axios";
 
 export class HttpAppResponse {
     public statusCode: number;
@@ -127,7 +129,7 @@ export class HttpPeer extends PeerBase {
 
                 if (gnArray == null) {
                     if (httpAppResponse.data != null) {
-                        let iList = <[]>globalThis.exports.decode(httpAppResponse.data);
+                        let iList = <[]>msgpack.decode(httpAppResponse.data);
                         gnArray = GNArray.builder()
                             .addAll(NetworkingPeerBase.fromMsgList(iList))
                             .build();
@@ -166,8 +168,6 @@ export class HttpPeer extends PeerBase {
     }
 
     private async getRequestViaHTTPRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): Promise<void> {
-        let axios = globalThis.exports.axios;
-
         let headers: { [k: string]: any } = {};
 
         let authToken = GNNetwork.getAuthToken();
@@ -202,8 +202,6 @@ export class HttpPeer extends PeerBase {
     }
 
     private async postRequestViaHTTPRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): Promise<void> {
-        let axios = globalThis.exports.axios;
-
         let headers: { [k: string]: any } = {};
 
         let authToken = GNNetwork.getAuthToken();
@@ -228,7 +226,7 @@ export class HttpPeer extends PeerBase {
         }
         else if (postType == PostType.MsgPack) {
             let content = param.toData();
-            body = globalThis.exports.encode(content);
+            body = msgpack.encode(content);
 
             headers[Commands.CONTENT_TYPE] = Commands.APPLICATION_MSGPACK;
 
@@ -291,8 +289,6 @@ export class HttpPeer extends PeerBase {
 
         // let form: FormData = new FormData();
         // form.append(Commands.File, content as any as Blob, null);
-
-        // let axios = globalThis.exports.axios;
 
         // let headers: { [k: string]: any } = {};
 

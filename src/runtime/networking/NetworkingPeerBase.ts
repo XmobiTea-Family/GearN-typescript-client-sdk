@@ -4,6 +4,7 @@ import { GNArray } from "./../common/GNData";
 import { OperationRequest } from "./../entity/OperationRequest";
 import { GNNetwork } from "./../GNNetwork";
 import { GNDebug } from "./../logger/GNDebug";
+import msgpack from "@msgpack/msgpack";
 
 export class SocketPacket {
     public obj: any;
@@ -186,7 +187,7 @@ export abstract class NetworkingPeerBase {
                 let responsePacket = this.responsePacketLst[i];
                 if (responsePacket.encrypted) {
                     try {
-                        let iList = <[]>globalThis.exports.decode(responsePacket.obj);
+                        let iList = <[]>msgpack.decode(responsePacket.obj);
                         let gnArray = GNArray.builder()
                             .addAll(NetworkingPeerBase.fromMsgList(iList))
                             .build();
@@ -217,7 +218,7 @@ export abstract class NetworkingPeerBase {
                 let eventPacket = this.eventPacketLst[i];
                 if (eventPacket.encrypted) {
                     try {
-                        let iList = <[]>globalThis.exports.decode(eventPacket.obj);
+                        let iList = <[]>msgpack.decode(eventPacket.obj);
                         let gnArray = GNArray.builder()
                             .addAll(NetworkingPeerBase.fromMsgList(iList))
                             .build();

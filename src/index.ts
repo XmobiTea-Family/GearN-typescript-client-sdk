@@ -1,5 +1,3 @@
-// var GN: { [k: string]: any } = {};
-
 import { Action0 } from "./runtime/common/Action0";
 import { Action1 } from "./runtime/common/Action1";
 import { Action2 } from "./runtime/common/Action2";
@@ -12,15 +10,9 @@ export { Action2 };
 export { Action3 };
 export { Action4 };
 export { GNHashtableBuilder, GNHashtable, GNArrayBuilder, GNArray };
-// GN["GNHashtableBuilder"] = GNHashtableBuilder;
-// GN["GNHashtable"] = GNHashtable;
-// GN["GNArrayBuilder"] = GNArrayBuilder;
-// GN["GNArray"] = GNArray;
 
 import { GNServerSettings, GNServerSettingsOptions } from "./runtime/config/GNServerSettings";
 export { GNServerSettings, GNServerSettingsOptions };
-// GN["GNServerSettings"] = GNServerSettings;
-// GN["GNServerSettingsOptions"] = GNServerSettingsOptions;
 
 import { FriendStatus } from "./runtime/constant/enumType/FriendStatus";
 import { GoogleLoginType } from "./runtime/constant/enumType/GoogleLoginType";
@@ -34,12 +26,6 @@ export { InvalidMemberType };
 export { LoginType };
 export { PlatformType };
 export { UserRoleType };
-// GN["FriendStatus"] = FriendStatus;
-// GN["GoogleLoginType"] = GoogleLoginType;
-// GN["InvalidMemberType"] = InvalidMemberType;
-// GN["LoginType"] = LoginType;
-// GN["PlatformType"] = PlatformType;
-// GN["UserRoleType"] = UserRoleType;
 
 import { DebugErrorCode } from "./runtime/constant/errorCode/DebugErrorCode";
 import { EnterDisplayNameErrorCode } from "./runtime/constant/errorCode/EnterDisplayNameErrorCode";
@@ -75,23 +61,6 @@ export { GetAppConfigParameterCode };
 export { LoginParameterCode };
 export { ParameterCode };
 export { RegisterSocketParameterCode };
-// GN["DebugErrorCode"] = DebugErrorCode;
-// GN["EnterDisplayNameErrorCode"] = EnterDisplayNameErrorCode;
-// GN["FetchAllDataErrorCode"] = FetchAllDataErrorCode;
-// GN["FetchSparkPlayerErrorCode"] = FetchSparkPlayerErrorCode;
-// GN["FileUploadInfoErrorCode"] = FileUploadInfoErrorCode;
-// GN["GetAppConfigErrorCode"] = GetAppConfigErrorCode;
-// GN["LoginErrorCode"] = LoginErrorCode;
-// GN["RegisterSocketErrorCode"] = RegisterSocketErrorCode;
-// GN["DebugParameterCode"] = DebugParameterCode;
-// GN["EnterDisplayNameParameterCode"] = EnterDisplayNameParameterCode;
-// GN["FetchAllDataParameterCode"] = FetchAllDataParameterCode;
-// GN["FetchSparkPlayerParameterCode"] = FetchSparkPlayerParameterCode;
-// GN["FileUploadInfoParameterCode"] = FileUploadInfoParameterCode;
-// GN["GetAppConfigParameterCode"] = GetAppConfigParameterCode;
-// GN["LoginParameterCode"] = LoginParameterCode;
-// GN["ParameterCode"] = ParameterCode;
-// GN["RegisterSocketParameterCode"] = RegisterSocketParameterCode;
 
 import { Commands } from "./runtime/constant/Commands";
 import { EventCode } from "./runtime/constant/EventCode";
@@ -101,10 +70,6 @@ export { Commands };
 export { EventCode };
 export { OperationCode };
 export { ReturnCode };
-// GN["Commands"] = Commands;
-// GN["EventCode"] = EventCode;
-// GN["OperationCode"] = OperationCode;
-// GN["ReturnCode"] = ReturnCode;
 
 import { CreateNewFileUploadInfoOperationRequest } from "./runtime/entity/request/CreateNewFileUploadInfoOperationRequest";
 import { CustomOperationRequest } from "./runtime/entity/request/CustomOperationRequest";
@@ -132,28 +97,7 @@ export { LogoutOperationRequest };
 export { RegisterAccountOperationRequest };
 export { RegisterSocketOperationRequest };
 export { TemplateOperationRequest };
-// GN["CreateNewFileUploadInfoOperationRequest"] = CreateNewFileUploadInfoOperationRequest;
-// GN["CustomOperationRequest"] = CustomOperationRequest;
-// GN["DebugOperationRequest"] = DebugOperationRequest;
-// GN["EnterDisplayNameOperationRequest"] = EnterDisplayNameOperationRequest;
-// GN["FetchAllDataOperationRequest"] = FetchAllDataOperationRequest;
-// GN["FetchSparkPlayerOperationRequest"] = FetchSparkPlayerOperationRequest;
-// GN["GetAppConfigOperationRequest"] = GetAppConfigOperationRequest;
-// GN["GetFileUploadInfoOperationRequest"] = GetFileUploadInfoOperationRequest;
-// GN["LoginOperationRequest"] = LoginOperationRequest;
-// GN["AccountLoginOperationRequest"] = AccountLoginOperationRequest;
-// GN["AppleLoginOperationRequest"] = AppleLoginOperationRequest;
-// GN["CustomIdLoginOperationRequest"] = CustomIdLoginOperationRequest;
-// GN["DeviceLoginOperationRequest"] = DeviceLoginOperationRequest;
-// GN["FacebookLoginOperationRequest"] = FacebookLoginOperationRequest;
-// GN["GoogleLoginOperationRequest"] = GoogleLoginOperationRequest;
-// GN["PublicAddressGetRandomMessageOperationRequest"] = PublicAddressGetRandomMessageOperationRequest;
-// GN["PublicAddressLoginOperationRequest"] = PublicAddressLoginOperationRequest;
-// GN["UserIdLoginOperationRequest"] = UserIdLoginOperationRequest;
-// GN["LogoutOperationRequest"] = LogoutOperationRequest;
-// GN["RegisterAccountOperationRequest"] = RegisterAccountOperationRequest;
-// GN["RegisterSocketOperationRequest"] = RegisterSocketOperationRequest;
-// GN["TemplateOperationRequest"] = TemplateOperationRequest;
+
 
 import { CreateNewFileUploadInfoOperationResponse } from "./runtime/entity/response/CreateNewFileUploadInfoOperationResponse";
 import { CustomOperationResponse } from "./runtime/entity/response/CustomOperationResponse";
@@ -183,20 +127,6 @@ export { PublicAddressGetRandomMessageOperationResponse };
 export { RegisterAccountOperationResponse };
 export { RegisterSocketOperationResponse };
 export { TemplateOperationResponse };
-// GN["CreateNewFileUploadInfoOperationResponse"] = CreateNewFileUploadInfoOperationResponse;
-// GN["CustomOperationResponse"] = CustomOperationResponse;
-// GN["DebugOperationResponse"] = DebugOperationResponse;
-// GN["EnterDisplayNameOperationResponse"] = EnterDisplayNameOperationResponse;
-// GN["FetchAllDataOperationResponse"] = FetchAllDataOperationResponse;
-// GN["FetchSparkPlayerOperationResponse"] = FetchSparkPlayerOperationResponse;
-// GN["GetAppConfigOperationResponse"] = GetAppConfigOperationResponse;
-// GN["GetFileUploadInfoOperationResponse"] = GetFileUploadInfoOperationResponse;
-// GN["LoginOperationResponse"] = LoginOperationResponse;
-// GN["LogoutOperationResponse"] = LogoutOperationResponse;
-// GN["PublicAddressGetRandomMessageOperationResponse"] = PublicAddressGetRandomMessageOperationResponse;
-// GN["RegisterAccountOperationResponse"] = RegisterAccountOperationResponse;
-// GN["RegisterSocketOperationResponse"] = RegisterSocketOperationResponse;
-// GN["TemplateOperationResponse"] = TemplateOperationResponse;
 
 
 import { InvalidMember } from "./runtime/entity/InvalidMember";
@@ -209,24 +139,16 @@ export { OperationEvent };
 export { OperationHelper };
 export { OperationRequest };
 export { OperationResponse };
-// GN["InvalidMember"] = InvalidMember;
-// GN["OperationEvent"] = OperationEvent;
-// GN["OperationHelper"] = OperationHelper;
-// GN["OperationRequest"] = OperationRequest;
-// GN["OperationResponse"] = OperationResponse;
 
 
 import { GNDebug, LogType } from "./runtime/logger/GNDebug";
 export { GNDebug, LogType };
-// GN["GNDebug"] = GNDebug;
-// GN["LogType"] = LogType;
 
 import { IServerEventHandler } from "./runtime/networking/handler/IServerEventHandler";
 import { OnDebugEventHander } from "./runtime/networking/handler/OnDebugEventHander";
 export { IServerEventHandler };
 export { OnDebugEventHander };
-// GN["IServerEventHandler"] = IServerEventHandler;
-// GN["OnDebugEventHander"] = OnDebugEventHander;
+
 
 import { HttpPeer, HttpAppResponse, PostType } from "./runtime/networking/HttpPeer";
 import { IPeer } from "./runtime/networking/IPeer";
@@ -244,32 +166,21 @@ export { NetworkingPeerSocket };
 export { OperationPending };
 export { PeerBase };
 export { SocketPeer };
-// GN["HttpPeer"] = HttpPeer;
-// GN["HttpAppResponse"] = HttpAppResponse;
-// GN["PostType"] = PostType;
-// GN["NetworkingPeer"] = NetworkingPeer;
-// GN["NetworkingPeerBase"] = NetworkingPeerBase;
-// GN["SocketPacket"] = SocketPacket;
-// GN["NetworkingPeerSocket"] = NetworkingPeerSocket;
-// GN["OperationPending"] = OperationPending;
-// GN["PeerBase"] = PeerBase;
-// GN["SocketPeer"] = SocketPeer;
+
 
 import { GNNetwork } from "./runtime/GNNetwork";
 export { GNNetwork };
-// GN["GNNetwork"] = GNNetwork;
+
 
 import { GNSupport } from "./runtime/helper/GNSupport";
 import { CodeHelper } from "./runtime/helper/CodeHelper";
 export { GNSupport };
 export { CodeHelper };
-// GN["GNSupport"] = GNSupport;
-// GN["CodeHelper"] = CodeHelper;
 
-// export { GN };
 
 import { IGNObject, ConvertService } from "./runtime/helper/ConverterService";
 export { IGNObject, ConvertService };
+
 
 import { DataMember, StringDataMember, BooleanDataMember, GNHashtableDataMember, GNArrayDataMember, NumberDataMember } from "./runtime/entity/DataMember";
 export { DataMember, StringDataMember, BooleanDataMember, GNHashtableDataMember, GNArrayDataMember, NumberDataMember };

@@ -86,7 +86,7 @@ export class OperationResponse {
     public toString(): string {
         let stringBuilder = "";
 
-        stringBuilder += "Code: " + CodeHelper.getOperationCodeName(this.operationCode) + ", responseId: " + this.responseId + ", returnCode " + CodeHelper.getReturnCodeName(this.returnCode);
+        stringBuilder += "Code: " + CodeHelper.getOperationCodeName(this.operationCode) + " (" + this.operationCode + ")" +", responseId: " + this.responseId + ", returnCode " + CodeHelper.getReturnCodeName(this.returnCode);
 
         if (this.returnCode == ReturnCode.Ok) stringBuilder += ", parameters " + this.parameters;
         else if (this.returnCode == ReturnCode.InvalidRequestParameters) {
@@ -101,6 +101,8 @@ export class OperationResponse {
             else stringBuilder += ", invalidMembers " + this.invalidMembers;
         }
         else stringBuilder += ", debugMessage " + this.debugMessage;
+        
+        stringBuilder += ", encrypted " + this.encrypted;
 
         return stringBuilder;
     }

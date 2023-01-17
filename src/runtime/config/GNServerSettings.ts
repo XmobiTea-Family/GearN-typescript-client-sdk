@@ -151,11 +151,11 @@ export class GNServerSettings {
 
     public getSocketUrl(): string {
         if (this.serverPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
-        else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.getServerPort;
+        else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverPort;
     }
 
     public getHttpUrl(): string {
-        if (this.serverPort < 0) return (this.isUseSsl ? "https" : "http") + "://" + this.serverAddress;
+        if (this.serverPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
         else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverPort;
     }
 

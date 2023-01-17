@@ -13,7 +13,7 @@ interface IGNData {
     getGNArray(k: string | number, def?: GNArray): GNArray;
 }
 
-abstract class GNData implements IGNData {
+export abstract class GNData implements IGNData {
     protected get<T>(k: string | number, def?: T): T {
         return def;
     }
