@@ -1,3 +1,4 @@
+import { Action1 } from "./../common/Action1";
 import { Action0 } from "./../common/Action0";
 import { GNArray } from "./../common/GNData";
 import { ReturnCode } from "./../constant/ReturnCode";
@@ -12,7 +13,8 @@ import { PeerBase } from "./PeerBase";
 
 export class SocketPeer extends PeerBase {
     //private const string authTokenFormat = "{\"authtoken\":$authtoken}";
-    private serverEventHandlerDic: { [k: number]: IServerEventHandler; };
+    private serverEventHandlersDic: { [k: number]: IServerEventHandler[]; };
+    private _onEventHandler: Action1<OperationEvent>;
 
     private networkingPeerBase: NetworkingPeerBase;
 
@@ -29,18 +31,30 @@ export class SocketPeer extends PeerBase {
     }
 
     subscriberServerEventHandler(): void {
-        this.serverEventHandlerDic = {};
+        this.serverEventHandlersDic = {};
 
         let serverEventHandlers = IServerEventHandler.getImplementations();
         for (let i = 0; i < serverEventHandlers.length; i++) {
             let serverEventHandler = new serverEventHandlers[i]();
 
-            if (serverEventHandler != null) this.serverEventHandlerDic[serverEventHandler.getEventCode()] = serverEventHandler;
+            if (serverEventHandler != null) {
+                let serverEventHandlers2 = this.serverEventHandlersDic[serverEventHandler.getEventCode()];
+                if (serverEventHandlers2 == null) {
+                    serverEventHandlers2 = [];
+                    this.serverEventHandlersDic[serverEventHandler.getEventCode()] = serverEventHandlers2;
+                }
+                serverEventHandlers2.push(serverEventHandler);
+            }
         }
     }
 
     subscriberAServerEventHandler(serverEventHandler: IServerEventHandler): void {
-        this.serverEventHandlerDic[serverEventHandler.getEventCode()] = serverEventHandler;
+        let serverEventHandlers2 = this.serverEventHandlersDic[serverEventHandler.getEventCode()];
+        if (serverEventHandlers2 == null) {
+            serverEventHandlers2 = [];
+            this.serverEventHandlersDic[serverEventHandler.getEventCode()] = serverEventHandlers2;
+        }
+        serverEventHandlers2.push(serverEventHandler);
     }
 
     override initGNSocketObject(): void {
@@ -55,15 +69,11 @@ export class SocketPeer extends PeerBase {
         this.networkingPeerBase.init(gnServerSettings.getSocketUrl(), gnServerSettings.getReconnectDelay(), gnServerSettings.getPingInterval(), gnServerSettings.getPingTimeout());
         this.networkingPeerBase.reInitNewSocket();
 
-        this.networkingPeerBase.setOnEventHandler({
-            invoke: (t1, t2) => {
-                this.onEventHandler(t1, t2);
-            }
+        this.networkingPeerBase.setOnEventHandler((t1: GNArray, t2: boolean) => {
+            this.onEventHandler(t1, t2);
         });
-        this.networkingPeerBase.setOnResponseHandler({
-            invoke: (t1, t2) => {
-                this.onResponseHandler(t1, t2);
-            }
+        this.networkingPeerBase.setOnResponseHandler((t1: GNArray, t2: boolean) => {
+            this.onResponseHandler(t1, t2);
         });
 
         this.subscriberServerEventHandler();
@@ -91,6 +101,10 @@ export class SocketPeer extends PeerBase {
 
     disconnect(_onSocketDisconnect: Action0): void {
         this.networkingPeerBase.close(_onSocketDisconnect);
+    }
+
+    setOnEventHandler(_onEventHandler: Action1<OperationEvent>): void {
+        this._onEventHandler = _onEventHandler;
     }
 
     override send(operationPending: OperationPending): void {
@@ -121,17 +135,21 @@ export class SocketPeer extends PeerBase {
 
     onEventHandler(obj: GNArray, isEncrypted: boolean): void {
         let eventCode = obj.getNumber(0);
-        if (this.serverEventHandlerDic[eventCode] == null) {
-            return;
-        }
-
+        
         let operationEvent = new OperationEvent(eventCode, obj.getGNHashtable(1));
         operationEvent.setEncrypted(isEncrypted);
 
         GNDebug.log("[GN Socket EVENT] " + operationEvent.toString());
 
-        let serverEventHandler = this.serverEventHandlerDic[eventCode];
-        serverEventHandler.handle(operationEvent);
+        if (this._onEventHandler != null) this._onEventHandler(operationEvent);
+
+        let serverEventHandlers = this.serverEventHandlersDic[eventCode];
+
+        serverEventHandlers.forEach(serverEventHandler => {
+            if (serverEventHandler != null) {
+                serverEventHandler.handle(operationEvent);
+            }
+        });
     }
 
     override service(): void {

@@ -10,7 +10,7 @@ import { OperationPending } from "./OperationPending";
 import { PeerBase } from "./PeerBase";
 import { NetworkingPeerBase } from "./NetworkingPeerBase";
 import { GNSupport } from "./../helper/GNSupport";
-import msgpack from "@msgpack/msgpack";
+import { encode, decode } from "@msgpack/msgpack";
 import axios from "axios";
 
 export class HttpAppResponse {
@@ -103,10 +103,8 @@ export class HttpPeer extends PeerBase {
 
         let subUri = (postType == PostType.Json ? NetworkingPeer.API_JSON : NetworkingPeer.API_MSG_PACK) + "/" + operationRequest.getOperationCode();
         let thiz = this;
-        this.postRequestViaHTTPRequest(subUri, operationRequest.getParameters(), postType, {
-            invoke: function (httpAppResponse: HttpAppResponse) {
-                thiz.onSendOperationRequestResponse(operationPending, httpAppResponse);
-            }
+        this.postRequestViaHTTPRequest(subUri, operationRequest.getParameters(), postType, (httpAppResponse: HttpAppResponse) => {
+            thiz.onSendOperationRequestResponse(operationPending, httpAppResponse);
         }, operationRequest.getTimeout());
     }
 
@@ -129,7 +127,7 @@ export class HttpPeer extends PeerBase {
 
                 if (gnArray == null) {
                     if (httpAppResponse.data != null) {
-                        let iList = <[]>msgpack.decode(httpAppResponse.data);
+                        let iList = <[]>decode(httpAppResponse.data);
                         gnArray = GNArray.builder()
                             .addAll(NetworkingPeerBase.fromMsgList(iList))
                             .build();
@@ -198,7 +196,7 @@ export class HttpPeer extends PeerBase {
             GNDebug.logError(error);
         }
 
-        onHttpAppResponse?.invoke(httpAppResponse);
+        if (onHttpAppResponse != null) onHttpAppResponse(httpAppResponse);
     }
 
     private async postRequestViaHTTPRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): Promise<void> {
@@ -226,7 +224,7 @@ export class HttpPeer extends PeerBase {
         }
         else if (postType == PostType.MsgPack) {
             let content = param.toData();
-            body = msgpack.encode(content);
+            body = encode(content);
 
             headers[Commands.CONTENT_TYPE] = Commands.APPLICATION_MSGPACK;
 
@@ -255,7 +253,7 @@ export class HttpPeer extends PeerBase {
             GNDebug.logError(error);
         }
 
-        onHttpAppResponse?.invoke(httpAppResponse);
+        if (onHttpAppResponse != null) onHttpAppResponse(httpAppResponse);
     }
 
     uploadFile(fileId: string, content: Uint8Array, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = 60): void {
@@ -266,7 +264,7 @@ export class HttpPeer extends PeerBase {
             httpAppResponse.statusCode = 401;
             httpAppResponse.error = "Auth token null";
 
-            onHttpAppResponse?.invoke(httpAppResponse);
+            if (onHttpAppResponse != null) onHttpAppResponse(httpAppResponse);
 
             return;
         }
@@ -285,7 +283,7 @@ export class HttpPeer extends PeerBase {
         httpAppResponse.statusCode = -1;
         httpAppResponse.text = "[-3]";
 
-        onHttpAppResponse?.invoke(httpAppResponse);
+        if (onHttpAppResponse != null) onHttpAppResponse(httpAppResponse);
 
         // let form: FormData = new FormData();
         // form.append(Commands.File, content as any as Blob, null);

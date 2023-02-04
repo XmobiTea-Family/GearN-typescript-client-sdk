@@ -1,3 +1,1 @@
-export interface Action0 {
-    invoke: () => void;
-}
+export type Action0 = () => void;

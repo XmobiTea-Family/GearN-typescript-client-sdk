@@ -39,10 +39,8 @@ gnServerSettings.config(options);
 
 GNNetwork.init(gnServerSettings);
 
-GNNetwork.connectSocket({
-    invoke: () => {
-        console.log("connect success");
-    }
+GNNetwork.connectSocket(() => {
+    console.log("connect success");
 });
 
 // let gnServerSettings = new GN.GNServerSettings();

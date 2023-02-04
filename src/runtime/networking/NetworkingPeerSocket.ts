@@ -6,7 +6,7 @@ import { NetworkingPeerBase, SocketPacket } from "./NetworkingPeerBase";
 import { GNNetwork } from "./../GNNetwork";
 import { OperationHelper } from "./../entity/OperationHelper";
 import { Manager, Socket } from "socket.io-client";
-import msgpack from "@msgpack/msgpack";
+import { encode } from "@msgpack/msgpack";
 
 export class NetworkingPeerSocket extends NetworkingPeerBase {
     private socketManager: Manager;
@@ -119,7 +119,7 @@ export class NetworkingPeerSocket extends NetworkingPeerBase {
 
         let dataSend = OperationHelper.toSocketData(operationRequest);
         if (operationRequest.isEncrypted())
-            socket.emit(Commands.RequestCmd_MsgPack, msgpack.encode(dataSend));
+            socket.emit(Commands.RequestCmd_MsgPack, encode(dataSend));
         else
             socket.emit(Commands.RequestCmd_Json, dataSend);
     }

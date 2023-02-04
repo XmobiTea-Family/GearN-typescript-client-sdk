@@ -188,7 +188,8 @@ export abstract class PeerBase implements IPeer {
 
             GNDebug.log("[GN RECV] " + operationResponse.toString());
 
-            operationPending.getCallback()?.invoke(operationResponse);
+            let callback = operationPending.getCallback();
+            if (callback != null) callback(operationResponse);
         }
         else {
             GNDebug.logError("[GN] OnResponseHandler, un available request id " + obj);

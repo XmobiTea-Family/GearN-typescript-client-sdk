@@ -1,4 +1,4 @@
-// import { GNDebug } from "../runtime/logger/GNDebug";
+// import { GNDebug } from "./../runtime/logger/GNDebug";
 // import { GNServerSettings } from "./../runtime/config/GNServerSettings";
 // import * as fs from "fs";
 // import path from "path";

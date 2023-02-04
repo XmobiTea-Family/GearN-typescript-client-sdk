@@ -35,15 +35,8 @@ import { FileUploadInfoErrorCode } from "./runtime/constant/errorCode/FileUpload
 import { GetAppConfigErrorCode } from "./runtime/constant/errorCode/GetAppConfigErrorCode";
 import { LoginErrorCode } from "./runtime/constant/errorCode/LoginErrorCode";
 import { RegisterSocketErrorCode } from "./runtime/constant/errorCode/RegisterSocketErrorCode";
-import { DebugParameterCode } from "./runtime/constant/parameterCode/DebugParameterCode";
-import { EnterDisplayNameParameterCode } from "./runtime/constant/parameterCode/EnterDisplayNameParameterCode";
-import { FetchAllDataParameterCode } from "./runtime/constant/parameterCode/FetchAllDataParameterCode";
-import { FetchSparkPlayerParameterCode } from "./runtime/constant/parameterCode/FetchSparkPlayerParameterCode";
-import { FileUploadInfoParameterCode } from "./runtime/constant/parameterCode/FileUploadInfoParameterCode";
-import { GetAppConfigParameterCode } from "./runtime/constant/parameterCode/GetAppConfigParameterCode";
-import { LoginParameterCode } from "./runtime/constant/parameterCode/LoginParameterCode";
-import { ParameterCode } from "./runtime/constant/parameterCode/ParameterCode";
-import { RegisterSocketParameterCode } from "./runtime/constant/parameterCode/RegisterSocketParameterCode";
+import { ChatErrorCode } from "./runtime/constant/errorCode/ChatErrorCode";
+import { FriendErrorCode } from "./runtime/constant/errorCode/FriendErrorCode";
 export { DebugErrorCode };
 export { EnterDisplayNameErrorCode };
 export { FetchAllDataErrorCode };
@@ -53,6 +46,21 @@ export { GetAppConfigErrorCode };
 export { LoginErrorCode };
 export { RegisterSocketErrorCode };
 export { DebugParameterCode };
+export { ChatErrorCode };
+export { FriendErrorCode };
+
+
+import { DebugParameterCode } from "./runtime/constant/parameterCode/DebugParameterCode";
+import { EnterDisplayNameParameterCode } from "./runtime/constant/parameterCode/EnterDisplayNameParameterCode";
+import { FetchAllDataParameterCode } from "./runtime/constant/parameterCode/FetchAllDataParameterCode";
+import { FetchSparkPlayerParameterCode } from "./runtime/constant/parameterCode/FetchSparkPlayerParameterCode";
+import { FileUploadInfoParameterCode } from "./runtime/constant/parameterCode/FileUploadInfoParameterCode";
+import { GetAppConfigParameterCode } from "./runtime/constant/parameterCode/GetAppConfigParameterCode";
+import { LoginParameterCode } from "./runtime/constant/parameterCode/LoginParameterCode";
+import { ParameterCode } from "./runtime/constant/parameterCode/ParameterCode";
+import { RegisterSocketParameterCode } from "./runtime/constant/parameterCode/RegisterSocketParameterCode";
+import { ChatParameterCode } from "./runtime/constant/parameterCode/ChatParameterCode";
+import { FriendParameterCode } from "./runtime/constant/parameterCode/FriendParameterCode";
 export { EnterDisplayNameParameterCode };
 export { FetchAllDataParameterCode };
 export { FetchSparkPlayerParameterCode };
@@ -61,6 +69,9 @@ export { GetAppConfigParameterCode };
 export { LoginParameterCode };
 export { ParameterCode };
 export { RegisterSocketParameterCode };
+export { ChatParameterCode };
+export { FriendParameterCode };
+
 
 import { Commands } from "./runtime/constant/Commands";
 import { EventCode } from "./runtime/constant/EventCode";
@@ -84,6 +95,21 @@ import { LogoutOperationRequest } from "./runtime/entity/request/LogoutOperation
 import { RegisterAccountOperationRequest } from "./runtime/entity/request/RegisterAccountOperationRequest";
 import { RegisterSocketOperationRequest } from "./runtime/entity/request/RegisterSocketOperationRequest";
 import { TemplateOperationRequest } from "./runtime/entity/request/TemplateOperationRequest";
+import { AddFriendOperationRequest } from "./runtime/entity/request/AddFriendOperationRequest";
+import { EditChatInfoChannelOperationRequest } from "./runtime/entity/request/EditChatInfoChannelOperationRequest";
+import { EditChatMessageChannelOperationRequest } from "./runtime/entity/request/EditChatMessageChannelOperationRequest";
+import { EditChatMessageUserOperationRequest } from "./runtime/entity/request/EditChatMessageUserOperationRequest";
+import { FindPlayerOperationRequest } from "./runtime/entity/request/FindPlayerOperationRequest";
+import { GetChatInfoChannelOperationRequest } from "./runtime/entity/request/GetChatInfoChannelOperationRequest";
+import { GetChatMemberChannelOperationRequest } from "./runtime/entity/request/GetChatMemberChannelOperationRequest";
+import { GetChatMessageChannelOperationRequest } from "./runtime/entity/request/GetChatMessageChannelOperationRequest";
+import { GetChatMessageUserOperationRequest } from "./runtime/entity/request/GetChatMessageUserOperationRequest";
+import { GetFriendsOperationRequest } from "./runtime/entity/request/GetFriendsOperationRequest";
+import { JoinChatChannelOperationRequest } from "./runtime/entity/request/JoinChatChannelOperationRequest";
+import { LeaveChatChannelOperationRequest } from "./runtime/entity/request/LeaveChatChannelOperationRequest";
+import { RemoveFriendOperationRequest } from "./runtime/entity/request/RemoveFriendOperationRequest";
+import { SendChatToChannelOperationRequest } from "./runtime/entity/request/SendChatToChannelOperationRequest";
+import { SendChatToUserOperationRequest } from "./runtime/entity/request/SendChatToUserOperationRequest";
 export { CreateNewFileUploadInfoOperationRequest };
 export { CustomOperationRequest };
 export { DebugOperationRequest };
@@ -97,6 +123,21 @@ export { LogoutOperationRequest };
 export { RegisterAccountOperationRequest };
 export { RegisterSocketOperationRequest };
 export { TemplateOperationRequest };
+export { AddFriendOperationRequest };
+export { EditChatInfoChannelOperationRequest };
+export { EditChatMessageChannelOperationRequest };
+export { EditChatMessageUserOperationRequest };
+export { FindPlayerOperationRequest };
+export { GetChatInfoChannelOperationRequest };
+export { GetChatMessageChannelOperationRequest };
+export { GetChatMessageUserOperationRequest };
+export { GetFriendsOperationRequest };
+export { JoinChatChannelOperationRequest };
+export { GetChatMemberChannelOperationRequest };
+export { LeaveChatChannelOperationRequest };
+export { RemoveFriendOperationRequest };
+export { SendChatToChannelOperationRequest };
+export { SendChatToUserOperationRequest };
 
 
 import { CreateNewFileUploadInfoOperationResponse } from "./runtime/entity/response/CreateNewFileUploadInfoOperationResponse";
@@ -113,6 +154,21 @@ import { PublicAddressGetRandomMessageOperationResponse } from "./runtime/entity
 import { RegisterAccountOperationResponse } from "./runtime/entity/response/RegisterAccountOperationResponse";
 import { RegisterSocketOperationResponse } from "./runtime/entity/response/RegisterSocketOperationResponse";
 import { TemplateOperationResponse } from "./runtime/entity/response/TemplateOperationResponse";
+import { AddFriendOperationResponse } from "./runtime/entity/response/AddFriendOperationResponse";
+import { EditChatInfoChannelOperationResponse } from "./runtime/entity/response/EditChatInfoChannelOperationResponse";
+import { EditChatMessageChannelOperationResponse } from "./runtime/entity/response/EditChatMessageChannelOperationResponse";
+import { EditChatMessageUserOperationResponse } from "./runtime/entity/response/EditChatMessageUserOperationResponse";
+import { FindPlayerOperationResponse } from "./runtime/entity/response/FindPlayerOperationResponse";
+import { GetChatInfoChannelOperationResponse } from "./runtime/entity/response/GetChatInfoChannelOperationResponse";
+import { GetChatMemberChannelOperationResponse } from "./runtime/entity/response/GetChatMemberChannelOperationResponse";
+import { GetChatMessageChannelOperationResponse } from "./runtime/entity/response/GetChatMessageChannelOperationResponse";
+import { GetChatMessageUserOperationResponse } from "./runtime/entity/response/GetChatMessageUserOperationResponse";
+import { GetFriendsOperationResponse } from "./runtime/entity/response/GetFriendsOperationResponse";
+import { JoinChatChannelOperationResponse } from "./runtime/entity/response/JoinChatChannelOperationResponse";
+import { LeaveChatChannelOperationResponse } from "./runtime/entity/response/LeaveChatChannelOperationResponse";
+import { RemoveFriendOperationResponse } from "./runtime/entity/response/RemoveFriendOperationResponse";
+import { SendChatToChannelOperationResponse } from "./runtime/entity/response/SendChatToChannelOperationResponse";
+import { SendChatToUserOperationResponse } from "./runtime/entity/response/SendChatToUserOperationResponse";
 export { CreateNewFileUploadInfoOperationResponse };
 export { CustomOperationResponse };
 export { DebugOperationResponse };
@@ -127,6 +183,35 @@ export { PublicAddressGetRandomMessageOperationResponse };
 export { RegisterAccountOperationResponse };
 export { RegisterSocketOperationResponse };
 export { TemplateOperationResponse };
+export { AddFriendOperationResponse };
+export { EditChatInfoChannelOperationResponse };
+export { EditChatMessageChannelOperationResponse };
+export { EditChatMessageUserOperationResponse };
+export { FindPlayerOperationResponse };
+export { GetChatInfoChannelOperationResponse };
+export { GetChatMemberChannelOperationResponse };
+export { GetChatMessageChannelOperationResponse };
+export { GetChatMessageUserOperationResponse };
+export { GetFriendsOperationResponse };
+export { JoinChatChannelOperationResponse };
+export { LeaveChatChannelOperationResponse };
+export { RemoveFriendOperationResponse };
+export { SendChatToChannelOperationResponse };
+export { SendChatToUserOperationResponse };
+
+
+import { AvatarChannel } from "./runtime/entity/server/AvatarChannel";
+import { ChatChannel } from "./runtime/entity/server/ChatChannel";
+import { ChatMessage, EditChatMessage } from "./runtime/entity/server/ChatMessage";
+import { ChatUser } from "./runtime/entity/server/ChatUser";
+import { FriendItem } from "./runtime/entity/server/FriendItem";
+import { UserChannel } from "./runtime/entity/server/UserChannel";
+export { AvatarChannel };
+export { ChatChannel };
+export { ChatMessage, EditChatMessage };
+export { ChatUser };
+export { FriendItem };
+export { UserChannel };
 
 
 import { InvalidMember } from "./runtime/entity/InvalidMember";
@@ -144,10 +229,17 @@ export { OperationResponse };
 import { GNDebug, LogType } from "./runtime/logger/GNDebug";
 export { GNDebug, LogType };
 
+
 import { IServerEventHandler } from "./runtime/networking/handler/IServerEventHandler";
+import { OnChannelChatEventHandler } from "./runtime/networking/handler/OnChannelChatEventHandler";
 import { OnDebugEventHander } from "./runtime/networking/handler/OnDebugEventHander";
+import { OnFriendUpdateEventHandler } from "./runtime/networking/handler/OnFriendUpdateEventHandler";
+import { OnUserChatEventHandler } from "./runtime/networking/handler/OnUserChatEventHandler";
 export { IServerEventHandler };
+export { OnChannelChatEventHandler };
 export { OnDebugEventHander };
+export { OnFriendUpdateEventHandler };
+export { OnUserChatEventHandler };
 
 
 import { HttpPeer, HttpAppResponse, PostType } from "./runtime/networking/HttpPeer";

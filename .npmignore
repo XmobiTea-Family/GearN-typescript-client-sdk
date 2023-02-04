@@ -8,3 +8,6 @@ tsconfig-build.json
 webpack.config.js
 index.js
 scratch/
+tsconfig.udm.json
+tsconfig-build.udm.json
+webpack.config.udm.js

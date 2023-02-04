@@ -4,7 +4,7 @@ import { GNArray } from "./../common/GNData";
 import { OperationRequest } from "./../entity/OperationRequest";
 import { GNNetwork } from "./../GNNetwork";
 import { GNDebug } from "./../logger/GNDebug";
-import msgpack from "@msgpack/msgpack";
+import { decode } from "@msgpack/msgpack";
 
 export class SocketPacket {
     public obj: any;
@@ -13,6 +13,29 @@ export class SocketPacket {
     constructor(obj: any, encrypted: boolean) {
         this.obj = obj;
         this.encrypted = encrypted;
+    }
+}
+
+class Action0List {
+    private handlers: Action0[];
+
+    subscriber(action: Action0) {
+        this.handlers.push(action);
+    }
+
+    unsubscriber(action: Action0) {
+        let indexOf = this.handlers.indexOf(action);
+        if (indexOf != -1) this.handlers.splice(indexOf, 1);
+    }
+
+    invoke() {
+        this.handlers.forEach((a) => {
+            if (a != null) a();
+        });
+    }
+
+    constructor() {
+        this.handlers = [];
     }
 }
 
@@ -36,11 +59,12 @@ export abstract class NetworkingPeerBase {
     private _onSocketConnect: Action0;
     private _onSocketDisconnect: Action0;
 
-    private _onConnectHandler: Action0;
-    private _onDisconnectHandler: Action0;
+    private _onConnectHandler: Action0List;
+    private _onDisconnectHandler: Action0List;
 
     constructor() {
-
+        this._onConnectHandler = new Action0List();
+        this._onDisconnectHandler = new Action0List();
     }
 
     init(url: string, reconnectDelay: number, pingInterval: number, pingTimeout: number): void {
@@ -80,38 +104,42 @@ export abstract class NetworkingPeerBase {
     }
 
     setOnConnectHandler(_onConnectHandler: Action0): void {
-        this._onConnectHandler = _onConnectHandler;
+        this._onConnectHandler.subscriber(_onConnectHandler);
     }
 
     setOnDisconnectHandler(_onDisconnectHandler: Action0): void {
-        this._onDisconnectHandler = _onDisconnectHandler;
+        this._onDisconnectHandler.subscriber(_onDisconnectHandler);
     }
 
     removeOnConnectHandler(_onConnectHandler: Action0): void {
-        this._onConnectHandler = _onConnectHandler;
+        this._onConnectHandler.unsubscriber(_onConnectHandler);
     }
 
     removeOnDisconnectHandler(_onDisconnectHandler: Action0): void {
-        this._onDisconnectHandler = _onDisconnectHandler;
+        this._onDisconnectHandler.unsubscriber(_onDisconnectHandler);
     }
 
     onConnectHandler(): void {
-        this._onConnectHandler?.invoke();
+        this._onConnectHandler.invoke();
 
         let authToken = GNNetwork.getAuthToken();
         if (authToken != null) {
             this.sendRequestAuthSocket();
         }
 
-        this._onSocketConnect?.invoke();
-        this._onSocketConnect = null;
+        if (this._onSocketConnect != null) {
+            this._onSocketConnect();
+            this._onSocketConnect = null;
+        }
     }
 
     onDisconnectHandler(): void {
-        this._onDisconnectHandler?.invoke();
+        this._onDisconnectHandler.invoke();
 
-        this._onSocketDisconnect?.invoke();
-        this._onSocketDisconnect = null;
+        if (this._onSocketDisconnect != null) {
+            this._onSocketDisconnect();
+            this._onSocketDisconnect = null;
+        }
     }
 
     setOnEventHandler(_onEventHandler: Action2<GNArray, boolean>): void {
@@ -119,7 +147,7 @@ export abstract class NetworkingPeerBase {
     }
 
     onEventHandler(obj: GNArray, isEncrypted: boolean): void {
-        this._onEventHandler?.invoke(obj, isEncrypted);
+        if (this._onEventHandler != null) this._onEventHandler(obj, isEncrypted);
     }
 
     setOnResponseHandler(_onResponseHandler: Action2<GNArray, boolean>): void {
@@ -127,7 +155,7 @@ export abstract class NetworkingPeerBase {
     }
 
     onResponseHandler(obj: GNArray, isEncrypted: boolean): void {
-        this._onResponseHandler?.invoke(obj, isEncrypted);
+        if (this._onResponseHandler != null) this._onResponseHandler(obj, isEncrypted);
     }
 
     // internal static System.Collections.IDictionary fromMsgKeyValuePairs(KeyValuePair<object, object>[] keyValuePairs)
@@ -187,7 +215,7 @@ export abstract class NetworkingPeerBase {
                 let responsePacket = this.responsePacketLst[i];
                 if (responsePacket.encrypted) {
                     try {
-                        let iList = <[]>msgpack.decode(responsePacket.obj);
+                        let iList = <[]>decode(responsePacket.obj);
                         let gnArray = GNArray.builder()
                             .addAll(NetworkingPeerBase.fromMsgList(iList))
                             .build();
@@ -218,7 +246,7 @@ export abstract class NetworkingPeerBase {
                 let eventPacket = this.eventPacketLst[i];
                 if (eventPacket.encrypted) {
                     try {
-                        let iList = <[]>msgpack.decode(eventPacket.obj);
+                        let iList = <[]>decode(eventPacket.obj);
                         let gnArray = GNArray.builder()
                             .addAll(NetworkingPeerBase.fromMsgList(iList))
                             .build();
