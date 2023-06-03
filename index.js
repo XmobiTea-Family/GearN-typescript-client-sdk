@@ -39,6 +39,10 @@ gnServerSettings.config(options);
 
 GNNetwork.init(gnServerSettings);
 
+GNNetwork.customIdLogin("hihihi", response => {
+    console.log(response);
+});
+
 GNNetwork.connectSocket(() => {
     console.log("connect success");
 });

@@ -1,7 +1,7 @@
 {
     "name": "debug",
     "options": {
-        "serverAddress": "127.0.0.1",
+        "serverAddress": "54.255.43.189",
         "serverPort": 2202,
         "useSsl": false,
         "useSocket": true,
