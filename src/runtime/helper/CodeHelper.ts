@@ -2,26 +2,35 @@ import { EventCode } from "./../constant/EventCode";
 import { OperationCode } from "./../constant/OperationCode";
 import { ReturnCode } from "./../constant/ReturnCode";
 
-export class CodeHelper {
-    private static readonly UnknownCode = "Unknown";
+class CodeHelperBase {
+    private static readonly unknownCode = "Unknown";
 
-    private static operationCodeDic: { [k: number]: string };
-    private static eventCodeDic: { [k: number]: string };
-    private static returnCodeDic: { [k: number]: string };
+    codeDict: Map<number, string>;
+
+    public getCodeName(code: number): string {
+        return this.codeDict.has(code) ? this.codeDict.get(code) : CodeHelperBase.unknownCode;
+    }
+
+    constructor(codeDict: Map<number, string>) {
+        this.codeDict = codeDict;
+    }
+}
+
+export class CodeHelper {
+    private static operationCodeHelper: CodeHelperBase;
+    private static eventCodeHelper: CodeHelperBase;
+    private static returnCodeHelper: CodeHelperBase;
 
     public static getOperationCodeName(operationCode: number): string {
-        let operationCodeName = this.operationCodeDic[operationCode];
-        return operationCodeName ? operationCodeName : this.UnknownCode;
+        return CodeHelper.operationCodeHelper.getCodeName(operationCode);
     }
 
     public static getEventCodeName(eventCode: number): string {
-        let eventCodeName = this.eventCodeDic[eventCode];
-        return eventCodeName ? eventCodeName : this.UnknownCode;
+        return CodeHelper.eventCodeHelper.getCodeName(eventCode);
     }
 
     public static getReturnCodeName(returnCode: number): string {
-        let returnCodeName = this.returnCodeDic[returnCode];
-        return returnCodeName ? returnCodeName : this.UnknownCode;
+        return CodeHelper.returnCodeHelper.getCodeName(returnCode);
     }
 
     static init(): void {
@@ -31,7 +40,7 @@ export class CodeHelper {
     }
 
     private static setOperationCodeDic(): void {
-        this.operationCodeDic = {};
+        this.operationCodeHelper = new CodeHelperBase(new Map());
 
         this.addOperationCodeDic(OperationCode);
     }
@@ -41,12 +50,12 @@ export class CodeHelper {
         let values = Object.values(operationCode) as Array<number>;
 
         for (let i = 0; i < keys.length; i++) {
-            this.operationCodeDic[values[i]] = keys[i];
+            this.operationCodeHelper.codeDict.set(values[i], keys[i]);
         }
     }
 
     private static setEventCodeDic(): void {
-        this.eventCodeDic = {};
+        this.eventCodeHelper = new CodeHelperBase(new Map());
 
         this.addEventCodeDic(EventCode);
     }
@@ -56,12 +65,12 @@ export class CodeHelper {
         let values = Object.values(eventCode) as Array<number>;
 
         for (let i = 0; i < keys.length; i++) {
-            this.eventCodeDic[values[i]] = keys[i];
+            this.eventCodeHelper.codeDict.set(values[i], keys[i]);
         }
     }
 
     private static setReturnCodeDic(): void {
-        this.returnCodeDic = {};
+        this.returnCodeHelper = new CodeHelperBase(new Map());
 
         this.addReturnCodeDic(ReturnCode);
     }
@@ -71,7 +80,7 @@ export class CodeHelper {
         let values = Object.values(returnCode) as Array<number>;
 
         for (let i = 0; i < keys.length; i++) {
-            this.returnCodeDic[values[i]] = keys[i];
+            this.returnCodeHelper.codeDict.set(values[i], keys[i]);
         }
     }
 

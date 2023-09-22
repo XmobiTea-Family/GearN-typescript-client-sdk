@@ -12,13 +12,13 @@ export enum FieldDataType {
     String = 2,
     Array = 3,
     Object = 4,
-    
+
 };
 
 export interface GNObjectFieldMetadata {
     name: string;
     fieldType: FieldDataType;
-
+    cls: new (...args: any[]) => any;
 };
 
 export interface GNObjectMetadata {

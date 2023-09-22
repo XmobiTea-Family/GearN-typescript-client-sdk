@@ -1,3 +1,5 @@
+import { RequestRole } from "../constant/enumType/RequestRole";
+import { RequestType } from "../constant/enumType/RequestType";
 import { Action1 } from "./../common/Action1";
 import { GNArray, GNHashtable } from "./../common/GNData";
 import { InvalidMemberType } from "./../constant/enumType/InvalidMemberType";
@@ -10,11 +12,12 @@ import { GNNetwork } from "./../GNNetwork";
 import { GNDebug } from "./../logger/GNDebug";
 import { IPeer } from "./IPeer";
 import { OperationPending } from "./OperationPending";
+import store from "store";
 
 export abstract class PeerBase implements IPeer {
-    private operationPendingQueue: OperationPending[];
+    private operationPendingQueue: Array<OperationPending>;
 
-    private operationWaitingResponseDic: { [k: string]: OperationPending; };
+    private operationWaitingResponseDict: Map<number, OperationPending>;
 
     private static requestId: number = 0;
 
@@ -36,10 +39,12 @@ export abstract class PeerBase implements IPeer {
     protected isUse: boolean;
 
     public initPeer() {
+        if (this.operationWaitingResponseDict == null)
+            this.operationWaitingResponseDict = new Map();
+
         if (this.operationPendingQueue == null)
             this.operationPendingQueue = [];
-        if (this.operationWaitingResponseDic == null)
-            this.operationWaitingResponseDic = {};
+
         if (this.pingLst == null)
             this.pingLst = [];
 
@@ -57,13 +62,13 @@ export abstract class PeerBase implements IPeer {
 
     protected abstract initGNSocketObject(): void;
 
-    public enqueue(operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>): void {
+    public enqueue(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable): void {
         if (!this.isUsing) {
             GNDebug.logError("[GN] Server Settings dont setup to use this to send operation request.");
             return;
         }
 
-        let operationPending = new OperationPending(operationRequest, onOperationResponse);
+        let operationPending = new OperationPending(requestType, requestRole, operationRequest, onOperationResponse, authToken, secretKey, customTags);
         this.operationPendingQueue.push(operationPending);
     }
 
@@ -79,13 +84,10 @@ export abstract class PeerBase implements IPeer {
         if (this.checkTimeoutOperationPending < nowSecond) {
             this.checkTimeoutOperationPending = nowSecond + 0.1;
 
-            let operationWaitingResponseDicKeys = Object.keys(this.operationWaitingResponseDic);
-            if (operationWaitingResponseDicKeys.length != 0) {
+            if (this.operationWaitingResponseDict.size != 0) {
                 let gnArrayLst: GNArray[] = [];
 
-                operationWaitingResponseDicKeys.forEach(operationPendingKey => {
-                    let operationPending = this.operationWaitingResponseDic[operationPendingKey];
-
+                this.operationWaitingResponseDict.forEach((operationPending, operationPendingKey) => {
                     if (operationPending.isTimeout()) {
                         let gnArray = new GNArray();
 
@@ -119,11 +121,11 @@ export abstract class PeerBase implements IPeer {
 
     protected onResponseHandler(obj: GNArray, isEncrypted: boolean): void {
         let responseId = obj.getNumber(2);
-        if (this.operationWaitingResponseDic[responseId] != null) {
-            let operationPending = this.operationWaitingResponseDic[responseId];
+        if (this.operationWaitingResponseDict.has(responseId)) {
+            let operationPending = this.operationWaitingResponseDict.get(responseId);
             operationPending.onRecv();
 
-            delete this.operationWaitingResponseDic[responseId];
+            this.operationWaitingResponseDict.delete(responseId);
 
             let returnCode = obj.getNumber(0);
 
@@ -136,10 +138,7 @@ export abstract class PeerBase implements IPeer {
             else if (returnCode == ReturnCode.InvalidRequestParameters)
                 array = obj.getGNArray(1);
             else if (returnCode == ReturnCode.OperationNotAuthorized) {
-                if (GNNetwork.getAuthToken()) {
-                    GNNetwork.setAuthToken("");
-                    GNNetwork.setUserId("");
-                }
+
             }
             else
                 debugMessage = obj.getString(1);
@@ -157,7 +156,7 @@ export abstract class PeerBase implements IPeer {
                     let arrChild = array.getGNArray(i);
 
                     invalidMembers.push({
-                        code: arrChild.getNumber(0),
+                        code: arrChild.getString(0),
                         invalidMemberType: <InvalidMemberType>arrChild.getNumber(1)
                     });
                 }
@@ -171,13 +170,17 @@ export abstract class PeerBase implements IPeer {
                     if (parameters.containsKey(ParameterCode.AuthToken)) {
                         let authToken = parameters.getString(ParameterCode.AuthToken);
 
-                        GNNetwork.setAuthToken(authToken);
+                        GNNetwork.getAuthenticateStatus().setAuthToken(authToken);
+
+                        store.set(GNNetwork.AUTH_TOKEN_KEY, authToken);
                     }
 
                     if (parameters.containsKey(ParameterCode.UserId)) {
                         let userId = parameters.getString(ParameterCode.UserId);
 
-                        GNNetwork.setUserId(userId);
+                        GNNetwork.getAuthenticateStatus().setUserId(userId);
+
+                        store.set(GNNetwork.USER_ID_KEY, userId);
                     }
 
                     if (parameters.containsKey(ParameterCode.Ts)) {
@@ -192,7 +195,7 @@ export abstract class PeerBase implements IPeer {
             if (callback != null) callback(operationResponse);
         }
         else {
-            GNDebug.logError("[GN] OnResponseHandler, un available request id " + obj);
+            GNDebug.logError("[GN] OnResponseHandler, unavailable request id " + obj);
         }
     }
 
@@ -205,7 +208,7 @@ export abstract class PeerBase implements IPeer {
             operationRequest.setRequestId(PeerBase.requestId++);
 
             if (operationPending.getCallback() != null) {
-                this.operationWaitingResponseDic[operationRequest.getRequestId()] = operationPending;
+                this.operationWaitingResponseDict.set(operationRequest.getRequestId(), operationPending);
             }
         }
     }

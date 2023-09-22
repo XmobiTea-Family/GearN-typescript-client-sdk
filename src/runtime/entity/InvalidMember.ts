@@ -1,9 +1,8 @@
 import { InvalidMemberType } from "./../constant/enumType/InvalidMemberType";
 
-export class InvalidMember {
-    
-    code: number;
+export interface InvalidMember {
 
+    code: string;
     invalidMemberType: InvalidMemberType;
 
 }

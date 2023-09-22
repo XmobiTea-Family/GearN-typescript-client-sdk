@@ -12,7 +12,10 @@ export interface GNServerSettingsOptions {
     pingInterval: number;
     pingTimeout: number;
 
-    codeCanSendNotAuthorized: number[];
+    adminSecretKey: string;
+    serverSecretKey: string;
+    clientSecretKey: string;
+
     gnServerSourcePath: string;
 
     logType: LogType;
@@ -30,7 +33,10 @@ export class GNServerSettings {
     private pingInterval: number = 20000;
     private pingTimeout: number = 20000;
 
-    private codeCanSendNotAuthorized: number[];
+    private adminSecretKey: string;
+    private serverSecretKey: string;
+    private clientSecretKey: string;
+
     private gnServerSourcePath: string;
 
     private logType: LogType = LogType.All;
@@ -47,7 +53,10 @@ export class GNServerSettings {
         this.pingInterval = options.pingInterval;
         this.pingTimeout = options.pingTimeout;
 
-        this.codeCanSendNotAuthorized = options.codeCanSendNotAuthorized;
+        this.adminSecretKey = options.adminSecretKey;
+        this.serverSecretKey = options.serverSecretKey;
+        this.clientSecretKey = options.clientSecretKey;
+
         this.gnServerSourcePath = options.gnServerSourcePath;
 
         this.logType = options.logType;
@@ -125,12 +134,28 @@ export class GNServerSettings {
         this.pingTimeout = pingTimeout;
     }
 
-    public getCodeCanSendNotAuthorized(): number[] {
-        return this.codeCanSendNotAuthorized;
+    public getAdminSecretKey(): string {
+        return this.adminSecretKey;
     }
 
-    public setCodeCanSendNotAuthorized(codeCanSendNotAuthorized: number[]): void {
-        this.codeCanSendNotAuthorized = codeCanSendNotAuthorized;
+    public setAdminSecretKey(adminSecretKey: string): void {
+        this.adminSecretKey = adminSecretKey;
+    }
+
+    public getServerSecretKey(): string {
+        return this.serverSecretKey;
+    }
+
+    public setServerSecretKey(serverSecretKey: string): void {
+        this.serverSecretKey = serverSecretKey;
+    }
+
+    public getClientSecretKey(): string {
+        return this.clientSecretKey;
+    }
+
+    public setClientSecretKey(clientSecretKey: string): void {
+        this.clientSecretKey = clientSecretKey;
     }
 
     public getGNServerSourcePath(): string {

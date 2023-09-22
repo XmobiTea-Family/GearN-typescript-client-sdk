@@ -1,3 +1,5 @@
+import { ConverterService } from "../../helper/ConverterService";
+import { Constructor } from "../GNMetadata";
 import { GNHashtable } from "./../../common/GNData";
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { ReturnCode } from "./../../constant/ReturnCode";
@@ -12,7 +14,7 @@ export abstract class CustomOperationResponse {
     public errorCode: number;
     public invalidMembers: InvalidMember[];
 
-    public hasError() {
+    public hasReturnCodeError() {
         return this.returnCode != ReturnCode.Ok;
     }
 
@@ -24,12 +26,24 @@ export abstract class CustomOperationResponse {
         this.parameters = operationResponse.getParameters();
         this.invalidMembers = operationResponse.getInvalidMembers();
 
-        if (!this.hasError()) {
+        if (!this.hasReturnCodeError()) {
             this.errorCode = this.parameters.getNumber(ParameterCode.ErrorCode);
         }
     }
 
     public toString(): string {
         return "ReturnCode: " + this.returnCode + " " + (this.parameters != null ? this.parameters.toString() : this.debugMessage);
+    }
+}
+
+export abstract class CustomOperationResponseAbstract<TResponseData> extends CustomOperationResponse {
+    public responseData: TResponseData;
+
+    public setupOperationResponseAbstract(operationResponse: OperationResponse, cls: Constructor<TResponseData>): void {
+        super.setupOperationResponse(operationResponse);
+
+        if (!this.hasReturnCodeError()) {
+            this.responseData = ConverterService.deserializeObject<TResponseData>(this.parameters, cls);
+        }
     }
 }

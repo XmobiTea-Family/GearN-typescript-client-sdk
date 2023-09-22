@@ -52,6 +52,7 @@ export const initGNObjectFieldMetadata = <T extends GNObjectFieldMetadata>(proto
         const field: GNObjectFieldMetadata = {
             name: propertyKey,
             fieldType: getGNReflectedDataType(prototype, propertyKey),
+            cls: prototype.constructor
         };
         meta.fields.push(field);
         return field as T;
@@ -87,7 +88,6 @@ export interface GNEnhancedObjectFieldMetadata extends GNObjectFieldMetadata {
     minValue?: number;
     maxValue?: number;
     mustInt?: boolean;
-
 };
 
 export enum GNFieldDataType {
@@ -147,7 +147,6 @@ interface GNHashtableDataMemberArgs extends OtherDataMemberArgs {
     mustNonNull?: boolean;
     minLength?: number;
     maxLength?: number;
-
 };
 
 interface GNArrayDataMemberArgs extends OtherDataMemberArgs {
@@ -155,7 +154,7 @@ interface GNArrayDataMemberArgs extends OtherDataMemberArgs {
     mustNonNull?: boolean;
     minLength?: number;
     maxLength?: number;
-
+    elementCls?: new (...args: any[]) => any;
 };
 
 export const DataMember = (args: DataMemberArgs) => (prototype: any, propertyKey: string) => {
@@ -211,6 +210,7 @@ export const BooleanDataMember = (args: BooleanDataMemberArgs) => (prototype: an
 
 export const GNHashtableDataMember = (args: GNHashtableDataMemberArgs) => (prototype: any, propertyKey: string) => {
     let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
+
     field.code = args.code;
     field.isOptional = args.isOptional == null ? false : args.isOptional;
     field.defaultValue = args.defaultValue;
@@ -240,6 +240,8 @@ export const GNHashtableDataMember = (args: GNHashtableDataMemberArgs) => (proto
 
 export const GNArrayDataMember = (args: GNArrayDataMemberArgs) => (prototype: any, propertyKey: string) => {
     let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
+    if (args.elementCls != null) field.cls = args.elementCls;
+
     field.code = args.code;
     field.isOptional = args.isOptional == null ? false : args.isOptional;
     field.defaultValue = args.defaultValue;

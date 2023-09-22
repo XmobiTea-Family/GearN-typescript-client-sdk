@@ -1,658 +1,267 @@
-import { GNArray, GNHashtable, GNData } from "./../common/GNData";
-import { getGNObjectMetadata, GNEnhancedObjectFieldMetadata, GNEnhancedObjectMetadata, GNFieldDataType } from "./../entity/DataMember";
-import { InvalidMemberType } from "./../constant/enumType/InvalidMemberType";
+import { GNEnhancedObjectFieldMetadata, GNEnhancedObjectMetadata, GNFieldDataType, getGNObjectMetadata } from "../entity/DataMember";
+import { FieldDataType } from "../entity/GNMetadata";
+import { GNArray, GNData, GNHashtable } from "./../common/GNData";
 
 type Constructor<T> = { new(...args: any[]): T };
 
-export interface IGNObject {
-    parameters: GNHashtable;
-    isValid: boolean;
-}
+class DataMemberFieldInfoTypeMapper {
+    private readonly declaredFieldsMap: Map<any, GNEnhancedObjectFieldMetadata[]>;
 
-export class ConvertService {
-    private readonly declaredFieldsMap: { [k: string]: GNEnhancedObjectFieldMetadata[] };
+    public getGNEnhancedObjectFieldMetadata<T>(cls: Constructor<T>): GNEnhancedObjectFieldMetadata[] {
+        let declaredFields: GNEnhancedObjectFieldMetadata[];
 
-    public convertObject<T extends IGNObject>(parameters: GNHashtable, cls: Constructor<T>): T {
-        let declaredFields = this.declaredFieldsMap[cls.name];
-        if (declaredFields == null) {
+        if (this.declaredFieldsMap.has(cls)) declaredFields = this.declaredFieldsMap.get(cls);
+        else {
             declaredFields = getGNObjectMetadata<GNEnhancedObjectMetadata>(cls).fields;
-            this.declaredFieldsMap[cls.name] = declaredFields;
+            this.declaredFieldsMap.set(cls, declaredFields);
         }
 
-        let answer = new cls();
-        let answerAny = answer as any;
-        answerAny.invalidMembers = [];
-
-        let isValidRequest = true;
-
-        for (let i = 0; i < declaredFields.length; i++) {
-            let field = declaredFields[i];
-            let gnFieldType = field.gnFieldType;
-
-            let containsKey = parameters.containsKey(field.code);
-            let value = parameters.getObject(field.code);
-
-            //console.log(fieldType + " " + (value instanceof GNHashtable) + " " + field.name);
-
-            if (field.isOptional) {
-                if (containsKey && value != null) {
-                    if (gnFieldType == GNFieldDataType.GNHashtable) {
-                        if (value instanceof GNHashtable) {
-                            let lastValue = value as GNHashtable;
-
-                            if (field.mustNonNull) {
-                                if (lastValue == null) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.GNHashtableNull
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-
-                            if (lastValue != null) {
-                                if (lastValue.count() < field.minLength) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.GNHashtableMinLength
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                                else if (lastValue.count() > field.maxLength) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.GNHashtableMaxLength
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.GNArray) {
-                        if (value instanceof GNArray) {
-                            let lastValue = value as GNArray;
-
-                            if (field.mustNonNull) {
-                                if (lastValue == null) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.GNArrayNull
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-
-                            if (lastValue != null) {
-                                if (lastValue.count() < field.minLength) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.GNArrayMinLength
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                                else if (lastValue.count() > field.maxLength) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.GNArrayMaxLength
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.Boolean) {
-                        if (typeof value === "boolean") {
-                            let lastValue: boolean = value as any as boolean;
-
-                            if (lastValue == null) {
-                                lastValue = false;
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.Number) {
-                        if (typeof value === "number") {
-                            let lastValue: number = value as any as number;
-
-                            if (lastValue == null) {
-                                lastValue = 0;
-                            }
-
-                            if (field.activeConditionValid) {
-                                if (field.mustInt === true) {
-                                    if (!this.isInteger(lastValue)) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.NumberMustInt
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-
-                                if (lastValue < field.minValue) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.NumberMinValue
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                                else if (lastValue > field.maxValue) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.NumberMaxValue
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.String) {
-                        if (typeof value === "string") {
-                            let lastValue: string = value as any as string;
-
-                            if (field.activeConditionValid) {
-                                if (field.mustNonNull) {
-                                    if (lastValue == null) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.StringNull
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-
-                                if (lastValue != null) {
-                                    if (lastValue.length < field.minLength) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.StringMinLength
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                    else if (lastValue.length > field.maxLength) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.StringMaxLength
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.Other) {
-                        let lastValue = value;
-
-                        answerAny[field.name] = lastValue;
-                    }
-                }
-                else {
-                    if (gnFieldType == GNFieldDataType.GNHashtable || gnFieldType == GNFieldDataType.GNArray) {
-                        let lastValue: GNData = field.defaultValue;
-
-                        answerAny[field.name] = lastValue;
-                    }
-                    else if (gnFieldType == GNFieldDataType.Boolean) {
-                        let lastValue: boolean = field.defaultValue;
-
-                        answerAny[field.name] = lastValue;
-                    }
-                    else if (gnFieldType == GNFieldDataType.Number) {
-                        let lastValue: number = field.defaultValue;
-
-                        answerAny[field.name] = lastValue;
-                    }
-                    else if (gnFieldType == GNFieldDataType.String) {
-                        let lastValue: string = field.defaultValue;
-
-                        answerAny[field.name] = lastValue;
-                    }
-                    else if (gnFieldType == GNFieldDataType.Other) {
-                        let lastValue = field.defaultValue;
-
-                        answerAny[field.name] = lastValue;
-                    }
-                }
-            }
-            else {
-                if (!containsKey) {
-                    answerAny.invalidMembers.push({
-                        code: field.code,
-                        invalidMemberType: InvalidMemberType.DataRequired
-                    });
-
-                    isValidRequest = false;
-                    break;
-                }
-
-                if (value != null) {
-                    if (gnFieldType == GNFieldDataType.GNHashtable) {
-                        if (value instanceof GNHashtable) {
-                            let lastValue = value as GNHashtable;
-
-                            if (field.activeConditionValid) {
-                                if (field.mustNonNull) {
-                                    if (lastValue == null) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.GNHashtableNull
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-
-                                if (lastValue != null) {
-                                    if (lastValue.count() < field.minLength) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.GNHashtableMinLength
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                    else if (lastValue.count() > field.maxLength) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.GNHashtableMaxLength
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.GNArray) {
-                        if (value instanceof GNArray) {
-                            let lastValue = value as GNArray;
-
-                            if (field.activeConditionValid) {
-                                if (field.mustNonNull) {
-                                    if (lastValue == null) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.GNArrayNull
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-
-                                if (lastValue != null) {
-                                    if (lastValue.count() < field.minLength) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.GNArrayMinLength
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                    else if (lastValue.count() > field.maxLength) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.GNArrayMaxLength
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.Boolean) {
-                        if (typeof value === "boolean") {
-                            let lastValue: boolean = value as any as boolean;
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.Number) {
-                        if (typeof value === "number") {
-                            let lastValue: number = value as any as number;
-
-                            if (field.activeConditionValid) {
-                                if (field.mustInt === true) {
-                                    if (!this.isInteger(lastValue)) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.NumberMustInt
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-
-                                if (lastValue < field.minValue) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.NumberMinValue
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                                else if (lastValue > field.maxValue) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.NumberMaxValue
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.String) {
-                        if (typeof value === "string") {
-                            let lastValue: string = value as any as string;
-
-                            if (field.activeConditionValid) {
-                                if (field.mustNonNull) {
-                                    if (lastValue == null) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.StringNull
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-
-                                if (lastValue != null) {
-                                    if (lastValue.length < field.minLength) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.StringMinLength
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                    else if (lastValue.length > field.maxLength) {
-                                        answerAny.invalidMembers.push({
-                                            code: field.code,
-                                            invalidMemberType: InvalidMemberType.StringMaxLength
-                                        });
-
-                                        isValidRequest = false;
-                                        break;
-                                    }
-                                }
-                            }
-
-                            answerAny[field.name] = lastValue;
-                        }
-                        else {
-                            answerAny.invalidMembers.push({
-                                code: field.code,
-                                invalidMemberType: InvalidMemberType.TypeInvalid
-                            });
-
-                            isValidRequest = false;
-                            break;
-                        }
-                    }
-                    else if (gnFieldType == GNFieldDataType.Other) {
-                        let lastValue = value;
-
-                        answerAny[field.name] = lastValue;
-                    }
-                }
-                else {
-                    if (gnFieldType == GNFieldDataType.GNHashtable || gnFieldType == GNFieldDataType.GNArray) {
-                        let lastValue: GNData = null;
-                        if (field.defaultValue != null) lastValue = field.defaultValue;
-
-                        if (field.activeConditionValid) {
-                            if (field.mustNonNull) {
-                                if (lastValue == null) {
-                                    let invalidMemberType = gnFieldType == GNFieldDataType.GNHashtable ? InvalidMemberType.GNHashtableNull : InvalidMemberType.GNArrayNull;
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: invalidMemberType
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-
-                            if (lastValue != null) {
-                                if (lastValue.count() < field.minLength) {
-                                    let invalidMemberType = gnFieldType == GNFieldDataType.GNHashtable ? InvalidMemberType.GNHashtableMinLength : InvalidMemberType.GNArrayMinLength;
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: invalidMemberType
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                                else if (lastValue.count() > field.maxLength) {
-                                    let invalidMemberType = gnFieldType == GNFieldDataType.GNHashtable ? InvalidMemberType.GNHashtableMaxLength : InvalidMemberType.GNArrayMaxLength;
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: invalidMemberType
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-                        }
-
-                        answerAny[field.name] = lastValue;
-                    }
-                    else if (gnFieldType == GNFieldDataType.Boolean) {
-                        answerAny.invalidMembers.push({
-                            code: field.code,
-                            invalidMemberType: InvalidMemberType.TypeInvalid
-                        });
-
-                        isValidRequest = false;
-                        break;
-                    }
-                    else if (gnFieldType == GNFieldDataType.Number) {
-                        answerAny.invalidMembers.push({
-                            code: field.code,
-                            invalidMemberType: InvalidMemberType.TypeInvalid
-                        });
-
-                        isValidRequest = false;
-                        break;
-                    }
-                    else if (gnFieldType == GNFieldDataType.String) {
-                        let lastValue: string = null;
-                        if (field.defaultValue != null) lastValue = field.defaultValue;
-
-                        if (field.activeConditionValid) {
-                            if (field.mustNonNull) {
-                                if (lastValue == null) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.StringNull
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-
-                            if (lastValue != null) {
-                                if (lastValue.length < field.minLength) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.StringMinLength
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                                else if (lastValue.length > field.maxLength) {
-                                    answerAny.invalidMembers.push({
-                                        code: field.code,
-                                        invalidMemberType: InvalidMemberType.StringMaxLength
-                                    });
-
-                                    isValidRequest = false;
-                                    break;
-                                }
-                            }
-                        }
-
-                        answerAny[field.name] = lastValue;
-                    }
-                    else if (gnFieldType == GNFieldDataType.Other) {
-                        let lastValue = null;
-                        if (field.defaultValue != null) lastValue = field.defaultValue;
-
-                        answerAny[field.name] = lastValue;
-                    }
-                }
-            }
-        }
-
-        answerAny.parameters = parameters;
-        answerAny.isValid = isValidRequest;
-
-        return answer as any as T;
-    }
-
-    private isInteger(number: number): boolean {
-        return Number.isInteger(number);
+        return declaredFields;
     }
 
     constructor() {
-        this.declaredFieldsMap = {};
+        this.declaredFieldsMap = new Map();
+    }
+}
+
+class DeserializeConverter {
+    private dataMemberFieldInfoMapper: DataMemberFieldInfoTypeMapper;
+
+    public deserializeObject<T>(gnHashtable: GNHashtable, cls: Constructor<T>): any {
+        if (gnHashtable == null) return null;
+
+            let declaredFields = this.dataMemberFieldInfoMapper.getGNEnhancedObjectFieldMetadata(cls);
+
+            let answer = new cls() as any;
+
+            declaredFields.forEach (declaredField =>
+            {
+                let value = gnHashtable.getObject(declaredField.code);
+                let typeOfValue = typeof value;
+                
+                if (declaredField.gnFieldType == GNFieldDataType.String)
+                {
+                    if (value == null) answer[declaredField.name] = declaredField.defaultValue;
+                    else if (typeOfValue == "string") answer[declaredField.name] = value;
+                }
+                else if (declaredField.gnFieldType == GNFieldDataType.Boolean)
+                {
+                    if (value == null) answer[declaredField.name] = declaredField.defaultValue;
+                    else if (typeOfValue == "boolean") answer[declaredField.name] = value;
+                }
+                else if (declaredField.gnFieldType == GNFieldDataType.GNHashtable)
+                {
+                    if (value == null)
+                    {
+                        if (declaredField.defaultValue != null)
+                        {
+                            if (declaredField.cls == GNHashtable) answer[declaredField.name] = declaredField.defaultValue;
+                            else if (typeof declaredField.cls == "object") answer[declaredField.name] = (<GNHashtable>declaredField.defaultValue).toData();
+                            else answer[declaredField.name] = this.deserializeObject(<GNHashtable>declaredField.defaultValue, declaredField.cls);
+                        }
+                    }
+                    else
+                    {
+                        if (declaredField.cls == GNHashtable) answer[declaredField.name] = value;
+                        else if (typeof declaredField.cls == "object") answer[declaredField.name] = (<GNHashtable>value).toData();
+                        else answer[declaredField.name] = this.deserializeObject(<GNHashtable>value, declaredField.cls);
+                    }
+                }
+                else if (declaredField.gnFieldType == GNFieldDataType.GNArray)
+                {
+                    if (value == null)
+                    {
+                        if (declaredField.defaultValue != null)
+                        {
+                            if (declaredField.cls == GNArray) answer[declaredField.name] = declaredField.defaultValue;
+                            else answer[declaredField.name] = (<GNArray>declaredField.defaultValue).toData();
+                        }
+                    }
+                    else
+                    {
+                        if (declaredField.cls == GNArray) answer[declaredField.name] = value;
+                        else answer[declaredField.name] = (<GNArray>value).toData();
+                    }
+                }
+                else if (declaredField.gnFieldType == GNFieldDataType.Number)
+                {
+                    if (value == null) answer[declaredField.name] = declaredField.defaultValue;
+                    else if (typeOfValue == "number") answer[declaredField.name] = value;
+                }
+                else
+                {
+                    if (value == null)
+                    {
+                        if (declaredField.defaultValue != null)
+                        {
+                            if (declaredField.cls == Number) answer[declaredField.name] = declaredField.defaultValue;
+                            else if (declaredField.cls == String) answer[declaredField.name] = declaredField.defaultValue;
+                            else if (declaredField.cls == Boolean) answer[declaredField.name] = declaredField.defaultValue;
+                            else if (declaredField.cls == GNHashtable) answer[declaredField.name] = this.deserializeObject(<GNHashtable>declaredField.defaultValue, declaredField.cls);
+                            else if (declaredField.cls == GNArray) answer[declaredField.name] = this.deserializeArray(<GNArray>declaredField.defaultValue, declaredField.cls);
+
+                        }
+                    }
+                    else
+                    {
+                        if (declaredField.cls == Number) answer[declaredField.name] = value;
+                        else if (declaredField.cls == String) answer[declaredField.name] = value;
+                        else if (declaredField.cls == Boolean) answer[declaredField.name] = value;
+                        else if (declaredField.cls == GNHashtable) answer[declaredField.name] = this.deserializeObject(<GNHashtable>value, declaredField.cls);
+                        else if (declaredField.cls == GNArray) answer[declaredField.name] = this.deserializeArray(<GNArray>value, declaredField.cls);
+                    }
+                }
+            });
+
+            return answer;
+    }
+
+    public deserializeArray<T>(gnArray: GNArray, cls: Constructor<T>): any[] {
+        if (gnArray == null) return null;
+
+        let answer: any[] = [];
+
+        for (let i = 0; i < gnArray.count(); i++)
+        {
+            let value = gnArray.getObject(i);
+            if (value == null) answer.push(null);
+            else
+            {
+                let typeOfValue = typeof value;
+
+                if (typeOfValue == "number") answer.push(value);
+                else if (typeOfValue == "string") answer.push(value);
+                else if (typeOfValue == "boolean") answer.push(value);
+                else if (cls as any == GNArray) answer.push(value);
+                else if (cls as any ==  GNData) answer.push(value);
+                else if (typeOfValue == "object") {
+                    if (Array.isArray(value)) {
+                        answer.push(this.deserializeArray(gnArray.getGNArray(i), cls));
+                    }
+                    else {
+                        answer.push(this.deserializeObject(gnArray.getGNHashtable(i), cls));
+                    }
+                } 
+            }
+        }
+
+        return answer;
+    }
+
+    constructor(dataMemberFieldInfoMapper: DataMemberFieldInfoTypeMapper) {
+        this.dataMemberFieldInfoMapper = dataMemberFieldInfoMapper;
+    }
+}
+
+class SerializeConverter {
+    private dataMemberFieldInfoMapper: DataMemberFieldInfoTypeMapper;
+
+    public serializeObject(obj: any): GNHashtable {
+        if (obj == null) return null;
+
+        let fieldInfos = this.dataMemberFieldInfoMapper.getGNEnhancedObjectFieldMetadata(obj);
+
+        let answer = new GNHashtable();
+
+        fieldInfos.forEach((field) => {
+            let dataMemberAnno = field;
+
+            let value = obj[dataMemberAnno.code];
+
+            if (value == null) {
+                if (!dataMemberAnno.isOptional) answer.add(dataMemberAnno.code, null);
+            }
+            else {
+                let typeOfValue = typeof value;
+
+                if (dataMemberAnno.gnFieldType == GNFieldDataType.String) {
+                    if (typeOfValue == "string") answer.add(dataMemberAnno.code, value);
+                }
+                else if (dataMemberAnno.gnFieldType == GNFieldDataType.Boolean) {
+                    if (typeOfValue == "boolean") answer.add(dataMemberAnno.code, value);
+                }
+                else if (dataMemberAnno.gnFieldType == GNFieldDataType.GNHashtable) {
+                    if (value instanceof GNHashtable) answer.add(dataMemberAnno.code, value);
+                    else if (typeOfValue === "object") {
+                        if (!Array.isArray(value)) answer.add(dataMemberAnno.code, this.serializeObject(value));
+                    }
+                }
+                else if (dataMemberAnno.gnFieldType == GNFieldDataType.GNArray) {
+                    if (value instanceof GNArray) answer.add(dataMemberAnno.code, value);
+                    else if (typeOfValue === "object") {
+                        if (Array.isArray(value)) answer.add(dataMemberAnno.code, this.serializeArray(value));
+                    }
+                }
+                else if (dataMemberAnno.gnFieldType == GNFieldDataType.Number) {
+                    if (typeOfValue == "number") answer.add(dataMemberAnno.code, value);
+                }
+                else {
+                    if (typeOfValue == "string") answer.add(dataMemberAnno.code, value);
+                    else if (typeOfValue == "boolean") answer.add(dataMemberAnno.code, value);
+                    else if (typeOfValue == "number") answer.add(dataMemberAnno.code, value);
+                    else if (value instanceof GNData) answer.add(dataMemberAnno.code, value);
+                    else if (typeOfValue == "object") {
+                        if (Array.isArray(value)) answer.add(dataMemberAnno.code, this.serializeArray(value));
+                        else answer.add(dataMemberAnno.code, GNHashtable.builder().addAll(value).build());
+                    }
+                    else answer.add(dataMemberAnno.code, this.serializeObject(value));
+                }
+            }
+        });
+
+        return answer;
+    }
+
+    public serializeArray(objLst: any[]): GNArray {
+        if (objLst == null) return null;
+
+        let answer = new GNArray();
+
+        for (let i = 0; i < objLst.length; i++) {
+            let obj = objLst[i];
+
+            if (obj == null) answer.add(null);
+            else {
+                let typeOfValue = typeof obj;
+
+                if (typeOfValue === "string") answer.add(obj);
+                else if (typeOfValue === "boolean") answer.add(obj);
+                else if (typeOfValue === "number") answer.add(obj);
+                else if (obj instanceof GNData) answer.add(obj);
+                else {
+                    if (typeOfValue === "object") {
+                        if (Array.isArray(obj)) answer.add(this.serializeArray(obj));
+                        else answer.add(this.serializeObject(obj));
+                    }
+                }
+            }
+        }
+
+        return answer;
+    }
+
+    constructor(dataMemberFieldInfoMapper: DataMemberFieldInfoTypeMapper) {
+        this.dataMemberFieldInfoMapper = dataMemberFieldInfoMapper;
+    }
+}
+
+export class ConverterService {
+    private static serializeConverter: SerializeConverter;
+    private static deserializeConverter: DeserializeConverter;
+
+    public static deserializeObject<T>(gnHashtable: GNHashtable, cls: Constructor<T>): any {
+        return ConverterService.deserializeConverter.deserializeObject(gnHashtable, cls);
+    }
+
+    public static deserializeArray<T>(gnArray: GNArray, cls: Constructor<T>): any[] {
+        return ConverterService.deserializeConverter.deserializeArray(gnArray, cls);
+    }
+
+    public static serializeObject(obj: any): GNHashtable {
+        return ConverterService.serializeConverter.serializeObject(obj);
+    }
+
+    public static serializeArray(objLst: []): GNArray {
+        return ConverterService.serializeConverter.serializeArray(objLst);
     }
 }

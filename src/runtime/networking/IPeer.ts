@@ -1,3 +1,6 @@
+import { GNHashtable } from "../common/GNData";
+import { RequestRole } from "../constant/enumType/RequestRole";
+import { RequestType } from "../constant/enumType/RequestType";
 import { Action1 } from "./../common/Action1";
 import { OperationRequest } from "./../entity/OperationRequest";
 import { OperationResponse } from "./../entity/OperationResponse";
@@ -6,10 +9,10 @@ export interface IPeer {
 
     initPeer(): void;
 
-    enqueue(operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>): void;
+    enqueue(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable): void;
 
     isUsing(): boolean;
 
     service(): void;
-    
+
 }

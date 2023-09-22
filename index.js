@@ -16,6 +16,7 @@ const encode = require("@msgpack/msgpack").encode;
 const decode = require("@msgpack/msgpack").decode;
 var axios = require("axios");
 const FormData = require('form-data');
+const { AuthenticateModels } = require("./dist/runtime/entity/models/AuthenticateModels");
 
 const optionsPath = __dirname + "/./GNServerSettingsConfig.debug.json";
 let optionStr = fs.readFileSync(optionsPath).toString();
@@ -45,6 +46,10 @@ GNNetwork.customIdLogin("hihihi", response => {
 
 GNNetwork.connectSocket(() => {
     console.log("connect success");
+});
+
+GNNetwork.authenticate.loginByAccount(new AuthenticateModels.LoginByAccountRequestData(), response => {
+    response.responseData.password;
 });
 
 // let gnServerSettings = new GN.GNServerSettings();
