@@ -13,5 +13,6 @@ export enum InvalidMemberType {
     GNHashtableMaxLength = 11,
     GNArrayNull = 12,
     GNArrayMinLength = 13,
-    GNArrayMaxLength = 14
+    GNArrayMaxLength = 14,
+    
 }

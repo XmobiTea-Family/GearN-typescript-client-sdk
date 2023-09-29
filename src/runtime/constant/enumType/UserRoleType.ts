@@ -4,5 +4,6 @@ export enum UserRoleType {
     SuperModerazor = 2,
     Moderazor = 3,
     User = 100,
-    UserNonActivate = 101
+    UserNonActivate = 101,
+    
 }

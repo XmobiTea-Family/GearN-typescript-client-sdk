@@ -1,7 +1,7 @@
 {
     "name": "debug",
     "options": {
-        "serverAddress": "54.255.43.189",
+        "serverAddress": "127.0.0.1",
         "serverPort": 2202,
         "useSsl": false,
         "useSocket": true,
@@ -14,8 +14,8 @@
 
         "gnServerSourcePath": "./../GNServer/",
         "logType": 4,
-        "adminSecretKey": "",
-        "serverSecretKey": "",
-        "clientSecretKey": ""
+        "adminSecretKey": "TSeNrcGJIdLFTs2hbomY",
+        "serverSecretKey": "hEHrIZ2NvsoQpax0SKtO",
+        "clientSecretKey": "IDcw7W9kws5AVPFMdfSW"
     }
 }

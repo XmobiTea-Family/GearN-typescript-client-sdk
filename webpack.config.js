@@ -26,7 +26,7 @@ module.exports = {
 		libraryTarget: "commonjs",
 	},
 	optimization: {
-		minimize: true,
+		minimize: false,
 		minimizer: [
 			new TerserPlugin({
 				terserOptions: {

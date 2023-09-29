@@ -111,7 +111,7 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
 
     protected override emit(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable): void {
         super.emit(requestType, requestRole, operationRequest, authToken, secretKey, customTags);
-        
+
         if (this.socketManager == null) {
             // callback here
             return;

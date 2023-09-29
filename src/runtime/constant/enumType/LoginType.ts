@@ -6,5 +6,6 @@ export enum LoginType {
     Apple = 5,
     UserId = 6,
     PublicAddress = 7,
-    CustomId = 8
+    CustomId = 8,
+    
 }

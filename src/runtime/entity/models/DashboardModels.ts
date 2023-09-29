@@ -4,6 +4,21 @@ import { ParameterCode } from "../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "../DataMember";
 
 export module DashboardModels {
+	export class PermissionRulesParam {
+		@BooleanDataMember({ code: GNParameterCode.SelfEnable, isOptional: true })
+		public selfEnable?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.OtherSelfEnable, isOptional: true })
+		public otherSelfEnable?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.AdminSelfEnable, isOptional: true })
+		public adminSelfEnable?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.ServerSelfEnable, isOptional: true })
+		public serverSelfEnable?: boolean;
+
+	}
+
 	export class FriendCatalogSettingsParam {
 		@StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
@@ -514,6 +529,42 @@ export module DashboardModels {
 
 	}
 
+	export class GroupSettingsParam {
+		@GNArrayDataMember({ code: GNParameterCode.CurrencySettings, elementCls: CurrencySettingsParam, isOptional: true })
+		public groupCurrencySettings?: Array<CurrencySettingsParam>;
+
+		@GNArrayDataMember({ code: GNParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
+		public groupStatisticsSettings?: Array<StatisticsSettingsParam>;
+
+		@GNArrayDataMember({ code: GNParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		public groupDatasSettings?: Array<DataSettingsParam>;
+
+		@GNArrayDataMember({ code: GNParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		public customDatasSettings?: Array<DataSettingsParam>;
+
+		@GNArrayDataMember({ code: GNParameterCode.TagsSettings, elementCls: TagSettingsParam, isOptional: true })
+		public tagsSettings?: Array<TagSettingsParam>;
+
+		@GNArrayDataMember({ code: GNParameterCode.ItemCatalogSettings, elementCls: ItemCatalogSettingsParam, isOptional: true })
+		public groupItemCatalogSettings?: Array<ItemCatalogSettingsParam>;
+
+	}
+
+	export class InventorySettingsParam {
+		@GNArrayDataMember({ code: GNParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
+		public inventoryStatisticsSettings?: Array<StatisticsSettingsParam>;
+
+		@GNArrayDataMember({ code: GNParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		public inventoryDatasSettings?: Array<DataSettingsParam>;
+
+		@GNArrayDataMember({ code: GNParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		public customDatasSettings?: Array<DataSettingsParam>;
+
+		@GNArrayDataMember({ code: GNParameterCode.TagsSettings, elementCls: TagSettingsParam, isOptional: true })
+		public tagsSettings?: Array<TagSettingsParam>;
+
+	}
+
 	export class GameSettingsParam {
 		@GNHashtableDataMember({ code: GNParameterCode.GamePlayerSettings, isOptional: true })
 		public gamePlayerSettings?: GamePlayerSettingsParam;
@@ -646,27 +697,6 @@ export module DashboardModels {
 
 	}
 
-	export class GroupSettingsParam {
-		@GNArrayDataMember({ code: GNParameterCode.CurrencySettings, elementCls: CurrencySettingsParam, isOptional: true })
-		public groupCurrencySettings?: Array<CurrencySettingsParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
-		public groupStatisticsSettings?: Array<StatisticsSettingsParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
-		public groupDatasSettings?: Array<DataSettingsParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
-		public customDatasSettings?: Array<DataSettingsParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.TagsSettings, elementCls: TagSettingsParam, isOptional: true })
-		public tagsSettings?: Array<TagSettingsParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.ItemCatalogSettings, elementCls: ItemCatalogSettingsParam, isOptional: true })
-		public groupItemCatalogSettings?: Array<ItemCatalogSettingsParam>;
-
-	}
-
 	export class InventoryPermissionRulesParam {
 		@GNHashtableDataMember({ code: GNParameterCode.AddSegment, isOptional: true })
 		public addSegment?: PermissionRulesParam;
@@ -763,21 +793,6 @@ export module DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.GetItemsWithDisplayName, isOptional: true })
 		public getItemsWithDisplayName?: PermissionRulesParam;
-
-	}
-
-	export class InventorySettingsParam {
-		@GNArrayDataMember({ code: GNParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
-		public inventoryStatisticsSettings?: Array<StatisticsSettingsParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
-		public inventoryDatasSettings?: Array<DataSettingsParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
-		public customDatasSettings?: Array<DataSettingsParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.TagsSettings, elementCls: TagSettingsParam, isOptional: true })
-		public tagsSettings?: Array<TagSettingsParam>;
 
 	}
 
@@ -1066,48 +1081,51 @@ export module DashboardModels {
 
 	}
 
-	export class PermissionParam {
-		@GNHashtableDataMember({ code: GNParameterCode.Authenticate, isOptional: true })
-		public authenticate?: AuthenticatePermissionRulesParam;
+	export class AuthenticatePermissionRulesParam {
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByAccount, isOptional: true })
+		public loginByAccount?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.MasterPlayer, isOptional: true })
-		public masterPlayer?: MasterPlayerPermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByAndroidDeviceId, isOptional: true })
+		public loginByAndroidDeviceId?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.GamePlayer, isOptional: true })
-		public gamePlayer?: GamePlayerPermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByApple, isOptional: true })
+		public loginByApple?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.CharacterPlayer, isOptional: true })
-		public characterPlayer?: CharacterPlayerPermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByCustomDeviceId, isOptional: true })
+		public loginByCustomDeviceId?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.Content, isOptional: true })
-		public content?: ContentPermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByCustomId, isOptional: true })
+		public loginByCustomId?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.Group, isOptional: true })
-		public group?: GroupPermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByFacebook, isOptional: true })
+		public loginByFacebook?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.Inventory, isOptional: true })
-		public inventory?: InventoryPermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByGenericService, isOptional: true })
+		public loginByGenericService?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.StoreInventory, isOptional: true })
-		public storeInventory?: StoreInventoryPermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByGoogle, isOptional: true })
+		public loginByGoogle?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.MasterAdmin, isOptional: true })
-		public masterAdmin?: MasterAdminPermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByiOSDeviceId, isOptional: true })
+		public loginByiOSDeviceId?: PermissionRulesParam;
 
-	}
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByWindowsPhoneDeviceId, isOptional: true })
+		public loginByWindowsPhoneDeviceId?: PermissionRulesParam;
 
-	export class PermissionRulesParam {
-		@BooleanDataMember({ code: GNParameterCode.SelfEnable, isOptional: true })
-		public selfEnable?: boolean;
+		@GNHashtableDataMember({ code: GNParameterCode.RegisterAccount, isOptional: true })
+		public registerAccount?: PermissionRulesParam;
 
-		@BooleanDataMember({ code: GNParameterCode.OtherSelfEnable, isOptional: true })
-		public otherSelfEnable?: boolean;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByEditorDeviceId, isOptional: true })
+		public loginByEditorDeviceId?: PermissionRulesParam;
 
-		@BooleanDataMember({ code: GNParameterCode.AdminSelfEnable, isOptional: true })
-		public adminSelfEnable?: boolean;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByLinuxDeviceId, isOptional: true })
+		public loginByLinuxDeviceId?: PermissionRulesParam;
 
-		@BooleanDataMember({ code: GNParameterCode.ServerSelfEnable, isOptional: true })
-		public serverSelfEnable?: boolean;
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByMacOSDeviceId, isOptional: true })
+		public loginByMacOSDeviceId?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.LoginByWindowsDeviceId, isOptional: true })
+		public loginByWindowsDeviceId?: PermissionRulesParam;
 
 	}
 
@@ -1138,6 +1156,36 @@ export module DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.ValidateFacebookStoreReceipt, isOptional: true })
 		public validateFacebookStoreReceipt?: PermissionRulesParam;
+
+	}
+
+	export class PermissionParam {
+		@GNHashtableDataMember({ code: GNParameterCode.Authenticate, isOptional: true })
+		public authenticate?: AuthenticatePermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.MasterPlayer, isOptional: true })
+		public masterPlayer?: MasterPlayerPermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.GamePlayer, isOptional: true })
+		public gamePlayer?: GamePlayerPermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.CharacterPlayer, isOptional: true })
+		public characterPlayer?: CharacterPlayerPermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Content, isOptional: true })
+		public content?: ContentPermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Group, isOptional: true })
+		public group?: GroupPermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Inventory, isOptional: true })
+		public inventory?: InventoryPermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.StoreInventory, isOptional: true })
+		public storeInventory?: StoreInventoryPermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.MasterAdmin, isOptional: true })
+		public masterAdmin?: MasterAdminPermissionRulesParam;
 
 	}
 
@@ -1279,54 +1327,6 @@ export module DashboardModels {
 
 		@StringDataMember({ code: GNParameterCode.SecretKey, minLength: 6, maxLength: 64, mustNonNull: true })
 		public secretKey: string;
-
-	}
-
-	export class AuthenticatePermissionRulesParam {
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByAccount, isOptional: true })
-		public loginByAccount?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByAndroidDeviceId, isOptional: true })
-		public loginByAndroidDeviceId?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByApple, isOptional: true })
-		public loginByApple?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByCustomDeviceId, isOptional: true })
-		public loginByCustomDeviceId?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByCustomId, isOptional: true })
-		public loginByCustomId?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByFacebook, isOptional: true })
-		public loginByFacebook?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByGenericService, isOptional: true })
-		public loginByGenericService?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByGoogle, isOptional: true })
-		public loginByGoogle?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByiOSDeviceId, isOptional: true })
-		public loginByiOSDeviceId?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByWindowsPhoneDeviceId, isOptional: true })
-		public loginByWindowsPhoneDeviceId?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.RegisterAccount, isOptional: true })
-		public registerAccount?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByEditorDeviceId, isOptional: true })
-		public loginByEditorDeviceId?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByLinuxDeviceId, isOptional: true })
-		public loginByLinuxDeviceId?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByMacOSDeviceId, isOptional: true })
-		public loginByMacOSDeviceId?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.LoginByWindowsDeviceId, isOptional: true })
-		public loginByWindowsDeviceId?: PermissionRulesParam;
 
 	}
 

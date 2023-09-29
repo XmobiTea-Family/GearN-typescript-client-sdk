@@ -121,7 +121,7 @@ export class SocketPeer extends PeerBase {
 
     onEventHandler(obj: GNArray, isEncrypted: boolean): void {
         let eventCode = obj.getNumber(0);
-        
+
         let operationEvent = new OperationEvent(eventCode, obj.getGNHashtable(1));
         operationEvent.setEncrypted(isEncrypted);
 

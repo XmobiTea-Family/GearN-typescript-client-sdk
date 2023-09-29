@@ -17,7 +17,7 @@ import { AuthenticateStatus } from "./networking/AuthenticateStatus";
 import { RequestType } from "./constant/enumType/RequestType";
 import { RequestRole } from "./constant/enumType/RequestRole";
 import { CustomOperationRequest } from "./entity/request/CustomOperationRequest";
-import { CustomOperationResponse, CustomOperationResponseAbstract } from "./entity/response/CustomOperationResponse";
+import { CustomOperationResponse } from "./entity/response/CustomOperationResponse";
 import { ServiceUpdate } from "./typescript/ServiceUpdate";
 import { Constructor } from "./entity/GNMetadata";
 import { AuthenticateApi } from "./GNNetworkAuthenticateApi";
@@ -29,6 +29,7 @@ import { GroupApi } from "./GNNetworkGroupApi";
 import { InventoryApi } from "./GNNetworkInventoryApi";
 import { MasterPlayerApi } from "./GNNetworkMasterPlayerApi";
 import { StoreInventoryApi } from "./GNNetworkStoreInventoryApi";
+import { ConverterService } from "./helper/ConverterService";
 
 export class GNNetwork {
 
@@ -89,13 +90,14 @@ export class GNNetwork {
 
         GNSupport.init();
         CodeHelper.init();
-
-        GNDebug.log("GNNetwork init on " + GNSupport.isBrowser() ? "browser." : "server.");
+        ConverterService.init();
 
         GNNetwork.gnServerSettings = gnServerSettings;
 
         GNNetwork.initServerSettings();
         GNNetwork.initGNDebug();
+
+        GNDebug.log("GNNetwork init on " + (GNSupport.isBrowser() ? "browser." : "server.") + " Version: " + GNNetwork.getClientSdkVersion());
 
         GNNetwork.initGNSocketObject();
 
@@ -223,7 +225,5 @@ export class GNNetwork {
     public static syncTs(onResponse: Action1<number> = null): void {
         this.peer.syncTs(onResponse);
     }
-
-
 
 }

@@ -13,6 +13,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByAccountRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByAccountRequestData;
 		}
 	}
 
@@ -24,6 +25,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByAndroidDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByAndroidDeviceIdRequestData;
 		}
 	}
 
@@ -35,6 +37,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByAppleRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByAppleRequestData;
 		}
 	}
 
@@ -46,6 +49,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByCustomDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByCustomDeviceIdRequestData;
 		}
 	}
 
@@ -57,6 +61,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByCustomIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByCustomIdRequestData;
 		}
 	}
 
@@ -68,6 +73,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByEditorDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByEditorDeviceIdRequestData;
 		}
 	}
 
@@ -79,6 +85,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByFacebookRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByFacebookRequestData;
 		}
 	}
 
@@ -90,6 +97,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByGenericServiceRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByGenericServiceRequestData;
 		}
 	}
 
@@ -101,6 +109,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByGoogleRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByGoogleRequestData;
 		}
 	}
 
@@ -112,6 +121,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByiOSDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByiOSDeviceIdRequestData;
 		}
 	}
 
@@ -123,6 +133,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByLinuxDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByLinuxDeviceIdRequestData;
 		}
 	}
 
@@ -134,6 +145,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByMacOSDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByMacOSDeviceIdRequestData;
 		}
 	}
 
@@ -145,6 +157,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByWindowsDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByWindowsDeviceIdRequestData;
 		}
 	}
 
@@ -156,6 +169,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData;
 		}
 	}
 
@@ -167,6 +181,7 @@ export module AuthenticateRequestModels {
 
 		constructor(requestData: AuthenticateModels.RegisterAccountRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.RegisterAccountRequestData;
 		}
 	}
 

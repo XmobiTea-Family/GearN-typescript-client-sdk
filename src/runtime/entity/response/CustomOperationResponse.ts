@@ -34,6 +34,7 @@ export abstract class CustomOperationResponse {
     public toString(): string {
         return "ReturnCode: " + this.returnCode + " " + (this.parameters != null ? this.parameters.toString() : this.debugMessage);
     }
+    
 }
 
 export abstract class CustomOperationResponseAbstract<TResponseData> extends CustomOperationResponse {
@@ -46,4 +47,5 @@ export abstract class CustomOperationResponseAbstract<TResponseData> extends Cus
             this.responseData = ConverterService.deserializeObject<TResponseData>(this.parameters, cls);
         }
     }
+
 }

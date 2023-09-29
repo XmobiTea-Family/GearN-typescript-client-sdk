@@ -3,6 +3,93 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 export module CharacterPlayerModels {
+	export class InfoRequestParam {
+		@BooleanDataMember({ code: GNParameterCode.CatalogId, isOptional: true, defaultValue: false })
+		public catalogId?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.Owner, isOptional: true, defaultValue: false })
+		public owner?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.RemoveStatus, isOptional: true, defaultValue: false })
+		public removeStatus?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.Segments, isOptional: true, defaultValue: false })
+		public segments?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.CustomDatas, isOptional: true, defaultValue: false })
+		public customDatas?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.DisplayName, isOptional: true, defaultValue: false })
+		public displayName?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.Avatar, isOptional: true, defaultValue: false })
+		public avatar?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.TsCreate, isOptional: true, defaultValue: false })
+		public tsCreate?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.Tags, isOptional: true, defaultValue: false })
+		public tags?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerBan, isOptional: true, defaultValue: false })
+		public playerBan?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerCurrencies, isOptional: true, defaultValue: false })
+		public playerCurrencies?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerStatistics, isOptional: true, defaultValue: false })
+		public playerStatistics?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerDatas, isOptional: true, defaultValue: false })
+		public playerDatas?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.IpAddressCreate, isOptional: true, defaultValue: false })
+		public ipAddressCreate?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.CountryCode, isOptional: true, defaultValue: false })
+		public countryCode?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
+		public tsLastLogin?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerInventories, isOptional: true, defaultValue: false })
+		public playerInventories?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerGroups, isOptional: true, defaultValue: false })
+		public playerGroups?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerFriends, isOptional: true, defaultValue: false })
+		public playerFriends?: boolean;
+
+		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
+		public playerDataKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
+		public playerCurrencyKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.PlayerStatisticsKeys, isOptional: true, elementCls: String })
+		public playerStatisticsKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
+		public customDataKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.TagKeys, isOptional: true, elementCls: String })
+		public tagKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.CharacterCatalogIds, isOptional: true, elementCls: String })
+		public characterCatalogIds?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
+		public itemCatalogIds?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.GroupCatalogIds, isOptional: true, elementCls: String })
+		public groupCatalogIds?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.FriendCatalogIds, isOptional: true, elementCls: String })
+		public friendCatalogIds?: Array<string>;
+
+	}
+
 	export class PlayerStatisticsParam {
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -820,93 +907,6 @@ export module CharacterPlayerModels {
 	}
 
 	export class AdminSetTagRequestData extends ServerSetTagRequestData {
-	}
-
-	export class InfoRequestParam {
-		@BooleanDataMember({ code: GNParameterCode.CatalogId, isOptional: true, defaultValue: false })
-		public catalogId?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.Owner, isOptional: true, defaultValue: false })
-		public owner?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.RemoveStatus, isOptional: true, defaultValue: false })
-		public removeStatus?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.Segments, isOptional: true, defaultValue: false })
-		public segments?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.CustomDatas, isOptional: true, defaultValue: false })
-		public customDatas?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.DisplayName, isOptional: true, defaultValue: false })
-		public displayName?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.Avatar, isOptional: true, defaultValue: false })
-		public avatar?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.TsCreate, isOptional: true, defaultValue: false })
-		public tsCreate?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.Tags, isOptional: true, defaultValue: false })
-		public tags?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerBan, isOptional: true, defaultValue: false })
-		public playerBan?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerCurrencies, isOptional: true, defaultValue: false })
-		public playerCurrencies?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerStatistics, isOptional: true, defaultValue: false })
-		public playerStatistics?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerDatas, isOptional: true, defaultValue: false })
-		public playerDatas?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.IpAddressCreate, isOptional: true, defaultValue: false })
-		public ipAddressCreate?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.CountryCode, isOptional: true, defaultValue: false })
-		public countryCode?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
-		public tsLastLogin?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerInventories, isOptional: true, defaultValue: false })
-		public playerInventories?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerGroups, isOptional: true, defaultValue: false })
-		public playerGroups?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerFriends, isOptional: true, defaultValue: false })
-		public playerFriends?: boolean;
-
-		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
-		public playerDataKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
-		public playerCurrencyKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.PlayerStatisticsKeys, isOptional: true, elementCls: String })
-		public playerStatisticsKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
-		public customDataKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.TagKeys, isOptional: true, elementCls: String })
-		public tagKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.CharacterCatalogIds, isOptional: true, elementCls: String })
-		public characterCatalogIds?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
-		public itemCatalogIds?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.GroupCatalogIds, isOptional: true, elementCls: String })
-		public groupCatalogIds?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.FriendCatalogIds, isOptional: true, elementCls: String })
-		public friendCatalogIds?: Array<string>;
-
 	}
 
 	export class InfoResponseParameters {

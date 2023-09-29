@@ -1,15 +1,15 @@
 {
   "name": "@xmobitea/gn-typescript-client",
-  "version": "2.0",
+  "version": "2.0.4",
   "description": "",
   "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "debug": "node index.js",
     "test": "mocha -r ts-node/register ./test/**/*.test.ts",
     "buildnode": "webpack --config webpack.config.js --mode production --display-modules",
     "buildudm": "webpack --config webpack.config.udm.js --mode production --display-modules",
-    "build": "rm -rf ./dist && npm run buildnode && npm run buildudm",
+    "build": "rm -rf ./dist && npm run buildnode",
     "push": "npm run build && npm run test && npm publish && git push"
   },
   "author": "changx.develop@gmail.com (https://xmobitea.com)",

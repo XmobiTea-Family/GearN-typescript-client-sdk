@@ -4,6 +4,70 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { MasterPlayerModels } from "./MasterPlayerModels";
 
 export module AuthenticateModels {
+
+	export class InfoRequestParam {
+		@BooleanDataMember({ code: GNParameterCode.External, isOptional: true, defaultValue: false })
+		public external?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.Segments, isOptional: true, defaultValue: false })
+		public segments?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.CustomDatas, isOptional: true, defaultValue: false })
+		public customDatas?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.DisplayName, isOptional: true, defaultValue: false })
+		public displayName?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.Avatar, isOptional: true, defaultValue: false })
+		public avatar?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.TsCreate, isOptional: true, defaultValue: false })
+		public tsCreate?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.Tags, isOptional: true, defaultValue: false })
+		public tags?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerBan, isOptional: true, defaultValue: false })
+		public playerBan?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerCurrencies, isOptional: true, defaultValue: false })
+		public playerCurrencies?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerStatistics, isOptional: true, defaultValue: false })
+		public playerStatistics?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.PlayerDatas, isOptional: true, defaultValue: false })
+		public playerDatas?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.IpAddressCreate, isOptional: true, defaultValue: false })
+		public ipAddressCreate?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.CountryCode, isOptional: true, defaultValue: false })
+		public countryCode?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.Email, isOptional: true, defaultValue: false })
+		public email?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
+		public tsLastLogin?: boolean;
+
+		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
+		public playerDataKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
+		public playerCurrencyKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.PlayerStatisticsKeys, isOptional: true, elementCls: String })
+		public playerStatisticsKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
+		public customDataKeys?: Array<string>;
+
+		@GNArrayDataMember({ code: GNParameterCode.TagKeys, isOptional: true, elementCls: String })
+		public tagKeys?: Array<string>;
+
+	}
+
 	export class LoginByAccountRequestData {
 		@StringDataMember({ code: GNParameterCode.Username, minLength: 6, maxLength: 32, mustNonNull: true })
 		public username: string;
@@ -187,69 +251,6 @@ export module AuthenticateModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
-
-	}
-
-	export class InfoRequestParam {
-		@BooleanDataMember({ code: GNParameterCode.External, isOptional: true, defaultValue: false })
-		public external?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.Segments, isOptional: true, defaultValue: false })
-		public segments?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.CustomDatas, isOptional: true, defaultValue: false })
-		public customDatas?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.DisplayName, isOptional: true, defaultValue: false })
-		public displayName?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.Avatar, isOptional: true, defaultValue: false })
-		public avatar?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.TsCreate, isOptional: true, defaultValue: false })
-		public tsCreate?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.Tags, isOptional: true, defaultValue: false })
-		public tags?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerBan, isOptional: true, defaultValue: false })
-		public playerBan?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerCurrencies, isOptional: true, defaultValue: false })
-		public playerCurrencies?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerStatistics, isOptional: true, defaultValue: false })
-		public playerStatistics?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.PlayerDatas, isOptional: true, defaultValue: false })
-		public playerDatas?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.IpAddressCreate, isOptional: true, defaultValue: false })
-		public ipAddressCreate?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.CountryCode, isOptional: true, defaultValue: false })
-		public countryCode?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.Email, isOptional: true, defaultValue: false })
-		public email?: boolean;
-
-		@BooleanDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
-		public tsLastLogin?: boolean;
-
-		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
-		public playerDataKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
-		public playerCurrencyKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.PlayerStatisticsKeys, isOptional: true, elementCls: String })
-		public playerStatisticsKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
-		public customDataKeys?: Array<string>;
-
-		@GNArrayDataMember({ code: GNParameterCode.TagKeys, isOptional: true, elementCls: String })
-		public tagKeys?: Array<string>;
 
 	}
 

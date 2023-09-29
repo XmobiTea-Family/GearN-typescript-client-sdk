@@ -9,14 +9,13 @@ const {
     ReturnCode,
     GNDebug,
     GNHashtable,
-    OperationRequest
+    OperationRequest,
+    DashboardModels,
 } = require("./dist/index");
 
 const encode = require("@msgpack/msgpack").encode;
 const decode = require("@msgpack/msgpack").decode;
 var axios = require("axios");
-const FormData = require('form-data');
-const { AuthenticateModels } = require("./dist/runtime/entity/models/AuthenticateModels");
 
 const optionsPath = __dirname + "/./GNServerSettingsConfig.debug.json";
 let optionStr = fs.readFileSync(optionsPath).toString();
@@ -40,17 +39,17 @@ gnServerSettings.config(options);
 
 GNNetwork.init(gnServerSettings);
 
-GNNetwork.customIdLogin("hihihi", response => {
+let requestData = new DashboardModels.LoginByAdminAccountRequestData();
+requestData.username = "gnadmin";
+requestData.password = "g7Jeyhzj1S";
+
+GNNetwork.dashboard.loginByAdminAccount(requestData, response => {
     console.log(response);
 });
 
-GNNetwork.connectSocket(() => {
-    console.log("connect success");
-});
-
-GNNetwork.authenticate.loginByAccount(new AuthenticateModels.LoginByAccountRequestData(), response => {
-    response.responseData.password;
-});
+// GNNetwork.connectSocket(() => {
+//     console.log("connect success");
+// });
 
 // let gnServerSettings = new GN.GNServerSettings();
 
@@ -68,17 +67,17 @@ GNNetwork.authenticate.loginByAccount(new AuthenticateModels.LoginByAccountReque
 
 // GN.GNNetwork.init(gnServerSettings);
 
-process.on("uncaughtException", (uncaughtException) => {
-    GNDebug.log("Uncaught Exception at: %s - message: %s", uncaughtException.stack, uncaughtException.message);
-});
+// process.on("uncaughtException", (uncaughtException) => {
+//     GNDebug.log("Uncaught Exception at: %s - message: %s", uncaughtException.stack, uncaughtException.message);
+// });
 
-process.on("uncaughtError", (uncaughtException) => {
-    GNDebug.log("Uncaught Error at: %s - message: %s", uncaughtException.stack, uncaughtException.message);
-});
+// process.on("uncaughtError", (uncaughtException) => {
+//     GNDebug.log("Uncaught Error at: %s - message: %s", uncaughtException.stack, uncaughtException.message);
+// });
 
-process.on("unhandledRejection", (reason) => {
-    GNDebug.log("Unhandled Rejection at: %s - message: %s", reason.stack, reason.message);
-});
+// process.on("unhandledRejection", (reason) => {
+//     GNDebug.log("Unhandled Rejection at: %s - message: %s", reason.stack, reason.message);
+// });
 
 
 // console.log(manager);

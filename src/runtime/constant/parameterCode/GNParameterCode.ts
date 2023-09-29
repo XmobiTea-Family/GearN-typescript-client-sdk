@@ -110,7 +110,7 @@ export class GNParameterCode {
 	public static readonly Members: string = "Members";
 	public static readonly OwnerId: string = "OwnerId";
 	public static readonly OwnerType: string = "OwnerType";
-    public static readonly Keys: string = "Keys";
+	public static readonly Keys: string = "Keys";
 	public static readonly Label: string = "Label";
 	public static readonly Configs: string = "Configs";
 	public static readonly Data: string = "Data";
@@ -403,5 +403,5 @@ export class GNParameterCode {
 	public static readonly GooglePlayStoreId: string = "GooglePlayStoreId";
 	public static readonly CustomTags: string = "CustomTags";
 	public static readonly SetSecretInfoInformation: string = "SetSecretInfoInformation";
-	
+
 }

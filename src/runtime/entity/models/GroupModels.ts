@@ -3,53 +3,6 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 export module GroupModels {
-	export class CustomDataParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
-		public key: string;
-
-		@DataMember({ code: GNParameterCode.Value })
-		public value: any;
-
-	}
-
-	export class GroupCurrencyParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
-		public key: string;
-
-		@NumberDataMember({ code: GNParameterCode.Amount })
-		public amount: number;
-
-	}
-
-	export class GroupDataParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
-		public key: string;
-
-		@DataMember({ code: GNParameterCode.Value })
-		public value: any;
-
-		@NumberDataMember({ code: GNParameterCode.Permission, mustInt: true })
-		public permission: number;
-
-	}
-
-	export class GroupMemberParam {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
-
-		@NumberDataMember({ code: GNParameterCode.Role, mustInt: true })
-		public role: number;
-
-	}
-
-	export class GroupStatisticsParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
-		public key: string;
-
-		@NumberDataMember({ code: GNParameterCode.Value })
-		public value: number;
-
-	}
 
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: GNParameterCode.CatalogId, isOptional: true, defaultValue: false })
@@ -108,6 +61,54 @@ export module GroupModels {
 
 		@GNArrayDataMember({ code: GNParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
 		public itemCatalogIds?: Array<string>;
+
+	}
+	
+	export class CustomDataParam {
+		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		public key: string;
+
+		@DataMember({ code: GNParameterCode.Value })
+		public value: any;
+
+	}
+
+	export class GroupCurrencyParam {
+		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		public key: string;
+
+		@NumberDataMember({ code: GNParameterCode.Amount })
+		public amount: number;
+
+	}
+
+	export class GroupDataParam {
+		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		public key: string;
+
+		@DataMember({ code: GNParameterCode.Value })
+		public value: any;
+
+		@NumberDataMember({ code: GNParameterCode.Permission, mustInt: true })
+		public permission: number;
+
+	}
+
+	export class GroupMemberParam {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+		@NumberDataMember({ code: GNParameterCode.Role, mustInt: true })
+		public role: number;
+
+	}
+
+	export class GroupStatisticsParam {
+		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		public key: string;
+
+		@NumberDataMember({ code: GNParameterCode.Value })
+		public value: number;
 
 	}
 

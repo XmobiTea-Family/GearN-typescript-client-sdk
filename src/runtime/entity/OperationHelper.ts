@@ -10,14 +10,14 @@ export class OperationHelper {
             return [
                 request.getOperationCode(),
                 <number>requestType,
-                <number> requestRole,
+                <number>requestRole,
                 (request.getParameters() == null) ? null : request.getParameters().toData()
             ];
         else
             return [
                 request.getOperationCode(),
                 <number>requestType,
-                <number> requestRole,
+                <number>requestRole,
                 (request.getParameters() == null) ? null : request.getParameters().toData(),
                 requestId
             ];
