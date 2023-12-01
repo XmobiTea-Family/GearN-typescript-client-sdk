@@ -602,7 +602,7 @@ export namespace GamePlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public version?: string;
-	
+
 	}
 
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
@@ -986,7 +986,7 @@ export namespace GamePlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
-		
+
 	}
 
 	export class ServerSetPlayerCurrencyRequestData extends SetPlayerCurrencyRequestData {
@@ -1025,7 +1025,7 @@ export namespace GamePlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
-		
+
 	}
 
 	export class ServerSetPlayerStatisticsRequestData extends SetPlayerStatisticsRequestData {
@@ -1070,7 +1070,7 @@ export namespace GamePlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetCurrencyLogRequestData extends GetCurrencyLogRequestData {
@@ -1091,7 +1091,7 @@ export namespace GamePlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
@@ -1099,17 +1099,17 @@ export namespace GamePlayerModels {
 
 	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
 	}
-	
+
 	export class SendSocketOperationEventRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10 })
 		public userId: string;
 
-		@NumberDataMember({ code: GNParameterCode.EventCode, minValue: 1000, mustInt: true})
+		@NumberDataMember({ code: GNParameterCode.EventCode, minValue: 1000, mustInt: true })
 		public eventCode: number;
-	
+
 		@GNHashtableDataMember({ code: GNParameterCode.EventParameters, mustNonNull: true, minLength: 0, maxLength: 128, isOptional: true })
 		public eventParameters?: GNHashtable;
-	
+
 		@BooleanDataMember({ code: GNParameterCode.EventEncrypted, isOptional: true, defaultValue: false })
 		public eventEncrypted?: boolean;
 
@@ -1286,7 +1286,7 @@ export namespace GamePlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class GetCurrencyLogResponseData {

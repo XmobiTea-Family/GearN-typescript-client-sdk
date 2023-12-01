@@ -218,19 +218,19 @@ export class OperationCode {
 	public static readonly EditFunction: number = 168;
 	public static readonly GetFunction: number = 169;
 
-    public static readonly LoginByGooglePlayGameService: number = 170;
-    public static readonly LoginByGameCenter: number = 171;
-    public static readonly LinkGooglePlayGameService: number = 172;
-    public static readonly LinkGameCenter: number = 173;
-    public static readonly UnlinkGooglePlayGameService: number = 174;
-    public static readonly UnlinkGameCenter: number = 175;
-    public static readonly GetPlayersWithGooglePlayGameService: number = 176;
-    public static readonly GetPlayersWithGameCenter: number = 177;
-    public static readonly GetLastLoginLeaderboard: number = 178;
-    public static readonly GetCreateLeaderboard: number = 179;
-	
-    public static readonly GetAllMatchmakingTicket: number = 180;
-    public static readonly GetAllMatch: number = 181;
+	public static readonly LoginByGooglePlayGameService: number = 170;
+	public static readonly LoginByGameCenter: number = 171;
+	public static readonly LinkGooglePlayGameService: number = 172;
+	public static readonly LinkGameCenter: number = 173;
+	public static readonly UnlinkGooglePlayGameService: number = 174;
+	public static readonly UnlinkGameCenter: number = 175;
+	public static readonly GetPlayersWithGooglePlayGameService: number = 176;
+	public static readonly GetPlayersWithGameCenter: number = 177;
+	public static readonly GetLastLoginLeaderboard: number = 178;
+	public static readonly GetCreateLeaderboard: number = 179;
+
+	public static readonly GetAllMatchmakingTicket: number = 180;
+	public static readonly GetAllMatch: number = 181;
 
 	public static readonly SendSocketOperationEvent: number = 182;
 	public static readonly GetStatisticsLog: number = 183;

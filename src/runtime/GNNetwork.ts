@@ -112,7 +112,7 @@ export class GNNetwork {
         GNNetwork.peer.authenticateStatus.setAuthToken(store.get(GNNetwork.AUTH_TOKEN_KEY, ""));
         GNNetwork.peer.authenticateStatus.setUserId(store.get(GNNetwork.USER_ID_KEY, ""));
         GNNetwork.peer.gameId = store.get(GNNetwork.GAME_ID_KEY, "");
-        
+
         GNNetwork.authenticate = new AuthenticateApi();
         GNNetwork.characterPlayer = new CharacterPlayerApi();
         GNNetwork.content = new ContentApi();

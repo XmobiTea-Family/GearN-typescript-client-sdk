@@ -51,7 +51,7 @@ GNNetwork.dashboard.loginByAdminAccount(loginByAdminAccountRequestData, response
         let changePasswordAdminAccountRequestData = new DashboardModels.ChangePasswordAdminAccountRequestData();
         changePasswordAdminAccountRequestData.currentPassword = "123456";
         changePasswordAdminAccountRequestData.password = "gnadmin";
-    
+
         GNNetwork.dashboard.changePasswordAdminAccount(changePasswordAdminAccountRequestData, response => {
             console.log(response.errorCode);
         });

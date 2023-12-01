@@ -401,7 +401,7 @@ export namespace CharacterPlayerResponseModels {
 			this.responseDataCls = CharacterPlayerModels.GetCreateLeaderboardResponseData;
 		}
 	}
-	
+
 	export class GetStatisticsLogOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.GetStatisticsLogResponseData> {
 
 		constructor() {

@@ -244,7 +244,7 @@ export namespace DashboardRequestModels {
 			this.requestDataCls = DashboardModels.GetAnalyticsRequestData;
 		}
 	}
-	
+
 	export class GetEventCallbackCloudScriptOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetEventCallbackCloudScriptRequestData> {
 		protected override operationCode: number = OperationCode.GetEventCallbackCloudScript;
 		protected override operationEncrypted: boolean = true;

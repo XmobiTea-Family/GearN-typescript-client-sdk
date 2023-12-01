@@ -650,7 +650,7 @@ export class MasterPlayerApi {
 	public async getCurrencyLogAsync(requestData: MasterPlayerModels.GetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.GetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }
 
 export class ServerMasterPlayerApi {
@@ -1285,7 +1285,7 @@ export class ServerMasterPlayerApi {
 	public async getCurrencyLogAsync(requestData: MasterPlayerModels.ServerGetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerGetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }
 
 export class AdminMasterPlayerApi {
@@ -1904,7 +1904,7 @@ export class AdminMasterPlayerApi {
 	public async getLastLoginLeaderboardAsync(requestData: MasterPlayerModels.AdminGetLastLoginLeaderboardRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetLastLoginLeaderboardOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminGetLastLoginLeaderboardOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetLastLoginLeaderboardOperationResponse);
 	}
-	
+
 	public getStatisticsLog(requestData: MasterPlayerModels.AdminGetStatisticsLogRequestData, onResponse: Action1<MasterPlayerResponseModels.GetStatisticsLogOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminGetStatisticsLogOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetStatisticsLogOperationResponse);
 	}
@@ -1920,5 +1920,5 @@ export class AdminMasterPlayerApi {
 	public async getCurrencyLogAsync(requestData: MasterPlayerModels.AdminGetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminGetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }

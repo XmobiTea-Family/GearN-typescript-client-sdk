@@ -92,13 +92,13 @@ export namespace MultiplayerModels {
         public returnMember?: boolean;
 
         @NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
-		public skip?: number;
+        public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
-		public limit?: number;
+        @NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+        public limit?: number;
 
     }
-    
+
     export class ServerGetAllMatchRequestData extends GetAllMatchRequestData {
     }
 
@@ -113,10 +113,10 @@ export namespace MultiplayerModels {
         public returnMember?: boolean;
 
         @NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
-		public skip?: number;
+        public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
-		public limit?: number;
+        @NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+        public limit?: number;
 
     }
 
@@ -223,11 +223,11 @@ export namespace MultiplayerModels {
 
     }
 
-	export class MatchmakingTicketWithTicketIdResponseData extends MatchmakingTicketResponseData {
-		@StringDataMember({ code: GNParameterCode.TicketId })
-		public ticketId: string;
+    export class MatchmakingTicketWithTicketIdResponseData extends MatchmakingTicketResponseData {
+        @StringDataMember({ code: GNParameterCode.TicketId })
+        public ticketId: string;
 
-	}
+    }
 
     export class GetMatchmakingTicketResponseData {
         @GNHashtableDataMember({ code: GNParameterCode.MatchmakingTicket })

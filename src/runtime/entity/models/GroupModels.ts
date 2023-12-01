@@ -427,7 +427,7 @@ export namespace GroupModels {
 
 		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public version?: string;
-	
+
 	}
 
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
@@ -643,7 +643,7 @@ export namespace GroupModels {
 
 		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
-		
+
 	}
 
 	export class ServerSetGroupCurrencyRequestData extends SetGroupCurrencyRequestData {
@@ -676,7 +676,7 @@ export namespace GroupModels {
 
 		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
-		
+
 	}
 
 	export class ServerSetGroupStatisticsRequestData extends SetGroupStatisticsRequestData {
@@ -730,7 +730,7 @@ export namespace GroupModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetCurrencyLogRequestData extends GetCurrencyLogRequestData {
@@ -751,7 +751,7 @@ export namespace GroupModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
@@ -925,7 +925,7 @@ export namespace GroupModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class GetCurrencyLogResponseData {

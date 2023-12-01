@@ -15,7 +15,7 @@ class DataMemberFieldInfoTypeMapper {
         }
         else {
             let gnObjectMetadata = getGNObjectMetadata<GNEnhancedObjectMetadata>(cls);
-            
+
             declaredFields = gnObjectMetadata != null ? gnObjectMetadata.fields : [];
             this.declaredFieldsMap.set(cls, declaredFields);
         }
@@ -255,8 +255,7 @@ export class ConverterService {
         return ConverterService.serializeConverter.serializeArray(objLst, cls);
     }
 
-    static init(): void
-    {
+    static init(): void {
         let dataMemberFieldInfoMapper = new DataMemberFieldInfoTypeMapper();
 
         ConverterService.serializeConverter = new SerializeConverter(dataMemberFieldInfoMapper);

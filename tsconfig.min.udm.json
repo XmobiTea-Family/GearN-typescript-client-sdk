@@ -3,7 +3,12 @@
     "compilerOptions": {
         "target": "ES2016",
         "module": "ESNext",
-        "lib": ["ES2016", "DOM"],
+        "lib": [
+            "ES2016",
+            "DOM"
+        ],
     },
-    "exclude": ["node_modules"]
+    "exclude": [
+        "node_modules"
+    ]
 }

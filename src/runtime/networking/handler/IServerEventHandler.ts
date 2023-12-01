@@ -23,5 +23,5 @@ export namespace IServerEventHandler {
         implementations.push(ctor);
         return ctor;
     }
-    
+
 }

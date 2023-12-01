@@ -426,7 +426,7 @@ export class CharacterPlayerApi {
 	public async getCurrencyLogAsync(requestData: CharacterPlayerModels.GetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CharacterPlayerResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new CharacterPlayerRequestModels.GetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CharacterPlayerResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }
 
 export class ServerCharacterPlayerApi {
@@ -829,7 +829,7 @@ export class ServerCharacterPlayerApi {
 	public async getCreateLeaderboardAsync(requestData: CharacterPlayerModels.ServerGetCreateLeaderboardRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CharacterPlayerResponseModels.GetCreateLeaderboardOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new CharacterPlayerRequestModels.ServerGetCreateLeaderboardOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CharacterPlayerResponseModels.GetCreateLeaderboardOperationResponse);
 	}
-	
+
 	public getStatisticsLog(requestData: CharacterPlayerModels.ServerGetStatisticsLogRequestData, onResponse: Action1<CharacterPlayerResponseModels.GetStatisticsLogOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new CharacterPlayerRequestModels.ServerGetStatisticsLogOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CharacterPlayerResponseModels.GetStatisticsLogOperationResponse);
 	}
@@ -845,7 +845,7 @@ export class ServerCharacterPlayerApi {
 	public async getCurrencyLogAsync(requestData: CharacterPlayerModels.ServerGetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CharacterPlayerResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new CharacterPlayerRequestModels.ServerGetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CharacterPlayerResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }
 
 export class AdminCharacterPlayerApi {
@@ -1248,7 +1248,7 @@ export class AdminCharacterPlayerApi {
 	public async getCreateLeaderboardAsync(requestData: CharacterPlayerModels.AdminGetCreateLeaderboardRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CharacterPlayerResponseModels.GetCreateLeaderboardOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new CharacterPlayerRequestModels.AdminGetCreateLeaderboardOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CharacterPlayerResponseModels.GetCreateLeaderboardOperationResponse);
 	}
-	
+
 	public getStatisticsLog(requestData: CharacterPlayerModels.AdminGetStatisticsLogRequestData, onResponse: Action1<CharacterPlayerResponseModels.GetStatisticsLogOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new CharacterPlayerRequestModels.AdminGetStatisticsLogOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CharacterPlayerResponseModels.GetStatisticsLogOperationResponse);
 	}
@@ -1264,5 +1264,5 @@ export class AdminCharacterPlayerApi {
 	public async getCurrencyLogAsync(requestData: CharacterPlayerModels.AdminGetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CharacterPlayerResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new CharacterPlayerRequestModels.AdminGetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CharacterPlayerResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }

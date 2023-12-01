@@ -90,7 +90,7 @@ export const initGNObjectFieldMetadata = <T extends GNObjectFieldMetadata>(proto
             fieldType: gnReflectedMetadata.fieldDataType,
             cls: gnReflectedMetadata.prototype.constructor
         };
-        
+
         meta.fields.push(field);
         return field as T;
     } else {

@@ -205,7 +205,7 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Email })
 		public email: string;
-		
+
 	}
 
 	export class ExternalItem {
@@ -682,7 +682,7 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public version?: string;
-	
+
 	}
 
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
@@ -703,7 +703,7 @@ export namespace MasterPlayerModels {
 
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
-		
+
 	}
 
 	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
@@ -1006,19 +1006,19 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.PlayerId, minLength: 2, maxLength: 64, mustNonNull: true })
 		public playerId: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.Name, minLength: 2, maxLength: 64, mustNonNull: true })
 		public name: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.PublicKeyUrl, minLength: 2, maxLength: 256, mustNonNull: true })
 		public publicKeyUrl: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.Signature, minLength: 2, maxLength: 512, mustNonNull: true })
 		public signature: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.Salt, minLength: 2, maxLength: 128, mustNonNull: true })
 		public salt: string;
-	
+
 		@NumberDataMember({ code: GNParameterCode.Timestamp })
 		public timestamp: number;
 
@@ -1321,7 +1321,7 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
-		
+
 	}
 
 	export class ServerSetPlayerCurrencyRequestData extends SetPlayerCurrencyRequestData {
@@ -1405,7 +1405,7 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetCurrencyLogRequestData extends GetCurrencyLogRequestData {
@@ -1426,7 +1426,7 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
@@ -1963,7 +1963,7 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class GetCurrencyLogResponseData {

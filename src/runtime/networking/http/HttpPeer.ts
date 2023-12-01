@@ -79,7 +79,7 @@ export class HttpPeer extends PeerBase {
 
         let subUri = (postType == PostType.Json ? NetworkingPeer.API_JSON : NetworkingPeer.API_MSG_PACK) + "/" + operationRequest.getOperationCode() + "/" + <number>operationPending.getRequestType() + "/" + <number>operationPending.getRequestRole();
         let thiz = this;
-        
+
         this.networkingHttpPeerBase.postRequest(subUri, operationRequest.getParameters(), postType, (httpAppResponse: HttpAppResponse) => {
             thiz.onSendOperationRequestResponse(operationPending, httpAppResponse);
         }, operationRequest.getTimeout(), authToken, secretKey, customTags, gameId);

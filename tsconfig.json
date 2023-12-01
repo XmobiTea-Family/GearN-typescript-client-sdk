@@ -18,12 +18,23 @@
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
         "forceConsistentCasingInFileNames": true,
-        "lib": ["ES2016", "DOM"],
+        "lib": [
+            "ES2016",
+            "DOM"
+        ],
         "allowSyntheticDefaultImports": true,
         "stripInternal": true,
         "skipLibCheck": true,
         "allowJs": true,
         "outDir": "./dist",
     },
-    "exclude": ["./test/", "./node_modules/", "./dist/", "./index.js", "./webpack.config.js", "./webpack.config.min.udm.js", "./webpack.config.udm.js"]
+    "exclude": [
+        "./test/",
+        "./node_modules/",
+        "./dist/",
+        "./index.js",
+        "./webpack.config.js",
+        "./webpack.config.min.udm.js",
+        "./webpack.config.udm.js"
+    ]
 }

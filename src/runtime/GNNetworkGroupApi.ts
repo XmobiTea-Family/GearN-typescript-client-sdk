@@ -314,7 +314,7 @@ export class GroupApi {
 	public async getCreateLeaderboardAsync(requestData: GroupModels.GetCreateLeaderboardRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.GetCreateLeaderboardOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.GetCreateLeaderboardOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GetCreateLeaderboardOperationResponse);
 	}
-	
+
 	public getStatisticsLog(requestData: GroupModels.GetStatisticsLogRequestData, onResponse: Action1<GroupResponseModels.GetStatisticsLogOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.GetStatisticsLogOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GetStatisticsLogOperationResponse);
 	}
@@ -330,7 +330,7 @@ export class GroupApi {
 	public async getCurrencyLogAsync(requestData: GroupModels.GetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.GetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }
 
 export class ServerGroupApi {
@@ -653,7 +653,7 @@ export class ServerGroupApi {
 	public async getCurrencyLogAsync(requestData: GroupModels.ServerGetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerGetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }
 
 export class AdminGroupApi {
@@ -976,5 +976,5 @@ export class AdminGroupApi {
 	public async getCurrencyLogAsync(requestData: GroupModels.AdminGetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminGetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GetCurrencyLogOperationResponse);
 	}
-	
+
 }

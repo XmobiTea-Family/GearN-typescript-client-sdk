@@ -6,12 +6,10 @@
         "useSsl": false,
         "useSocket": true,
         "useHttp": true,
-
         "sendRate": 20,
         "reconnectDelay": 5000,
         "pingInterval": 20000,
         "pingTimeout": 20000,
-
         "gnServerSourcePath": "./../GNServer/",
         "logType": 4,
         "adminSecretKey": "",

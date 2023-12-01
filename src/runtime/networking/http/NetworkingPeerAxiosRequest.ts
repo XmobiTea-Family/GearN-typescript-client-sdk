@@ -96,14 +96,14 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
         else if (postType == PostType.MsgPack) {
             let content = param.toData();
             body = Buffer.from(encode(content));
-            
+
             headers[Commands.CONTENT_TYPE] = Commands.APPLICATION_MSGPACK;
             headers[Commands.ACCEPT] = Commands.APPLICATION_MSGPACK;
 
             if (!GNSupport.isBrowser())
                 headers[Commands.CONTENT_LENGTH] = body.length;
         }
-            
+
         let httpAppResponse = new HttpAppResponse();
 
         try {
@@ -113,7 +113,7 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
                     timeout: timeout * 1000,
                     responseType: "text",
                 });
-    
+
                 httpAppResponse.statusCode = result.status;
                 // let buffers = this.toBuffers(result.data);
                 // httpAppResponse.data = buffers[0];
@@ -125,7 +125,7 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
                     timeout: timeout * 1000,
                     responseType: "arraybuffer",
                 });
-    
+
                 httpAppResponse.statusCode = result.status;
                 let buffers = this.toBuffers(result.data);
                 httpAppResponse.data = buffers[0];

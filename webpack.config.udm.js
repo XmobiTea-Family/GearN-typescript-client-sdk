@@ -18,15 +18,15 @@ module.exports = {
 		extensions: [".ts", ".tsx", ".js", ".jsx"],
 		fallback: {
 
-        },
+		},
 	},
 	output: {
 		filename: "gn.js.client.js",
 		path: path.resolve(__dirname, "dist"),
-        library: {
-            type: "umd",
-            name: "GN",
-        },
+		library: {
+			type: "umd",
+			name: "GN",
+		},
 		environment: {
 			arrowFunction: true,
 		},

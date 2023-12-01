@@ -464,9 +464,9 @@ export class GNParameterCode {
 	public static readonly GetQueueStatistics: string = "GetQueueStatistics";
 	public static readonly JoinMatchmakingTicket: string = "JoinMatchmakingTicket";
 	public static readonly ListMatchmakingTicketsForPlayer: string = "ListMatchmakingTicketsForPlayer";
-    public static readonly GetAllMatchmakingTicket: string = "GetAllMatchmakingTicket";
-    public static readonly GetAllMatch: string = "GetAllMatch";
-	
+	public static readonly GetAllMatchmakingTicket: string = "GetAllMatchmakingTicket";
+	public static readonly GetAllMatch: string = "GetAllMatch";
+
 	public static readonly FunctionName: string = "FunctionName";
 	public static readonly FunctionParameters: string = "FunctionParameters";
 	public static readonly Version: string = "Version";
@@ -508,12 +508,12 @@ export class GNParameterCode {
 	public static readonly GetPlayersWithGameCenter: string = "GetPlayersWithGameCenter";
 	public static readonly LatestVersion: string = "LatestVersion";
 	public static readonly LiveLatestVersion: string = "LiveLatestVersion";
-	
+
 	public static readonly SendSocketOperationEvent: string = "SendSocketOperationEvent";
 	public static readonly EventCode: string = "EventCode";
 	public static readonly EventParameters: string = "EventParameters";
 	public static readonly EventEncrypted: string = "EventEncrypted";
-	
+
 	public static readonly Log: string = "Log";
 	public static readonly StartValue: string = "StartValue";
 	public static readonly FinalValue: string = "FinalValue";
@@ -543,7 +543,7 @@ export class GNParameterCode {
 	public static readonly FullScript: string = "FullScript";
 	public static readonly ChildScripts: string = "ChildScripts";
 	public static readonly EventName: string = "EventName";
-	
+
 	public static readonly PresentStoreItem: string = "PresentStoreItem";
 	public static readonly GetStoreLog: string = "GetStoreLog";
 	public static readonly TsLastUpdate: string = "TsLastUpdate";
@@ -562,7 +562,7 @@ export class GNParameterCode {
 	public static readonly ResetStatisticsLeaderboard: string = "ResetStatisticsLeaderboard";
 	public static readonly GetBackupStatisticsLeaderboardVersion: string = "GetBackupStatisticsLeaderboardVersion";
 	public static readonly GetServerGameData: string = "GetServerGameData";
-	
+
 	public static readonly MasterPlayerCount: string = "MasterPlayerCount";
 	public static readonly GamePlayerCount: string = "GamePlayerCount";
 	public static readonly CharacterPlayerCount: string = "CharacterPlayerCount";

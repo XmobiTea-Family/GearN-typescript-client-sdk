@@ -288,25 +288,25 @@ export namespace StoreInventoryModels {
 
 		@GNArrayDataMember({ code: GNParameterCode.StoreDatas, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: StoreDataParam })
 		public storeDataParams?: Array<StoreDataParam>;
-	
+
 		@GNArrayDataMember({ code: GNParameterCode.StoreItems, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: StoreItemParam })
 		public storeItemParams?: Array<StoreItemParam>;
-	
+
 		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencies, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: CurrencyParam })
 		public storeCurrencyParams?: Array<CurrencyParam>;
-	
+
 		@GNArrayDataMember({ code: GNParameterCode.PriceCurrencies, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: CurrencyParam })
 		public priceCurrencyParams?: Array<CurrencyParam>;
-	
+
 		@GNHashtableDataMember({ code: GNParameterCode.InAppPurchase, mustNonNull: true, isOptional: true, })
 		public inAppPurchaseParam?: InAppPurchaseParam;
-	
+
 		@StringDataMember({ code: GNParameterCode.DisplayName, mustNonNull: true, isOptional: true, })
 		public displayName?: string;
-	
+
 		@GNHashtableDataMember({ code: GNParameterCode.Avatar, mustNonNull: true, isOptional: true, })
 		public avatarParam?: AvatarParam;
-	
+
 		@GNArrayDataMember({ code: GNParameterCode.Tags, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: TagParam })
 		public tagParams?: Array<TagParam>;
 
@@ -525,7 +525,7 @@ export namespace StoreInventoryModels {
 
 		@StringDataMember({ code: GNParameterCode.ItemId })
 		public itemId: string;
-		
+
 	}
 
 	export class StoreLogResponseData {

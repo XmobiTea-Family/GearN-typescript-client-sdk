@@ -70,7 +70,7 @@ export namespace DashboardModels {
 
 		@BooleanDataMember({ code: GNParameterCode.Index })
 		public index: boolean;
-		
+
 	}
 
 	export class DataSettingsParam {
@@ -103,7 +103,7 @@ export namespace DashboardModels {
 
 		@BooleanDataMember({ code: GNParameterCode.Index })
 		public index: boolean;
-		
+
 	}
 
 	export class CurrencySettingsParam {
@@ -280,7 +280,7 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.GetCreateLeaderboard, isOptional: true })
 		public getCreateLeaderboard?: PermissionRulesParam;
-		
+
 		@GNHashtableDataMember({ code: GNParameterCode.GetStatisticsLog, isOptional: true })
 		public getStatisticsLog?: PermissionRulesParam;
 
@@ -386,22 +386,22 @@ export namespace DashboardModels {
 		@StringDataMember({ code: GNParameterCode.PackageId })
 		public packageId: string;
 
-	}	
+	}
 
 	export class ThirtPartyGooglePlayGameSettingsParam {
 		@StringDataMember({ code: GNParameterCode.RedirectUri })
 		public redirectUri: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.ClientId })
 		public clientId: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.ClientSecret })
 		public clientSecret: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.ApplicationId })
 		public applicationId: string;
 
-	}	
+	}
 
 	export class ThirtPartyParam {
 		@GNHashtableDataMember({ code: GNParameterCode.GoogleSettings, isOptional: true })
@@ -778,7 +778,7 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.GetCurrencyLeaderboard, isOptional: true })
 		public getCurrencyLeaderboard?: PermissionRulesParam;
-		
+
 		@GNHashtableDataMember({ code: GNParameterCode.GetCreateLeaderboard, isOptional: true })
 		public getCreateLeaderboard?: PermissionRulesParam;
 
@@ -1000,7 +1000,7 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.GetAllMatch, isOptional: true })
 		getAllMatch?: PermissionRulesParam;
-		
+
 	}
 
 	export class MasterPlayerPermissionRulesParam {
@@ -1365,7 +1365,7 @@ export namespace DashboardModels {
 	export class ServerAllocationParam {
 		@BooleanDataMember({ code: GNParameterCode.Enable })
 		public enable: boolean;
-	
+
 	}
 
 	export class MatchmakingQueueSettingsParam {
@@ -1482,7 +1482,7 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.PresentStoreItem, isOptional: true })
 		public presentStoreItem?: PermissionRulesParam;
-	
+
 		@GNHashtableDataMember({ code: GNParameterCode.GetStoreLog, isOptional: true })
 		public getStoreLog?: PermissionRulesParam;
 
@@ -1581,7 +1581,7 @@ export namespace DashboardModels {
 
 		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 50, minValue: 5, maxValue: 200, mustInt: true, isOptional: true })
 		limit?: number;
-	
+
 	}
 
 	export class GrantAdminAccountRequestData {
@@ -1720,22 +1720,22 @@ export namespace DashboardModels {
 	export class SetEventCallbackCloudScriptRequestData {
 		@StringDataMember({ code: GNParameterCode.EventName, minLength: 6, maxLength: 128, mustNonNull: true })
 		public eventName: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.Script, minLength: 6, maxLength: 4096, mustNonNull: true })
 		public script: string;
-		
+
 	}
 
 	export class ResetStatisticsLeaderboardRequestData {
 		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
 		public type: number;
-	
+
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32 })
 		public key: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32 })
 		public version: string;
-	
+
 		@StringDataMember({ code: GNParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public gameId: string;
 
@@ -1750,7 +1750,7 @@ export namespace DashboardModels {
 
 		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
 		public type: number;
-	
+
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32 })
 		public key: string;
 	}
@@ -1761,22 +1761,22 @@ export namespace DashboardModels {
 
 		@BooleanDataMember({ code: GNParameterCode.MasterPlayerCount, isOptional: true })
 		public masterPlayerCount?: boolean;
-	
+
 		@BooleanDataMember({ code: GNParameterCode.GamePlayerCount, isOptional: true })
 		public gamePlayerCount?: boolean;
-	
+
 		@BooleanDataMember({ code: GNParameterCode.CharacterPlayerCount, isOptional: true })
 		public characterPlayerCount?: boolean;
-	
+
 		@BooleanDataMember({ code: GNParameterCode.InventoryCount, isOptional: true })
 		public inventoryCount?: boolean;
-	
+
 		@BooleanDataMember({ code: GNParameterCode.StoreInventoryCount, isOptional: true })
 		public storeInventoryCount?: boolean;
-	
+
 		@BooleanDataMember({ code: GNParameterCode.GroupCount, isOptional: true })
 		public groupCount?: boolean;
-	
+
 		@BooleanDataMember({ code: GNParameterCode.Country, isOptional: true })
 		public country?: boolean;
 
@@ -1911,30 +1911,30 @@ export namespace DashboardModels {
 	export class GetServerLogResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: String })
 		public results: Array<string>;
-	
+
 	}
 
 	export class CountryRegionResponseData {
 		@StringDataMember({ code: GNParameterCode.RegionCode })
-        public regionCode: string;
+		public regionCode: string;
 
 		@StringDataMember({ code: GNParameterCode.RegionName })
-        public regionName: string;
+		public regionName: string;
 
 		@NumberDataMember({ code: GNParameterCode.CCU })
-        public ccu: number;
+		public ccu: number;
 
 		@NumberDataMember({ code: GNParameterCode.Latitude, isOptional: true, defaultValue: 0 })
-        public latitude: number;
+		public latitude: number;
 
 		@NumberDataMember({ code: GNParameterCode.Longitude, isOptional: true, defaultValue: 0 })
-        public longitude: number;
+		public longitude: number;
 
 	}
 
 	export class CountryResponseData {
 		@StringDataMember({ code: GNParameterCode.CountryCode })
-        public countryCode: string;
+		public countryCode: string;
 
 		@GNArrayDataMember({ code: GNParameterCode.Regions, elementCls: CountryRegionResponseData })
 		public regions: Array<CountryRegionResponseData>;
@@ -1983,7 +1983,7 @@ export namespace DashboardModels {
 
 		@NumberDataMember({ code: GNParameterCode.AnalyticsPrice })
 		public analyticsPrice: number;
-		
+
 	}
 
 	export class GetAnalyticsResponseData {
@@ -2033,21 +2033,21 @@ export namespace DashboardModels {
 		public results: Array<EventCallbackCloudScriptResponseData>;
 	}
 
-    export class SetEventCallbackCloudScriptResponseData {
-        @StringDataMember({ code: GNParameterCode.Message })
-        public errorMessage: string;
+	export class SetEventCallbackCloudScriptResponseData {
+		@StringDataMember({ code: GNParameterCode.Message })
+		public errorMessage: string;
 
-    }
+	}
 
 	export class BackupStatisticsLeaderboardVersionResponseData {
 		@StringDataMember({ code: GNParameterCode.Version })
-        public version: string;
+		public version: string;
 
 		@StringDataMember({ code: GNParameterCode.Log })
-        public log: string;
+		public log: string;
 
 		@NumberDataMember({ code: GNParameterCode.TsCreate })
-        public tsCreate: number;
+		public tsCreate: number;
 
 	}
 
@@ -2059,28 +2059,28 @@ export namespace DashboardModels {
 
 	export class GetServerGameDataResponseData {
 		@NumberDataMember({ code: GNParameterCode.MasterPlayerCount, isOptional: true })
-        public masterPlayerCount?: number;
+		public masterPlayerCount?: number;
 
 		@NumberDataMember({ code: GNParameterCode.GamePlayerCount, isOptional: true })
-        public gamePlayerCount?: number;
+		public gamePlayerCount?: number;
 
 		@NumberDataMember({ code: GNParameterCode.CharacterPlayerCount, isOptional: true })
-        public characterPlayerCount?: number;
+		public characterPlayerCount?: number;
 
 		@NumberDataMember({ code: GNParameterCode.InventoryCount, isOptional: true })
-        public inventoryCount?: number;
+		public inventoryCount?: number;
 
 		@NumberDataMember({ code: GNParameterCode.StoreInventoryCount, isOptional: true })
-        public storeInventoryCount?: number;
+		public storeInventoryCount?: number;
 
 		@NumberDataMember({ code: GNParameterCode.GroupCount, isOptional: true })
-        public groupCount?: number;
+		public groupCount?: number;
 
 		@GNArrayDataMember({ code: GNParameterCode.Country, elementCls: CountryResponseData, isOptional: true })
 		public country?: Array<CountryResponseData>;
 
 		@StringDataMember({ code: GNParameterCode.Version, isOptional: true })
-        public version?: string;
+		public version?: string;
 
 	}
 

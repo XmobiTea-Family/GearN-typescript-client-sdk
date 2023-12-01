@@ -161,7 +161,7 @@ export namespace DashboardResponseModels {
 			this.responseDataCls = DashboardModels.GetAnalyticsResponseData;
 		}
 	}
-	
+
 	export class GetEventCallbackCloudScriptOperationResponse extends CustomOperationResponseAbstract<DashboardModels.GetEventCallbackCloudScriptResponseData> {
 
 		constructor() {

@@ -379,7 +379,7 @@ export namespace InventoryModels {
 
 		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public version?: string;
-	
+
 	}
 
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
@@ -553,7 +553,7 @@ export namespace InventoryModels {
 
 		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
-		
+
 	}
 
 	export class ServerSetItemStatisticsRequestData extends SetItemStatisticsRequestData {
@@ -625,7 +625,7 @@ export namespace InventoryModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
@@ -751,7 +751,7 @@ export namespace InventoryModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class EmptyResponseData {
