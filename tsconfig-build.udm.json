@@ -4,7 +4,10 @@
         "noUnusedLocals": false,
         "noUnusedParameters": false,
         "rootDir": "./src",
-        "outDir": "./dist"
+        "outDir": "./dist",
+        "lib": [
+            "DOM"
+        ]
     },
-    "exclude": ["./test/", "./node_modules/", "webpack.config.udm.js", "webpack.config.js", "./dist/index.js", "./dist/gn.js.client.min.js", "./index.js"]
+    "exclude": ["./test/", "./node_modules/", "./webpack.config.udm.js", "./webpack.config.min.udm.js", "./webpack.config.js", "./dist/index.js", "./dist/gn.js.client.min.js", "./dist/gn.js.client.js", "./index.js"]
 }

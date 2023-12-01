@@ -1,10 +1,10 @@
-import { Action1 } from "../../common/Action1";
-import { EventCode } from "../../constant/EventCode";
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { GNArrayDataMember } from "../../entity/DataMember";
-import { OperationEvent } from "../../entity/OperationEvent";
-import { GroupModels } from "../../entity/models/GroupModels";
-import { ConverterService } from "../../helper/ConverterService";
+import { Action1 } from "./../../common/Action1";
+import { EventCode } from "./../../constant/EventCode";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { GNArrayDataMember } from "./../../entity/DataMember";
+import { OperationEvent } from "./../../entity/OperationEvent";
+import { GroupModels } from "./../../entity/models/GroupModels";
+import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 export class GroupMessageUpdate {

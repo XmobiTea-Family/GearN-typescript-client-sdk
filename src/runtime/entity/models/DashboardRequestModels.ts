@@ -1,10 +1,10 @@
-import { OperationCode } from "../../constant/OperationCode";
-import { RequestRole } from "../../constant/enumType/RequestRole";
-import { RequestType } from "../../constant/enumType/RequestType";
-import { CustomOperationRequestAbstract } from "../request/CustomOperationRequest";
+import { OperationCode } from "./../../constant/OperationCode";
+import { RequestRole } from "./../../constant/enumType/RequestRole";
+import { RequestType } from "./../../constant/enumType/RequestType";
+import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequest";
 import { DashboardModels } from "./DashboardModels";
 
-export module DashboardRequestModels {
+export namespace DashboardRequestModels {
 	export class ChangePasswordAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.ChangePasswordAdminAccountRequestData> {
 		protected override operationCode: number = OperationCode.ChangePasswordAdminAccount;
 		protected override operationEncrypted: boolean = true;
@@ -218,6 +218,90 @@ export module DashboardRequestModels {
 		constructor(requestData: DashboardModels.SetSecretKeyAdminAccountRequestData, timeout: number) {
 			super(requestData, timeout);
 			this.requestDataCls = DashboardModels.SetSecretKeyAdminAccountRequestData;
+		}
+	}
+
+	export class GetUsernameAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetUsernameAdminAccountRequestData> {
+		protected override operationCode: number = OperationCode.GetUsernameAdminAccount;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Dashboard;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: DashboardModels.GetUsernameAdminAccountRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = DashboardModels.GetUsernameAdminAccountRequestData;
+		}
+	}
+
+	export class GetAnalyticsOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetAnalyticsRequestData> {
+		protected override operationCode: number = OperationCode.GetAnalytics;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Dashboard;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: DashboardModels.GetAnalyticsRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = DashboardModels.GetAnalyticsRequestData;
+		}
+	}
+	
+	export class GetEventCallbackCloudScriptOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetEventCallbackCloudScriptRequestData> {
+		protected override operationCode: number = OperationCode.GetEventCallbackCloudScript;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Dashboard;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: DashboardModels.GetEventCallbackCloudScriptRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = DashboardModels.GetEventCallbackCloudScriptRequestData;
+		}
+	}
+
+	export class SetEventCallbackCloudScriptOperationRequest extends CustomOperationRequestAbstract<DashboardModels.SetEventCallbackCloudScriptRequestData> {
+		protected override operationCode: number = OperationCode.SetEventCallbackCloudScript;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Dashboard;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: DashboardModels.SetEventCallbackCloudScriptRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = DashboardModels.SetEventCallbackCloudScriptRequestData;
+		}
+	}
+
+	export class ResetStatisticsLeaderboardOperationRequest extends CustomOperationRequestAbstract<DashboardModels.ResetStatisticsLeaderboardRequestData> {
+		protected override operationCode: number = OperationCode.ResetStatisticsLeaderboard;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Dashboard;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: DashboardModels.ResetStatisticsLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = DashboardModels.ResetStatisticsLeaderboardRequestData;
+		}
+	}
+
+	export class GetBackupStatisticsLeaderboardVersionOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetBackupStatisticsLeaderboardVersionRequestData> {
+		protected override operationCode: number = OperationCode.GetBackupStatisticsLeaderboardVersion;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Dashboard;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: DashboardModels.GetBackupStatisticsLeaderboardVersionRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = DashboardModels.GetBackupStatisticsLeaderboardVersionRequestData;
+		}
+	}
+
+	export class GetServerGameDataOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetServerGameDataRequestData> {
+		protected override operationCode: number = OperationCode.GetServerGameData;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Dashboard;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: DashboardModels.GetServerGameDataRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = DashboardModels.GetServerGameDataRequestData;
 		}
 	}
 

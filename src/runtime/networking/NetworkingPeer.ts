@@ -13,8 +13,8 @@ import { PeerBase } from "./PeerBase";
 import { SocketPeer } from "./socket/SocketPeer";
 import { OperationEvent } from "./../entity/OperationEvent";
 import { AuthenticateStatus } from "./AuthenticateStatus";
-import { RequestType } from "../constant/enumType/RequestType";
-import { RequestRole } from "../constant/enumType/RequestRole";
+import { RequestType } from "./../constant/enumType/RequestType";
+import { RequestRole } from "./../constant/enumType/RequestRole";
 
 export class NetworkingPeer {
     static readonly SYNC_TS: string = "ts";
@@ -27,6 +27,7 @@ export class NetworkingPeer {
     private httpPeer: IPeer;
 
     authenticateStatus: AuthenticateStatus;
+    gameId: string;
 
     getPing(): number {
         let count = 0;
@@ -90,7 +91,7 @@ export class NetworkingPeer {
             else if (requestRole == RequestRole.Client) secretKey = GNNetwork.getGNServerSettings().getClientSecretKey();
         }
 
-        this.socketPeer.enqueue(requestType, requestRole, request, onResponse, authToken, secretKey, customTags);
+        this.socketPeer.enqueue(requestType, requestRole, request, onResponse, authToken, secretKey, customTags, this.gameId);
     }
 
     sendViaHttp(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
@@ -101,7 +102,7 @@ export class NetworkingPeer {
             else if (requestRole == RequestRole.Client) secretKey = GNNetwork.getGNServerSettings().getClientSecretKey();
         }
 
-        this.httpPeer.enqueue(requestType, requestRole, request, onResponse, authToken, secretKey, customTags);
+        this.httpPeer.enqueue(requestType, requestRole, request, onResponse, authToken, secretKey, customTags, this.gameId);
     }
 
     sendRequestAuthSocket(): void {

@@ -1,10 +1,10 @@
-import { OperationCode } from "../../constant/OperationCode";
-import { RequestRole } from "../../constant/enumType/RequestRole";
-import { RequestType } from "../../constant/enumType/RequestType";
-import { CustomOperationRequestAbstract } from "../request/CustomOperationRequest";
+import { OperationCode } from "./../../constant/OperationCode";
+import { RequestRole } from "./../../constant/enumType/RequestRole";
+import { RequestType } from "./../../constant/enumType/RequestType";
+import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequest";
 import { AuthenticateModels } from "./AuthenticateModels";
 
-export module AuthenticateRequestModels {
+export namespace AuthenticateRequestModels {
 	export class LoginByAccountOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByAccountRequestData> {
 		protected override operationCode: number = OperationCode.LoginByAccount;
 		protected override operationEncrypted: boolean = true;
@@ -113,6 +113,30 @@ export module AuthenticateRequestModels {
 		}
 	}
 
+	export class LoginByGooglePlayGameServiceOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByGooglePlayGameServiceRequestData> {
+		protected override operationCode: number = OperationCode.LoginByGooglePlayGameService;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Authenticate;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: AuthenticateModels.LoginByGooglePlayGameServiceRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByGooglePlayGameServiceRequestData;
+		}
+	}
+
+	export class LoginByGameCenterOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByGameCenterRequestData> {
+		protected override operationCode: number = OperationCode.LoginByGameCenter;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Authenticate;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: AuthenticateModels.LoginByGameCenterRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.LoginByGameCenterRequestData;
+		}
+	}
+
 	export class LoginByiOSDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByiOSDeviceIdRequestData> {
 		protected override operationCode: number = OperationCode.LoginByiOSDeviceId;
 		protected override operationEncrypted: boolean = true;
@@ -185,4 +209,15 @@ export module AuthenticateRequestModels {
 		}
 	}
 
+	export class RefreshAuthTokenOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.RefreshAuthTokenRequestData> {
+		protected override operationCode: number = OperationCode.RefreshAuthToken;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Authenticate;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: AuthenticateModels.RefreshAuthTokenRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = AuthenticateModels.RefreshAuthTokenRequestData;
+		}
+	}
 }

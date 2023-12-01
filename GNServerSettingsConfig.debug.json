@@ -14,8 +14,8 @@
 
         "gnServerSourcePath": "./../GNServer/",
         "logType": 4,
-        "adminSecretKey": "TSeNrcGJIdLFTs2hbomY",
-        "serverSecretKey": "hEHrIZ2NvsoQpax0SKtO",
-        "clientSecretKey": "IDcw7W9kws5AVPFMdfSW"
+        "adminSecretKey": "",
+        "serverSecretKey": "",
+        "clientSecretKey": ""
     }
 }

@@ -1,8 +1,8 @@
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "../DataMember";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
-export module GroupModels {
+export namespace GroupModels {
 
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: GNParameterCode.CatalogId, isOptional: true, defaultValue: false })
@@ -63,7 +63,7 @@ export module GroupModels {
 		public itemCatalogIds?: Array<string>;
 
 	}
-	
+
 	export class CustomDataParam {
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -89,13 +89,10 @@ export module GroupModels {
 		@DataMember({ code: GNParameterCode.Value })
 		public value: any;
 
-		@NumberDataMember({ code: GNParameterCode.Permission, mustInt: true })
-		public permission: number;
-
 	}
 
 	export class GroupMemberParam {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
 		public userId: string;
 
 		@NumberDataMember({ code: GNParameterCode.Role, mustInt: true })
@@ -113,7 +110,7 @@ export module GroupModels {
 	}
 
 	export class AddMemberRequestData {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
 		public userId: string;
 
 		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
@@ -428,12 +425,36 @@ export module GroupModels {
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
+		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		public version?: string;
+	
 	}
 
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
 	}
 
 	export class AdminGetStatisticsLeaderboardRequestData extends ServerGetStatisticsLeaderboardRequestData {
+	}
+
+	export class GetCreateLeaderboardRequestData {
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
+	}
+
+	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
 	}
 
 	export class GetTagRequestData {
@@ -488,7 +509,7 @@ export module GroupModels {
 	}
 
 	export class RemoveGroupItemRequestData {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
 
 		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
@@ -503,7 +524,7 @@ export module GroupModels {
 	}
 
 	export class RemoveMemberRequestData {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
 		public userId: string;
 
 		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
@@ -620,6 +641,9 @@ export module GroupModels {
 		@GNArrayDataMember({ code: GNParameterCode.GroupCurrencies, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: GroupCurrencyParam })
 		public groupCurrencyParams: Array<GroupCurrencyParam>;
 
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+		
 	}
 
 	export class ServerSetGroupCurrencyRequestData extends SetGroupCurrencyRequestData {
@@ -650,6 +674,9 @@ export module GroupModels {
 		@GNArrayDataMember({ code: GNParameterCode.GroupStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: GroupStatisticsParam })
 		public groupStatisticsParams: Array<GroupStatisticsParam>;
 
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+		
 	}
 
 	export class ServerSetGroupStatisticsRequestData extends SetGroupStatisticsRequestData {
@@ -689,6 +716,48 @@ export module GroupModels {
 	}
 
 	export class AdminSetTagRequestData extends ServerSetTagRequestData {
+	}
+
+	export class GetCurrencyLogRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		public keys?: Array<string>;
+
+		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
+		public groupId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class ServerGetCurrencyLogRequestData extends GetCurrencyLogRequestData {
+	}
+
+	export class AdminGetCurrencyLogRequestData extends ServerGetCurrencyLogRequestData {
+	}
+
+	export class GetStatisticsLogRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		public keys?: Array<string>;
+
+		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
+		public groupId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
+	}
+
+	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
 	}
 
 	export class InfoResponseParameters {
@@ -749,11 +818,41 @@ export module GroupModels {
 		@NumberDataMember({ code: GNParameterCode.Position })
 		public position: number;
 
+		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
+		public backupValue?: number;
+
+	}
+
+	export class GroupLogResponseData {
+		@StringDataMember({ code: GNParameterCode.GroupId })
+		public groupId: string;
+
+		@NumberDataMember({ code: GNParameterCode.TsCreate })
+		public tsCreate: number;
+
+		@StringDataMember({ code: GNParameterCode.Log })
+		public log: string;
+
+		@StringDataMember({ code: GNParameterCode.Key })
+		public key: string;
+
+		@NumberDataMember({ code: GNParameterCode.Amount })
+		public amount: number;
+
+		@NumberDataMember({ code: GNParameterCode.StartValue })
+		public startValue: number;
+
+		@NumberDataMember({ code: GNParameterCode.FinalValue })
+		public finalValue: number;
+
 	}
 
 	export class GetStatisticsLeaderboardResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: GroupLeaderboardResponseData })
 		public results: Array<GroupLeaderboardResponseData>;
+
+		@NumberDataMember({ code: GNParameterCode.TsCreate, isOptional: true })
+		public tsCreate: number;
 
 	}
 
@@ -781,6 +880,60 @@ export module GroupModels {
 	export class GroupMessagesResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.GroupMessages, elementCls: GroupMessageResponseData })
 		public groupMessages: Array<GroupMessageResponseData>;
+
+	}
+
+	export class GetCurrencyLeaderboardRequestData {
+		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		public key: string;
+
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetCurrencyLeaderboardRequestData extends GetCurrencyLeaderboardRequestData {
+	}
+
+	export class AdminGetCurrencyLeaderboardRequestData extends ServerGetCurrencyLeaderboardRequestData {
+	}
+
+	export class GetCurrencyLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: GroupLeaderboardResponseData })
+		public results: Array<GroupLeaderboardResponseData>;
+
+	}
+
+	export class GetCreateLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: GroupLeaderboardResponseData })
+		public results: Array<GroupLeaderboardResponseData>;
+
+	}
+
+	export class GetStatisticsLogResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: GroupLogResponseData })
+		public results: Array<GroupLogResponseData>;
+
+		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class GetCurrencyLogResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: GroupLogResponseData })
+		public results: Array<GroupLogResponseData>;
+
+		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		public token?: string;
 
 	}
 

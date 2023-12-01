@@ -1,8 +1,8 @@
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "../DataMember";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
-export module CharacterPlayerModels {
+export namespace CharacterPlayerModels {
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: GNParameterCode.CatalogId, isOptional: true, defaultValue: false })
 		public catalogId?: boolean;
@@ -105,9 +105,6 @@ export module CharacterPlayerModels {
 
 		@DataMember({ code: GNParameterCode.Value })
 		public value: any;
-
-		@NumberDataMember({ code: GNParameterCode.Permission, mustInt: true })
-		public permission: number;
 
 	}
 
@@ -537,7 +534,7 @@ export module CharacterPlayerModels {
 	export class AdminGetStatisticsLeaderboardAroundPlayerRequestData extends ServerGetStatisticsLeaderboardAroundPlayerRequestData {
 	}
 
-	export class GetStatisticsLeaderboardRequestData {
+	export class GetCurrencyLeaderboardRequestData {
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
@@ -555,10 +552,58 @@ export module CharacterPlayerModels {
 
 	}
 
+	export class ServerGetCurrencyLeaderboardRequestData extends GetCurrencyLeaderboardRequestData {
+	}
+
+	export class AdminGetCurrencyLeaderboardRequestData extends ServerGetCurrencyLeaderboardRequestData {
+	}
+
+	export class GetStatisticsLeaderboardRequestData {
+		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		public key: string;
+
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		public version?: string;
+	
+	}
+
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
 	}
 
 	export class AdminGetStatisticsLeaderboardRequestData extends ServerGetStatisticsLeaderboardRequestData {
+	}
+
+	export class GetCreateLeaderboardRequestData {
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
+	}
+
+	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
 	}
 
 	export class GetTagRequestData {
@@ -646,7 +691,7 @@ export module CharacterPlayerModels {
 	}
 
 	export class JoinGroupRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
@@ -661,7 +706,7 @@ export module CharacterPlayerModels {
 	}
 
 	export class LeaveGroupRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
@@ -838,6 +883,9 @@ export module CharacterPlayerModels {
 		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencies, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerCurrencyParam })
 		public playerCurrencyParams: Array<PlayerCurrencyParam>;
 
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+		
 	}
 
 	export class ServerSetPlayerCurrencyRequestData extends SetPlayerCurrencyRequestData {
@@ -868,6 +916,9 @@ export module CharacterPlayerModels {
 		@GNArrayDataMember({ code: GNParameterCode.PlayerStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerStatisticsParam })
 		public playerStatisticsParams: Array<PlayerStatisticsParam>;
 
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+		
 	}
 
 	export class ServerSetPlayerStatisticsRequestData extends SetPlayerStatisticsRequestData {
@@ -907,6 +958,48 @@ export module CharacterPlayerModels {
 	}
 
 	export class AdminSetTagRequestData extends ServerSetTagRequestData {
+	}
+
+	export class GetCurrencyLogRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		public keys?: Array<string>;
+
+		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true, isOptional: true })
+		public characterId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class ServerGetCurrencyLogRequestData extends GetCurrencyLogRequestData {
+	}
+
+	export class AdminGetCurrencyLogRequestData extends ServerGetCurrencyLogRequestData {
+	}
+
+	export class GetStatisticsLogRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		public keys?: Array<string>;
+
+		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true, isOptional: true })
+		public characterId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
+	}
+
+	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
 	}
 
 	export class InfoResponseParameters {
@@ -985,17 +1078,77 @@ export module CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Position })
 		public position: number;
 
+		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
+		public backupValue?: number;
+
+	}
+
+	export class CharacterPlayerLogResponseData {
+		@StringDataMember({ code: GNParameterCode.CharacterId })
+		public characterId: string;
+
+		@NumberDataMember({ code: GNParameterCode.TsCreate })
+		public tsCreate: number;
+
+		@StringDataMember({ code: GNParameterCode.Log })
+		public log: string;
+
+		@StringDataMember({ code: GNParameterCode.Key })
+		public key: string;
+
+		@NumberDataMember({ code: GNParameterCode.Amount })
+		public amount: number;
+
+		@NumberDataMember({ code: GNParameterCode.StartValue })
+		public startValue: number;
+
+		@NumberDataMember({ code: GNParameterCode.FinalValue })
+		public finalValue: number;
+
 	}
 
 	export class GetStatisticsLeaderboardResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
 		public results: Array<CharacterPlayerLeaderboardResponseData>;
 
+		@NumberDataMember({ code: GNParameterCode.TsCreate, isOptional: true })
+		public tsCreate: number;
+
 	}
 
-	export class MasterPlayersWithCharacterIdResponseData {
+	export class CharacterPlayersWithCharacterIdResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerWithCharacterIdResponseData })
 		public results: Array<CharacterPlayerWithCharacterIdResponseData>;
+
+	}
+
+	export class GetCurrencyLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
+		public results: Array<CharacterPlayerLeaderboardResponseData>;
+
+	}
+
+	export class GetCreateLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
+		public results: Array<CharacterPlayerLeaderboardResponseData>;
+
+	}
+
+	export class GetStatisticsLogResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLogResponseData })
+		public results: Array<CharacterPlayerLogResponseData>;
+
+		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class GetCurrencyLogResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLogResponseData })
+		public results: Array<CharacterPlayerLogResponseData>;
+
+		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		public token?: string;
 
 	}
 

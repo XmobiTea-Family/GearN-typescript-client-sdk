@@ -1,8 +1,8 @@
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "../DataMember";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
-export module InventoryModels {
+export namespace InventoryModels {
 
 	export class CustomDataParam {
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
@@ -76,9 +76,6 @@ export module InventoryModels {
 
 		@DataMember({ code: GNParameterCode.Value })
 		public value: any;
-
-		@NumberDataMember({ code: GNParameterCode.Permission, mustInt: true })
-		public permission: number;
 
 	}
 
@@ -380,12 +377,36 @@ export module InventoryModels {
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
+		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		public version?: string;
+	
 	}
 
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
 	}
 
 	export class AdminGetStatisticsLeaderboardRequestData extends ServerGetStatisticsLeaderboardRequestData {
+	}
+
+	export class GetCreateLeaderboardRequestData {
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
+	}
+
+	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
 	}
 
 	export class GetTagRequestData {
@@ -530,6 +551,9 @@ export module InventoryModels {
 		@GNArrayDataMember({ code: GNParameterCode.ItemStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: ItemStatisticsParam })
 		public inventoryStatisticsParams: Array<ItemStatisticsParam>;
 
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+		
 	}
 
 	export class ServerSetItemStatisticsRequestData extends SetItemStatisticsRequestData {
@@ -587,6 +611,27 @@ export module InventoryModels {
 	}
 
 	export class AdminSetTagRequestData extends ServerSetTagRequestData {
+	}
+
+	export class GetStatisticsLogRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		public keys?: Array<string>;
+
+		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true, isOptional: true })
+		public itemId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
+	}
+
+	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
 	}
 
 	export class InfoResponseParameters {
@@ -650,11 +695,41 @@ export module InventoryModels {
 		@NumberDataMember({ code: GNParameterCode.Position })
 		public position: number;
 
+		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
+		public backupValue?: number;
+
+	}
+
+	export class InventoryLogResponseData {
+		@StringDataMember({ code: GNParameterCode.ItemId })
+		public itemId: string;
+
+		@NumberDataMember({ code: GNParameterCode.TsCreate })
+		public tsCreate: number;
+
+		@StringDataMember({ code: GNParameterCode.Log })
+		public log: string;
+
+		@StringDataMember({ code: GNParameterCode.Key })
+		public key: string;
+
+		@NumberDataMember({ code: GNParameterCode.Amount })
+		public amount: number;
+
+		@NumberDataMember({ code: GNParameterCode.StartValue })
+		public startValue: number;
+
+		@NumberDataMember({ code: GNParameterCode.FinalValue })
+		public finalValue: number;
+
 	}
 
 	export class GetStatisticsLeaderboardResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: InventoryLeaderboardResponseData })
 		public results: Array<InventoryLeaderboardResponseData>;
+
+		@NumberDataMember({ code: GNParameterCode.TsCreate, isOptional: true })
+		public tsCreate: number;
 
 	}
 
@@ -662,6 +737,21 @@ export module InventoryModels {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: InventoryWithItemIdResponseData })
 		public results: Array<InventoryWithItemIdResponseData>;
 
+	}
+
+	export class GetCreateLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: InventoryLeaderboardResponseData })
+		public results: Array<InventoryLeaderboardResponseData>;
+
+	}
+
+	export class GetStatisticsLogResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: InventoryLogResponseData })
+		public results: Array<InventoryLogResponseData>;
+
+		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		public token?: string;
+		
 	}
 
 	export class EmptyResponseData {

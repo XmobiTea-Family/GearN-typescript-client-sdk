@@ -1,11 +1,11 @@
-import { Action0 } from "../../common/Action0";
-import { Action2 } from "../../common/Action2";
-import { GNArray, GNHashtable } from "../../common/GNData";
-import { RequestRole } from "../../constant/enumType/RequestRole";
-import { RequestType } from "../../constant/enumType/RequestType";
-import { OperationRequest } from "../../entity/OperationRequest";
-import { GNNetwork } from "../../GNNetwork";
-import { GNDebug } from "../../logger/GNDebug";
+import { Action0 } from "./../../common/Action0";
+import { Action2 } from "./../../common/Action2";
+import { GNArray, GNHashtable } from "./../../common/GNData";
+import { RequestRole } from "./../../constant/enumType/RequestRole";
+import { RequestType } from "./../../constant/enumType/RequestType";
+import { OperationRequest } from "./../../entity/OperationRequest";
+import { GNNetwork } from "./../../GNNetwork";
+import { GNDebug } from "./../../logger/GNDebug";
 import { decode } from "@msgpack/msgpack";
 
 export class SocketPacket {
@@ -93,11 +93,11 @@ export abstract class NetworkingSocketPeerBase {
     sendRequestAuthSocket(): void {
     }
 
-    send(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable) {
-        this.emit(requestType, requestRole, operationRequest, authToken, secretKey, customTags);
+    send(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string) {
+        this.emit(requestType, requestRole, operationRequest, authToken, secretKey, customTags, gameId);
     }
 
-    protected emit(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable): void {
+    protected emit(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
 
     }
 

@@ -1,9 +1,11 @@
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { ParameterCode } from "../../constant/parameterCode/ParameterCode";
-import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "../DataMember";
+import { GNHashtable } from "../../common/GNData";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
+import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
+import { GenericModels } from "./GenericModels";
 import { MasterPlayerModels } from "./MasterPlayerModels";
 
-export module AuthenticateModels {
+export namespace AuthenticateModels {
 
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: GNParameterCode.External, isOptional: true, defaultValue: false })
@@ -156,8 +158,8 @@ export module AuthenticateModels {
 		@StringDataMember({ code: GNParameterCode.ServiceName, minLength: 6, maxLength: 32, mustNonNull: true })
 		public serviceName: string;
 
-		@StringDataMember({ code: GNParameterCode.ServiceId, minLength: 6, maxLength: 64, mustNonNull: true })
-		public serviceId: string;
+		@GNHashtableDataMember({ code: GNParameterCode.ServiceData, mustNonNull: true })
+		public serviceData: GNHashtable;
 
 		@BooleanDataMember({ code: GNParameterCode.CreatePlayerIfNotExists, isOptional: true, defaultValue: false })
 		public createPlayerIfNotExists?: boolean;
@@ -173,6 +175,45 @@ export module AuthenticateModels {
 
 		@NumberDataMember({ code: GNParameterCode.Type, minValue: 1, maxValue: 2, mustInt: true })
 		public type: number;
+
+		@BooleanDataMember({ code: GNParameterCode.CreatePlayerIfNotExists, isOptional: true, defaultValue: false })
+		public createPlayerIfNotExists?: boolean;
+
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+	}
+
+	export class LoginByGooglePlayGameServiceRequestData {
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 20, maxLength: 512, mustNonNull: true })
+		public token: string;
+
+		@BooleanDataMember({ code: GNParameterCode.CreatePlayerIfNotExists, isOptional: true, defaultValue: false })
+		public createPlayerIfNotExists?: boolean;
+
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+	}
+
+	export class LoginByGameCenterRequestData {
+		@StringDataMember({ code: GNParameterCode.PlayerId, minLength: 2, maxLength: 64, mustNonNull: true })
+		public playerId: string;
+
+		@StringDataMember({ code: GNParameterCode.Name, minLength: 2, maxLength: 64, mustNonNull: true })
+		public name: string;
+
+		@StringDataMember({ code: GNParameterCode.PublicKeyUrl, minLength: 2, maxLength: 256, mustNonNull: true })
+		public publicKeyUrl: string;
+
+		@StringDataMember({ code: GNParameterCode.Signature, minLength: 2, maxLength: 512, mustNonNull: true })
+		public signature: string;
+
+		@StringDataMember({ code: GNParameterCode.Salt, minLength: 2, maxLength: 128, mustNonNull: true })
+		public salt: string;
+
+		@NumberDataMember({ code: GNParameterCode.Timestamp })
+		public timestamp: number;
 
 		@BooleanDataMember({ code: GNParameterCode.CreatePlayerIfNotExists, isOptional: true, defaultValue: false })
 		public createPlayerIfNotExists?: boolean;
@@ -254,13 +295,27 @@ export module AuthenticateModels {
 
 	}
 
+	export class RefreshAuthTokenRequestData {
+
+	}
+
 	export class AuthenticateResponseData extends MasterPlayerModels.MasterPlayerWithUserIdResponseData {
 		@BooleanDataMember({ code: GNParameterCode.NewlyCreated, isOptional: true })
 		public newlyCreated?: boolean;
 
-		@StringDataMember({ code: ParameterCode.AuthToken })
-		public authToken: string;
+		@StringDataMember({ code: ParameterCode.AuthToken, isOptional: true })
+		public authToken?: string;
 
+		@GNHashtableDataMember({ code: GNParameterCode.PlayerBan, isOptional: true })
+		public playerBan?: GenericModels.BanItem;
+	}
+
+	export class RefreshAuthTokenResponseData {
+		@StringDataMember({ code: ParameterCode.AuthToken, isOptional: true })
+		public authToken?: string;
+
+		@GNHashtableDataMember({ code: GNParameterCode.PlayerBan, isOptional: true })
+		public playerBan?: GenericModels.BanItem;
 	}
 
 	export class EmptyResponseData {

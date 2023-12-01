@@ -61,6 +61,7 @@ export class GNParameterCode {
 	public static readonly Facebook: string = "Facebook";
 	public static readonly GenericService: string = "GenericService";
 	public static readonly ServiceId: string = "ServiceId";
+	public static readonly ServiceData: string = "ServiceData";
 	public static readonly StatisticsAggregationMethod: string = "StatisticsAggregationMethod";
 	public static readonly MaximumValue: string = "MaximumValue";
 	public static readonly MinimumValue: string = "MinimumValue";
@@ -222,6 +223,7 @@ export class GNParameterCode {
 	public static readonly LoginByLinuxDeviceId: string = "LoginByLinuxDeviceId";
 	public static readonly LoginByMacOSDeviceId: string = "LoginByMacOSDeviceId";
 	public static readonly LoginByWindowsDeviceId: string = "LoginByWindowsDeviceId";
+	public static readonly RefreshAuthToken: string = "RefreshAuthToken";
 
 	public static readonly LinkAccount: string = "LinkAccount";
 	public static readonly LinkAndroidDeviceId: string = "LinkAndroidDeviceId";
@@ -333,7 +335,7 @@ export class GNParameterCode {
 	public static readonly GetMembers: string = "GetMembers";
 	public static readonly AddMember: string = "AddMember";
 	public static readonly RemoveMember: string = "RemoveMember";
-	public static readonly SendGroupMessage: string = "sendGroupMessage";
+	public static readonly SendGroupMessage: string = "SendGroupMessage";
 	public static readonly GetGroupMessage: string = "GetGroupMessage";
 	public static readonly GetGroupsWithDisplayName: string = "GetGroupsWithDisplayName";
 
@@ -403,5 +405,184 @@ export class GNParameterCode {
 	public static readonly GooglePlayStoreId: string = "GooglePlayStoreId";
 	public static readonly CustomTags: string = "CustomTags";
 	public static readonly SetSecretInfoInformation: string = "SetSecretInfoInformation";
+
+	public static readonly GetCurrencyLeaderboard: string = "GetCurrencyLeaderboard";
+	public static readonly GetCreateLeaderboard: string = "GetCreateLeaderboard";
+	public static readonly GetLastLoginLeaderboard: string = "GetLastLoginLeaderboard";
+
+	public static readonly Multiplayer: string = "Multiplayer";
+	public static readonly TimeInSeconds: string = "TimeInSeconds";
+	public static readonly QueueName: string = "QueueName";
+	public static readonly TimeToMatchInSeconds: string = "TimeToMatchInSeconds";
+	public static readonly TicketId: string = "TicketId";
+	public static readonly TicketIds: string = "TicketIds";
+	public static readonly MatchmakingTicket: string = "MatchmakingTicket";
+	public static readonly GiveUpAfterSeconds: string = "GiveUpAfterSeconds";
+	public static readonly MatchId: string = "MatchId";
+	public static readonly Attribute: string = "Attribute";
+	public static readonly ReturnMember: string = "ReturnMember";
+	public static readonly Match: string = "Match";
+	public static readonly TeamId: string = "TeamId";
+	public static readonly IpV4Address: string = "IpV4Address";
+	public static readonly Ports: string = "Ports";
+	public static readonly PublicPort: string = "PublicPort";
+	public static readonly PrivatePort: string = "PrivatePort";
+	public static readonly Protocol: string = "Protocol";
+	public static readonly ServerDetail: string = "ServerDetail";
+	public static readonly MatchmakingQueueSettings: string = "MatchmakingQueueSettings";
+	public static readonly Min: string = "Min";
+	public static readonly Max: string = "Max";
+	public static readonly MatchSize: string = "MatchSize";
+	public static readonly TicketSize: string = "TicketSize";
+	public static readonly TeamSize: string = "TeamSize";
+	public static readonly Teams: string = "Teams";
+	public static readonly Rules: string = "Rules";
+	public static readonly AttributeSource: string = "AttributeSource";
+	public static readonly AttributePath: string = "AttributePath";
+	public static readonly DefaultValue: string = "DefaultValue";
+	public static readonly CompairType: string = "CompairType";
+	public static readonly AllowedDifference: string = "AllowedDifference";
+	public static readonly AdvancedSettings: string = "AdvancedSettings";
+	public static readonly SecondsUntilOptional: string = "SecondsUntilOptional";
+	public static readonly ExpansionType: string = "ExpansionType";
+	public static readonly SecondsBetweenExpansions: string = "SecondsBetweenExpansions";
+	public static readonly Delta: string = "Delta";
+	public static readonly LinearExpansions: string = "LinearExpansions";
+	public static readonly CustomExpansions: string = "CustomExpansions";
+	public static readonly OverrideValue: string = "OverrideValue";
+	public static readonly OverrideMin: string = "OverrideMin";
+	public static readonly OverrideMax: string = "OverrideMax";
+	public static readonly PendingMemberCount: string = "PendingMemberCount";
+	public static readonly PendingTicketCount: string = "PendingTicketCount";
+	public static readonly AverageMatchmakingTimeInSeconds: string = "AverageMatchmakingTimeInSeconds";
+
+	public static readonly CancelAllMatchmakingTicket: string = "CancelAllMatchmakingTicket";
+	public static readonly CancelMatchmakingTicket: string = "CancelMatchmakingTicket";
+	public static readonly CreateMatchmakingTicket: string = "CreateMatchmakingTicket";
+	public static readonly GetMatchmakingTicket: string = "GetMatchmakingTicket";
+	public static readonly GetMatch: string = "GetMatch";
+	public static readonly GetQueueStatistics: string = "GetQueueStatistics";
+	public static readonly JoinMatchmakingTicket: string = "JoinMatchmakingTicket";
+	public static readonly ListMatchmakingTicketsForPlayer: string = "ListMatchmakingTicketsForPlayer";
+    public static readonly GetAllMatchmakingTicket: string = "GetAllMatchmakingTicket";
+    public static readonly GetAllMatch: string = "GetAllMatch";
+	
+	public static readonly FunctionName: string = "FunctionName";
+	public static readonly FunctionParameters: string = "FunctionParameters";
+	public static readonly Version: string = "Version";
+	public static readonly FunctionResult: string = "FunctionResult";
+	public static readonly ExecutionTimeInMs: string = "ExecutionTimeInMs";
+	public static readonly MemoryUsedInBytes: string = "MemoryUsedInBytes";
+	public static readonly FunctionLogs: string = "FunctionLogs";
+	public static readonly CanExecute: string = "CanExecute";
+	public static readonly Script: string = "Script";
+	public static readonly IsLive: string = "IsLive";
+	public static readonly AddFunction: string = "AddFunction";
+	public static readonly GetFunctions: string = "GetFunctions";
+	public static readonly EditFunction: string = "EditFunction";
+	public static readonly ExecuteFunction: string = "ExecuteFunction";
+	public static readonly GetFunction: string = "GetFunction";
+	public static readonly CloudScript: string = "CloudScript";
+
+	public static readonly LoginByGooglePlayGameService: string = "LoginByGooglePlayGameService";
+	public static readonly LoginByGameCenter: string = "LoginByGameCenter";
+	public static readonly UnlinkGooglePlayGameService: string = "UnlinkGooglePlayGameService";
+	public static readonly UnlinkGameCenter: string = "UnlinkGameCenter";
+	public static readonly LinkGooglePlayGameService: string = "LinkGooglePlayGameService";
+	public static readonly LinkGameCenter: string = "LinkGameCenter";
+	public static readonly GooglePlayGameSettings: string = "GooglePlayGameSettings";
+	public static readonly GameCenterSettings: string = "GameCenterSettings";
+	public static readonly ApplicationId: string = "ApplicationId";
+	public static readonly ClientId: string = "ClientId";
+	public static readonly ClientSecret: string = "ClientSecret";
+	public static readonly RedirectUri: string = "RedirectUri";
+	public static readonly PlayerId: string = "PlayerId";
+	public static readonly PublicKeyUrl: string = "PublicKeyUrl";
+	public static readonly Signature: string = "Signature";
+	public static readonly Salt: string = "Salt";
+	public static readonly Timestamp: string = "Timestamp";
+	public static readonly GooglePlayGameService: string = "GooglePlayGameService";
+	public static readonly GameCenter: string = "GameCenter";
+	public static readonly PlayerIds: string = "PlayerIds";
+	public static readonly GetPlayersWithGooglePlayGameService: string = "GetPlayersWithGooglePlayGameService";
+	public static readonly GetPlayersWithGameCenter: string = "GetPlayersWithGameCenter";
+	public static readonly LatestVersion: string = "LatestVersion";
+	public static readonly LiveLatestVersion: string = "LiveLatestVersion";
+	
+	public static readonly SendSocketOperationEvent: string = "SendSocketOperationEvent";
+	public static readonly EventCode: string = "EventCode";
+	public static readonly EventParameters: string = "EventParameters";
+	public static readonly EventEncrypted: string = "EventEncrypted";
+	
+	public static readonly Log: string = "Log";
+	public static readonly StartValue: string = "StartValue";
+	public static readonly FinalValue: string = "FinalValue";
+	public static readonly GetStatisticsLog: string = "GetStatisticsLog";
+	public static readonly GetCurrencyLog: string = "GetCurrencyLog";
+
+	public static readonly GetUsernameAdminAccount: string = "GetUsernameAdminAccount";
+	public static readonly GetAnalytics: string = "GetAnalytics";
+	public static readonly AnalyticsItem: string = "AnalyticsItem";
+	public static readonly CCU: string = "CCU";
+	public static readonly DAU: string = "DAU";
+	public static readonly DAUSince0h: string = "DAUSince0h";
+	public static readonly DNU: string = "DNU";
+	public static readonly DNUSince0h: string = "DNUSince0h";
+	public static readonly DRT: string = "DRT";
+	public static readonly DRTSince0h: string = "DRTSince0h";
+	public static readonly MAU: string = "MAU";
+	public static readonly MAUSince0h1: string = "MAUSince0h1";
+	public static readonly MNU: string = "MNU";
+	public static readonly MNUSince0h1: string = "MNUSince0h1";
+	public static readonly MRT: string = "MRT";
+	public static readonly MRTSince0h1: string = "MRTSince0h1";
+
+	public static readonly GetEventCallbackCloudScript: string = "GetEventCallbackCloudScript";
+	public static readonly SetEventCallbackCloudScript: string = "SetEventCallbackCloudScript";
+	public static readonly HasEdit: string = "HasEdit";
+	public static readonly FullScript: string = "FullScript";
+	public static readonly ChildScripts: string = "ChildScripts";
+	public static readonly EventName: string = "EventName";
+	
+	public static readonly PresentStoreItem: string = "PresentStoreItem";
+	public static readonly GetStoreLog: string = "GetStoreLog";
+	public static readonly TsLastUpdate: string = "TsLastUpdate";
+	public static readonly StoreReceiveType: string = "StoreReceiveType";
+	public static readonly StoreReceiveTypes: string = "StoreReceiveTypes";
+	public static readonly TransactionId: string = "TransactionId";
+	public static readonly PriceCurrencyStartValues: string = "PriceCurrencyStartValues";
+	public static readonly PriceCurrencyAmountValues: string = "PriceCurrencyAmountValues";
+	public static readonly PriceCurrencyFinalValues: string = "PriceCurrencyFinalValues";
+	public static readonly StoreCurrencyStartValues: string = "StoreCurrencyStartValues";
+	public static readonly StoreCurrencyAmountValues: string = "StoreCurrencyAmountValues";
+	public static readonly StoreCurrencyFinalValues: string = "StoreCurrencyFinalValues";
+	public static readonly StoreItemFinalValues: string = "StoreItemFinalValues";
+
+	public static readonly Index: string = "Index";
+	public static readonly ResetStatisticsLeaderboard: string = "ResetStatisticsLeaderboard";
+	public static readonly GetBackupStatisticsLeaderboardVersion: string = "GetBackupStatisticsLeaderboardVersion";
+	public static readonly GetServerGameData: string = "GetServerGameData";
+	
+	public static readonly MasterPlayerCount: string = "MasterPlayerCount";
+	public static readonly GamePlayerCount: string = "GamePlayerCount";
+	public static readonly CharacterPlayerCount: string = "CharacterPlayerCount";
+	public static readonly InventoryCount: string = "InventoryCount";
+	public static readonly StoreInventoryCount: string = "StoreInventoryCount";
+	public static readonly GroupCount: string = "GroupCount";
+	public static readonly Country: string = "Country";
+	public static readonly RegionCode: string = "RegionCode";
+	public static readonly RegionName: string = "RegionName";
+	public static readonly Regions: string = "Regions";
+	public static readonly Latitude: string = "Latitude";
+	public static readonly Longitude: string = "Longitude";
+	public static readonly BackupValue: string = "BackupValue";
+	public static readonly AnalyticsPrice: string = "AnalyticsPrice";
+
+	public static readonly IssuerId: string = "IssuerId";
+	public static readonly KeyId: string = "KeyId";
+	public static readonly P8Content: string = "P8Content";
+
+	public static readonly ServerAllocation: string = "ServerAllocation";
+	public static readonly Enable: string = "Enable";
 
 }

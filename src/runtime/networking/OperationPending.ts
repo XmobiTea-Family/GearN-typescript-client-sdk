@@ -1,6 +1,6 @@
-import { GNHashtable } from "../common/GNData";
-import { RequestRole } from "../constant/enumType/RequestRole";
-import { RequestType } from "../constant/enumType/RequestType";
+import { GNHashtable } from "./../common/GNData";
+import { RequestRole } from "./../constant/enumType/RequestRole";
+import { RequestType } from "./../constant/enumType/RequestType";
 import { Action1 } from "./../common/Action1";
 import { OperationRequest } from "./../entity/OperationRequest";
 import { OperationResponse } from "./../entity/OperationResponse";
@@ -11,6 +11,7 @@ export class OperationPending {
     private requestRole: RequestRole;
     private authToken: string;
     private secretKey: string;
+    private gameId: string;
     private customTags: GNHashtable;
     private onOperationResponse: Action1<OperationResponse>;
     private timeout: number;
@@ -18,7 +19,7 @@ export class OperationPending {
     private firstSend: number;
     private secondsSend: number;
 
-    constructor(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable) {
+    constructor(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string) {
         this.operationRequest = operationRequest;
         this.onOperationResponse = onOperationResponse;
 
@@ -30,6 +31,7 @@ export class OperationPending {
         this.requestRole = requestRole;
         this.authToken = authToken;
         this.secretKey = secretKey;
+        this.gameId = gameId;
         this.customTags = customTags;
     }
 
@@ -47,6 +49,10 @@ export class OperationPending {
 
     public getSecretKey(): string {
         return this.secretKey;
+    }
+
+    public getGameId(): string {
+        return this.gameId;
     }
 
     public getCustomTags(): GNHashtable {

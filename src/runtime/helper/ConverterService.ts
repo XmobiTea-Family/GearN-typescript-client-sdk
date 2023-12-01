@@ -1,5 +1,5 @@
-import { GNEnhancedObjectFieldMetadata, GNEnhancedObjectMetadata, GNFieldDataType, getGNObjectMetadata } from "../entity/DataMember";
-import { FieldDataType } from "../entity/GNMetadata";
+import { GNEnhancedObjectFieldMetadata, GNEnhancedObjectMetadata, GNFieldDataType, getGNObjectMetadata } from "./../entity/DataMember";
+import { FieldDataType } from "./../entity/GNMetadata";
 import { GNArray, GNData, GNHashtable } from "./../common/GNData";
 
 type Constructor<T> = { new(...args: any[]): T };
@@ -10,9 +10,13 @@ class DataMemberFieldInfoTypeMapper {
     public getGNEnhancedObjectFieldMetadata<T>(cls: Constructor<T>): GNEnhancedObjectFieldMetadata[] {
         let declaredFields: GNEnhancedObjectFieldMetadata[];
 
-        if (this.declaredFieldsMap.has(cls)) declaredFields = this.declaredFieldsMap.get(cls);
+        if (this.declaredFieldsMap.has(cls)) {
+            declaredFields = this.declaredFieldsMap.get(cls);
+        }
         else {
-            declaredFields = getGNObjectMetadata<GNEnhancedObjectMetadata>(cls).fields;
+            let gnObjectMetadata = getGNObjectMetadata<GNEnhancedObjectMetadata>(cls);
+            
+            declaredFields = gnObjectMetadata != null ? gnObjectMetadata.fields : [];
             this.declaredFieldsMap.set(cls, declaredFields);
         }
 
@@ -64,12 +68,14 @@ class DeserializeConverter {
                 if (value == null) {
                     if (declaredField.defaultValue != null) {
                         if (declaredField.cls == GNArray) answer[declaredField.name] = declaredField.defaultValue;
-                        else answer[declaredField.name] = (<GNArray>declaredField.defaultValue).toData();
+                        else if (typeof declaredField.cls == "object") answer[declaredField.name] = (<GNArray>declaredField.defaultValue).toData();
+                        else answer[declaredField.name] = this.deserializeArray(<GNArray>declaredField.defaultValue, declaredField.cls);
                     }
                 }
                 else {
                     if (declaredField.cls == GNArray) answer[declaredField.name] = value;
-                    else answer[declaredField.name] = (<GNArray>value).toData();
+                    else if (typeof declaredField.cls == "object") answer[declaredField.name] = (<GNArray>value).toData();
+                    else answer[declaredField.name] = this.deserializeArray(<GNArray>value, declaredField.cls);
                 }
             }
             else if (declaredField.gnFieldType == GNFieldDataType.Number) {
@@ -84,7 +90,7 @@ class DeserializeConverter {
                         else if (declaredField.cls == Boolean) answer[declaredField.name] = declaredField.defaultValue;
                         else if (declaredField.cls == GNHashtable) answer[declaredField.name] = this.deserializeObject(<GNHashtable>declaredField.defaultValue, declaredField.cls);
                         else if (declaredField.cls == GNArray) answer[declaredField.name] = this.deserializeArray(<GNArray>declaredField.defaultValue, declaredField.cls);
-
+                        else answer[declaredField.name] = declaredField.defaultValue;
                     }
                 }
                 else {
@@ -93,6 +99,7 @@ class DeserializeConverter {
                     else if (declaredField.cls == Boolean) answer[declaredField.name] = value;
                     else if (declaredField.cls == GNHashtable) answer[declaredField.name] = this.deserializeObject(<GNHashtable>value, declaredField.cls);
                     else if (declaredField.cls == GNArray) answer[declaredField.name] = this.deserializeArray(<GNArray>value, declaredField.cls);
+                    else answer[declaredField.name] = value;
                 }
             }
         });
@@ -101,6 +108,7 @@ class DeserializeConverter {
     }
 
     public deserializeArray<T>(gnArray: GNArray, cls: Constructor<T>): any[] {
+
         if (gnArray == null) return null;
 
         let answer: any[] = [];

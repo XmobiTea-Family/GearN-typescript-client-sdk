@@ -1,5 +1,5 @@
-import { RequestRole } from "../constant/enumType/RequestRole";
-import { RequestType } from "../constant/enumType/RequestType";
+import { RequestRole } from "./../constant/enumType/RequestRole";
+import { RequestType } from "./../constant/enumType/RequestType";
 import { OperationRequest } from "./OperationRequest";
 
 export class OperationHelper {

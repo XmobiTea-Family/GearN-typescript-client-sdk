@@ -1,21 +1,21 @@
 import axios from "axios";
-import { Action1 } from "../../common/Action1";
-import { GNHashtable } from "../../common/GNData";
-import { Commands } from "../../constant/Commands";
-import { GNSupport } from "../../helper/GNSupport";
-import { GNDebug } from "../../logger/GNDebug";
+import { Action1 } from "./../../common/Action1";
+import { GNHashtable } from "./../../common/GNData";
+import { Commands } from "./../../constant/Commands";
+import { GNSupport } from "./../../helper/GNSupport";
+import { GNDebug } from "./../../logger/GNDebug";
 import { HttpAppResponse, PostType } from "./HttpPeer";
 import { NetworkingHttpPeerBase } from "./NetworkingHttpPeerBase";
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
 import { encode } from "@msgpack/msgpack";
 
 export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
-    public override getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string): void {
-        this.getRequestAxios(subUri, onHttpAppResponse, timeout, authToken, secretKey);
+    public override getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): void {
+        this.getRequestAxios(subUri, onHttpAppResponse, timeout, authToken, secretKey, gameId);
     }
 
-    public postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable): void {
-        this.postRequestAxios(subUri, param, postType, onHttpAppResponse, timeout, authToken, secretKey, customTags);
+    public postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
+        this.postRequestAxios(subUri, param, postType, onHttpAppResponse, timeout, authToken, secretKey, customTags, gameId);
     }
 
     public postRequestUpload(subUri: string, content: Uint8Array, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): void {
@@ -30,7 +30,7 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
         if (onHttpAppResponse != null) onHttpAppResponse(httpAppResponse);
     }
 
-    private async getRequestAxios(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string): Promise<void> {
+    private async getRequestAxios(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): Promise<void> {
         let headers: { [k: string]: any } = {};
 
         if (authToken)
@@ -38,6 +38,9 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 
         if (secretKey)
             headers[Commands.RequestSecretCmd] = secretKey;
+
+        if (gameId)
+            headers[Commands.RequestGameIdCmd] = gameId;
 
         if (!GNSupport.isBrowser())
             headers[Commands.USER_AGENT] = this.userAgent;
@@ -66,11 +69,12 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
         if (onHttpAppResponse != null) onHttpAppResponse(httpAppResponse);
     }
 
-    private async postRequestAxios(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable): Promise<void> {
+    private async postRequestAxios(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): Promise<void> {
         let headers: { [k: string]: any } = {};
 
         if (authToken) headers[Commands.RequestAuthTokenCmd] = authToken;
         if (secretKey) headers[Commands.RequestSecretCmd] = secretKey;
+        if (gameId) headers[Commands.RequestGameIdCmd] = gameId;
 
         if (!GNSupport.isBrowser())
             headers[Commands.USER_AGENT] = this.userAgent;
@@ -87,30 +91,46 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
                 headers[Commands.CONTENT_LENGTH] = JSON.stringify(body).length;
                 headers[Commands.CONTENT_TYPE] = Commands.APPLICATION_JSON;
             }
+            headers[Commands.ACCEPT] = Commands.APPLICATION_JSON;
         }
         else if (postType == PostType.MsgPack) {
             let content = param.toData();
-            body = encode(content);
-
+            body = Buffer.from(encode(content));
+            
             headers[Commands.CONTENT_TYPE] = Commands.APPLICATION_MSGPACK;
+            headers[Commands.ACCEPT] = Commands.APPLICATION_MSGPACK;
 
             if (!GNSupport.isBrowser())
                 headers[Commands.CONTENT_LENGTH] = body.length;
         }
-
+            
         let httpAppResponse = new HttpAppResponse();
 
         try {
-            let result = await axios.post(this.httpUrl + "/" + subUri, body, {
-                headers: headers,
-                timeout: timeout * 1000,
-                responseType: "arraybuffer",
-            });
-
-            httpAppResponse.statusCode = result.status;
-            let buffers = this.toBuffers(result.data);
-            httpAppResponse.data = buffers[0];
-            httpAppResponse.text = buffers[1];
+            if (postType == PostType.Json) {
+                let result = await axios.post(this.httpUrl + "/" + subUri, body, {
+                    headers: headers,
+                    timeout: timeout * 1000,
+                    responseType: "text",
+                });
+    
+                httpAppResponse.statusCode = result.status;
+                // let buffers = this.toBuffers(result.data);
+                // httpAppResponse.data = buffers[0];
+                httpAppResponse.text = result.data;
+            }
+            else {
+                let result = await axios.post(this.httpUrl + "/" + subUri, body, {
+                    headers: headers,
+                    timeout: timeout * 1000,
+                    responseType: "arraybuffer",
+                });
+    
+                httpAppResponse.statusCode = result.status;
+                let buffers = this.toBuffers(result.data);
+                httpAppResponse.data = buffers[0];
+                httpAppResponse.text = buffers[1];
+            }
         } catch (error) {
             httpAppResponse.error = error.toString();
             httpAppResponse.statusCode = -1;

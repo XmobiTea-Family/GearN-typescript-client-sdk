@@ -1,5 +1,5 @@
 export enum GoogleLoginType {
-    AccessToken = 1,
-    IdToken = 2,
-    
+	AccessToken = 1,
+	IdToken = 2,
+
 }

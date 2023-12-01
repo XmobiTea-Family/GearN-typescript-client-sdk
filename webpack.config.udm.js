@@ -21,15 +21,18 @@ module.exports = {
         },
 	},
 	output: {
-		filename: "gn.js.client.min.js",
+		filename: "gn.js.client.js",
 		path: path.resolve(__dirname, "dist"),
         library: {
             type: "umd",
             name: "GN",
         },
+		environment: {
+			arrowFunction: true,
+		},
 	},
 	optimization: {
-		minimize: true,
+		minimize: false,
 		minimizer: [
 			new TerserPlugin({
 				terserOptions: {

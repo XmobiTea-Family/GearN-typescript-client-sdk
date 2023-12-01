@@ -1,7 +1,8 @@
 export enum OwnerType {
-    MasterPlayer = 0,
-    GamePlayer = 1,
-    CharacterPlayer = 2,
-    Group = 3,
+    MasterPlayer = 1,
+    GamePlayer = 2,
+    CharacterPlayer = 3,
+    Group = 4,
+    Inventory = 5,
 
 }

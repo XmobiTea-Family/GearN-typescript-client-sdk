@@ -9,5 +9,7 @@ export enum RequestType {
     MasterPlayer = 7,
     StoreInventory = 8,
     Dashboard = 9,
+    Multiplayer = 10,
+    CloudScript = 11,
 
 }

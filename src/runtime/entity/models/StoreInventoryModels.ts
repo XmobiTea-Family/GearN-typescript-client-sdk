@@ -1,8 +1,8 @@
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "../DataMember";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
-export module StoreInventoryModels {
+export namespace StoreInventoryModels {
 	export class AvatarParam {
 		@NumberDataMember({ code: GNParameterCode.Type, mustInt: true })
 		public type: number;
@@ -22,14 +22,17 @@ export module StoreInventoryModels {
 	}
 
 	export class InAppPurchaseParam {
-		@StringDataMember({ code: GNParameterCode.FacebookStoreId, minLength: 1, maxLength: 128, mustNonNull: true })
-		public facebookStoreId: string;
+		@StringDataMember({ code: GNParameterCode.FacebookStoreId, minLength: 1, maxLength: 128, mustNonNull: true, isOptional: true })
+		public facebookStoreId?: string;
 
-		@StringDataMember({ code: GNParameterCode.GooglePlayStoreId, minLength: 1, maxLength: 128, mustNonNull: true })
-		public googlePlayStoreId: string;
+		@StringDataMember({ code: GNParameterCode.GooglePlayStoreId, minLength: 1, maxLength: 128, mustNonNull: true, isOptional: true })
+		public googlePlayStoreId?: string;
 
-		@StringDataMember({ code: GNParameterCode.AppleAppStoreId, minLength: 1, maxLength: 128, mustNonNull: true })
-		public appleAppStoreId: string;
+		@StringDataMember({ code: GNParameterCode.AppleAppStoreId, minLength: 1, maxLength: 128, mustNonNull: true, isOptional: true })
+		public appleAppStoreId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.AnalyticsPrice, isOptional: true })
+		public analyticsPrice?: number;
 
 	}
 
@@ -106,6 +109,9 @@ export module StoreInventoryModels {
 		@StringDataMember({ code: GNParameterCode.GooglePlayStoreId })
 		public googlePlayStoreId: string;
 
+		@NumberDataMember({ code: GNParameterCode.AnalyticsPrice })
+		public analyticsPrice: number;
+
 	}
 
 	export class PriceCurrencyItem {
@@ -145,11 +151,14 @@ export module StoreInventoryModels {
 		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public storeId: string;
 
-		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
 		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
 		public type: number;
+
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
 
 	}
 
@@ -157,6 +166,51 @@ export module StoreInventoryModels {
 	}
 
 	export class AdminBuyStoreItemRequestData extends ServerBuyStoreItemRequestData {
+	}
+
+	export class PresentStoreItemRequestData {
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public storeId: string;
+
+		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
+		public id: string;
+
+		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
+		public type: number;
+
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+
+	}
+
+	export class ServerPresentStoreItemRequestData extends PresentStoreItemRequestData {
+	}
+
+	export class AdminPresentStoreItemRequestData extends ServerPresentStoreItemRequestData {
+	}
+
+	export class GetStoreLogRequestData {
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
+		public storeId?: string;
+
+		@GNArrayDataMember({ code: GNParameterCode.StoreReceiveTypes, minLength: 1, maxLength: 10, mustNonNull: true, elementCls: Number, isOptional: true })
+		public storeReceiveTypes?: Array<number>;
+
+		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true, isOptional: true })
+		public id?: string;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		public token?: string;
+
+	}
+
+	export class ServerGetStoreLogRequestData extends GetStoreLogRequestData {
+	}
+
+	export class AdminGetStoreLogRequestData extends ServerGetStoreLogRequestData {
 	}
 
 	export class GetStoreItemInformationRequestData {
@@ -199,6 +253,9 @@ export module StoreInventoryModels {
 	}
 
 	export class GrantStoreItemRequestData {
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
+		public storeId?: string;
+
 		@StringDataMember({ code: GNParameterCode.DisplayName, defaultValue: "", isOptional: true })
 		public displayName?: string;
 
@@ -229,29 +286,29 @@ export module StoreInventoryModels {
 		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public storeId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.StoreDatas, minLength: 0, maxLength: 32, mustNonNull: true, elementCls: StoreDataParam })
-		public storeDataParams: Array<StoreDataParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.StoreItems, minLength: 0, maxLength: 32, mustNonNull: true, elementCls: StoreItemParam })
-		public storeItemParams: Array<StoreItemParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencies, minLength: 0, maxLength: 32, mustNonNull: true, elementCls: CurrencyParam })
-		public storeCurrencyParams: Array<CurrencyParam>;
-
-		@GNArrayDataMember({ code: GNParameterCode.PriceCurrencies, minLength: 0, maxLength: 32, mustNonNull: true, elementCls: CurrencyParam })
-		public priceCurrencyParams: Array<CurrencyParam>;
-
-		@GNHashtableDataMember({ code: GNParameterCode.InAppPurchase, mustNonNull: true })
-		public inAppPurchaseParam: InAppPurchaseParam;
-
-		@StringDataMember({ code: GNParameterCode.DisplayName, mustNonNull: true })
-		public displayName: string;
-
-		@GNHashtableDataMember({ code: GNParameterCode.Avatar, mustNonNull: true })
-		public avatarParam: AvatarParam;
-
-		@GNArrayDataMember({ code: GNParameterCode.Tags, minLength: 0, maxLength: 32, mustNonNull: true, elementCls: TagParam })
-		public tagParams: Array<TagParam>;
+		@GNArrayDataMember({ code: GNParameterCode.StoreDatas, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: StoreDataParam })
+		public storeDataParams?: Array<StoreDataParam>;
+	
+		@GNArrayDataMember({ code: GNParameterCode.StoreItems, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: StoreItemParam })
+		public storeItemParams?: Array<StoreItemParam>;
+	
+		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencies, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: CurrencyParam })
+		public storeCurrencyParams?: Array<CurrencyParam>;
+	
+		@GNArrayDataMember({ code: GNParameterCode.PriceCurrencies, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: CurrencyParam })
+		public priceCurrencyParams?: Array<CurrencyParam>;
+	
+		@GNHashtableDataMember({ code: GNParameterCode.InAppPurchase, mustNonNull: true, isOptional: true, })
+		public inAppPurchaseParam?: InAppPurchaseParam;
+	
+		@StringDataMember({ code: GNParameterCode.DisplayName, mustNonNull: true, isOptional: true, })
+		public displayName?: string;
+	
+		@GNHashtableDataMember({ code: GNParameterCode.Avatar, mustNonNull: true, isOptional: true, })
+		public avatarParam?: AvatarParam;
+	
+		@GNArrayDataMember({ code: GNParameterCode.Tags, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: TagParam })
+		public tagParams?: Array<TagParam>;
 
 	}
 
@@ -265,11 +322,14 @@ export module StoreInventoryModels {
 		@StringDataMember({ code: GNParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
 
-		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
 		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
 		public type: number;
+
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
 
 	}
 
@@ -283,11 +343,14 @@ export module StoreInventoryModels {
 		@StringDataMember({ code: GNParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
 
-		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
 		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
 		public type: number;
+
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
 
 	}
 
@@ -301,11 +364,14 @@ export module StoreInventoryModels {
 		@StringDataMember({ code: GNParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
 
-		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
 		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
 		public type: number;
+
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
 
 	}
 
@@ -315,8 +381,29 @@ export module StoreInventoryModels {
 	export class AdminValidateGooglePlayStoreReceiptRequestData extends ServerValidateGooglePlayStoreReceiptRequestData {
 	}
 
+	export class GetCreateLeaderboardRequestData {
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
+	}
+
+	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
+	}
+
 	export class InfoResponseParameters {
-		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencies, isOptional: true, elementCls: StoreInventoryItem })
+		@GNArrayDataMember({ code: GNParameterCode.StoreItems, isOptional: true, elementCls: StoreInventoryItem })
 		public storeItems?: Array<StoreInventoryItem>;
 
 		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencies, isOptional: true, elementCls: PriceCurrencyItem })
@@ -364,11 +451,8 @@ export module StoreInventoryModels {
 		@NumberDataMember({ code: GNParameterCode.Position })
 		public position: number;
 
-	}
-
-	export class GetStatisticsLeaderboardResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: StoreInventoryLeaderboardResponseData })
-		public results: Array<StoreInventoryLeaderboardResponseData>;
+		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
+		public backupValue?: number;
 
 	}
 
@@ -405,6 +489,101 @@ export module StoreInventoryModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.InfoResponseParameters, isOptional: true })
 		public infoResponseParameters?: OwnerInfoResponseParameters;
+
+	}
+
+	export class PresentStoreInventoryResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencies, isOptional: true, elementCls: StoreInventoryItem })
+		public storeItems?: Array<StoreInventoryItem>;
+
+		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencies, isOptional: true, elementCls: PriceCurrencyItem })
+		public storeCurrencies?: Array<PriceCurrencyItem>;
+
+		@GNArrayDataMember({ code: GNParameterCode.PriceCurrencies, isOptional: true, elementCls: PriceCurrencyItem })
+		public priceCurrencies?: Array<PriceCurrencyItem>;
+
+		@GNHashtableDataMember({ code: GNParameterCode.InfoResponseParameters, isOptional: true })
+		public infoResponseParameters?: OwnerInfoResponseParameters;
+
+	}
+
+	export class CurrencyResponseData {
+		@StringDataMember({ code: GNParameterCode.Key })
+		public key: string;
+
+		@NumberDataMember({ code: GNParameterCode.Value })
+		public value: number;
+
+	}
+
+	export class StoreItemResponseData {
+		@StringDataMember({ code: GNParameterCode.CatalogId })
+		public catalogId: string;
+
+		@StringDataMember({ code: GNParameterCode.ClassId })
+		public classId: string;
+
+		@StringDataMember({ code: GNParameterCode.ItemId })
+		public itemId: string;
+		
+	}
+
+	export class StoreLogResponseData {
+		@StringDataMember({ code: GNParameterCode.StoreId })
+		public storeId: string;
+
+		@StringDataMember({ code: GNParameterCode.OwnerId })
+		public id: string;
+
+		@NumberDataMember({ code: GNParameterCode.OwnerType })
+		public type: number;
+
+		@StringDataMember({ code: GNParameterCode.TransactionId, isOptional: true })
+		public transactionId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.StoreReceiveType })
+		public storeReceiveType: number;
+
+		@GNArrayDataMember({ code: GNParameterCode.PriceCurrencyStartValues, elementCls: CurrencyResponseData })
+		public priceCurrencyStartValues: Array<CurrencyResponseData>;
+
+		@GNArrayDataMember({ code: GNParameterCode.PriceCurrencyAmountValues, elementCls: CurrencyResponseData })
+		public priceCurrencyAmountValues: Array<CurrencyResponseData>;
+
+		@GNArrayDataMember({ code: GNParameterCode.PriceCurrencyFinalValues, elementCls: CurrencyResponseData })
+		public priceCurrencyFinalValues: Array<CurrencyResponseData>;
+
+		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencyStartValues, elementCls: CurrencyResponseData })
+		public storeCurrencyStartValues: Array<CurrencyResponseData>;
+
+		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencyAmountValues, elementCls: CurrencyResponseData })
+		public storeCurrencyAmountValues: Array<CurrencyResponseData>;
+
+		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencyFinalValues, elementCls: CurrencyResponseData })
+		public storeCurrencyFinalValues: Array<CurrencyResponseData>;
+
+		@GNArrayDataMember({ code: GNParameterCode.StoreItemFinalValues, elementCls: StoreItemResponseData })
+		public storeItemFinalValues: Array<StoreItemResponseData>;
+
+		@NumberDataMember({ code: GNParameterCode.TsCreate })
+		public tsCreate: number;
+
+		@StringDataMember({ code: GNParameterCode.Log })
+		public log: string;
+	}
+
+	export class GetCreateLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: StoreInventoryLeaderboardResponseData })
+		public results: Array<StoreInventoryLeaderboardResponseData>;
+
+	}
+
+	export class GetStoreLogResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: StoreLogResponseData })
+		public results: Array<StoreLogResponseData>;
+
+		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		public token?: string;
 
 	}
 

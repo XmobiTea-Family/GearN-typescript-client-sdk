@@ -1,10 +1,10 @@
-import { OperationCode } from "../../constant/OperationCode";
-import { RequestRole } from "../../constant/enumType/RequestRole";
-import { RequestType } from "../../constant/enumType/RequestType";
-import { CustomOperationRequestAbstract } from "../request/CustomOperationRequest";
+import { OperationCode } from "./../../constant/OperationCode";
+import { RequestRole } from "./../../constant/enumType/RequestRole";
+import { RequestType } from "./../../constant/enumType/RequestType";
+import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequest";
 import { ContentModels } from "./ContentModels";
 
-export module ContentRequestModels {
+export namespace ContentRequestModels {
 	export class CreateNewFileUploadInfoOperationRequest extends CustomOperationRequestAbstract<ContentModels.CreateNewFileUploadInfoRequestData> {
 		protected override operationCode: number = OperationCode.CreateNewFileUploadInfo;
 		protected override operationEncrypted: boolean = true;
@@ -13,22 +13,25 @@ export module ContentRequestModels {
 
 		constructor(requestData: ContentModels.CreateNewFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.CreateNewFileUploadInfoRequestData;
 		}
 	}
 
 	export class ServerCreateNewFileUploadInfoOperationRequest extends CreateNewFileUploadInfoOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: ContentModels.CreateNewFileUploadInfoRequestData, timeout: number) {
+		constructor(requestData: ContentModels.ServerCreateNewFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.ServerCreateNewFileUploadInfoRequestData;
 		}
 	}
 
 	export class AdminCreateNewFileUploadInfoOperationRequest extends CreateNewFileUploadInfoOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: ContentModels.CreateNewFileUploadInfoRequestData, timeout: number) {
+		constructor(requestData: ContentModels.AdminCreateNewFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.AdminCreateNewFileUploadInfoRequestData;
 		}
 	}
 
@@ -40,22 +43,25 @@ export module ContentRequestModels {
 
 		constructor(requestData: ContentModels.GetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.GetContentDataRequestData;
 		}
 	}
 
 	export class ServerGetContentDataOperationRequest extends GetContentDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: ContentModels.GetContentDataRequestData, timeout: number) {
+		constructor(requestData: ContentModels.ServerGetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.ServerGetContentDataRequestData;
 		}
 	}
 
 	export class AdminGetContentDataOperationRequest extends GetContentDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: ContentModels.GetContentDataRequestData, timeout: number) {
+		constructor(requestData: ContentModels.AdminGetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.AdminGetContentDataRequestData;
 		}
 	}
 
@@ -67,22 +73,25 @@ export module ContentRequestModels {
 
 		constructor(requestData: ContentModels.GetFileUploadInfoListRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.GetFileUploadInfoListRequestData;
 		}
 	}
 
 	export class ServerGetFileUploadInfoListOperationRequest extends GetFileUploadInfoListOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: ContentModels.GetFileUploadInfoListRequestData, timeout: number) {
+		constructor(requestData: ContentModels.ServerGetFileUploadInfoListRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.ServerGetFileUploadInfoListRequestData;
 		}
 	}
 
 	export class AdminGetFileUploadInfoListOperationRequest extends GetFileUploadInfoListOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: ContentModels.GetFileUploadInfoListRequestData, timeout: number) {
+		constructor(requestData: ContentModels.AdminGetFileUploadInfoListRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.AdminGetFileUploadInfoListRequestData;
 		}
 	}
 
@@ -94,22 +103,25 @@ export module ContentRequestModels {
 
 		constructor(requestData: ContentModels.GetFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.GetFileUploadInfoRequestData;
 		}
 	}
 
 	export class ServerGetFileUploadInfoOperationRequest extends GetFileUploadInfoOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: ContentModels.GetFileUploadInfoRequestData, timeout: number) {
+		constructor(requestData: ContentModels.ServerGetFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.ServerGetFileUploadInfoRequestData;
 		}
 	}
 
 	export class AdminGetFileUploadInfoOperationRequest extends GetFileUploadInfoOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: ContentModels.GetFileUploadInfoRequestData, timeout: number) {
+		constructor(requestData: ContentModels.AdminGetFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.AdminGetFileUploadInfoRequestData;
 		}
 	}
 
@@ -121,22 +133,25 @@ export module ContentRequestModels {
 
 		constructor(requestData: ContentModels.RemoveFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.RemoveFileUploadInfoRequestData;
 		}
 	}
 
 	export class ServerRemoveFileUploadInfoOperationRequest extends RemoveFileUploadInfoOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: ContentModels.RemoveFileUploadInfoRequestData, timeout: number) {
+		constructor(requestData: ContentModels.ServerRemoveFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.ServerRemoveFileUploadInfoRequestData;
 		}
 	}
 
 	export class AdminRemoveFileUploadInfoOperationRequest extends RemoveFileUploadInfoOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: ContentModels.RemoveFileUploadInfoRequestData, timeout: number) {
+		constructor(requestData: ContentModels.AdminRemoveFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.AdminRemoveFileUploadInfoRequestData;
 		}
 	}
 
@@ -148,22 +163,25 @@ export module ContentRequestModels {
 
 		constructor(requestData: ContentModels.RequestDownloadFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.RequestDownloadFileUploadInfoRequestData;
 		}
 	}
 
 	export class ServerRequestDownloadFileUploadInfoOperationRequest extends RequestDownloadFileUploadInfoOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: ContentModels.RequestDownloadFileUploadInfoRequestData, timeout: number) {
+		constructor(requestData: ContentModels.ServerRequestDownloadFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.ServerRequestDownloadFileUploadInfoRequestData;
 		}
 	}
 
 	export class AdminRequestDownloadFileUploadInfoOperationRequest extends RequestDownloadFileUploadInfoOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: ContentModels.RequestDownloadFileUploadInfoRequestData, timeout: number) {
+		constructor(requestData: ContentModels.AdminRequestDownloadFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.AdminRequestDownloadFileUploadInfoRequestData;
 		}
 	}
 
@@ -175,22 +193,25 @@ export module ContentRequestModels {
 
 		constructor(requestData: ContentModels.SetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.SetContentDataRequestData;
 		}
 	}
 
 	export class ServerSetContentDataOperationRequest extends SetContentDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: ContentModels.SetContentDataRequestData, timeout: number) {
+		constructor(requestData: ContentModels.ServerSetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.ServerSetContentDataRequestData;
 		}
 	}
 
 	export class AdminSetContentDataOperationRequest extends SetContentDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: ContentModels.SetContentDataRequestData, timeout: number) {
+		constructor(requestData: ContentModels.AdminSetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = ContentModels.AdminSetContentDataRequestData;
 		}
 	}
 

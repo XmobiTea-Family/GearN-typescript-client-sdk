@@ -1,10 +1,10 @@
-import { OperationCode } from "../../constant/OperationCode";
-import { RequestRole } from "../../constant/enumType/RequestRole";
-import { RequestType } from "../../constant/enumType/RequestType";
-import { CustomOperationRequestAbstract } from "../request/CustomOperationRequest";
+import { OperationCode } from "./../../constant/OperationCode";
+import { RequestRole } from "./../../constant/enumType/RequestRole";
+import { RequestType } from "./../../constant/enumType/RequestType";
+import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequest";
 import { CharacterPlayerModels } from "./CharacterPlayerModels";
 
-export module CharacterPlayerRequestModels {
+export namespace CharacterPlayerRequestModels {
 	export class AddPlayerFriendOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.AddPlayerFriendRequestData> {
 		protected override operationCode: number = OperationCode.AddPlayerFriend;
 		protected override operationEncrypted: boolean = true;
@@ -13,22 +13,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.AddPlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AddPlayerFriendRequestData;
 		}
 	}
 
 	export class ServerAddPlayerFriendOperationRequest extends AddPlayerFriendOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.AddPlayerFriendRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerAddPlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerAddPlayerFriendRequestData;
 		}
 	}
 
 	export class AdminAddPlayerFriendOperationRequest extends AddPlayerFriendOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.AddPlayerFriendRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminAddPlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminAddPlayerFriendRequestData;
 		}
 	}
 
@@ -40,22 +43,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.AddSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AddSegmentRequestData;
 		}
 	}
 
 	export class ServerAddSegmentOperationRequest extends AddSegmentOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.AddSegmentRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerAddSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerAddSegmentRequestData;
 		}
 	}
 
 	export class AdminAddSegmentOperationRequest extends AddSegmentOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.AddSegmentRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminAddSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminAddSegmentRequestData;
 		}
 	}
 
@@ -67,22 +73,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetAvatarRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetAvatarRequestData;
 		}
 	}
 
 	export class ServerGetAvatarOperationRequest extends GetAvatarOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetAvatarRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetAvatarRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetAvatarRequestData;
 		}
 	}
 
 	export class AdminGetAvatarOperationRequest extends GetAvatarOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetAvatarRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetAvatarRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetAvatarRequestData;
 		}
 	}
 
@@ -94,22 +103,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetCatalogIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetCatalogIdRequestData;
 		}
 	}
 
 	export class ServerGetCatalogIdOperationRequest extends GetCatalogIdOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetCatalogIdRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetCatalogIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetCatalogIdRequestData;
 		}
 	}
 
 	export class AdminGetCatalogIdOperationRequest extends GetCatalogIdOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetCatalogIdRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetCatalogIdRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetCatalogIdRequestData;
 		}
 	}
 
@@ -121,22 +133,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetCountryCodeRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetCountryCodeRequestData;
 		}
 	}
 
 	export class ServerGetCountryCodeOperationRequest extends GetCountryCodeOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetCountryCodeRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetCountryCodeRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetCountryCodeRequestData;
 		}
 	}
 
 	export class AdminGetCountryCodeOperationRequest extends GetCountryCodeOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetCountryCodeRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetCountryCodeRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetCountryCodeRequestData;
 		}
 	}
 
@@ -148,22 +163,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetCustomDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetCustomDataRequestData;
 		}
 	}
 
 	export class ServerGetCustomDataOperationRequest extends GetCustomDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetCustomDataRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetCustomDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetCustomDataRequestData;
 		}
 	}
 
 	export class AdminGetCustomDataOperationRequest extends GetCustomDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetCustomDataRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetCustomDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetCustomDataRequestData;
 		}
 	}
 
@@ -175,22 +193,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetDisplayNameRequestData;
 		}
 	}
 
 	export class ServerGetDisplayNameOperationRequest extends GetDisplayNameOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetDisplayNameRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetDisplayNameRequestData;
 		}
 	}
 
 	export class AdminGetDisplayNameOperationRequest extends GetDisplayNameOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetDisplayNameRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetDisplayNameRequestData;
 		}
 	}
 
@@ -202,22 +223,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetFriendStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetFriendStatisticsLeaderboardAroundPlayerRequestData;
 		}
 	}
 
 	export class ServerGetFriendStatisticsLeaderboardAroundPlayerOperationRequest extends GetFriendStatisticsLeaderboardAroundPlayerOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetFriendStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetFriendStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetFriendStatisticsLeaderboardAroundPlayerRequestData;
 		}
 	}
 
 	export class AdminGetFriendStatisticsLeaderboardAroundPlayerOperationRequest extends GetFriendStatisticsLeaderboardAroundPlayerOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetFriendStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetFriendStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetFriendStatisticsLeaderboardAroundPlayerRequestData;
 		}
 	}
 
@@ -229,22 +253,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetFriendStatisticsLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetFriendStatisticsLeaderboardRequestData;
 		}
 	}
 
 	export class ServerGetFriendStatisticsLeaderboardOperationRequest extends GetFriendStatisticsLeaderboardOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetFriendStatisticsLeaderboardRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetFriendStatisticsLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetFriendStatisticsLeaderboardRequestData;
 		}
 	}
 
 	export class AdminGetFriendStatisticsLeaderboardOperationRequest extends GetFriendStatisticsLeaderboardOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetFriendStatisticsLeaderboardRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetFriendStatisticsLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetFriendStatisticsLeaderboardRequestData;
 		}
 	}
 
@@ -256,22 +283,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetIpAddressCreateRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetIpAddressCreateRequestData;
 		}
 	}
 
 	export class ServerGetIpAddressCreateOperationRequest extends GetIpAddressCreateOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetIpAddressCreateRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetIpAddressCreateRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetIpAddressCreateRequestData;
 		}
 	}
 
 	export class AdminGetIpAddressCreateOperationRequest extends GetIpAddressCreateOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetIpAddressCreateRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetIpAddressCreateRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetIpAddressCreateRequestData;
 		}
 	}
 
@@ -283,22 +313,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetOwnerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetOwnerRequestData;
 		}
 	}
 
 	export class ServerGetOwnerOperationRequest extends GetOwnerOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetOwnerRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetOwnerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetOwnerRequestData;
 		}
 	}
 
 	export class AdminGetOwnerOperationRequest extends GetOwnerOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetOwnerRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetOwnerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetOwnerRequestData;
 		}
 	}
 
@@ -310,22 +343,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayerBanRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayerBanRequestData;
 		}
 	}
 
 	export class ServerGetPlayerBanOperationRequest extends GetPlayerBanOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerBanRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayerBanRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayerBanRequestData;
 		}
 	}
 
 	export class AdminGetPlayerBanOperationRequest extends GetPlayerBanOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerBanRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayerBanRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayerBanRequestData;
 		}
 	}
 
@@ -337,22 +373,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayerCurrencyRequestData;
 		}
 	}
 
 	export class ServerGetPlayerCurrencyOperationRequest extends GetPlayerCurrencyOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerCurrencyRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayerCurrencyRequestData;
 		}
 	}
 
 	export class AdminGetPlayerCurrencyOperationRequest extends GetPlayerCurrencyOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerCurrencyRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayerCurrencyRequestData;
 		}
 	}
 
@@ -364,22 +403,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayerDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayerDataRequestData;
 		}
 	}
 
 	export class ServerGetPlayerDataOperationRequest extends GetPlayerDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerDataRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayerDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayerDataRequestData;
 		}
 	}
 
 	export class AdminGetPlayerDataOperationRequest extends GetPlayerDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerDataRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayerDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayerDataRequestData;
 		}
 	}
 
@@ -391,22 +433,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayerFriendRequestData;
 		}
 	}
 
 	export class ServerGetPlayerFriendOperationRequest extends GetPlayerFriendOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerFriendRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayerFriendRequestData;
 		}
 	}
 
 	export class AdminGetPlayerFriendOperationRequest extends GetPlayerFriendOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerFriendRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayerFriendRequestData;
 		}
 	}
 
@@ -418,22 +463,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayerGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayerGroupRequestData;
 		}
 	}
 
 	export class ServerGetPlayerGroupOperationRequest extends GetPlayerGroupOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerGroupRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayerGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayerGroupRequestData;
 		}
 	}
 
 	export class AdminGetPlayerGroupOperationRequest extends GetPlayerGroupOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerGroupRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayerGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayerGroupRequestData;
 		}
 	}
 
@@ -445,22 +493,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayerInformationRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayerInformationRequestData;
 		}
 	}
 
 	export class ServerGetPlayerInformationOperationRequest extends GetPlayerInformationOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerInformationRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayerInformationRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayerInformationRequestData;
 		}
 	}
 
 	export class AdminGetPlayerInformationOperationRequest extends GetPlayerInformationOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerInformationRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayerInformationRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayerInformationRequestData;
 		}
 	}
 
@@ -472,22 +523,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayerInventoryRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayerInventoryRequestData;
 		}
 	}
 
 	export class ServerGetPlayerInventoryOperationRequest extends GetPlayerInventoryOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerInventoryRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayerInventoryRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayerInventoryRequestData;
 		}
 	}
 
 	export class AdminGetPlayerInventoryOperationRequest extends GetPlayerInventoryOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerInventoryRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayerInventoryRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayerInventoryRequestData;
 		}
 	}
 
@@ -499,22 +553,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayerStatisticsRequestData;
 		}
 	}
 
 	export class ServerGetPlayerStatisticsOperationRequest extends GetPlayerStatisticsOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerStatisticsRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayerStatisticsRequestData;
 		}
 	}
 
 	export class AdminGetPlayerStatisticsOperationRequest extends GetPlayerStatisticsOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayerStatisticsRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayerStatisticsRequestData;
 		}
 	}
 
@@ -526,22 +583,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayersWithDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayersWithDisplayNameRequestData;
 		}
 	}
 
 	export class ServerGetPlayersWithDisplayNameOperationRequest extends GetPlayersWithDisplayNameOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayersWithDisplayNameRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayersWithDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayersWithDisplayNameRequestData;
 		}
 	}
 
 	export class AdminGetPlayersWithDisplayNameOperationRequest extends GetPlayersWithDisplayNameOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayersWithDisplayNameRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayersWithDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayersWithDisplayNameRequestData;
 		}
 	}
 
@@ -553,22 +613,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayersWithSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayersWithSegmentRequestData;
 		}
 	}
 
 	export class ServerGetPlayersWithSegmentOperationRequest extends GetPlayersWithSegmentOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayersWithSegmentRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayersWithSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayersWithSegmentRequestData;
 		}
 	}
 
 	export class AdminGetPlayersWithSegmentOperationRequest extends GetPlayersWithSegmentOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayersWithSegmentRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayersWithSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayersWithSegmentRequestData;
 		}
 	}
 
@@ -580,22 +643,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetPlayersWithTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetPlayersWithTagRequestData;
 		}
 	}
 
 	export class ServerGetPlayersWithTagOperationRequest extends GetPlayersWithTagOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayersWithTagRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetPlayersWithTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetPlayersWithTagRequestData;
 		}
 	}
 
 	export class AdminGetPlayersWithTagOperationRequest extends GetPlayersWithTagOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetPlayersWithTagRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetPlayersWithTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetPlayersWithTagRequestData;
 		}
 	}
 
@@ -607,22 +673,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetRemoveStatusRequestData;
 		}
 	}
 
 	export class ServerGetRemoveStatusOperationRequest extends GetRemoveStatusOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetRemoveStatusRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetRemoveStatusRequestData;
 		}
 	}
 
 	export class AdminGetRemoveStatusOperationRequest extends GetRemoveStatusOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetRemoveStatusRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetRemoveStatusRequestData;
 		}
 	}
 
@@ -634,22 +703,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetSegmentRequestData;
 		}
 	}
 
 	export class ServerGetSegmentOperationRequest extends GetSegmentOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetSegmentRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetSegmentRequestData;
 		}
 	}
 
 	export class AdminGetSegmentOperationRequest extends GetSegmentOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetSegmentRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetSegmentRequestData;
 		}
 	}
 
@@ -661,22 +733,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetStatisticsLeaderboardAroundPlayerRequestData;
 		}
 	}
 
 	export class ServerGetStatisticsLeaderboardAroundPlayerOperationRequest extends GetStatisticsLeaderboardAroundPlayerOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetStatisticsLeaderboardAroundPlayerRequestData;
 		}
 	}
 
 	export class AdminGetStatisticsLeaderboardAroundPlayerOperationRequest extends GetStatisticsLeaderboardAroundPlayerOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetStatisticsLeaderboardAroundPlayerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetStatisticsLeaderboardAroundPlayerRequestData;
 		}
 	}
 
@@ -688,22 +763,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetStatisticsLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetStatisticsLeaderboardRequestData;
 		}
 	}
 
 	export class ServerGetStatisticsLeaderboardOperationRequest extends GetStatisticsLeaderboardOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetStatisticsLeaderboardRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetStatisticsLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetStatisticsLeaderboardRequestData;
 		}
 	}
 
 	export class AdminGetStatisticsLeaderboardOperationRequest extends GetStatisticsLeaderboardOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetStatisticsLeaderboardRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetStatisticsLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetStatisticsLeaderboardRequestData;
 		}
 	}
 
@@ -715,22 +793,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetTagRequestData;
 		}
 	}
 
 	export class ServerGetTagOperationRequest extends GetTagOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetTagRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetTagRequestData;
 		}
 	}
 
 	export class AdminGetTagOperationRequest extends GetTagOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetTagRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetTagRequestData;
 		}
 	}
 
@@ -742,22 +823,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetTsCreateRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetTsCreateRequestData;
 		}
 	}
 
 	export class ServerGetTsCreateOperationRequest extends GetTsCreateOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetTsCreateRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetTsCreateRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetTsCreateRequestData;
 		}
 	}
 
 	export class AdminGetTsCreateOperationRequest extends GetTsCreateOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetTsCreateRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetTsCreateRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetTsCreateRequestData;
 		}
 	}
 
@@ -769,22 +853,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GetTsLastLoginRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetTsLastLoginRequestData;
 		}
 	}
 
 	export class ServerGetTsLastLoginOperationRequest extends GetTsLastLoginOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GetTsLastLoginRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGetTsLastLoginRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetTsLastLoginRequestData;
 		}
 	}
 
 	export class AdminGetTsLastLoginOperationRequest extends GetTsLastLoginOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GetTsLastLoginRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGetTsLastLoginRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetTsLastLoginRequestData;
 		}
 	}
 
@@ -796,22 +883,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GrantGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GrantGroupRequestData;
 		}
 	}
 
 	export class ServerGrantGroupOperationRequest extends GrantGroupOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GrantGroupRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGrantGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGrantGroupRequestData;
 		}
 	}
 
 	export class AdminGrantGroupOperationRequest extends GrantGroupOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GrantGroupRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGrantGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGrantGroupRequestData;
 		}
 	}
 
@@ -823,22 +913,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.GrantPlayerItemRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GrantPlayerItemRequestData;
 		}
 	}
 
 	export class ServerGrantPlayerItemOperationRequest extends GrantPlayerItemOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.GrantPlayerItemRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerGrantPlayerItemRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGrantPlayerItemRequestData;
 		}
 	}
 
 	export class AdminGrantPlayerItemOperationRequest extends GrantPlayerItemOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.GrantPlayerItemRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminGrantPlayerItemRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGrantPlayerItemRequestData;
 		}
 	}
 
@@ -850,22 +943,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.JoinGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.JoinGroupRequestData;
 		}
 	}
 
 	export class ServerJoinGroupOperationRequest extends JoinGroupOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.JoinGroupRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerJoinGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerJoinGroupRequestData;
 		}
 	}
 
 	export class AdminJoinGroupOperationRequest extends JoinGroupOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.JoinGroupRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminJoinGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminJoinGroupRequestData;
 		}
 	}
 
@@ -877,22 +973,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.LeaveGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.LeaveGroupRequestData;
 		}
 	}
 
 	export class ServerLeaveGroupOperationRequest extends LeaveGroupOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.LeaveGroupRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerLeaveGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerLeaveGroupRequestData;
 		}
 	}
 
 	export class AdminLeaveGroupOperationRequest extends LeaveGroupOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.LeaveGroupRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminLeaveGroupRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminLeaveGroupRequestData;
 		}
 	}
 
@@ -904,22 +1003,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.RemovePlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.RemovePlayerFriendRequestData;
 		}
 	}
 
 	export class ServerRemovePlayerFriendOperationRequest extends RemovePlayerFriendOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.RemovePlayerFriendRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerRemovePlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerRemovePlayerFriendRequestData;
 		}
 	}
 
 	export class AdminRemovePlayerFriendOperationRequest extends RemovePlayerFriendOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.RemovePlayerFriendRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminRemovePlayerFriendRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminRemovePlayerFriendRequestData;
 		}
 	}
 
@@ -931,22 +1033,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.RemovePlayerItemRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.RemovePlayerItemRequestData;
 		}
 	}
 
 	export class ServerRemovePlayerItemOperationRequest extends RemovePlayerItemOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.RemovePlayerItemRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerRemovePlayerItemRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerRemovePlayerItemRequestData;
 		}
 	}
 
 	export class AdminRemovePlayerItemOperationRequest extends RemovePlayerItemOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.RemovePlayerItemRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminRemovePlayerItemRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminRemovePlayerItemRequestData;
 		}
 	}
 
@@ -958,22 +1063,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.RemoveSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.RemoveSegmentRequestData;
 		}
 	}
 
 	export class ServerRemoveSegmentOperationRequest extends RemoveSegmentOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.RemoveSegmentRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerRemoveSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerRemoveSegmentRequestData;
 		}
 	}
 
 	export class AdminRemoveSegmentOperationRequest extends RemoveSegmentOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.RemoveSegmentRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminRemoveSegmentRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminRemoveSegmentRequestData;
 		}
 	}
 
@@ -985,22 +1093,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.RemoveTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.RemoveTagRequestData;
 		}
 	}
 
 	export class ServerRemoveTagOperationRequest extends RemoveTagOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.RemoveTagRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerRemoveTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerRemoveTagRequestData;
 		}
 	}
 
 	export class AdminRemoveTagOperationRequest extends RemoveTagOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.RemoveTagRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminRemoveTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminRemoveTagRequestData;
 		}
 	}
 
@@ -1012,22 +1123,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetAvatarRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetAvatarRequestData;
 		}
 	}
 
 	export class ServerSetAvatarOperationRequest extends SetAvatarOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetAvatarRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetAvatarRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetAvatarRequestData;
 		}
 	}
 
 	export class AdminSetAvatarOperationRequest extends SetAvatarOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetAvatarRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetAvatarRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetAvatarRequestData;
 		}
 	}
 
@@ -1039,22 +1153,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetCountryCodeRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetCountryCodeRequestData;
 		}
 	}
 
 	export class ServerSetCountryCodeOperationRequest extends SetCountryCodeOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetCountryCodeRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetCountryCodeRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetCountryCodeRequestData;
 		}
 	}
 
 	export class AdminSetCountryCodeOperationRequest extends SetCountryCodeOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetCountryCodeRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetCountryCodeRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetCountryCodeRequestData;
 		}
 	}
 
@@ -1066,22 +1183,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetCustomDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetCustomDataRequestData;
 		}
 	}
 
 	export class ServerSetCustomDataOperationRequest extends SetCustomDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetCustomDataRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetCustomDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetCustomDataRequestData;
 		}
 	}
 
 	export class AdminSetCustomDataOperationRequest extends SetCustomDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetCustomDataRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetCustomDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetCustomDataRequestData;
 		}
 	}
 
@@ -1093,22 +1213,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetDisplayNameRequestData;
 		}
 	}
 
 	export class ServerSetDisplayNameOperationRequest extends SetDisplayNameOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetDisplayNameRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetDisplayNameRequestData;
 		}
 	}
 
 	export class AdminSetDisplayNameOperationRequest extends SetDisplayNameOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetDisplayNameRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetDisplayNameRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetDisplayNameRequestData;
 		}
 	}
 
@@ -1120,22 +1243,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetOwnerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetOwnerRequestData;
 		}
 	}
 
 	export class ServerSetOwnerOperationRequest extends SetOwnerOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetOwnerRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetOwnerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetOwnerRequestData;
 		}
 	}
 
 	export class AdminSetOwnerOperationRequest extends SetOwnerOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetOwnerRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetOwnerRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetOwnerRequestData;
 		}
 	}
 
@@ -1147,22 +1273,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetPlayerBanRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetPlayerBanRequestData;
 		}
 	}
 
 	export class ServerSetPlayerBanOperationRequest extends SetPlayerBanOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerBanRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetPlayerBanRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetPlayerBanRequestData;
 		}
 	}
 
 	export class AdminSetPlayerBanOperationRequest extends SetPlayerBanOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerBanRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetPlayerBanRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetPlayerBanRequestData;
 		}
 	}
 
@@ -1174,22 +1303,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetPlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetPlayerCurrencyRequestData;
 		}
 	}
 
 	export class ServerSetPlayerCurrencyOperationRequest extends SetPlayerCurrencyOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerCurrencyRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetPlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetPlayerCurrencyRequestData;
 		}
 	}
 
 	export class AdminSetPlayerCurrencyOperationRequest extends SetPlayerCurrencyOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerCurrencyRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetPlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetPlayerCurrencyRequestData;
 		}
 	}
 
@@ -1201,22 +1333,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetPlayerDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetPlayerDataRequestData;
 		}
 	}
 
 	export class ServerSetPlayerDataOperationRequest extends SetPlayerDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerDataRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetPlayerDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetPlayerDataRequestData;
 		}
 	}
 
 	export class AdminSetPlayerDataOperationRequest extends SetPlayerDataOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerDataRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetPlayerDataRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetPlayerDataRequestData;
 		}
 	}
 
@@ -1228,22 +1363,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetPlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetPlayerStatisticsRequestData;
 		}
 	}
 
 	export class ServerSetPlayerStatisticsOperationRequest extends SetPlayerStatisticsOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerStatisticsRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetPlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetPlayerStatisticsRequestData;
 		}
 	}
 
 	export class AdminSetPlayerStatisticsOperationRequest extends SetPlayerStatisticsOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerStatisticsRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetPlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetPlayerStatisticsRequestData;
 		}
 	}
 
@@ -1255,22 +1393,25 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetRemoveStatusRequestData;
 		}
 	}
 
 	export class ServerSetRemoveStatusOperationRequest extends SetRemoveStatusOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetRemoveStatusRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetRemoveStatusRequestData;
 		}
 	}
 
 	export class AdminSetRemoveStatusOperationRequest extends SetRemoveStatusOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetRemoveStatusRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetRemoveStatusRequestData;
 		}
 	}
 
@@ -1282,22 +1423,145 @@ export module CharacterPlayerRequestModels {
 
 		constructor(requestData: CharacterPlayerModels.SetTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.SetTagRequestData;
 		}
 	}
 
 	export class ServerSetTagOperationRequest extends SetTagOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.SetTagRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerSetTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerSetTagRequestData;
 		}
 	}
 
 	export class AdminSetTagOperationRequest extends SetTagOperationRequest {
 		protected override requestRole: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.SetTagRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminSetTagRequestData, timeout: number) {
 			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminSetTagRequestData;
+		}
+	}
+
+	export class GetCurrencyLeaderboardOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.GetCurrencyLeaderboardRequestData> {
+		protected override operationCode: number = OperationCode.GetCurrencyLeaderboard;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.CharacterPlayer;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: CharacterPlayerModels.GetCurrencyLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetCurrencyLeaderboardRequestData;
+		}
+	}
+
+	export class ServerGetCurrencyLeaderboardOperationRequest extends GetCurrencyLeaderboardOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Server;
+
+		constructor(requestData: CharacterPlayerModels.ServerGetCurrencyLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetCurrencyLeaderboardRequestData;
+		}
+	}
+
+	export class AdminGetCurrencyLeaderboardOperationRequest extends GetCurrencyLeaderboardOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Admin;
+
+		constructor(requestData: CharacterPlayerModels.AdminGetCurrencyLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetCurrencyLeaderboardRequestData;
+		}
+	}
+
+	export class GetCreateLeaderboardOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.GetCreateLeaderboardRequestData> {
+		protected override operationCode: number = OperationCode.GetCreateLeaderboard;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.CharacterPlayer;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: CharacterPlayerModels.GetCreateLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetCreateLeaderboardRequestData;
+		}
+	}
+
+	export class ServerGetCreateLeaderboardOperationRequest extends GetCreateLeaderboardOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Server;
+
+		constructor(requestData: CharacterPlayerModels.ServerGetCreateLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetCreateLeaderboardRequestData;
+		}
+	}
+
+	export class AdminGetCreateLeaderboardOperationRequest extends GetCreateLeaderboardOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Admin;
+
+		constructor(requestData: CharacterPlayerModels.AdminGetCreateLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetCreateLeaderboardRequestData;
+		}
+	}
+
+	export class GetStatisticsLogOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.GetStatisticsLogRequestData> {
+		protected override operationCode: number = OperationCode.GetStatisticsLog;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.CharacterPlayer;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: CharacterPlayerModels.GetStatisticsLogRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetStatisticsLogRequestData;
+		}
+	}
+
+	export class ServerGetStatisticsLogOperationRequest extends GetStatisticsLogOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Server;
+
+		constructor(requestData: CharacterPlayerModels.ServerGetStatisticsLogRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetStatisticsLogRequestData;
+		}
+	}
+
+	export class AdminGetStatisticsLogOperationRequest extends GetStatisticsLogOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Admin;
+
+		constructor(requestData: CharacterPlayerModels.AdminGetStatisticsLogRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetStatisticsLogRequestData;
+		}
+	}
+
+	export class GetCurrencyLogOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.GetCurrencyLogRequestData> {
+		protected override operationCode: number = OperationCode.GetCurrencyLog;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.CharacterPlayer;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: CharacterPlayerModels.GetCurrencyLogRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetCurrencyLogRequestData;
+		}
+	}
+
+	export class ServerGetCurrencyLogOperationRequest extends GetCurrencyLogOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Server;
+
+		constructor(requestData: CharacterPlayerModels.ServerGetCurrencyLogRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetCurrencyLogRequestData;
+		}
+	}
+
+	export class AdminGetCurrencyLogOperationRequest extends GetCurrencyLogOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Admin;
+
+		constructor(requestData: CharacterPlayerModels.AdminGetCurrencyLogRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetCurrencyLogRequestData;
 		}
 	}
 

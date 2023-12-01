@@ -1,9 +1,9 @@
-import { GNHashtable } from "../../common/GNData";
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "../DataMember";
+import { GNHashtable } from "./../../common/GNData";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
-export module ContentModels {
+export namespace ContentModels {
 	export class ContentDataParam {
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -29,8 +29,8 @@ export module ContentModels {
 	}
 
 	export class GetContentDataRequestData {
-		@GNArrayDataMember({ code: GNParameterCode.Keys, elementCls: String, mustNonNull: true })
-		public keys: Array<string>;
+		@GNArrayDataMember({ code: GNParameterCode.Keys, elementCls: String, isOptional: true })
+		public keys?: Array<string>;
 
 		@StringDataMember({ code: GNParameterCode.Label, minLength: 2, maxLength: 32, isOptional: true, defaultValue: "" })
 		public label?: string;
@@ -44,9 +44,6 @@ export module ContentModels {
 	}
 
 	export class GetFileUploadInfoListRequestData {
-		@StringDataMember({ code: GNParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
-		public fileId: string;
-
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 

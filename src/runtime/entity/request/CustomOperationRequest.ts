@@ -1,5 +1,5 @@
-import { ConverterService } from "../../helper/ConverterService";
-import { Constructor } from "../GNMetadata";
+import { ConverterService } from "./../../helper/ConverterService";
+import { Constructor } from "./../GNMetadata";
 import { RequestRole } from "./../../constant/enumType/RequestRole";
 import { RequestType } from "./../../constant/enumType/RequestType";
 import { OperationRequest } from "./../OperationRequest";

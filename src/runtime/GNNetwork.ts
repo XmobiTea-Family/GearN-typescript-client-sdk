@@ -1,4 +1,4 @@
-const VERSION: string = "2.0";
+const VERSION: string = "2.3";
 
 import { Action0 } from "./common/Action0";
 import { Action1 } from "./common/Action1";
@@ -30,12 +30,14 @@ import { InventoryApi } from "./GNNetworkInventoryApi";
 import { MasterPlayerApi } from "./GNNetworkMasterPlayerApi";
 import { StoreInventoryApi } from "./GNNetworkStoreInventoryApi";
 import { ConverterService } from "./helper/ConverterService";
+import { MultiplayerApi } from "./GNNetworkMultiplayerApi";
+import { CloudScriptApi } from "./GNNetworkCloudScriptApi";
 
 export class GNNetwork {
 
     static readonly AUTH_TOKEN_KEY = "[GN]_AUTH_TOKEN_KEY";
     static readonly USER_ID_KEY = "[GN]_USER_ID_KEY";
-    static readonly AUTH_TOKEN_TS_EXPIRE_KEY = "[GN]_AUTH_TOKEN_TS_EXPIRE_KEY";
+    static readonly GAME_ID_KEY = "[GN]_GAME_ID_KEY";
 
     private static gnServerSettings: GNServerSettings;
     public static getGNServerSettings(): GNServerSettings {
@@ -59,12 +61,16 @@ export class GNNetwork {
         return false;
     }
 
-    static getServerTimestamp(): number {
+    public static getServerTimestamp(): number {
         return GNNetwork.peer != null ? GNNetwork.peer.getServerTimestamp() : new Date().getUTCMilliseconds();
     }
 
-    static getAuthenticateStatus(): AuthenticateStatus {
+    public static getAuthenticateStatus(): AuthenticateStatus {
         return GNNetwork.peer.authenticateStatus;
+    }
+
+    public static getGameId(): string {
+        return GNNetwork.peer.gameId;
     }
 
     public static getPlatform(): number {
@@ -80,6 +86,8 @@ export class GNNetwork {
     public static inventory: InventoryApi;
     public static masterPlayer: MasterPlayerApi;
     public static storeInventory: StoreInventoryApi;
+    public static multiplayer: MultiplayerApi;
+    public static cloudScript: CloudScriptApi;
 
     public static init(gnServerSettings: GNServerSettings): void {
         if (GNNetwork.gnServerSettings != null) {
@@ -102,9 +110,9 @@ export class GNNetwork {
         GNNetwork.initGNSocketObject();
 
         GNNetwork.peer.authenticateStatus.setAuthToken(store.get(GNNetwork.AUTH_TOKEN_KEY, ""));
-        GNNetwork.peer.authenticateStatus.setAuthTokenTsExpire(parseInt(store.get(GNNetwork.AUTH_TOKEN_TS_EXPIRE_KEY, "-1")));
         GNNetwork.peer.authenticateStatus.setUserId(store.get(GNNetwork.USER_ID_KEY, ""));
-
+        GNNetwork.peer.gameId = store.get(GNNetwork.GAME_ID_KEY, "");
+        
         GNNetwork.authenticate = new AuthenticateApi();
         GNNetwork.characterPlayer = new CharacterPlayerApi();
         GNNetwork.content = new ContentApi();
@@ -114,6 +122,22 @@ export class GNNetwork {
         GNNetwork.inventory = new InventoryApi();
         GNNetwork.masterPlayer = new MasterPlayerApi();
         GNNetwork.storeInventory = new StoreInventoryApi();
+        GNNetwork.multiplayer = new MultiplayerApi();
+        GNNetwork.cloudScript = new CloudScriptApi();
+    }
+
+    public static setNewAuthenticateStatus(authenticateStatus: AuthenticateStatus) {
+        store.set(GNNetwork.AUTH_TOKEN_KEY, authenticateStatus.getAuthToken());
+        store.set(GNNetwork.USER_ID_KEY, authenticateStatus.getUserId());
+
+        GNNetwork.peer.authenticateStatus.setAuthToken(authenticateStatus.getAuthToken());
+        GNNetwork.peer.authenticateStatus.setUserId(authenticateStatus.getUserId());
+    }
+
+    public static setGameId(gameId: string) {
+        store.set(GNNetwork.GAME_ID_KEY, gameId);
+
+        GNNetwork.peer.gameId = gameId;
     }
 
     public static getClientSdkVersion(): string {
@@ -134,7 +158,7 @@ export class GNNetwork {
 
     private static initGNDebug(): void {
         if (GNNetwork.gnServerSettings == null)
-            throw new Error("Null EUN Server Settings, please find it now");
+            throw new Error("Null GN Server Settings, please find it now");
 
         GNDebug.setLogType(GNNetwork.gnServerSettings.getLogType());
     }
@@ -156,38 +180,94 @@ export class GNNetwork {
         GNNetwork.peer.sendViaSocket(requestType, requestRole, request, onResponse, overrideAuthToken, overrideSecretKey, customTags);
     }
 
+    public static async sendViaSocketAsync(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse> {
+        return new Promise((resolve) => {
+            GNNetwork.sendViaSocket(requestType, requestRole, request,
+                (response: OperationResponse) => {
+                    resolve(response);
+                }, overrideAuthToken, overrideSecretKey, customTags
+            );
+        });
+    }
+
     public static sendViaHttp(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): void {
         GNNetwork.peer.sendViaHttp(requestType, requestRole, request, onResponse, overrideAuthToken, overrideSecretKey, customTags);
     }
 
-    public static sendViaSocketTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, cls: Constructor<TResponse>): void {
-        GNNetwork.sendViaSocketTResponse(request.getRequestType(), request.getRequestRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, customTags, cls);
+    public static async sendViaHttpAsync(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse> {
+        return new Promise((resolve) => {
+            GNNetwork.sendViaHttp(requestType, requestRole, request,
+                (response: OperationResponse) => {
+                    resolve(response);
+                }, overrideAuthToken, overrideSecretKey, customTags
+            );
+        });
     }
 
-    public static sendViaHttpTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, cls: Constructor<TResponse>): void {
-        GNNetwork.sendViaHttpTResponse(request.getRequestType(), request.getRequestRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, customTags, cls);
+    public static sendViaSocketTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): void {
+        GNNetwork.sendViaSocketTResponse(request.getRequestType(), request.getRequestRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
     }
 
-    public static sendViaSocketTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, cls: Constructor<TResponse>): void {
+    public static async sendViaSocketTRequestTResponseAsync<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
+        return new Promise((resolve) => {
+            GNNetwork.sendViaSocketTRequestTResponse(request,
+                (response: TResponse) => {
+                    resolve(response);
+                }, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+        });
+    }
+
+    public static sendViaHttpTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): void {
+        GNNetwork.sendViaHttpTResponse(request.getRequestType(), request.getRequestRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+    }
+
+    public static async sendViaHttpTRequestTResponseAsync<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
+        return new Promise((resolve) => {
+            GNNetwork.sendViaHttpTRequestTResponse(request,
+                (response: TResponse) => {
+                    resolve(response);
+                }, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+        });
+    }
+
+    public static sendViaSocketTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): void {
         GNNetwork.sendViaSocket(requestType, requestRole, request, response => {
             if (response == null) return;
 
-            let customOperationResponse = new cls();
-            (customOperationResponse as any).setupOperationResponseAbstract(response, cls);
+            let customOperationResponse = new customOperationResponseCls();
+            customOperationResponse.setupOperationResponse(response);
 
             if (onResponse != null) onResponse(customOperationResponse);
         }, overrideAuthToken, overrideSecretKey, customTags);
     }
 
-    public static sendViaHttpTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, cls: Constructor<TResponse>): void {
+    public static async sendViaSocketTResponseAsync<TResponse extends CustomOperationResponse>(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
+        return new Promise((resolve) => {
+            GNNetwork.sendViaSocketTResponse(requestType, requestRole, request,
+                (response: TResponse) => {
+                    resolve(response);
+                }, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+        });
+    }
+
+    public static sendViaHttpTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): void {
         GNNetwork.sendViaHttp(requestType, requestRole, request, response => {
             if (response == null) return;
 
-            let customOperationResponse = new cls();
-            (customOperationResponse as any).setupOperationResponseAbstract(response, cls);
+            let customOperationResponse = new customOperationResponseCls();
+            customOperationResponse.setupOperationResponse(response);
 
             if (onResponse != null) onResponse(customOperationResponse);
         }, overrideAuthToken, overrideSecretKey, customTags);
+    }
+
+    public static async sendViaHttpTResponseAsync<TResponse extends CustomOperationResponse>(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
+        return new Promise((resolve) => {
+            GNNetwork.sendViaHttpTResponse(requestType, requestRole, request,
+                (response: TResponse) => {
+                    resolve(response);
+                }, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+        });
     }
 
     public static connectSocket(_onSocketConnect: Action0 = null): void {

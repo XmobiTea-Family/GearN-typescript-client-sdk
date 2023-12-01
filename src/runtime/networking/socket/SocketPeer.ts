@@ -1,15 +1,15 @@
-import { Action1 } from "../../common/Action1";
-import { Action0 } from "../../common/Action0";
-import { GNArray } from "../../common/GNData";
-import { ReturnCode } from "../../constant/ReturnCode";
-import { OperationEvent } from "../../entity/OperationEvent";
-import { GNNetwork } from "../../GNNetwork";
-import { GNDebug } from "../../logger/GNDebug";
-import { IServerEventHandler } from "../handler/IServerEventHandler";
+import { Action1 } from "./../../common/Action1";
+import { Action0 } from "./../../common/Action0";
+import { GNArray } from "./../../common/GNData";
+import { ReturnCode } from "./../../constant/ReturnCode";
+import { OperationEvent } from "./../../entity/OperationEvent";
+import { GNNetwork } from "./../../GNNetwork";
+import { GNDebug } from "./../../logger/GNDebug";
+import { IServerEventHandler } from "./../handler/IServerEventHandler";
 import { NetworkingSocketPeerBase } from "./NetworkingSocketPeerBase";
 import { NetworkingPeerSocketIOClient } from "./NetworkingPeerSocketIOClient";
-import { OperationPending } from "../OperationPending";
-import { PeerBase } from "../PeerBase";
+import { OperationPending } from "./../OperationPending";
+import { PeerBase } from "./../PeerBase";
 
 export class SocketPeer extends PeerBase {
     private networkingSocketPeerBase: NetworkingSocketPeerBase;
@@ -114,9 +114,10 @@ export class SocketPeer extends PeerBase {
 
         let authToken = operationPending.getAuthToken();
         let secretKey = operationPending.getSecretKey();
+        let gameId = operationPending.getGameId();
         let customTags = operationPending.getCustomTags();
 
-        this.networkingSocketPeerBase.send(operationPending.getRequestType(), operationPending.getRequestRole(), operationPending.getOperationRequest(), authToken, secretKey, customTags);
+        this.networkingSocketPeerBase.send(operationPending.getRequestType(), operationPending.getRequestRole(), operationPending.getOperationRequest(), authToken, secretKey, customTags, gameId);
     }
 
     onEventHandler(obj: GNArray, isEncrypted: boolean): void {

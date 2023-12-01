@@ -11,3 +11,6 @@ scratch/
 tsconfig.udm.json
 tsconfig-build.udm.json
 webpack.config.udm.js
+tsconfig.min.udm.json
+tsconfig-build.min.udm.json
+webpack.config.min.udm.js

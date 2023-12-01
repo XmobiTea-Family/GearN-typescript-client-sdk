@@ -4,6 +4,7 @@ import { Action2 } from "./runtime/common/Action2";
 import { Action3 } from "./runtime/common/Action3";
 import { Action4 } from "./runtime/common/Action4";
 import { GNHashtableBuilder, GNHashtable, GNArrayBuilder, GNArray } from "./runtime/common/GNData";
+
 export { Action0 };
 export { Action1 };
 export { Action2 };
@@ -19,25 +20,24 @@ import { GoogleLoginType } from "./runtime/constant/enumType/GoogleLoginType";
 import { GroupStatus } from "./runtime/constant/enumType/GroupStatus";
 import { InvalidMemberType } from "./runtime/constant/enumType/InvalidMemberType";
 import { ItemType } from "./runtime/constant/enumType/ItemType";
-import { LoginType } from "./runtime/constant/enumType/LoginType";
+import { MatchmakingMemberStatus } from "./runtime/constant/enumType/MatchmakingMemberStatus";
+import { MatchmakingTicketStatus } from "./runtime/constant/enumType/MatchmakingTicketStatus";
 import { OwnerType } from "./runtime/constant/enumType/OwnerType";
 import { PermissionDataItem } from "./runtime/constant/enumType/PermissionDataItem";
 import { RequestRole } from "./runtime/constant/enumType/RequestRole";
 import { RequestType } from "./runtime/constant/enumType/RequestType";
-import { StatisticsAggregationMethod } from "./runtime/constant/enumType/StatisticsAggregationMethod";
-import { UserRoleType } from "./runtime/constant/enumType/UserRoleType";
 export { FriendStatus };
 export { GoogleLoginType };
 export { GroupStatus };
 export { InvalidMemberType };
 export { ItemType };
-export { LoginType };
+export { MatchmakingMemberStatus };
+export { MatchmakingTicketStatus };
 export { OwnerType };
 export { PermissionDataItem };
 export { RequestRole };
 export { RequestType };
-export { StatisticsAggregationMethod };
-export { UserRoleType };
+
 
 import { GNErrorCode } from "./runtime/constant/errorCode/GNErrorCode";
 export { GNErrorCode };
@@ -85,7 +85,12 @@ import { MasterPlayerResponseModels } from "./runtime/entity/models/MasterPlayer
 import { StoreInventoryModels } from "./runtime/entity/models/StoreInventoryModels";
 import { StoreInventoryRequestModels } from "./runtime/entity/models/StoreInventoryRequestModels";
 import { StoreInventoryResponseModels } from "./runtime/entity/models/StoreInventoryResponseModels";
-
+import { CloudScriptModels } from "./runtime/entity/models/CloudScriptModels";
+import { CloudScriptRequestModels } from "./runtime/entity/models/CloudScriptRequestModels";
+import { CloudScriptResponseModels } from "./runtime/entity/models/CloudScriptResponseModels";
+import { MultiplayerModels } from "./runtime/entity/models/MultiplayerModels";
+import { MultiplayerRequestModels } from "./runtime/entity/models/MultiplayerRequestModels";
+import { MultiplayerResponseModels } from "./runtime/entity/models/MultiplayerResponseModels";
 export { AuthenticateModels };
 export { AuthenticateRequestModels };
 export { AuthenticateResponseModels };
@@ -114,7 +119,12 @@ export { MasterPlayerResponseModels };
 export { StoreInventoryModels };
 export { StoreInventoryRequestModels };
 export { StoreInventoryResponseModels };
-
+export { CloudScriptModels };
+export { CloudScriptRequestModels };
+export { CloudScriptResponseModels };
+export { MultiplayerModels };
+export { MultiplayerRequestModels };
+export { MultiplayerResponseModels };
 
 import { CustomOperationRequest, CustomOperationRequestAbstract } from "./runtime/entity/request/CustomOperationRequest";
 export { CustomOperationRequest, CustomOperationRequestAbstract };
@@ -132,7 +142,6 @@ export { OperationEvent };
 export { OperationHelper };
 export { OperationRequest };
 export { OperationResponse };
-
 
 import { GNDebug, LogType } from "./runtime/logger/GNDebug";
 export { GNDebug, LogType };
@@ -171,7 +180,6 @@ export { OperationPending };
 export { PeerBase };
 export { SocketPeer };
 
-
 import { GNNetwork } from "./runtime/GNNetwork";
 export { GNNetwork };
 
@@ -194,7 +202,10 @@ import { MasterPlayerApi as GNNetworkMasterPlayerApi, ServerMasterPlayerApi as S
 export { GNNetworkMasterPlayerApi, Server_GNNetworkMasterPlayerApi, Admin_GNNetworkMasterPlayerApi };
 import { StoreInventoryApi as GNNetworkStoreInventoryApi, ServerStoreInventoryApi as Server_GNNetworkStoreInventoryApi, AdminStoreInventoryApi as Admin_GNNetworkStoreInventoryApi } from "./runtime/GNNetworkStoreInventoryApi";
 export { GNNetworkStoreInventoryApi, Server_GNNetworkStoreInventoryApi, Admin_GNNetworkStoreInventoryApi };
-
+import { MultiplayerApi as GNNetworkMultiplayerApi, ServerMultiplayerApi as Server_GNNetworkMultiplayerApi, AdminMultiplayerApi as Admin_GNNetworkMultiplayerApi } from "./runtime/GNNetworkMultiplayerApi";
+export { GNNetworkMultiplayerApi, Server_GNNetworkMultiplayerApi, Admin_GNNetworkMultiplayerApi };
+import { CloudScriptApi as GNNetworkCloudScriptApi, ServerCloudScriptApi as Server_GNNetworkCloudScriptApi, AdminCloudScriptApi as Admin_GNNetworkCloudScriptApi } from "./runtime/GNNetworkCloudScriptApi";
+export { GNNetworkCloudScriptApi, Server_GNNetworkCloudScriptApi, Admin_GNNetworkCloudScriptApi };
 
 import { GNSupport } from "./runtime/helper/GNSupport";
 import { CodeHelper } from "./runtime/helper/CodeHelper";
@@ -226,3 +237,131 @@ export { OnGamePlayerFriendUpdateEventHandler };
 export { OnGamePlayerGroupUpdateEventHandler };
 export { OnGroupMemberUpdateEventHandler };
 export { OnGroupMessageUpdateEventHandler };
+
+
+const gn = {
+    GNHashtableBuilder,
+    GNHashtable,
+    GNArrayBuilder,
+    GNArray,
+    GNServerSettings,
+    FriendStatus,
+    GoogleLoginType,
+    GroupStatus,
+    InvalidMemberType,
+    ItemType,
+    MatchmakingMemberStatus,
+    MatchmakingTicketStatus,
+    OwnerType,
+    PermissionDataItem,
+    RequestRole,
+    RequestType,
+    GNErrorCode,
+    GNParameterCode,
+    ParameterCode,
+    Commands,
+    EventCode, 
+    OperationCode,
+    ReturnCode, 
+    AuthenticateModels,
+    AuthenticateRequestModels,
+    AuthenticateResponseModels,
+    CharacterPlayerModels,
+    CharacterPlayerRequestModels,
+    CharacterPlayerResponseModels,
+    ContentModels,
+    ContentRequestModels,
+    ContentResponseModels,
+    DashboardModels,
+    DashboardRequestModels,
+    DashboardResponseModels,
+    GamePlayerModels,
+    GamePlayerRequestModels,
+    GamePlayerResponseModels,
+    GenericModels,
+    GroupModels,
+    GroupRequestModels,
+    GroupResponseModels,
+    InventoryModels,
+    InventoryRequestModels,
+    InventoryResponseModels,
+    MasterPlayerModels,
+    MasterPlayerRequestModels,
+    MasterPlayerResponseModels,
+    StoreInventoryModels,
+    StoreInventoryRequestModels,
+    StoreInventoryResponseModels,
+    CloudScriptModels,
+    CloudScriptRequestModels,
+    CloudScriptResponseModels,
+    MultiplayerModels,
+    MultiplayerRequestModels,
+    MultiplayerResponseModels,
+    CustomOperationRequest,
+    CustomOperationRequestAbstract,
+    CustomOperationResponse,
+    CustomOperationResponseAbstract,
+    OperationEvent,
+    OperationHelper,
+    OperationRequest,
+    OperationResponse,
+    GNDebug,
+    LogType,
+    IServerEventHandler,
+    HttpPeer,
+    HttpAppResponse,
+    PostType,
+    NetworkingHttpPeerBase,
+    NetworkingPeerAxiosRequest,
+    NetworkingPeer,
+    NetworkingSocketPeerBase,
+    SocketPacket,
+    NetworkingPeerSocketIOClient,
+    OperationPending,
+    PeerBase,
+    SocketPeer,
+    GNNetwork,
+    GNNetworkAuthenticateApi,
+    Server_GNNetworkAuthenticateApi,
+    Admin_GNNetworkAuthenticateApi,
+    GNNetworkCharacterPlayerApi,
+    Server_GNNetworkCharacterPlayerApi,
+    Admin_GNNetworkCharacterPlayerApi,
+    GNNetworkContentApi,
+    Server_GNNetworkContentApi,
+    Admin_GNNetworkContentApi,
+    GNNetworkDashboardApi,
+    Server_GNNetworkDashboardApi,
+    Admin_GNNetworkDashboardApi,
+    GNNetworkGamePlayerApi,
+    Server_GNNetworkGamePlayerApi,
+    Admin_GNNetworkGamePlayerApi,
+    GNNetworkGroupApi,
+    Server_GNNetworkGroupApi,
+    Admin_GNNetworkGroupApi,
+    GNNetworkInventoryApi,
+    Server_GNNetworkInventoryApi,
+    Admin_GNNetworkInventoryApi,
+    GNNetworkMasterPlayerApi,
+    Server_GNNetworkMasterPlayerApi,
+    Admin_GNNetworkMasterPlayerApi,
+    GNNetworkStoreInventoryApi,
+    Server_GNNetworkStoreInventoryApi,
+    Admin_GNNetworkStoreInventoryApi,
+    GNNetworkMultiplayerApi,
+    Server_GNNetworkMultiplayerApi,
+    Admin_GNNetworkMultiplayerApi,
+    GNNetworkCloudScriptApi,
+    Server_GNNetworkCloudScriptApi,
+    Admin_GNNetworkCloudScriptApi,
+    GNSupport,
+    CodeHelper,
+    DataMember,
+    StringDataMember,
+    BooleanDataMember,
+    GNHashtableDataMember,
+    GNArrayDataMember,
+    NumberDataMember,
+    FieldDataType,
+    ServiceUpdate,
+};

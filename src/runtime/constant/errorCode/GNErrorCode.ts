@@ -37,4 +37,17 @@ export class GNErrorCode {
 	public static readonly ReceiptInvalid: number = 35;
 	public static readonly StoreItemHadBeenRemove: number = 36;
 	public static readonly DisplayNameHasUse: number = 37;
+	public static readonly PlayerBan: number = 38;
+
+	public static readonly MatchmakingTicketNotFound: number = 39;
+	public static readonly MatchmakingTicketAlreadyCompleted: number = 40;
+	public static readonly MatchmakingPlayerHasNotJoinedTicket: number = 41;
+	public static readonly MatchNotFound: number = 42;
+	public static readonly MatchmakingPlayerHasJoinedOtherTicket: number = 43;
+	public static readonly MatchmakingQueueNotFound: number = 44;
+	public static readonly TicketSizeError: number = 45;
+
+	public static readonly ExecuteError: number = 46;
+	public static readonly VersionInvalid: number = 47;
+
 }

@@ -1,8 +1,9 @@
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "../DataMember";
+import { GNHashtable } from "../../common/GNData";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
-export module MasterPlayerModels {
+export namespace MasterPlayerModels {
 	export class CustomDataParam {
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -102,7 +103,16 @@ export module MasterPlayerModels {
 
 	}
 
-	export class ExternalItem {
+	export class GenericService {
+		@StringDataMember({ code: GNParameterCode.ServiceName })
+		public serviceName: string;
+
+		@StringDataMember({ code: GNParameterCode.ServiceId })
+		public serviceId: string;
+
+	}
+
+	export class Device {
 		@StringDataMember({ code: GNParameterCode.CustomDeviceId, isOptional: true })
 		public customDeviceId?: string;
 
@@ -174,12 +184,57 @@ export module MasterPlayerModels {
 
 	}
 
-	export class GenericService {
-		@StringDataMember({ code: GNParameterCode.ServiceName })
-		public serviceName: string;
+	export class GooglePlayGameService {
+		@StringDataMember({ code: GNParameterCode.PlayerId })
+		public playerId: string;
 
-		@StringDataMember({ code: GNParameterCode.ServiceId })
-		public serviceId: string;
+		@StringDataMember({ code: GNParameterCode.DisplayName })
+		public displayName: string;
+
+		@StringDataMember({ code: GNParameterCode.Email })
+		public email: string;
+
+	}
+
+	export class GameCenter {
+		@StringDataMember({ code: GNParameterCode.PlayerId })
+		public playerId: string;
+
+		@StringDataMember({ code: GNParameterCode.DisplayName })
+		public displayName: string;
+
+		@StringDataMember({ code: GNParameterCode.Email })
+		public email: string;
+		
+	}
+
+	export class ExternalItem {
+		@GNHashtableDataMember({ code: GNParameterCode.Device, isOptional: true })
+		public device?: Device;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Account, isOptional: true })
+		public account?: Account;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Custom, isOptional: true })
+		public custom?: Custom;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Apple, isOptional: true })
+		public apple?: Apple;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Google, isOptional: true })
+		public google?: Google;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Facebook, isOptional: true })
+		public facebook?: Facebook;
+
+		@GNArrayDataMember({ code: GNParameterCode.GenericService, isOptional: true, elementCls: GenericService })
+		public genericServices?: Array<GenericService>;
+
+		@GNHashtableDataMember({ code: GNParameterCode.GooglePlayGameService, isOptional: true })
+		public googlePlayGameService?: GooglePlayGameService;
+
+		@GNHashtableDataMember({ code: GNParameterCode.GameCenter, isOptional: true })
+		public gameCenter?: GameCenter;
 
 	}
 
@@ -492,6 +547,36 @@ export module MasterPlayerModels {
 	export class AdminGetPlayersWithGoogleRequestData extends ServerGetPlayersWithGoogleRequestData {
 	}
 
+	export class GetPlayersWithGooglePlayGameServiceRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.PlayerIds, mustNonNull: true, elementCls: String })
+		public playerIds: Array<string>;
+
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+	}
+
+	export class ServerGetPlayersWithGooglePlayGameServiceRequestData extends GetPlayersWithGooglePlayGameServiceRequestData {
+	}
+
+	export class AdminGetPlayersWithGooglePlayGameServiceRequestData extends ServerGetPlayersWithGooglePlayGameServiceRequestData {
+	}
+
+	export class GetPlayersWithGameCenterRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.PlayerIds, mustNonNull: true, elementCls: String })
+		public playerIds: Array<string>;
+
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+	}
+
+	export class ServerGetPlayersWithGameCenterRequestData extends GetPlayersWithGameCenterRequestData {
+	}
+
+	export class AdminGetPlayersWithGameCenterRequestData extends ServerGetPlayersWithGameCenterRequestData {
+	}
+
 	export class GetPlayersWithSegmentRequestData {
 		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
@@ -595,12 +680,57 @@ export module MasterPlayerModels {
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
+		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		public version?: string;
+	
 	}
 
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
 	}
 
 	export class AdminGetStatisticsLeaderboardRequestData extends ServerGetStatisticsLeaderboardRequestData {
+	}
+
+	export class GetCreateLeaderboardRequestData {
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+		
+	}
+
+	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
+	}
+
+	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
+	}
+
+	export class GetLastLoginLeaderboardRequestData {
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetLastLoginLeaderboardRequestData extends GetLastLoginLeaderboardRequestData {
+	}
+
+	export class AdminGetLastLoginLeaderboardRequestData extends ServerGetLastLoginLeaderboardRequestData {
 	}
 
 	export class GetTagRequestData {
@@ -808,8 +938,8 @@ export module MasterPlayerModels {
 		@StringDataMember({ code: GNParameterCode.ServiceName, minLength: 6, maxLength: 32, mustNonNull: true })
 		public serviceName: string;
 
-		@StringDataMember({ code: GNParameterCode.ServiceId, minLength: 6, maxLength: 64, mustNonNull: true })
-		public serviceId: string;
+		@GNHashtableDataMember({ code: GNParameterCode.ServiceData, mustNonNull: true })
+		public serviceData: GNHashtable;
 
 		@BooleanDataMember({ code: GNParameterCode.ForceLink, isOptional: true, defaultValue: false })
 		public forceLink?: boolean;
@@ -847,6 +977,63 @@ export module MasterPlayerModels {
 	}
 
 	export class AdminLinkGoogleRequestData extends ServerLinkGoogleRequestData {
+	}
+
+	export class LinkGooglePlayGameServiceRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 20, maxLength: 512, mustNonNull: true })
+		public token: string;
+
+		@BooleanDataMember({ code: GNParameterCode.ForceLink, isOptional: true, defaultValue: false })
+		public forceLink?: boolean;
+
+	}
+
+	export class ServerLinkGooglePlayGameServiceRequestData extends LinkGooglePlayGameServiceRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminLinkGooglePlayGameServiceRequestData extends ServerLinkGooglePlayGameServiceRequestData {
+	}
+
+	export class LinkGameCenterRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@StringDataMember({ code: GNParameterCode.PlayerId, minLength: 2, maxLength: 64, mustNonNull: true })
+		public playerId: string;
+	
+		@StringDataMember({ code: GNParameterCode.Name, minLength: 2, maxLength: 64, mustNonNull: true })
+		public name: string;
+	
+		@StringDataMember({ code: GNParameterCode.PublicKeyUrl, minLength: 2, maxLength: 256, mustNonNull: true })
+		public publicKeyUrl: string;
+	
+		@StringDataMember({ code: GNParameterCode.Signature, minLength: 2, maxLength: 512, mustNonNull: true })
+		public signature: string;
+	
+		@StringDataMember({ code: GNParameterCode.Salt, minLength: 2, maxLength: 128, mustNonNull: true })
+		public salt: string;
+	
+		@NumberDataMember({ code: GNParameterCode.Timestamp })
+		public timestamp: number;
+
+		@BooleanDataMember({ code: GNParameterCode.ForceLink, isOptional: true, defaultValue: false })
+		public forceLink?: boolean;
+
+	}
+
+	export class ServerLinkGameCenterRequestData extends LinkGameCenterRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminLinkGameCenterRequestData extends ServerLinkGameCenterRequestData {
 	}
 
 	export class LinkiOSDeviceIdRequestData {
@@ -991,8 +1178,8 @@ export module MasterPlayerModels {
 	}
 
 	export class ResetAccountPasswordRequestData {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
 
 		@StringDataMember({ code: GNParameterCode.Password, minLength: 6, maxLength: 64, mustNonNull: true })
 		public password: string;
@@ -1009,8 +1196,8 @@ export module MasterPlayerModels {
 	}
 
 	export class SetAvatarRequestData {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
 
 		@NumberDataMember({ code: GNParameterCode.Type, mustInt: true })
 		public type: number;
@@ -1132,6 +1319,9 @@ export module MasterPlayerModels {
 		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencies, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerCurrencyParam })
 		public playerCurrencyParams: Array<PlayerCurrencyParam>;
 
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+		
 	}
 
 	export class ServerSetPlayerCurrencyRequestData extends SetPlayerCurrencyRequestData {
@@ -1168,6 +1358,9 @@ export module MasterPlayerModels {
 		@GNArrayDataMember({ code: GNParameterCode.PlayerStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerStatisticsParam })
 		public playerStatisticsParams: Array<PlayerStatisticsParam>;
 
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+
 	}
 
 	export class ServerSetPlayerStatisticsRequestData extends SetPlayerStatisticsRequestData {
@@ -1198,6 +1391,48 @@ export module MasterPlayerModels {
 	}
 
 	export class AdminSetTagRequestData extends ServerSetTagRequestData {
+	}
+
+	export class GetCurrencyLogRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		public keys?: Array<string>;
+
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
+		public userId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class ServerGetCurrencyLogRequestData extends GetCurrencyLogRequestData {
+	}
+
+	export class AdminGetCurrencyLogRequestData extends ServerGetCurrencyLogRequestData {
+	}
+
+	export class GetStatisticsLogRequestData {
+		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		public keys?: Array<string>;
+
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
+		public userId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
+	}
+
+	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
 	}
 
 	export class SetTsLastLoginRequestData {
@@ -1378,6 +1613,42 @@ export module MasterPlayerModels {
 	}
 
 	export class AdminUnlinkGoogleRequestData extends ServerUnlinkGoogleRequestData {
+	}
+
+	export class UnlinkGooglePlayGameServiceRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@StringDataMember({ code: GNParameterCode.PlayerId, minLength: 6, maxLength: 64, mustNonNull: true })
+		public playerId: string;
+
+	}
+
+	export class ServerUnlinkGooglePlayGameServiceRequestData extends UnlinkGooglePlayGameServiceRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminUnlinkGooglePlayGameServiceRequestData extends ServerUnlinkGooglePlayGameServiceRequestData {
+	}
+
+	export class UnlinkGameCenterRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@StringDataMember({ code: GNParameterCode.PlayerId, minLength: 6, maxLength: 64, mustNonNull: true })
+		public playerId: string;
+
+	}
+
+	export class ServerUnlinkGameCenterRequestData extends UnlinkGameCenterRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminUnlinkGameCenterRequestData extends ServerUnlinkGameCenterRequestData {
 	}
 
 	export class UnlinkiOSDeviceIdRequestData {
@@ -1584,15 +1855,123 @@ export module MasterPlayerModels {
 
 	}
 
+	export class MasterPlayerWithPlayerIdResponseData extends MasterPlayerWithUserIdResponseData {
+		@StringDataMember({ code: GNParameterCode.PlayerId })
+		public playerId: string;
+
+	}
+
+	export class GetPlayersWithGooglePlayGameServiceResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: MasterPlayerWithPlayerIdResponseData })
+		public results: Array<MasterPlayerWithPlayerIdResponseData>;
+
+	}
+
+	export class GetPlayersWithGameCenterResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: MasterPlayerWithPlayerIdResponseData })
+		public results: Array<MasterPlayerWithPlayerIdResponseData>;
+
+	}
+
 	export class MasterPlayerLeaderboardResponseData extends MasterPlayerWithUserIdResponseData {
 		@NumberDataMember({ code: GNParameterCode.Position })
 		public position: number;
+
+		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
+		public backupValue?: number;
+
+	}
+
+	export class MasterPlayerLogResponseData {
+		@StringDataMember({ code: GNParameterCode.UserId })
+		public userId: string;
+
+		@NumberDataMember({ code: GNParameterCode.TsCreate })
+		public tsCreate: number;
+
+		@StringDataMember({ code: GNParameterCode.Log })
+		public log: string;
+
+		@StringDataMember({ code: GNParameterCode.Key })
+		public key: string;
+
+		@NumberDataMember({ code: GNParameterCode.Amount })
+		public amount: number;
+
+		@NumberDataMember({ code: GNParameterCode.StartValue })
+		public startValue: number;
+
+		@NumberDataMember({ code: GNParameterCode.FinalValue })
+		public finalValue: number;
 
 	}
 
 	export class GetStatisticsLeaderboardResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
 		public results: Array<MasterPlayerLeaderboardResponseData>;
+
+		@NumberDataMember({ code: GNParameterCode.TsCreate, isOptional: true })
+		public tsCreate: number;
+
+	}
+
+	export class GetCurrencyLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
+		public results: Array<MasterPlayerLeaderboardResponseData>;
+
+	}
+
+	export class GetCreateLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
+		public results: Array<MasterPlayerLeaderboardResponseData>;
+
+	}
+
+	export class GetLastLoginLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
+		public results: Array<MasterPlayerLeaderboardResponseData>;
+
+	}
+
+	export class GetCurrencyLeaderboardRequestData {
+		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		public key: string;
+
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetCurrencyLeaderboardRequestData extends GetCurrencyLeaderboardRequestData {
+	}
+
+	export class AdminGetCurrencyLeaderboardRequestData extends ServerGetCurrencyLeaderboardRequestData {
+	}
+
+	export class GetStatisticsLogResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: MasterPlayerLogResponseData })
+		public results: Array<MasterPlayerLogResponseData>;
+
+		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		public token?: string;
+		
+	}
+
+	export class GetCurrencyLogResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: MasterPlayerLogResponseData })
+		public results: Array<MasterPlayerLogResponseData>;
+
+		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		public token?: string;
 
 	}
 

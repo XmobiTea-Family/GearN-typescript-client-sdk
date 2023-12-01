@@ -1,13 +1,13 @@
-import { Action1 } from "../../common/Action1";
-import { GNArray, GNHashtable } from "../../common/GNData";
-import { ReturnCode } from "../../constant/ReturnCode";
-import { GNNetwork } from "../../GNNetwork";
-import { GNDebug } from "../../logger/GNDebug";
-import { NetworkingPeer } from "../NetworkingPeer";
-import { OperationPending } from "../OperationPending";
-import { PeerBase } from "../PeerBase";
-import { NetworkingSocketPeerBase } from "../socket/NetworkingSocketPeerBase";
-import { GNSupport } from "../../helper/GNSupport";
+import { Action1 } from "./../../common/Action1";
+import { GNArray, GNHashtable } from "./../../common/GNData";
+import { ReturnCode } from "./../../constant/ReturnCode";
+import { GNNetwork } from "./../../GNNetwork";
+import { GNDebug } from "./../../logger/GNDebug";
+import { NetworkingPeer } from "./../NetworkingPeer";
+import { OperationPending } from "./../OperationPending";
+import { PeerBase } from "./../PeerBase";
+import { NetworkingSocketPeerBase } from "./../socket/NetworkingSocketPeerBase";
+import { GNSupport } from "./../../helper/GNSupport";
 import { decode } from "@msgpack/msgpack";
 import { NetworkingHttpPeerBase } from "./NetworkingHttpPeerBase";
 import { NetworkingPeerAxiosRequest } from "./NetworkingPeerAxiosRequest";
@@ -64,6 +64,7 @@ export class HttpPeer extends PeerBase {
 
         let authToken = operationPending.getAuthToken();
         let secretKey = operationPending.getSecretKey();
+        let gameId = operationPending.getGameId();
         let customTags = operationPending.getCustomTags();
 
         if (GNSupport.isBrowser()) {
@@ -78,9 +79,10 @@ export class HttpPeer extends PeerBase {
 
         let subUri = (postType == PostType.Json ? NetworkingPeer.API_JSON : NetworkingPeer.API_MSG_PACK) + "/" + operationRequest.getOperationCode() + "/" + <number>operationPending.getRequestType() + "/" + <number>operationPending.getRequestRole();
         let thiz = this;
+        
         this.networkingHttpPeerBase.postRequest(subUri, operationRequest.getParameters(), postType, (httpAppResponse: HttpAppResponse) => {
             thiz.onSendOperationRequestResponse(operationPending, httpAppResponse);
-        }, operationRequest.getTimeout(), authToken, secretKey, customTags);
+        }, operationRequest.getTimeout(), authToken, secretKey, customTags, gameId);
     }
 
     private onSendOperationRequestResponse(operationPending: OperationPending, httpAppResponse: HttpAppResponse): void {
@@ -136,8 +138,8 @@ export class HttpPeer extends PeerBase {
         this.onResponseHandler(obj, operationRequest.isEncrypted());
     }
 
-    getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = 15, authToken: string = null, secretKey: string = null): void {
-        this.networkingHttpPeerBase.getRequest(subUri, onHttpAppResponse, timeout, authToken, secretKey);
+    getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = 15, authToken: string = null, secretKey: string = null, gameId: string = null): void {
+        this.networkingHttpPeerBase.getRequest(subUri, onHttpAppResponse, timeout, authToken, secretKey, gameId);
     }
 
     uploadFile(fileId: string, content: Uint8Array, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = 60): void {

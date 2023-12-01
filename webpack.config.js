@@ -24,6 +24,9 @@ module.exports = {
 		filename: "index.js",
 		path: path.resolve(__dirname, "dist"),
 		libraryTarget: "commonjs",
+		environment: {
+			arrowFunction: true,
+		},
 	},
 	optimization: {
 		minimize: false,

@@ -1,4 +1,4 @@
-import { NetworkingPeer } from "../networking/NetworkingPeer";
+import { NetworkingPeer } from "./../networking/NetworkingPeer";
 
 export class ServiceUpdate {
     peer: NetworkingPeer;

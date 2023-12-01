@@ -1,5 +1,5 @@
-import { RequestRole } from "../constant/enumType/RequestRole";
-import { RequestType } from "../constant/enumType/RequestType";
+import { RequestRole } from "./../constant/enumType/RequestRole";
+import { RequestType } from "./../constant/enumType/RequestType";
 import { Action1 } from "./../common/Action1";
 import { GNArray, GNHashtable } from "./../common/GNData";
 import { InvalidMemberType } from "./../constant/enumType/InvalidMemberType";
@@ -62,13 +62,13 @@ export abstract class PeerBase implements IPeer {
 
     protected abstract initGNSocketObject(): void;
 
-    public enqueue(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable): void {
+    public enqueue(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
         if (!this.isUsing) {
             GNDebug.logError("[GN] Server Settings dont setup to use this to send operation request.");
             return;
         }
 
-        let operationPending = new OperationPending(requestType, requestRole, operationRequest, onOperationResponse, authToken, secretKey, customTags);
+        let operationPending = new OperationPending(requestType, requestRole, operationRequest, onOperationResponse, authToken, secretKey, customTags, gameId);
         this.operationPendingQueue.push(operationPending);
     }
 

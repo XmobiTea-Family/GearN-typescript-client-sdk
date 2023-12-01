@@ -29,6 +29,39 @@ const getGNReflectedDataType = (prototype: any, propertyKey: string): FieldDataT
     }
 };
 
+const getGNReflectedMetadata = (prototype: any, propertyKey: string): {
+    fieldDataType: FieldDataType,
+    prototype: any
+} => {
+    let t = Reflect.getMetadata("design:type", prototype, propertyKey);
+    if (!t) {
+        throw Error(
+            `Cannot get gn reflected data type for ${prototype.constructor.name}:${propertyKey}`
+        );
+    }
+
+    let answer: {
+        fieldDataType: FieldDataType,
+        prototype: any
+    } = {
+        fieldDataType: null,
+        prototype: t.prototype
+    }
+
+    if (t.name == "Boolean")
+        answer.fieldDataType = FieldDataType.Boolean;
+    else if (t.name == "Number")
+        answer.fieldDataType = FieldDataType.Number;
+    else if (t.name == "String")
+        answer.fieldDataType = FieldDataType.String;
+    else if (t.name == "Array")
+        answer.fieldDataType = FieldDataType.Array;
+    else
+        answer.fieldDataType = FieldDataType.Object;
+
+    return answer;
+};
+
 export const initGNObjectMetadata = <T extends GNObjectMetadata>(prototype: any): T => {
     if (prototype === Object.prototype) {
         return {} as T;
@@ -49,11 +82,15 @@ export const initGNObjectFieldMetadata = <T extends GNObjectFieldMetadata>(proto
 
     let fieldIndex = meta.fields.findIndex((f) => f.name === propertyKey);
     if (fieldIndex < 0) {
+        let gnReflectedMetadata = getGNReflectedMetadata(prototype, propertyKey);
+
         const field: GNObjectFieldMetadata = {
             name: propertyKey,
-            fieldType: getGNReflectedDataType(prototype, propertyKey),
-            cls: prototype.constructor
+            // fieldType: getGNReflectedDataType(prototype, propertyKey),
+            fieldType: gnReflectedMetadata.fieldDataType,
+            cls: gnReflectedMetadata.prototype.constructor
         };
+        
         meta.fields.push(field);
         return field as T;
     } else {
@@ -284,11 +321,11 @@ export const NumberDataMember = (args: NumberDataMemberArgs) => (prototype: any,
         }
 
         if (args.minValue == null) {
-            args.minValue = Number.MIN_VALUE;
+            args.minValue = -Infinity;
         }
 
         if (args.maxValue == null) {
-            args.maxValue = Number.MAX_VALUE;
+            args.maxValue = Infinity;
         }
     }
 

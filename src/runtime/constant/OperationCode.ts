@@ -17,6 +17,14 @@ export class OperationCode {
 	public static readonly GetSecretInfoList: number = -16;
 	public static readonly GrantSecretInfo: number = -17;
 	public static readonly SetSecretInfoInformation: number = -18;
+	public static readonly GetUsernameAdminAccount: number = -19;
+	public static readonly GetAnalytics: number = -20;
+	public static readonly Get: number = -20;
+	public static readonly GetEventCallbackCloudScript: number = -21;
+	public static readonly SetEventCallbackCloudScript: number = -22;
+	public static readonly ResetStatisticsLeaderboard: number = -23;
+	public static readonly GetBackupStatisticsLeaderboardVersion: number = -24;
+	public static readonly GetServerGameData: number = -25;
 
 	public static readonly LoginByAccount: number = 1;
 	public static readonly LoginByAndroidDeviceId: number = 2;
@@ -191,5 +199,44 @@ export class OperationCode {
 	public static readonly RemoveFileUploadInfo: number = 152;
 	public static readonly GetFileUploadInfoList: number = 153;
 	public static readonly SetStoreItemInformation: number = 154;
+	public static readonly RefreshAuthToken: number = 155;
+
+	public static readonly CancelAllMatchmakingTicket: number = 156;
+	public static readonly CancelMatchmakingTicket: number = 157;
+	public static readonly CreateMatchmakingTicket: number = 158;
+	public static readonly GetMatch: number = 159;
+	public static readonly GetMatchmakingTicket: number = 160;
+	public static readonly GetQueueStatistics: number = 161;
+	public static readonly JoinMatchmakingTicket: number = 162;
+	public static readonly ListMatchmakingTicketsForPlayer: number = 163;
+
+	public static readonly GetCurrencyLeaderboard: number = 164;
+
+	public static readonly ExecuteFunction: number = 165;
+	public static readonly GetFunctions: number = 166;
+	public static readonly AddFunction: number = 167;
+	public static readonly EditFunction: number = 168;
+	public static readonly GetFunction: number = 169;
+
+    public static readonly LoginByGooglePlayGameService: number = 170;
+    public static readonly LoginByGameCenter: number = 171;
+    public static readonly LinkGooglePlayGameService: number = 172;
+    public static readonly LinkGameCenter: number = 173;
+    public static readonly UnlinkGooglePlayGameService: number = 174;
+    public static readonly UnlinkGameCenter: number = 175;
+    public static readonly GetPlayersWithGooglePlayGameService: number = 176;
+    public static readonly GetPlayersWithGameCenter: number = 177;
+    public static readonly GetLastLoginLeaderboard: number = 178;
+    public static readonly GetCreateLeaderboard: number = 179;
+	
+    public static readonly GetAllMatchmakingTicket: number = 180;
+    public static readonly GetAllMatch: number = 181;
+
+	public static readonly SendSocketOperationEvent: number = 182;
+	public static readonly GetStatisticsLog: number = 183;
+	public static readonly GetCurrencyLog: number = 184;
+
+	public static readonly PresentStoreItem: number = 185;
+	public static readonly GetStoreLog: number = 186;
 
 }

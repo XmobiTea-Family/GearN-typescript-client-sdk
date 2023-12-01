@@ -1,16 +1,16 @@
-import { Action0 } from "../../common/Action0";
-import { Commands } from "../../constant/Commands";
-import { OperationRequest } from "../../entity/OperationRequest";
-import { GNDebug } from "../../logger/GNDebug";
+import { Action0 } from "./../../common/Action0";
+import { Commands } from "./../../constant/Commands";
+import { OperationRequest } from "./../../entity/OperationRequest";
+import { GNDebug } from "./../../logger/GNDebug";
 import { NetworkingSocketPeerBase, SocketPacket } from "./NetworkingSocketPeerBase";
-import { GNNetwork } from "../../GNNetwork";
-import { OperationHelper } from "../../entity/OperationHelper";
+import { GNNetwork } from "./../../GNNetwork";
+import { OperationHelper } from "./../../entity/OperationHelper";
 import { Manager, Socket } from "socket.io-client";
 import { encode } from "@msgpack/msgpack";
-import { GNParameterCode } from "../../constant/parameterCode/GNParameterCode";
-import { RequestType } from "../../constant/enumType/RequestType";
-import { RequestRole } from "../../constant/enumType/RequestRole";
-import { GNHashtable } from "../../common/GNData";
+import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { RequestType } from "./../../constant/enumType/RequestType";
+import { RequestRole } from "./../../constant/enumType/RequestRole";
+import { GNHashtable } from "./../../common/GNData";
 
 export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
     private socketManager: Manager;
@@ -109,8 +109,8 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
         super.init(url, reconnectDelay, pingInterval, pingTimeout);
     }
 
-    protected override emit(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable): void {
-        super.emit(requestType, requestRole, operationRequest, authToken, secretKey, customTags);
+    protected override emit(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
+        super.emit(requestType, requestRole, operationRequest, authToken, secretKey, customTags, gameId);
 
         if (this.socketManager == null) {
             // callback here

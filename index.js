@@ -11,6 +11,7 @@ const {
     GNHashtable,
     OperationRequest,
     DashboardModels,
+    GNErrorCode,
 } = require("./dist/index");
 
 const encode = require("@msgpack/msgpack").encode;
@@ -39,12 +40,22 @@ gnServerSettings.config(options);
 
 GNNetwork.init(gnServerSettings);
 
-let requestData = new DashboardModels.LoginByAdminAccountRequestData();
-requestData.username = "gnadmin";
-requestData.password = "g7Jeyhzj1S";
+let loginByAdminAccountRequestData = new DashboardModels.LoginByAdminAccountRequestData();
+loginByAdminAccountRequestData.username = "gnadmin";
+loginByAdminAccountRequestData.password = "123456";
 
-GNNetwork.dashboard.loginByAdminAccount(requestData, response => {
-    console.log(response);
+GNNetwork.dashboard.loginByAdminAccount(loginByAdminAccountRequestData, response => {
+    console.log(response.errorCode);
+
+    if (response.errorCode == GNErrorCode.Ok) {
+        let changePasswordAdminAccountRequestData = new DashboardModels.ChangePasswordAdminAccountRequestData();
+        changePasswordAdminAccountRequestData.currentPassword = "123456";
+        changePasswordAdminAccountRequestData.password = "gnadmin";
+    
+        GNNetwork.dashboard.changePasswordAdminAccount(changePasswordAdminAccountRequestData, response => {
+            console.log(response.errorCode);
+        });
+    }
 });
 
 // GNNetwork.connectSocket(() => {
