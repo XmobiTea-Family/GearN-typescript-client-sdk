@@ -305,4 +305,16 @@ export namespace DashboardRequestModels {
 		}
 	}
 
+	export class DeleteInDatabaseOperationRequest extends CustomOperationRequestAbstract<DashboardModels.DeleteInDatabaseRequestData> {
+		protected override operationCode: number = OperationCode.DeleteInDatabase;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.Dashboard;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: DashboardModels.DeleteInDatabaseRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = DashboardModels.DeleteInDatabaseRequestData;
+		}
+	}
+
 }

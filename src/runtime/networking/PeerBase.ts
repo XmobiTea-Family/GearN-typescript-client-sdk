@@ -68,9 +68,15 @@ export abstract class PeerBase implements IPeer {
             return;
         }
 
+        if (operationRequest.getRequestId() != -1) operationRequest.setRequestId(PeerBase.requestId++);
+
         let operationPending = new OperationPending(requestType, requestRole, operationRequest, onOperationResponse, authToken, secretKey, customTags, gameId);
         this.operationPendingQueue.push(operationPending);
+
+        this.onEnqueue(operationPending);
     }
+
+    protected abstract onEnqueue(operationPending: OperationPending): void;
 
     public isUsing(): boolean {
         return this.isUse;
@@ -205,8 +211,6 @@ export abstract class PeerBase implements IPeer {
         let operationRequest = operationPending.getOperationRequest();
 
         if (operationRequest.getRequestId() != -1) {
-            operationRequest.setRequestId(PeerBase.requestId++);
-
             if (operationPending.getCallback() != null) {
                 this.operationWaitingResponseDict.set(operationRequest.getRequestId(), operationPending);
             }

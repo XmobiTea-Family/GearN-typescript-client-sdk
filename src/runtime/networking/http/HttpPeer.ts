@@ -8,9 +8,9 @@ import { OperationPending } from "./../OperationPending";
 import { PeerBase } from "./../PeerBase";
 import { NetworkingSocketPeerBase } from "./../socket/NetworkingSocketPeerBase";
 import { GNSupport } from "./../../helper/GNSupport";
-import { decode } from "@msgpack/msgpack";
 import { NetworkingHttpPeerBase } from "./NetworkingHttpPeerBase";
 import { NetworkingPeerAxiosRequest } from "./NetworkingPeerAxiosRequest";
+import { MessagePackConverterService } from "./../../helper/MessagePackConverterService";
 
 export class HttpAppResponse {
     public statusCode: number;
@@ -58,9 +58,8 @@ export class HttpPeer extends PeerBase {
     override send(operationPending: OperationPending): void {
         super.send(operationPending);
 
-        GNDebug.log("[GN Http SEND] " + operationPending.getOperationRequest().toString());
-
         let operationRequest = operationPending.getOperationRequest();
+        GNDebug.log("[GN Http SEND] " + operationRequest.toString());
 
         let authToken = operationPending.getAuthToken();
         let secretKey = operationPending.getSecretKey();
@@ -85,6 +84,10 @@ export class HttpPeer extends PeerBase {
         }, operationRequest.getTimeout(), authToken, secretKey, customTags, gameId);
     }
 
+    protected override onEnqueue(operationPending: OperationPending): void {
+        GNDebug.log("[GN Http ENQUEUE] " + operationPending.getOperationRequest().toString());
+    }
+
     private onSendOperationRequestResponse(operationPending: OperationPending, httpAppResponse: HttpAppResponse): void {
         let operationRequest = operationPending.getOperationRequest();
         let obj = new GNArray();
@@ -104,7 +107,7 @@ export class HttpPeer extends PeerBase {
 
                 if (gnArray == null) {
                     if (httpAppResponse.data != null) {
-                        let iList = <[]>decode(httpAppResponse.data);
+                        let iList = MessagePackConverterService.deserialize<[]>(httpAppResponse.data);
                         gnArray = GNArray.builder()
                             .addAll(NetworkingSocketPeerBase.fromMsgList(iList))
                             .build();
@@ -142,7 +145,7 @@ export class HttpPeer extends PeerBase {
         this.networkingHttpPeerBase.getRequest(subUri, onHttpAppResponse, timeout, authToken, secretKey, gameId);
     }
 
-    uploadFile(fileId: string, content: Uint8Array, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = 60): void {
+    uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = 6000): void {
         let authToken = GNNetwork.getAuthenticateStatus().getAuthToken();
 
         if (!authToken) {
@@ -157,7 +160,7 @@ export class HttpPeer extends PeerBase {
 
         let subUri = NetworkingPeer.UPLOAD_FILE + "/" + fileId;
 
-        this.networkingHttpPeerBase.postRequestUpload(subUri, content, mimetype, onHttpAppResponse, timeout);
+        this.networkingHttpPeerBase.postRequestUpload(subUri, content, filename, mimetype, onHttpAppResponse, timeout);
     }
 
 }

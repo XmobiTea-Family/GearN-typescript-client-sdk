@@ -20,8 +20,6 @@ export namespace ContentModels {
 	}
 
 	export class ServerCreateNewFileUploadInfoRequestData extends CreateNewFileUploadInfoRequestData {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
 
 	}
 
@@ -47,7 +45,7 @@ export namespace ContentModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -148,9 +146,6 @@ export namespace ContentModels {
 
 		@NumberDataMember({ code: GNParameterCode.TsCreate })
 		public tsCreate: number;
-
-		@StringDataMember({ code: GNParameterCode.UserId })
-		public userId: string;
 
 		@GNHashtableDataMember({ code: GNParameterCode.RemoveStatus })
 		public removeStatus: GenericModels.RemoveStatusItem;

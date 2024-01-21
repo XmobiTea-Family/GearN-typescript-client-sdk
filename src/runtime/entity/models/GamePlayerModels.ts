@@ -1,4 +1,4 @@
-import { GNHashtable } from "../../common/GNData";
+import { GNHashtable } from "./../../common/GNData";
 import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
@@ -243,8 +243,11 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
 
 	}
 
@@ -270,8 +273,11 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
 
 	}
 
@@ -369,7 +375,7 @@ export namespace GamePlayerModels {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true })
+		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
 		public playerDataKeys?: Array<string>;
 
 	}
@@ -486,7 +492,7 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -507,7 +513,7 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -531,7 +537,7 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -570,8 +576,11 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
 
 	}
 
@@ -594,7 +603,7 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
@@ -618,7 +627,7 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
@@ -738,7 +747,7 @@ export namespace GamePlayerModels {
 		@StringDataMember({ code: GNParameterCode.DisplayName, defaultValue: "", isOptional: true })
 		public displayName?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Amount, defaultValue: 1, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Amount, defaultValue: 1, mustInt: true, isOptional: true })
 		public amount?: number;
 
 	}
@@ -1065,7 +1074,7 @@ export namespace GamePlayerModels {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
 		public userId?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
@@ -1086,7 +1095,7 @@ export namespace GamePlayerModels {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
 		public userId?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
@@ -1098,27 +1107,6 @@ export namespace GamePlayerModels {
 	}
 
 	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
-	}
-
-	export class SendSocketOperationEventRequestData {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10 })
-		public userId: string;
-
-		@NumberDataMember({ code: GNParameterCode.EventCode, minValue: 1000, mustInt: true })
-		public eventCode: number;
-
-		@GNHashtableDataMember({ code: GNParameterCode.EventParameters, mustNonNull: true, minLength: 0, maxLength: 128, isOptional: true })
-		public eventParameters?: GNHashtable;
-
-		@BooleanDataMember({ code: GNParameterCode.EventEncrypted, isOptional: true, defaultValue: false })
-		public eventEncrypted?: boolean;
-
-	}
-
-	export class ServerSendSocketOperationEventRequestData extends SendSocketOperationEventRequestData {
-	}
-
-	export class AdminSendSocketOperationEventRequestData extends ServerSendSocketOperationEventRequestData {
 	}
 
 	export class InfoResponseParameters {
@@ -1235,6 +1223,12 @@ export namespace GamePlayerModels {
 
 	}
 
+	export class GetLastLoginLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: GamePlayerLeaderboardResponseData })
+		public results: Array<GamePlayerLeaderboardResponseData>;
+
+	}
+
 	export class GetCreateLeaderboardResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: GamePlayerLeaderboardResponseData })
 		public results: Array<GamePlayerLeaderboardResponseData>;
@@ -1266,7 +1260,7 @@ export namespace GamePlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
@@ -1278,6 +1272,27 @@ export namespace GamePlayerModels {
 	}
 
 	export class AdminGetCurrencyLeaderboardRequestData extends ServerGetCurrencyLeaderboardRequestData {
+	}
+
+	export class GetLastLoginLeaderboardRequestData {
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetLastLoginLeaderboardRequestData extends GetLastLoginLeaderboardRequestData {
+	}
+
+	export class AdminGetLastLoginLeaderboardRequestData extends ServerGetLastLoginLeaderboardRequestData {
 	}
 
 	export class GetStatisticsLogResponseData {

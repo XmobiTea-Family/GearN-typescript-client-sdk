@@ -88,7 +88,7 @@ export class OperationResponse {
 
         stringBuilder += "Code: " + CodeHelper.getOperationCodeName(this.operationCode) + " (" + this.operationCode + ")" + ", responseId: " + this.responseId + ", returnCode " + CodeHelper.getReturnCodeName(this.returnCode);
 
-        if (this.returnCode == ReturnCode.Ok) stringBuilder += ", parameters " + this.parameters;
+        if (this.returnCode == ReturnCode.Ok) stringBuilder += ", parameters " + JSON.stringify(this.parameters?.toData());
         else if (this.returnCode == ReturnCode.InvalidRequestParameters) {
             if (this.invalidMembers != null) {
                 let invalidStr = "";

@@ -10,7 +10,7 @@ export abstract class NetworkingHttpPeerBase {
 
     public abstract postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void;
 
-    public abstract postRequestUpload(subUri: string, content: Uint8Array, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): void;
+    public abstract postRequestUpload(subUri: string, content: Uint8Array, filename: string, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): void;
 
     public init(httpUrl: string, userAgent: string): void {
         this.httpUrl = httpUrl;

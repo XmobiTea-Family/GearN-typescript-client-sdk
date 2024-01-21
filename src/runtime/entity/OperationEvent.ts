@@ -41,7 +41,7 @@ export class OperationEvent {
     }
 
     public toString(): string {
-        return "Code: " + CodeHelper.getEventCodeName(this.eventCode) + " (" + this.eventCode + ")" + ", parameters " + this.parameters + ", encrypted " + this.encrypted;
+        return "Code: " + CodeHelper.getEventCodeName(this.eventCode) + " (" + this.eventCode + ")" + ", parameters " + JSON.stringify(this.parameters?.toData()) + ", encrypted " + this.encrypted;
     }
 
 }

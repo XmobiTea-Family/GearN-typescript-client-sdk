@@ -77,6 +77,9 @@ export namespace DashboardModels {
 		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32 })
 		public key: string;
 
+		@StringDataMember({ code: GNParameterCode.DisplayName, minLength: 2, maxLength: 64 })
+		public displayName: string;
+
 		@NumberDataMember({ code: GNParameterCode.Permission, mustInt: true })
 		public permission: number;
 
@@ -281,6 +284,9 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.GetCreateLeaderboard, isOptional: true })
 		public getCreateLeaderboard?: PermissionRulesParam;
 
+        @GNHashtableDataMember({ code: GNParameterCode.GetLastLoginLeaderboard, isOptional: true })
+		public getLastLoginLeaderboard?: PermissionRulesParam;
+
 		@GNHashtableDataMember({ code: GNParameterCode.GetStatisticsLog, isOptional: true })
 		public getStatisticsLog?: PermissionRulesParam;
 
@@ -418,6 +424,27 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.GameCenterSettings, isOptional: true })
 		public gameCenterSettings?: ThirtPartyGameCenterSettingsParam;
+
+	}
+
+	export class EmailSettingsParam {
+		@StringDataMember({ code: GNParameterCode.SendFrom })
+		public sendFrom: string;
+
+		@StringDataMember({ code: GNParameterCode.SendGridApiKey })
+		public sendGridApiKey: string;
+
+	}
+
+	export class PushNotificationSettingsParam {
+		@StringDataMember({ code: GNParameterCode.ProjectId })
+		public projectId: string;
+
+		@StringDataMember({ code: GNParameterCode.ClientEmail })
+		public clientEmail: string;
+
+		@StringDataMember({ code: GNParameterCode.PrivateKey })
+		public privateKey: string;
 
 	}
 
@@ -569,8 +596,8 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.GetCreateLeaderboard, isOptional: true })
 		public getCreateLeaderboard?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: GNParameterCode.SendSocketOperationEvent, isOptional: true })
-		public sendSocketOperationEvent?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: GNParameterCode.GetLastLoginLeaderboard, isOptional: true })
+		public getLastLoginLeaderboard?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: GNParameterCode.GetStatisticsLog, isOptional: true })
 		public getStatisticsLog?: PermissionRulesParam;
@@ -968,6 +995,9 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.GetServerGameData, isOptional: true })
 		public getServerGameData?: PermissionRulesParam;
 
+		@GNHashtableDataMember({ code: GNParameterCode.DeleteInDatabase, isOptional: true })
+		public deleteInDatabase?: PermissionRulesParam;
+
 	}
 
 	export class MultiplayerPermissionRulesParam {
@@ -1244,6 +1274,24 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.GetCurrencyLog, isOptional: true })
 		public getCurrencyLog?: PermissionRulesParam;
 
+		@GNHashtableDataMember({ code: GNParameterCode.SendSocketOperationEvent, isOptional: true })
+		public sendSocketOperationEvent?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.SendEmail, isOptional: true })
+		public sendEmail?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.SendPushNotification, isOptional: true })
+		public sendPushNotification?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.AddPushNotification, isOptional: true })
+		public addPushNotification?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.RemovePushNotification, isOptional: true })
+		public removePushNotification?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.GetPushNotification, isOptional: true })
+		public getPushNotification?: PermissionRulesParam;
+
 	}
 
 	export class MasterPlayerSettingsParam {
@@ -1486,6 +1534,12 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.GetStoreLog, isOptional: true })
 		public getStoreLog?: PermissionRulesParam;
 
+        @GNHashtableDataMember({ code: GNParameterCode.GetStoreUsed, isOptional: true })
+		public getStoreUsed?: PermissionRulesParam;
+
+        @GNHashtableDataMember({ code: GNParameterCode.RemoveStoreUsed, isOptional: true })
+		public removeStoreUsed?: PermissionRulesParam;
+
 	}
 
 	export class CloudScriptPermissionRulesParam {
@@ -1660,6 +1714,12 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.MasterPlayerSettings, isOptional: true })
 		public masterPlayerSettings?: MasterPlayerSettingsParam;
 
+		@GNHashtableDataMember({ code: GNParameterCode.EmailSettings, isOptional: true })
+		public emailSettings?: EmailSettingsParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.PushNotificationSettings, isOptional: true })
+		public pushNotificationSettings?: PushNotificationSettingsParam;
+
 	}
 
 	export class SetPasswordAdminAccountRequestData {
@@ -1705,6 +1765,21 @@ export namespace DashboardModels {
 		@BooleanDataMember({ code: GNParameterCode.Country, isOptional: true })
 		public country?: boolean;
 
+		@BooleanDataMember({ code: GNParameterCode.RequestComplete, isOptional: true })
+		public requestComplete?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.OperationSystem, isOptional: true })
+		public operationSystem?: boolean;
+
+		@BooleanDataMember({ code: GNParameterCode.DatabaseSystem, isOptional: true })
+		public databaseSystem?: boolean;
+
+        @BooleanDataMember({ code: GNParameterCode.Cost, isOptional: true })
+		public cost?: boolean;
+
+        @BooleanDataMember({ code: GNParameterCode.MonthlyCost, isOptional: true })
+		public monthlyCost?: boolean;
+
 	}
 
 	export class GetUsernameAdminAccountRequestData {
@@ -1721,7 +1796,7 @@ export namespace DashboardModels {
 		@StringDataMember({ code: GNParameterCode.EventName, minLength: 6, maxLength: 128, mustNonNull: true })
 		public eventName: string;
 
-		@StringDataMember({ code: GNParameterCode.Script, minLength: 6, maxLength: 4096, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.Script, minLength: 6, maxLength: Number.MAX_SAFE_INTEGER, mustNonNull: true })
 		public script: string;
 
 	}
@@ -1735,6 +1810,24 @@ export namespace DashboardModels {
 
 		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32 })
 		public version: string;
+
+		@StringDataMember({ code: GNParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
+		public gameId: string;
+
+		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		public log?: string;
+
+		@StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		public catalogId?: string;
+
+	}
+
+	export class DeleteInDatabaseRequestData {
+		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
+		public type: number;
+
+		@StringDataMember({ code: GNParameterCode.Id, minLength: 2, maxLength: 15 })
+		public id: string;
 
 		@StringDataMember({ code: GNParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public gameId: string;
@@ -1848,6 +1941,12 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.MasterPlayerSettings })
 		public masterPlayerSettings: MasterPlayerSettingsParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.EmailSettings })
+		public emailSettings: EmailSettingsParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.PushNotificationSettings })
+		public pushNotificationSettings: PushNotificationSettingsParam;
 
 	}
 
@@ -1986,12 +2085,117 @@ export namespace DashboardModels {
 
 	}
 
+	export class MemoryUsageResponseData {
+		@NumberDataMember({ code: GNParameterCode.FreeMemoryInBytes })
+		public freeMemoryInBytes: number;
+
+		@NumberDataMember({ code: GNParameterCode.TotalMemoryInBytes })
+		public totalMemoryInBytes: number;
+
+	}
+
+	export class StorageUsageResponseData {
+		@StringDataMember({ code: GNParameterCode.Name })
+		public name: string;
+
+		@NumberDataMember({ code: GNParameterCode.FsTotalSizeInBytes })
+		public fsTotalSizeInBytes: number;
+
+		@NumberDataMember({ code: GNParameterCode.FsUsedSizeInBytes })
+		public fsUsedSizeInBytes: number;
+
+	}
+
+	export class DatabaseSystemResponseData {
+		@NumberDataMember({ code: GNParameterCode.FsTotalSizeInBytes })
+		public fsTotalSizeInBytes: number;
+
+		@NumberDataMember({ code: GNParameterCode.FsUsedSizeInBytes })
+		public fsUsedSizeInBytes: number;
+
+		@NumberDataMember({ code: GNParameterCode.TotalSizeInBytes })
+		public totalSizeInBytes: number;
+
+		@NumberDataMember({ code: GNParameterCode.Collections })
+		public collections: number;
+
+		@NumberDataMember({ code: GNParameterCode.Objects })
+		public objects: number;
+
+		@NumberDataMember({ code: GNParameterCode.Indexes })
+		public indexes: number;
+
+	}
+
+	export class OperationSystemResponseData {
+		@NumberDataMember({ code: GNParameterCode.CpuUsage })
+		public cpuUsage: number;
+
+		@GNHashtableDataMember({ code: GNParameterCode.MemoryUsage })
+		public memoryUsage: MemoryUsageResponseData;
+
+		@GNArrayDataMember({ code: GNParameterCode.StorageUsage, elementCls: StorageUsageResponseData })
+		public storageUsage: Array<StorageUsageResponseData>;
+
+	}
+
+	export class RequestCompleteErrorCodeResponseData {
+		@NumberDataMember({ code: GNParameterCode.ErrorCode })
+		public errorCode: number;
+
+		@NumberDataMember({ code: GNParameterCode.Count })
+		public count: number;
+
+	}
+
+	export class RequestCompleteResponseData {
+		@StringDataMember({ code: GNParameterCode.EventName })
+		public eventName: string;
+
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: RequestCompleteErrorCodeResponseData })
+		public results: Array<RequestCompleteErrorCodeResponseData>;
+
+	}
+
+    export class CostResponseData {
+        @NumberDataMember({ code: GNParameterCode.RequestCount })
+		public requestCount: number;
+
+		@NumberDataMember({ code: GNParameterCode.MatchmakingRequestCount })
+		public matchmakingRequestCount: number;
+
+        @NumberDataMember({ code: GNParameterCode.CloudScriptGBs })
+		public cloudScriptGBs: number;
+
+        @NumberDataMember({ code: GNParameterCode.StorageSizeInBytes })
+		public storageSizeInBytes: number;
+
+        @NumberDataMember({ code: GNParameterCode.DataTransferSizeInBytes })
+		public dataTransferSizeInBytes: number;
+
+    }
+
 	export class GetAnalyticsResponseData {
 		@GNHashtableDataMember({ code: GNParameterCode.AnalyticsItem, isOptional: true })
 		public analyticsItem?: AnalyticsItemResponseData;
 
 		@GNArrayDataMember({ code: GNParameterCode.Country, elementCls: CountryResponseData, isOptional: true })
 		public country?: Array<CountryResponseData>;
+
+		@GNHashtableDataMember({ code: GNParameterCode.OperationSystem, isOptional: true })
+		public operationSystem?: OperationSystemResponseData;
+
+		@GNArrayDataMember({ code: GNParameterCode.RequestComplete, elementCls: RequestCompleteResponseData, isOptional: true })
+		public requestComplete?: Array<RequestCompleteResponseData>;
+
+		@GNHashtableDataMember({ code: GNParameterCode.DatabaseSystem, isOptional: true })
+		public databaseSystem?: DatabaseSystemResponseData;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Cost, isOptional: true })
+		public cost?: CostResponseData;
+
+        @GNHashtableDataMember({ code: GNParameterCode.MonthlyCost, isOptional: true })
+		public monthlyCost?: CostResponseData;
 
 	}
 

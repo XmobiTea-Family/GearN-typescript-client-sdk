@@ -3,6 +3,7 @@ import { LogType } from "./../logger/GNDebug";
 export interface GNServerSettingsOptions {
     serverAddress: string;
     serverPort: number;
+    serverSocketPort: number;
     useSsl: boolean;
     useSocket: boolean;
     useHttp: boolean;
@@ -24,6 +25,7 @@ export interface GNServerSettingsOptions {
 export class GNServerSettings {
     private serverAddress: string = "127.0.0.1";
     private serverPort: number = 2202;
+    private serverSocketPort: number = 2901;
     private useSsl: boolean = false;
     private useSocket: boolean = true;
     private useHttp: boolean = true;
@@ -44,6 +46,7 @@ export class GNServerSettings {
     public config(options: GNServerSettingsOptions): void {
         this.serverAddress = options.serverAddress;
         this.serverPort = options.serverPort;
+        this.serverSocketPort = options.serverSocketPort;
         this.useSsl = options.useSsl;
         this.useSocket = options.useSocket;
         this.useHttp = options.useHttp;
@@ -76,6 +79,14 @@ export class GNServerSettings {
 
     public setServerPort(serverPort: number): void {
         this.serverPort = serverPort;
+    }
+
+    public getServerSocketPort(): number {
+        return this.serverSocketPort;
+    }
+
+    public setServerSocketPort(serverSocketPort: number): void {
+        this.serverSocketPort = serverSocketPort;
     }
 
     public isUseSsl(): boolean {
@@ -175,8 +186,8 @@ export class GNServerSettings {
     }
 
     public getSocketUrl(): string {
-        if (this.serverPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
-        else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverPort;
+        if (this.serverSocketPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
+        else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverSocketPort;
     }
 
     public getHttpUrl(): string {

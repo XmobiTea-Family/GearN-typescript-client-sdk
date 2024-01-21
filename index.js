@@ -28,6 +28,7 @@ gnServerSettings.config(options);
 
 // gnServerSettings.serverAddress = "127.0.0.1";
 // gnServerSettings.serverPort = 2202;
+// gnServerSettings.serverSocketPort = 2901;
 // gnServerSettings.useSsl = false;
 // gnServerSettings.useSocket = true;
 // gnServerSettings.useHttp = true;
@@ -66,6 +67,7 @@ GNNetwork.dashboard.loginByAdminAccount(loginByAdminAccountRequestData, response
 
 // gnServerSettings.serverAddress = "127.0.0.1";
 // gnServerSettings.serverPort = 2202;
+// gnServerSettings.serverSocketPort = 2901;
 // gnServerSettings.useSsl = false;
 // gnServerSettings.useSocket = true;
 // gnServerSettings.useHttp = true;

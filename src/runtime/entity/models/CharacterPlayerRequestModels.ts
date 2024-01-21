@@ -1505,6 +1505,36 @@ export namespace CharacterPlayerRequestModels {
 		}
 	}
 
+    export class GetLastLoginLeaderboardOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.GetLastLoginLeaderboardRequestData> {
+		protected override operationCode: number = OperationCode.GetLastLoginLeaderboard;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.CharacterPlayer;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: CharacterPlayerModels.GetLastLoginLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.GetLastLoginLeaderboardRequestData;
+		}
+	}
+
+	export class ServerGetLastLoginLeaderboardOperationRequest extends GetLastLoginLeaderboardOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Server;
+
+		constructor(requestData: CharacterPlayerModels.ServerGetLastLoginLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.ServerGetLastLoginLeaderboardRequestData;
+		}
+	}
+
+	export class AdminGetLastLoginLeaderboardOperationRequest extends GetLastLoginLeaderboardOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Admin;
+
+		constructor(requestData: CharacterPlayerModels.AdminGetLastLoginLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = CharacterPlayerModels.AdminGetLastLoginLeaderboardRequestData;
+		}
+	}
+
 	export class GetStatisticsLogOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.GetStatisticsLogRequestData> {
 		protected override operationCode: number = OperationCode.GetStatisticsLog;
 		protected override operationEncrypted: boolean = true;

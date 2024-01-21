@@ -365,4 +365,64 @@ export namespace StoreInventoryRequestModels {
 		}
 	}
 
+    export class GetStoreUsedOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.GetStoreUsedRequestData> {
+        protected override operationCode: number = OperationCode.GetStoreUsed;
+        protected override operationEncrypted: boolean = true;
+        protected override requestType: RequestType = RequestType.StoreInventory;
+        protected override requestRole: RequestRole = RequestRole.Client;
+    
+        constructor(requestData: StoreInventoryModels.GetStoreUsedRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = StoreInventoryModels.GetStoreUsedRequestData;
+        }
+    }
+
+    export class ServerGetStoreUsedOperationRequest extends GetStoreUsedOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Server;
+    
+        constructor(requestData: StoreInventoryModels.ServerGetStoreUsedRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = StoreInventoryModels.ServerGetStoreUsedRequestData;
+        }
+    }
+
+    export class AdminGetStoreUsedOperationRequest extends GetStoreUsedOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Admin;
+    
+        constructor(requestData: StoreInventoryModels.AdminGetStoreUsedRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = StoreInventoryModels.AdminGetStoreUsedRequestData;
+        }
+    }
+
+    export class RemoveStoreUsedOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.RemoveStoreUsedRequestData> {
+        protected override operationCode: number = OperationCode.RemoveStoreUsed;
+        protected override operationEncrypted: boolean = true;
+        protected override requestType: RequestType = RequestType.StoreInventory;
+        protected override requestRole: RequestRole = RequestRole.Client;
+    
+        constructor(requestData: StoreInventoryModels.RemoveStoreUsedRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = StoreInventoryModels.RemoveStoreUsedRequestData;
+        }
+    }
+
+    export class ServerRemoveStoreUsedOperationRequest extends RemoveStoreUsedOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Server;
+    
+        constructor(requestData: StoreInventoryModels.ServerRemoveStoreUsedRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = StoreInventoryModels.ServerRemoveStoreUsedRequestData;
+        }
+    }
+
+    export class AdminRemoveStoreUsedOperationRequest extends RemoveStoreUsedOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Admin;
+    
+        constructor(requestData: StoreInventoryModels.AdminRemoveStoreUsedRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = StoreInventoryModels.AdminRemoveStoreUsedRequestData;
+        }
+    }
+
 }

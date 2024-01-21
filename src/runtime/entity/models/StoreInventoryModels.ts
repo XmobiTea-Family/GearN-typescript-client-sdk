@@ -40,6 +40,9 @@ export namespace StoreInventoryModels {
 		@BooleanDataMember({ code: GNParameterCode.StoreItems, isOptional: true, defaultValue: false })
 		public storeItems?: boolean;
 
+		@BooleanDataMember({ code: GNParameterCode.StoreItemType, isOptional: true, defaultValue: false })
+		public storeItemType?: boolean;
+
 		@BooleanDataMember({ code: GNParameterCode.StoreCurrencies, isOptional: true, defaultValue: false })
 		public storeCurrencies?: boolean;
 
@@ -148,7 +151,7 @@ export namespace StoreInventoryModels {
 	}
 
 	export class BuyStoreItemRequestData {
-		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
 		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
@@ -169,7 +172,7 @@ export namespace StoreInventoryModels {
 	}
 
 	export class PresentStoreItemRequestData {
-		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
 		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
@@ -190,7 +193,7 @@ export namespace StoreInventoryModels {
 	}
 
 	export class GetStoreLogRequestData {
-		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true, isOptional: true })
 		public storeId?: string;
 
 		@GNArrayDataMember({ code: GNParameterCode.StoreReceiveTypes, minLength: 1, maxLength: 10, mustNonNull: true, elementCls: Number, isOptional: true })
@@ -199,7 +202,7 @@ export namespace StoreInventoryModels {
 		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true, isOptional: true })
 		public id?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
@@ -213,8 +216,35 @@ export namespace StoreInventoryModels {
 	export class AdminGetStoreLogRequestData extends ServerGetStoreLogRequestData {
 	}
 
+    export class GetStoreUsedRequestData {
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
+		public storeId: string;
+
+	}
+
+	export class ServerGetStoreUsedRequestData extends GetStoreUsedRequestData {
+	}
+
+	export class AdminGetStoreUsedRequestData extends ServerGetStoreUsedRequestData {
+	}
+
+    export class RemoveStoreUsedRequestData {
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
+		public storeId: string;
+
+        @GNArrayDataMember({ code: GNParameterCode.OwnerIds, elementCls: String, isOptional: true })
+        public ownerIds?: Array<string>;
+
+	}
+
+	export class ServerRemoveStoreUsedRequestData extends RemoveStoreUsedRequestData {
+	}
+
+	export class AdminRemoveStoreUsedRequestData extends ServerRemoveStoreUsedRequestData {
+	}
+
 	export class GetStoreItemInformationRequestData {
-		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
 		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
@@ -241,7 +271,7 @@ export namespace StoreInventoryModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -253,7 +283,7 @@ export namespace StoreInventoryModels {
 	}
 
 	export class GrantStoreItemRequestData {
-		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true, isOptional: true })
 		public storeId?: string;
 
 		@StringDataMember({ code: GNParameterCode.DisplayName, defaultValue: "", isOptional: true })
@@ -268,7 +298,7 @@ export namespace StoreInventoryModels {
 	}
 
 	export class SetRemoveStatusRequestData {
-		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
 		@StringDataMember({ code: GNParameterCode.Reason, isOptional: true, defaultValue: "" })
@@ -283,8 +313,11 @@ export namespace StoreInventoryModels {
 	}
 
 	export class SetStoreItemInformationRequestData {
-		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
+
+		@NumberDataMember({ code: GNParameterCode.StoreItemType, minValue: 1, maxValue: 2, mustInt: true, isOptional: true })
+		public storeItemType?: number;
 
 		@GNArrayDataMember({ code: GNParameterCode.StoreDatas, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: StoreDataParam })
 		public storeDataParams?: Array<StoreDataParam>;
@@ -388,7 +421,7 @@ export namespace StoreInventoryModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
@@ -405,6 +438,9 @@ export namespace StoreInventoryModels {
 	export class InfoResponseParameters {
 		@GNArrayDataMember({ code: GNParameterCode.StoreItems, isOptional: true, elementCls: StoreInventoryItem })
 		public storeItems?: Array<StoreInventoryItem>;
+
+		@NumberDataMember({ code: GNParameterCode.StoreItemType, isOptional: true })
+		public storeItemType?: number;
 
 		@GNArrayDataMember({ code: GNParameterCode.StoreCurrencies, isOptional: true, elementCls: PriceCurrencyItem })
 		public storeCurrencies?: Array<PriceCurrencyItem>;
@@ -450,9 +486,6 @@ export namespace StoreInventoryModels {
 	export class StoreInventoryLeaderboardResponseData extends StoreInventoryWithStoreIdResponseData {
 		@NumberDataMember({ code: GNParameterCode.Position })
 		public position: number;
-
-		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
-		public backupValue?: number;
 
 	}
 
@@ -572,6 +605,18 @@ export namespace StoreInventoryModels {
 		public log: string;
 	}
 
+    export class StoreUsedResponseData {
+        @StringDataMember({ code: GNParameterCode.OwnerId })
+		public id: string;
+
+		@NumberDataMember({ code: GNParameterCode.OwnerType })
+		public type: number;
+
+        @NumberDataMember({ code: GNParameterCode.TsCreate })
+		public tsCreate: number;
+
+    }
+
 	export class GetCreateLeaderboardResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: StoreInventoryLeaderboardResponseData })
 		public results: Array<StoreInventoryLeaderboardResponseData>;
@@ -584,6 +629,12 @@ export namespace StoreInventoryModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
 		public token?: string;
+
+	}
+
+    export class GetStoreUsedResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: StoreUsedResponseData })
+		public results: Array<StoreUsedResponseData>;
 
 	}
 

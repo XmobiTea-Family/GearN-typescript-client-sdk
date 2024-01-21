@@ -1445,6 +1445,36 @@ export namespace GamePlayerRequestModels {
 		}
 	}
 
+	export class GetLastLoginLeaderboardOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.GetLastLoginLeaderboardRequestData> {
+		protected override operationCode: number = OperationCode.GetLastLoginLeaderboard;
+		protected override operationEncrypted: boolean = true;
+		protected override requestType: RequestType = RequestType.GamePlayer;
+		protected override requestRole: RequestRole = RequestRole.Client;
+
+		constructor(requestData: GamePlayerModels.GetLastLoginLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = GamePlayerModels.GetLastLoginLeaderboardRequestData;
+		}
+	}
+
+	export class ServerGetLastLoginLeaderboardOperationRequest extends GetLastLoginLeaderboardOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Server;
+
+		constructor(requestData: GamePlayerModels.ServerGetLastLoginLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = GamePlayerModels.ServerGetLastLoginLeaderboardRequestData;
+		}
+	}
+
+	export class AdminGetLastLoginLeaderboardOperationRequest extends GetLastLoginLeaderboardOperationRequest {
+		protected override requestRole: RequestRole = RequestRole.Admin;
+
+		constructor(requestData: GamePlayerModels.AdminGetLastLoginLeaderboardRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = GamePlayerModels.AdminGetLastLoginLeaderboardRequestData;
+		}
+	}
+
 	export class GetCreateLeaderboardOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.GetCreateLeaderboardRequestData> {
 		protected override operationCode: number = OperationCode.GetCreateLeaderboard;
 		protected override operationEncrypted: boolean = true;
@@ -1472,36 +1502,6 @@ export namespace GamePlayerRequestModels {
 		constructor(requestData: GamePlayerModels.AdminGetCreateLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
 			this.requestDataCls = GamePlayerModels.AdminGetCreateLeaderboardRequestData;
-		}
-	}
-
-	export class SendSocketOperationEventOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.SendSocketOperationEventRequestData> {
-		protected override operationCode: number = OperationCode.SendSocketOperationEvent;
-		protected override operationEncrypted: boolean = true;
-		protected override requestType: RequestType = RequestType.GamePlayer;
-		protected override requestRole: RequestRole = RequestRole.Client;
-
-		constructor(requestData: GamePlayerModels.SendSocketOperationEventRequestData, timeout: number) {
-			super(requestData, timeout);
-			this.requestDataCls = GamePlayerModels.SendSocketOperationEventRequestData;
-		}
-	}
-
-	export class ServerSendSocketOperationEventOperationRequest extends SendSocketOperationEventOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
-
-		constructor(requestData: GamePlayerModels.ServerSendSocketOperationEventRequestData, timeout: number) {
-			super(requestData, timeout);
-			this.requestDataCls = GamePlayerModels.ServerSendSocketOperationEventRequestData;
-		}
-	}
-
-	export class AdminSendSocketOperationEventOperationRequest extends SendSocketOperationEventOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
-
-		constructor(requestData: GamePlayerModels.AdminSendSocketOperationEventRequestData, timeout: number) {
-			super(requestData, timeout);
-			this.requestDataCls = GamePlayerModels.AdminSendSocketOperationEventRequestData;
 		}
 	}
 
@@ -1538,7 +1538,7 @@ export namespace GamePlayerRequestModels {
 	export class GetCurrencyLogOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.GetCurrencyLogRequestData> {
 		protected override operationCode: number = OperationCode.GetCurrencyLog;
 		protected override operationEncrypted: boolean = true;
-		protected override requestType: RequestType = RequestType.CharacterPlayer;
+		protected override requestType: RequestType = RequestType.GamePlayer;
 		protected override requestRole: RequestRole = RequestRole.Client;
 
 		constructor(requestData: GamePlayerModels.GetCurrencyLogRequestData, timeout: number) {

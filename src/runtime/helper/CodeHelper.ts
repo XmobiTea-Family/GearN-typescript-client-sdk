@@ -8,7 +8,7 @@ class CodeHelperBase {
     codeDict: Map<number, string>;
 
     public getCodeName(code: number): string {
-        return this.codeDict.has(code) ? this.codeDict.get(code) : CodeHelperBase.unknownCode;
+        return this.codeDict.has(code) ? this.codeDict.get(code) : (CodeHelperBase.unknownCode + " (" + code + ")");
     }
 
     constructor(codeDict: Map<number, string>) {

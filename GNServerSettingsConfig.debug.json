@@ -3,6 +3,7 @@
     "options": {
         "serverAddress": "127.0.0.1",
         "serverPort": 2202,
+        "serverSocketPort": 2901,
         "useSsl": false,
         "useSocket": true,
         "useHttp": true,

@@ -15,9 +15,12 @@ import { OperationEvent } from "./../entity/OperationEvent";
 import { AuthenticateStatus } from "./AuthenticateStatus";
 import { RequestType } from "./../constant/enumType/RequestType";
 import { RequestRole } from "./../constant/enumType/RequestRole";
+import { GetAuthInfoResponse } from "./../entity/response/GetAuthInfoResponse";
+import { UploadFileResponse } from "./../entity/response/UploadFileResponse";
 
 export class NetworkingPeer {
     static readonly SYNC_TS: string = "ts";
+    static readonly GET_AUTH_INFO: string = "getAuthInfo";
     static readonly UPLOAD_FILE: string = "upload";
     static readonly DOWNLOAD_FILE: string = "download";
     static readonly API_JSON: string = "api/" + Commands.RequestCmd_Json;
@@ -163,6 +166,62 @@ export class NetworkingPeer {
             }
 
             if (onResponse != null) onResponse(thiz.getServerTimestamp());
+        });
+    }
+
+    getAuthInfo(authToken: string, onResponse: Action1<GetAuthInfoResponse>): void {
+        (this.httpPeer as HttpPeer).getRequest(NetworkingPeer.GET_AUTH_INFO + "?authToken=" + authToken, (httpAppResponse: HttpAppResponse) => {
+            if (!httpAppResponse.hasError()) {
+                if (httpAppResponse.statusCode == 200) {
+                    let returnDatas = JSON.parse(httpAppResponse.text);
+                    if (returnDatas.error) {
+                        if (onResponse != null) onResponse({
+                            error: returnDatas.error,
+                        });
+                    }
+                    else {
+                        if (onResponse != null) {
+                            let response: GetAuthInfoResponse = {
+                                error: null,
+                                data: returnDatas.data,
+                            };
+
+                            response.data.otherDatas = GNHashtable.builder()
+                                .addAll(returnDatas.data.otherDatas)
+                                .build();
+                            onResponse(response);
+                        }
+                    }
+
+                    return;
+                }
+            }
+
+            if (onResponse != null) onResponse({
+                error: httpAppResponse.error,
+            });
+        });
+    }
+
+    uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onResponse: Action1<UploadFileResponse>): void {
+        (this.httpPeer as HttpPeer).uploadFile(fileId, content, filename, mimetype, (httpAppResponse: HttpAppResponse) => {
+            if (!httpAppResponse.hasError()) {
+                if (httpAppResponse.statusCode == 200) {
+                    if (onResponse != null) {
+                        let response: UploadFileResponse = {
+                            error: null,
+                        };
+
+                        onResponse(response);
+                    }
+
+                    return;
+                }
+            }
+
+            if (onResponse != null) onResponse({
+                error: httpAppResponse.error ?? "Unknown Error",
+            });
         });
     }
 

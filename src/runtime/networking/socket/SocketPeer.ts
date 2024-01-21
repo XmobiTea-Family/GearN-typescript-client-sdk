@@ -120,6 +120,10 @@ export class SocketPeer extends PeerBase {
         this.networkingSocketPeerBase.send(operationPending.getRequestType(), operationPending.getRequestRole(), operationPending.getOperationRequest(), authToken, secretKey, customTags, gameId);
     }
 
+    protected override onEnqueue(operationPending: OperationPending): void {
+        GNDebug.log("[GN Socket ENQUEUE] " + operationPending.getOperationRequest().toString());
+    }
+
     onEventHandler(obj: GNArray, isEncrypted: boolean): void {
         let eventCode = obj.getNumber(0);
 

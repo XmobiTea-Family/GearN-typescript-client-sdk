@@ -2387,4 +2387,184 @@ export namespace MasterPlayerRequestModels {
         }
     }
 
+    export class SendSocketOperationEventOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.SendSocketOperationEventRequestData> {
+        protected override operationCode: number = OperationCode.SendSocketOperationEvent;
+        protected override operationEncrypted: boolean = true;
+        protected override requestType: RequestType = RequestType.MasterPlayer;
+        protected override requestRole: RequestRole = RequestRole.Client;
+
+        constructor(requestData: MasterPlayerModels.SendSocketOperationEventRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.SendSocketOperationEventRequestData;
+        }
+    }
+
+    export class ServerSendSocketOperationEventOperationRequest extends SendSocketOperationEventOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Server;
+
+        constructor(requestData: MasterPlayerModels.ServerSendSocketOperationEventRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.ServerSendSocketOperationEventRequestData;
+        }
+    }
+
+    export class AdminSendSocketOperationEventOperationRequest extends SendSocketOperationEventOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Admin;
+
+        constructor(requestData: MasterPlayerModels.AdminSendSocketOperationEventRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.AdminSendSocketOperationEventRequestData;
+        }
+    }
+
+    export class SendEmailOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.SendEmailRequestData> {
+        protected override operationCode: number = OperationCode.SendEmail;
+        protected override operationEncrypted: boolean = true;
+        protected override requestType: RequestType = RequestType.MasterPlayer;
+        protected override requestRole: RequestRole = RequestRole.Client;
+
+        constructor(requestData: MasterPlayerModels.SendEmailRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.SendEmailRequestData;
+        }
+    }
+
+    export class ServerSendEmailOperationRequest extends SendEmailOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Server;
+
+        constructor(requestData: MasterPlayerModels.ServerSendEmailRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.ServerSendEmailRequestData;
+        }
+    }
+
+    export class AdminSendEmailOperationRequest extends SendEmailOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Admin;
+
+        constructor(requestData: MasterPlayerModels.AdminSendEmailRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.AdminSendEmailRequestData;
+        }
+    }
+
+    export class AddPushNotificationOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.AddPushNotificationRequestData> {
+        protected override operationCode: number = OperationCode.AddPushNotification;
+        protected override operationEncrypted: boolean = true;
+        protected override requestType: RequestType = RequestType.MasterPlayer;
+        protected override requestRole: RequestRole = RequestRole.Client;
+
+        constructor(requestData: MasterPlayerModels.AddPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.AddPushNotificationRequestData;
+        }
+    }
+
+    export class ServerAddPushNotificationOperationRequest extends AddPushNotificationOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Server;
+
+        constructor(requestData: MasterPlayerModels.ServerAddPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.ServerAddPushNotificationRequestData;
+        }
+    }
+
+    export class AdminAddPushNotificationOperationRequest extends AddPushNotificationOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Admin;
+
+        constructor(requestData: MasterPlayerModels.AdminAddPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.AdminAddPushNotificationRequestData;
+        }
+    }
+
+    export class RemovePushNotificationOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.RemovePushNotificationRequestData> {
+        protected override operationCode: number = OperationCode.RemovePushNotification;
+        protected override operationEncrypted: boolean = true;
+        protected override requestType: RequestType = RequestType.MasterPlayer;
+        protected override requestRole: RequestRole = RequestRole.Client;
+
+        constructor(requestData: MasterPlayerModels.RemovePushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.RemovePushNotificationRequestData;
+        }
+    }
+
+    export class ServerRemovePushNotificationOperationRequest extends RemovePushNotificationOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Server;
+
+        constructor(requestData: MasterPlayerModels.ServerRemovePushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.ServerRemovePushNotificationRequestData;
+        }
+    }
+
+    export class AdminRemovePushNotificationOperationRequest extends RemovePushNotificationOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Admin;
+
+        constructor(requestData: MasterPlayerModels.AdminRemovePushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.AdminRemovePushNotificationRequestData;
+        }
+    }
+
+    export class GetPushNotificationOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.GetPushNotificationRequestData> {
+        protected override operationCode: number = OperationCode.GetPushNotification;
+        protected override operationEncrypted: boolean = true;
+        protected override requestType: RequestType = RequestType.MasterPlayer;
+        protected override requestRole: RequestRole = RequestRole.Client;
+
+        constructor(requestData: MasterPlayerModels.GetPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.GetPushNotificationRequestData;
+        }
+    }
+
+    export class ServerGetPushNotificationOperationRequest extends GetPushNotificationOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Server;
+
+        constructor(requestData: MasterPlayerModels.ServerGetPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.ServerGetPushNotificationRequestData;
+        }
+    }
+
+    export class AdminGetPushNotificationOperationRequest extends GetPushNotificationOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Admin;
+
+        constructor(requestData: MasterPlayerModels.AdminGetPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.AdminGetPushNotificationRequestData;
+        }
+    }
+
+    export class SendPushNotificationOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.SendPushNotificationRequestData> {
+        protected override operationCode: number = OperationCode.SendPushNotification;
+        protected override operationEncrypted: boolean = true;
+        protected override requestType: RequestType = RequestType.MasterPlayer;
+        protected override requestRole: RequestRole = RequestRole.Client;
+
+        constructor(requestData: MasterPlayerModels.SendPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.SendPushNotificationRequestData;
+        }
+    }
+
+    export class ServerSendPushNotificationOperationRequest extends SendPushNotificationOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Server;
+
+        constructor(requestData: MasterPlayerModels.ServerSendPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.ServerSendPushNotificationRequestData;
+        }
+    }
+
+    export class AdminSendPushNotificationOperationRequest extends SendPushNotificationOperationRequest {
+        protected override requestRole: RequestRole = RequestRole.Admin;
+
+        constructor(requestData: MasterPlayerModels.AdminSendPushNotificationRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.AdminSendPushNotificationRequestData;
+        }
+    }
+
 }

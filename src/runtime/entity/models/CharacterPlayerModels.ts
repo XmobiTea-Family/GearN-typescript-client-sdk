@@ -244,8 +244,11 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
+
+        @BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+        public loadFromCache?: boolean;
 
 	}
 
@@ -268,8 +271,11 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
+
+        @BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+        public loadFromCache?: boolean;
 
 	}
 
@@ -334,7 +340,7 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true })
+		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
 		public playerDataKeys?: Array<string>;
 
 	}
@@ -430,7 +436,7 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -451,7 +457,7 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -475,7 +481,7 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -523,8 +529,14 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
+
+        @BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+        public loadFromCache?: boolean;
+
+        @StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+        public catalogId?: string;
 
 	}
 
@@ -544,11 +556,14 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
+
+        @StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+        public catalogId?: string;
 
 	}
 
@@ -568,7 +583,7 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
@@ -576,7 +591,10 @@ export namespace CharacterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public version?: string;
-	
+
+	    @StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+        public catalogId?: string;
+
 	}
 
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
@@ -592,7 +610,7 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
@@ -604,6 +622,27 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
+	}
+
+    export class GetLastLoginLeaderboardRequestData {
+		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		public infoRequestParam: InfoRequestParam;
+
+		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		public skip?: number;
+
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		public limit?: number;
+
+		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
+
+	}
+
+	export class ServerGetLastLoginLeaderboardRequestData extends GetLastLoginLeaderboardRequestData {
+	}
+
+	export class AdminGetLastLoginLeaderboardRequestData extends ServerGetLastLoginLeaderboardRequestData {
 	}
 
 	export class GetTagRequestData {
@@ -679,7 +718,7 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: GNParameterCode.DisplayName, defaultValue: "", isOptional: true })
 		public displayName?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Amount, defaultValue: 1, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Amount, defaultValue: 1, mustInt: true, isOptional: true })
 		public amount?: number;
 
 	}
@@ -967,7 +1006,7 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true, isOptional: true })
 		public characterId?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
@@ -988,7 +1027,7 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true, isOptional: true })
 		public characterId?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 5, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
@@ -1129,6 +1168,12 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetCreateLeaderboardResponseData {
+		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
+		public results: Array<CharacterPlayerLeaderboardResponseData>;
+
+	}
+
+    export class GetLastLoginLeaderboardResponseData {
 		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
 		public results: Array<CharacterPlayerLeaderboardResponseData>;
 

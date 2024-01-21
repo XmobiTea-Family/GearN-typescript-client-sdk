@@ -202,4 +202,12 @@ export namespace DashboardResponseModels {
 		}
 	}
 
+	export class DeleteInDatabaseOperationResponse extends CustomOperationResponseAbstract<DashboardModels.EmptyResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = DashboardModels.EmptyResponseData;
+		}
+	}
+
 }

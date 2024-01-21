@@ -211,6 +211,14 @@ export class DashboardApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.GetServerGameDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.GetServerGameDataOperationResponse);
 	}
 
+	public deleteInDatabase(requestData: DashboardModels.DeleteInDatabaseRequestData, onResponse: Action1<DashboardResponseModels.DeleteInDatabaseOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new DashboardRequestModels.DeleteInDatabaseOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.DeleteInDatabaseOperationResponse);
+	}
+
+	public async deleteInDatabaseAsync(requestData: DashboardModels.DeleteInDatabaseRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<DashboardResponseModels.DeleteInDatabaseOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.DeleteInDatabaseOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.DeleteInDatabaseOperationResponse);
+	}
+
 }
 
 export class ServerDashboardApi {

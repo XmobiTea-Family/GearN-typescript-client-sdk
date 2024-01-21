@@ -402,6 +402,14 @@ export namespace CharacterPlayerResponseModels {
 		}
 	}
 
+    export class GetLastLoginLeaderboardOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.GetLastLoginLeaderboardResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = CharacterPlayerModels.GetLastLoginLeaderboardResponseData;
+		}
+	}
+
 	export class GetStatisticsLogOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.GetStatisticsLogResponseData> {
 
 		constructor() {

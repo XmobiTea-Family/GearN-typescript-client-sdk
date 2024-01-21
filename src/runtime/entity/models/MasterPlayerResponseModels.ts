@@ -234,131 +234,131 @@ export namespace MasterPlayerResponseModels {
 		}
 	}
 
-	export class LinkAccountOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkAccountOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkAndroidDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkAndroidDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkAppleOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkAppleOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkCustomDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkCustomDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkCustomIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkCustomIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkEditorDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkEditorDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkFacebookOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkFacebookOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkGenericServiceOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkGenericServiceOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkGoogleOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkGoogleOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkGooglePlayGameServiceOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkGooglePlayGameServiceOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkGameCenterOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkGameCenterOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkiOSDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkiOSDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkLinuxDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkLinuxDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkMacOSDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkMacOSDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkWindowsDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkWindowsDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
-	export class LinkWindowsPhoneDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class LinkWindowsPhoneDeviceIdOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
 		}
 	}
 
@@ -639,6 +639,54 @@ export namespace MasterPlayerResponseModels {
 		constructor() {
 			super();
 			this.responseDataCls = MasterPlayerModels.GetCurrencyLogResponseData;
+		}
+	}
+
+	export class SendSocketOperationEventOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+		}
+	}
+
+	export class SendEmailOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+		}
+	}
+
+	export class AddPushNotificationOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.AddPushNotificationResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.AddPushNotificationResponseData;
+		}
+	}
+
+	export class RemovePushNotificationOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+		}
+	}
+
+	export class GetPushNotificationOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
+		}
+	}
+
+	export class SendPushNotificationOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.SendPushNotificationResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.SendPushNotificationResponseData;
 		}
 	}
 

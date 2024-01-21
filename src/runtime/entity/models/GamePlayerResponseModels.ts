@@ -386,19 +386,19 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
+	export class GetLastLoginLeaderboardOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GetLastLoginLeaderboardResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = GamePlayerModels.GetLastLoginLeaderboardResponseData;
+		}
+	}
+
 	export class GetCreateLeaderboardOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GetCreateLeaderboardResponseData> {
 
 		constructor() {
 			super();
 			this.responseDataCls = GamePlayerModels.GetCreateLeaderboardResponseData;
-		}
-	}
-
-	export class SendSocketOperationEventOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.EmptyResponseData> {
-
-		constructor() {
-			super();
-			this.responseDataCls = GamePlayerModels.EmptyResponseData;
 		}
 	}
 

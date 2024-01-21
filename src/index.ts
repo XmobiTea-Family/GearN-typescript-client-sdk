@@ -3,14 +3,14 @@ import { Action1 } from "./runtime/common/Action1";
 import { Action2 } from "./runtime/common/Action2";
 import { Action3 } from "./runtime/common/Action3";
 import { Action4 } from "./runtime/common/Action4";
-import { GNHashtableBuilder, GNHashtable, GNArrayBuilder, GNArray } from "./runtime/common/GNData";
+import { GNHashtableBuilder, GNHashtable, GNArrayBuilder, GNArray, GNData } from "./runtime/common/GNData";
 
 export { Action0 };
 export { Action1 };
 export { Action2 };
 export { Action3 };
 export { Action4 };
-export { GNHashtableBuilder, GNHashtable, GNArrayBuilder, GNArray };
+export { GNHashtableBuilder, GNHashtable, GNArrayBuilder, GNArray, GNData };
 
 import { GNServerSettings, GNServerSettingsOptions } from "./runtime/config/GNServerSettings";
 export { GNServerSettings, GNServerSettingsOptions };
@@ -20,24 +20,34 @@ import { GoogleLoginType } from "./runtime/constant/enumType/GoogleLoginType";
 import { GroupStatus } from "./runtime/constant/enumType/GroupStatus";
 import { InvalidMemberType } from "./runtime/constant/enumType/InvalidMemberType";
 import { ItemType } from "./runtime/constant/enumType/ItemType";
+import { StoreItemType } from "./runtime/constant/enumType/StoreItemType";
 import { MatchmakingMemberStatus } from "./runtime/constant/enumType/MatchmakingMemberStatus";
 import { MatchmakingTicketStatus } from "./runtime/constant/enumType/MatchmakingTicketStatus";
 import { OwnerType } from "./runtime/constant/enumType/OwnerType";
 import { PermissionDataItem } from "./runtime/constant/enumType/PermissionDataItem";
 import { RequestRole } from "./runtime/constant/enumType/RequestRole";
 import { RequestType } from "./runtime/constant/enumType/RequestType";
+import { PushPlatformType } from "./runtime/constant/enumType/PushPlatformType";
+import { StoreReceiveType } from "./runtime/constant/enumType/StoreReceiveType";
+import { ExecuteResponseStatus } from "./runtime/constant/enumType/ExecuteResponseStatus";
 export { FriendStatus };
 export { GoogleLoginType };
 export { GroupStatus };
 export { InvalidMemberType };
 export { ItemType };
+export { StoreItemType };
 export { MatchmakingMemberStatus };
 export { MatchmakingTicketStatus };
 export { OwnerType };
 export { PermissionDataItem };
 export { RequestRole };
 export { RequestType };
+export { PushPlatformType };
+export { StoreReceiveType };
+export { ExecuteResponseStatus };
 
+import { AuthenticateStatus } from "./runtime/networking/AuthenticateStatus";
+export { AuthenticateStatus } 
 
 import { GNErrorCode } from "./runtime/constant/errorCode/GNErrorCode";
 export { GNErrorCode };
@@ -130,7 +140,10 @@ import { CustomOperationRequest, CustomOperationRequestAbstract } from "./runtim
 export { CustomOperationRequest, CustomOperationRequestAbstract };
 import { CustomOperationResponse, CustomOperationResponseAbstract } from "./runtime/entity/response/CustomOperationResponse";
 export { CustomOperationResponse, CustomOperationResponseAbstract };
-
+import { GetAuthInfoResponse } from "./runtime/entity/response/GetAuthInfoResponse";
+export { GetAuthInfoResponse };
+import { UploadFileResponse } from "./runtime/entity/response/UploadFileResponse";
+export { UploadFileResponse };
 
 import { InvalidMember } from "./runtime/entity/InvalidMember";
 import { OperationEvent } from "./runtime/entity/OperationEvent";
@@ -210,9 +223,11 @@ export { GNNetworkCloudScriptApi, Server_GNNetworkCloudScriptApi, Admin_GNNetwor
 import { GNSupport } from "./runtime/helper/GNSupport";
 import { CodeHelper } from "./runtime/helper/CodeHelper";
 import { ConverterService } from "./runtime/helper/ConverterService";
+import { GNUtils } from "./runtime/helper/GNUtils";
 export { GNSupport };
 export { CodeHelper };
 export { ConverterService };
+export { GNUtils };
 
 
 import { DataMember, StringDataMember, BooleanDataMember, GNHashtableDataMember, GNArrayDataMember, NumberDataMember } from "./runtime/entity/DataMember";
@@ -238,24 +253,29 @@ export { OnGamePlayerGroupUpdateEventHandler };
 export { OnGroupMemberUpdateEventHandler };
 export { OnGroupMessageUpdateEventHandler };
 
-
 const gn = {
     GNHashtableBuilder,
     GNHashtable,
     GNArrayBuilder,
     GNArray,
+    GNData,
     GNServerSettings,
+    AuthenticateStatus,
     FriendStatus,
     GoogleLoginType,
     GroupStatus,
     InvalidMemberType,
     ItemType,
+    StoreItemType,
     MatchmakingMemberStatus,
     MatchmakingTicketStatus,
     OwnerType,
     PermissionDataItem,
+    PushPlatformType,
+    StoreReceiveType,
     RequestRole,
     RequestType,
+    ExecuteResponseStatus,
     GNErrorCode,
     GNParameterCode,
     ParameterCode,
@@ -301,6 +321,8 @@ const gn = {
     CustomOperationRequestAbstract,
     CustomOperationResponse,
     CustomOperationResponseAbstract,
+    GetAuthInfoResponse,
+    UploadFileResponse,
     OperationEvent,
     OperationHelper,
     OperationRequest,
@@ -364,4 +386,5 @@ const gn = {
     NumberDataMember,
     FieldDataType,
     ServiceUpdate,
+    GNUtils,
 };

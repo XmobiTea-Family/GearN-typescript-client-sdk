@@ -1,4 +1,4 @@
-import { GNHashtable } from "../../common/GNData";
+import { GNHashtable } from "./../../common/GNData";
 import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
@@ -53,6 +53,9 @@ export namespace AuthenticateModels {
 		@BooleanDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
 		public tsLastLogin?: boolean;
 
+		@BooleanDataMember({ code: GNParameterCode.PushNotifications, isOptional: true, defaultValue: false })
+		public pushNotifications?: boolean;
+
 		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
 		public playerDataKeys?: Array<string>;
 
@@ -95,7 +98,7 @@ export namespace AuthenticateModels {
 	}
 
 	export class LoginByAppleRequestData {
-		@StringDataMember({ code: GNParameterCode.Token, minLength: 32, maxLength: 512, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 32, maxLength: 2048, mustNonNull: true })
 		public token: string;
 
 		@BooleanDataMember({ code: GNParameterCode.CreatePlayerIfNotExists, isOptional: true, defaultValue: false })
@@ -143,7 +146,7 @@ export namespace AuthenticateModels {
 	}
 
 	export class LoginByFacebookRequestData {
-		@StringDataMember({ code: GNParameterCode.Token, minLength: 32, maxLength: 512, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 32, maxLength: 2048, mustNonNull: true })
 		public token: string;
 
 		@BooleanDataMember({ code: GNParameterCode.CreatePlayerIfNotExists, isOptional: true, defaultValue: false })
@@ -170,7 +173,7 @@ export namespace AuthenticateModels {
 	}
 
 	export class LoginByGoogleRequestData {
-		@StringDataMember({ code: GNParameterCode.Token, minLength: 32, maxLength: 512, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 32, maxLength: 2048, mustNonNull: true })
 		public token: string;
 
 		@NumberDataMember({ code: GNParameterCode.Type, minValue: 1, maxValue: 2, mustInt: true })
@@ -185,7 +188,7 @@ export namespace AuthenticateModels {
 	}
 
 	export class LoginByGooglePlayGameServiceRequestData {
-		@StringDataMember({ code: GNParameterCode.Token, minLength: 20, maxLength: 512, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 32, maxLength: 2048, mustNonNull: true })
 		public token: string;
 
 		@BooleanDataMember({ code: GNParameterCode.CreatePlayerIfNotExists, isOptional: true, defaultValue: false })
@@ -200,16 +203,16 @@ export namespace AuthenticateModels {
 		@StringDataMember({ code: GNParameterCode.PlayerId, minLength: 2, maxLength: 64, mustNonNull: true })
 		public playerId: string;
 
-		@StringDataMember({ code: GNParameterCode.Name, minLength: 2, maxLength: 64, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.Name, minLength: 2, maxLength: 128, mustNonNull: true })
 		public name: string;
 
-		@StringDataMember({ code: GNParameterCode.PublicKeyUrl, minLength: 2, maxLength: 256, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.PublicKeyUrl, minLength: 2, maxLength: 2048, mustNonNull: true })
 		public publicKeyUrl: string;
 
-		@StringDataMember({ code: GNParameterCode.Signature, minLength: 2, maxLength: 512, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.Signature, minLength: 2, maxLength: 2048, mustNonNull: true })
 		public signature: string;
 
-		@StringDataMember({ code: GNParameterCode.Salt, minLength: 2, maxLength: 128, mustNonNull: true })
+		@StringDataMember({ code: GNParameterCode.Salt, minLength: 2, maxLength: 256, mustNonNull: true })
 		public salt: string;
 
 		@NumberDataMember({ code: GNParameterCode.Timestamp })

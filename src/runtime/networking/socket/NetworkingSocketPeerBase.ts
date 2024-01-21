@@ -1,3 +1,4 @@
+import { MessagePackConverterService } from "./../../helper/MessagePackConverterService";
 import { Action0 } from "./../../common/Action0";
 import { Action2 } from "./../../common/Action2";
 import { GNArray, GNHashtable } from "./../../common/GNData";
@@ -6,7 +7,6 @@ import { RequestType } from "./../../constant/enumType/RequestType";
 import { OperationRequest } from "./../../entity/OperationRequest";
 import { GNNetwork } from "./../../GNNetwork";
 import { GNDebug } from "./../../logger/GNDebug";
-import { decode } from "@msgpack/msgpack";
 
 export class SocketPacket {
     public obj: any;
@@ -180,7 +180,7 @@ export abstract class NetworkingSocketPeerBase {
                 let responsePacket = this.responsePacketLst[i];
                 if (responsePacket.encrypted) {
                     try {
-                        let iList = <[]>decode(responsePacket.obj);
+                        let iList = MessagePackConverterService.deserialize<[]>(responsePacket.obj);
                         let gnArray = GNArray.builder()
                             .addAll(NetworkingSocketPeerBase.fromMsgList(iList))
                             .build();
@@ -211,7 +211,7 @@ export abstract class NetworkingSocketPeerBase {
                 let eventPacket = this.eventPacketLst[i];
                 if (eventPacket.encrypted) {
                     try {
-                        let iList = <[]>decode(eventPacket.obj);
+                        let iList = MessagePackConverterService.deserialize<[]>(eventPacket.obj);
                         let gnArray = GNArray.builder()
                             .addAll(NetworkingSocketPeerBase.fromMsgList(iList))
                             .build();

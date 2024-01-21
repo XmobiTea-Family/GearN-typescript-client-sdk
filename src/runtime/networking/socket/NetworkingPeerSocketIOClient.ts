@@ -6,11 +6,11 @@ import { NetworkingSocketPeerBase, SocketPacket } from "./NetworkingSocketPeerBa
 import { GNNetwork } from "./../../GNNetwork";
 import { OperationHelper } from "./../../entity/OperationHelper";
 import { Manager, Socket } from "socket.io-client";
-import { encode } from "@msgpack/msgpack";
 import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
 import { RequestType } from "./../../constant/enumType/RequestType";
 import { RequestRole } from "./../../constant/enumType/RequestRole";
 import { GNHashtable } from "./../../common/GNData";
+import { MessagePackConverterService } from "./../../helper/MessagePackConverterService";
 
 export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
     private socketManager: Manager;
@@ -127,7 +127,7 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
 
         let dataSend = OperationHelper.toSocketData(requestType, requestRole, operationRequest);
         if (operationRequest.isEncrypted())
-            socket.emit(Commands.RequestCmd_MsgPack, encode(dataSend));
+            socket.emit(Commands.RequestCmd_MsgPack, MessagePackConverterService.serialize(dataSend));
         else
             socket.emit(Commands.RequestCmd_Json, dataSend);
     }

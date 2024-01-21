@@ -1,4 +1,4 @@
-const VERSION: string = "2.3";
+const VERSION: string = "2.5";
 
 import { Action0 } from "./common/Action0";
 import { Action1 } from "./common/Action1";
@@ -32,6 +32,8 @@ import { StoreInventoryApi } from "./GNNetworkStoreInventoryApi";
 import { ConverterService } from "./helper/ConverterService";
 import { MultiplayerApi } from "./GNNetworkMultiplayerApi";
 import { CloudScriptApi } from "./GNNetworkCloudScriptApi";
+import { GetAuthInfoResponse } from "./entity/response/GetAuthInfoResponse";
+import { UploadFileResponse } from "./entity/response/UploadFileResponse";
 
 export class GNNetwork {
 
@@ -52,6 +54,10 @@ export class GNNetwork {
 
     public static getSocketSId(): string {
         return GNNetwork.peer != null ? GNNetwork.peer.getClientId() : "";
+    }
+
+    public static sendRequestAuthSocket(): void {
+        return GNNetwork.peer.sendRequestAuthSocket();
     }
 
     public static isSocketConnected(): boolean {
@@ -271,39 +277,75 @@ export class GNNetwork {
     }
 
     public static connectSocket(_onSocketConnect: Action0 = null): void {
-        this.peer.connectSocket(_onSocketConnect);
+        GNNetwork.peer.connectSocket(_onSocketConnect);
     }
 
     public static disconnectSocket(_onSocketDisconnect: Action0 = null): void {
-        this.peer.disconnectSocket(_onSocketDisconnect);
+        GNNetwork.peer.disconnectSocket(_onSocketDisconnect);
     }
 
     public static setOnEventHandler(_onEventHandler: Action1<OperationEvent>): void {
-        this.peer.setOnEventHandler(_onEventHandler);
+        GNNetwork.peer.setOnEventHandler(_onEventHandler);
     }
 
     public static subscriberOnConnectHandler(_onConnectHandler: Action0): void {
-        this.peer.setOnConnectHandler(_onConnectHandler);
+        GNNetwork.peer.setOnConnectHandler(_onConnectHandler);
     }
 
     public static subscriberOnDisconnectHandler(_onDisconnectHandler: Action0): void {
-        this.peer.setOnDisconnectHandler(_onDisconnectHandler);
+        GNNetwork.peer.setOnDisconnectHandler(_onDisconnectHandler);
     }
 
     public static unscriberOnConnectHandler(_onConnectHandler: Action0): void {
-        this.peer.removeOnConnectHandler(_onConnectHandler);
+        GNNetwork.peer.removeOnConnectHandler(_onConnectHandler);
     }
 
     public static unsubscriberOnDisconnectHandler(_onDisconnectHandler: Action0): void {
-        this.peer.removeOnDisconnectHandler(_onDisconnectHandler);
+        GNNetwork.peer.removeOnDisconnectHandler(_onDisconnectHandler);
     }
 
     public static subscriberServerEventHandler(serverEventHandler: IServerEventHandler): void {
-        this.peer.subscriberServerEventHandler(serverEventHandler);
+        GNNetwork.peer.subscriberServerEventHandler(serverEventHandler);
     }
 
     public static syncTs(onResponse: Action1<number> = null): void {
-        this.peer.syncTs(onResponse);
+        GNNetwork.peer.syncTs(onResponse);
+    }
+
+    public static syncTsAsync(): Promise<number> {
+        return new Promise((resolve) => {
+            GNNetwork.syncTs((response: number) => {
+                resolve(response);
+            });
+        });
+    }
+
+    public static getAuthInfo(authToken: string, onResponse: Action1<GetAuthInfoResponse> = null): void {
+        GNNetwork.peer.getAuthInfo(authToken, onResponse);
+    }
+
+    public static getAuthInfoAsync(authToken: string): Promise<GetAuthInfoResponse> {
+        return new Promise((resolve) => {
+            GNNetwork.getAuthInfo(authToken, (response: GetAuthInfoResponse) => {
+                resolve(response);
+            });
+        });
+    }
+
+    public static uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onResponse: Action1<UploadFileResponse> = null): void {
+        GNNetwork.peer.uploadFile(fileId, content, filename, mimetype, onResponse);
+    }
+
+    public static uploadFileAsync(fileId: string, content: Uint8Array, filename: string, mimetype: string): Promise<UploadFileResponse> {
+        return new Promise((resolve) => {
+            GNNetwork.uploadFile(fileId, content, filename, mimetype, (response: GetAuthInfoResponse) => {
+                resolve(response);
+            });
+        });
+    }
+
+    public static getDownloadFileUrl(downloadToken: string): string {
+        return GNNetwork.gnServerSettings.getHttpUrl() + "/" + NetworkingPeer.DOWNLOAD_FILE + "/" + downloadToken;
     }
 
 }

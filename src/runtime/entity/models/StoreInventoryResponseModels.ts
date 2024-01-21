@@ -98,4 +98,20 @@ export namespace StoreInventoryResponseModels {
 		}
 	}
 
+    export class GetStoreUsedOperationResponse extends CustomOperationResponseAbstract<StoreInventoryModels.GetStoreUsedResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = StoreInventoryModels.GetStoreUsedResponseData;
+		}
+	}
+
+    export class RemoveStoreUsedOperationResponse extends CustomOperationResponseAbstract<StoreInventoryModels.EmptyResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = StoreInventoryModels.EmptyResponseData;
+		}
+	}
+
 }
