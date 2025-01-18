@@ -451,9 +451,6 @@ export namespace StoreInventoryModels {
 		@NumberDataMember({ code: GNParameterCode.Position })
 		public position: number;
 
-		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
-		public backupValue?: number;
-
 	}
 
 	export class StoreInventoriesWithStoreIdResponseData {

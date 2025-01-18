@@ -19,7 +19,6 @@ export class OperationCode {
 	public static readonly SetSecretInfoInformation: number = -18;
 	public static readonly GetUsernameAdminAccount: number = -19;
 	public static readonly GetAnalytics: number = -20;
-	public static readonly Get: number = -20;
 	public static readonly GetEventCallbackCloudScript: number = -21;
 	public static readonly SetEventCallbackCloudScript: number = -22;
 	public static readonly ResetStatisticsLeaderboard: number = -23;
