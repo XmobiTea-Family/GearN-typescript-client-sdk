@@ -651,6 +651,54 @@ export class MasterPlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.GetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetCurrencyLogOperationResponse);
 	}
 
+	public sendSocketOperationEvent(requestData: MasterPlayerModels.SendSocketOperationEventRequestData, onResponse: Action1<MasterPlayerResponseModels.SendSocketOperationEventOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.SendSocketOperationEventOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendSocketOperationEventOperationResponse);
+	}
+
+	public async sendSocketOperationEventAsync(requestData: MasterPlayerModels.SendSocketOperationEventRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendSocketOperationEventOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SendSocketOperationEventOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendSocketOperationEventOperationResponse);
+	}
+
+	public sendEmail(requestData: MasterPlayerModels.SendEmailRequestData, onResponse: Action1<MasterPlayerResponseModels.SendEmailOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.SendEmailOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendEmailOperationResponse);
+	}
+
+	public async sendEmailAsync(requestData: MasterPlayerModels.SendEmailRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendEmailOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SendEmailOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendEmailOperationResponse);
+	}
+
+	public addPushNotification(requestData: MasterPlayerModels.AddPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.AddPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AddPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.AddPushNotificationOperationResponse);
+	}
+
+	public async addPushNotificationAsync(requestData: MasterPlayerModels.AddPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.AddPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AddPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.AddPushNotificationOperationResponse);
+	}
+
+	public removePushNotification(requestData: MasterPlayerModels.RemovePushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.RemovePushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.RemovePushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.RemovePushNotificationOperationResponse);
+	}
+
+	public async removePushNotificationAsync(requestData: MasterPlayerModels.RemovePushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.RemovePushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.RemovePushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.RemovePushNotificationOperationResponse);
+	}
+
+	public getPushNotification(requestData: MasterPlayerModels.GetPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.GetPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.GetPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetPushNotificationOperationResponse);
+	}
+
+	public async getPushNotificationAsync(requestData: MasterPlayerModels.GetPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.GetPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetPushNotificationOperationResponse);
+	}
+
+	public sendPushNotification(requestData: MasterPlayerModels.SendPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.SendPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.SendPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
+	}
+
+	public async sendPushNotificationAsync(requestData: MasterPlayerModels.SendPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SendPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
+	}
+
 }
 
 export class ServerMasterPlayerApi {
@@ -1286,6 +1334,54 @@ export class ServerMasterPlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerGetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetCurrencyLogOperationResponse);
 	}
 
+	public sendSocketOperationEvent(requestData: MasterPlayerModels.ServerSendSocketOperationEventRequestData, onResponse: Action1<MasterPlayerResponseModels.SendSocketOperationEventOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerSendSocketOperationEventOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendSocketOperationEventOperationResponse);
+	}
+
+	public async sendSocketOperationEventAsync(requestData: MasterPlayerModels.ServerSendSocketOperationEventRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendSocketOperationEventOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSendSocketOperationEventOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendSocketOperationEventOperationResponse);
+	}
+
+	public sendEmail(requestData: MasterPlayerModels.ServerSendEmailRequestData, onResponse: Action1<MasterPlayerResponseModels.SendEmailOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerSendEmailOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendEmailOperationResponse);
+	}
+
+	public async sendEmailAsync(requestData: MasterPlayerModels.ServerSendEmailRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendEmailOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSendEmailOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendEmailOperationResponse);
+	}
+
+	public addPushNotification(requestData: MasterPlayerModels.ServerAddPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.AddPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerAddPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.AddPushNotificationOperationResponse);
+	}
+
+	public async addPushNotificationAsync(requestData: MasterPlayerModels.ServerAddPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.AddPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerAddPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.AddPushNotificationOperationResponse);
+	}
+
+	public removePushNotification(requestData: MasterPlayerModels.ServerRemovePushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.RemovePushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerRemovePushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.RemovePushNotificationOperationResponse);
+	}
+
+	public async removePushNotificationAsync(requestData: MasterPlayerModels.ServerRemovePushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.RemovePushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerRemovePushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.RemovePushNotificationOperationResponse);
+	}
+
+	public getPushNotification(requestData: MasterPlayerModels.ServerGetPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.GetPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerGetPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetPushNotificationOperationResponse);
+	}
+
+	public async getPushNotificationAsync(requestData: MasterPlayerModels.ServerGetPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerGetPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetPushNotificationOperationResponse);
+	}
+
+	public sendPushNotification(requestData: MasterPlayerModels.ServerSendPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.SendPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerSendPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
+	}
+
+	public async sendPushNotificationAsync(requestData: MasterPlayerModels.ServerSendPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSendPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
+	}
+
 }
 
 export class AdminMasterPlayerApi {
@@ -1919,6 +2015,54 @@ export class AdminMasterPlayerApi {
 
 	public async getCurrencyLogAsync(requestData: MasterPlayerModels.AdminGetCurrencyLogRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetCurrencyLogOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminGetCurrencyLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetCurrencyLogOperationResponse);
+	}
+
+	public sendSocketOperationEvent(requestData: MasterPlayerModels.AdminSendSocketOperationEventRequestData, onResponse: Action1<MasterPlayerResponseModels.SendSocketOperationEventOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminSendSocketOperationEventOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendSocketOperationEventOperationResponse);
+	}
+
+	public async sendSocketOperationEventAsync(requestData: MasterPlayerModels.AdminSendSocketOperationEventRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendSocketOperationEventOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSendSocketOperationEventOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendSocketOperationEventOperationResponse);
+	}
+
+	public sendEmail(requestData: MasterPlayerModels.AdminSendEmailRequestData, onResponse: Action1<MasterPlayerResponseModels.SendEmailOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminSendEmailOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendEmailOperationResponse);
+	}
+
+	public async sendEmailAsync(requestData: MasterPlayerModels.AdminSendEmailRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendEmailOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSendEmailOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendEmailOperationResponse);
+	}
+
+	public addPushNotification(requestData: MasterPlayerModels.AdminAddPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.AddPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminAddPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.AddPushNotificationOperationResponse);
+	}
+
+	public async addPushNotificationAsync(requestData: MasterPlayerModels.AdminAddPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.AddPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminAddPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.AddPushNotificationOperationResponse);
+	}
+
+	public removePushNotification(requestData: MasterPlayerModels.AdminRemovePushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.RemovePushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminRemovePushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.RemovePushNotificationOperationResponse);
+	}
+
+	public async removePushNotificationAsync(requestData: MasterPlayerModels.AdminRemovePushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.RemovePushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminRemovePushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.RemovePushNotificationOperationResponse);
+	}
+
+	public getPushNotification(requestData: MasterPlayerModels.AdminGetPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.GetPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminGetPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetPushNotificationOperationResponse);
+	}
+
+	public async getPushNotificationAsync(requestData: MasterPlayerModels.AdminGetPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminGetPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetPushNotificationOperationResponse);
+	}
+
+	public sendPushNotification(requestData: MasterPlayerModels.AdminSendPushNotificationRequestData, onResponse: Action1<MasterPlayerResponseModels.SendPushNotificationOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminSendPushNotificationOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
+	}
+
+	public async sendPushNotificationAsync(requestData: MasterPlayerModels.AdminSendPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendPushNotificationOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSendPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
 	}
 
 }

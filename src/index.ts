@@ -26,6 +26,8 @@ import { OwnerType } from "./runtime/constant/enumType/OwnerType";
 import { PermissionDataItem } from "./runtime/constant/enumType/PermissionDataItem";
 import { RequestRole } from "./runtime/constant/enumType/RequestRole";
 import { RequestType } from "./runtime/constant/enumType/RequestType";
+import { PushPlatformType } from "./runtime/constant/enumType/PushPlatformType";
+import { StoreReceiveType } from "./runtime/constant/enumType/StoreReceiveType";
 export { FriendStatus };
 export { GoogleLoginType };
 export { GroupStatus };
@@ -37,6 +39,8 @@ export { OwnerType };
 export { PermissionDataItem };
 export { RequestRole };
 export { RequestType };
+export { PushPlatformType };
+export { StoreReceiveType };
 
 
 import { GNErrorCode } from "./runtime/constant/errorCode/GNErrorCode";
@@ -254,6 +258,8 @@ const gn = {
     MatchmakingTicketStatus,
     OwnerType,
     PermissionDataItem,
+    PushPlatformType,
+    StoreReceiveType,
     RequestRole,
     RequestType,
     GNErrorCode,

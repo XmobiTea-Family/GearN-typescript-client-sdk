@@ -53,6 +53,9 @@ export namespace AuthenticateModels {
 		@BooleanDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
 		public tsLastLogin?: boolean;
 
+		@BooleanDataMember({ code: GNParameterCode.PushNotifications, isOptional: true, defaultValue: false })
+		public pushNotifications?: boolean;
+
 		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
 		public playerDataKeys?: Array<string>;
 

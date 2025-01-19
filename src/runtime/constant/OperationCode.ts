@@ -238,4 +238,10 @@ export class OperationCode {
 	public static readonly PresentStoreItem: number = 185;
 	public static readonly GetStoreLog: number = 186;
 
+	public static readonly SendEmail: number = 187;
+	public static readonly SendPushNotification: number = 188;
+	public static readonly AddPushNotification: number = 189;
+	public static readonly RemovePushNotification: number = 190;
+	public static readonly GetPushNotification: number = 191;
+
 }

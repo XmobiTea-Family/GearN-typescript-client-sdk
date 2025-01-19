@@ -394,14 +394,6 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
-	export class SendSocketOperationEventOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.EmptyResponseData> {
-
-		constructor() {
-			super();
-			this.responseDataCls = GamePlayerModels.EmptyResponseData;
-		}
-	}
-
 	export class GetStatisticsLogOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GetStatisticsLogResponseData> {
 
 		constructor() {

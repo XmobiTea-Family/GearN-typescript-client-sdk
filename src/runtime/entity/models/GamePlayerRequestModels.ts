@@ -1475,36 +1475,6 @@ export namespace GamePlayerRequestModels {
 		}
 	}
 
-	export class SendSocketOperationEventOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.SendSocketOperationEventRequestData> {
-		protected override operationCode: number = OperationCode.SendSocketOperationEvent;
-		protected override operationEncrypted: boolean = true;
-		protected override requestType: RequestType = RequestType.GamePlayer;
-		protected override requestRole: RequestRole = RequestRole.Client;
-
-		constructor(requestData: GamePlayerModels.SendSocketOperationEventRequestData, timeout: number) {
-			super(requestData, timeout);
-			this.requestDataCls = GamePlayerModels.SendSocketOperationEventRequestData;
-		}
-	}
-
-	export class ServerSendSocketOperationEventOperationRequest extends SendSocketOperationEventOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
-
-		constructor(requestData: GamePlayerModels.ServerSendSocketOperationEventRequestData, timeout: number) {
-			super(requestData, timeout);
-			this.requestDataCls = GamePlayerModels.ServerSendSocketOperationEventRequestData;
-		}
-	}
-
-	export class AdminSendSocketOperationEventOperationRequest extends SendSocketOperationEventOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
-
-		constructor(requestData: GamePlayerModels.AdminSendSocketOperationEventRequestData, timeout: number) {
-			super(requestData, timeout);
-			this.requestDataCls = GamePlayerModels.AdminSendSocketOperationEventRequestData;
-		}
-	}
-
 	export class GetStatisticsLogOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.GetStatisticsLogRequestData> {
 		protected override operationCode: number = OperationCode.GetStatisticsLog;
 		protected override operationEncrypted: boolean = true;
@@ -1538,7 +1508,7 @@ export namespace GamePlayerRequestModels {
 	export class GetCurrencyLogOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.GetCurrencyLogRequestData> {
 		protected override operationCode: number = OperationCode.GetCurrencyLog;
 		protected override operationEncrypted: boolean = true;
-		protected override requestType: RequestType = RequestType.CharacterPlayer;
+		protected override requestType: RequestType = RequestType.GamePlayer;
 		protected override requestRole: RequestRole = RequestRole.Client;
 
 		constructor(requestData: GamePlayerModels.GetCurrencyLogRequestData, timeout: number) {

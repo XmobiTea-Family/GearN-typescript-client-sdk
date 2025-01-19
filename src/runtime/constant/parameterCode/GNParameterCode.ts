@@ -585,4 +585,29 @@ export class GNParameterCode {
 	public static readonly ServerAllocation: string = "ServerAllocation";
 	public static readonly Enable: string = "Enable";
 
+	public static readonly SendEmail: string = "SendEmail";
+	public static readonly SendPushNotification: string = "SendPushNotification";
+	public static readonly AddPushNotification: string = "AddPushNotification";
+	public static readonly RemovePushNotification: string = "RemovePushNotification";
+	public static readonly GetPushNotification: string = "GetPushNotification";
+	public static readonly EmailSettings: string = "EmailSettings";
+	public static readonly PushNotificationSettings: string = "PushNotificationSettings";
+	public static readonly SendFrom: string = "SendFrom";
+	public static readonly SendGridApiKey: string = "SendGridApiKey";
+	public static readonly Subject: string = "Subject";
+	public static readonly ContentHtml: string = "ContentHtml";
+	public static readonly PushNotifications: string = "PushNotifications";
+	public static readonly PushId: string = "PushId";
+	public static readonly PlatformType: string = "PlatformType";
+	public static readonly ProjectId: string = "ProjectId";
+	public static readonly ClientEmail: string = "ClientEmail";
+	public static readonly PrivateKey: string = "PrivateKey";
+
+	public static readonly Badge: string = "Badge";
+	public static readonly Icon: string = "Icon";
+	public static readonly Sound: string = "Sound";
+	public static readonly Title: string = "Title";
+	public static readonly Body: string = "Body";
+	public static readonly TargetPlatforms: string = "TargetPlatforms";
+
 }

@@ -642,4 +642,52 @@ export namespace MasterPlayerResponseModels {
 		}
 	}
 
+	export class SendSocketOperationEventOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+		}
+	}
+
+	export class SendEmailOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+		}
+	}
+
+	export class AddPushNotificationOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.AddPushNotificationResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.AddPushNotificationResponseData;
+		}
+	}
+
+	export class RemovePushNotificationOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.EmptyResponseData;
+		}
+	}
+
+	export class GetPushNotificationOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
+		}
+	}
+
+	export class SendPushNotificationOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.SendPushNotificationResponseData> {
+
+		constructor() {
+			super();
+			this.responseDataCls = MasterPlayerModels.SendPushNotificationResponseData;
+		}
+	}
+
 }

@@ -49,5 +49,6 @@ export class GNErrorCode {
 
 	public static readonly ExecuteError: number = 46;
 	public static readonly VersionInvalid: number = 47;
+	public static readonly EmailInvalid: number = 48;
 
 }

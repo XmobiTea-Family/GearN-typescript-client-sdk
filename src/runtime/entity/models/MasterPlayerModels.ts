@@ -59,6 +59,9 @@ export namespace MasterPlayerModels {
 		@BooleanDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
 		public tsLastLogin?: boolean;
 
+		@BooleanDataMember({ code: GNParameterCode.PushNotifications, isOptional: true, defaultValue: false })
+		public pushNotifications?: boolean;
+
 		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
 		public playerDataKeys?: Array<string>;
 
@@ -1741,6 +1744,150 @@ export namespace MasterPlayerModels {
 	export class AdminUnlinkWindowsPhoneDeviceIdRequestData extends ServerUnlinkWindowsPhoneDeviceIdRequestData {
 	}
 
+	export class SendSocketOperationEventRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@NumberDataMember({ code: GNParameterCode.EventCode, minValue: 1000, mustInt: true })
+		public eventCode: number;
+
+		@GNHashtableDataMember({ code: GNParameterCode.EventParameters, mustNonNull: true, minLength: 0, maxLength: 128, isOptional: true })
+		public eventParameters?: GNHashtable;
+
+		@BooleanDataMember({ code: GNParameterCode.EventEncrypted, isOptional: true, defaultValue: false })
+		public eventEncrypted?: boolean;
+
+	}
+
+	export class ServerSendSocketOperationEventRequestData extends SendSocketOperationEventRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminSendSocketOperationEventRequestData extends ServerSendSocketOperationEventRequestData {
+	}
+
+	export class SendEmailRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@StringDataMember({ code: GNParameterCode.Subject, minLength: 2, maxLength: 256, mustNonNull: true })
+		public subject: string;
+
+		@StringDataMember({ code: GNParameterCode.ContentHtml, minLength: 2, maxLength: 8192, mustNonNull: true })
+		public contentHtml: string;
+
+	}
+
+	export class ServerSendEmailRequestData extends SendEmailRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminSendEmailRequestData extends ServerSendEmailRequestData {
+	}
+
+	export class AddPushNotificationRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@StringDataMember({ code: GNParameterCode.Token, minLength: 10, maxLength: 256, mustNonNull: true })
+		public token: string;
+
+		@NumberDataMember({ code: GNParameterCode.PlatformType, minValue: 1, mustInt: true })
+		public platformType: number;
+
+	}
+
+	export class ServerAddPushNotificationRequestData extends AddPushNotificationRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminAddPushNotificationRequestData extends ServerAddPushNotificationRequestData {
+	}
+
+	export class GetPushNotificationRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+	}
+
+	export class ServerGetPushNotificationRequestData extends GetPushNotificationRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminGetPushNotificationRequestData extends ServerGetPushNotificationRequestData {
+	}
+
+	export class RemovePushNotificationRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@StringDataMember({ code: GNParameterCode.PushId, minLength: 8, maxLength: 8, mustNonNull: true })
+		public pushId: string;
+
+	}
+
+	export class ServerRemovePushNotificationRequestData extends RemovePushNotificationRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminRemovePushNotificationRequestData extends ServerRemovePushNotificationRequestData {
+	}
+
+	export class SendPushNotificationRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+		public userId?: string;
+
+		@StringDataMember({ code: GNParameterCode.Title })
+		public title: string;
+
+		@StringDataMember({ code: GNParameterCode.Body })
+		public body: string;
+
+		@NumberDataMember({ code: GNParameterCode.Badge, mustInt: true, isOptional: true, defaultValue: null })
+		public badge?: number;
+
+		@StringDataMember({ code: GNParameterCode.Sound, isOptional: true })
+		public sound?: string;
+
+		@StringDataMember({ code: GNParameterCode.Icon, isOptional: true })
+		public icon?: string;
+
+		@GNHashtableDataMember({ code: GNParameterCode.Data, isOptional: true })
+		public data?: GNHashtable;
+
+	}
+
+	export class ServerSendPushNotificationRequestData extends SendPushNotificationRequestData {
+		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		public userId: string;
+
+	}
+
+	export class AdminSendPushNotificationRequestData extends ServerSendPushNotificationRequestData {
+	}
+
+	export class PushNotificationItem {
+		@StringDataMember({ code: GNParameterCode.Token })
+		public token: string;
+
+		@StringDataMember({ code: GNParameterCode.PushId })
+		public pushId: string;
+
+		@NumberDataMember({ code: GNParameterCode.PlatformType })
+		public platformType: number;
+
+	}
+
 	export class InfoResponseParameters {
 		@GNHashtableDataMember({ code: GNParameterCode.External, isOptional: true })
 		public external?: ExternalItem;
@@ -1786,6 +1933,9 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Email, isOptional: true })
 		public email?: string;
+
+		@GNArrayDataMember({ code: GNParameterCode.PushNotifications, isOptional: true, elementCls: MasterPlayerModels.PushNotificationItem })
+		public pushNotifications?: Array<MasterPlayerModels.PushNotificationItem>;
 
 	}
 
@@ -1972,6 +2122,18 @@ export namespace MasterPlayerModels {
 
 		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
 		public token?: string;
+
+	}
+
+	export class AddPushNotificationResponseData {
+		@StringDataMember({ code: GNParameterCode.PushId })
+		public pushId: string;
+
+	}
+
+	export class SendPushNotificationResponseData {
+		@StringDataMember({ code: GNParameterCode.Message })
+		public message: string;
 
 	}
 

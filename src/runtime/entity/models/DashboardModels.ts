@@ -421,6 +421,27 @@ export namespace DashboardModels {
 
 	}
 
+	export class EmailSettingsParam {
+		@StringDataMember({ code: GNParameterCode.SendFrom })
+		public sendFrom: string;
+
+		@StringDataMember({ code: GNParameterCode.SendGridApiKey })
+		public sendGridApiKey: string;
+
+	}
+
+	export class PushNotificationSettingsParam {
+		@StringDataMember({ code: GNParameterCode.ProjectId })
+		public projectId: string;
+
+		@StringDataMember({ code: GNParameterCode.ClientEmail })
+		public clientEmail: string;
+
+		@StringDataMember({ code: GNParameterCode.PrivateKey })
+		public privateKey: string;
+
+	}
+
 	export class GamePlayerPermissionRulesParam {
 		@GNHashtableDataMember({ code: GNParameterCode.AddSegment, isOptional: true })
 		public addSegment?: PermissionRulesParam;
@@ -568,9 +589,6 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.GetCreateLeaderboard, isOptional: true })
 		public getCreateLeaderboard?: PermissionRulesParam;
-
-		@GNHashtableDataMember({ code: GNParameterCode.SendSocketOperationEvent, isOptional: true })
-		public sendSocketOperationEvent?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: GNParameterCode.GetStatisticsLog, isOptional: true })
 		public getStatisticsLog?: PermissionRulesParam;
@@ -1244,6 +1262,24 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.GetCurrencyLog, isOptional: true })
 		public getCurrencyLog?: PermissionRulesParam;
 
+		@GNHashtableDataMember({ code: GNParameterCode.SendSocketOperationEvent, isOptional: true })
+		public sendSocketOperationEvent?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.SendEmail, isOptional: true })
+		public sendEmail?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.SendPushNotification, isOptional: true })
+		public sendPushNotification?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.AddPushNotification, isOptional: true })
+		public addPushNotification?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.RemovePushNotification, isOptional: true })
+		public removePushNotification?: PermissionRulesParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.GetPushNotification, isOptional: true })
+		public getPushNotification?: PermissionRulesParam;
+
 	}
 
 	export class MasterPlayerSettingsParam {
@@ -1660,6 +1696,12 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.MasterPlayerSettings, isOptional: true })
 		public masterPlayerSettings?: MasterPlayerSettingsParam;
 
+		@GNHashtableDataMember({ code: GNParameterCode.EmailSettings, isOptional: true })
+		public emailSettings?: EmailSettingsParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.PushNotificationSettings, isOptional: true })
+		public pushNotificationSettings?: PushNotificationSettingsParam;
+
 	}
 
 	export class SetPasswordAdminAccountRequestData {
@@ -1848,6 +1890,12 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: GNParameterCode.MasterPlayerSettings })
 		public masterPlayerSettings: MasterPlayerSettingsParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.EmailSettings })
+		public emailSettings: EmailSettingsParam;
+
+		@GNHashtableDataMember({ code: GNParameterCode.PushNotificationSettings })
+		public pushNotificationSettings: PushNotificationSettingsParam;
 
 	}
 

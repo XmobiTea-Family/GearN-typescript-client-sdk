@@ -1100,27 +1100,6 @@ export namespace GamePlayerModels {
 	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
 	}
 
-	export class SendSocketOperationEventRequestData {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10 })
-		public userId: string;
-
-		@NumberDataMember({ code: GNParameterCode.EventCode, minValue: 1000, mustInt: true })
-		public eventCode: number;
-
-		@GNHashtableDataMember({ code: GNParameterCode.EventParameters, mustNonNull: true, minLength: 0, maxLength: 128, isOptional: true })
-		public eventParameters?: GNHashtable;
-
-		@BooleanDataMember({ code: GNParameterCode.EventEncrypted, isOptional: true, defaultValue: false })
-		public eventEncrypted?: boolean;
-
-	}
-
-	export class ServerSendSocketOperationEventRequestData extends SendSocketOperationEventRequestData {
-	}
-
-	export class AdminSendSocketOperationEventRequestData extends ServerSendSocketOperationEventRequestData {
-	}
-
 	export class InfoResponseParameters {
 		@GNArrayDataMember({ code: GNParameterCode.Segments, isOptional: true, elementCls: String })
 		public segments?: Array<string>;

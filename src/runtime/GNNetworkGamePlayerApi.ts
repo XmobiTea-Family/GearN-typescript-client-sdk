@@ -403,14 +403,6 @@ export class GamePlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.GetCreateLeaderboardOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetCreateLeaderboardOperationResponse);
 	}
 
-	public sendSocketOperationEvent(requestData: GamePlayerModels.SendSocketOperationEventRequestData, onResponse: Action1<GamePlayerResponseModels.SendSocketOperationEventOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GamePlayerRequestModels.SendSocketOperationEventOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.SendSocketOperationEventOperationResponse);
-	}
-
-	public async sendSocketOperationEventAsync(requestData: GamePlayerModels.SendSocketOperationEventRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.SendSocketOperationEventOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.SendSocketOperationEventOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.SendSocketOperationEventOperationResponse);
-	}
-
 	public getStatisticsLog(requestData: GamePlayerModels.GetStatisticsLogRequestData, onResponse: Action1<GamePlayerResponseModels.GetStatisticsLogOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new GamePlayerRequestModels.GetStatisticsLogOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetStatisticsLogOperationResponse);
 	}
@@ -822,14 +814,6 @@ export class ServerGamePlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.ServerGetCreateLeaderboardOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetCreateLeaderboardOperationResponse);
 	}
 
-	public sendSocketOperationEvent(requestData: GamePlayerModels.ServerSendSocketOperationEventRequestData, onResponse: Action1<GamePlayerResponseModels.SendSocketOperationEventOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GamePlayerRequestModels.ServerSendSocketOperationEventOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.SendSocketOperationEventOperationResponse);
-	}
-
-	public async sendSocketOperationEventAsync(requestData: GamePlayerModels.ServerSendSocketOperationEventRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.SendSocketOperationEventOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.ServerSendSocketOperationEventOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.SendSocketOperationEventOperationResponse);
-	}
-
 	public getStatisticsLog(requestData: GamePlayerModels.ServerGetStatisticsLogRequestData, onResponse: Action1<GamePlayerResponseModels.GetStatisticsLogOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new GamePlayerRequestModels.ServerGetStatisticsLogOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetStatisticsLogOperationResponse);
 	}
@@ -1239,14 +1223,6 @@ export class AdminGamePlayerApi {
 
 	public async getCreateLeaderboardAsync(requestData: GamePlayerModels.AdminGetCreateLeaderboardRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.GetCreateLeaderboardOperationResponse> {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.AdminGetCreateLeaderboardOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetCreateLeaderboardOperationResponse);
-	}
-
-	public sendSocketOperationEvent(requestData: GamePlayerModels.AdminSendSocketOperationEventRequestData, onResponse: Action1<GamePlayerResponseModels.SendSocketOperationEventOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GamePlayerRequestModels.AdminSendSocketOperationEventOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.SendSocketOperationEventOperationResponse);
-	}
-
-	public async sendSocketOperationEventAsync(requestData: GamePlayerModels.AdminSendSocketOperationEventRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.SendSocketOperationEventOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.AdminSendSocketOperationEventOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.SendSocketOperationEventOperationResponse);
 	}
 
 	public getStatisticsLog(requestData: GamePlayerModels.AdminGetStatisticsLogRequestData, onResponse: Action1<GamePlayerResponseModels.GetStatisticsLogOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
