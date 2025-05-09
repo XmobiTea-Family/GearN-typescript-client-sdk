@@ -1,7 +1,11 @@
-const path = require("path");
-const TerserPlugin = require("terser-webpack-plugin");
+import path from "path";
+import TerserPlugin from "terser-webpack-plugin";
+import { fileURLToPath } from "url";
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
 	entry: "./src/index.ts",
 	module: {
 		rules: [
@@ -23,10 +27,9 @@ module.exports = {
 	output: {
 		filename: "gn.js.client.min.js",
 		path: path.resolve(__dirname, "dist"),
-		library: {
-			type: "umd",
-			name: "GN",
-		},
+        library: "GN",
+		libraryTarget: "umd",
+        globalObject: "this",
 		environment: {
 			arrowFunction: true,
 		},

@@ -48,15 +48,15 @@ loginByAdminAccountRequestData.password = "123456";
 GNNetwork.dashboard.loginByAdminAccount(loginByAdminAccountRequestData, response => {
     console.log(response.errorCode);
 
-    if (response.errorCode == GNErrorCode.Ok) {
-        let changePasswordAdminAccountRequestData = new DashboardModels.ChangePasswordAdminAccountRequestData();
-        changePasswordAdminAccountRequestData.currentPassword = "123456";
-        changePasswordAdminAccountRequestData.password = "gnadmin";
+    // if (response.errorCode == GNErrorCode.Ok) {
+    //     let changePasswordAdminAccountRequestData = new DashboardModels.ChangePasswordAdminAccountRequestData();
+    //     changePasswordAdminAccountRequestData.currentPassword = "123456";
+    //     changePasswordAdminAccountRequestData.password = "gnadmin";
 
-        GNNetwork.dashboard.changePasswordAdminAccount(changePasswordAdminAccountRequestData, response => {
-            console.log(response.errorCode);
-        });
-    }
+    //     GNNetwork.dashboard.changePasswordAdminAccount(changePasswordAdminAccountRequestData, response => {
+    //         console.log(response.errorCode);
+    //     });
+    // }
 });
 
 // GNNetwork.connectSocket(() => {

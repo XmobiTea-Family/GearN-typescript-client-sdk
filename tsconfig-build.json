@@ -6,5 +6,15 @@
         "rootDir": "./src",
         "outDir": "./dist"
     },
-    "exclude": ["./test/", "./node_modules/", "./webpack.config.udm.js", "./webpack.config.min.udm.js", "./webpack.config.js", "./dist/index.js", "./dist/gn.js.client.min.js", "./dist/gn.js.client.js", "./index.js"]
+    "exclude": [
+        "./test/",
+        "./node_modules/",
+        "./webpack.config.udm.mjs",
+        "./webpack.config.min.udm.mjs",
+        "./webpack.config.mjs",
+        "./dist/index.js",
+        "./dist/gn.js.client.min.js",
+        "./dist/gn.js.client.js",
+        "./index.js"
+    ]
 }
