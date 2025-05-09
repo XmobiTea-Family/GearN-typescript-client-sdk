@@ -723,6 +723,9 @@ export namespace GamePlayerModels {
 		@StringDataMember({ code: GNParameterCode.DisplayName, defaultValue: "", isOptional: true, mustNonNull: true })
 		public displayName?: string;
 
+        @BooleanDataMember({ code: GNParameterCode.UniqueDisplayName, defaultValue: false, isOptional: true })
+        public uniqueDisplayName?: boolean;
+
 	}
 
 	export class ServerGrantPlayerCharacterRequestData extends GrantPlayerCharacterRequestData {

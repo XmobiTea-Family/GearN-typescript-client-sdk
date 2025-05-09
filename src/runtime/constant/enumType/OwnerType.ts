@@ -4,5 +4,6 @@ export enum OwnerType {
     CharacterPlayer = 3,
     Group = 4,
     Inventory = 5,
+    StoreInventory = 6,
 
 }
