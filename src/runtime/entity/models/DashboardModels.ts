@@ -284,7 +284,7 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.GetCreateLeaderboard, isOptional: true })
 		public getCreateLeaderboard?: PermissionRulesParam;
 
-        @GNHashtableDataMember({ code: GNParameterCode.GetLastLoginLeaderboard, isOptional: true })
+		@GNHashtableDataMember({ code: GNParameterCode.GetLastLoginLeaderboard, isOptional: true })
 		public getLastLoginLeaderboard?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: GNParameterCode.GetStatisticsLog, isOptional: true })
@@ -1534,10 +1534,10 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.GetStoreLog, isOptional: true })
 		public getStoreLog?: PermissionRulesParam;
 
-        @GNHashtableDataMember({ code: GNParameterCode.GetStoreUsed, isOptional: true })
+		@GNHashtableDataMember({ code: GNParameterCode.GetStoreUsed, isOptional: true })
 		public getStoreUsed?: PermissionRulesParam;
 
-        @GNHashtableDataMember({ code: GNParameterCode.RemoveStoreUsed, isOptional: true })
+		@GNHashtableDataMember({ code: GNParameterCode.RemoveStoreUsed, isOptional: true })
 		public removeStoreUsed?: PermissionRulesParam;
 
 	}
@@ -1741,6 +1741,9 @@ export namespace DashboardModels {
 		@NumberDataMember({ code: GNParameterCode.TsExpire, isOptional: true })
 		public tsExpire?: number;
 
+		@StringDataMember({ code: GNParameterCode.DisplayName, isOptional: true })
+		public displayName?: string;
+
 		@GNHashtableDataMember({ code: GNParameterCode.Permission, isOptional: true })
 		public permissionParam?: PermissionParam;
 
@@ -1774,10 +1777,10 @@ export namespace DashboardModels {
 		@BooleanDataMember({ code: GNParameterCode.DatabaseSystem, isOptional: true })
 		public databaseSystem?: boolean;
 
-        @BooleanDataMember({ code: GNParameterCode.Cost, isOptional: true })
+		@BooleanDataMember({ code: GNParameterCode.Cost, isOptional: true })
 		public cost?: boolean;
 
-        @BooleanDataMember({ code: GNParameterCode.MonthlyCost, isOptional: true })
+		@BooleanDataMember({ code: GNParameterCode.MonthlyCost, isOptional: true })
 		public monthlyCost?: boolean;
 
 	}
@@ -1972,6 +1975,9 @@ export namespace DashboardModels {
 		@NumberDataMember({ code: GNParameterCode.TsExpire })
 		public tsExpire: number;
 
+		@StringDataMember({ code: GNParameterCode.DisplayName })
+		public displayName: string;
+
 		@GNHashtableDataMember({ code: GNParameterCode.Permission })
 		public permission: PermissionParam;
 
@@ -1984,8 +1990,14 @@ export namespace DashboardModels {
 	}
 
 	export class GetSecretInfoListResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: SecretInfoWithSecretKeyResponseData })
-		public results: Array<SecretInfoWithSecretKeyResponseData>;
+		@GNArrayDataMember({ code: GNParameterCode.AdminSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
+		public adminSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
+
+		@GNArrayDataMember({ code: GNParameterCode.ServerSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
+		public serverSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
+
+		@GNArrayDataMember({ code: GNParameterCode.PlayerSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
+		public playerSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
 
 	}
 
@@ -2157,23 +2169,23 @@ export namespace DashboardModels {
 
 	}
 
-    export class CostResponseData {
-        @NumberDataMember({ code: GNParameterCode.RequestCount })
+	export class CostResponseData {
+		@NumberDataMember({ code: GNParameterCode.RequestCount })
 		public requestCount: number;
 
 		@NumberDataMember({ code: GNParameterCode.MatchmakingRequestCount })
 		public matchmakingRequestCount: number;
 
-        @NumberDataMember({ code: GNParameterCode.CloudScriptGBs })
+		@NumberDataMember({ code: GNParameterCode.CloudScriptGBs })
 		public cloudScriptGBs: number;
 
-        @NumberDataMember({ code: GNParameterCode.StorageSizeInBytes })
+		@NumberDataMember({ code: GNParameterCode.StorageSizeInBytes })
 		public storageSizeInBytes: number;
 
-        @NumberDataMember({ code: GNParameterCode.DataTransferSizeInBytes })
+		@NumberDataMember({ code: GNParameterCode.DataTransferSizeInBytes })
 		public dataTransferSizeInBytes: number;
 
-    }
+	}
 
 	export class GetAnalyticsResponseData {
 		@GNHashtableDataMember({ code: GNParameterCode.AnalyticsItem, isOptional: true })
@@ -2194,7 +2206,7 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: GNParameterCode.Cost, isOptional: true })
 		public cost?: CostResponseData;
 
-        @GNHashtableDataMember({ code: GNParameterCode.MonthlyCost, isOptional: true })
+		@GNHashtableDataMember({ code: GNParameterCode.MonthlyCost, isOptional: true })
 		public monthlyCost?: CostResponseData;
 
 	}

@@ -628,17 +628,21 @@ export class GNParameterCode {
 	public static readonly Indexes: string = "indexes";
 	public static readonly DatabaseSystem: string = "databaseSystem";
 
-    public static readonly Cost: string = "cost";
-    public static readonly MonthlyCost: string = "monthlyCost";
-    public static readonly RequestCount: string = "requestCount";
-    public static readonly MatchmakingRequestCount: string = "matchmakingRequestCount";
-    public static readonly CloudScriptGBs: string = "cloudScriptGBs";
-    public static readonly StorageSizeInBytes: string = "storageSizeInBytes";
-    public static readonly DataTransferSizeInBytes: string = "dataTransferSizeInBytes";
+	public static readonly Cost: string = "cost";
+	public static readonly MonthlyCost: string = "monthlyCost";
+	public static readonly RequestCount: string = "requestCount";
+	public static readonly MatchmakingRequestCount: string = "matchmakingRequestCount";
+	public static readonly CloudScriptGBs: string = "cloudScriptGBs";
+	public static readonly StorageSizeInBytes: string = "storageSizeInBytes";
+	public static readonly DataTransferSizeInBytes: string = "dataTransferSizeInBytes";
 
-    public static readonly StoreItemType: string = "storeItemType";
-    public static readonly OwnerIds: string = "ownerIds";
-    public static readonly GetStoreUsed: string = "getStoreUsed";
-    public static readonly RemoveStoreUsed: string = "removeStoreUsed";
+	public static readonly StoreItemType: string = "storeItemType";
+	public static readonly OwnerIds: string = "ownerIds";
+	public static readonly GetStoreUsed: string = "getStoreUsed";
+	public static readonly RemoveStoreUsed: string = "removeStoreUsed";
+
+	public static readonly AdminSecretKeys: string = "adminSecretKeys";
+	public static readonly ServerSecretKeys: string = "serverSecretKeys";
+	public static readonly PlayerSecretKeys: string = "playerSecretKeys";
 
 }

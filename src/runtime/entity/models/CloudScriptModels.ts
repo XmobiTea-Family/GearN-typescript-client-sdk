@@ -51,7 +51,7 @@ export namespace CloudScriptModels {
         functionParameters?: object;
 
         @StringDataMember({ code: GNParameterCode.Version, minLength: 7, maxLength: 7, isOptional: true })
-        version: string;
+        version?: string;
 
     }
 
