@@ -1,6 +1,6 @@
 {
   "name": "@xmobitea/gn-typescript-client",
-  "version": "2.5.4",
+  "version": "2.6.1",
   "description": "GearN Typescript Client SDK by XmobiTea (Pro)",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@msgpack/msgpack": "^2.8.0",
-    "axios": "^1.7.9",
+    "axios": "^1.10.0",
     "reflect-metadata": "^0.2.2",
     "socket.io-client": "^4.8.1",
     "store": "^2.0.12"

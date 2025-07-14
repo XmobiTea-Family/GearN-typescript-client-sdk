@@ -1,4 +1,4 @@
-const VERSION: string = "2.5";
+const VERSION: string = "2.6";
 
 import { Action0 } from "./common/Action0";
 import { Action1 } from "./common/Action1";

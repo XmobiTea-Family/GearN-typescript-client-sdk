@@ -17,8 +17,6 @@ export interface GNServerSettingsOptions {
     serverSecretKey: string;
     clientSecretKey: string;
 
-    gnServerSourcePath: string;
-
     logType: LogType;
 }
 
@@ -39,8 +37,6 @@ export class GNServerSettings {
     private serverSecretKey: string;
     private clientSecretKey: string;
 
-    private gnServerSourcePath: string;
-
     private logType: LogType = LogType.All;
 
     public config(options: GNServerSettingsOptions): void {
@@ -59,8 +55,6 @@ export class GNServerSettings {
         this.adminSecretKey = options.adminSecretKey;
         this.serverSecretKey = options.serverSecretKey;
         this.clientSecretKey = options.clientSecretKey;
-
-        this.gnServerSourcePath = options.gnServerSourcePath;
 
         this.logType = options.logType;
     }
@@ -167,14 +161,6 @@ export class GNServerSettings {
 
     public setClientSecretKey(clientSecretKey: string): void {
         this.clientSecretKey = clientSecretKey;
-    }
-
-    public getGNServerSourcePath(): string {
-        return this.gnServerSourcePath;
-    }
-
-    public setGNServerSourcePath(gnServerSourcePath: string): void {
-        this.gnServerSourcePath = gnServerSourcePath;
     }
 
     public getLogType(): LogType {
