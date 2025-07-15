@@ -11,6 +11,7 @@ import { GNSupport } from "./../../helper/GNSupport";
 import { NetworkingHttpPeerBase } from "./NetworkingHttpPeerBase";
 import { NetworkingPeerAxiosRequest } from "./NetworkingPeerAxiosRequest";
 import { MessagePackConverterService } from "./../../helper/MessagePackConverterService";
+import { MessageType } from "./../../config/GNServerSettings";
 
 export class HttpAppResponse {
     public statusCode: number;
@@ -66,15 +67,13 @@ export class HttpPeer extends PeerBase {
         let gameId = operationPending.getGameId();
         let customTags = operationPending.getCustomTags();
 
+        let gnServerSettings = GNNetwork.getGNServerSettings();
+        let postType = gnServerSettings.getMessageType() == MessageType.Json ? PostType.Json : PostType.MsgPack;
+
         if (GNSupport.isBrowser()) {
-            if (operationRequest.isEncrypted()) {
-                GNDebug.logWarning("GN JS client sdk does not support send encrypted request via HTTP, so we will send this request via HTTP non encrypted");
-
-                operationRequest.setEncrypted(false);
-            }
+            GNDebug.logWarning("GN JS client sdk does not support send encrypted request via HTTP, so we will send this request via HTTP non encrypted");
+            postType = PostType.MsgPack;
         }
-
-        let postType = !operationRequest.isEncrypted() ? PostType.Json : PostType.MsgPack;
 
         let subUri = (postType == PostType.Json ? NetworkingPeer.API_JSON : NetworkingPeer.API_MSG_PACK) + "/" + operationRequest.getOperationCode() + "/" + <number>operationPending.getRequestType() + "/" + <number>operationPending.getRequestRole();
         let thiz = this;

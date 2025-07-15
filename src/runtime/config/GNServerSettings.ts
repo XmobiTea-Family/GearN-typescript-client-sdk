@@ -1,5 +1,10 @@
 import { LogType } from "./../logger/GNDebug";
 
+export enum MessageType {
+    Json = 1,
+    MsgPack = 2,
+}
+
 export interface GNServerSettingsOptions {
     serverAddress: string;
     serverPort: number;
@@ -8,6 +13,7 @@ export interface GNServerSettingsOptions {
     useSocket: boolean;
     useHttp: boolean;
 
+    messageType: MessageType;
     sendRate: number;
     reconnectDelay: number;
     pingInterval: number;
@@ -28,6 +34,7 @@ export class GNServerSettings {
     private useSocket: boolean = true;
     private useHttp: boolean = true;
 
+    private messageType: MessageType = MessageType.MsgPack;
     private sendRate: number = 20;
     private reconnectDelay: number = 5000;
     private pingInterval: number = 20000;
@@ -47,6 +54,7 @@ export class GNServerSettings {
         this.useSocket = options.useSocket;
         this.useHttp = options.useHttp;
 
+        this.messageType = options.messageType;
         this.sendRate = options.sendRate;
         this.reconnectDelay = options.reconnectDelay;
         this.pingInterval = options.pingInterval;
@@ -105,6 +113,14 @@ export class GNServerSettings {
 
     public setUseHttp(useHttp: boolean): void {
         this.useHttp = useHttp;
+    }
+
+    public getMessageType(): MessageType {
+        return this.messageType;
+    }
+
+    public setMessageType(messageType: MessageType): void {
+        this.messageType = messageType;
     }
 
     public getSendRate(): number {

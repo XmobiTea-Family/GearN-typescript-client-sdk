@@ -11,6 +11,7 @@ import { RequestType } from "./../../constant/enumType/RequestType";
 import { RequestRole } from "./../../constant/enumType/RequestRole";
 import { GNHashtable } from "./../../common/GNData";
 import { MessagePackConverterService } from "./../../helper/MessagePackConverterService";
+import { MessageType } from "./../../config/GNServerSettings";
 
 export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
     private socketManager: Manager;
@@ -124,10 +125,13 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
         if (customTags != null) operationRequest.setParameter(GNParameterCode.CustomTags, customTags);
 
         let dataSend = OperationHelper.toSocketData(requestType, requestRole, operationRequest);
-        if (operationRequest.isEncrypted())
-            socket.emit(Commands.RequestCmd_MsgPack, MessagePackConverterService.serialize(dataSend));
-        else
+
+        let gnServerSettings = GNNetwork.getGNServerSettings();
+
+        if (gnServerSettings.getMessageType() == MessageType.Json)
             socket.emit(Commands.RequestCmd_Json, dataSend);
+        else
+            socket.emit(Commands.RequestCmd_MsgPack, MessagePackConverterService.serialize(dataSend));
     }
 
     override close(_onSocketDisconnect: Action0): void {

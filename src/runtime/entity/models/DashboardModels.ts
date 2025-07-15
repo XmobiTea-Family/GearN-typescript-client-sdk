@@ -431,8 +431,20 @@ export namespace DashboardModels {
 		@StringDataMember({ code: GNParameterCode.SendFrom })
 		public sendFrom: string;
 
-		@StringDataMember({ code: GNParameterCode.SendGridApiKey })
-		public sendGridApiKey: string;
+		@BooleanDataMember({ code: GNParameterCode.Secure })
+        public secure: boolean;
+
+        @StringDataMember({ code: GNParameterCode.Host })
+        public host: string;
+
+        @NumberDataMember({ code: GNParameterCode.Port })
+        public port: number;
+
+        @StringDataMember({ code: GNParameterCode.Username })
+        public username: string;
+
+        @StringDataMember({ code: GNParameterCode.Password })
+        public password: string;
 
 	}
 

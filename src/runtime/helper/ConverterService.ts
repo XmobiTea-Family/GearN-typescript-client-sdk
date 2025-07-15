@@ -1,5 +1,4 @@
 import { GNEnhancedObjectFieldMetadata, GNEnhancedObjectMetadata, GNFieldDataType, getGNObjectMetadata } from "./../entity/DataMember";
-import { FieldDataType } from "./../entity/GNMetadata";
 import { GNArray, GNData, GNHashtable } from "./../common/GNData";
 
 type Constructor<T> = { new(...args: any[]): T };

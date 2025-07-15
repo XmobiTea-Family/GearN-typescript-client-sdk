@@ -594,6 +594,9 @@ export class GNParameterCode {
 	public static readonly EmailSettings: string = "emailSettings";
 	public static readonly PushNotificationSettings: string = "pushNotificationSettings";
 	public static readonly SendFrom: string = "sendFrom";
+    public static readonly Host: string = "host";
+	public static readonly Port: string = "port";
+	public static readonly Secure: string = "secure";
 	public static readonly SendGridApiKey: string = "sendGridApiKey";
 	public static readonly Subject: string = "subject";
 	public static readonly ContentHtml: string = "contentHtml";
