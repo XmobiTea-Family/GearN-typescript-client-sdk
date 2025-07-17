@@ -48,7 +48,7 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
                 this.onDisconnect();
             });
 
-            socket.io.on("error", (error: any) => {
+            socket.on("error", (error: any) => {
                 this.onError(error);
             });
 
