@@ -1,148 +1,148 @@
-import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
 export namespace CharacterPlayerModels {
 	export class InfoRequestParam {
-		@BooleanDataMember({ code: GNParameterCode.CatalogId, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.CatalogId, isOptional: true, defaultValue: false })
 		public catalogId?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Owner, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Owner, isOptional: true, defaultValue: false })
 		public owner?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.RemoveStatus, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.RemoveStatus, isOptional: true, defaultValue: false })
 		public removeStatus?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Segments, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Segments, isOptional: true, defaultValue: false })
 		public segments?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.CustomDatas, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.CustomDatas, isOptional: true, defaultValue: false })
 		public customDatas?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.DisplayName, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.DisplayName, isOptional: true, defaultValue: false })
 		public displayName?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Avatar, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Avatar, isOptional: true, defaultValue: false })
 		public avatar?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.TsCreate, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.TsCreate, isOptional: true, defaultValue: false })
 		public tsCreate?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Tags, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Tags, isOptional: true, defaultValue: false })
 		public tags?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.PlayerBan, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.PlayerBan, isOptional: true, defaultValue: false })
 		public playerBan?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.PlayerCurrencies, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.PlayerCurrencies, isOptional: true, defaultValue: false })
 		public playerCurrencies?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.PlayerStatistics, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.PlayerStatistics, isOptional: true, defaultValue: false })
 		public playerStatistics?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.PlayerDatas, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.PlayerDatas, isOptional: true, defaultValue: false })
 		public playerDatas?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.IpAddressCreate, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.IpAddressCreate, isOptional: true, defaultValue: false })
 		public ipAddressCreate?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.CountryCode, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.CountryCode, isOptional: true, defaultValue: false })
 		public countryCode?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
 		public tsLastLogin?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.PlayerInventories, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.PlayerInventories, isOptional: true, defaultValue: false })
 		public playerInventories?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.PlayerGroups, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.PlayerGroups, isOptional: true, defaultValue: false })
 		public playerGroups?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.PlayerFriends, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.PlayerFriends, isOptional: true, defaultValue: false })
 		public playerFriends?: boolean;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
 		public playerDataKeys?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
 		public playerCurrencyKeys?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerStatisticsKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.PlayerStatisticsKeys, isOptional: true, elementCls: String })
 		public playerStatisticsKeys?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
 		public customDataKeys?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.TagKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.TagKeys, isOptional: true, elementCls: String })
 		public tagKeys?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.CharacterCatalogIds, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.CharacterCatalogIds, isOptional: true, elementCls: String })
 		public characterCatalogIds?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
 		public itemCatalogIds?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.GroupCatalogIds, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.GroupCatalogIds, isOptional: true, elementCls: String })
 		public groupCatalogIds?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.FriendCatalogIds, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.FriendCatalogIds, isOptional: true, elementCls: String })
 		public friendCatalogIds?: Array<string>;
 
 	}
 
 	export class PlayerStatisticsParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@NumberDataMember({ code: GNParameterCode.Value })
+		@NumberDataMember({ code: ParameterCode.Value })
 		public value: number;
 
 	}
 
 	export class PlayerDataParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@DataMember({ code: GNParameterCode.Value })
+		@DataMember({ code: ParameterCode.Value })
 		public value: any;
 
 	}
 
 	export class PlayerCurrencyParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@NumberDataMember({ code: GNParameterCode.Amount })
+		@NumberDataMember({ code: ParameterCode.Amount })
 		public amount: number;
 
 	}
 
 	export class CustomDataParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@DataMember({ code: GNParameterCode.Value })
+		@DataMember({ code: ParameterCode.Value })
 		public value: any;
 
 	}
 
 	export class GroupMemberParam {
-		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public userId: string;
 
-		@NumberDataMember({ code: GNParameterCode.Role, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Role, mustInt: true })
 		public role: number;
 
 	}
 
 	export class AddPlayerFriendRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.FriendId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.FriendId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public friendId: string;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public catalogId: string;
 
 	}
@@ -154,10 +154,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class AddSegmentRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 6, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 6, maxLength: 32, mustNonNull: true })
 		public value: string;
 
 	}
@@ -169,7 +169,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetAvatarRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -181,7 +181,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetCatalogIdRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -193,7 +193,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetCountryCodeRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -205,10 +205,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetCustomDataRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
 		public customDataKeys?: Array<string>;
 
 	}
@@ -220,7 +220,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetDisplayNameRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -232,23 +232,23 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetFriendStatisticsLeaderboardAroundPlayerRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-        @BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
-        public loadFromCache?: boolean;
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
 
 	}
 
@@ -259,23 +259,23 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetFriendStatisticsLeaderboardRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-        @BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
-        public loadFromCache?: boolean;
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
 
 	}
 
@@ -286,7 +286,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetIpAddressCreateRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -298,7 +298,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetOwnerRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -310,7 +310,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayerBanRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -322,10 +322,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayerCurrencyRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
 		public playerCurrencyKeys?: Array<string>;
 
 	}
@@ -337,10 +337,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayerDataRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
 		public playerDataKeys?: Array<string>;
 
 	}
@@ -352,10 +352,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayerFriendRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.FriendCatalogIds, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.FriendCatalogIds, isOptional: true, elementCls: String })
 		public friendCatalogIds?: Array<string>;
 
 	}
@@ -367,10 +367,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayerGroupRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.GroupCatalogIds, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.GroupCatalogIds, isOptional: true, elementCls: String })
 		public groupCatalogIds?: Array<string>;
 
 	}
@@ -382,10 +382,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayerInformationRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
 	}
@@ -397,10 +397,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayerInventoryRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
 		public itemCatalogIds?: Array<string>;
 
 	}
@@ -412,10 +412,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayerStatisticsRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.StatisticsKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.StatisticsKeys, isOptional: true, elementCls: String })
 		public statisticsKeys?: Array<string>;
 
 	}
@@ -427,16 +427,16 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayersWithDisplayNameRequestData {
-		@StringDataMember({ code: GNParameterCode.Keyword, minLength: 2, maxLength: 32 })
+		@StringDataMember({ code: ParameterCode.Keyword, minLength: 2, maxLength: 32 })
 		public keyword: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -448,16 +448,16 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayersWithSegmentRequestData {
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -469,19 +469,19 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetPlayersWithTagRequestData {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -493,7 +493,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetRemoveStatusRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -505,7 +505,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetSegmentRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -517,26 +517,26 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetStatisticsLeaderboardAroundPlayerRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-        @BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
-        public loadFromCache?: boolean;
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		public loadFromCache?: boolean;
 
-        @StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
-        public catalogId?: string;
+		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		public catalogId?: string;
 
 	}
 
@@ -547,23 +547,23 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetCurrencyLeaderboardRequestData {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
-        @StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
-        public catalogId?: string;
+		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		public catalogId?: string;
 
 	}
 
@@ -574,26 +574,26 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetStatisticsLeaderboardRequestData {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
-		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public version?: string;
 
-	    @StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
-        public catalogId?: string;
+		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		public catalogId?: string;
 
 	}
 
@@ -604,16 +604,16 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetCreateLeaderboardRequestData {
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
 	}
@@ -624,17 +624,17 @@ export namespace CharacterPlayerModels {
 	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
 	}
 
-    export class GetLastLoginLeaderboardRequestData {
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+	export class GetLastLoginLeaderboardRequestData {
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
 	}
@@ -646,10 +646,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetTagRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.TagKeys, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.TagKeys, elementCls: String })
 		public tagKeys: Array<string>;
 
 	}
@@ -661,7 +661,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetTsCreateRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -673,7 +673,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetTsLastLoginRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
 	}
@@ -684,56 +684,56 @@ export namespace CharacterPlayerModels {
 	export class AdminGetTsLastLoginRequestData extends ServerGetTsLastLoginRequestData {
 	}
 
-	export class GrantGroupRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+	export class CreateGroupRequestData {
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public catalogId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.GroupMembers, isOptional: true, elementCls: GroupMemberParam })
+		@GNArrayDataMember({ code: ParameterCode.GroupMembers, isOptional: true, elementCls: GroupMemberParam })
 		public groupMembers?: Array<GroupMemberParam>;
 
-		@StringDataMember({ code: GNParameterCode.DisplayName, defaultValue: "", isOptional: true })
+		@StringDataMember({ code: ParameterCode.DisplayName, defaultValue: "", isOptional: true })
 		public displayName?: string;
 
 	}
 
-	export class ServerGrantGroupRequestData extends GrantGroupRequestData {
+	export class ServerCreateGroupRequestData extends CreateGroupRequestData {
 	}
 
-	export class AdminGrantGroupRequestData extends ServerGrantGroupRequestData {
+	export class AdminCreateGroupRequestData extends ServerCreateGroupRequestData {
 	}
 
-	export class GrantPlayerItemRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+	export class CreatePlayerItemRequestData {
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public catalogId: string;
 
-		@StringDataMember({ code: GNParameterCode.ClassId, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ClassId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public classId: string;
 
-		@StringDataMember({ code: GNParameterCode.DisplayName, defaultValue: "", isOptional: true })
+		@StringDataMember({ code: ParameterCode.DisplayName, defaultValue: "", isOptional: true })
 		public displayName?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Amount, defaultValue: 1, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Amount, defaultValue: 1, mustInt: true, isOptional: true })
 		public amount?: number;
 
 	}
 
-	export class ServerGrantPlayerItemRequestData extends GrantPlayerItemRequestData {
+	export class ServerCreatePlayerItemRequestData extends CreatePlayerItemRequestData {
 	}
 
-	export class AdminGrantPlayerItemRequestData extends ServerGrantPlayerItemRequestData {
+	export class AdminCreatePlayerItemRequestData extends ServerCreatePlayerItemRequestData {
 	}
 
 	export class JoinGroupRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
 
 	}
@@ -745,10 +745,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class LeaveGroupRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
 
 	}
@@ -760,10 +760,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class RemovePlayerFriendRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.FriendId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.FriendId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public friendId: string;
 
 	}
@@ -775,10 +775,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class RemovePlayerItemRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -790,10 +790,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class RemoveSegmentRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
 
 	}
@@ -805,10 +805,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class RemoveTagRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
 	}
@@ -820,13 +820,13 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetAvatarRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@NumberDataMember({ code: GNParameterCode.Type, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 1, maxLength: 128, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 1, maxLength: 128, mustNonNull: true })
 		public value: string;
 
 	}
@@ -838,10 +838,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetCountryCodeRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.CountryCode, minLength: 2, maxLength: 32 })
+		@StringDataMember({ code: ParameterCode.CountryCode, minLength: 2, maxLength: 32 })
 		public countryCode: string;
 
 	}
@@ -853,10 +853,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetCustomDataRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.CustomDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: CustomDataParam })
+		@GNArrayDataMember({ code: ParameterCode.CustomDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: CustomDataParam })
 		public customData: Array<CustomDataParam>;
 
 	}
@@ -868,14 +868,14 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetDisplayNameRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.DisplayName, minLength: 5, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.DisplayName, minLength: 5, maxLength: 32, mustNonNull: true })
 		public displayName: string;
 
-        @BooleanDataMember({ code: GNParameterCode.UniqueDisplayName, defaultValue: false, isOptional: true })
-        public uniqueDisplayName?: boolean;
+		@BooleanDataMember({ code: ParameterCode.UniqueDisplayName, defaultValue: false, isOptional: true })
+		public uniqueDisplayName?: boolean;
 
 	}
 
@@ -886,10 +886,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetOwnerRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public newOwnerId: string;
 
 	}
@@ -901,13 +901,13 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetPlayerBanRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@NumberDataMember({ code: GNParameterCode.TsExpire })
+		@NumberDataMember({ code: ParameterCode.TsExpire })
 		public tsExpire: number;
 
-		@StringDataMember({ code: GNParameterCode.Reason })
+		@StringDataMember({ code: ParameterCode.Reason })
 		public reason: string;
 
 	}
@@ -919,15 +919,15 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetPlayerCurrencyRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencies, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerCurrencyParam })
+		@GNArrayDataMember({ code: ParameterCode.PlayerCurrencies, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerCurrencyParam })
 		public playerCurrencyParams: Array<PlayerCurrencyParam>;
 
-		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
-		
+
 	}
 
 	export class ServerSetPlayerCurrencyRequestData extends SetPlayerCurrencyRequestData {
@@ -937,10 +937,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetPlayerDataRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerDataParam })
+		@GNArrayDataMember({ code: ParameterCode.PlayerDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerDataParam })
 		public playerDataParams: Array<PlayerDataParam>;
 
 	}
@@ -952,15 +952,15 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetPlayerStatisticsRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerStatisticsParam })
+		@GNArrayDataMember({ code: ParameterCode.PlayerStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerStatisticsParam })
 		public playerStatisticsParams: Array<PlayerStatisticsParam>;
 
-		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
-		
+
 	}
 
 	export class ServerSetPlayerStatisticsRequestData extends SetPlayerStatisticsRequestData {
@@ -970,10 +970,10 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetRemoveStatusRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.Reason, isOptional: true, defaultValue: "" })
+		@StringDataMember({ code: ParameterCode.Reason, isOptional: true, defaultValue: "" })
 		public reason?: string;
 
 	}
@@ -985,13 +985,13 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class SetTagRequestData {
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
 
 	}
@@ -1003,18 +1003,18 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetCurrencyLogRequestData {
-		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
 
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true, isOptional: true })
 		public characterId?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetCurrencyLogRequestData extends GetCurrencyLogRequestData {
@@ -1024,18 +1024,18 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GetStatisticsLogRequestData {
-		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
 
-		@StringDataMember({ code: GNParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true, isOptional: true })
 		public characterId?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
@@ -1045,157 +1045,157 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class InfoResponseParameters {
-		@StringDataMember({ code: GNParameterCode.CatalogId, isOptional: true })
+		@StringDataMember({ code: ParameterCode.CatalogId, isOptional: true })
 		public catalogId?: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.Owner, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.Owner, isOptional: true })
 		public owner?: GenericModels.OwnerItem;
 
-		@GNHashtableDataMember({ code: GNParameterCode.RemoveStatus, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.RemoveStatus, isOptional: true })
 		public removeStatus?: GenericModels.RemoveStatusItem;
 
-		@GNArrayDataMember({ code: GNParameterCode.Segments, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.Segments, isOptional: true, elementCls: String })
 		public segments?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.CustomDatas, isOptional: true, elementCls: GenericModels.DataItem })
+		@GNArrayDataMember({ code: ParameterCode.CustomDatas, isOptional: true, elementCls: GenericModels.DataItem })
 		public customDatas?: Array<GenericModels.DataItem>;
 
-		@StringDataMember({ code: GNParameterCode.DisplayName, isOptional: true })
+		@StringDataMember({ code: ParameterCode.DisplayName, isOptional: true })
 		public displayName?: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.Avatar, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.Avatar, isOptional: true })
 		public avatar?: GenericModels.AvatarItem;
 
-		@NumberDataMember({ code: GNParameterCode.TsCreate, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.TsCreate, isOptional: true })
 		public tsCreate?: number;
 
-		@GNArrayDataMember({ code: GNParameterCode.Tags, isOptional: true, elementCls: GenericModels.TagItem })
+		@GNArrayDataMember({ code: ParameterCode.Tags, isOptional: true, elementCls: GenericModels.TagItem })
 		public tags?: Array<GenericModels.TagItem>;
 
-		@GNHashtableDataMember({ code: GNParameterCode.PlayerBan, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.PlayerBan, isOptional: true })
 		public playerBan?: GenericModels.BanItem;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerDatas, isOptional: true, elementCls: GenericModels.DataItem })
+		@GNArrayDataMember({ code: ParameterCode.PlayerDatas, isOptional: true, elementCls: GenericModels.DataItem })
 		public playerDatas?: Array<GenericModels.DataItem>;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerCurrencies, isOptional: true, elementCls: GenericModels.CurrencyItem })
+		@GNArrayDataMember({ code: ParameterCode.PlayerCurrencies, isOptional: true, elementCls: GenericModels.CurrencyItem })
 		public playerCurrencies?: Array<GenericModels.CurrencyItem>;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerStatistics, isOptional: true, elementCls: GenericModels.StatisticsItem })
+		@GNArrayDataMember({ code: ParameterCode.PlayerStatistics, isOptional: true, elementCls: GenericModels.StatisticsItem })
 		public playerStatistics?: Array<GenericModels.StatisticsItem>;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerInventories, isOptional: true, elementCls: GenericModels.InventoryItem })
+		@GNArrayDataMember({ code: ParameterCode.PlayerInventories, isOptional: true, elementCls: GenericModels.InventoryItem })
 		public playerInventories?: Array<GenericModels.InventoryItem>;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerGroups, isOptional: true, elementCls: GenericModels.GroupItem })
+		@GNArrayDataMember({ code: ParameterCode.PlayerGroups, isOptional: true, elementCls: GenericModels.GroupItem })
 		public playerGroups?: Array<GenericModels.GroupItem>;
 
-		@GNArrayDataMember({ code: GNParameterCode.PlayerFriends, isOptional: true, elementCls: GenericModels.FriendItem })
+		@GNArrayDataMember({ code: ParameterCode.PlayerFriends, isOptional: true, elementCls: GenericModels.FriendItem })
 		public playerFriends?: Array<GenericModels.FriendItem>;
 
-		@NumberDataMember({ code: GNParameterCode.TsLastLogin, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.TsLastLogin, isOptional: true })
 		public tsLastLogin?: number;
 
-		@StringDataMember({ code: GNParameterCode.IpAddressCreate, isOptional: true })
+		@StringDataMember({ code: ParameterCode.IpAddressCreate, isOptional: true })
 		public ipAddressCreate?: string;
 
-		@StringDataMember({ code: GNParameterCode.CountryCode, isOptional: true })
+		@StringDataMember({ code: ParameterCode.CountryCode, isOptional: true })
 		public countryCode?: string;
 
 	}
 
 	export class CharacterPlayerResponseData {
-		@GNHashtableDataMember({ code: GNParameterCode.InfoResponseParameters })
+		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
 	export class CharacterPlayerWithCharacterIdResponseData extends CharacterPlayerResponseData {
-		@StringDataMember({ code: GNParameterCode.CharacterId })
+		@StringDataMember({ code: ParameterCode.CharacterId })
 		public characterId: string;
 
 	}
 
 	export class CharacterPlayerLeaderboardResponseData extends CharacterPlayerWithCharacterIdResponseData {
-		@NumberDataMember({ code: GNParameterCode.Position })
+		@NumberDataMember({ code: ParameterCode.Position })
 		public position: number;
 
-		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.BackupValue, isOptional: true })
 		public backupValue?: number;
 
 	}
 
 	export class CharacterPlayerLogResponseData {
-		@StringDataMember({ code: GNParameterCode.CharacterId })
+		@StringDataMember({ code: ParameterCode.CharacterId })
 		public characterId: string;
 
-		@NumberDataMember({ code: GNParameterCode.TsCreate })
+		@NumberDataMember({ code: ParameterCode.TsCreate })
 		public tsCreate: number;
 
-		@StringDataMember({ code: GNParameterCode.Log })
+		@StringDataMember({ code: ParameterCode.Log })
 		public log: string;
 
-		@StringDataMember({ code: GNParameterCode.Key })
+		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
 
-		@NumberDataMember({ code: GNParameterCode.Amount })
+		@NumberDataMember({ code: ParameterCode.Amount })
 		public amount: number;
 
-		@NumberDataMember({ code: GNParameterCode.StartValue })
+		@NumberDataMember({ code: ParameterCode.StartValue })
 		public startValue: number;
 
-		@NumberDataMember({ code: GNParameterCode.FinalValue })
+		@NumberDataMember({ code: ParameterCode.FinalValue })
 		public finalValue: number;
 
 	}
 
 	export class GetStatisticsLeaderboardResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
 		public results: Array<CharacterPlayerLeaderboardResponseData>;
 
-		@NumberDataMember({ code: GNParameterCode.TsCreate, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.TsCreate, isOptional: true })
 		public tsCreate: number;
 
 	}
 
 	export class CharacterPlayersWithCharacterIdResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerWithCharacterIdResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerWithCharacterIdResponseData })
 		public results: Array<CharacterPlayerWithCharacterIdResponseData>;
 
 	}
 
 	export class GetCurrencyLeaderboardResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
 		public results: Array<CharacterPlayerLeaderboardResponseData>;
 
 	}
 
 	export class GetCreateLeaderboardResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
 		public results: Array<CharacterPlayerLeaderboardResponseData>;
 
 	}
 
-    export class GetLastLoginLeaderboardResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
+	export class GetLastLoginLeaderboardResponseData {
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerLeaderboardResponseData })
 		public results: Array<CharacterPlayerLeaderboardResponseData>;
 
 	}
 
 	export class GetStatisticsLogResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLogResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerLogResponseData })
 		public results: Array<CharacterPlayerLogResponseData>;
 
-		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
-		
+
 	}
 
 	export class GetCurrencyLogResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: CharacterPlayerLogResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerLogResponseData })
 		public results: Array<CharacterPlayerLogResponseData>;
 
-		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}

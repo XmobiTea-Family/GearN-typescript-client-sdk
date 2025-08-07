@@ -1,13 +1,13 @@
 
 export class GNSupport {
-    private static _isBrowser: boolean;
+	private static _isBrowser: boolean;
 
-    static init(): void {
-        this._isBrowser = (typeof window !== "undefined");
-    }
+	static init(): void {
+		this._isBrowser = (typeof window !== "undefined");
+	}
 
-    public static isBrowser(): boolean {
-        return this._isBrowser;
-    }
+	public static isBrowser(): boolean {
+		return this._isBrowser;
+	}
 
 }

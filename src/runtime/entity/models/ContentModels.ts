@@ -1,20 +1,20 @@
 import { GNHashtable } from "./../../common/GNData";
-import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
 export namespace ContentModels {
 	export class ContentDataParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.Data })
+		@GNHashtableDataMember({ code: ParameterCode.Data })
 		public data: GNHashtable;
 
 	}
 
 	export class CreateNewFileUploadInfoRequestData {
-		@StringDataMember({ code: GNParameterCode.FileName, mustNonNull: true, minLength: 5, maxLength: 50 })
+		@StringDataMember({ code: ParameterCode.FileName, mustNonNull: true, minLength: 5, maxLength: 50 })
 		public fileName: string;
 
 	}
@@ -27,10 +27,10 @@ export namespace ContentModels {
 	}
 
 	export class GetContentDataRequestData {
-		@GNArrayDataMember({ code: GNParameterCode.Keys, elementCls: String, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.Keys, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
 
-		@StringDataMember({ code: GNParameterCode.Label, minLength: 2, maxLength: 32, isOptional: true, defaultValue: "" })
+		@StringDataMember({ code: ParameterCode.Label, minLength: 2, maxLength: 32, isOptional: true, defaultValue: "" })
 		public label?: string;
 
 	}
@@ -42,10 +42,10 @@ export namespace ContentModels {
 	}
 
 	export class GetFileUploadInfoListRequestData {
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -57,7 +57,7 @@ export namespace ContentModels {
 	}
 
 	export class GetFileUploadInfoRequestData {
-		@StringDataMember({ code: GNParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
+		@StringDataMember({ code: ParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
 		public fileId: string;
 
 	}
@@ -69,10 +69,10 @@ export namespace ContentModels {
 	}
 
 	export class RemoveFileUploadInfoRequestData {
-		@StringDataMember({ code: GNParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
+		@StringDataMember({ code: ParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
 		public fileId: string;
 
-		@StringDataMember({ code: GNParameterCode.Reason, isOptional: true, defaultValue: "" })
+		@StringDataMember({ code: ParameterCode.Reason, isOptional: true, defaultValue: "" })
 		public reason?: string;
 
 	}
@@ -84,7 +84,7 @@ export namespace ContentModels {
 	}
 
 	export class RequestDownloadFileUploadInfoRequestData {
-		@StringDataMember({ code: GNParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
+		@StringDataMember({ code: ParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
 		public fileId: string;
 
 	}
@@ -96,10 +96,10 @@ export namespace ContentModels {
 	}
 
 	export class SetContentDataRequestData {
-		@GNArrayDataMember({ code: GNParameterCode.Configs, elementCls: ContentDataParam, mustNonNull: true })
+		@GNArrayDataMember({ code: ParameterCode.Configs, elementCls: ContentDataParam, mustNonNull: true })
 		public configs: Array<ContentDataParam>;
 
-		@StringDataMember({ code: GNParameterCode.Label, minLength: 2, maxLength: 32, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Label, minLength: 2, maxLength: 32, isOptional: true })
 		public label?: string;
 
 	}
@@ -111,55 +111,55 @@ export namespace ContentModels {
 	}
 
 	export class FileIdUploadResponseData {
-		@StringDataMember({ code: GNParameterCode.FileId })
+		@StringDataMember({ code: ParameterCode.FileId })
 		public fileId: string;
 
 	}
 
 	export class GetContentDataResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Configs, elementCls: ContentDataParam, mustNonNull: true })
+		@GNArrayDataMember({ code: ParameterCode.Configs, elementCls: ContentDataParam, mustNonNull: true })
 		public configs: Array<ContentDataParam>;
 
 	}
 
 	export class GetFileUploadInfoListResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: FileIdUploadResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: FileIdUploadResponseData })
 		public results: Array<FileIdUploadResponseData>;
 
 	}
 
 	export class FileUploadItem {
-		@StringDataMember({ code: GNParameterCode.MimeType })
+		@StringDataMember({ code: ParameterCode.MimeType })
 		public mimeType: string;
 
-		@NumberDataMember({ code: GNParameterCode.Size })
+		@NumberDataMember({ code: ParameterCode.Size })
 		public size: number;
 
-		@StringDataMember({ code: GNParameterCode.FolderFileName })
+		@StringDataMember({ code: ParameterCode.FolderFileName })
 		public folderFileName: string;
 
 	}
 
 	export class GetFileUploadInfoResponseData extends FileIdUploadResponseData {
-		@StringDataMember({ code: GNParameterCode.FileName })
+		@StringDataMember({ code: ParameterCode.FileName })
 		public fileName: string;
 
-		@NumberDataMember({ code: GNParameterCode.TsCreate })
+		@NumberDataMember({ code: ParameterCode.TsCreate })
 		public tsCreate: number;
 
-		@GNHashtableDataMember({ code: GNParameterCode.RemoveStatus })
+		@GNHashtableDataMember({ code: ParameterCode.RemoveStatus })
 		public removeStatus: GenericModels.RemoveStatusItem;
 
-		@NumberDataMember({ code: GNParameterCode.TsUploadExpire, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.TsUploadExpire, isOptional: true })
 		public tsUploadExpire?: number;
 
-		@GNHashtableDataMember({ code: GNParameterCode.FileUpload, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.FileUpload, isOptional: true })
 		public fileUpload?: FileUploadItem;
 
 	}
 
 	export class RequestDownloadFileUploadInfoResponseData {
-		@StringDataMember({ code: GNParameterCode.DownloadToken })
+		@StringDataMember({ code: ParameterCode.DownloadToken })
 		public downloadToken: string;
 
 	}

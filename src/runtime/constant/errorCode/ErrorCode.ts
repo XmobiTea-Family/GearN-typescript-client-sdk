@@ -1,4 +1,4 @@
-export class GNErrorCode {
+export class ErrorCode {
 	public static readonly Ok: number = 1;
 
 	public static readonly AccountNotFound: number = 2;
@@ -51,7 +51,7 @@ export class GNErrorCode {
 	public static readonly VersionInvalid: number = 47;
 	public static readonly EmailInvalid: number = 48;
 
-    public static readonly StoreItemHadPurchaseAndNonConsumable: number = 49;
-    public static readonly StoreItemHadExists: number = 50;
+	public static readonly StoreItemHadPurchaseAndNonConsumable: number = 49;
+	public static readonly StoreItemHadExists: number = 50;
 
 }

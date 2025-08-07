@@ -6,10 +6,9 @@ import { AuthenticateModels } from "./AuthenticateModels";
 
 export namespace AuthenticateRequestModels {
 	export class LoginByAccountOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByAccountRequestData> {
-		protected override operationCode: number = OperationCode.LoginByAccount;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByAccount;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByAccountRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -18,10 +17,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByAndroidDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByAndroidDeviceIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByAndroidDeviceId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByAndroidDeviceId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByAndroidDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -30,10 +28,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByAppleOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByAppleRequestData> {
-		protected override operationCode: number = OperationCode.LoginByApple;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByApple;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByAppleRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -42,10 +39,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByCustomDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByCustomDeviceIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByCustomDeviceId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByCustomDeviceId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByCustomDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -54,10 +50,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByCustomIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByCustomIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByCustomId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByCustomId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByCustomIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -66,10 +61,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByEditorDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByEditorDeviceIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByEditorDeviceId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByEditorDeviceId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByEditorDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -78,10 +72,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByFacebookOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByFacebookRequestData> {
-		protected override operationCode: number = OperationCode.LoginByFacebook;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByFacebook;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByFacebookRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -90,10 +83,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByGenericServiceOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByGenericServiceRequestData> {
-		protected override operationCode: number = OperationCode.LoginByGenericService;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByGenericService;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByGenericServiceRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -102,10 +94,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByGoogleOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByGoogleRequestData> {
-		protected override operationCode: number = OperationCode.LoginByGoogle;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByGoogle;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByGoogleRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -114,10 +105,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByGooglePlayGameServiceOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByGooglePlayGameServiceRequestData> {
-		protected override operationCode: number = OperationCode.LoginByGooglePlayGameService;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByGooglePlayGameService;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByGooglePlayGameServiceRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -126,10 +116,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByGameCenterOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByGameCenterRequestData> {
-		protected override operationCode: number = OperationCode.LoginByGameCenter;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByGameCenter;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByGameCenterRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -138,10 +127,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByiOSDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByiOSDeviceIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByiOSDeviceId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByiOSDeviceId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByiOSDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -150,10 +138,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByLinuxDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByLinuxDeviceIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByLinuxDeviceId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByLinuxDeviceId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByLinuxDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -162,10 +149,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByMacOSDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByMacOSDeviceIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByMacOSDeviceId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByMacOSDeviceId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByMacOSDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -174,10 +160,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByWindowsDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByWindowsDeviceIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByWindowsDeviceId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByWindowsDeviceId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByWindowsDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -186,10 +171,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class LoginByWindowsPhoneDeviceIdOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData> {
-		protected override operationCode: number = OperationCode.LoginByWindowsPhoneDeviceId;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByWindowsPhoneDeviceId;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -198,10 +182,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class RegisterAccountOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.RegisterAccountRequestData> {
-		protected override operationCode: number = OperationCode.RegisterAccount;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.RegisterAccount;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.RegisterAccountRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -210,10 +193,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	export class RefreshAuthTokenOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.RefreshAuthTokenRequestData> {
-		protected override operationCode: number = OperationCode.RefreshAuthToken;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.RefreshAuthToken;
 		protected override requestType: RequestType = RequestType.Authenticate;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: AuthenticateModels.RefreshAuthTokenRequestData, timeout: number) {
 			super(requestData, timeout);

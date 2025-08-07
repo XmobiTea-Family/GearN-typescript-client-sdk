@@ -6,10 +6,9 @@ import { DashboardModels } from "./DashboardModels";
 
 export namespace DashboardRequestModels {
 	export class ChangePasswordAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.ChangePasswordAdminAccountRequestData> {
-		protected override operationCode: number = OperationCode.ChangePasswordAdminAccount;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.ChangePasswordAdminAccount;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.ChangePasswordAdminAccountRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -18,10 +17,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetAdminAccountListOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetAdminAccountListRequestData> {
-		protected override operationCode: number = OperationCode.GetAdminAccountList;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetAdminAccountList;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetAdminAccountListRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -30,10 +28,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetGameInformationOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetGameInformationRequestData> {
-		protected override operationCode: number = OperationCode.GetGameInformation;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetGameInformation;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetGameInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -42,10 +39,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetGameListOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetGameListRequestData> {
-		protected override operationCode: number = OperationCode.GetGameList;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetGameList;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetGameListRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -54,10 +50,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetMasterGameSettingsOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetMasterGameSettingsRequestData> {
-		protected override operationCode: number = OperationCode.GetMasterGameSettings;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetMasterGameSettings;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetMasterGameSettingsRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -66,10 +61,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetSecretInfoInformationOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetSecretInfoInformationRequestData> {
-		protected override operationCode: number = OperationCode.GetSecretInfoInformation;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetSecretInfoInformation;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetSecretInfoInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -78,10 +72,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetSecretInfoListOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetSecretInfoListRequestData> {
-		protected override operationCode: number = OperationCode.GetSecretInfoList;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetSecretInfoList;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetSecretInfoListRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -90,10 +83,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetServerLogOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetServerLogRequestData> {
-		protected override operationCode: number = OperationCode.GetServerLog;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetServerLog;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetServerLogRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -101,47 +93,43 @@ export namespace DashboardRequestModels {
 		}
 	}
 
-	export class GrantAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GrantAdminAccountRequestData> {
-		protected override operationCode: number = OperationCode.GrantAdminAccount;
-		protected override operationEncrypted: boolean = true;
+	export class CreateAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.CreateAdminAccountRequestData> {
+		protected override operationCode: string = OperationCode.CreateAdminAccount;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: DashboardModels.GrantAdminAccountRequestData, timeout: number) {
+		constructor(requestData: DashboardModels.CreateAdminAccountRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = DashboardModels.GrantAdminAccountRequestData;
+			this.requestDataCls = DashboardModels.CreateAdminAccountRequestData;
 		}
 	}
 
-	export class GrantGameOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GrantGameRequestData> {
-		protected override operationCode: number = OperationCode.GrantGame;
-		protected override operationEncrypted: boolean = true;
+	export class CreateGameOperationRequest extends CustomOperationRequestAbstract<DashboardModels.CreateGameRequestData> {
+		protected override operationCode: string = OperationCode.CreateGame;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: DashboardModels.GrantGameRequestData, timeout: number) {
+		constructor(requestData: DashboardModels.CreateGameRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = DashboardModels.GrantGameRequestData;
+			this.requestDataCls = DashboardModels.CreateGameRequestData;
 		}
 	}
 
-	export class GrantSecretInfoOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GrantSecretInfoRequestData> {
-		protected override operationCode: number = OperationCode.GrantSecretInfo;
-		protected override operationEncrypted: boolean = true;
+	export class CreateSecretInfoOperationRequest extends CustomOperationRequestAbstract<DashboardModels.CreateSecretInfoRequestData> {
+		protected override operationCode: string = OperationCode.CreateSecretInfo;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: DashboardModels.GrantSecretInfoRequestData, timeout: number) {
+		constructor(requestData: DashboardModels.CreateSecretInfoRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = DashboardModels.GrantSecretInfoRequestData;
+			this.requestDataCls = DashboardModels.CreateSecretInfoRequestData;
 		}
 	}
 
 	export class LoginByAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.LoginByAdminAccountRequestData> {
-		protected override operationCode: number = OperationCode.LoginByAdminAccount;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.LoginByAdminAccount;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.LoginByAdminAccountRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -150,10 +138,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class RemoveAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.RemoveAdminAccountRequestData> {
-		protected override operationCode: number = OperationCode.RemoveAdminAccount;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.RemoveAdminAccount;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.RemoveAdminAccountRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -162,10 +149,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class SetGameInformationOperationRequest extends CustomOperationRequestAbstract<DashboardModels.SetGameInformationRequestData> {
-		protected override operationCode: number = OperationCode.SetGameInformation;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetGameInformation;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.SetGameInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -174,10 +160,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class SetMasterGameSettingsOperationRequest extends CustomOperationRequestAbstract<DashboardModels.SetMasterGameSettingsRequestData> {
-		protected override operationCode: number = OperationCode.SetMasterGameSettings;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetMasterGameSettings;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.SetMasterGameSettingsRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -186,10 +171,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class SetPasswordAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.SetPasswordAdminAccountRequestData> {
-		protected override operationCode: number = OperationCode.SetPasswordAdminAccount;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetPasswordAdminAccount;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.SetPasswordAdminAccountRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -198,10 +182,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class SetSecretInfoInformationOperationRequest extends CustomOperationRequestAbstract<DashboardModels.SetSecretInfoInformationRequestData> {
-		protected override operationCode: number = OperationCode.SetSecretInfoInformation;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetSecretInfoInformation;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.SetSecretInfoInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -210,10 +193,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class SetSecretKeyAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.SetSecretKeyAdminAccountRequestData> {
-		protected override operationCode: number = OperationCode.SetSecretKeyAdminAccount;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetSecretKeyAdminAccount;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.SetSecretKeyAdminAccountRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -222,10 +204,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetUsernameAdminAccountOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetUsernameAdminAccountRequestData> {
-		protected override operationCode: number = OperationCode.GetUsernameAdminAccount;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetUsernameAdminAccount;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetUsernameAdminAccountRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -234,10 +215,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetAnalyticsOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetAnalyticsRequestData> {
-		protected override operationCode: number = OperationCode.GetAnalytics;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetAnalytics;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetAnalyticsRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -246,10 +226,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetEventCallbackCloudScriptOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetEventCallbackCloudScriptRequestData> {
-		protected override operationCode: number = OperationCode.GetEventCallbackCloudScript;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetEventCallbackCloudScript;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetEventCallbackCloudScriptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -258,10 +237,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class SetEventCallbackCloudScriptOperationRequest extends CustomOperationRequestAbstract<DashboardModels.SetEventCallbackCloudScriptRequestData> {
-		protected override operationCode: number = OperationCode.SetEventCallbackCloudScript;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetEventCallbackCloudScript;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.SetEventCallbackCloudScriptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -270,10 +248,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class ResetStatisticsLeaderboardOperationRequest extends CustomOperationRequestAbstract<DashboardModels.ResetStatisticsLeaderboardRequestData> {
-		protected override operationCode: number = OperationCode.ResetStatisticsLeaderboard;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.ResetStatisticsLeaderboard;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.ResetStatisticsLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -282,10 +259,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetBackupStatisticsLeaderboardVersionOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetBackupStatisticsLeaderboardVersionRequestData> {
-		protected override operationCode: number = OperationCode.GetBackupStatisticsLeaderboardVersion;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetBackupStatisticsLeaderboardVersion;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetBackupStatisticsLeaderboardVersionRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -294,10 +270,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class GetServerGameDataOperationRequest extends CustomOperationRequestAbstract<DashboardModels.GetServerGameDataRequestData> {
-		protected override operationCode: number = OperationCode.GetServerGameData;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetServerGameData;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.GetServerGameDataRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -306,10 +281,9 @@ export namespace DashboardRequestModels {
 	}
 
 	export class DeleteInDatabaseOperationRequest extends CustomOperationRequestAbstract<DashboardModels.DeleteInDatabaseRequestData> {
-		protected override operationCode: number = OperationCode.DeleteInDatabase;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.DeleteInDatabase;
 		protected override requestType: RequestType = RequestType.Dashboard;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: DashboardModels.DeleteInDatabaseRequestData, timeout: number) {
 			super(requestData, timeout);

@@ -75,28 +75,28 @@ export class DashboardApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.GetServerLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.GetServerLogOperationResponse);
 	}
 
-	public grantAdminAccount(requestData: DashboardModels.GrantAdminAccountRequestData, onResponse: Action1<DashboardResponseModels.GrantAdminAccountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new DashboardRequestModels.GrantAdminAccountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.GrantAdminAccountOperationResponse);
+	public createAdminAccount(requestData: DashboardModels.CreateAdminAccountRequestData, onResponse: Action1<DashboardResponseModels.CreateAdminAccountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new DashboardRequestModels.CreateAdminAccountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.CreateAdminAccountOperationResponse);
 	}
 
-	public async grantAdminAccountAsync(requestData: DashboardModels.GrantAdminAccountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<DashboardResponseModels.GrantAdminAccountOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.GrantAdminAccountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.GrantAdminAccountOperationResponse);
+	public async createAdminAccountAsync(requestData: DashboardModels.CreateAdminAccountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<DashboardResponseModels.CreateAdminAccountOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.CreateAdminAccountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.CreateAdminAccountOperationResponse);
 	}
 
-	public grantGame(requestData: DashboardModels.GrantGameRequestData, onResponse: Action1<DashboardResponseModels.GrantGameOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new DashboardRequestModels.GrantGameOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.GrantGameOperationResponse);
+	public createGame(requestData: DashboardModels.CreateGameRequestData, onResponse: Action1<DashboardResponseModels.CreateGameOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new DashboardRequestModels.CreateGameOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.CreateGameOperationResponse);
 	}
 
-	public async grantGameAsync(requestData: DashboardModels.GrantGameRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<DashboardResponseModels.GrantGameOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.GrantGameOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.GrantGameOperationResponse);
+	public async createGameAsync(requestData: DashboardModels.CreateGameRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<DashboardResponseModels.CreateGameOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.CreateGameOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.CreateGameOperationResponse);
 	}
 
-	public grantSecretInfo(requestData: DashboardModels.GrantSecretInfoRequestData, onResponse: Action1<DashboardResponseModels.GrantSecretInfoOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new DashboardRequestModels.GrantSecretInfoOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.GrantSecretInfoOperationResponse);
+	public createSecretInfo(requestData: DashboardModels.CreateSecretInfoRequestData, onResponse: Action1<DashboardResponseModels.CreateSecretInfoOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new DashboardRequestModels.CreateSecretInfoOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.CreateSecretInfoOperationResponse);
 	}
 
-	public async grantSecretInfoAsync(requestData: DashboardModels.GrantSecretInfoRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<DashboardResponseModels.GrantSecretInfoOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.GrantSecretInfoOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.GrantSecretInfoOperationResponse);
+	public async createSecretInfoAsync(requestData: DashboardModels.CreateSecretInfoRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<DashboardResponseModels.CreateSecretInfoOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new DashboardRequestModels.CreateSecretInfoOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, DashboardResponseModels.CreateSecretInfoOperationResponse);
 	}
 
 	public loginByAdminAccount(requestData: DashboardModels.LoginByAdminAccountRequestData, onResponse: Action1<DashboardResponseModels.LoginByAdminAccountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {

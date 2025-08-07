@@ -15,223 +15,212 @@ import { OperationPending } from "./OperationPending";
 import store from "store";
 
 export abstract class PeerBase implements IPeer {
-    private operationPendingQueue: Array<OperationPending>;
+	private operationPendingQueue: Array<OperationPending>;
 
-    private operationWaitingResponseDict: Map<number, OperationPending>;
+	private operationWaitingResponseDict: Map<number, OperationPending>;
 
-    private static requestId: number = 0;
+	private static requestId: number = 0;
 
-    private perMsgTimer: number = 0;
-    private nextSendMsgTimer: number = 0;
-    private checkTimeoutOperationPending: number = 0;
+	private perMsgTimer: number = 0;
+	private nextSendMsgTimer: number = 0;
+	private checkTimeoutOperationPending: number = 0;
 
-    protected getSendRate(): number {
-        return (1000 / this.perMsgTimer);
-    }
+	protected getSendRate(): number {
+		return (1000 / this.perMsgTimer);
+	}
 
-    protected setSendRate(sendRate: number) {
-        this.perMsgTimer = 1000 / sendRate / 1000;
-    }
+	protected setSendRate(sendRate: number) {
+		this.perMsgTimer = 1000 / sendRate / 1000;
+	}
 
-    ping: number;
-    private pingLst: number[];
+	ping: number;
+	private pingLst: number[];
 
-    protected isUse: boolean;
+	protected isUse: boolean;
 
-    public initPeer() {
-        if (this.operationWaitingResponseDict == null)
-            this.operationWaitingResponseDict = new Map();
+	public initPeer() {
+		if (this.operationWaitingResponseDict == null)
+			this.operationWaitingResponseDict = new Map();
 
-        if (this.operationPendingQueue == null)
-            this.operationPendingQueue = [];
+		if (this.operationPendingQueue == null)
+			this.operationPendingQueue = [];
 
-        if (this.pingLst == null)
-            this.pingLst = [];
+		if (this.pingLst == null)
+			this.pingLst = [];
 
-        this.initSendRate();
-        this.initGNSocketObject();
-    }
+		this.initSendRate();
+		this.initGNSocketObject();
+	}
 
-    private initSendRate(): void {
-        let gnServerSettings = GNNetwork.getGNServerSettings();
-        if (gnServerSettings == null)
-            throw new Error("Null GN Server Settings, please find it now");
+	private initSendRate(): void {
+		let gnServerSettings = GNNetwork.getGNServerSettings();
+		if (gnServerSettings == null)
+			throw new Error("Null GN Server Settings, please find it now");
 
-        this.setSendRate(gnServerSettings.getSendRate());
-    }
+		this.setSendRate(gnServerSettings.getSendRate());
+	}
 
-    protected abstract initGNSocketObject(): void;
+	protected abstract initGNSocketObject(): void;
 
-    public enqueue(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
-        if (!this.isUsing) {
-            GNDebug.logError("[GN] Server Settings dont setup to use this to send operation request.");
-            return;
-        }
+	public enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
+		if (!this.isUsing) {
+			GNDebug.logError("[GN] Server Settings dont setup to use this to send operation request.");
+			return;
+		}
 
-        if (operationRequest.getRequestId() != -1) operationRequest.setRequestId(PeerBase.requestId++);
+		if (operationRequest.getRequestId() != -1) operationRequest.setRequestId(++PeerBase.requestId);
 
-        let operationPending = new OperationPending(requestType, requestRole, operationRequest, onOperationResponse, authToken, secretKey, customTags, gameId);
-        this.operationPendingQueue.push(operationPending);
+		let operationPending = new OperationPending(requestType, role, operationRequest, onOperationResponse, authToken, secretKey, customTags, gameId);
+		this.operationPendingQueue.push(operationPending);
 
-        this.onEnqueue(operationPending);
-    }
+		this.onEnqueue(operationPending);
+	}
 
-    protected abstract onEnqueue(operationPending: OperationPending): void;
+	protected abstract onEnqueue(operationPending: OperationPending): void;
 
-    public isUsing(): boolean {
-        return this.isUse;
-    }
+	public isUsing(): boolean {
+		return this.isUse;
+	}
 
-    service() {
-        if (!this.isUsing)
-            return;
+	service() {
+		if (!this.isUsing)
+			return;
 
-        let nowSecond = Date.now() / 1000;
-        if (this.checkTimeoutOperationPending < nowSecond) {
-            this.checkTimeoutOperationPending = nowSecond + 0.1;
+		let nowSecond = Date.now() / 1000;
+		if (this.checkTimeoutOperationPending < nowSecond) {
+			this.checkTimeoutOperationPending = nowSecond + 0.1;
 
-            if (this.operationWaitingResponseDict.size != 0) {
-                let gnArrayLst: GNArray[] = [];
+			if (this.operationWaitingResponseDict.size != 0) {
+				let gnHashtableLst: GNHashtable[] = [];
 
-                this.operationWaitingResponseDict.forEach((operationPending, operationPendingKey) => {
-                    if (operationPending.isTimeout()) {
-                        let gnArray = new GNArray();
+				this.operationWaitingResponseDict.forEach((operationPending, operationPendingKey) => {
+					if (operationPending.isTimeout()) {
+						let gnHashtable = new GNHashtable();
 
-                        gnArray.add(ReturnCode.OperationTimeout);
-                        gnArray.add(null);
-                        gnArray.add(operationPending.getOperationRequest().getRequestId());
-                        gnArray.add(operationPending.getOperationRequest().isEncrypted());
+						gnHashtable.add("returnCode", ReturnCode.OperationTimeout);
+						gnHashtable.add("parameters", null);
+						gnHashtable.add("responseId", operationPending.getOperationRequest().getRequestId());
 
-                        gnArrayLst.push(gnArray);
-                    }
-                });
+						gnHashtableLst.push(gnHashtable);
+					}
+				});
 
-                if (gnArrayLst.length != 0) {
-                    gnArrayLst.forEach(gnArray => {
-                        this.onResponseHandler(gnArray, gnArray.getBoolean(3));
-                    });
-                }
-            }
-        }
+				if (gnHashtableLst.length != 0) {
+					gnHashtableLst.forEach(gnHashtable => {
+						this.onResponseHandler(gnHashtable);
+					});
+				}
+			}
+		}
 
-        if (this.nextSendMsgTimer < nowSecond) {
-            if (this.operationPendingQueue.length != 0) {
-                this.nextSendMsgTimer = nowSecond + this.perMsgTimer;
+		if (this.nextSendMsgTimer < nowSecond) {
+			if (this.operationPendingQueue.length != 0) {
+				this.nextSendMsgTimer = nowSecond + this.perMsgTimer;
 
-                let operationPending = this.operationPendingQueue.shift();
+				let operationPending = this.operationPendingQueue.shift();
 
-                this.send(operationPending);
-            }
-        }
-    }
+				this.send(operationPending);
+			}
+		}
+	}
 
-    protected onResponseHandler(obj: GNArray, isEncrypted: boolean): void {
-        let responseId = obj.getNumber(2);
-        if (this.operationWaitingResponseDict.has(responseId)) {
-            let operationPending = this.operationWaitingResponseDict.get(responseId);
-            operationPending.onRecv();
+	protected onResponseHandler(obj: GNHashtable): void {
+		let responseId = obj.getNumber("responseId");
+		if (this.operationWaitingResponseDict.has(responseId)) {
+			let operationPending = this.operationWaitingResponseDict.get(responseId);
+			operationPending.onRecv();
 
-            this.operationWaitingResponseDict.delete(responseId);
+			this.operationWaitingResponseDict.delete(responseId);
 
-            let returnCode = obj.getNumber(0);
+			let returnCode = obj.getNumber("returnCode");
 
-            let parameters: GNHashtable = null;
-            let debugMessage: string = null;
-            let array: GNArray = null;
+			let parameters: GNHashtable = obj.getGNHashtable("parameters");
+			let debugMessage: string = obj.getString("debugMessage");
+			let array: GNArray = obj.getGNArray("invalidRequestParameters");
 
-            if (returnCode == ReturnCode.Ok)
-                parameters = obj.getGNHashtable(1);
-            else if (returnCode == ReturnCode.InvalidRequestParameters)
-                array = obj.getGNArray(1);
-            else if (returnCode == ReturnCode.OperationNotAuthorized) {
+			let operationRequest = operationPending.getOperationRequest();
+			let operationResponse = new OperationResponse(operationRequest.getOperationCode(), operationRequest.getRequestId());
 
-            }
-            else
-                debugMessage = obj.getString(1);
+			operationResponse.setReturnCode(returnCode);
+			operationResponse.setDebugMessage(debugMessage);
+			operationResponse.setParameters(parameters);
 
-            let operationRequest = operationPending.getOperationRequest();
-            let operationResponse = new OperationResponse(operationRequest.getOperationCode(), operationRequest.getRequestId(), isEncrypted);
+			if (array != null) {
+				let invalidMembers: InvalidMember[] = [];
+				for (let i = 0; i < array.count(); i++) {
+					let arrChild = array.getGNArray(i);
 
-            operationResponse.setReturnCode(returnCode);
-            operationResponse.setDebugMessage(debugMessage);
-            operationResponse.setParameters(parameters);
+					invalidMembers.push({
+						code: arrChild.getString(0),
+						invalidMemberType: <InvalidMemberType>arrChild.getNumber(1)
+					});
+				}
+				operationResponse.setInvalidMembers(invalidMembers);
+			}
 
-            if (array != null) {
-                let invalidMembers: InvalidMember[] = [];
-                for (let i = 0; i < array.count(); i++) {
-                    let arrChild = array.getGNArray(i);
+			if (!operationResponse.hasError()) {
+				this.addPing(operationPending.getExecuteTimerInMs());
 
-                    invalidMembers.push({
-                        code: arrChild.getString(0),
-                        invalidMemberType: <InvalidMemberType>arrChild.getNumber(1)
-                    });
-                }
-                operationResponse.setInvalidMembers(invalidMembers);
-            }
+				if (parameters != null) {
+					if (parameters.containsKey(ParameterCode.AuthToken)) {
+						let authToken = parameters.getString(ParameterCode.AuthToken);
 
-            if (!operationResponse.hasError()) {
-                this.addPing(operationPending.getExecuteTimerInMs());
+						GNNetwork.getAuthenticateStatus().setAuthToken(authToken);
 
-                if (parameters != null) {
-                    if (parameters.containsKey(ParameterCode.AuthToken)) {
-                        let authToken = parameters.getString(ParameterCode.AuthToken);
+						store.set(GNNetwork.AUTH_TOKEN_KEY, authToken);
+					}
 
-                        GNNetwork.getAuthenticateStatus().setAuthToken(authToken);
+					if (parameters.containsKey(ParameterCode.UserId)) {
+						let userId = parameters.getString(ParameterCode.UserId);
 
-                        store.set(GNNetwork.AUTH_TOKEN_KEY, authToken);
-                    }
+						GNNetwork.getAuthenticateStatus().setUserId(userId);
 
-                    if (parameters.containsKey(ParameterCode.UserId)) {
-                        let userId = parameters.getString(ParameterCode.UserId);
+						store.set(GNNetwork.USER_ID_KEY, userId);
+					}
 
-                        GNNetwork.getAuthenticateStatus().setUserId(userId);
+					if (parameters.containsKey(ParameterCode.Ts)) {
+						GNNetwork.peer.setServerTimeMilliseconds(parameters.getNumber(ParameterCode.Ts, new Date().getUTCMilliseconds()));
+					}
+				}
+			}
 
-                        store.set(GNNetwork.USER_ID_KEY, userId);
-                    }
+			GNDebug.log("[GN RECV] " + operationResponse.toString());
 
-                    if (parameters.containsKey(ParameterCode.Ts)) {
-                        GNNetwork.peer.setServerTimeMilliseconds(parameters.getNumber(ParameterCode.Ts, new Date().getUTCMilliseconds()));
-                    }
-                }
-            }
+			let callback = operationPending.getCallback();
+			if (callback != null) callback(operationResponse);
+		}
+		else {
+			GNDebug.logError("[GN] OnResponseHandler, unavailable request id " + obj);
+		}
+	}
 
-            GNDebug.log("[GN RECV] " + operationResponse.toString());
+	send(operationPending: OperationPending): void {
+		operationPending.onSend();
 
-            let callback = operationPending.getCallback();
-            if (callback != null) callback(operationResponse);
-        }
-        else {
-            GNDebug.logError("[GN] OnResponseHandler, unavailable request id " + obj);
-        }
-    }
+		let operationRequest = operationPending.getOperationRequest();
 
-    send(operationPending: OperationPending): void {
-        operationPending.onSend();
+		if (operationRequest.getRequestId() != -1) {
+			if (operationPending.getCallback() != null) {
+				this.operationWaitingResponseDict.set(operationRequest.getRequestId(), operationPending);
+			}
+		}
+	}
 
-        let operationRequest = operationPending.getOperationRequest();
+	addPing(value: number): void {
+		if (this.pingLst.length > 10)
+			this.pingLst.shift();
+		this.pingLst.push(value / 2);
 
-        if (operationRequest.getRequestId() != -1) {
-            if (operationPending.getCallback() != null) {
-                this.operationWaitingResponseDict.set(operationRequest.getRequestId(), operationPending);
-            }
-        }
-    }
+		if (this.pingLst.length != 0) {
+			let total = 0;
+			for (let i = 0; i < this.pingLst.length; i++) {
+				total += this.pingLst[i];
+			}
 
-    addPing(value: number): void {
-        if (this.pingLst.length > 10)
-            this.pingLst.shift();
-        this.pingLst.push(value / 2);
-
-        if (this.pingLst.length != 0) {
-            let total = 0;
-            for (let i = 0; i < this.pingLst.length; i++) {
-                total += this.pingLst[i];
-            }
-
-            let average = total / this.pingLst.length;
-            this.ping = (average * 1000);
-        }
-        else
-            this.ping = -1;
-    }
+			let average = total / this.pingLst.length;
+			this.ping = (average * 1000);
+		}
+		else
+			this.ping = -1;
+	}
 }

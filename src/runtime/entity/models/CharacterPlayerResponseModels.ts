@@ -234,7 +234,7 @@ export namespace CharacterPlayerResponseModels {
 		}
 	}
 
-	export class GrantGroupOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.CharacterPlayerResponseData> {
+	export class CreateGroupOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.CharacterPlayerResponseData> {
 
 		constructor() {
 			super();
@@ -242,7 +242,7 @@ export namespace CharacterPlayerResponseModels {
 		}
 	}
 
-	export class GrantPlayerItemOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.CharacterPlayerResponseData> {
+	export class CreatePlayerItemOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.CharacterPlayerResponseData> {
 
 		constructor() {
 			super();
@@ -402,7 +402,7 @@ export namespace CharacterPlayerResponseModels {
 		}
 	}
 
-    export class GetLastLoginLeaderboardOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.GetLastLoginLeaderboardResponseData> {
+	export class GetLastLoginLeaderboardOperationResponse extends CustomOperationResponseAbstract<CharacterPlayerModels.GetLastLoginLeaderboardResponseData> {
 
 		constructor() {
 			super();

@@ -290,11 +290,11 @@ export namespace MasterPlayerResponseModels {
 		}
 	}
 
-	export class LinkGenericServiceOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+	export class LinkGenericServiceOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.GenericServiceMasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
+			this.responseDataCls = MasterPlayerModels.GenericServiceMasterPlayerResponseData;
 		}
 	}
 

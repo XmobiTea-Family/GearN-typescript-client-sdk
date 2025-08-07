@@ -6,10 +6,9 @@ import { StoreInventoryModels } from "./StoreInventoryModels";
 
 export namespace StoreInventoryRequestModels {
 	export class BuyStoreItemOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.BuyStoreItemRequestData> {
-		protected override operationCode: number = OperationCode.BuyStoreItem;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.BuyStoreItem;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.BuyStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -18,7 +17,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerBuyStoreItemOperationRequest extends BuyStoreItemOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerBuyStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -27,7 +26,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminBuyStoreItemOperationRequest extends BuyStoreItemOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminBuyStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -36,10 +35,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class GetStoreItemInformationOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.GetStoreItemInformationRequestData> {
-		protected override operationCode: number = OperationCode.GetStoreItemInformation;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetStoreItemInformation;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.GetStoreItemInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -48,7 +46,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerGetStoreItemInformationOperationRequest extends GetStoreItemInformationOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerGetStoreItemInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -57,7 +55,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminGetStoreItemInformationOperationRequest extends GetStoreItemInformationOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminGetStoreItemInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -66,10 +64,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class GetStoreItemsWithTagOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.GetStoreItemsWithTagRequestData> {
-		protected override operationCode: number = OperationCode.GetStoreItemsWithTag;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetStoreItemsWithTag;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.GetStoreItemsWithTagRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -78,7 +75,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerGetStoreItemsWithTagOperationRequest extends GetStoreItemsWithTagOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerGetStoreItemsWithTagRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -87,7 +84,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminGetStoreItemsWithTagOperationRequest extends GetStoreItemsWithTagOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminGetStoreItemsWithTagRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -95,41 +92,39 @@ export namespace StoreInventoryRequestModels {
 		}
 	}
 
-	export class GrantStoreItemOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.GrantStoreItemRequestData> {
-		protected override operationCode: number = OperationCode.GrantStoreItem;
-		protected override operationEncrypted: boolean = true;
+	export class CreateStoreItemOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.CreateStoreItemRequestData> {
+		protected override operationCode: string = OperationCode.CreateStoreItem;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: StoreInventoryModels.GrantStoreItemRequestData, timeout: number) {
+		constructor(requestData: StoreInventoryModels.CreateStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = StoreInventoryModels.GrantStoreItemRequestData;
+			this.requestDataCls = StoreInventoryModels.CreateStoreItemRequestData;
 		}
 	}
 
-	export class ServerGrantStoreItemOperationRequest extends GrantStoreItemOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+	export class ServerCreateStoreItemOperationRequest extends CreateStoreItemOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-		constructor(requestData: StoreInventoryModels.ServerGrantStoreItemRequestData, timeout: number) {
+		constructor(requestData: StoreInventoryModels.ServerCreateStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = StoreInventoryModels.ServerGrantStoreItemRequestData;
+			this.requestDataCls = StoreInventoryModels.ServerCreateStoreItemRequestData;
 		}
 	}
 
-	export class AdminGrantStoreItemOperationRequest extends GrantStoreItemOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+	export class AdminCreateStoreItemOperationRequest extends CreateStoreItemOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: StoreInventoryModels.AdminGrantStoreItemRequestData, timeout: number) {
+		constructor(requestData: StoreInventoryModels.AdminCreateStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = StoreInventoryModels.AdminGrantStoreItemRequestData;
+			this.requestDataCls = StoreInventoryModels.AdminCreateStoreItemRequestData;
 		}
 	}
 
 	export class SetRemoveStatusOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.SetRemoveStatusRequestData> {
-		protected override operationCode: number = OperationCode.SetRemoveStatus;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetRemoveStatus;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.SetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -138,7 +133,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerSetRemoveStatusOperationRequest extends SetRemoveStatusOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerSetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -147,7 +142,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminSetRemoveStatusOperationRequest extends SetRemoveStatusOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminSetRemoveStatusRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -156,10 +151,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class SetStoreItemInformationOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.SetStoreItemInformationRequestData> {
-		protected override operationCode: number = OperationCode.SetStoreItemInformation;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetStoreItemInformation;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.SetStoreItemInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -168,7 +162,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerSetStoreItemInformationOperationRequest extends SetStoreItemInformationOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerSetStoreItemInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -177,7 +171,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminSetStoreItemInformationOperationRequest extends SetStoreItemInformationOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminSetStoreItemInformationRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -186,10 +180,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ValidateAppleAppStoreReceiptOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.ValidateAppleAppStoreReceiptRequestData> {
-		protected override operationCode: number = OperationCode.ValidateAppleAppStoreReceipt;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.ValidateAppleAppStoreReceipt;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.ValidateAppleAppStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -198,7 +191,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerValidateAppleAppStoreReceiptOperationRequest extends ValidateAppleAppStoreReceiptOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerValidateAppleAppStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -207,7 +200,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminValidateAppleAppStoreReceiptOperationRequest extends ValidateAppleAppStoreReceiptOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminValidateAppleAppStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -216,10 +209,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ValidateFacebookStoreReceiptOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.ValidateFacebookStoreReceiptRequestData> {
-		protected override operationCode: number = OperationCode.ValidateFacebookStoreReceipt;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.ValidateFacebookStoreReceipt;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.ValidateFacebookStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -228,7 +220,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerValidateFacebookStoreReceiptOperationRequest extends ValidateFacebookStoreReceiptOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerValidateFacebookStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -237,7 +229,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminValidateFacebookStoreReceiptOperationRequest extends ValidateFacebookStoreReceiptOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminValidateFacebookStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -246,10 +238,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ValidateGooglePlayStoreReceiptOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.ValidateGooglePlayStoreReceiptRequestData> {
-		protected override operationCode: number = OperationCode.ValidateGooglePlayStoreReceipt;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.ValidateGooglePlayStoreReceipt;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.ValidateGooglePlayStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -258,7 +249,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerValidateGooglePlayStoreReceiptOperationRequest extends ValidateGooglePlayStoreReceiptOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerValidateGooglePlayStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -267,7 +258,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminValidateGooglePlayStoreReceiptOperationRequest extends ValidateGooglePlayStoreReceiptOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminValidateGooglePlayStoreReceiptRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -276,10 +267,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class GetCreateLeaderboardOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.GetCreateLeaderboardRequestData> {
-		protected override operationCode: number = OperationCode.GetCreateLeaderboard;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetCreateLeaderboard;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.GetCreateLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -288,7 +278,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerGetCreateLeaderboardOperationRequest extends GetCreateLeaderboardOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerGetCreateLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -297,7 +287,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminGetCreateLeaderboardOperationRequest extends GetCreateLeaderboardOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminGetCreateLeaderboardRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -306,10 +296,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class PresentStoreItemOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.PresentStoreItemRequestData> {
-		protected override operationCode: number = OperationCode.PresentStoreItem;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.PresentStoreItem;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.PresentStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -318,7 +307,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerPresentStoreItemOperationRequest extends PresentStoreItemOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerPresentStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -327,7 +316,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminPresentStoreItemOperationRequest extends PresentStoreItemOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminPresentStoreItemRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -336,10 +325,9 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class GetStoreLogOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.GetStoreLogRequestData> {
-		protected override operationCode: number = OperationCode.GetStoreLog;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetStoreLog;
 		protected override requestType: RequestType = RequestType.StoreInventory;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: StoreInventoryModels.GetStoreLogRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -348,7 +336,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class ServerGetStoreLogOperationRequest extends GetStoreLogOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: StoreInventoryModels.ServerGetStoreLogRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -357,7 +345,7 @@ export namespace StoreInventoryRequestModels {
 	}
 
 	export class AdminGetStoreLogOperationRequest extends GetStoreLogOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: StoreInventoryModels.AdminGetStoreLogRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -365,64 +353,62 @@ export namespace StoreInventoryRequestModels {
 		}
 	}
 
-    export class GetStoreUsedOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.GetStoreUsedRequestData> {
-        protected override operationCode: number = OperationCode.GetStoreUsed;
-        protected override operationEncrypted: boolean = true;
-        protected override requestType: RequestType = RequestType.StoreInventory;
-        protected override requestRole: RequestRole = RequestRole.Client;
-    
-        constructor(requestData: StoreInventoryModels.GetStoreUsedRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = StoreInventoryModels.GetStoreUsedRequestData;
-        }
-    }
+	export class GetStoreUsedOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.GetStoreUsedRequestData> {
+		protected override operationCode: string = OperationCode.GetStoreUsed;
+		protected override requestType: RequestType = RequestType.StoreInventory;
+		protected override role: RequestRole = RequestRole.Client;
 
-    export class ServerGetStoreUsedOperationRequest extends GetStoreUsedOperationRequest {
-        protected override requestRole: RequestRole = RequestRole.Server;
-    
-        constructor(requestData: StoreInventoryModels.ServerGetStoreUsedRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = StoreInventoryModels.ServerGetStoreUsedRequestData;
-        }
-    }
+		constructor(requestData: StoreInventoryModels.GetStoreUsedRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = StoreInventoryModels.GetStoreUsedRequestData;
+		}
+	}
 
-    export class AdminGetStoreUsedOperationRequest extends GetStoreUsedOperationRequest {
-        protected override requestRole: RequestRole = RequestRole.Admin;
-    
-        constructor(requestData: StoreInventoryModels.AdminGetStoreUsedRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = StoreInventoryModels.AdminGetStoreUsedRequestData;
-        }
-    }
+	export class ServerGetStoreUsedOperationRequest extends GetStoreUsedOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-    export class RemoveStoreUsedOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.RemoveStoreUsedRequestData> {
-        protected override operationCode: number = OperationCode.RemoveStoreUsed;
-        protected override operationEncrypted: boolean = true;
-        protected override requestType: RequestType = RequestType.StoreInventory;
-        protected override requestRole: RequestRole = RequestRole.Client;
-    
-        constructor(requestData: StoreInventoryModels.RemoveStoreUsedRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = StoreInventoryModels.RemoveStoreUsedRequestData;
-        }
-    }
+		constructor(requestData: StoreInventoryModels.ServerGetStoreUsedRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = StoreInventoryModels.ServerGetStoreUsedRequestData;
+		}
+	}
 
-    export class ServerRemoveStoreUsedOperationRequest extends RemoveStoreUsedOperationRequest {
-        protected override requestRole: RequestRole = RequestRole.Server;
-    
-        constructor(requestData: StoreInventoryModels.ServerRemoveStoreUsedRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = StoreInventoryModels.ServerRemoveStoreUsedRequestData;
-        }
-    }
+	export class AdminGetStoreUsedOperationRequest extends GetStoreUsedOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-    export class AdminRemoveStoreUsedOperationRequest extends RemoveStoreUsedOperationRequest {
-        protected override requestRole: RequestRole = RequestRole.Admin;
-    
-        constructor(requestData: StoreInventoryModels.AdminRemoveStoreUsedRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = StoreInventoryModels.AdminRemoveStoreUsedRequestData;
-        }
-    }
+		constructor(requestData: StoreInventoryModels.AdminGetStoreUsedRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = StoreInventoryModels.AdminGetStoreUsedRequestData;
+		}
+	}
+
+	export class RemoveStoreUsedOperationRequest extends CustomOperationRequestAbstract<StoreInventoryModels.RemoveStoreUsedRequestData> {
+		protected override operationCode: string = OperationCode.RemoveStoreUsed;
+		protected override requestType: RequestType = RequestType.StoreInventory;
+		protected override role: RequestRole = RequestRole.Client;
+
+		constructor(requestData: StoreInventoryModels.RemoveStoreUsedRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = StoreInventoryModels.RemoveStoreUsedRequestData;
+		}
+	}
+
+	export class ServerRemoveStoreUsedOperationRequest extends RemoveStoreUsedOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
+
+		constructor(requestData: StoreInventoryModels.ServerRemoveStoreUsedRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = StoreInventoryModels.ServerRemoveStoreUsedRequestData;
+		}
+	}
+
+	export class AdminRemoveStoreUsedOperationRequest extends RemoveStoreUsedOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
+
+		constructor(requestData: StoreInventoryModels.AdminRemoveStoreUsedRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = StoreInventoryModels.AdminRemoveStoreUsedRequestData;
+		}
+	}
 
 }

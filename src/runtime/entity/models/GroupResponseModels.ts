@@ -178,7 +178,7 @@ export namespace GroupResponseModels {
 		}
 	}
 
-	export class GrantGroupItemOperationResponse extends CustomOperationResponseAbstract<GroupModels.GroupResponseData> {
+	export class CreateGroupItemOperationResponse extends CustomOperationResponseAbstract<GroupModels.GroupResponseData> {
 
 		constructor() {
 			super();

@@ -1,286 +1,286 @@
 type GNDataType = string | number | boolean | null | GNArray | GNHashtable;
 
 interface IGNData {
-    clear(): void;
-    remove(k: string | number): boolean;
-    count(): string | number;
+	clear(): void;
+	remove(k: string | number): boolean;
+	count(): string | number;
 
-    getObject(k: string | number, def?: object): object;
-    getBoolean(k: string | number, def?: boolean): boolean;
-    getString(k: string | number, def?: string): string;
-    getNumber(k: string | number, def?: number): number;
-    getGNHashtable(k: string | number, def?: GNHashtable): GNHashtable;
-    getGNArray(k: string | number, def?: GNArray): GNArray;
+	getObject(k: string | number, def?: object): object;
+	getBoolean(k: string | number, def?: boolean): boolean;
+	getString(k: string | number, def?: string): string;
+	getNumber(k: string | number, def?: number): number;
+	getGNHashtable(k: string | number, def?: GNHashtable): GNHashtable;
+	getGNArray(k: string | number, def?: GNArray): GNArray;
 }
 
 export abstract class GNData implements IGNData {
-    protected get<T>(k: string | number, def?: T): T {
-        return def;
-    }
+	protected get<T>(k: string | number, def?: T): T {
+		return def;
+	}
 
-    public abstract clear(): void;
-    public abstract remove(k: string | number): boolean;
-    public abstract count(): string | number;
+	public abstract clear(): void;
+	public abstract remove(k: string | number): boolean;
+	public abstract count(): string | number;
 
-    public getBoolean(k: string | number, def?: boolean): boolean {
-        return this.get(k, def);
-    }
+	public getBoolean(k: string | number, def?: boolean): boolean {
+		return this.get(k, def);
+	}
 
-    public getObject(k: string | number, def?: object): object {
-        return this.get(k, def);
-    }
+	public getObject(k: string | number, def?: object): object {
+		return this.get(k, def);
+	}
 
-    public getString(k: string | number, def?: string): string {
-        return this.get(k, def);
-    }
+	public getString(k: string | number, def?: string): string {
+		return this.get(k, def);
+	}
 
-    public getNumber(k: string | number, def?: number): number {
-        return this.get(k, def);
-    }
+	public getNumber(k: string | number, def?: number): number {
+		return this.get(k, def);
+	}
 
-    public getGNHashtable(k: string | number, def?: GNHashtable): GNHashtable {
-        return this.get(k, def);
-    }
+	public getGNHashtable(k: string | number, def?: GNHashtable): GNHashtable {
+		return this.get(k, def);
+	}
 
-    public getGNArray(k: string | number, def?: GNArray): GNArray {
-        return this.get(k, def);
-    }
+	public getGNArray(k: string | number, def?: GNArray): GNArray {
+		return this.get(k, def);
+	}
 
-    private static createGNHashtableFromObject(value: any): GNHashtable {
-        let answer = new GNHashtable();
+	private static createGNHashtableFromObject(value: any): GNHashtable {
+		let answer = new GNHashtable();
 
-        let valueKeys = Object.keys(value);
-        for (let i = 0; i < valueKeys.length; i++) {
-            let key = valueKeys[i];
-            answer.add(key, value[key]);
-        }
+		let valueKeys = Object.keys(value);
+		for (let i = 0; i < valueKeys.length; i++) {
+			let key = valueKeys[i];
+			answer.add(key, value[key]);
+		}
 
-        return answer;
-    }
+		return answer;
+	}
 
-    private static createGNArrayFromArray(value: any): GNArray {
-        let answer = new GNArray();
+	private static createGNArrayFromArray(value: any): GNArray {
+		let answer = new GNArray();
 
-        let valueArr = <Array<any>>value;
-        for (let i = 0; i < valueArr.length; i++) {
-            answer.add(valueArr[i]);
-        }
+		let valueArr = <Array<any>>value;
+		for (let i = 0; i < valueArr.length; i++) {
+			answer.add(valueArr[i]);
+		}
 
-        return answer;
-    }
+		return answer;
+	}
 
-    protected static createUseDataFromOriginData(value: any): GNDataType {
-        if (value == null) return null;
+	protected static createUseDataFromOriginData(value: any): GNDataType {
+		if (value == null) return null;
 
-        let typeOfValue = typeof value;
+		let typeOfValue = typeof value;
 
-        if (typeOfValue === "string") return value as string;
+		if (typeOfValue === "string") return value as string;
 
-        if (typeOfValue === "number") return value as number;
+		if (typeOfValue === "number") return value as number;
 
-        if (typeOfValue === "boolean") return value as boolean;
+		if (typeOfValue === "boolean") return value as boolean;
 
-        if (value instanceof GNArray) return value;
+		if (value instanceof GNArray) return value;
 
-        if (value instanceof GNHashtable) return value;
+		if (value instanceof GNHashtable) return value;
 
-        if (typeOfValue === "object") {
-            if (Array.isArray(value)) return this.createGNArrayFromArray(value);
-            else return this.createGNHashtableFromObject(value);
-        }
+		if (typeOfValue === "object") {
+			if (Array.isArray(value)) return this.createGNArrayFromArray(value);
+			else return this.createGNHashtableFromObject(value);
+		}
 
-        return null;
-    }
+		return null;
+	}
 
-    protected static createDataFromUseData(value: GNDataType): any {
-        if (value == null) return null;
+	protected static createDataFromUseData(value: GNDataType): any {
+		if (value == null) return null;
 
-        if (value instanceof GNArray) {
-            return (<GNArray>value).toData();
-        }
+		if (value instanceof GNArray) {
+			return (<GNArray>value).toData();
+		}
 
-        if (value instanceof GNHashtable) {
-            return (<GNHashtable>value).toData();
-        }
+		if (value instanceof GNHashtable) {
+			return (<GNHashtable>value).toData();
+		}
 
-        return value;
-    }
+		return value;
+	}
 
-    public abstract toData(): any;
+	public abstract toData(): any;
 }
 
 export class GNHashtableBuilder {
-    private dict: { [k: string]: any } = {};
+	private dict: { [k: string]: any } = {};
 
-    public add(k: string, value: any): GNHashtableBuilder {
-        this.dict[k] = value;
+	public add(k: string, value: any): GNHashtableBuilder {
+		this.dict[k] = value;
 
-        return this;
-    }
+		return this;
+	}
 
-    public addAll(dict: { [k: string]: any }) {
-        let keys = Object.keys(dict);
-        keys.forEach(keyStr => {
-            this.add(keyStr, dict[keyStr]);
-        });
+	public addAll(dict: { [k: string]: any }) {
+		let keys = Object.keys(dict);
+		keys.forEach(keyStr => {
+			this.add(keyStr, dict[keyStr]);
+		});
 
-        return this;
-    }
+		return this;
+	}
 
-    constructor() {
-        this.dict = {};
-    }
+	constructor() {
+		this.dict = {};
+	}
 
-    public build(): GNHashtable {
-        let answer = new GNHashtable();
+	public build(): GNHashtable {
+		let answer = new GNHashtable();
 
-        let keys = Object.keys(this.dict);
-        keys.forEach(keyStr => {
-            answer.add(keyStr, this.dict[keyStr]);
-        });
+		let keys = Object.keys(this.dict);
+		keys.forEach(keyStr => {
+			answer.add(keyStr, this.dict[keyStr]);
+		});
 
-        return answer;
-    }
+		return answer;
+	}
 
 }
 
 export class GNHashtable extends GNData {
-    private dict: { [k: string]: GNDataType } = {};
+	private dict: { [k: string]: GNDataType } = {};
 
-    public override clear(): void {
-        this.dict = {};
-    }
+	public override clear(): void {
+		this.dict = {};
+	}
 
-    public override remove(k: string): boolean {
-        if (this.containsKey(k)) {
-            delete this.dict[k];
-            return true;
-        }
+	public override remove(k: string): boolean {
+		if (this.containsKey(k)) {
+			delete this.dict[k];
+			return true;
+		}
 
-        return false;
-    }
+		return false;
+	}
 
-    public override count(): number {
-        return Object.keys(this.dict).length;
-    }
+	public override count(): number {
+		return Object.keys(this.dict).length;
+	}
 
-    public containsKey(k: string): boolean {
-        let keys = Object.keys(this.dict);
-        let kStr = k.toString();
+	public containsKey(k: string): boolean {
+		let keys = Object.keys(this.dict);
+		let kStr = k.toString();
 
-        return keys.indexOf(kStr) != -1;
-    }
+		return keys.indexOf(kStr) != -1;
+	}
 
-    protected override get<T>(k: string, def?: T): T {
-        let value = this.dict[k];
+	protected override get<T>(k: string, def?: T): T {
+		let value = this.dict[k];
 
-        if (value == null) return def;
-        return <T>(value as any);
-    }
+		if (value == null) return def;
+		return <T>(value as any);
+	}
 
-    public add(k: string, value: any) {
-        this.dict[k] = GNData.createUseDataFromOriginData(value);
-    }
+	public add(k: string, value: any) {
+		this.dict[k] = GNData.createUseDataFromOriginData(value);
+	}
 
-    public override toData(): {} {
-        let anwser: { [k: string]: any } = {};
+	public override toData(): {} {
+		let anwser: { [k: string]: any } = {};
 
-        let keys = Object.keys(this.dict);
-        for (let i = 0; i < keys.length; i++) {
-            let key = keys[i];
-            anwser[key] = GNData.createDataFromUseData(this.dict[key]);
-        }
+		let keys = Object.keys(this.dict);
+		for (let i = 0; i < keys.length; i++) {
+			let key = keys[i];
+			anwser[key] = GNData.createDataFromUseData(this.dict[key]);
+		}
 
-        return anwser;
-    }
+		return anwser;
+	}
 
-    public static builder(): GNHashtableBuilder {
-        return new GNHashtableBuilder();
-    }
+	public static builder(): GNHashtableBuilder {
+		return new GNHashtableBuilder();
+	}
 
-    public toString(): string {
-        return JSON.stringify(this.dict);
-    }
+	public toString(): string {
+		return JSON.stringify(this.dict);
+	}
 }
 
 export class GNArrayBuilder {
-    private array: Array<any> = [];
+	private array: Array<any> = [];
 
-    public add(value: any): GNArrayBuilder {
-        this.array.push(value);
+	public add(value: any): GNArrayBuilder {
+		this.array.push(value);
 
-        return this;
-    }
+		return this;
+	}
 
-    public addAll(array: any[]): GNArrayBuilder {
-        array.forEach(o => {
-            this.add(o);
-        });
+	public addAll(array: any[]): GNArrayBuilder {
+		array.forEach(o => {
+			this.add(o);
+		});
 
-        return this;
-    }
+		return this;
+	}
 
-    public build(): GNArray {
-        let awnser = new GNArray();
+	public build(): GNArray {
+		let awnser = new GNArray();
 
-        this.array.forEach(o => {
-            awnser.add(o);
-        });
+		this.array.forEach(o => {
+			awnser.add(o);
+		});
 
-        return awnser;
-    }
+		return awnser;
+	}
 
-    constructor() {
-        this.array = [];
-    }
+	constructor() {
+		this.array = [];
+	}
 }
 
 export class GNArray extends GNData {
-    private array: Array<GNDataType> = [];
+	private array: Array<GNDataType> = [];
 
-    public override clear(): void {
-        this.array = [];
-    }
+	public override clear(): void {
+		this.array = [];
+	}
 
-    public override remove(k: number): boolean {
-        if (k < 0 || k >= this.array.length) return false;
+	public override remove(k: number): boolean {
+		if (k < 0 || k >= this.array.length) return false;
 
-        this.array.splice(k, 1);
-        return true;
-    }
+		this.array.splice(k, 1);
+		return true;
+	}
 
-    public override count(): number {
-        return this.array.length;
-    }
+	public override count(): number {
+		return this.array.length;
+	}
 
-    protected override get<T>(k: number, def?: T): T {
-        if (k < 0 || k >= this.array.length) return null;
+	protected override get<T>(k: number, def?: T): T {
+		if (k < 0 || k >= this.array.length) return null;
 
-        let value = this.array[k];
+		let value = this.array[k];
 
-        if (value == null) return def;
-        return <T>(value as any);
-    }
+		if (value == null) return def;
+		return <T>(value as any);
+	}
 
-    public add(value: any) {
-        this.array.push(GNData.createUseDataFromOriginData(value));
-    }
+	public add(value: any) {
+		this.array.push(GNData.createUseDataFromOriginData(value));
+	}
 
-    public override toData(): any[] {
-        let anwser = [];
+	public override toData(): any[] {
+		let anwser = [];
 
-        for (let i = 0; i < this.array.length; i++) {
-            anwser.push(GNData.createDataFromUseData(this.array[i]));
-        }
+		for (let i = 0; i < this.array.length; i++) {
+			anwser.push(GNData.createDataFromUseData(this.array[i]));
+		}
 
-        return anwser;
-    }
+		return anwser;
+	}
 
-    public static builder(): GNArrayBuilder {
-        return new GNArrayBuilder();
-    }
+	public static builder(): GNArrayBuilder {
+		return new GNArrayBuilder();
+	}
 
-    public toString(): string {
-        return JSON.stringify(this.array);
-    }
+	public toString(): string {
+		return JSON.stringify(this.array);
+	}
 }

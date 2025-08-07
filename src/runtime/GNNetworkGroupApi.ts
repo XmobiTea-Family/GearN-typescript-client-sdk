@@ -187,12 +187,12 @@ export class GroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.GetTsCreateOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GetTsCreateOperationResponse);
 	}
 
-	public grantGroupItem(requestData: GroupModels.GrantGroupItemRequestData, onResponse: Action1<GroupResponseModels.GrantGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.GrantGroupItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GrantGroupItemOperationResponse);
+	public createGroupItem(requestData: GroupModels.CreateGroupItemRequestData, onResponse: Action1<GroupResponseModels.CreateGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.CreateGroupItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.CreateGroupItemOperationResponse);
 	}
 
-	public async grantGroupItemAsync(requestData: GroupModels.GrantGroupItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.GrantGroupItemOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.GrantGroupItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GrantGroupItemOperationResponse);
+	public async createGroupItemAsync(requestData: GroupModels.CreateGroupItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.CreateGroupItemOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.CreateGroupItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.CreateGroupItemOperationResponse);
 	}
 
 	public removeGroupItem(requestData: GroupModels.RemoveGroupItemRequestData, onResponse: Action1<GroupResponseModels.RemoveGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -510,12 +510,12 @@ export class ServerGroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerGetTsCreateOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GetTsCreateOperationResponse);
 	}
 
-	public grantGroupItem(requestData: GroupModels.ServerGrantGroupItemRequestData, onResponse: Action1<GroupResponseModels.GrantGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.ServerGrantGroupItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GrantGroupItemOperationResponse);
+	public createGroupItem(requestData: GroupModels.ServerCreateGroupItemRequestData, onResponse: Action1<GroupResponseModels.CreateGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.ServerCreateGroupItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.CreateGroupItemOperationResponse);
 	}
 
-	public async grantGroupItemAsync(requestData: GroupModels.ServerGrantGroupItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.GrantGroupItemOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerGrantGroupItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GrantGroupItemOperationResponse);
+	public async createGroupItemAsync(requestData: GroupModels.ServerCreateGroupItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.CreateGroupItemOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerCreateGroupItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.CreateGroupItemOperationResponse);
 	}
 
 	public removeGroupItem(requestData: GroupModels.ServerRemoveGroupItemRequestData, onResponse: Action1<GroupResponseModels.RemoveGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -833,12 +833,12 @@ export class AdminGroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminGetTsCreateOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GetTsCreateOperationResponse);
 	}
 
-	public grantGroupItem(requestData: GroupModels.AdminGrantGroupItemRequestData, onResponse: Action1<GroupResponseModels.GrantGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.AdminGrantGroupItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GrantGroupItemOperationResponse);
+	public createGroupItem(requestData: GroupModels.AdminCreateGroupItemRequestData, onResponse: Action1<GroupResponseModels.CreateGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.AdminCreateGroupItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.CreateGroupItemOperationResponse);
 	}
 
-	public async grantGroupItemAsync(requestData: GroupModels.AdminGrantGroupItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.GrantGroupItemOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminGrantGroupItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.GrantGroupItemOperationResponse);
+	public async createGroupItemAsync(requestData: GroupModels.AdminCreateGroupItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.CreateGroupItemOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminCreateGroupItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.CreateGroupItemOperationResponse);
 	}
 
 	public removeGroupItem(requestData: GroupModels.AdminRemoveGroupItemRequestData, onResponse: Action1<GroupResponseModels.RemoveGroupItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {

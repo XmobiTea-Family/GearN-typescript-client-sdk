@@ -19,210 +19,205 @@ import { GetAuthInfoResponse } from "./../entity/response/GetAuthInfoResponse";
 import { UploadFileResponse } from "./../entity/response/UploadFileResponse";
 
 export class NetworkingPeer {
-    static readonly SYNC_TS: string = "ts";
-    static readonly GET_AUTH_INFO: string = "getAuthInfo";
-    static readonly UPLOAD_FILE: string = "upload";
-    static readonly DOWNLOAD_FILE: string = "download";
-    static readonly API_JSON: string = "api/" + Commands.RequestCmd_Json;
-    static readonly API_MSG_PACK: string = "api/" + Commands.RequestCmd_MsgPack;
+	static readonly SYNC_TS: string = "ts";
+	static readonly GET_AUTH_INFO: string = "getAuthInfo";
+	static readonly UPLOAD_FILE: string = "upload";
+	static readonly DOWNLOAD_FILE: string = "download";
+	static readonly API_JSON: string = "api/" + Commands.RequestCmd_Json;
+	static readonly API_MSG_PACK: string = "api/" + Commands.RequestCmd_MsgPack;
 
-    private socketPeer: IPeer;
-    private httpPeer: IPeer;
+	private socketPeer: IPeer;
+	private httpPeer: IPeer;
 
-    authenticateStatus: AuthenticateStatus;
-    gameId: string;
+	authenticateStatus: AuthenticateStatus;
+	gameId: string;
 
-    getPing(): number {
-        let count = 0;
-        let totalPing = 0;
+	getPing(): number {
+		let count = 0;
+		let totalPing = 0;
 
-        if (this.httpPeer.isUsing()) {
-            count++;
-            totalPing += (<PeerBase>this.httpPeer).ping;
-        }
+		if (this.httpPeer.isUsing()) {
+			count++;
+			totalPing += (<PeerBase>this.httpPeer).ping;
+		}
 
-        if (this.socketPeer.isUsing()) {
-            count++;
-            totalPing += (<PeerBase>this.socketPeer).ping;
-        }
+		if (this.socketPeer.isUsing()) {
+			count++;
+			totalPing += (<PeerBase>this.socketPeer).ping;
+		}
 
-        return totalPing / count;
-    }
+		return totalPing / count;
+	}
 
-    getClientId(): string {
-        return (this.socketPeer as SocketPeer).getClientId();
-    }
+	getClientId(): string {
+		return (this.socketPeer as SocketPeer).getClientId();
+	}
 
-    private lastCurrentServerMilliseconds: number;
-    private lastGetCurrentMilliseconds: number;
+	private lastCurrentServerMilliseconds: number;
+	private lastGetCurrentMilliseconds: number;
 
-    setServerTimeMilliseconds(currentServerMilliseconds: number): void {
-        this.lastCurrentServerMilliseconds = currentServerMilliseconds;
-        this.lastGetCurrentMilliseconds = Date.now() / 1000;
-    }
+	setServerTimeMilliseconds(currentServerMilliseconds: number): void {
+		this.lastCurrentServerMilliseconds = currentServerMilliseconds;
+		this.lastGetCurrentMilliseconds = Date.now() / 1000;
+	}
 
-    getServerTimestamp(): number {
-        return this.lastCurrentServerMilliseconds + ((Date.now() / 1000 - this.lastGetCurrentMilliseconds) * 1000);
-    }
+	getServerTimestamp(): number {
+		return this.lastCurrentServerMilliseconds + ((Date.now() / 1000 - this.lastGetCurrentMilliseconds) * 1000);
+	}
 
-    initPeer(): void {
-        this.setServerTimeMilliseconds(new Date().getUTCMilliseconds());
+	initPeer(): void {
+		this.setServerTimeMilliseconds(new Date().getUTCMilliseconds());
 
-        let gnServerSettings = GNNetwork.getGNServerSettings();
-        if (gnServerSettings == null)
-            throw new Error("Null GN Server Settings, please find it now");
+		let gnServerSettings = GNNetwork.getGNServerSettings();
+		if (gnServerSettings == null)
+			throw new Error("Null GN Server Settings, please find it now");
 
-        this.authenticateStatus = new AuthenticateStatus();
+		this.authenticateStatus = new AuthenticateStatus();
 
-        this.httpPeer = new HttpPeer();
-        this.httpPeer.initPeer();
+		this.httpPeer = new HttpPeer();
+		this.httpPeer.initPeer();
 
-        this.socketPeer = new SocketPeer();
-        this.socketPeer.initPeer();
-    }
+		this.socketPeer = new SocketPeer();
+		this.socketPeer.initPeer();
+	}
 
-    service() {
-        if (this.httpPeer != null) this.httpPeer.service();
-        if (this.socketPeer != null) this.socketPeer.service();
-    }
+	service() {
+		if (this.httpPeer != null) this.httpPeer.service();
+		if (this.socketPeer != null) this.socketPeer.service();
+	}
 
-    sendViaSocket(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
-        if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
-        if (secretKey == null) {
-            if (requestRole == RequestRole.Admin) secretKey = GNNetwork.getGNServerSettings().getAdminSecretKey();
-            else if (requestRole == RequestRole.Server) secretKey = GNNetwork.getGNServerSettings().getServerSecretKey();
-            else if (requestRole == RequestRole.Client) secretKey = GNNetwork.getGNServerSettings().getClientSecretKey();
-        }
+	sendViaSocket(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
+		if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
+		if (secretKey == null) {
+			if (role == RequestRole.Admin) secretKey = GNNetwork.getGNServerSettings().getAdminSecretKey();
+			else if (role == RequestRole.Server) secretKey = GNNetwork.getGNServerSettings().getServerSecretKey();
+			else if (role == RequestRole.Client) secretKey = GNNetwork.getGNServerSettings().getClientSecretKey();
+		}
 
-        this.socketPeer.enqueue(requestType, requestRole, request, onResponse, authToken, secretKey, customTags, this.gameId);
-    }
+		this.socketPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, customTags, this.gameId);
+	}
 
-    sendViaHttp(requestType: RequestType, requestRole: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
-        if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
-        if (secretKey == null) {
-            if (requestRole == RequestRole.Admin) secretKey = GNNetwork.getGNServerSettings().getAdminSecretKey();
-            else if (requestRole == RequestRole.Server) secretKey = GNNetwork.getGNServerSettings().getServerSecretKey();
-            else if (requestRole == RequestRole.Client) secretKey = GNNetwork.getGNServerSettings().getClientSecretKey();
-        }
+	sendViaHttp(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
+		if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
+		if (secretKey == null) {
+			if (role == RequestRole.Admin) secretKey = GNNetwork.getGNServerSettings().getAdminSecretKey();
+			else if (role == RequestRole.Server) secretKey = GNNetwork.getGNServerSettings().getServerSecretKey();
+			else if (role == RequestRole.Client) secretKey = GNNetwork.getGNServerSettings().getClientSecretKey();
+		}
 
-        this.httpPeer.enqueue(requestType, requestRole, request, onResponse, authToken, secretKey, customTags, this.gameId);
-    }
+		this.httpPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, customTags, this.gameId);
+	}
 
-    sendRequestAuthSocket(): void {
-        (this.socketPeer as SocketPeer).sendRequestAuthSocket();
-    }
+	sendRequestAuthSocket(): void {
+		(this.socketPeer as SocketPeer).sendRequestAuthSocket();
+	}
 
-    connectSocket(_onSocketConnect: Action0): void {
-        (this.socketPeer as SocketPeer).connect(_onSocketConnect);
-    }
+	connectSocket(_onSocketConnect: Action0): void {
+		(this.socketPeer as SocketPeer).connect(_onSocketConnect);
+	}
 
-    disconnectSocket(_onSocketDisconnect: Action0): void {
-        (this.socketPeer as SocketPeer).disconnect(_onSocketDisconnect);
-    }
+	disconnectSocket(_onSocketDisconnect: Action0): void {
+		(this.socketPeer as SocketPeer).disconnect(_onSocketDisconnect);
+	}
 
-    setOnEventHandler(_onEventHandler: Action1<OperationEvent>): void {
-        (this.socketPeer as SocketPeer).setOnEventHandler(_onEventHandler);
-    }
+	setOnEventHandler(_onEventHandler: Action1<OperationEvent>): void {
+		(this.socketPeer as SocketPeer).setOnEventHandler(_onEventHandler);
+	}
 
-    setOnConnectHandler(_onConnectHandler: Action0): void {
-        (this.socketPeer as SocketPeer).setOnConnectHandler(_onConnectHandler);
-    }
+	setOnConnectHandler(_onConnectHandler: Action0): void {
+		(this.socketPeer as SocketPeer).setOnConnectHandler(_onConnectHandler);
+	}
 
-    setOnDisconnectHandler(_onDisconnectHandler: Action0): void {
-        (this.socketPeer as SocketPeer).setOnDisconnectHandler(_onDisconnectHandler);
-    }
+	setOnDisconnectHandler(_onDisconnectHandler: Action0): void {
+		(this.socketPeer as SocketPeer).setOnDisconnectHandler(_onDisconnectHandler);
+	}
 
-    removeOnConnectHandler(_onConnectHandler: Action0): void {
-        (this.socketPeer as SocketPeer).removeOnConnectHandler(_onConnectHandler);
-    }
+	removeOnConnectHandler(_onConnectHandler: Action0): void {
+		(this.socketPeer as SocketPeer).removeOnConnectHandler(_onConnectHandler);
+	}
 
-    removeOnDisconnectHandler(_onDisconnectHandler: Action0): void {
-        (this.socketPeer as SocketPeer).removeOnDisconnectHandler(_onDisconnectHandler);
-    }
+	removeOnDisconnectHandler(_onDisconnectHandler: Action0): void {
+		(this.socketPeer as SocketPeer).removeOnDisconnectHandler(_onDisconnectHandler);
+	}
 
-    subscriberServerEventHandler(serverEventHandler: IServerEventHandler): void {
-        (this.socketPeer as SocketPeer).subscriberAServerEventHandler(serverEventHandler);
-    }
+	subscriberServerEventHandler(serverEventHandler: IServerEventHandler): void {
+		(this.socketPeer as SocketPeer).subscriberAServerEventHandler(serverEventHandler);
+	}
 
-    syncTs(onResponse: Action1<number> = null): void {
-        let thiz = this;
+	syncTs(onResponse: Action1<number> = null): void {
+		let thiz = this;
 
-        (this.httpPeer as HttpPeer).getRequest(NetworkingPeer.SYNC_TS, (httpAppResponse: HttpAppResponse) => {
-            if (!httpAppResponse.hasError()) {
-                if (httpAppResponse.statusCode == 200) {
-                    let returnDatas = JSON.parse(httpAppResponse.text);
-                    let gnArray = GNArray.builder()
-                        .addAll(returnDatas)
-                        .build();
+		(this.httpPeer as HttpPeer).getRequest(NetworkingPeer.SYNC_TS, (httpAppResponse: HttpAppResponse) => {
+			if (!httpAppResponse.hasError()) {
+				if (httpAppResponse.statusCode == 200) {
+					let returnDatas = JSON.parse(httpAppResponse.text);
+					let gnHashtable = GNHashtable.builder()
+						.addAll(returnDatas)
+						.build();
 
-                    let returnCode = gnArray.getNumber(0);
-                    if (returnCode == ReturnCode.Ok) {
-                        let gnHashtable = gnArray.getGNHashtable(1);
-                        let newServerTimestamp = gnHashtable.getNumber("1", new Date().getUTCMilliseconds());
+					let newServerTimestamp = gnHashtable.getNumber("ts", new Date().getUTCMilliseconds());
+					thiz.setServerTimeMilliseconds(newServerTimestamp);
+				}
+			}
 
-                        thiz.setServerTimeMilliseconds(newServerTimestamp);
-                    }
-                }
-            }
+			if (onResponse != null) onResponse(thiz.getServerTimestamp());
+		});
+	}
 
-            if (onResponse != null) onResponse(thiz.getServerTimestamp());
-        });
-    }
+	getAuthInfo(authToken: string, onResponse: Action1<GetAuthInfoResponse>): void {
+		(this.httpPeer as HttpPeer).getRequest(NetworkingPeer.GET_AUTH_INFO + "?authToken=" + authToken, (httpAppResponse: HttpAppResponse) => {
+			if (!httpAppResponse.hasError()) {
+				if (httpAppResponse.statusCode == 200) {
+					let returnDatas = JSON.parse(httpAppResponse.text);
+					if (returnDatas.error) {
+						if (onResponse != null) onResponse({
+							error: returnDatas.error,
+						});
+					}
+					else {
+						if (onResponse != null) {
+							let response: GetAuthInfoResponse = {
+								error: null,
+								data: returnDatas.data,
+							};
 
-    getAuthInfo(authToken: string, onResponse: Action1<GetAuthInfoResponse>): void {
-        (this.httpPeer as HttpPeer).getRequest(NetworkingPeer.GET_AUTH_INFO + "?authToken=" + authToken, (httpAppResponse: HttpAppResponse) => {
-            if (!httpAppResponse.hasError()) {
-                if (httpAppResponse.statusCode == 200) {
-                    let returnDatas = JSON.parse(httpAppResponse.text);
-                    if (returnDatas.error) {
-                        if (onResponse != null) onResponse({
-                            error: returnDatas.error,
-                        });
-                    }
-                    else {
-                        if (onResponse != null) {
-                            let response: GetAuthInfoResponse = {
-                                error: null,
-                                data: returnDatas.data,
-                            };
+							response.data.otherDatas = GNHashtable.builder()
+								.addAll(returnDatas.data.otherDatas)
+								.build();
+							onResponse(response);
+						}
+					}
 
-                            response.data.otherDatas = GNHashtable.builder()
-                                .addAll(returnDatas.data.otherDatas)
-                                .build();
-                            onResponse(response);
-                        }
-                    }
+					return;
+				}
+			}
 
-                    return;
-                }
-            }
+			if (onResponse != null) onResponse({
+				error: httpAppResponse.error,
+			});
+		});
+	}
 
-            if (onResponse != null) onResponse({
-                error: httpAppResponse.error,
-            });
-        });
-    }
+	uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onResponse: Action1<UploadFileResponse>): void {
+		(this.httpPeer as HttpPeer).uploadFile(fileId, content, filename, mimetype, (httpAppResponse: HttpAppResponse) => {
+			if (!httpAppResponse.hasError()) {
+				if (httpAppResponse.statusCode == 200) {
+					if (onResponse != null) {
+						let response: UploadFileResponse = {
+							error: null,
+						};
 
-    uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onResponse: Action1<UploadFileResponse>): void {
-        (this.httpPeer as HttpPeer).uploadFile(fileId, content, filename, mimetype, (httpAppResponse: HttpAppResponse) => {
-            if (!httpAppResponse.hasError()) {
-                if (httpAppResponse.statusCode == 200) {
-                    if (onResponse != null) {
-                        let response: UploadFileResponse = {
-                            error: null,
-                        };
+						onResponse(response);
+					}
 
-                        onResponse(response);
-                    }
+					return;
+				}
+			}
 
-                    return;
-                }
-            }
-
-            if (onResponse != null) onResponse({
-                error: httpAppResponse.error ?? "Unknown Error",
-            });
-        });
-    }
+			if (onResponse != null) onResponse({
+				error: httpAppResponse.error ?? "Unknown Error",
+			});
+		});
+	}
 
 }

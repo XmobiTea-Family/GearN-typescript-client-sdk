@@ -6,10 +6,9 @@ import { ContentModels } from "./ContentModels";
 
 export namespace ContentRequestModels {
 	export class CreateNewFileUploadInfoOperationRequest extends CustomOperationRequestAbstract<ContentModels.CreateNewFileUploadInfoRequestData> {
-		protected override operationCode: number = OperationCode.CreateNewFileUploadInfo;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.CreateNewFileUploadInfo;
 		protected override requestType: RequestType = RequestType.Content;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: ContentModels.CreateNewFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -18,7 +17,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class ServerCreateNewFileUploadInfoOperationRequest extends CreateNewFileUploadInfoOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: ContentModels.ServerCreateNewFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -27,7 +26,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class AdminCreateNewFileUploadInfoOperationRequest extends CreateNewFileUploadInfoOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: ContentModels.AdminCreateNewFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -36,10 +35,9 @@ export namespace ContentRequestModels {
 	}
 
 	export class GetContentDataOperationRequest extends CustomOperationRequestAbstract<ContentModels.GetContentDataRequestData> {
-		protected override operationCode: number = OperationCode.GetContentData;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetContentData;
 		protected override requestType: RequestType = RequestType.Content;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: ContentModels.GetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -48,7 +46,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class ServerGetContentDataOperationRequest extends GetContentDataOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: ContentModels.ServerGetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -57,7 +55,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class AdminGetContentDataOperationRequest extends GetContentDataOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: ContentModels.AdminGetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -66,10 +64,9 @@ export namespace ContentRequestModels {
 	}
 
 	export class GetFileUploadInfoListOperationRequest extends CustomOperationRequestAbstract<ContentModels.GetFileUploadInfoListRequestData> {
-		protected override operationCode: number = OperationCode.GetFileUploadInfoList;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetFileUploadInfoList;
 		protected override requestType: RequestType = RequestType.Content;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: ContentModels.GetFileUploadInfoListRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -78,7 +75,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class ServerGetFileUploadInfoListOperationRequest extends GetFileUploadInfoListOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: ContentModels.ServerGetFileUploadInfoListRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -87,7 +84,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class AdminGetFileUploadInfoListOperationRequest extends GetFileUploadInfoListOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: ContentModels.AdminGetFileUploadInfoListRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -96,10 +93,9 @@ export namespace ContentRequestModels {
 	}
 
 	export class GetFileUploadInfoOperationRequest extends CustomOperationRequestAbstract<ContentModels.GetFileUploadInfoRequestData> {
-		protected override operationCode: number = OperationCode.GetFileUploadInfo;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.GetFileUploadInfo;
 		protected override requestType: RequestType = RequestType.Content;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: ContentModels.GetFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -108,7 +104,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class ServerGetFileUploadInfoOperationRequest extends GetFileUploadInfoOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: ContentModels.ServerGetFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -117,7 +113,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class AdminGetFileUploadInfoOperationRequest extends GetFileUploadInfoOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: ContentModels.AdminGetFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -126,10 +122,9 @@ export namespace ContentRequestModels {
 	}
 
 	export class RemoveFileUploadInfoOperationRequest extends CustomOperationRequestAbstract<ContentModels.RemoveFileUploadInfoRequestData> {
-		protected override operationCode: number = OperationCode.RemoveFileUploadInfo;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.RemoveFileUploadInfo;
 		protected override requestType: RequestType = RequestType.Content;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: ContentModels.RemoveFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -138,7 +133,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class ServerRemoveFileUploadInfoOperationRequest extends RemoveFileUploadInfoOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: ContentModels.ServerRemoveFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -147,7 +142,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class AdminRemoveFileUploadInfoOperationRequest extends RemoveFileUploadInfoOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: ContentModels.AdminRemoveFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -156,10 +151,9 @@ export namespace ContentRequestModels {
 	}
 
 	export class RequestDownloadFileUploadInfoOperationRequest extends CustomOperationRequestAbstract<ContentModels.RequestDownloadFileUploadInfoRequestData> {
-		protected override operationCode: number = OperationCode.RequestDownloadFileUploadInfo;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.RequestDownloadFileUploadInfo;
 		protected override requestType: RequestType = RequestType.Content;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: ContentModels.RequestDownloadFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -168,7 +162,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class ServerRequestDownloadFileUploadInfoOperationRequest extends RequestDownloadFileUploadInfoOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: ContentModels.ServerRequestDownloadFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -177,7 +171,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class AdminRequestDownloadFileUploadInfoOperationRequest extends RequestDownloadFileUploadInfoOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: ContentModels.AdminRequestDownloadFileUploadInfoRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -186,10 +180,9 @@ export namespace ContentRequestModels {
 	}
 
 	export class SetContentDataOperationRequest extends CustomOperationRequestAbstract<ContentModels.SetContentDataRequestData> {
-		protected override operationCode: number = OperationCode.SetContentData;
-		protected override operationEncrypted: boolean = true;
+		protected override operationCode: string = OperationCode.SetContentData;
 		protected override requestType: RequestType = RequestType.Content;
-		protected override requestRole: RequestRole = RequestRole.Client;
+		protected override role: RequestRole = RequestRole.Client;
 
 		constructor(requestData: ContentModels.SetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -198,7 +191,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class ServerSetContentDataOperationRequest extends SetContentDataOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Server;
+		protected override role: RequestRole = RequestRole.Server;
 
 		constructor(requestData: ContentModels.ServerSetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);
@@ -207,7 +200,7 @@ export namespace ContentRequestModels {
 	}
 
 	export class AdminSetContentDataOperationRequest extends SetContentDataOperationRequest {
-		protected override requestRole: RequestRole = RequestRole.Admin;
+		protected override role: RequestRole = RequestRole.Admin;
 
 		constructor(requestData: ContentModels.AdminSetContentDataRequestData, timeout: number) {
 			super(requestData, timeout);

@@ -18,7 +18,7 @@ const encode = require("@msgpack/msgpack").encode;
 const decode = require("@msgpack/msgpack").decode;
 var axios = require("axios");
 
-const optionsPath = __dirname + "/./GNServerSettingsConfig.debug.json";
+const optionsPath = __dirname + "/./GNServerSettings.debug.json";
 let optionStr = fs.readFileSync(optionsPath).toString();
 let fullOptions = JSON.parse(optionStr);
 let options = fullOptions.options;

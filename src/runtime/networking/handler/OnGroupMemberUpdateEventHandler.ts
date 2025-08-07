@@ -1,6 +1,6 @@
 import { Action1 } from "./../../common/Action1";
 import { EventCode } from "./../../constant/EventCode";
-import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNArrayDataMember } from "./../../entity/DataMember";
 import { OperationEvent } from "./../../entity/OperationEvent";
 import { GenericModels } from "./../../entity/models/GenericModels";
@@ -8,7 +8,7 @@ import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 export class GroupMemberUpdate {
-    @GNArrayDataMember({ code: GNParameterCode.Members, elementCls: GenericModels.FriendItem })
+    @GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.FriendItem })
     public members: Array<GenericModels.MemberItem>;
 }
 
@@ -16,7 +16,7 @@ export class GroupMemberUpdate {
 export class OnGroupMemberUpdateEventHandler implements IServerEventHandler {
     public static onUpdate: Action1<GroupMemberUpdate>;
 
-    public getEventCode(): number {
+    public getEventCode(): string {
         return EventCode.OnGroupMemberUpdate;
     }
 
