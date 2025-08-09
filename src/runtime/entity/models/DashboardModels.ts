@@ -1676,7 +1676,7 @@ export namespace DashboardModels {
 		@NumberDataMember({ code: ParameterCode.Role, mustInt: true })
 		public role: number;
 
-		@GNHashtableDataMember({ code: ParameterCode.Permission, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.PermissionParam, isOptional: true })
 		public permissionParam?: PermissionParam;
 
 	}
@@ -1754,7 +1754,7 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.Description, isOptional: true })
 		public description?: string;
 
-		@GNHashtableDataMember({ code: ParameterCode.Permission, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.PermissionParam, isOptional: true })
 		public permissionParam?: PermissionParam;
 
 	}
@@ -1815,7 +1815,7 @@ export namespace DashboardModels {
 	}
 
 	export class ResetStatisticsLeaderboardRequestData {
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32 })
@@ -1836,7 +1836,7 @@ export namespace DashboardModels {
 	}
 
 	export class DeleteInDatabaseRequestData {
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.Id, minLength: 2, maxLength: 15 })
@@ -1854,7 +1854,7 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public gameId: string;
 
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32 })
