@@ -183,7 +183,7 @@ export namespace InventoryModels {
 		public itemId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.ItemDataKeys, isOptional: true, elementCls: String })
-		public inventoryDataKeys?: Array<string>;
+		public itemDataKeys?: Array<string>;
 
 	}
 
@@ -513,7 +513,7 @@ export namespace InventoryModels {
 		public itemId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: CustomDataParam })
-		public customData: Array<CustomDataParam>;
+		public customDatas: Array<CustomDataParam>;
 
 	}
 
@@ -543,7 +543,7 @@ export namespace InventoryModels {
 		public itemId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.ItemDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: ItemDataParam })
-		public inventoryDataParams: Array<ItemDataParam>;
+		public itemDatas: Array<ItemDataParam>;
 
 	}
 
@@ -558,7 +558,7 @@ export namespace InventoryModels {
 		public itemId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.ItemStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: ItemStatisticsParam })
-		public inventoryStatisticsParams: Array<ItemStatisticsParam>;
+		public itemStatistics: Array<ItemStatisticsParam>;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
@@ -575,10 +575,10 @@ export namespace InventoryModels {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.NewOwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
 		public newOwnerId: string;
 
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.NewOwnerType, mustInt: true })
 		public newOwnerType: number;
 
 	}
