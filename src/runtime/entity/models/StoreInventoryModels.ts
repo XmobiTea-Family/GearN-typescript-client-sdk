@@ -154,10 +154,10 @@ export namespace StoreInventoryModels {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
-		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Id, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
@@ -175,10 +175,10 @@ export namespace StoreInventoryModels {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
-		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Id, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
@@ -199,7 +199,7 @@ export namespace StoreInventoryModels {
 		@GNArrayDataMember({ code: ParameterCode.StoreReceiveTypes, minLength: 1, maxLength: 10, mustNonNull: true, elementCls: Number, isOptional: true })
 		public storeReceiveTypes?: Array<number>;
 
-		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Id, minLength: 10, maxLength: 11, mustNonNull: true, isOptional: true })
 		public id?: string;
 
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
@@ -320,28 +320,28 @@ export namespace StoreInventoryModels {
 		public storeItemType?: number;
 
 		@GNArrayDataMember({ code: ParameterCode.StoreDatas, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: StoreDataParam })
-		public storeDataParams?: Array<StoreDataParam>;
+		public storeDatas?: Array<StoreDataParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.StoreItems, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: StoreItemParam })
-		public storeItemParams?: Array<StoreItemParam>;
+		public storeItems?: Array<StoreItemParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.StoreCurrencies, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: CurrencyParam })
-		public storeCurrencyParams?: Array<CurrencyParam>;
+		public storeCurrencies?: Array<CurrencyParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.PriceCurrencies, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: CurrencyParam })
-		public priceCurrencyParams?: Array<CurrencyParam>;
+		public priceCurrencies?: Array<CurrencyParam>;
 
 		@GNHashtableDataMember({ code: ParameterCode.InAppPurchase, mustNonNull: true, isOptional: true, })
-		public inAppPurchaseParam?: InAppPurchaseParam;
+		public inAppPurchase?: InAppPurchaseParam;
 
 		@StringDataMember({ code: ParameterCode.DisplayName, mustNonNull: true, isOptional: true, })
 		public displayName?: string;
 
 		@GNHashtableDataMember({ code: ParameterCode.Avatar, mustNonNull: true, isOptional: true, })
-		public avatarParam?: AvatarParam;
+		public avatar?: AvatarParam;
 
 		@GNArrayDataMember({ code: ParameterCode.Tags, minLength: 0, maxLength: 32, mustNonNull: true, isOptional: true, elementCls: TagParam })
-		public tagParams?: Array<TagParam>;
+		public tags?: Array<TagParam>;
 
 	}
 
@@ -355,10 +355,10 @@ export namespace StoreInventoryModels {
 		@StringDataMember({ code: ParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
 
-		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Id, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
@@ -376,10 +376,10 @@ export namespace StoreInventoryModels {
 		@StringDataMember({ code: ParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
 
-		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Id, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
@@ -397,10 +397,10 @@ export namespace StoreInventoryModels {
 		@StringDataMember({ code: ParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
 
-		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Id, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
-		@NumberDataMember({ code: ParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
