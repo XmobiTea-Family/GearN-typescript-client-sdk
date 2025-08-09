@@ -618,7 +618,7 @@ export namespace GroupModels {
 		public groupId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: CustomDataParam })
-		public customData: Array<CustomDataParam>;
+		public customDatas: Array<CustomDataParam>;
 
 	}
 
@@ -648,7 +648,7 @@ export namespace GroupModels {
 		public groupId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.GroupCurrencies, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: GroupCurrencyParam })
-		public groupCurrencyParams: Array<GroupCurrencyParam>;
+		public groupCurrencies: Array<GroupCurrencyParam>;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
@@ -666,7 +666,7 @@ export namespace GroupModels {
 		public groupId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.GroupDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: GroupDataParam })
-		public groupDataParams: Array<GroupDataParam>;
+		public groupDatas: Array<GroupDataParam>;
 
 	}
 
@@ -681,7 +681,7 @@ export namespace GroupModels {
 		public groupId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.GroupStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: GroupStatisticsParam })
-		public groupStatisticsParams: Array<GroupStatisticsParam>;
+		public groupStatistics: Array<GroupStatisticsParam>;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
