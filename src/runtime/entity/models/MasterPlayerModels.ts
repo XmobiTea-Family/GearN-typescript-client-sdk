@@ -794,7 +794,7 @@ export namespace MasterPlayerModels {
 		@StringDataMember({ code: ParameterCode.Username, minLength: 6, maxLength: 32, mustNonNull: true })
 		public username: string;
 
-		@StringDataMember({ code: ParameterCode.Username, minLength: 6, maxLength: 64, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Password, minLength: 6, maxLength: 64, mustNonNull: true })
 		public password: string;
 
 		@BooleanDataMember({ code: ParameterCode.ForceLink, isOptional: true, defaultValue: false })
@@ -1245,7 +1245,7 @@ export namespace MasterPlayerModels {
 		public userId?: string;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: CustomDataParam })
-		public customData: Array<CustomDataParam>;
+		public customDatas: Array<CustomDataParam>;
 
 	}
 
@@ -1323,7 +1323,7 @@ export namespace MasterPlayerModels {
 		public userId?: string;
 
 		@GNArrayDataMember({ code: ParameterCode.PlayerCurrencies, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerCurrencyParam })
-		public playerCurrencyParams: Array<PlayerCurrencyParam>;
+		public playerCurrencies: Array<PlayerCurrencyParam>;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
@@ -1344,7 +1344,7 @@ export namespace MasterPlayerModels {
 		public userId?: string;
 
 		@GNArrayDataMember({ code: ParameterCode.PlayerDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerDataParam })
-		public playerDataParams: Array<PlayerDataParam>;
+		public playerDatas: Array<PlayerDataParam>;
 
 	}
 
@@ -1362,7 +1362,7 @@ export namespace MasterPlayerModels {
 		public userId?: string;
 
 		@GNArrayDataMember({ code: ParameterCode.PlayerStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerStatisticsParam })
-		public playerStatisticsParams: Array<PlayerStatisticsParam>;
+		public playerStatistics: Array<PlayerStatisticsParam>;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
