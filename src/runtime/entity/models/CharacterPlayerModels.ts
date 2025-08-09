@@ -808,7 +808,7 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
 	}
@@ -857,7 +857,7 @@ export namespace CharacterPlayerModels {
 		public characterId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: CustomDataParam })
-		public customData: Array<CustomDataParam>;
+		public customDatas: Array<CustomDataParam>;
 
 	}
 
@@ -889,7 +889,7 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@StringDataMember({ code: ParameterCode.OwnerId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.NewOwnerId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public newOwnerId: string;
 
 	}
@@ -923,7 +923,7 @@ export namespace CharacterPlayerModels {
 		public characterId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.PlayerCurrencies, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerCurrencyParam })
-		public playerCurrencyParams: Array<PlayerCurrencyParam>;
+		public playerCurrencies: Array<PlayerCurrencyParam>;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
@@ -941,7 +941,7 @@ export namespace CharacterPlayerModels {
 		public characterId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.PlayerDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerDataParam })
-		public playerDataParams: Array<PlayerDataParam>;
+		public playerDatas: Array<PlayerDataParam>;
 
 	}
 
@@ -956,7 +956,7 @@ export namespace CharacterPlayerModels {
 		public characterId: string;
 
 		@GNArrayDataMember({ code: ParameterCode.PlayerStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: PlayerStatisticsParam })
-		public playerStatisticsParams: Array<PlayerStatisticsParam>;
+		public playerStatistics: Array<PlayerStatisticsParam>;
 
 		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
