@@ -1673,7 +1673,7 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public gameId?: string;
 
-		@NumberDataMember({ code: ParameterCode.Role, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Role, mustInt: true, minValue: 1, maxValue: 3 })
 		public role: number;
 
 		@GNHashtableDataMember({ code: ParameterCode.PermissionParam, isOptional: true })
@@ -1988,8 +1988,8 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.Description })
 		public description: string;
 
-		@GNHashtableDataMember({ code: ParameterCode.Permission })
-		public permission: PermissionParam;
+		@GNHashtableDataMember({ code: ParameterCode.PermissionParam })
+		public permissionParam: PermissionParam;
 
 	}
 

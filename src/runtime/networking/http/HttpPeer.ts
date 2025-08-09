@@ -11,11 +11,9 @@ import { NetworkingHttpPeerBase } from "./NetworkingHttpPeerBase";
 import { NetworkingPeerAxiosRequest } from "./NetworkingPeerAxiosRequest";
 import { MessagePackConverterService } from "./../../helper/MessagePackConverterService";
 import { MessageType } from "./../../config/GNServerSettings";
-import { EnumUtility } from "./../../helper/EnumUtility";
-import { RequestType } from "./../../constant/enumType/RequestType";
-import { RequestRole } from "./../../constant/enumType/RequestRole";
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
-import { OperationRequest } from "../../entity/OperationRequest";
+import { OperationRequest } from "./../../entity/OperationRequest";
+import { CodeHelper } from "./../../helper/CodeHelper";
 
 export class HttpAppResponse {
 	public statusCode: number;
@@ -82,7 +80,7 @@ export class HttpPeer extends PeerBase {
 			postType = PostType.Json;
 		}
 
-		let subUri = (postType == PostType.Json ? NetworkingPeer.API_JSON : NetworkingPeer.API_MSG_PACK) + "/" + EnumUtility.toString(RequestType, operationPending.getRequestType()) + "/" + operationRequest.getOperationCode() + "/" + EnumUtility.toString(RequestRole, operationPending.getRole());
+		let subUri = (postType == PostType.Json ? NetworkingPeer.API_JSON : NetworkingPeer.API_MSG_PACK) + "/" + CodeHelper.getRequestTypeName(operationPending.getRequestType()) + "/" + operationRequest.getOperationCode() + "/" + CodeHelper.getRequestRoleName(operationPending.getRole());
 		let thiz = this;
 
 		this.networkingHttpPeerBase.postRequest(subUri, operationRequest.getParameters(), postType, (httpAppResponse: HttpAppResponse) => {

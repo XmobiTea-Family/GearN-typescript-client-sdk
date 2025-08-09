@@ -10,7 +10,7 @@ import { NetworkingPeerSocketIOClient } from "./NetworkingPeerSocketIOClient";
 import { OperationPending } from "./../OperationPending";
 import { PeerBase } from "./../PeerBase";
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
-import { OperationRequest } from "../../entity/OperationRequest";
+import { OperationRequest } from "./../../entity/OperationRequest";
 
 export class SocketPeer extends PeerBase {
 	private networkingSocketPeerBase: NetworkingSocketPeerBase;

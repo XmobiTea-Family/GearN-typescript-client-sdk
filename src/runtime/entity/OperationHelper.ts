@@ -1,7 +1,7 @@
-import { EnumUtility } from "./../helper/EnumUtility";
 import { RequestRole } from "./../constant/enumType/RequestRole";
 import { RequestType } from "./../constant/enumType/RequestType";
 import { OperationRequest } from "./OperationRequest";
+import { CodeHelper } from "./../helper/CodeHelper";
 
 export class OperationHelper {
 	public static toSocketData(requestType: RequestType, role: RequestRole, request: OperationRequest): any {
@@ -9,16 +9,16 @@ export class OperationHelper {
 
 		if (requestId == -1)
 			return [
-				EnumUtility.toString(RequestType, requestType),
+				CodeHelper.getRequestTypeName(requestType),
 				request.getOperationCode(),
-				EnumUtility.toString(RequestRole, role),
+				CodeHelper.getRequestRoleName(role),
 				(request.getParameters() == null) ? null : request.getParameters().toData()
 			];
 		else
 			return [
-				EnumUtility.toString(RequestType, requestType),
+				CodeHelper.getRequestTypeName(requestType),
 				request.getOperationCode(),
-				EnumUtility.toString(RequestRole, role),
+				CodeHelper.getRequestRoleName(role),
 				(request.getParameters() == null) ? null : request.getParameters().toData(),
 				requestId
 			];
