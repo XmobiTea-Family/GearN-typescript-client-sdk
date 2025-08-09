@@ -1318,7 +1318,7 @@ export namespace MasterPlayerModels {
 	export class AdminSetPlayerBanRequestData extends ServerSetPlayerBanRequestData {
 	}
 
-	export class SetPlayerCurrencyRequestData {
+	export class ChangePlayerCurrencyRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
@@ -1330,13 +1330,13 @@ export namespace MasterPlayerModels {
 
 	}
 
-	export class ServerSetPlayerCurrencyRequestData extends SetPlayerCurrencyRequestData {
+	export class ServerChangePlayerCurrencyRequestData extends ChangePlayerCurrencyRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
-	export class AdminSetPlayerCurrencyRequestData extends ServerSetPlayerCurrencyRequestData {
+	export class AdminChangePlayerCurrencyRequestData extends ServerChangePlayerCurrencyRequestData {
 	}
 
 	export class SetPlayerDataRequestData {
@@ -1357,7 +1357,7 @@ export namespace MasterPlayerModels {
 	export class AdminSetPlayerDataRequestData extends ServerSetPlayerDataRequestData {
 	}
 
-	export class SetPlayerStatisticsRequestData {
+	export class ChangePlayerStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
@@ -1369,13 +1369,13 @@ export namespace MasterPlayerModels {
 
 	}
 
-	export class ServerSetPlayerStatisticsRequestData extends SetPlayerStatisticsRequestData {
+	export class ServerChangePlayerStatisticsRequestData extends ChangePlayerStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
-	export class AdminSetPlayerStatisticsRequestData extends ServerSetPlayerStatisticsRequestData {
+	export class AdminChangePlayerStatisticsRequestData extends ServerChangePlayerStatisticsRequestData {
 	}
 
 	export class SetTagRequestData {

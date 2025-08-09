@@ -817,32 +817,32 @@ export namespace InventoryRequestModels {
 		}
 	}
 
-	export class SetItemStatisticsOperationRequest extends CustomOperationRequestAbstract<InventoryModels.SetItemStatisticsRequestData> {
-		protected override operationCode: string = OperationCode.SetItemStatistics;
+	export class ChangeItemStatisticsOperationRequest extends CustomOperationRequestAbstract<InventoryModels.ChangeItemStatisticsRequestData> {
+		protected override operationCode: string = OperationCode.ChangeItemStatistics;
 		protected override requestType: RequestType = RequestType.Inventory;
 		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: InventoryModels.SetItemStatisticsRequestData, timeout: number) {
+		constructor(requestData: InventoryModels.ChangeItemStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = InventoryModels.SetItemStatisticsRequestData;
+			this.requestDataCls = InventoryModels.ChangeItemStatisticsRequestData;
 		}
 	}
 
-	export class ServerSetItemStatisticsOperationRequest extends SetItemStatisticsOperationRequest {
+	export class ServerChangeItemStatisticsOperationRequest extends ChangeItemStatisticsOperationRequest {
 		protected override role: RequestRole = RequestRole.Server;
 
-		constructor(requestData: InventoryModels.ServerSetItemStatisticsRequestData, timeout: number) {
+		constructor(requestData: InventoryModels.ServerChangeItemStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = InventoryModels.ServerSetItemStatisticsRequestData;
+			this.requestDataCls = InventoryModels.ServerChangeItemStatisticsRequestData;
 		}
 	}
 
-	export class AdminSetItemStatisticsOperationRequest extends SetItemStatisticsOperationRequest {
+	export class AdminChangeItemStatisticsOperationRequest extends ChangeItemStatisticsOperationRequest {
 		protected override role: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: InventoryModels.AdminSetItemStatisticsRequestData, timeout: number) {
+		constructor(requestData: InventoryModels.AdminChangeItemStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = InventoryModels.AdminSetItemStatisticsRequestData;
+			this.requestDataCls = InventoryModels.AdminChangeItemStatisticsRequestData;
 		}
 	}
 

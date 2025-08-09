@@ -434,7 +434,7 @@ export namespace MasterPlayerResponseModels {
 		}
 	}
 
-	export class SetPlayerCurrencyOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+	export class ChangePlayerCurrencyOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
@@ -450,7 +450,7 @@ export namespace MasterPlayerResponseModels {
 		}
 	}
 
-	export class SetPlayerStatisticsOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+	export class ChangePlayerStatisticsOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();

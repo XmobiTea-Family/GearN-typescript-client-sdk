@@ -918,7 +918,7 @@ export namespace CharacterPlayerModels {
 	export class AdminSetPlayerBanRequestData extends ServerSetPlayerBanRequestData {
 	}
 
-	export class SetPlayerCurrencyRequestData {
+	export class ChangePlayerCurrencyRequestData {
 		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
@@ -930,10 +930,10 @@ export namespace CharacterPlayerModels {
 
 	}
 
-	export class ServerSetPlayerCurrencyRequestData extends SetPlayerCurrencyRequestData {
+	export class ServerChangePlayerCurrencyRequestData extends ChangePlayerCurrencyRequestData {
 	}
 
-	export class AdminSetPlayerCurrencyRequestData extends ServerSetPlayerCurrencyRequestData {
+	export class AdminChangePlayerCurrencyRequestData extends ServerChangePlayerCurrencyRequestData {
 	}
 
 	export class SetPlayerDataRequestData {
@@ -951,7 +951,7 @@ export namespace CharacterPlayerModels {
 	export class AdminSetPlayerDataRequestData extends ServerSetPlayerDataRequestData {
 	}
 
-	export class SetPlayerStatisticsRequestData {
+	export class ChangePlayerStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
@@ -963,10 +963,10 @@ export namespace CharacterPlayerModels {
 
 	}
 
-	export class ServerSetPlayerStatisticsRequestData extends SetPlayerStatisticsRequestData {
+	export class ServerChangePlayerStatisticsRequestData extends ChangePlayerStatisticsRequestData {
 	}
 
-	export class AdminSetPlayerStatisticsRequestData extends ServerSetPlayerStatisticsRequestData {
+	export class AdminChangePlayerStatisticsRequestData extends ServerChangePlayerStatisticsRequestData {
 	}
 
 	export class SetRemoveStatusRequestData {

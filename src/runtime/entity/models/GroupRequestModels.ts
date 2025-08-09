@@ -904,32 +904,32 @@ export namespace GroupRequestModels {
 		}
 	}
 
-	export class SetGroupCurrencyOperationRequest extends CustomOperationRequestAbstract<GroupModels.SetGroupCurrencyRequestData> {
-		protected override operationCode: string = OperationCode.SetGroupCurrency;
+	export class ChangeGroupCurrencyOperationRequest extends CustomOperationRequestAbstract<GroupModels.ChangeGroupCurrencyRequestData> {
+		protected override operationCode: string = OperationCode.ChangeGroupCurrency;
 		protected override requestType: RequestType = RequestType.Group;
 		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: GroupModels.SetGroupCurrencyRequestData, timeout: number) {
+		constructor(requestData: GroupModels.ChangeGroupCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = GroupModels.SetGroupCurrencyRequestData;
+			this.requestDataCls = GroupModels.ChangeGroupCurrencyRequestData;
 		}
 	}
 
-	export class ServerSetGroupCurrencyOperationRequest extends SetGroupCurrencyOperationRequest {
+	export class ServerChangeGroupCurrencyOperationRequest extends ChangeGroupCurrencyOperationRequest {
 		protected override role: RequestRole = RequestRole.Server;
 
-		constructor(requestData: GroupModels.ServerSetGroupCurrencyRequestData, timeout: number) {
+		constructor(requestData: GroupModels.ServerChangeGroupCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = GroupModels.ServerSetGroupCurrencyRequestData;
+			this.requestDataCls = GroupModels.ServerChangeGroupCurrencyRequestData;
 		}
 	}
 
-	export class AdminSetGroupCurrencyOperationRequest extends SetGroupCurrencyOperationRequest {
+	export class AdminChangeGroupCurrencyOperationRequest extends ChangeGroupCurrencyOperationRequest {
 		protected override role: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: GroupModels.AdminSetGroupCurrencyRequestData, timeout: number) {
+		constructor(requestData: GroupModels.AdminChangeGroupCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = GroupModels.AdminSetGroupCurrencyRequestData;
+			this.requestDataCls = GroupModels.AdminChangeGroupCurrencyRequestData;
 		}
 	}
 
@@ -962,32 +962,32 @@ export namespace GroupRequestModels {
 		}
 	}
 
-	export class SetGroupStatisticsOperationRequest extends CustomOperationRequestAbstract<GroupModels.SetGroupStatisticsRequestData> {
-		protected override operationCode: string = OperationCode.SetGroupStatistics;
+	export class ChangeGroupStatisticsOperationRequest extends CustomOperationRequestAbstract<GroupModels.ChangeGroupStatisticsRequestData> {
+		protected override operationCode: string = OperationCode.ChangeGroupStatistics;
 		protected override requestType: RequestType = RequestType.Group;
 		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: GroupModels.SetGroupStatisticsRequestData, timeout: number) {
+		constructor(requestData: GroupModels.ChangeGroupStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = GroupModels.SetGroupStatisticsRequestData;
+			this.requestDataCls = GroupModels.ChangeGroupStatisticsRequestData;
 		}
 	}
 
-	export class ServerSetGroupStatisticsOperationRequest extends SetGroupStatisticsOperationRequest {
+	export class ServerChangeGroupStatisticsOperationRequest extends ChangeGroupStatisticsOperationRequest {
 		protected override role: RequestRole = RequestRole.Server;
 
-		constructor(requestData: GroupModels.ServerSetGroupStatisticsRequestData, timeout: number) {
+		constructor(requestData: GroupModels.ServerChangeGroupStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = GroupModels.ServerSetGroupStatisticsRequestData;
+			this.requestDataCls = GroupModels.ServerChangeGroupStatisticsRequestData;
 		}
 	}
 
-	export class AdminSetGroupStatisticsOperationRequest extends SetGroupStatisticsOperationRequest {
+	export class AdminChangeGroupStatisticsOperationRequest extends ChangeGroupStatisticsOperationRequest {
 		protected override role: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: GroupModels.AdminSetGroupStatisticsRequestData, timeout: number) {
+		constructor(requestData: GroupModels.AdminChangeGroupStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = GroupModels.AdminSetGroupStatisticsRequestData;
+			this.requestDataCls = GroupModels.AdminChangeGroupStatisticsRequestData;
 		}
 	}
 

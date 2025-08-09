@@ -346,7 +346,7 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
-	export class SetPlayerCurrencyOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
+	export class ChangePlayerCurrencyOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
 
 		constructor() {
 			super();
@@ -362,7 +362,7 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
-	export class SetPlayerStatisticsOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
+	export class ChangePlayerStatisticsOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
 
 		constructor() {
 			super();

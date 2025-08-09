@@ -553,7 +553,7 @@ export namespace InventoryModels {
 	export class AdminSetItemDataRequestData extends ServerSetItemDataRequestData {
 	}
 
-	export class SetItemStatisticsRequestData {
+	export class ChangeItemStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
@@ -565,10 +565,10 @@ export namespace InventoryModels {
 
 	}
 
-	export class ServerSetItemStatisticsRequestData extends SetItemStatisticsRequestData {
+	export class ServerChangeItemStatisticsRequestData extends ChangeItemStatisticsRequestData {
 	}
 
-	export class AdminSetItemStatisticsRequestData extends ServerSetItemStatisticsRequestData {
+	export class AdminChangeItemStatisticsRequestData extends ServerChangeItemStatisticsRequestData {
 	}
 
 	export class SetOwnerRequestData {

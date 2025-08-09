@@ -643,7 +643,7 @@ export namespace GroupModels {
 	export class AdminSetDisplayNameRequestData extends ServerSetDisplayNameRequestData {
 	}
 
-	export class SetGroupCurrencyRequestData {
+	export class ChangeGroupCurrencyRequestData {
 		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
 
@@ -655,10 +655,10 @@ export namespace GroupModels {
 
 	}
 
-	export class ServerSetGroupCurrencyRequestData extends SetGroupCurrencyRequestData {
+	export class ServerChangeGroupCurrencyRequestData extends ChangeGroupCurrencyRequestData {
 	}
 
-	export class AdminSetGroupCurrencyRequestData extends ServerSetGroupCurrencyRequestData {
+	export class AdminChangeGroupCurrencyRequestData extends ServerChangeGroupCurrencyRequestData {
 	}
 
 	export class SetGroupDataRequestData {
@@ -676,7 +676,7 @@ export namespace GroupModels {
 	export class AdminSetGroupDataRequestData extends ServerSetGroupDataRequestData {
 	}
 
-	export class SetGroupStatisticsRequestData {
+	export class ChangeGroupStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
 
@@ -688,10 +688,10 @@ export namespace GroupModels {
 
 	}
 
-	export class ServerSetGroupStatisticsRequestData extends SetGroupStatisticsRequestData {
+	export class ServerChangeGroupStatisticsRequestData extends ChangeGroupStatisticsRequestData {
 	}
 
-	export class AdminSetGroupStatisticsRequestData extends ServerSetGroupStatisticsRequestData {
+	export class AdminChangeGroupStatisticsRequestData extends ServerChangeGroupStatisticsRequestData {
 	}
 
 	export class SetRemoveStatusRequestData {

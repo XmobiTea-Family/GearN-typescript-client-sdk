@@ -1252,32 +1252,32 @@ export namespace CharacterPlayerRequestModels {
 		}
 	}
 
-	export class SetPlayerCurrencyOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.SetPlayerCurrencyRequestData> {
-		protected override operationCode: string = OperationCode.SetPlayerCurrency;
+	export class ChangePlayerCurrencyOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.ChangePlayerCurrencyRequestData> {
+		protected override operationCode: string = OperationCode.ChangePlayerCurrency;
 		protected override requestType: RequestType = RequestType.CharacterPlayer;
 		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerCurrencyRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ChangePlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = CharacterPlayerModels.SetPlayerCurrencyRequestData;
+			this.requestDataCls = CharacterPlayerModels.ChangePlayerCurrencyRequestData;
 		}
 	}
 
-	export class ServerSetPlayerCurrencyOperationRequest extends SetPlayerCurrencyOperationRequest {
+	export class ServerChangePlayerCurrencyOperationRequest extends ChangePlayerCurrencyOperationRequest {
 		protected override role: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.ServerSetPlayerCurrencyRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerChangePlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = CharacterPlayerModels.ServerSetPlayerCurrencyRequestData;
+			this.requestDataCls = CharacterPlayerModels.ServerChangePlayerCurrencyRequestData;
 		}
 	}
 
-	export class AdminSetPlayerCurrencyOperationRequest extends SetPlayerCurrencyOperationRequest {
+	export class AdminChangePlayerCurrencyOperationRequest extends ChangePlayerCurrencyOperationRequest {
 		protected override role: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.AdminSetPlayerCurrencyRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminChangePlayerCurrencyRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = CharacterPlayerModels.AdminSetPlayerCurrencyRequestData;
+			this.requestDataCls = CharacterPlayerModels.AdminChangePlayerCurrencyRequestData;
 		}
 	}
 
@@ -1310,32 +1310,32 @@ export namespace CharacterPlayerRequestModels {
 		}
 	}
 
-	export class SetPlayerStatisticsOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.SetPlayerStatisticsRequestData> {
-		protected override operationCode: string = OperationCode.SetPlayerStatistics;
+	export class ChangePlayerStatisticsOperationRequest extends CustomOperationRequestAbstract<CharacterPlayerModels.ChangePlayerStatisticsRequestData> {
+		protected override operationCode: string = OperationCode.ChangePlayerStatistics;
 		protected override requestType: RequestType = RequestType.CharacterPlayer;
 		protected override role: RequestRole = RequestRole.Client;
 
-		constructor(requestData: CharacterPlayerModels.SetPlayerStatisticsRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ChangePlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = CharacterPlayerModels.SetPlayerStatisticsRequestData;
+			this.requestDataCls = CharacterPlayerModels.ChangePlayerStatisticsRequestData;
 		}
 	}
 
-	export class ServerSetPlayerStatisticsOperationRequest extends SetPlayerStatisticsOperationRequest {
+	export class ServerChangePlayerStatisticsOperationRequest extends ChangePlayerStatisticsOperationRequest {
 		protected override role: RequestRole = RequestRole.Server;
 
-		constructor(requestData: CharacterPlayerModels.ServerSetPlayerStatisticsRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.ServerChangePlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = CharacterPlayerModels.ServerSetPlayerStatisticsRequestData;
+			this.requestDataCls = CharacterPlayerModels.ServerChangePlayerStatisticsRequestData;
 		}
 	}
 
-	export class AdminSetPlayerStatisticsOperationRequest extends SetPlayerStatisticsOperationRequest {
+	export class AdminChangePlayerStatisticsOperationRequest extends ChangePlayerStatisticsOperationRequest {
 		protected override role: RequestRole = RequestRole.Admin;
 
-		constructor(requestData: CharacterPlayerModels.AdminSetPlayerStatisticsRequestData, timeout: number) {
+		constructor(requestData: CharacterPlayerModels.AdminChangePlayerStatisticsRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = CharacterPlayerModels.AdminSetPlayerStatisticsRequestData;
+			this.requestDataCls = CharacterPlayerModels.AdminChangePlayerStatisticsRequestData;
 		}
 	}
 

@@ -226,7 +226,7 @@ export namespace InventoryResponseModels {
 		}
 	}
 
-	export class SetItemStatisticsOperationResponse extends CustomOperationResponseAbstract<InventoryModels.InventoryResponseData> {
+	export class ChangeItemStatisticsOperationResponse extends CustomOperationResponseAbstract<InventoryModels.InventoryResponseData> {
 
 		constructor() {
 			super();

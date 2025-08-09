@@ -183,14 +183,14 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.GetAvatar, isOptional: true })
 		public getAvatar?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetPlayerCurrency, isOptional: true })
-		public setPlayerCurrency?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangePlayerCurrency, isOptional: true })
+		public changePlayerCurrency?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetPlayerCurrency, isOptional: true })
 		public getPlayerCurrency?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetPlayerStatistics, isOptional: true })
-		public setPlayerStatistics?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangePlayerStatistics, isOptional: true })
+		public changePlayerStatistics?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetPlayerStatistics, isOptional: true })
 		public getPlayerStatistics?: PermissionRulesParam;
@@ -510,14 +510,14 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.GetAvatar, isOptional: true })
 		public getAvatar?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetPlayerCurrency, isOptional: true })
-		public setPlayerCurrency?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangePlayerCurrency, isOptional: true })
+		public changePlayerCurrency?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetPlayerCurrency, isOptional: true })
 		public getPlayerCurrency?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetPlayerStatistics, isOptional: true })
-		public setPlayerStatistics?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangePlayerStatistics, isOptional: true })
+		public changePlayerStatistics?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetPlayerStatistics, isOptional: true })
 		public getPlayerStatistics?: PermissionRulesParam;
@@ -738,14 +738,14 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.GetAvatar, isOptional: true })
 		public getAvatar?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetGroupCurrency, isOptional: true })
-		public setGroupCurrency?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangeGroupCurrency, isOptional: true })
+		public changeGroupCurrency?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetGroupCurrency, isOptional: true })
 		public getGroupCurrency?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetGroupStatistics, isOptional: true })
-		public setGroupStatistics?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangeGroupStatistics, isOptional: true })
+		public changeGroupStatistics?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetGroupStatistics, isOptional: true })
 		public getGroupStatistics?: PermissionRulesParam;
@@ -861,8 +861,8 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.GetAvatar, isOptional: true })
 		public getAvatar?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetItemStatistics, isOptional: true })
-		public setItemStatistics?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangeItemStatistics, isOptional: true })
+		public changeItemStatistics?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetItemStatistics, isOptional: true })
 		public getItemStatistics?: PermissionRulesParam;
@@ -1200,14 +1200,14 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.GetAvatar, isOptional: true })
 		public getAvatar?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetPlayerCurrency, isOptional: true })
-		public setPlayerCurrency?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangePlayerCurrency, isOptional: true })
+		public changePlayerCurrency?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetPlayerCurrency, isOptional: true })
 		public getPlayerCurrency?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetPlayerStatistics, isOptional: true })
-		public setPlayerStatistics?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.ChangePlayerStatistics, isOptional: true })
+		public changePlayerStatistics?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetPlayerStatistics, isOptional: true })
 		public getPlayerStatistics?: PermissionRulesParam;

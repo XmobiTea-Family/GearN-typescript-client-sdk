@@ -259,12 +259,12 @@ export class GroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.SetDisplayNameOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetDisplayNameOperationResponse);
 	}
 
-	public setGroupCurrency(requestData: GroupModels.SetGroupCurrencyRequestData, onResponse: Action1<GroupResponseModels.SetGroupCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.SetGroupCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupCurrencyOperationResponse);
+	public changeGroupCurrency(requestData: GroupModels.ChangeGroupCurrencyRequestData, onResponse: Action1<GroupResponseModels.ChangeGroupCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.ChangeGroupCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupCurrencyOperationResponse);
 	}
 
-	public async setGroupCurrencyAsync(requestData: GroupModels.SetGroupCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.SetGroupCurrencyOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.SetGroupCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupCurrencyOperationResponse);
+	public async changeGroupCurrencyAsync(requestData: GroupModels.ChangeGroupCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.ChangeGroupCurrencyOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ChangeGroupCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupCurrencyOperationResponse);
 	}
 
 	public setGroupData(requestData: GroupModels.SetGroupDataRequestData, onResponse: Action1<GroupResponseModels.SetGroupDataOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -275,12 +275,12 @@ export class GroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.SetGroupDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupDataOperationResponse);
 	}
 
-	public setGroupStatistics(requestData: GroupModels.SetGroupStatisticsRequestData, onResponse: Action1<GroupResponseModels.SetGroupStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.SetGroupStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupStatisticsOperationResponse);
+	public changeGroupStatistics(requestData: GroupModels.ChangeGroupStatisticsRequestData, onResponse: Action1<GroupResponseModels.ChangeGroupStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.ChangeGroupStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupStatisticsOperationResponse);
 	}
 
-	public async setGroupStatisticsAsync(requestData: GroupModels.SetGroupStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.SetGroupStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.SetGroupStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupStatisticsOperationResponse);
+	public async changeGroupStatisticsAsync(requestData: GroupModels.ChangeGroupStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.ChangeGroupStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ChangeGroupStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupStatisticsOperationResponse);
 	}
 
 	public setRemoveStatus(requestData: GroupModels.SetRemoveStatusRequestData, onResponse: Action1<GroupResponseModels.SetRemoveStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -582,12 +582,12 @@ export class ServerGroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerSetDisplayNameOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetDisplayNameOperationResponse);
 	}
 
-	public setGroupCurrency(requestData: GroupModels.ServerSetGroupCurrencyRequestData, onResponse: Action1<GroupResponseModels.SetGroupCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.ServerSetGroupCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupCurrencyOperationResponse);
+	public changeGroupCurrency(requestData: GroupModels.ServerChangeGroupCurrencyRequestData, onResponse: Action1<GroupResponseModels.ChangeGroupCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.ServerChangeGroupCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupCurrencyOperationResponse);
 	}
 
-	public async setGroupCurrencyAsync(requestData: GroupModels.ServerSetGroupCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.SetGroupCurrencyOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerSetGroupCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupCurrencyOperationResponse);
+	public async changeGroupCurrencyAsync(requestData: GroupModels.ServerChangeGroupCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.ChangeGroupCurrencyOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerChangeGroupCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupCurrencyOperationResponse);
 	}
 
 	public setGroupData(requestData: GroupModels.ServerSetGroupDataRequestData, onResponse: Action1<GroupResponseModels.SetGroupDataOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -598,12 +598,12 @@ export class ServerGroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerSetGroupDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupDataOperationResponse);
 	}
 
-	public setGroupStatistics(requestData: GroupModels.ServerSetGroupStatisticsRequestData, onResponse: Action1<GroupResponseModels.SetGroupStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.ServerSetGroupStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupStatisticsOperationResponse);
+	public changeGroupStatistics(requestData: GroupModels.ServerChangeGroupStatisticsRequestData, onResponse: Action1<GroupResponseModels.ChangeGroupStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.ServerChangeGroupStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupStatisticsOperationResponse);
 	}
 
-	public async setGroupStatisticsAsync(requestData: GroupModels.ServerSetGroupStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.SetGroupStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerSetGroupStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupStatisticsOperationResponse);
+	public async changeGroupStatisticsAsync(requestData: GroupModels.ServerChangeGroupStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.ChangeGroupStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.ServerChangeGroupStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupStatisticsOperationResponse);
 	}
 
 	public setRemoveStatus(requestData: GroupModels.ServerSetRemoveStatusRequestData, onResponse: Action1<GroupResponseModels.SetRemoveStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -905,12 +905,12 @@ export class AdminGroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminSetDisplayNameOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetDisplayNameOperationResponse);
 	}
 
-	public setGroupCurrency(requestData: GroupModels.AdminSetGroupCurrencyRequestData, onResponse: Action1<GroupResponseModels.SetGroupCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.AdminSetGroupCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupCurrencyOperationResponse);
+	public changeGroupCurrency(requestData: GroupModels.AdminChangeGroupCurrencyRequestData, onResponse: Action1<GroupResponseModels.ChangeGroupCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.AdminChangeGroupCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupCurrencyOperationResponse);
 	}
 
-	public async setGroupCurrencyAsync(requestData: GroupModels.AdminSetGroupCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.SetGroupCurrencyOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminSetGroupCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupCurrencyOperationResponse);
+	public async changeGroupCurrencyAsync(requestData: GroupModels.AdminChangeGroupCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.ChangeGroupCurrencyOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminChangeGroupCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupCurrencyOperationResponse);
 	}
 
 	public setGroupData(requestData: GroupModels.AdminSetGroupDataRequestData, onResponse: Action1<GroupResponseModels.SetGroupDataOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -921,12 +921,12 @@ export class AdminGroupApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminSetGroupDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupDataOperationResponse);
 	}
 
-	public setGroupStatistics(requestData: GroupModels.AdminSetGroupStatisticsRequestData, onResponse: Action1<GroupResponseModels.SetGroupStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.AdminSetGroupStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupStatisticsOperationResponse);
+	public changeGroupStatistics(requestData: GroupModels.AdminChangeGroupStatisticsRequestData, onResponse: Action1<GroupResponseModels.ChangeGroupStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new GroupRequestModels.AdminChangeGroupStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupStatisticsOperationResponse);
 	}
 
-	public async setGroupStatisticsAsync(requestData: GroupModels.AdminSetGroupStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.SetGroupStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminSetGroupStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.SetGroupStatisticsOperationResponse);
+	public async changeGroupStatisticsAsync(requestData: GroupModels.AdminChangeGroupStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GroupResponseModels.ChangeGroupStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new GroupRequestModels.AdminChangeGroupStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GroupResponseModels.ChangeGroupStatisticsOperationResponse);
 	}
 
 	public setRemoveStatus(requestData: GroupModels.AdminSetRemoveStatusRequestData, onResponse: Action1<GroupResponseModels.SetRemoveStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
