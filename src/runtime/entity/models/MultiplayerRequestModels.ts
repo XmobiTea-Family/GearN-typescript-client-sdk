@@ -5,294 +5,294 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { MultiplayerModels } from "./MultiplayerModels";
 
 export namespace MultiplayerRequestModels {
-    export class CancelAllMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.CancelAllMatchmakingTicketRequestData> {
-        protected override operationCode: string = OperationCode.CancelAllMatchmakingTicket;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class CancelAllMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.CancelAllMatchmakingTicketRequestData> {
+		protected override operationCode: string = OperationCode.CancelAllMatchmakingTicket;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.CancelAllMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.CancelAllMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.CancelAllMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.CancelAllMatchmakingTicketRequestData;
+		}
+	}
 
-    export class ServerCancelAllMatchmakingTicketOperationRequest extends CancelAllMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerCancelAllMatchmakingTicketOperationRequest extends CancelAllMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerCancelAllMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerCancelAllMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerCancelAllMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerCancelAllMatchmakingTicketRequestData;
+		}
+	}
 
-    export class AdminCancelAllMatchmakingTicketOperationRequest extends CancelAllMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminCancelAllMatchmakingTicketOperationRequest extends CancelAllMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminCancelAllMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminCancelAllMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminCancelAllMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminCancelAllMatchmakingTicketRequestData;
+		}
+	}
 
-    export class CancelMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.CancelMatchmakingTicketRequestData> {
-        protected override operationCode: string = OperationCode.CancelMatchmakingTicket;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class CancelMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.CancelMatchmakingTicketRequestData> {
+		protected override operationCode: string = OperationCode.CancelMatchmakingTicket;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.CancelMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.CancelMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.CancelMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.CancelMatchmakingTicketRequestData;
+		}
+	}
 
-    export class ServerCancelMatchmakingTicketOperationRequest extends CancelMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerCancelMatchmakingTicketOperationRequest extends CancelMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerCancelMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerCancelMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerCancelMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerCancelMatchmakingTicketRequestData;
+		}
+	}
 
-    export class AdminCancelMatchmakingTicketOperationRequest extends CancelMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminCancelMatchmakingTicketOperationRequest extends CancelMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminCancelMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminCancelMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminCancelMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminCancelMatchmakingTicketRequestData;
+		}
+	}
 
-    export class CreateMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.CreateMatchmakingTicketRequestData> {
-        protected override operationCode: string = OperationCode.CreateMatchmakingTicket;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class CreateMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.CreateMatchmakingTicketRequestData> {
+		protected override operationCode: string = OperationCode.CreateMatchmakingTicket;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.CreateMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.CreateMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.CreateMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.CreateMatchmakingTicketRequestData;
+		}
+	}
 
-    export class ServerCreateMatchmakingTicketOperationRequest extends CreateMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerCreateMatchmakingTicketOperationRequest extends CreateMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerCreateMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerCreateMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerCreateMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerCreateMatchmakingTicketRequestData;
+		}
+	}
 
-    export class AdminCreateMatchmakingTicketOperationRequest extends CreateMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminCreateMatchmakingTicketOperationRequest extends CreateMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminCreateMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminCreateMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminCreateMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminCreateMatchmakingTicketRequestData;
+		}
+	}
 
-    export class GetMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetMatchmakingTicketRequestData> {
-        protected override operationCode: string = OperationCode.GetMatchmakingTicket;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class GetMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetMatchmakingTicketRequestData> {
+		protected override operationCode: string = OperationCode.GetMatchmakingTicket;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.GetMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.GetMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.GetMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.GetMatchmakingTicketRequestData;
+		}
+	}
 
-    export class ServerGetMatchmakingTicketOperationRequest extends GetMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerGetMatchmakingTicketOperationRequest extends GetMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerGetMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerGetMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerGetMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerGetMatchmakingTicketRequestData;
+		}
+	}
 
-    export class AdminGetMatchmakingTicketOperationRequest extends GetMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminGetMatchmakingTicketOperationRequest extends GetMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminGetMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminGetMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminGetMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminGetMatchmakingTicketRequestData;
+		}
+	}
 
-    export class GetMatchOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetMatchRequestData> {
-        protected override operationCode: string = OperationCode.GetMatch;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class GetMatchOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetMatchRequestData> {
+		protected override operationCode: string = OperationCode.GetMatch;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.GetMatchRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.GetMatchRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.GetMatchRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.GetMatchRequestData;
+		}
+	}
 
-    export class ServerGetMatchOperationRequest extends GetMatchOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerGetMatchOperationRequest extends GetMatchOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerGetMatchRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerGetMatchRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerGetMatchRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerGetMatchRequestData;
+		}
+	}
 
-    export class AdminGetMatchOperationRequest extends GetMatchOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminGetMatchOperationRequest extends GetMatchOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminGetMatchRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminGetMatchRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminGetMatchRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminGetMatchRequestData;
+		}
+	}
 
-    export class GetQueueStatisticsOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetQueueStatisticsRequestData> {
-        protected override operationCode: string = OperationCode.GetQueueStatistics;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class GetQueueStatisticsOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetQueueStatisticsRequestData> {
+		protected override operationCode: string = OperationCode.GetQueueStatistics;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.GetQueueStatisticsRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.GetQueueStatisticsRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.GetQueueStatisticsRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.GetQueueStatisticsRequestData;
+		}
+	}
 
-    export class ServerGetQueueStatisticsOperationRequest extends GetQueueStatisticsOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerGetQueueStatisticsOperationRequest extends GetQueueStatisticsOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerGetQueueStatisticsRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerGetQueueStatisticsRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerGetQueueStatisticsRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerGetQueueStatisticsRequestData;
+		}
+	}
 
-    export class AdminGetQueueStatisticsOperationRequest extends GetQueueStatisticsOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminGetQueueStatisticsOperationRequest extends GetQueueStatisticsOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminGetQueueStatisticsRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminGetQueueStatisticsRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminGetQueueStatisticsRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminGetQueueStatisticsRequestData;
+		}
+	}
 
-    export class JoinMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.JoinMatchmakingTicketRequestData> {
-        protected override operationCode: string = OperationCode.JoinMatchmakingTicket;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class JoinMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.JoinMatchmakingTicketRequestData> {
+		protected override operationCode: string = OperationCode.JoinMatchmakingTicket;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.JoinMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.JoinMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.JoinMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.JoinMatchmakingTicketRequestData;
+		}
+	}
 
-    export class ServerJoinMatchmakingTicketOperationRequest extends JoinMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerJoinMatchmakingTicketOperationRequest extends JoinMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerJoinMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerJoinMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerJoinMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerJoinMatchmakingTicketRequestData;
+		}
+	}
 
-    export class AdminJoinMatchmakingTicketOperationRequest extends JoinMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminJoinMatchmakingTicketOperationRequest extends JoinMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminJoinMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminJoinMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminJoinMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminJoinMatchmakingTicketRequestData;
+		}
+	}
 
-    export class ListMatchmakingTicketsForPlayerOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.ListMatchmakingTicketsForPlayerRequestData> {
-        protected override operationCode: string = OperationCode.ListMatchmakingTicketsForPlayer;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class ListMatchmakingTicketsForPlayerOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.ListMatchmakingTicketsForPlayerRequestData> {
+		protected override operationCode: string = OperationCode.ListMatchmakingTicketsForPlayer;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.ListMatchmakingTicketsForPlayerRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ListMatchmakingTicketsForPlayerRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ListMatchmakingTicketsForPlayerRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ListMatchmakingTicketsForPlayerRequestData;
+		}
+	}
 
-    export class ServerListMatchmakingTicketsForPlayerOperationRequest extends ListMatchmakingTicketsForPlayerOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerListMatchmakingTicketsForPlayerOperationRequest extends ListMatchmakingTicketsForPlayerOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerListMatchmakingTicketsForPlayerRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerListMatchmakingTicketsForPlayerRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerListMatchmakingTicketsForPlayerRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerListMatchmakingTicketsForPlayerRequestData;
+		}
+	}
 
-    export class AdminListMatchmakingTicketsForPlayerOperationRequest extends ListMatchmakingTicketsForPlayerOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminListMatchmakingTicketsForPlayerOperationRequest extends ListMatchmakingTicketsForPlayerOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminListMatchmakingTicketsForPlayerRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminListMatchmakingTicketsForPlayerRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminListMatchmakingTicketsForPlayerRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminListMatchmakingTicketsForPlayerRequestData;
+		}
+	}
 
-    export class GetAllMatchOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetAllMatchRequestData> {
-        protected override operationCode: string = OperationCode.GetAllMatch;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class GetAllMatchOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetAllMatchRequestData> {
+		protected override operationCode: string = OperationCode.GetAllMatch;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.GetAllMatchRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.GetAllMatchRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.GetAllMatchRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.GetAllMatchRequestData;
+		}
+	}
 
-    export class ServerGetAllMatchOperationRequest extends GetAllMatchOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerGetAllMatchOperationRequest extends GetAllMatchOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerGetAllMatchRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerGetAllMatchRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerGetAllMatchRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerGetAllMatchRequestData;
+		}
+	}
 
-    export class AdminGetAllMatchOperationRequest extends GetAllMatchOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminGetAllMatchOperationRequest extends GetAllMatchOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminGetAllMatchRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminGetAllMatchRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminGetAllMatchRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminGetAllMatchRequestData;
+		}
+	}
 
-    export class GetAllMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetAllMatchmakingTicketRequestData> {
-        protected override operationCode: string = OperationCode.GetAllMatchmakingTicket;
-        protected override requestType: RequestType = RequestType.Multiplayer;
-        protected override role: RequestRole = RequestRole.Client;
+	export class GetAllMatchmakingTicketOperationRequest extends CustomOperationRequestAbstract<MultiplayerModels.GetAllMatchmakingTicketRequestData> {
+		protected override operationCode: string = OperationCode.GetAllMatchmakingTicket;
+		protected override requestType: RequestType = RequestType.Multiplayer;
+		protected override role: RequestRole = RequestRole.Client;
 
-        constructor(requestData: MultiplayerModels.GetAllMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.GetAllMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.GetAllMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.GetAllMatchmakingTicketRequestData;
+		}
+	}
 
-    export class ServerGetAllMatchmakingTicketOperationRequest extends GetAllMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
+	export class ServerGetAllMatchmakingTicketOperationRequest extends GetAllMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Server;
 
-        constructor(requestData: MultiplayerModels.ServerGetAllMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.ServerGetAllMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.ServerGetAllMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.ServerGetAllMatchmakingTicketRequestData;
+		}
+	}
 
-    export class AdminGetAllMatchmakingTicketOperationRequest extends GetAllMatchmakingTicketOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
+	export class AdminGetAllMatchmakingTicketOperationRequest extends GetAllMatchmakingTicketOperationRequest {
+		protected override role: RequestRole = RequestRole.Admin;
 
-        constructor(requestData: MultiplayerModels.AdminGetAllMatchmakingTicketRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = MultiplayerModels.AdminGetAllMatchmakingTicketRequestData;
-        }
-    }
+		constructor(requestData: MultiplayerModels.AdminGetAllMatchmakingTicketRequestData, timeout: number) {
+			super(requestData, timeout);
+			this.requestDataCls = MultiplayerModels.AdminGetAllMatchmakingTicketRequestData;
+		}
+	}
 
 }

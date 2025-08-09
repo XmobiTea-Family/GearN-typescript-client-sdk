@@ -1,7 +1,6 @@
 import { Action1 } from "./../../common/Action1";
 import { Action0 } from "./../../common/Action0";
 import { GNArray, GNHashtable } from "./../../common/GNData";
-import { ReturnCode } from "./../../constant/ReturnCode";
 import { OperationEvent } from "./../../entity/OperationEvent";
 import { GNNetwork } from "./../../GNNetwork";
 import { GNDebug } from "./../../logger/GNDebug";
@@ -10,6 +9,8 @@ import { NetworkingSocketPeerBase } from "./NetworkingSocketPeerBase";
 import { NetworkingPeerSocketIOClient } from "./NetworkingPeerSocketIOClient";
 import { OperationPending } from "./../OperationPending";
 import { PeerBase } from "./../PeerBase";
+import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
+import { OperationRequest } from "../../entity/OperationRequest";
 
 export class SocketPeer extends PeerBase {
 	private networkingSocketPeerBase: NetworkingSocketPeerBase;
@@ -108,6 +109,11 @@ export class SocketPeer extends PeerBase {
 	}
 
 	override send(operationPending: OperationPending): void {
+		let gnServerSettings = GNNetwork.getGNServerSettings();
+		let operationRequest = operationPending.getOperationRequest();
+
+		if (operationRequest.getTimeout() == OperationRequest.defaultTimeOut) operationRequest.setTimeout(gnServerSettings.getDefaultTimeoutInSeconds());
+
 		super.send(operationPending);
 
 		GNDebug.log("[GN Socket SEND] " + operationPending.getOperationRequest().toString());
@@ -125,15 +131,17 @@ export class SocketPeer extends PeerBase {
 	}
 
 	onEventHandler(obj: GNHashtable): void {
-		let eventCode = obj.getString("eventCode");
+		let eventCode = obj.getString(ParameterCode.EventCode);
 
-		let operationEvent = new OperationEvent(eventCode, obj.getGNHashtable("parameters"));
+		let operationEvent = new OperationEvent(eventCode, obj.getGNHashtable(ParameterCode.Parameters));
 
 		GNDebug.log("[GN Socket EVENT] " + operationEvent.toString());
 
 		if (this._onEventHandler != null) this._onEventHandler(operationEvent);
 
 		let serverEventHandlers = this.serverEventHandlersDict[eventCode];
+
+		if (serverEventHandlers == null) return;
 
 		serverEventHandlers.forEach(serverEventHandler => {
 			if (serverEventHandler != null) {

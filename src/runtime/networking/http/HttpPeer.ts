@@ -14,6 +14,8 @@ import { MessageType } from "./../../config/GNServerSettings";
 import { EnumUtility } from "./../../helper/EnumUtility";
 import { RequestType } from "./../../constant/enumType/RequestType";
 import { RequestRole } from "./../../constant/enumType/RequestRole";
+import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
+import { OperationRequest } from "../../entity/OperationRequest";
 
 export class HttpAppResponse {
 	public statusCode: number;
@@ -59,9 +61,13 @@ export class HttpPeer extends PeerBase {
 	}
 
 	override send(operationPending: OperationPending): void {
+		let gnServerSettings = GNNetwork.getGNServerSettings();
+		let operationRequest = operationPending.getOperationRequest();
+
+		if (operationRequest.getTimeout() == OperationRequest.defaultTimeOut) operationRequest.setTimeout(gnServerSettings.getDefaultTimeoutInSeconds());
+
 		super.send(operationPending);
 
-		let operationRequest = operationPending.getOperationRequest();
 		GNDebug.log("[GN Http SEND] " + operationRequest.toString());
 
 		let authToken = operationPending.getAuthToken();
@@ -69,7 +75,6 @@ export class HttpPeer extends PeerBase {
 		let gameId = operationPending.getGameId();
 		let customTags = operationPending.getCustomTags();
 
-		let gnServerSettings = GNNetwork.getGNServerSettings();
 		let postType = gnServerSettings.getMessageType() == MessageType.Json ? PostType.Json : PostType.MsgPack;
 
 		if (GNSupport.isBrowser() && postType == PostType.MsgPack) {
@@ -107,19 +112,19 @@ export class HttpPeer extends PeerBase {
 
 				if (gnHashtable == null) {
 					if (httpAppResponse.data != null) {
-						let iList = MessagePackConverterService.deserialize<{}>(httpAppResponse.data);
+						let iDict = MessagePackConverterService.deserialize<{}>(httpAppResponse.data);
 						gnHashtable = GNHashtable.builder()
-							.addAll(iList)
+							.addAll(iDict)
 							.build();
 					}
 				}
 
 				if (gnHashtable != null) {
-					obj.add("returnCode", gnHashtable.getNumber("returnCode"));
-					obj.add("parameters", gnHashtable.getGNHashtable("parameters", new GNHashtable()));
-					obj.add("invalidRequestParameters", gnHashtable.getGNArray("invalidRequestParameters", new GNArray()));
-					obj.add("debugMessage", gnHashtable.getString("debugMessage"));
-					obj.add("responseId", operationRequest.getRequestId());
+					obj.add(ParameterCode.ReturnCode, gnHashtable.getNumber(ParameterCode.ReturnCode));
+					obj.add(ParameterCode.Parameters, gnHashtable.getGNHashtable(ParameterCode.Parameters, new GNHashtable()));
+					obj.add(ParameterCode.InvalidRequestParameters, gnHashtable.getGNArray(ParameterCode.InvalidRequestParameters, new GNArray()));
+					obj.add(ParameterCode.DebugMessage, gnHashtable.getString(ParameterCode.DebugMessage));
+					obj.add(ParameterCode.ResponseId, operationRequest.getRequestId());
 
 					this.onResponseHandler(obj);
 					return;
@@ -127,14 +132,14 @@ export class HttpPeer extends PeerBase {
 			}
 		}
 
-		obj.add("returnCode", ReturnCode.UnknownError);
-		obj.add("debugMessage", httpAppResponse.error);
-		obj.add("responseId", operationRequest.getRequestId());
+		obj.add(ParameterCode.ReturnCode, ReturnCode.UnknownError);
+		obj.add(ParameterCode.DebugMessage, httpAppResponse.error);
+		obj.add(ParameterCode.ResponseId, operationRequest.getRequestId());
 
 		this.onResponseHandler(obj);
 	}
 
-	getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = 15, authToken: string = null, secretKey: string = null, gameId: string = null): void {
+	getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = OperationRequest.defaultTimeOut, authToken: string = null, secretKey: string = null, gameId: string = null): void {
 		this.networkingHttpPeerBase.getRequest(subUri, onHttpAppResponse, timeout, authToken, secretKey, gameId);
 	}
 

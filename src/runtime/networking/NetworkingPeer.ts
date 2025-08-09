@@ -17,6 +17,7 @@ import { RequestType } from "./../constant/enumType/RequestType";
 import { RequestRole } from "./../constant/enumType/RequestRole";
 import { GetAuthInfoResponse } from "./../entity/response/GetAuthInfoResponse";
 import { UploadFileResponse } from "./../entity/response/UploadFileResponse";
+import { ParameterCode } from "./../constant/parameterCode/ParameterCode";
 
 export class NetworkingPeer {
 	static readonly SYNC_TS: string = "ts";
@@ -155,7 +156,7 @@ export class NetworkingPeer {
 						.addAll(returnDatas)
 						.build();
 
-					let newServerTimestamp = gnHashtable.getNumber("ts", new Date().getUTCMilliseconds());
+					let newServerTimestamp = gnHashtable.getNumber(ParameterCode.Ts, new Date().getUTCMilliseconds());
 					thiz.setServerTimeMilliseconds(newServerTimestamp);
 				}
 			}

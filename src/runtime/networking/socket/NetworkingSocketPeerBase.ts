@@ -165,9 +165,9 @@ export abstract class NetworkingSocketPeerBase {
 				let responsePacket = this.responsePacketLst[i];
 				if (responsePacket.isMsgPack) {
 					try {
-						let iList = MessagePackConverterService.deserialize<{}>(responsePacket.obj);
+						let iDict = MessagePackConverterService.deserialize<{}>(responsePacket.obj);
 						let gnHashtable = GNHashtable.builder()
-							.addAll(iList)
+							.addAll(iDict)
 							.build();
 						this.onResponseHandler(gnHashtable);
 					}
@@ -177,9 +177,9 @@ export abstract class NetworkingSocketPeerBase {
 				}
 				else {
 					try {
-						let iList = responsePacket.obj;
+						let iDict = responsePacket.obj;
 						let gnHashtable = GNHashtable.builder()
-							.addAll(iList)
+							.addAll(iDict)
 							.build();
 						this.onResponseHandler(gnHashtable);
 					}
@@ -196,9 +196,9 @@ export abstract class NetworkingSocketPeerBase {
 				let eventPacket = this.eventPacketLst[i];
 				if (eventPacket.isMsgPack) {
 					try {
-						let iList = MessagePackConverterService.deserialize<{}>(eventPacket.obj);
+						let iDict = MessagePackConverterService.deserialize<{}>(eventPacket.obj);
 						let gnHashtable = GNHashtable.builder()
-							.addAll(iList)
+							.addAll(iDict)
 							.build();
 						this.onEventHandler(gnHashtable);
 					}
@@ -208,9 +208,9 @@ export abstract class NetworkingSocketPeerBase {
 				}
 				else {
 					try {
-						let iList = eventPacket.obj;
+						let iDict = eventPacket.obj;
 						let gnHashtable = GNHashtable.builder()
-							.addAll(iList)
+							.addAll(iDict)
 							.build();
 						this.onEventHandler(gnHashtable);
 					}

@@ -3,6 +3,12 @@ export class ParameterCode {
 	public static readonly Ts: string = "ts";
 	public static readonly ErrorCode: string = "errorCode";
 	public static readonly UserId: string = "userId";
+	public static readonly ReturnCode: string = "returnCode";
+	public static readonly DebugMessage: string = "debugMessage";
+	public static readonly ResponseId: string = "responseId";
+	public static readonly Parameters: string = "parameters";
+	public static readonly InvalidRequestParameters: string = "invalidRequestParameters";
+
 	public static readonly ErrorMessage: string = "errorMessage";
 
 	public static readonly Username: string = "username";

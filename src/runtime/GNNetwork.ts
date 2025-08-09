@@ -37,9 +37,9 @@ import { UploadFileResponse } from "./entity/response/UploadFileResponse";
 
 export class GNNetwork {
 
-	static readonly AUTH_TOKEN_KEY = "[GN]_AUTH_TOKEN_KEY";
-	static readonly USER_ID_KEY = "[GN]_USER_ID_KEY";
-	static readonly GAME_ID_KEY = "[GN]_GAME_ID_KEY";
+	static readonly AUTH_TOKEN_KEY = "[GearN]_AUTH_TOKEN_KEY";
+	static readonly USER_ID_KEY = "[GearN]_USER_ID_KEY";
+	static readonly GAME_ID_KEY = "[GearN]_GAME_ID_KEY";
 
 	private static gnServerSettings: GNServerSettings;
 	public static getGNServerSettings(): GNServerSettings {

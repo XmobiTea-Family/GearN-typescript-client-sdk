@@ -13,6 +13,7 @@ export interface GNServerSettingsOptions {
 	useSocket: boolean;
 	useHttp: boolean;
 
+	defaultTimeoutInSeconds: number;
 	messageType: MessageType;
 	sendRate: number;
 	reconnectDelay: number;
@@ -34,6 +35,7 @@ export class GNServerSettings {
 	private useSocket: boolean = true;
 	private useHttp: boolean = true;
 
+	private defaultTimeoutInSeconds: number = 20;
 	private messageType: MessageType = MessageType.MsgPack;
 	private sendRate: number = 20;
 	private reconnectDelay: number = 5000;
@@ -54,6 +56,7 @@ export class GNServerSettings {
 		this.useSocket = options.useSocket;
 		this.useHttp = options.useHttp;
 
+		this.defaultTimeoutInSeconds = options.defaultTimeoutInSeconds;
 		this.messageType = options.messageType;
 		this.sendRate = options.sendRate;
 		this.reconnectDelay = options.reconnectDelay;
@@ -113,6 +116,14 @@ export class GNServerSettings {
 
 	public setUseHttp(useHttp: boolean): void {
 		this.useHttp = useHttp;
+	}
+
+	public getDefaultTimeoutInSeconds(): number {
+		return this.defaultTimeoutInSeconds;
+	}
+
+	public setDefaultTimeoutInSeconds(defaultTimeoutInSeconds: number): void {
+		this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
 	}
 
 	public getMessageType(): MessageType {

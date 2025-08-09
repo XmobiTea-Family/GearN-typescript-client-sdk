@@ -64,7 +64,7 @@ export abstract class PeerBase implements IPeer {
 
 	public enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
 		if (!this.isUsing) {
-			GNDebug.logError("[GN] Server Settings dont setup to use this to send operation request.");
+			GNDebug.logError("[GearN] Server Settings dont setup to use this to send operation request.");
 			return;
 		}
 
@@ -97,9 +97,9 @@ export abstract class PeerBase implements IPeer {
 					if (operationPending.isTimeout()) {
 						let gnHashtable = new GNHashtable();
 
-						gnHashtable.add("returnCode", ReturnCode.OperationTimeout);
-						gnHashtable.add("parameters", null);
-						gnHashtable.add("responseId", operationPending.getOperationRequest().getRequestId());
+						gnHashtable.add(ParameterCode.ReturnCode, ReturnCode.OperationTimeout);
+						gnHashtable.add(ParameterCode.Parameters, null);
+						gnHashtable.add(ParameterCode.ResponseId, operationPending.getOperationRequest().getRequestId());
 
 						gnHashtableLst.push(gnHashtable);
 					}
@@ -125,18 +125,18 @@ export abstract class PeerBase implements IPeer {
 	}
 
 	protected onResponseHandler(obj: GNHashtable): void {
-		let responseId = obj.getNumber("responseId");
+		let responseId = obj.getNumber(ParameterCode.ResponseId);
 		if (this.operationWaitingResponseDict.has(responseId)) {
 			let operationPending = this.operationWaitingResponseDict.get(responseId);
 			operationPending.onRecv();
 
 			this.operationWaitingResponseDict.delete(responseId);
 
-			let returnCode = obj.getNumber("returnCode");
+			let returnCode = obj.getNumber(ParameterCode.ReturnCode);
 
-			let parameters: GNHashtable = obj.getGNHashtable("parameters");
-			let debugMessage: string = obj.getString("debugMessage");
-			let array: GNArray = obj.getGNArray("invalidRequestParameters");
+			let parameters: GNHashtable = obj.getGNHashtable(ParameterCode.Parameters);
+			let debugMessage: string = obj.getString(ParameterCode.DebugMessage);
+			let invalidRequestParameterArray: GNArray = obj.getGNArray(ParameterCode.InvalidRequestParameters);
 
 			let operationRequest = operationPending.getOperationRequest();
 			let operationResponse = new OperationResponse(operationRequest.getOperationCode(), operationRequest.getRequestId());
@@ -145,10 +145,10 @@ export abstract class PeerBase implements IPeer {
 			operationResponse.setDebugMessage(debugMessage);
 			operationResponse.setParameters(parameters);
 
-			if (array != null) {
+			if (invalidRequestParameterArray != null) {
 				let invalidMembers: InvalidMember[] = [];
-				for (let i = 0; i < array.count(); i++) {
-					let arrChild = array.getGNArray(i);
+				for (let i = 0; i < invalidRequestParameterArray.count(); i++) {
+					let arrChild = invalidRequestParameterArray.getGNArray(i);
 
 					invalidMembers.push({
 						code: arrChild.getString(0),
@@ -190,7 +190,7 @@ export abstract class PeerBase implements IPeer {
 			if (callback != null) callback(operationResponse);
 		}
 		else {
-			GNDebug.logError("[GN] OnResponseHandler, unavailable request id " + obj);
+			GNDebug.logError("[GearN] OnResponseHandler, unavailable request id " + obj);
 		}
 	}
 

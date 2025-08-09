@@ -1,8 +1,7 @@
-import { CodeHelper } from "./../helper/CodeHelper";
 import { GNHashtable } from "./../common/GNData";
 
 export class OperationRequest {
-	public static readonly defaultTimeOut: number = 15;
+	public static readonly defaultTimeOut: number = 20;
 
 	private operationCode: string;
 	private requestId: number;

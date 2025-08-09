@@ -8,22 +8,22 @@ import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 export class GroupMemberUpdate {
-    @GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.FriendItem })
-    public members: Array<GenericModels.MemberItem>;
+	@GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.FriendItem })
+	public members: Array<GenericModels.MemberItem>;
 }
 
 @IServerEventHandler.registerEvent
 export class OnGroupMemberUpdateEventHandler implements IServerEventHandler {
-    public static onUpdate: Action1<GroupMemberUpdate>;
+	public static onUpdate: Action1<GroupMemberUpdate>;
 
-    public getEventCode(): string {
-        return EventCode.OnGroupMemberUpdate;
-    }
+	public getEventCode(): string {
+		return EventCode.OnGroupMemberUpdate;
+	}
 
-    public handle(operationEvent: OperationEvent): void {
-        if (OnGroupMemberUpdateEventHandler.onUpdate != null)
-            OnGroupMemberUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GroupMemberUpdate));
+	public handle(operationEvent: OperationEvent): void {
+		if (OnGroupMemberUpdateEventHandler.onUpdate != null)
+			OnGroupMemberUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GroupMemberUpdate));
 
-    }
+	}
 
 }
