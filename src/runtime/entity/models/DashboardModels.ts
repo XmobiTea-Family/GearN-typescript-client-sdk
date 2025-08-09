@@ -294,13 +294,13 @@ export namespace DashboardModels {
 	}
 
 	export class CharacterPlayerSettingsParam {
-		@GNArrayDataMember({ code: ParameterCode.CurrencySettings, elementCls: CurrencySettingsParam, isOptional: true })
-		public playerCurrencySettings?: Array<CurrencySettingsParam>;
+		@GNArrayDataMember({ code: ParameterCode.PlayerCurrenciesSettings, elementCls: CurrencySettingsParam, isOptional: true })
+		public playerCurrenciesSettings?: Array<CurrencySettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerStatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
 		public playerStatisticsSettings?: Array<StatisticsSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerDatasSettings, elementCls: DataSettingsParam, isOptional: true })
 		public playerDatasSettings?: Array<DataSettingsParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
@@ -309,13 +309,13 @@ export namespace DashboardModels {
 		@GNArrayDataMember({ code: ParameterCode.TagsSettings, elementCls: TagSettingsParam, isOptional: true })
 		public tagsSettings?: Array<TagSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.GroupCatalogSettings, elementCls: GroupCatalogSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerGroupCatalogSettings, elementCls: GroupCatalogSettingsParam, isOptional: true })
 		public playerGroupCatalogSettings?: Array<GroupCatalogSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.ItemCatalogSettings, elementCls: ItemCatalogSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerItemCatalogSettings, elementCls: ItemCatalogSettingsParam, isOptional: true })
 		public playerItemCatalogSettings?: Array<ItemCatalogSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.FriendCatalogSettings, elementCls: FriendCatalogSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerFriendCatalogSettings, elementCls: FriendCatalogSettingsParam, isOptional: true })
 		public playerFriendCatalogSettings?: Array<FriendCatalogSettingsParam>;
 
 	}
@@ -618,13 +618,13 @@ export namespace DashboardModels {
 	}
 
 	export class GamePlayerSettingsParam {
-		@GNArrayDataMember({ code: ParameterCode.CurrencySettings, elementCls: CurrencySettingsParam, isOptional: true })
-		public playerCurrencySettings?: Array<CurrencySettingsParam>;
+		@GNArrayDataMember({ code: ParameterCode.PlayerCurrenciesSettings, elementCls: CurrencySettingsParam, isOptional: true })
+		public playerCurrenciesSettings?: Array<CurrencySettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerStatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
 		public playerStatisticsSettings?: Array<StatisticsSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerDatasSettings, elementCls: DataSettingsParam, isOptional: true })
 		public playerDatasSettings?: Array<DataSettingsParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
@@ -633,28 +633,28 @@ export namespace DashboardModels {
 		@GNArrayDataMember({ code: ParameterCode.TagsSettings, elementCls: TagSettingsParam, isOptional: true })
 		public tagsSettings?: Array<TagSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.CharacterCatalogSettings, elementCls: CharacterCatalogSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerCharacterCatalogSettings, elementCls: CharacterCatalogSettingsParam, isOptional: true })
 		public playerCharacterCatalogSettings?: Array<CharacterCatalogSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.GroupCatalogSettings, elementCls: GroupCatalogSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerGroupCatalogSettings, elementCls: GroupCatalogSettingsParam, isOptional: true })
 		public playerGroupCatalogSettings?: Array<GroupCatalogSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.ItemCatalogSettings, elementCls: ItemCatalogSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerItemCatalogSettings, elementCls: ItemCatalogSettingsParam, isOptional: true })
 		public playerItemCatalogSettings?: Array<ItemCatalogSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.FriendCatalogSettings, elementCls: FriendCatalogSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerFriendCatalogSettings, elementCls: FriendCatalogSettingsParam, isOptional: true })
 		public playerFriendCatalogSettings?: Array<FriendCatalogSettingsParam>;
 
 	}
 
 	export class GroupSettingsParam {
-		@GNArrayDataMember({ code: ParameterCode.CurrencySettings, elementCls: CurrencySettingsParam, isOptional: true })
-		public groupCurrencySettings?: Array<CurrencySettingsParam>;
+		@GNArrayDataMember({ code: ParameterCode.GroupCurrenciesSettings, elementCls: CurrencySettingsParam, isOptional: true })
+		public groupCurrenciesSettings?: Array<CurrencySettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.GroupStatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
 		public groupStatisticsSettings?: Array<StatisticsSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.GroupDatasSettings, elementCls: DataSettingsParam, isOptional: true })
 		public groupDatasSettings?: Array<DataSettingsParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
@@ -663,17 +663,17 @@ export namespace DashboardModels {
 		@GNArrayDataMember({ code: ParameterCode.TagsSettings, elementCls: TagSettingsParam, isOptional: true })
 		public tagsSettings?: Array<TagSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.ItemCatalogSettings, elementCls: ItemCatalogSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.GroupItemCatalogSettings, elementCls: ItemCatalogSettingsParam, isOptional: true })
 		public groupItemCatalogSettings?: Array<ItemCatalogSettingsParam>;
 
 	}
 
 	export class InventorySettingsParam {
-		@GNArrayDataMember({ code: ParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
-		public inventoryStatisticsSettings?: Array<StatisticsSettingsParam>;
+		@GNArrayDataMember({ code: ParameterCode.ItemStatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
+		public itemStatisticsSettings?: Array<StatisticsSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
-		public inventoryDatasSettings?: Array<DataSettingsParam>;
+		@GNArrayDataMember({ code: ParameterCode.ItemDatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		public itemDatasSettings?: Array<DataSettingsParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
 		public customDatasSettings?: Array<DataSettingsParam>;
@@ -1308,13 +1308,13 @@ export namespace DashboardModels {
 		@GNArrayDataMember({ code: ParameterCode.GenericServiceSettings, elementCls: GenericServiceSettingsParam, isOptional: true })
 		public genericServiceSettings?: Array<GenericServiceSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.CurrencySettings, elementCls: CurrencySettingsParam, isOptional: true })
-		public playerCurrencySettings?: Array<CurrencySettingsParam>;
+		@GNArrayDataMember({ code: ParameterCode.PlayerCurrenciesSettings, elementCls: CurrencySettingsParam, isOptional: true })
+		public playerCurrenciesSettings?: Array<CurrencySettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.StatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerStatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
 		public playerStatisticsSettings?: Array<StatisticsSettingsParam>;
 
-		@GNArrayDataMember({ code: ParameterCode.DatasSettings, elementCls: DataSettingsParam, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.PlayerDatasSettings, elementCls: DataSettingsParam, isOptional: true })
 		public playerDatasSettings?: Array<DataSettingsParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.CustomDatasSettings, elementCls: DataSettingsParam, isOptional: true })
