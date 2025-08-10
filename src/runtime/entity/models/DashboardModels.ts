@@ -21,6 +21,9 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
 
+		@StringDataMember({ code: ParameterCode.Description })
+		public description: string;
+
 		@BooleanDataMember({ code: ParameterCode.ForceAcceptFriend })
 		public forceAcceptFriend: boolean;
 
@@ -30,8 +33,8 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.ClassId, minLength: 2, maxLength: 32 })
 		public classId: string;
 
-		@StringDataMember({ code: ParameterCode.Description, isOptional: true })
-		public description?: string;
+		@StringDataMember({ code: ParameterCode.Description })
+		public description: string;
 
 	}
 
@@ -51,8 +54,8 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
 
-		@StringDataMember({ code: ParameterCode.Description, isOptional: true })
-		public description?: string;
+		@StringDataMember({ code: ParameterCode.Description })
+		public description: string;
 
 		@BooleanDataMember({ code: ParameterCode.ForceAcceptMember })
 		public forceAcceptMember: boolean;
@@ -63,8 +66,8 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32 })
 		public key: string;
 
-		@StringDataMember({ code: ParameterCode.Description, isOptional: true })
-		public description?: string;
+		@StringDataMember({ code: ParameterCode.Description })
+		public description: string;
 
 		@BooleanDataMember({ code: ParameterCode.Index })
 		public index: boolean;
@@ -114,7 +117,7 @@ export namespace DashboardModels {
 		@NumberDataMember({ code: ParameterCode.InitialValue })
 		public initialValue: number;
 
-		@StringDataMember({ code: ParameterCode.Description, minLength: 2, maxLength: 64 })
+		@StringDataMember({ code: ParameterCode.Description })
 		public description: string;
 
 		@BooleanDataMember({ code: ParameterCode.Index })
@@ -126,8 +129,8 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
 
-		@StringDataMember({ code: ParameterCode.Description, isOptional: true })
-		public description?: string;
+		@StringDataMember({ code: ParameterCode.Description })
+		public description: string;
 
 	}
 
@@ -1787,6 +1790,9 @@ export namespace DashboardModels {
 		@BooleanDataMember({ code: ParameterCode.DatabaseSystem, isOptional: true })
 		public databaseSystem?: boolean;
 
+		@BooleanDataMember({ code: ParameterCode.LogDatabaseSystem, isOptional: true })
+		public logDatabaseSystem?: boolean;
+
 		@BooleanDataMember({ code: ParameterCode.Cost, isOptional: true })
 		public cost?: boolean;
 
@@ -2212,6 +2218,9 @@ export namespace DashboardModels {
 
 		@GNHashtableDataMember({ code: ParameterCode.DatabaseSystem, isOptional: true })
 		public databaseSystem?: DatabaseSystemResponseData;
+
+		@GNHashtableDataMember({ code: ParameterCode.LogDatabaseSystem, isOptional: true })
+		public logDatabaseSystem?: DatabaseSystemResponseData;
 
 		@GNHashtableDataMember({ code: ParameterCode.Cost, isOptional: true })
 		public cost?: CostResponseData;
