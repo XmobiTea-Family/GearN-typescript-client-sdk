@@ -10,15 +10,15 @@ export class OperationHelper {
 		if (requestId == -1)
 			return [
 				CodeHelper.getRequestTypeName(requestType),
-				request.getOperationCode(),
 				CodeHelper.getRequestRoleName(role),
+				request.getOperationCode(),
 				(request.getParameters() == null) ? null : request.getParameters().toData()
 			];
 		else
 			return [
 				CodeHelper.getRequestTypeName(requestType),
-				request.getOperationCode(),
 				CodeHelper.getRequestRoleName(role),
+				request.getOperationCode(),
 				(request.getParameters() == null) ? null : request.getParameters().toData(),
 				requestId
 			];
