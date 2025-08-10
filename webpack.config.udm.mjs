@@ -23,7 +23,7 @@ export default {
     fallback: {},
   },
   output: {
-    filename: "gn.js.client.js",
+    filename: "gearn.js.client.js",
     path: path.resolve(__dirname, "dist"),
     library: "GearN",
     libraryTarget: "umd",
