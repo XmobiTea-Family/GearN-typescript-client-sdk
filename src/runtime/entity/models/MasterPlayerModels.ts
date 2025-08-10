@@ -1751,8 +1751,8 @@ export namespace MasterPlayerModels {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
-		@NumberDataMember({ code: ParameterCode.EventCode, minValue: 1000, mustInt: true })
-		public eventCode: number;
+		@StringDataMember({ code: ParameterCode.EventCode, minLength: 1, maxLength: 64 })
+		public eventCode: string;
 
 		@GNHashtableDataMember({ code: ParameterCode.EventParameters, mustNonNull: true, minLength: 0, maxLength: 128, isOptional: true })
 		public eventParameters?: GNHashtable;

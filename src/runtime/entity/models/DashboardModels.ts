@@ -1682,7 +1682,7 @@ export namespace DashboardModels {
 	}
 
 	export class LoginByAdminAccountRequestData {
-		@StringDataMember({ code: ParameterCode.Username, minLength: 6, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Username, minLength: 4, maxLength: 32, mustNonNull: true })
 		public username: string;
 
 		@StringDataMember({ code: ParameterCode.Password, minLength: 6, maxLength: 64, mustNonNull: true })

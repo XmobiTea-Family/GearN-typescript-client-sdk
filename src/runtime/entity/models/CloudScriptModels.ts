@@ -43,16 +43,16 @@ export namespace CloudScriptModels {
 
 	export class ExecuteFunctionRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
-		userId?: string;
+		public userId?: string;
 
 		@StringDataMember({ code: ParameterCode.FunctionName, minLength: 3, maxLength: 30, mustNonNull: true })
-		functionName: string;
+		public functionName: string;
 
 		@DataMember({ code: ParameterCode.FunctionParameters, isOptional: true })
-		functionParameters?: GNHashtable | GNArray | boolean | string | number | null;
+		public functionParameters?: any;
 
 		@StringDataMember({ code: ParameterCode.Version, minLength: 7, maxLength: 7, isOptional: true })
-		version?: string;
+		public version?: string;
 
 	}
 
@@ -118,7 +118,7 @@ export namespace CloudScriptModels {
 		public memoryUsedInBytes: number;
 
 		@DataMember({ code: ParameterCode.FunctionResult })
-		public functionResult: GNHashtable | GNArray | boolean | string | number | null;
+		public functionResult: any;
 
 		@StringDataMember({ code: ParameterCode.ErrorMessage })
 		public errorMessage: string;
