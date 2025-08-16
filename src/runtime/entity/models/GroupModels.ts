@@ -95,9 +95,6 @@ export namespace GroupModels {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
 		public userId: string;
 
-		@NumberDataMember({ code: ParameterCode.Role, mustInt: true })
-		public role: number;
-
 	}
 
 	export class GroupStatisticsParam {
