@@ -44,7 +44,7 @@ export namespace MultiplayerModels {
 		public attribute?: GNHashtable;
 
 		@GNArrayDataMember({ code: ParameterCode.Members, isOptional: true, elementCls: String })
-		public members?: string[];
+		public members?: Array<string>;
 
 	}
 

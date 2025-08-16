@@ -1365,13 +1365,13 @@ export namespace DashboardModels {
 		public secondsBetweenExpansions: number;
 
 		@GNArrayDataMember({ code: ParameterCode.OverrideValue, isOptional: true, elementCls: Object })
-		public overrideValue?: any[];
+		public overrideValue?: Array<any>;
 
 		@GNArrayDataMember({ code: ParameterCode.OverrideMin, isOptional: true, elementCls: Object })
-		public overrideMin?: any[];
+		public overrideMin?: Array<any>;
 
 		@GNArrayDataMember({ code: ParameterCode.OverrideMax, isOptional: true, elementCls: Object })
-		public overrideMax?: any[];
+		public overrideMax?: Array<any>;
 
 	}
 
@@ -1443,10 +1443,10 @@ export namespace DashboardModels {
 		public serverAllocation: ServerAllocationParam;
 
 		@GNArrayDataMember({ code: ParameterCode.Teams, isOptional: true, elementCls: TeamParam })
-		public teams?: TeamParam[];
+		public teams?: Array<TeamParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.Rules, isOptional: true, elementCls: RuleParam })
-		public rules?: RuleParam[];
+		public rules?: Array<RuleParam>;
 
 		@BooleanDataMember({ code: ParameterCode.Remove, isOptional: true })
 		public remove?: boolean;
@@ -1716,7 +1716,7 @@ export namespace DashboardModels {
 		public gameSettings?: GameSettingsParam;
 
 		@GNArrayDataMember({ code: ParameterCode.MatchmakingQueueSettings, isOptional: true, elementCls: MatchmakingQueueSettingsParam })
-		public matchmakingQueueSettings?: MatchmakingQueueSettingsParam[];
+		public matchmakingQueueSettings?: Array<MatchmakingQueueSettingsParam>;
 
 	}
 
@@ -1938,7 +1938,7 @@ export namespace DashboardModels {
 		public gameSettings: GameSettingsParam;
 
 		@GNArrayDataMember({ code: ParameterCode.MatchmakingQueueSettings, elementCls: MatchmakingQueueSettingsParam })
-		public matchmakingQueueSettings: MatchmakingQueueSettingsParam[];
+		public matchmakingQueueSettings: Array<MatchmakingQueueSettingsParam>;
 
 	}
 
