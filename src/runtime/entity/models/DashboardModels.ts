@@ -420,7 +420,7 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.AppleSettings, isOptional: true })
 		public appleSettings?: ThirtPartyAppleSettingsParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.GooglePlayGameService, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.GooglePlayGameSettings, isOptional: true })
 		public googlePlayGameSettings?: ThirtPartyGooglePlayGameSettingsParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GameCenterSettings, isOptional: true })
