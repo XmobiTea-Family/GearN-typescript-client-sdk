@@ -18,6 +18,7 @@
         "./dist/index.js",
         "./dist/gearn.js.client.min.js",
         "./dist/gearn.js.client.js",
-        "./index.js"
+        "./index.js",
+        "./syncCode.js",
     ]
 }
