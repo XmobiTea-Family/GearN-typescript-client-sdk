@@ -51,8 +51,14 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 
 		let httpAppResponse = new HttpAppResponse();
 
+		let targetUrl = this.httpUrl + "/" + subUri;
+		if (this.useReverseProxy) {
+			targetUrl = "/" + subUri;
+			headers[Commands.BaseUrl] = this.httpUrl;
+		}
+
 		try {
-			let result = await axios.get(this.httpUrl + "/" + subUri, {
+			let result = await axios.get(targetUrl, {
 				headers: headers,
 				timeout: timeout * 1000,
 				responseType: "arraybuffer",
@@ -110,9 +116,15 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 
 		let httpAppResponse = new HttpAppResponse();
 
+		let targetUrl = this.httpUrl + "/" + subUri;
+		if (this.useReverseProxy) {
+			targetUrl = "/" + subUri;
+			headers[Commands.BaseUrl] = this.httpUrl;
+		}
+
 		try {
 			if (postType == PostType.Json) {
-				let result = await axios.post(this.httpUrl + "/" + subUri, body, {
+				let result = await axios.post(targetUrl, body, {
 					headers: headers,
 					timeout: timeout * 1000,
 					responseType: "text",
@@ -124,7 +136,7 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 				httpAppResponse.text = result.data;
 			}
 			else {
-				let result = await axios.post(this.httpUrl + "/" + subUri, body, {
+				let result = await axios.post(targetUrl, body, {
 					headers: headers,
 					timeout: timeout * 1000,
 					responseType: "arraybuffer",
@@ -159,8 +171,14 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 
 		let httpAppResponse = new HttpAppResponse();
 
+		let targetUrl = this.httpUrl + "/" + subUri;
+		if (this.useReverseProxy) {
+			targetUrl = "/" + subUri;
+			headers[Commands.BaseUrl] = this.httpUrl;
+		}
+
 		try {
-			let result = await axios.post(this.httpUrl + "/" + subUri, formData, {
+			let result = await axios.post(targetUrl, formData, {
 				headers: headers,
 				timeout: timeout * 1000,
 				responseType: "arraybuffer",

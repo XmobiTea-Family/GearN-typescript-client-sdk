@@ -22,4 +22,5 @@ export class Commands {
 	public static readonly Data: string = "data";
 	public static readonly File: string = "file";
 
+	public static readonly BaseUrl: string = "X-BaseUrl";
 }

@@ -56,6 +56,8 @@ export class HttpPeer extends PeerBase {
 		let httpUrl = gnServerSettings.getHttpUrl();
 		let userAgent = "GN-ts-" + GNNetwork.getPlatform() + "@" + GNNetwork.getClientSdkVersion();
 		this.networkingHttpPeerBase.init(httpUrl, userAgent);
+
+		this.networkingHttpPeerBase.setUseReverseProxy(gnServerSettings.getUseReverseProxy());
 	}
 
 	override send(operationPending: OperationPending): void {

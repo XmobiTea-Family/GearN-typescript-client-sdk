@@ -48,6 +48,8 @@ export class GNServerSettings {
 
 	private logType: LogType = LogType.All;
 
+	private useReverseProxy: boolean = false;
+
 	public config(options: GNServerSettingsOptions): void {
 		this.serverAddress = options.serverAddress;
 		this.serverPort = options.serverPort;
@@ -206,6 +208,14 @@ export class GNServerSettings {
 	public getHttpUrl(): string {
 		if (this.serverPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
 		else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverPort;
+	}
+
+	public setUseReverseProxy(useReverseProxy: boolean) {
+		this.useReverseProxy = useReverseProxy;
+	}
+
+	public getUseReverseProxy(): boolean {
+		return this.useReverseProxy;
 	}
 
 }

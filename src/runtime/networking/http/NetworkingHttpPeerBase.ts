@@ -6,6 +6,8 @@ export abstract class NetworkingHttpPeerBase {
 	protected httpUrl: string;
 	protected userAgent: string;
 
+	protected useReverseProxy: boolean;
+
 	public abstract getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): void;
 
 	public abstract postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void;
@@ -15,6 +17,10 @@ export abstract class NetworkingHttpPeerBase {
 	public init(httpUrl: string, userAgent: string): void {
 		this.httpUrl = httpUrl;
 		this.userAgent = userAgent;
+	}
+
+	public setUseReverseProxy(useReverseProxy: boolean) {
+		this.useReverseProxy = useReverseProxy;
 	}
 
 }
