@@ -1,6 +1,6 @@
 {
   "name": "@xmobitea/gn-typescript-client",
-  "version": "2.6.9",
+  "version": "2.6.12-tsc",
   "description": "GearN Typescript Client SDK by XmobiTea (Pro)",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
