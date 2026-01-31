@@ -11,7 +11,7 @@ import { GNSupport } from "./helper/GNSupport";
 import { IServerEventHandler } from "./networking/handler/IServerEventHandler";
 import { NetworkingPeer } from "./networking/NetworkingPeer";
 import { CodeHelper } from "./helper/CodeHelper";
-import store from "store";
+import { StorageService } from "./helper/StorageService";
 import { OperationEvent } from "./entity/OperationEvent";
 import { AuthenticateStatus } from "./networking/AuthenticateStatus";
 import { RequestType } from "./constant/enumType/RequestType";
@@ -116,9 +116,9 @@ export class GNNetwork {
 
 		GNNetwork.initGNSocketObject();
 
-		GNNetwork.peer.authenticateStatus.setAuthToken(store.get(GNNetwork.AUTH_TOKEN_KEY, ""));
-		GNNetwork.peer.authenticateStatus.setUserId(store.get(GNNetwork.USER_ID_KEY, ""));
-		GNNetwork.peer.gameId = store.get(GNNetwork.GAME_ID_KEY, "");
+		GNNetwork.peer.authenticateStatus.setAuthToken(StorageService.get(GNNetwork.AUTH_TOKEN_KEY, ""));
+		GNNetwork.peer.authenticateStatus.setUserId(StorageService.get(GNNetwork.USER_ID_KEY, ""));
+		GNNetwork.peer.gameId = StorageService.get(GNNetwork.GAME_ID_KEY, "");
 
 		GNNetwork.authenticate = new AuthenticateApi();
 		GNNetwork.characterPlayer = new CharacterPlayerApi();
@@ -134,15 +134,15 @@ export class GNNetwork {
 	}
 
 	public static setNewAuthenticateStatus(authenticateStatus: AuthenticateStatus) {
-		store.set(GNNetwork.AUTH_TOKEN_KEY, authenticateStatus.getAuthToken());
-		store.set(GNNetwork.USER_ID_KEY, authenticateStatus.getUserId());
+		StorageService.set(GNNetwork.AUTH_TOKEN_KEY, authenticateStatus.getAuthToken());
+		StorageService.set(GNNetwork.USER_ID_KEY, authenticateStatus.getUserId());
 
 		GNNetwork.peer.authenticateStatus.setAuthToken(authenticateStatus.getAuthToken());
 		GNNetwork.peer.authenticateStatus.setUserId(authenticateStatus.getUserId());
 	}
 
 	public static setGameId(gameId: string) {
-		store.set(GNNetwork.GAME_ID_KEY, gameId);
+		StorageService.set(GNNetwork.GAME_ID_KEY, gameId);
 
 		GNNetwork.peer.gameId = gameId;
 	}

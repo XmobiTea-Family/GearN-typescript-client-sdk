@@ -5,13 +5,14 @@
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "rm -rf ./dist && npm run buildnode && npm run debug",
+    "dev": "rm -rf ./dist && npm run build:node && npm run debug",
     "debug": "node index.js",
     "test": "mocha -r ts-node/register ./test/**/*.test.ts",
-    "buildnode": "webpack --config webpack.config.mjs --mode production --stats-modules",
-    "buildudm": "webpack --config webpack.config.udm.mjs --mode production --stats-modules",
-    "buildminudm": "webpack --config webpack.config.min.udm.mjs --mode production --stats-modules",
-    "build": "rm -rf ./dist && npm run buildnode && npm run buildudm && npm run buildminudm",
+    "build:node": "webpack --config webpack.config.mjs --mode production --stats-modules",
+    "build:udm": "webpack --config webpack.config.udm.mjs --mode production --stats-modules",
+    "build:minudm": "webpack --config webpack.config.min.udm.mjs --mode production --stats-modules",
+    "build:cocos": "webpack --config webpack.config.cocos.mjs --mode production --stats-modules",
+    "build": "rm -rf ./dist && npm run build:node && npm run build:udm && npm run build:minudm && npm run build:cocos",
     "build:withoutwebpack": "rm -rf ./dist && tsc",
     "push": "npm run build && npm publish && git push"
   },
@@ -32,10 +33,10 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
-    "@msgpack/msgpack": "^2.8.0",
-    "axios": "^1.10.0",
+    "@msgpack/msgpack": "^3.1.3",
+    "axios": "^1.13.2",
     "reflect-metadata": "^0.2.2",
-    "socket.io-client": "^4.8.1",
+    "socket.io-client": "^4.8.3",
     "store": "^2.0.12"
   },
   "directories": {
