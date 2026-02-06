@@ -18,7 +18,7 @@ import { RequestRole } from "./../constant/enumType/RequestRole";
 import { GetAuthInfoResponse } from "./../entity/response/GetAuthInfoResponse";
 import { UploadFileResponse } from "./../entity/response/UploadFileResponse";
 import { ParameterCode } from "./../constant/parameterCode/ParameterCode";
-import { HealthCheckResponse } from "../entity/response/HealthCheckResponse";
+import { HealthCheckResponse } from "./../entity/response/HealthCheckResponse";
 
 export class NetworkingPeer {
 	static readonly SYNC_TS: string = "ts";

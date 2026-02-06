@@ -4,7 +4,7 @@ import { OperationRequest } from "./../../entity/OperationRequest";
 import { GNDebug } from "./../../logger/GNDebug";
 import { NetworkingSocketPeerBase, SocketPacket } from "./NetworkingSocketPeerBase";
 import { GNNetwork } from "./../../GNNetwork";
-import { OperationHelper } from "./../../entity/OperationHelper";
+import { OperationHelper } from "./../../helper/OperationHelper";
 import { Manager, Socket } from "socket.io-client";
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { RequestType } from "./../../constant/enumType/RequestType";

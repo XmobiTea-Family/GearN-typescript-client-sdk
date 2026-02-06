@@ -23,7 +23,7 @@ export class OperationPending {
 		this.operationRequest = operationRequest;
 		this.onOperationResponse = onOperationResponse;
 
-		this.timeout = Date.now() / 1000 + OperationRequest.defaultTimeOut;
+		this.timeout = Date.now() + OperationRequest.defaultTimeOut * 1000;
 		this.firstSend = 0;
 		this.secondsSend = 0;
 
@@ -60,12 +60,12 @@ export class OperationPending {
 	}
 
 	public onSend(): void {
-		this.firstSend = Date.now() / 1000;
-		this.timeout = this.firstSend + this.operationRequest.getTimeout();
+		this.firstSend = Date.now();
+		this.timeout = this.firstSend + this.operationRequest.getTimeout() * 1000;
 	}
 
 	public onRecv(): void {
-		this.secondsSend = Date.now() / 1000;
+		this.secondsSend = Date.now();
 	}
 
 	public getExecuteTimerInMs(): number {
@@ -73,7 +73,7 @@ export class OperationPending {
 	}
 
 	public isTimeout(): boolean {
-		return this.timeout < Date.now() / 1000;
+		return this.timeout < Date.now();
 	}
 
 	public getOperationRequest(): OperationRequest {
