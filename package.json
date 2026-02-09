@@ -1,6 +1,6 @@
 {
   "name": "@xmobitea/gn-typescript-client",
-  "version": "2.6.12",
+  "version": "2.6.13",
   "description": "GearN Typescript Client SDK by XmobiTea (Pro)",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -11,9 +11,9 @@
     "build:node": "webpack --config webpack.config.mjs --mode production --stats-modules",
     "build:udm": "webpack --config webpack.config.udm.mjs --mode production --stats-modules",
     "build:minudm": "webpack --config webpack.config.min.udm.mjs --mode production --stats-modules",
-    "build:cocos": "webpack --config webpack.config.cocos.mjs --mode production --stats-modules",
-    "build": "rm -rf ./dist && npm run build:node && npm run build:udm && npm run build:minudm && npm run build:cocos",
-    "build:withoutwebpack": "rm -rf ./dist && tsc",
+    "build": "rm -rf ./dist && npm run build:node && npm run build:udm && npm run build:minudm",
+    "build:tsc": "rm -rf ./dist && tsc",
+    "build:cocos": "rm -rf ./dist && webpack --config webpack.config.cocos.mjs --mode production --stats-modules",
     "push": "npm run build && npm publish && git push"
   },
   "author": "changx.develop@gmail.com (https://xmobitea.com)",

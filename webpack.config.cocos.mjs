@@ -44,7 +44,7 @@ export default {
     },
   },
   output: {
-    filename: "gearn.cocos.js",
+    filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     library: {
       name: "GearN",
