@@ -167,7 +167,7 @@ export abstract class PeerBase implements IPeer {
 
 						GNNetwork.getAuthenticateStatus().setAuthToken(authToken);
 
-						StorageService.set(GNNetwork.AUTH_TOKEN_KEY, authToken);
+						StorageService.setString(GNNetwork.AUTH_TOKEN_KEY, authToken);
 					}
 
 					if (parameters.containsKey(ParameterCode.UserId)) {
@@ -175,7 +175,7 @@ export abstract class PeerBase implements IPeer {
 
 						GNNetwork.getAuthenticateStatus().setUserId(userId);
 
-						StorageService.set(GNNetwork.USER_ID_KEY, userId);
+						StorageService.setString(GNNetwork.USER_ID_KEY, userId);
 					}
 
 					if (parameters.containsKey(ParameterCode.Ts)) {

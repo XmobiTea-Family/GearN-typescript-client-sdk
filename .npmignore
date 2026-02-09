@@ -1,6 +1,8 @@
 .vscode/
 src/
 test/
+docs/
+examples/
 responseModel/
 .editorconfig
 .gitignore
@@ -12,6 +14,7 @@ scratch/
 tsconfig.udm.json
 tsconfig-build.udm.json
 webpack.config.udm.mjs
+webpack.config.cocos.mjs
 tsconfig.min.udm.json
 tsconfig-build.min.udm.json
 webpack.config.min.udm.mjs

@@ -21,6 +21,11 @@
         "./test/",
         "./node_modules/",
         "./dist/",
-        "./index.js"
+        "./index.js",
+        "./webpack.config.udm.mjs",
+        "./webpack.config.min.udm.mjs",
+        "./webpack.config.mjs",
+        "./webpack.config.cocos.mjs",
+        "./syncCode.js",
     ]
 }

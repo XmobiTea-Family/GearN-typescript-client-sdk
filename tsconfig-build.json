@@ -12,9 +12,8 @@
         "./webpack.config.udm.mjs",
         "./webpack.config.min.udm.mjs",
         "./webpack.config.mjs",
-        "./dist/index.js",
-        "./dist/gearn.js.client.min.js",
-        "./dist/gearn.js.client.js",
+        "./webpack.config.cocos.mjs",
+        "./dist/",
         "./index.js",
         "./syncCode.js",
     ]
