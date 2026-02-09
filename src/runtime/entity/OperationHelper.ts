@@ -1,29 +1,30 @@
 import { RequestRole } from "./../constant/enumType/RequestRole";
 import { RequestType } from "./../constant/enumType/RequestType";
 import { OperationRequest } from "./OperationRequest";
+import { CodeHelper } from "./../helper/CodeHelper";
 
 export class OperationHelper {
-    public static toSocketData(requestType: RequestType, requestRole: RequestRole, request: OperationRequest): any {
-        let requestId = request.getRequestId();
+	public static toSocketData(requestType: RequestType, role: RequestRole, request: OperationRequest): any {
+		let requestId = request.getRequestId();
 
-        if (requestId == -1)
-            return [
-                request.getOperationCode(),
-                <number>requestType,
-                <number>requestRole,
-                (request.getParameters() == null) ? null : request.getParameters().toData()
-            ];
-        else
-            return [
-                request.getOperationCode(),
-                <number>requestType,
-                <number>requestRole,
-                (request.getParameters() == null) ? null : request.getParameters().toData(),
-                requestId
-            ];
-    }
+		if (requestId == -1)
+			return [
+				CodeHelper.getRequestTypeName(requestType),
+				request.getOperationCode(),
+				CodeHelper.getRequestRoleName(role),
+				(request.getParameters() == null) ? null : request.getParameters().toData()
+			];
+		else
+			return [
+				CodeHelper.getRequestTypeName(requestType),
+				request.getOperationCode(),
+				CodeHelper.getRequestRoleName(role),
+				(request.getParameters() == null) ? null : request.getParameters().toData(),
+				requestId
+			];
+	}
 
-    public static toHttpData(requestType: RequestType, requestRole: RequestRole, request: OperationRequest): any {
-        return null;
-    }
+	public static toHttpData(requestType: RequestType, role: RequestRole, request: OperationRequest): any {
+		return null;
+	}
 }

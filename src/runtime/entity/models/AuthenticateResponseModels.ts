@@ -58,11 +58,11 @@ export namespace AuthenticateResponseModels {
 		}
 	}
 
-	export class LoginByGenericServiceOperationResponse extends CustomOperationResponseAbstract<AuthenticateModels.AuthenticateResponseData> {
+	export class LoginByGenericServiceOperationResponse extends CustomOperationResponseAbstract<AuthenticateModels.GenericServiceAuthenticateResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = AuthenticateModels.AuthenticateResponseData;
+			this.responseDataCls = AuthenticateModels.GenericServiceAuthenticateResponseData;
 		}
 	}
 

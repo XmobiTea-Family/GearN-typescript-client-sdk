@@ -26,11 +26,11 @@ export namespace StoreInventoryResponseModels {
 		}
 	}
 
-	export class GrantStoreItemOperationResponse extends CustomOperationResponseAbstract<StoreInventoryModels.GrantStoreItemResponseData> {
+	export class CreateStoreItemOperationResponse extends CustomOperationResponseAbstract<StoreInventoryModels.CreateStoreItemResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = StoreInventoryModels.GrantStoreItemResponseData;
+			this.responseDataCls = StoreInventoryModels.CreateStoreItemResponseData;
 		}
 	}
 
@@ -98,7 +98,7 @@ export namespace StoreInventoryResponseModels {
 		}
 	}
 
-    export class GetStoreUsedOperationResponse extends CustomOperationResponseAbstract<StoreInventoryModels.GetStoreUsedResponseData> {
+	export class GetStoreUsedOperationResponse extends CustomOperationResponseAbstract<StoreInventoryModels.GetStoreUsedResponseData> {
 
 		constructor() {
 			super();
@@ -106,7 +106,7 @@ export namespace StoreInventoryResponseModels {
 		}
 	}
 
-    export class RemoveStoreUsedOperationResponse extends CustomOperationResponseAbstract<StoreInventoryModels.EmptyResponseData> {
+	export class RemoveStoreUsedOperationResponse extends CustomOperationResponseAbstract<StoreInventoryModels.EmptyResponseData> {
 
 		constructor() {
 			super();

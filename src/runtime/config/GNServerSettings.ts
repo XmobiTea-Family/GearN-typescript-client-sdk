@@ -1,198 +1,211 @@
 import { LogType } from "./../logger/GNDebug";
 
+export enum MessageType {
+	Json = 1,
+	MsgPack = 2,
+}
+
 export interface GNServerSettingsOptions {
-    serverAddress: string;
-    serverPort: number;
-    serverSocketPort: number;
-    useSsl: boolean;
-    useSocket: boolean;
-    useHttp: boolean;
+	serverAddress: string;
+	serverPort: number;
+	serverSocketPort: number;
+	useSsl: boolean;
+	useSocket: boolean;
+	useHttp: boolean;
 
-    sendRate: number;
-    reconnectDelay: number;
-    pingInterval: number;
-    pingTimeout: number;
+	defaultTimeoutInSeconds: number;
+	messageType: MessageType;
+	sendRate: number;
+	reconnectDelay: number;
+	pingInterval: number;
+	pingTimeout: number;
 
-    adminSecretKey: string;
-    serverSecretKey: string;
-    clientSecretKey: string;
+	adminSecretKey: string;
+	serverSecretKey: string;
+	clientSecretKey: string;
 
-    gnServerSourcePath: string;
-
-    logType: LogType;
+	logType: LogType;
 }
 
 export class GNServerSettings {
-    private serverAddress: string = "127.0.0.1";
-    private serverPort: number = 2202;
-    private serverSocketPort: number = 2901;
-    private useSsl: boolean = false;
-    private useSocket: boolean = true;
-    private useHttp: boolean = true;
+	private serverAddress: string = "127.0.0.1";
+	private serverPort: number = 2202;
+	private serverSocketPort: number = 2901;
+	private useSsl: boolean = false;
+	private useSocket: boolean = true;
+	private useHttp: boolean = true;
 
-    private sendRate: number = 20;
-    private reconnectDelay: number = 5000;
-    private pingInterval: number = 20000;
-    private pingTimeout: number = 20000;
+	private defaultTimeoutInSeconds: number = 20;
+	private messageType: MessageType = MessageType.MsgPack;
+	private sendRate: number = 20;
+	private reconnectDelay: number = 5000;
+	private pingInterval: number = 20000;
+	private pingTimeout: number = 20000;
 
-    private adminSecretKey: string;
-    private serverSecretKey: string;
-    private clientSecretKey: string;
+	private adminSecretKey: string;
+	private serverSecretKey: string;
+	private clientSecretKey: string;
 
-    private gnServerSourcePath: string;
+	private logType: LogType = LogType.All;
 
-    private logType: LogType = LogType.All;
+	public config(options: GNServerSettingsOptions): void {
+		this.serverAddress = options.serverAddress;
+		this.serverPort = options.serverPort;
+		this.serverSocketPort = options.serverSocketPort;
+		this.useSsl = options.useSsl;
+		this.useSocket = options.useSocket;
+		this.useHttp = options.useHttp;
 
-    public config(options: GNServerSettingsOptions): void {
-        this.serverAddress = options.serverAddress;
-        this.serverPort = options.serverPort;
-        this.serverSocketPort = options.serverSocketPort;
-        this.useSsl = options.useSsl;
-        this.useSocket = options.useSocket;
-        this.useHttp = options.useHttp;
+		this.defaultTimeoutInSeconds = options.defaultTimeoutInSeconds;
+		this.messageType = options.messageType;
+		this.sendRate = options.sendRate;
+		this.reconnectDelay = options.reconnectDelay;
+		this.pingInterval = options.pingInterval;
+		this.pingTimeout = options.pingTimeout;
 
-        this.sendRate = options.sendRate;
-        this.reconnectDelay = options.reconnectDelay;
-        this.pingInterval = options.pingInterval;
-        this.pingTimeout = options.pingTimeout;
+		this.adminSecretKey = options.adminSecretKey;
+		this.serverSecretKey = options.serverSecretKey;
+		this.clientSecretKey = options.clientSecretKey;
 
-        this.adminSecretKey = options.adminSecretKey;
-        this.serverSecretKey = options.serverSecretKey;
-        this.clientSecretKey = options.clientSecretKey;
+		this.logType = options.logType;
+	}
 
-        this.gnServerSourcePath = options.gnServerSourcePath;
+	public getServerAddress(): string {
+		return this.serverAddress;
+	}
 
-        this.logType = options.logType;
-    }
+	public setServerAddress(serverAddress: string): void {
+		this.serverAddress = serverAddress;
+	}
 
-    public getServerAddress(): string {
-        return this.serverAddress;
-    }
+	public getServerPort(): number {
+		return this.serverPort;
+	}
 
-    public setServerAddress(serverAddress: string): void {
-        this.serverAddress = serverAddress;
-    }
+	public setServerPort(serverPort: number): void {
+		this.serverPort = serverPort;
+	}
 
-    public getServerPort(): number {
-        return this.serverPort;
-    }
+	public getServerSocketPort(): number {
+		return this.serverSocketPort;
+	}
 
-    public setServerPort(serverPort: number): void {
-        this.serverPort = serverPort;
-    }
+	public setServerSocketPort(serverSocketPort: number): void {
+		this.serverSocketPort = serverSocketPort;
+	}
 
-    public getServerSocketPort(): number {
-        return this.serverSocketPort;
-    }
+	public isUseSsl(): boolean {
+		return this.useSsl;
+	}
 
-    public setServerSocketPort(serverSocketPort: number): void {
-        this.serverSocketPort = serverSocketPort;
-    }
+	public setUseSsl(useSsl: boolean): void {
+		this.useSsl = useSsl;
+	}
 
-    public isUseSsl(): boolean {
-        return this.useSsl;
-    }
+	public isUseSocket(): boolean {
+		return this.useSocket;
+	}
 
-    public setUseSsl(useSsl: boolean): void {
-        this.useSsl = useSsl;
-    }
+	public setUseSocket(useSocket: boolean): void {
+		this.useSocket = useSocket;
+	}
 
-    public isUseSocket(): boolean {
-        return this.useSocket;
-    }
+	public isUseHttp(): boolean {
+		return this.useHttp;
+	}
 
-    public setUseSocket(useSocket: boolean): void {
-        this.useSocket = useSocket;
-    }
+	public setUseHttp(useHttp: boolean): void {
+		this.useHttp = useHttp;
+	}
 
-    public isUseHttp(): boolean {
-        return this.useHttp;
-    }
+	public getDefaultTimeoutInSeconds(): number {
+		return this.defaultTimeoutInSeconds;
+	}
 
-    public setUseHttp(useHttp: boolean): void {
-        this.useHttp = useHttp;
-    }
+	public setDefaultTimeoutInSeconds(defaultTimeoutInSeconds: number): void {
+		this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+	}
 
-    public getSendRate(): number {
-        return this.sendRate;
-    }
+	public getMessageType(): MessageType {
+		return this.messageType;
+	}
 
-    public setSendRate(sendRate: number): void {
-        this.sendRate = sendRate;
-    }
+	public setMessageType(messageType: MessageType): void {
+		this.messageType = messageType;
+	}
 
-    public getReconnectDelay(): number {
-        return this.reconnectDelay;
-    }
+	public getSendRate(): number {
+		return this.sendRate;
+	}
 
-    public setReconnectDelay(reconnectDelay: number): void {
-        this.reconnectDelay = reconnectDelay;
-    }
+	public setSendRate(sendRate: number): void {
+		this.sendRate = sendRate;
+	}
 
-    public getPingInterval(): number {
-        return this.pingInterval;
-    }
+	public getReconnectDelay(): number {
+		return this.reconnectDelay;
+	}
 
-    public setPingInterval(pingInterval: number): void {
-        this.pingInterval = pingInterval;
-    }
+	public setReconnectDelay(reconnectDelay: number): void {
+		this.reconnectDelay = reconnectDelay;
+	}
 
-    public getPingTimeout(): number {
-        return this.pingTimeout;
-    }
+	public getPingInterval(): number {
+		return this.pingInterval;
+	}
 
-    public setPingTimeout(pingTimeout: number): void {
-        this.pingTimeout = pingTimeout;
-    }
+	public setPingInterval(pingInterval: number): void {
+		this.pingInterval = pingInterval;
+	}
 
-    public getAdminSecretKey(): string {
-        return this.adminSecretKey;
-    }
+	public getPingTimeout(): number {
+		return this.pingTimeout;
+	}
 
-    public setAdminSecretKey(adminSecretKey: string): void {
-        this.adminSecretKey = adminSecretKey;
-    }
+	public setPingTimeout(pingTimeout: number): void {
+		this.pingTimeout = pingTimeout;
+	}
 
-    public getServerSecretKey(): string {
-        return this.serverSecretKey;
-    }
+	public getAdminSecretKey(): string {
+		return this.adminSecretKey;
+	}
 
-    public setServerSecretKey(serverSecretKey: string): void {
-        this.serverSecretKey = serverSecretKey;
-    }
+	public setAdminSecretKey(adminSecretKey: string): void {
+		this.adminSecretKey = adminSecretKey;
+	}
 
-    public getClientSecretKey(): string {
-        return this.clientSecretKey;
-    }
+	public getServerSecretKey(): string {
+		return this.serverSecretKey;
+	}
 
-    public setClientSecretKey(clientSecretKey: string): void {
-        this.clientSecretKey = clientSecretKey;
-    }
+	public setServerSecretKey(serverSecretKey: string): void {
+		this.serverSecretKey = serverSecretKey;
+	}
 
-    public getGNServerSourcePath(): string {
-        return this.gnServerSourcePath;
-    }
+	public getClientSecretKey(): string {
+		return this.clientSecretKey;
+	}
 
-    public setGNServerSourcePath(gnServerSourcePath: string): void {
-        this.gnServerSourcePath = gnServerSourcePath;
-    }
+	public setClientSecretKey(clientSecretKey: string): void {
+		this.clientSecretKey = clientSecretKey;
+	}
 
-    public getLogType(): LogType {
-        return this.logType;
-    }
+	public getLogType(): LogType {
+		return this.logType;
+	}
 
-    public setLogType(logType: LogType): void {
-        this.logType = logType;
-    }
+	public setLogType(logType: LogType): void {
+		this.logType = logType;
+	}
 
-    public getSocketUrl(): string {
-        if (this.serverSocketPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
-        else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverSocketPort;
-    }
+	public getSocketUrl(): string {
+		if (this.serverSocketPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
+		else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverSocketPort;
+	}
 
-    public getHttpUrl(): string {
-        if (this.serverPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
-        else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverPort;
-    }
+	public getHttpUrl(): string {
+		if (this.serverPort < 0) return (this.useSsl ? "https" : "http") + "://" + this.serverAddress;
+		else return (this.useSsl ? "https" : "http") + "://" + this.serverAddress + ":" + this.serverPort;
+	}
 
 }

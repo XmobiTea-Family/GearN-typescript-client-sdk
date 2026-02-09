@@ -1,11 +1,11 @@
-export class GNErrorCode {
+export class ErrorCode {
 	public static readonly Ok: number = 1;
 
 	public static readonly AccountNotFound: number = 2;
 	public static readonly AccountPasswordWrong: number = 3;
 	public static readonly AccountUsernameExists: number = 4;
 	public static readonly VerifyTokenError: number = 5;
-	public static readonly ServiceNameNotFound: number = 6;
+	public static readonly VerifyFailed: number = 6;
 	public static readonly CharacterPlayerNotFound: number = 7;
 	public static readonly NotEnoughCurrency: number = 8;
 	public static readonly KeyNotFound: number = 9;
@@ -51,7 +51,7 @@ export class GNErrorCode {
 	public static readonly VersionInvalid: number = 47;
 	public static readonly EmailInvalid: number = 48;
 
-    public static readonly StoreItemHadPurchaseAndNonConsumable: number = 49;
-    public static readonly StoreItemHadExists: number = 50;
+	public static readonly StoreItemHadPurchaseAndNonConsumable: number = 49;
+	public static readonly StoreItemHadExists: number = 50;
 
 }

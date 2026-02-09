@@ -226,7 +226,7 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
-	export class GrantGroupOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
+	export class CreateGroupOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
 
 		constructor() {
 			super();
@@ -234,7 +234,7 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
-	export class GrantPlayerCharacterOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
+	export class CreatePlayerCharacterOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
 
 		constructor() {
 			super();
@@ -242,7 +242,7 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
-	export class GrantPlayerItemOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
+	export class CreatePlayerItemOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
 
 		constructor() {
 			super();
@@ -346,7 +346,7 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
-	export class SetPlayerCurrencyOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
+	export class ChangePlayerCurrencyOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
 
 		constructor() {
 			super();
@@ -362,7 +362,7 @@ export namespace GamePlayerResponseModels {
 		}
 	}
 
-	export class SetPlayerStatisticsOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
+	export class ChangePlayerStatisticsOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
 
 		constructor() {
 			super();

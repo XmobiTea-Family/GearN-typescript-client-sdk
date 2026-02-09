@@ -7,46 +7,46 @@ import { InvalidMember } from "./../InvalidMember";
 import { OperationResponse } from "./../OperationResponse";
 
 export abstract class CustomOperationResponse {
-    public operationCode: number;
-    public parameters: GNHashtable;
-    public returnCode: number;
-    public debugMessage: string;
-    public errorCode: number;
-    public invalidMembers: InvalidMember[];
+	public operationCode: string;
+	public parameters: GNHashtable;
+	public returnCode: number;
+	public debugMessage: string;
+	public errorCode: number;
+	public invalidMembers: InvalidMember[];
 
-    public hasReturnCodeError() {
-        return this.returnCode != ReturnCode.Ok;
-    }
+	public hasReturnCodeError() {
+		return this.returnCode != ReturnCode.Ok;
+	}
 
-    public setupOperationResponse(operationResponse: OperationResponse): void {
-        this.operationCode = operationResponse.getOperationCode();
-        this.returnCode = operationResponse.getReturnCode();
-        this.debugMessage = operationResponse.getDebugMessage();
+	public setupOperationResponse(operationResponse: OperationResponse): void {
+		this.operationCode = operationResponse.getOperationCode();
+		this.returnCode = operationResponse.getReturnCode();
+		this.debugMessage = operationResponse.getDebugMessage();
 
-        this.parameters = operationResponse.getParameters();
-        this.invalidMembers = operationResponse.getInvalidMembers();
+		this.parameters = operationResponse.getParameters();
+		this.invalidMembers = operationResponse.getInvalidMembers();
 
-        if (!this.hasReturnCodeError()) {
-            this.errorCode = this.parameters.getNumber(ParameterCode.ErrorCode);
-        }
-    }
+		if (!this.hasReturnCodeError()) {
+			this.errorCode = this.parameters.getNumber(ParameterCode.ErrorCode);
+		}
+	}
 
-    public toString(): string {
-        return "ReturnCode: " + this.returnCode + " " + (this.parameters != null ? this.parameters.toString() : this.debugMessage);
-    }
+	public toString(): string {
+		return "ReturnCode: " + this.returnCode + " " + (this.parameters != null ? this.parameters.toString() : this.debugMessage);
+	}
 
 }
 
 export abstract class CustomOperationResponseAbstract<TResponseData> extends CustomOperationResponse {
-    public responseData: TResponseData;
-    protected responseDataCls: Constructor<TResponseData>;
+	public responseData: TResponseData;
+	protected responseDataCls: Constructor<TResponseData>;
 
-    public setupOperationResponse(operationResponse: OperationResponse): void {
-        super.setupOperationResponse(operationResponse);
+	public setupOperationResponse(operationResponse: OperationResponse): void {
+		super.setupOperationResponse(operationResponse);
 
-        if (!this.hasReturnCodeError()) {
-            this.responseData = ConverterService.deserializeObject<TResponseData>(this.parameters, this.responseDataCls);
-        }
-    }
+		if (!this.hasReturnCodeError()) {
+			this.responseData = ConverterService.deserializeObject<TResponseData>(this.parameters, this.responseDataCls);
+		}
+	}
 
 }

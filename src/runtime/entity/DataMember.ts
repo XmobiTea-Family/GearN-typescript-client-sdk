@@ -7,150 +7,150 @@ import { AbstractConstructor, Constructor, FieldDataType, GNObjectFieldMetadata,
 export const GN_METADATA = "__GN_METADATA__";
 
 const getGNReflectedDataType = (prototype: any, propertyKey: string): FieldDataType => {
-    let t = Reflect.getMetadata("design:type", prototype, propertyKey);
-    if (!t) {
-        throw Error(
-            `Cannot get gn reflected data type for ${prototype.constructor.name}:${propertyKey}`
-        );
-    }
+	let t = Reflect.getMetadata("design:type", prototype, propertyKey);
+	if (!t) {
+		throw Error(
+			`Cannot get gn reflected data type for ${prototype.constructor.name}:${propertyKey}`
+		);
+	}
 
-    switch (t.name) {
-        case "Boolean":
-            return FieldDataType.Boolean;
-        case "Number":
-            return FieldDataType.Number;
-        case "String":
-            return FieldDataType.String;
-        case "Array":
-            return FieldDataType.Array;
+	switch (t.name) {
+		case "Boolean":
+			return FieldDataType.Boolean;
+		case "Number":
+			return FieldDataType.Number;
+		case "String":
+			return FieldDataType.String;
+		case "Array":
+			return FieldDataType.Array;
 
-        default:
-            return FieldDataType.Object;
-    }
+		default:
+			return FieldDataType.Object;
+	}
 };
 
 const getGNReflectedMetadata = (prototype: any, propertyKey: string): {
-    fieldDataType: FieldDataType,
-    prototype: any
+	fieldDataType: FieldDataType,
+	prototype: any
 } => {
-    let t = Reflect.getMetadata("design:type", prototype, propertyKey);
-    if (!t) {
-        throw Error(
-            `Cannot get gn reflected data type for ${prototype.constructor.name}:${propertyKey}`
-        );
-    }
+	let t = Reflect.getMetadata("design:type", prototype, propertyKey);
+	if (!t) {
+		throw Error(
+			`Cannot get gn reflected data type for ${prototype.constructor.name}:${propertyKey}`
+		);
+	}
 
-    let answer: {
-        fieldDataType: FieldDataType,
-        prototype: any
-    } = {
-        fieldDataType: null,
-        prototype: t.prototype
-    }
+	let answer: {
+		fieldDataType: FieldDataType,
+		prototype: any
+	} = {
+		fieldDataType: null,
+		prototype: t.prototype
+	}
 
-    if (t.name == "Boolean")
-        answer.fieldDataType = FieldDataType.Boolean;
-    else if (t.name == "Number")
-        answer.fieldDataType = FieldDataType.Number;
-    else if (t.name == "String")
-        answer.fieldDataType = FieldDataType.String;
-    else if (t.name == "Array")
-        answer.fieldDataType = FieldDataType.Array;
-    else
-        answer.fieldDataType = FieldDataType.Object;
+	if (t.name == "Boolean")
+		answer.fieldDataType = FieldDataType.Boolean;
+	else if (t.name == "Number")
+		answer.fieldDataType = FieldDataType.Number;
+	else if (t.name == "String")
+		answer.fieldDataType = FieldDataType.String;
+	else if (t.name == "Array")
+		answer.fieldDataType = FieldDataType.Array;
+	else
+		answer.fieldDataType = FieldDataType.Object;
 
-    return answer;
+	return answer;
 };
 
 export const initGNObjectMetadata = <T extends GNObjectMetadata>(prototype: any): T => {
-    if (prototype === Object.prototype) {
-        return {} as T;
-    }
-    if (!prototype.hasOwnProperty(GN_METADATA)) {
-        const superPrototype = initGNObjectMetadata<T>(Object.getPrototypeOf(prototype));
-        prototype[GN_METADATA] = {
-            ...superPrototype,
-            id: getTableName(prototype.constructor),
-            fields: superPrototype.fields ? superPrototype.fields.map((f) => ({ ...f })) : [],
-        };
-    }
-    return prototype[GN_METADATA];
+	if (prototype === Object.prototype) {
+		return {} as T;
+	}
+	if (!prototype.hasOwnProperty(GN_METADATA)) {
+		const superPrototype = initGNObjectMetadata<T>(Object.getPrototypeOf(prototype));
+		prototype[GN_METADATA] = {
+			...superPrototype,
+			id: getTableName(prototype.constructor),
+			fields: superPrototype.fields ? superPrototype.fields.map((f) => ({ ...f })) : [],
+		};
+	}
+	return prototype[GN_METADATA];
 };
 
 export const initGNObjectFieldMetadata = <T extends GNObjectFieldMetadata>(prototype: any, propertyKey: string): T => {
-    let meta = initGNObjectMetadata<GNObjectMetadata>(prototype);
+	let meta = initGNObjectMetadata<GNObjectMetadata>(prototype);
 
-    let fieldIndex = meta.fields.findIndex((f) => f.name === propertyKey);
-    if (fieldIndex < 0) {
-        let gnReflectedMetadata = getGNReflectedMetadata(prototype, propertyKey);
+	let fieldIndex = meta.fields.findIndex((f) => f.name === propertyKey);
+	if (fieldIndex < 0) {
+		let gnReflectedMetadata = getGNReflectedMetadata(prototype, propertyKey);
 
-        const field: GNObjectFieldMetadata = {
-            name: propertyKey,
-            // fieldType: getGNReflectedDataType(prototype, propertyKey),
-            fieldType: gnReflectedMetadata.fieldDataType,
-            cls: gnReflectedMetadata.prototype.constructor
-        };
+		const field: GNObjectFieldMetadata = {
+			name: propertyKey,
+			// fieldType: getGNReflectedDataType(prototype, propertyKey),
+			fieldType: gnReflectedMetadata.fieldDataType,
+			cls: gnReflectedMetadata.prototype.constructor
+		};
 
-        meta.fields.push(field);
-        return field as T;
-    } else {
-        //-- shadow clone the field
-        const field = { ...meta.fields[fieldIndex] };
-        meta.fields[fieldIndex] = field;
-        return field as T;
-    }
+		meta.fields.push(field);
+		return field as T;
+	} else {
+		//-- shadow clone the field
+		const field = { ...meta.fields[fieldIndex] };
+		meta.fields[fieldIndex] = field;
+		return field as T;
+	}
 };
 
 export const getGNObjectMetadata = <T extends GNObjectMetadata>(obj: AbstractConstructor<any>): T | undefined => {
-    return obj.prototype[GN_METADATA];
+	return obj.prototype[GN_METADATA];
 };
 
 export const setGNObjectMetadata = <T extends GNObjectMetadata>(obj: AbstractConstructor<any>, metadata: T): void => {
-    obj.prototype[GN_METADATA] = metadata;
+	obj.prototype[GN_METADATA] = metadata;
 };
 
 export const getTableName = (model: Constructor<any>) => model?.name.toLowerCase();
 
 export interface GNEnhancedObjectFieldMetadata extends GNObjectFieldMetadata {
-    code: string;
-    isOptional: boolean;
-    gnFieldType: GNFieldDataType;
-    defaultValue: any;
+	code: string;
+	isOptional: boolean;
+	gnFieldType: GNFieldDataType;
+	defaultValue: any;
 
-    activeConditionValid: boolean;
+	activeConditionValid: boolean;
 
-    mustNonNull?: boolean;
-    minLength?: number;
-    maxLength?: number;
-    minValue?: number;
-    maxValue?: number;
-    mustInt?: boolean;
+	mustNonNull?: boolean;
+	minLength?: number;
+	maxLength?: number;
+	minValue?: number;
+	maxValue?: number;
+	mustInt?: boolean;
 };
 
 export enum GNFieldDataType {
-    Other = 0,
-    Number = 1,
-    String = 2,
-    Boolean = 3,
-    GNHashtable = 4,
-    GNArray = 5,
+	Other = 0,
+	Number = 1,
+	String = 2,
+	Boolean = 3,
+	GNHashtable = 4,
+	GNArray = 5,
 
 };
 
 export interface GNEnhancedObjectMetadata extends GNObjectMetadata {
-    fields: GNEnhancedObjectFieldMetadata[];
+	fields: GNEnhancedObjectFieldMetadata[];
 
 };
 
 interface DataMemberBaseArgs {
-    code: string;
-    isOptional?: boolean;
-    defaultValue?: any;
+	code: string;
+	isOptional?: boolean;
+	defaultValue?: any;
 
 };
 
 interface DataMemberArgs extends DataMemberBaseArgs {
-    gnFieldType?: GNFieldDataType;
+	gnFieldType?: GNFieldDataType;
 
 };
 
@@ -159,178 +159,178 @@ interface OtherDataMemberArgs extends DataMemberBaseArgs {
 };
 
 interface StringDataMemberArgs extends OtherDataMemberArgs {
-    defaultValue?: string;
-    mustNonNull?: boolean;
-    minLength?: number;
-    maxLength?: number;
+	defaultValue?: string;
+	mustNonNull?: boolean;
+	minLength?: number;
+	maxLength?: number;
 
 };
 
 interface BooleanDataMemberArgs extends OtherDataMemberArgs {
-    defaultValue?: boolean;
+	defaultValue?: boolean;
 
 };
 
 interface NumberDataMemberArgs extends OtherDataMemberArgs {
-    defaultValue?: number;
-    minValue?: number;
-    maxValue?: number;
-    mustInt?: boolean;
+	defaultValue?: number;
+	minValue?: number;
+	maxValue?: number;
+	mustInt?: boolean;
 
 };
 
 interface GNHashtableDataMemberArgs extends OtherDataMemberArgs {
-    defaultValue?: GNHashtable;
-    mustNonNull?: boolean;
-    minLength?: number;
-    maxLength?: number;
+	defaultValue?: GNHashtable;
+	mustNonNull?: boolean;
+	minLength?: number;
+	maxLength?: number;
 };
 
 interface GNArrayDataMemberArgs extends OtherDataMemberArgs {
-    defaultValue?: GNArray;
-    mustNonNull?: boolean;
-    minLength?: number;
-    maxLength?: number;
-    elementCls?: new (...args: any[]) => any;
+	defaultValue?: GNArray;
+	mustNonNull?: boolean;
+	minLength?: number;
+	maxLength?: number;
+	elementCls?: new (...args: any[]) => any;
 };
 
 export const DataMember = (args: DataMemberArgs) => (prototype: any, propertyKey: string) => {
-    let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
-    field.code = args.code;
-    field.isOptional = args.isOptional == null ? false : args.isOptional;
-    field.defaultValue = args.defaultValue;
-    field.gnFieldType = args.gnFieldType == null ? GNFieldDataType.Other : args.gnFieldType;
+	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
+	field.code = args.code;
+	field.isOptional = args.isOptional == null ? false : args.isOptional;
+	field.defaultValue = args.defaultValue;
+	field.gnFieldType = args.gnFieldType == null ? GNFieldDataType.Other : args.gnFieldType;
 
-    field.activeConditionValid = false;
+	field.activeConditionValid = false;
 
 };
 
 export const StringDataMember = (args: StringDataMemberArgs) => (prototype: any, propertyKey: string) => {
-    let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
-    field.code = args.code;
-    field.isOptional = args.isOptional == null ? false : args.isOptional;
-    field.defaultValue = args.defaultValue;
-    field.gnFieldType = GNFieldDataType.String;
+	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
+	field.code = args.code;
+	field.isOptional = args.isOptional == null ? false : args.isOptional;
+	field.defaultValue = args.defaultValue;
+	field.gnFieldType = GNFieldDataType.String;
 
-    if (args.mustNonNull != null || args.minLength != null || args.maxLength != null) {
-        field.activeConditionValid = true;
+	if (args.mustNonNull != null || args.minLength != null || args.maxLength != null) {
+		field.activeConditionValid = true;
 
-        if (args.mustNonNull == null) {
-            args.mustNonNull = false;
-        }
+		if (args.mustNonNull == null) {
+			args.mustNonNull = false;
+		}
 
-        if (args.minLength == null) {
-            args.minLength = 0;
-        }
+		if (args.minLength == null) {
+			args.minLength = 0;
+		}
 
-        if (args.maxLength == null) {
-            args.maxLength = 256;
-        }
-    }
+		if (args.maxLength == null) {
+			args.maxLength = 256;
+		}
+	}
 
-    field.mustNonNull = args.mustNonNull;
-    field.minLength = args.minLength;
-    field.maxLength = args.maxLength;
+	field.mustNonNull = args.mustNonNull;
+	field.minLength = args.minLength;
+	field.maxLength = args.maxLength;
 
 };
 
 export const BooleanDataMember = (args: BooleanDataMemberArgs) => (prototype: any, propertyKey: string) => {
-    let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
-    field.code = args.code;
-    field.isOptional = args.isOptional == null ? false : args.isOptional;
-    field.defaultValue = args.defaultValue;
-    field.gnFieldType = GNFieldDataType.Boolean;
+	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
+	field.code = args.code;
+	field.isOptional = args.isOptional == null ? false : args.isOptional;
+	field.defaultValue = args.defaultValue;
+	field.gnFieldType = GNFieldDataType.Boolean;
 
-    field.activeConditionValid = false;
+	field.activeConditionValid = false;
 
 };
 
 export const GNHashtableDataMember = (args: GNHashtableDataMemberArgs) => (prototype: any, propertyKey: string) => {
-    let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
+	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
 
-    field.code = args.code;
-    field.isOptional = args.isOptional == null ? false : args.isOptional;
-    field.defaultValue = args.defaultValue;
-    field.gnFieldType = GNFieldDataType.GNHashtable;
+	field.code = args.code;
+	field.isOptional = args.isOptional == null ? false : args.isOptional;
+	field.defaultValue = args.defaultValue;
+	field.gnFieldType = GNFieldDataType.GNHashtable;
 
-    if (args.mustNonNull != null || args.minLength != null || args.maxLength != null) {
-        field.activeConditionValid = true;
+	if (args.mustNonNull != null || args.minLength != null || args.maxLength != null) {
+		field.activeConditionValid = true;
 
-        if (args.mustNonNull == null) {
-            args.mustNonNull = false;
-        }
+		if (args.mustNonNull == null) {
+			args.mustNonNull = false;
+		}
 
-        if (args.minLength == null) {
-            args.minLength = 0;
-        }
+		if (args.minLength == null) {
+			args.minLength = 0;
+		}
 
-        if (args.maxLength == null) {
-            args.maxLength = 256;
-        }
-    }
+		if (args.maxLength == null) {
+			args.maxLength = 256;
+		}
+	}
 
-    field.mustNonNull = args.mustNonNull;
-    field.minLength = args.minLength;
-    field.maxLength = args.maxLength;
+	field.mustNonNull = args.mustNonNull;
+	field.minLength = args.minLength;
+	field.maxLength = args.maxLength;
 
 };
 
 export const GNArrayDataMember = (args: GNArrayDataMemberArgs) => (prototype: any, propertyKey: string) => {
-    let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
-    if (args.elementCls != null) field.cls = args.elementCls;
+	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
+	if (args.elementCls != null) field.cls = args.elementCls;
 
-    field.code = args.code;
-    field.isOptional = args.isOptional == null ? false : args.isOptional;
-    field.defaultValue = args.defaultValue;
-    field.gnFieldType = GNFieldDataType.GNArray;
+	field.code = args.code;
+	field.isOptional = args.isOptional == null ? false : args.isOptional;
+	field.defaultValue = args.defaultValue;
+	field.gnFieldType = GNFieldDataType.GNArray;
 
-    if (args.mustNonNull != null || args.minLength != null || args.maxLength != null) {
-        field.activeConditionValid = true;
+	if (args.mustNonNull != null || args.minLength != null || args.maxLength != null) {
+		field.activeConditionValid = true;
 
-        if (args.mustNonNull == null) {
-            args.mustNonNull = false;
-        }
+		if (args.mustNonNull == null) {
+			args.mustNonNull = false;
+		}
 
-        if (args.minLength == null) {
-            args.minLength = 0;
-        }
+		if (args.minLength == null) {
+			args.minLength = 0;
+		}
 
-        if (args.maxLength == null) {
-            args.maxLength = 256;
-        }
-    }
+		if (args.maxLength == null) {
+			args.maxLength = 256;
+		}
+	}
 
-    field.mustNonNull = args.mustNonNull;
-    field.minLength = args.minLength;
-    field.maxLength = args.maxLength;
+	field.mustNonNull = args.mustNonNull;
+	field.minLength = args.minLength;
+	field.maxLength = args.maxLength;
 
 };
 
 export const NumberDataMember = (args: NumberDataMemberArgs) => (prototype: any, propertyKey: string) => {
-    let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
-    field.code = args.code;
-    field.isOptional = args.isOptional == null ? false : args.isOptional;
-    field.defaultValue = args.defaultValue;
-    field.gnFieldType = GNFieldDataType.Number;
+	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
+	field.code = args.code;
+	field.isOptional = args.isOptional == null ? false : args.isOptional;
+	field.defaultValue = args.defaultValue;
+	field.gnFieldType = GNFieldDataType.Number;
 
-    if (args.mustInt != null || args.minValue != null || args.maxValue != null) {
-        field.activeConditionValid = true;
+	if (args.mustInt != null || args.minValue != null || args.maxValue != null) {
+		field.activeConditionValid = true;
 
-        if (args.mustInt == null) {
-            args.mustInt = false;
-        }
+		if (args.mustInt == null) {
+			args.mustInt = false;
+		}
 
-        if (args.minValue == null) {
-            args.minValue = -Infinity;
-        }
+		if (args.minValue == null) {
+			args.minValue = -Infinity;
+		}
 
-        if (args.maxValue == null) {
-            args.maxValue = Infinity;
-        }
-    }
+		if (args.maxValue == null) {
+			args.maxValue = Infinity;
+		}
+	}
 
-    field.minValue = args.minValue;
-    field.maxValue = args.maxValue;
-    field.mustInt = args.mustInt;
+	field.minValue = args.minValue;
+	field.maxValue = args.maxValue;
+	field.mustInt = args.mustInt;
 
 };

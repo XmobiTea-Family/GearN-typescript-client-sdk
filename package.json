@@ -1,6 +1,6 @@
 {
   "name": "@xmobitea/gn-typescript-client",
-  "version": "2.5.3",
+  "version": "2.6.7",
   "description": "GearN Typescript Client SDK by XmobiTea (Pro)",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
@@ -16,7 +16,7 @@
     "push": "npm run build && npm publish && git push"
   },
   "author": "changx.develop@gmail.com (https://xmobitea.com)",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.15.17",
@@ -33,12 +33,33 @@
   },
   "dependencies": {
     "@msgpack/msgpack": "^2.8.0",
-    "axios": "^1.7.9",
+    "axios": "^1.10.0",
     "reflect-metadata": "^0.2.2",
     "socket.io-client": "^4.8.1",
     "store": "^2.0.12"
   },
   "directories": {
     "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XmobiTea-Family/GearN-typescript-client-sdk.git"
+  },
+  "keywords": [
+    "GN",
+    "GearN",
+    "Server",
+    "Typescript",
+    "Sdk",
+    "Client",
+    "Pro",
+    "XmobiTea"
+  ],
+  "bugs": {
+    "url": "https://github.com/XmobiTea-Family/GearN-typescript-client-sdk/issues"
+  },
+  "homepage": "https://gearn.net",
+  "engines": {
+    "node": ">=20.0.0"
   }
 }

@@ -1,47 +1,35 @@
-import { CodeHelper } from "./../helper/CodeHelper";
 import { GNHashtable } from "./../common/GNData";
 
 export class OperationEvent {
 
-    private eventCode: number;
-    private parameters: GNHashtable;
-    private encrypted: boolean;
+	private eventCode: string;
+	private parameters: GNHashtable;
 
-    constructor(eventCode: number, parameters: GNHashtable = null, encrypted: boolean = true) {
-        this.eventCode = eventCode;
-        this.parameters = parameters;
-        this.encrypted = encrypted;
-    }
+	constructor(eventCode: string, parameters: GNHashtable = null) {
+		this.eventCode = eventCode;
+		this.parameters = parameters;
+	}
 
-    public getEventCode(): number {
-        return this.eventCode;
-    }
+	public getEventCode(): string {
+		return this.eventCode;
+	}
 
-    public getParameters(): GNHashtable {
-        return this.parameters;
-    }
+	public getParameters(): GNHashtable {
+		return this.parameters;
+	}
 
-    public isEncrypted(): boolean {
-        return this.encrypted;
-    }
+	public setParameter(k: string, value: any): OperationEvent {
+		this.parameters.add(k, value);
+		return this;
+	}
 
-    public setParameter(k: string, value: any): OperationEvent {
-        this.parameters.add(k, value);
-        return this;
-    }
+	public setParameters(parameters: GNHashtable): OperationEvent {
+		this.parameters = parameters;
+		return this;
+	}
 
-    public setParameters(parameters: GNHashtable): OperationEvent {
-        this.parameters = parameters;
-        return this;
-    }
-
-    public setEncrypted(encrypted: boolean): OperationEvent {
-        this.encrypted = encrypted;
-        return this;
-    }
-
-    public toString(): string {
-        return "Code: " + CodeHelper.getEventCodeName(this.eventCode) + " (" + this.eventCode + ")" + ", parameters " + JSON.stringify(this.parameters?.toData()) + ", encrypted " + this.encrypted;
-    }
+	public toString(): string {
+		return "EventCode: " + this.eventCode + ", parameters " + JSON.stringify(this.parameters?.toData());
+	}
 
 }

@@ -28,15 +28,12 @@ export default {
 		filename: "index.js",
 		path: path.resolve(__dirname, "dist"),
 		library: {
-            type: "module",
+            type: "commonjs",
         },
 		environment: {
 			arrowFunction: true,
 		},
 	},
-    experiments: {
-        outputModule: true
-    },
 	optimization: {
 		minimize: false,
 		minimizer: [

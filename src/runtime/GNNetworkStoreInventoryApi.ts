@@ -35,12 +35,12 @@ export class StoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.GetStoreItemsWithTagOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse);
 	}
 
-	public grantStoreItem(requestData: StoreInventoryModels.GrantStoreItemRequestData, onResponse: Action1<StoreInventoryResponseModels.GrantStoreItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.GrantStoreItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GrantStoreItemOperationResponse);
+	public createStoreItem(requestData: StoreInventoryModels.CreateStoreItemRequestData, onResponse: Action1<StoreInventoryResponseModels.CreateStoreItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.CreateStoreItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.CreateStoreItemOperationResponse);
 	}
 
-	public async grantStoreItemAsync(requestData: StoreInventoryModels.GrantStoreItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<StoreInventoryResponseModels.GrantStoreItemOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.GrantStoreItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GrantStoreItemOperationResponse);
+	public async createStoreItemAsync(requestData: StoreInventoryModels.CreateStoreItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<StoreInventoryResponseModels.CreateStoreItemOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.CreateStoreItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.CreateStoreItemOperationResponse);
 	}
 
 	public setRemoveStatus(requestData: StoreInventoryModels.SetRemoveStatusRequestData, onResponse: Action1<StoreInventoryResponseModels.SetRemoveStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -107,7 +107,7 @@ export class StoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.GetStoreLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreLogOperationResponse);
 	}
 
-    public getStoreUsed(requestData: StoreInventoryModels.GetStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.GetStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+	public getStoreUsed(requestData: StoreInventoryModels.GetStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.GetStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.GetStoreUsedOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreUsedOperationResponse);
 	}
 
@@ -115,7 +115,7 @@ export class StoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.GetStoreUsedOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreUsedOperationResponse);
 	}
 
-    public removeStoreUsed(requestData: StoreInventoryModels.RemoveStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.RemoveStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+	public removeStoreUsed(requestData: StoreInventoryModels.RemoveStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.RemoveStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.RemoveStoreUsedOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.RemoveStoreUsedOperationResponse);
 	}
 
@@ -150,12 +150,12 @@ export class ServerStoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.ServerGetStoreItemsWithTagOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse);
 	}
 
-	public grantStoreItem(requestData: StoreInventoryModels.ServerGrantStoreItemRequestData, onResponse: Action1<StoreInventoryResponseModels.GrantStoreItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.ServerGrantStoreItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GrantStoreItemOperationResponse);
+	public createStoreItem(requestData: StoreInventoryModels.ServerCreateStoreItemRequestData, onResponse: Action1<StoreInventoryResponseModels.CreateStoreItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.ServerCreateStoreItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.CreateStoreItemOperationResponse);
 	}
 
-	public async grantStoreItemAsync(requestData: StoreInventoryModels.ServerGrantStoreItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<StoreInventoryResponseModels.GrantStoreItemOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.ServerGrantStoreItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GrantStoreItemOperationResponse);
+	public async createStoreItemAsync(requestData: StoreInventoryModels.ServerCreateStoreItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<StoreInventoryResponseModels.CreateStoreItemOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.ServerCreateStoreItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.CreateStoreItemOperationResponse);
 	}
 
 	public setRemoveStatus(requestData: StoreInventoryModels.ServerSetRemoveStatusRequestData, onResponse: Action1<StoreInventoryResponseModels.SetRemoveStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -222,7 +222,7 @@ export class ServerStoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.ServerGetStoreLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreLogOperationResponse);
 	}
 
-    public getStoreUsed(requestData: StoreInventoryModels.ServerGetStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.GetStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+	public getStoreUsed(requestData: StoreInventoryModels.ServerGetStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.GetStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.ServerGetStoreUsedOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreUsedOperationResponse);
 	}
 
@@ -230,7 +230,7 @@ export class ServerStoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.ServerGetStoreUsedOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreUsedOperationResponse);
 	}
 
-    public removeStoreUsed(requestData: StoreInventoryModels.ServerRemoveStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.RemoveStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+	public removeStoreUsed(requestData: StoreInventoryModels.ServerRemoveStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.RemoveStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.ServerRemoveStoreUsedOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.RemoveStoreUsedOperationResponse);
 	}
 
@@ -265,12 +265,12 @@ export class AdminStoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.AdminGetStoreItemsWithTagOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse);
 	}
 
-	public grantStoreItem(requestData: StoreInventoryModels.AdminGrantStoreItemRequestData, onResponse: Action1<StoreInventoryResponseModels.GrantStoreItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.AdminGrantStoreItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GrantStoreItemOperationResponse);
+	public createStoreItem(requestData: StoreInventoryModels.AdminCreateStoreItemRequestData, onResponse: Action1<StoreInventoryResponseModels.CreateStoreItemOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.AdminCreateStoreItemOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.CreateStoreItemOperationResponse);
 	}
 
-	public async grantStoreItemAsync(requestData: StoreInventoryModels.AdminGrantStoreItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<StoreInventoryResponseModels.GrantStoreItemOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.AdminGrantStoreItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GrantStoreItemOperationResponse);
+	public async createStoreItemAsync(requestData: StoreInventoryModels.AdminCreateStoreItemRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<StoreInventoryResponseModels.CreateStoreItemOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.AdminCreateStoreItemOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.CreateStoreItemOperationResponse);
 	}
 
 	public setRemoveStatus(requestData: StoreInventoryModels.AdminSetRemoveStatusRequestData, onResponse: Action1<StoreInventoryResponseModels.SetRemoveStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -337,7 +337,7 @@ export class AdminStoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.AdminGetStoreLogOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreLogOperationResponse);
 	}
 
-    public getStoreUsed(requestData: StoreInventoryModels.AdminGetStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.GetStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+	public getStoreUsed(requestData: StoreInventoryModels.AdminGetStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.GetStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.AdminGetStoreUsedOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreUsedOperationResponse);
 	}
 
@@ -345,7 +345,7 @@ export class AdminStoreInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new StoreInventoryRequestModels.AdminGetStoreUsedOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.GetStoreUsedOperationResponse);
 	}
 
-    public removeStoreUsed(requestData: StoreInventoryModels.AdminRemoveStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.RemoveStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+	public removeStoreUsed(requestData: StoreInventoryModels.AdminRemoveStoreUsedRequestData, onResponse: Action1<StoreInventoryResponseModels.RemoveStoreUsedOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
 		GNNetwork.sendViaHttpTRequestTResponse(new StoreInventoryRequestModels.AdminRemoveStoreUsedOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, StoreInventoryResponseModels.RemoveStoreUsedOperationResponse);
 	}
 

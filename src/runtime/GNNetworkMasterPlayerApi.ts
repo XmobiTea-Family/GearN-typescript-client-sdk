@@ -443,12 +443,12 @@ export class MasterPlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SetPlayerBanOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerBanOperationResponse);
 	}
 
-	public setPlayerCurrency(requestData: MasterPlayerModels.SetPlayerCurrencyRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.SetPlayerCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse);
+	public changePlayerCurrency(requestData: MasterPlayerModels.ChangePlayerCurrencyRequestData, onResponse: Action1<MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ChangePlayerCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse);
 	}
 
-	public async setPlayerCurrencyAsync(requestData: MasterPlayerModels.SetPlayerCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SetPlayerCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse);
+	public async changePlayerCurrencyAsync(requestData: MasterPlayerModels.ChangePlayerCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ChangePlayerCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse);
 	}
 
 	public setPlayerData(requestData: MasterPlayerModels.SetPlayerDataRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerDataOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -459,12 +459,12 @@ export class MasterPlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SetPlayerDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerDataOperationResponse);
 	}
 
-	public setPlayerStatistics(requestData: MasterPlayerModels.SetPlayerStatisticsRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.SetPlayerStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse);
+	public changePlayerStatistics(requestData: MasterPlayerModels.ChangePlayerStatisticsRequestData, onResponse: Action1<MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ChangePlayerStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse);
 	}
 
-	public async setPlayerStatisticsAsync(requestData: MasterPlayerModels.SetPlayerStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SetPlayerStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse);
+	public async changePlayerStatisticsAsync(requestData: MasterPlayerModels.ChangePlayerStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ChangePlayerStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse);
 	}
 
 	public setTag(requestData: MasterPlayerModels.SetTagRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTagOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -1126,12 +1126,12 @@ export class ServerMasterPlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSetPlayerBanOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerBanOperationResponse);
 	}
 
-	public setPlayerCurrency(requestData: MasterPlayerModels.ServerSetPlayerCurrencyRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerSetPlayerCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse);
+	public changePlayerCurrency(requestData: MasterPlayerModels.ServerChangePlayerCurrencyRequestData, onResponse: Action1<MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerChangePlayerCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse);
 	}
 
-	public async setPlayerCurrencyAsync(requestData: MasterPlayerModels.ServerSetPlayerCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSetPlayerCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse);
+	public async changePlayerCurrencyAsync(requestData: MasterPlayerModels.ServerChangePlayerCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerChangePlayerCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse);
 	}
 
 	public setPlayerData(requestData: MasterPlayerModels.ServerSetPlayerDataRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerDataOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -1142,12 +1142,12 @@ export class ServerMasterPlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSetPlayerDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerDataOperationResponse);
 	}
 
-	public setPlayerStatistics(requestData: MasterPlayerModels.ServerSetPlayerStatisticsRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerSetPlayerStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse);
+	public changePlayerStatistics(requestData: MasterPlayerModels.ServerChangePlayerStatisticsRequestData, onResponse: Action1<MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerChangePlayerStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse);
 	}
 
-	public async setPlayerStatisticsAsync(requestData: MasterPlayerModels.ServerSetPlayerStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSetPlayerStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse);
+	public async changePlayerStatisticsAsync(requestData: MasterPlayerModels.ServerChangePlayerStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerChangePlayerStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse);
 	}
 
 	public setTag(requestData: MasterPlayerModels.ServerSetTagRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTagOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -1809,12 +1809,12 @@ export class AdminMasterPlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSetPlayerBanOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerBanOperationResponse);
 	}
 
-	public setPlayerCurrency(requestData: MasterPlayerModels.AdminSetPlayerCurrencyRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminSetPlayerCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse);
+	public changePlayerCurrency(requestData: MasterPlayerModels.AdminChangePlayerCurrencyRequestData, onResponse: Action1<MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminChangePlayerCurrencyOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse);
 	}
 
-	public async setPlayerCurrencyAsync(requestData: MasterPlayerModels.AdminSetPlayerCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSetPlayerCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerCurrencyOperationResponse);
+	public async changePlayerCurrencyAsync(requestData: MasterPlayerModels.AdminChangePlayerCurrencyRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminChangePlayerCurrencyOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerCurrencyOperationResponse);
 	}
 
 	public setPlayerData(requestData: MasterPlayerModels.AdminSetPlayerDataRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerDataOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -1825,12 +1825,12 @@ export class AdminMasterPlayerApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSetPlayerDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerDataOperationResponse);
 	}
 
-	public setPlayerStatistics(requestData: MasterPlayerModels.AdminSetPlayerStatisticsRequestData, onResponse: Action1<MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminSetPlayerStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse);
+	public changePlayerStatistics(requestData: MasterPlayerModels.AdminChangePlayerStatisticsRequestData, onResponse: Action1<MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminChangePlayerStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse);
 	}
 
-	public async setPlayerStatisticsAsync(requestData: MasterPlayerModels.AdminSetPlayerStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSetPlayerStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetPlayerStatisticsOperationResponse);
+	public async changePlayerStatisticsAsync(requestData: MasterPlayerModels.AdminChangePlayerStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminChangePlayerStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse);
 	}
 
 	public setTag(requestData: MasterPlayerModels.AdminSetTagRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTagOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {

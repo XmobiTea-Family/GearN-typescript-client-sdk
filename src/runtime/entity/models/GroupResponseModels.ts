@@ -178,7 +178,7 @@ export namespace GroupResponseModels {
 		}
 	}
 
-	export class GrantGroupItemOperationResponse extends CustomOperationResponseAbstract<GroupModels.GroupResponseData> {
+	export class CreateGroupItemOperationResponse extends CustomOperationResponseAbstract<GroupModels.GroupResponseData> {
 
 		constructor() {
 			super();
@@ -250,7 +250,7 @@ export namespace GroupResponseModels {
 		}
 	}
 
-	export class SetGroupCurrencyOperationResponse extends CustomOperationResponseAbstract<GroupModels.GroupResponseData> {
+	export class ChangeGroupCurrencyOperationResponse extends CustomOperationResponseAbstract<GroupModels.GroupResponseData> {
 
 		constructor() {
 			super();
@@ -266,7 +266,7 @@ export namespace GroupResponseModels {
 		}
 	}
 
-	export class SetGroupStatisticsOperationResponse extends CustomOperationResponseAbstract<GroupModels.GroupResponseData> {
+	export class ChangeGroupStatisticsOperationResponse extends CustomOperationResponseAbstract<GroupModels.GroupResponseData> {
 
 		constructor() {
 			super();

@@ -235,12 +235,12 @@ export class InventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.SetItemDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemDataOperationResponse);
 	}
 
-	public setItemStatistics(requestData: InventoryModels.SetItemStatisticsRequestData, onResponse: Action1<InventoryResponseModels.SetItemStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.SetItemStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemStatisticsOperationResponse);
+	public changeItemStatistics(requestData: InventoryModels.ChangeItemStatisticsRequestData, onResponse: Action1<InventoryResponseModels.ChangeItemStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.ChangeItemStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeItemStatisticsOperationResponse);
 	}
 
-	public async setItemStatisticsAsync(requestData: InventoryModels.SetItemStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.SetItemStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.SetItemStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemStatisticsOperationResponse);
+	public async changeItemStatisticsAsync(requestData: InventoryModels.ChangeItemStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.ChangeItemStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.ChangeItemStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeItemStatisticsOperationResponse);
 	}
 
 	public setOwner(requestData: InventoryModels.SetOwnerRequestData, onResponse: Action1<InventoryResponseModels.SetOwnerOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -510,12 +510,12 @@ export class ServerInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.ServerSetItemDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemDataOperationResponse);
 	}
 
-	public setItemStatistics(requestData: InventoryModels.ServerSetItemStatisticsRequestData, onResponse: Action1<InventoryResponseModels.SetItemStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.ServerSetItemStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemStatisticsOperationResponse);
+	public changeItemStatistics(requestData: InventoryModels.ServerChangeItemStatisticsRequestData, onResponse: Action1<InventoryResponseModels.ChangeItemStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.ServerChangeItemStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeItemStatisticsOperationResponse);
 	}
 
-	public async setItemStatisticsAsync(requestData: InventoryModels.ServerSetItemStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.SetItemStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.ServerSetItemStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemStatisticsOperationResponse);
+	public async changeItemStatisticsAsync(requestData: InventoryModels.ServerChangeItemStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.ChangeItemStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.ServerChangeItemStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeItemStatisticsOperationResponse);
 	}
 
 	public setOwner(requestData: InventoryModels.ServerSetOwnerRequestData, onResponse: Action1<InventoryResponseModels.SetOwnerOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -785,12 +785,12 @@ export class AdminInventoryApi {
 		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.AdminSetItemDataOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemDataOperationResponse);
 	}
 
-	public setItemStatistics(requestData: InventoryModels.AdminSetItemStatisticsRequestData, onResponse: Action1<InventoryResponseModels.SetItemStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.AdminSetItemStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemStatisticsOperationResponse);
+	public changeItemStatistics(requestData: InventoryModels.AdminChangeItemStatisticsRequestData, onResponse: Action1<InventoryResponseModels.ChangeItemStatisticsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.AdminChangeItemStatisticsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeItemStatisticsOperationResponse);
 	}
 
-	public async setItemStatisticsAsync(requestData: InventoryModels.AdminSetItemStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.SetItemStatisticsOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.AdminSetItemStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetItemStatisticsOperationResponse);
+	public async changeItemStatisticsAsync(requestData: InventoryModels.AdminChangeItemStatisticsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.ChangeItemStatisticsOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.AdminChangeItemStatisticsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeItemStatisticsOperationResponse);
 	}
 
 	public setOwner(requestData: InventoryModels.AdminSetOwnerRequestData, onResponse: Action1<InventoryResponseModels.SetOwnerOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {

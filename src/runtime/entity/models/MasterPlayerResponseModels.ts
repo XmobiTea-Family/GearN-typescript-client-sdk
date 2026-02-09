@@ -290,11 +290,11 @@ export namespace MasterPlayerResponseModels {
 		}
 	}
 
-	export class LinkGenericServiceOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+	export class LinkGenericServiceOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.GenericServiceMasterPlayerResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
+			this.responseDataCls = MasterPlayerModels.GenericServiceMasterPlayerResponseData;
 		}
 	}
 
@@ -434,7 +434,7 @@ export namespace MasterPlayerResponseModels {
 		}
 	}
 
-	export class SetPlayerCurrencyOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+	export class ChangePlayerCurrencyOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();
@@ -450,7 +450,7 @@ export namespace MasterPlayerResponseModels {
 		}
 	}
 
-	export class SetPlayerStatisticsOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+	export class ChangePlayerStatisticsOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
 
 		constructor() {
 			super();

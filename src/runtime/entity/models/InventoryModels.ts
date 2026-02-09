@@ -1,98 +1,98 @@
-import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
 export namespace InventoryModels {
 
 	export class CustomDataParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@DataMember({ code: GNParameterCode.Value })
+		@DataMember({ code: ParameterCode.Value })
 		public value: any;
 
 	}
 
 	export class InfoRequestParam {
-		@BooleanDataMember({ code: GNParameterCode.CatalogId, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.CatalogId, isOptional: true, defaultValue: false })
 		public catalogId?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.ClassId, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.ClassId, isOptional: true, defaultValue: false })
 		public classId?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.ItemType, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.ItemType, isOptional: true, defaultValue: false })
 		public itemType?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Amount, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Amount, isOptional: true, defaultValue: false })
 		public amount?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Owner, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Owner, isOptional: true, defaultValue: false })
 		public owner?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.RemoveStatus, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.RemoveStatus, isOptional: true, defaultValue: false })
 		public removeStatus?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Segments, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Segments, isOptional: true, defaultValue: false })
 		public segments?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.CustomDatas, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.CustomDatas, isOptional: true, defaultValue: false })
 		public customDatas?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.DisplayName, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.DisplayName, isOptional: true, defaultValue: false })
 		public displayName?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Avatar, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Avatar, isOptional: true, defaultValue: false })
 		public avatar?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.TsCreate, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.TsCreate, isOptional: true, defaultValue: false })
 		public tsCreate?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.Tags, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.Tags, isOptional: true, defaultValue: false })
 		public tags?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.ItemStatistics, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.ItemStatistics, isOptional: true, defaultValue: false })
 		public itemStatistics?: boolean;
 
-		@BooleanDataMember({ code: GNParameterCode.ItemDatas, isOptional: true, defaultValue: false })
+		@BooleanDataMember({ code: ParameterCode.ItemDatas, isOptional: true, defaultValue: false })
 		public itemDatas?: boolean;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemDataKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.ItemDataKeys, isOptional: true, elementCls: String })
 		public itemDataKeys?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemStatisticsKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.ItemStatisticsKeys, isOptional: true, elementCls: String })
 		public itemStatisticsKeys?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
 		public customDataKeys?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.TagKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.TagKeys, isOptional: true, elementCls: String })
 		public tagKeys?: Array<string>;
 
 	}
 
 	export class ItemDataParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@DataMember({ code: GNParameterCode.Value })
+		@DataMember({ code: ParameterCode.Value })
 		public value: any;
 
 	}
 
 	export class ItemStatisticsParam {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@NumberDataMember({ code: GNParameterCode.Value })
+		@NumberDataMember({ code: ParameterCode.Value })
 		public value: number;
 
 	}
 
 	export class AddSegmentRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 6, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 6, maxLength: 32, mustNonNull: true })
 		public value: string;
 
 	}
@@ -104,7 +104,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetAmountRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -116,7 +116,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetAvatarRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -128,7 +128,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetCatalogIdRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -140,7 +140,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetClassIdRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -152,10 +152,10 @@ export namespace InventoryModels {
 	}
 
 	export class GetCustomDataRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
 		public customDataKeys?: Array<string>;
 
 	}
@@ -167,7 +167,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetDisplayNameRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -179,11 +179,11 @@ export namespace InventoryModels {
 	}
 
 	export class GetItemDataRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemDataKeys, isOptional: true, elementCls: String })
-		public inventoryDataKeys?: Array<string>;
+		@GNArrayDataMember({ code: ParameterCode.ItemDataKeys, isOptional: true, elementCls: String })
+		public itemDataKeys?: Array<string>;
 
 	}
 
@@ -194,10 +194,10 @@ export namespace InventoryModels {
 	}
 
 	export class GetItemInformationRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
 	}
@@ -209,10 +209,10 @@ export namespace InventoryModels {
 	}
 
 	export class GetItemStatisticsRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.StatisticsKeys, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.StatisticsKeys, isOptional: true, elementCls: String })
 		public statisticsKeys?: Array<string>;
 
 	}
@@ -224,16 +224,16 @@ export namespace InventoryModels {
 	}
 
 	export class GetItemsWithDisplayNameRequestData {
-		@StringDataMember({ code: GNParameterCode.Keyword, minLength: 2, maxLength: 32 })
+		@StringDataMember({ code: ParameterCode.Keyword, minLength: 2, maxLength: 32 })
 		public keyword: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -245,16 +245,16 @@ export namespace InventoryModels {
 	}
 
 	export class GetItemsWithSegmentRequestData {
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -266,19 +266,19 @@ export namespace InventoryModels {
 	}
 
 	export class GetItemsWithTagRequestData {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
 	}
@@ -290,7 +290,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetItemTypeRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -302,7 +302,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetOwnerRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -314,7 +314,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetRemoveStatusRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -326,7 +326,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetSegmentRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -338,25 +338,25 @@ export namespace InventoryModels {
 	}
 
 	export class GetStatisticsLeaderboardAroundItemRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public catalogId?: string;
 
 	}
@@ -368,25 +368,25 @@ export namespace InventoryModels {
 	}
 
 	export class GetStatisticsLeaderboardRequestData {
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
-		@StringDataMember({ code: GNParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Version, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public version?: string;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public catalogId?: string;
 
 	}
@@ -398,16 +398,16 @@ export namespace InventoryModels {
 	}
 
 	export class GetCreateLeaderboardRequestData {
-		@GNHashtableDataMember({ code: GNParameterCode.InfoRequestParam, mustNonNull: true })
+		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
-		@NumberDataMember({ code: GNParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@BooleanDataMember({ code: GNParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
+		@BooleanDataMember({ code: ParameterCode.LoadFromCache, defaultValue: true, isOptional: true })
 		public loadFromCache?: boolean;
 
 	}
@@ -419,10 +419,10 @@ export namespace InventoryModels {
 	}
 
 	export class GetTagRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.TagKeys, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.TagKeys, elementCls: String })
 		public tagKeys: Array<string>;
 
 	}
@@ -434,7 +434,7 @@ export namespace InventoryModels {
 	}
 
 	export class GetTsCreateRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
@@ -446,10 +446,10 @@ export namespace InventoryModels {
 	}
 
 	export class RemoveSegmentRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
 
 	}
@@ -461,10 +461,10 @@ export namespace InventoryModels {
 	}
 
 	export class RemoveTagRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
 	}
@@ -476,10 +476,10 @@ export namespace InventoryModels {
 	}
 
 	export class SetAmountRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@NumberDataMember({ code: GNParameterCode.Amount, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Amount, mustInt: true })
 		public amount: number;
 
 	}
@@ -491,13 +491,13 @@ export namespace InventoryModels {
 	}
 
 	export class SetAvatarRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@NumberDataMember({ code: GNParameterCode.Type, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 1, maxLength: 128, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 1, maxLength: 128, mustNonNull: true })
 		public value: string;
 
 	}
@@ -509,11 +509,11 @@ export namespace InventoryModels {
 	}
 
 	export class SetCustomDataRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.CustomDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: CustomDataParam })
-		public customData: Array<CustomDataParam>;
+		@GNArrayDataMember({ code: ParameterCode.CustomDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: CustomDataParam })
+		public customDatas: Array<CustomDataParam>;
 
 	}
 
@@ -524,10 +524,10 @@ export namespace InventoryModels {
 	}
 
 	export class SetDisplayNameRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.DisplayName, minLength: 5, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.DisplayName, minLength: 5, maxLength: 32, mustNonNull: true })
 		public displayName: string;
 
 	}
@@ -539,11 +539,11 @@ export namespace InventoryModels {
 	}
 
 	export class SetItemDataRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: ItemDataParam })
-		public inventoryDataParams: Array<ItemDataParam>;
+		@GNArrayDataMember({ code: ParameterCode.ItemDatas, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: ItemDataParam })
+		public itemDatas: Array<ItemDataParam>;
 
 	}
 
@@ -553,32 +553,32 @@ export namespace InventoryModels {
 	export class AdminSetItemDataRequestData extends ServerSetItemDataRequestData {
 	}
 
-	export class SetItemStatisticsRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+	export class ChangeItemStatisticsRequestData {
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: ItemStatisticsParam })
-		public inventoryStatisticsParams: Array<ItemStatisticsParam>;
+		@GNArrayDataMember({ code: ParameterCode.ItemStatistics, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: ItemStatisticsParam })
+		public itemStatistics: Array<ItemStatisticsParam>;
 
-		@StringDataMember({ code: GNParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Log, minLength: 1, maxLength: 256, mustNonNull: true, isOptional: true })
 		public log?: string;
 
 	}
 
-	export class ServerSetItemStatisticsRequestData extends SetItemStatisticsRequestData {
+	export class ServerChangeItemStatisticsRequestData extends ChangeItemStatisticsRequestData {
 	}
 
-	export class AdminSetItemStatisticsRequestData extends ServerSetItemStatisticsRequestData {
+	export class AdminChangeItemStatisticsRequestData extends ServerChangeItemStatisticsRequestData {
 	}
 
 	export class SetOwnerRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 11, maxLength: 11, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.OwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.NewOwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
 		public newOwnerId: string;
 
-		@NumberDataMember({ code: GNParameterCode.OwnerType, mustInt: true })
+		@NumberDataMember({ code: ParameterCode.NewOwnerType, mustInt: true })
 		public newOwnerType: number;
 
 	}
@@ -590,10 +590,10 @@ export namespace InventoryModels {
 	}
 
 	export class SetRemoveStatusRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.Reason, isOptional: true, defaultValue: "" })
+		@StringDataMember({ code: ParameterCode.Reason, isOptional: true, defaultValue: "" })
 		public reason?: string;
 
 	}
@@ -605,13 +605,13 @@ export namespace InventoryModels {
 	}
 
 	export class SetTagRequestData {
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
 
-		@StringDataMember({ code: GNParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
 
 	}
@@ -623,16 +623,16 @@ export namespace InventoryModels {
 	}
 
 	export class GetStatisticsLogRequestData {
-		@GNArrayDataMember({ code: GNParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
+		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
 
-		@StringDataMember({ code: GNParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true, isOptional: true })
 		public itemId?: string;
 
-		@NumberDataMember({ code: GNParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
-		@StringDataMember({ code: GNParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
 	}
@@ -644,121 +644,121 @@ export namespace InventoryModels {
 	}
 
 	export class InfoResponseParameters {
-		@StringDataMember({ code: GNParameterCode.CatalogId, isOptional: true })
+		@StringDataMember({ code: ParameterCode.CatalogId, isOptional: true })
 		public catalogId?: string;
 
-		@StringDataMember({ code: GNParameterCode.ClassId, isOptional: true })
+		@StringDataMember({ code: ParameterCode.ClassId, isOptional: true })
 		public classId?: string;
 
-		@NumberDataMember({ code: GNParameterCode.ItemType, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.ItemType, isOptional: true })
 		public itemType?: number;
 
-		@NumberDataMember({ code: GNParameterCode.Amount, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Amount, isOptional: true })
 		public amount?: number;
 
-		@GNHashtableDataMember({ code: GNParameterCode.Owner, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.Owner, isOptional: true })
 		public owner?: GenericModels.OwnerItem;
 
-		@GNHashtableDataMember({ code: GNParameterCode.RemoveStatus, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.RemoveStatus, isOptional: true })
 		public removeStatus?: GenericModels.RemoveStatusItem;
 
-		@GNArrayDataMember({ code: GNParameterCode.Segments, isOptional: true, elementCls: String })
+		@GNArrayDataMember({ code: ParameterCode.Segments, isOptional: true, elementCls: String })
 		public segments?: Array<string>;
 
-		@GNArrayDataMember({ code: GNParameterCode.CustomDatas, isOptional: true, elementCls: GenericModels.DataItem })
+		@GNArrayDataMember({ code: ParameterCode.CustomDatas, isOptional: true, elementCls: GenericModels.DataItem })
 		public customDatas?: Array<GenericModels.DataItem>;
 
-		@StringDataMember({ code: GNParameterCode.DisplayName, isOptional: true })
+		@StringDataMember({ code: ParameterCode.DisplayName, isOptional: true })
 		public displayName?: string;
 
-		@GNHashtableDataMember({ code: GNParameterCode.Avatar, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.Avatar, isOptional: true })
 		public avatar?: GenericModels.AvatarItem;
 
-		@NumberDataMember({ code: GNParameterCode.TsCreate, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.TsCreate, isOptional: true })
 		public tsCreate?: number;
 
-		@GNArrayDataMember({ code: GNParameterCode.Tags, isOptional: true, elementCls: GenericModels.TagItem })
+		@GNArrayDataMember({ code: ParameterCode.Tags, isOptional: true, elementCls: GenericModels.TagItem })
 		public tags?: Array<GenericModels.TagItem>;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemDatas, isOptional: true, elementCls: GenericModels.DataItem })
+		@GNArrayDataMember({ code: ParameterCode.ItemDatas, isOptional: true, elementCls: GenericModels.DataItem })
 		public itemDatas?: Array<GenericModels.DataItem>;
 
-		@GNArrayDataMember({ code: GNParameterCode.ItemStatistics, isOptional: true, elementCls: GenericModels.StatisticsItem })
+		@GNArrayDataMember({ code: ParameterCode.ItemStatistics, isOptional: true, elementCls: GenericModels.StatisticsItem })
 		public itemStatistics?: Array<GenericModels.StatisticsItem>;
 
 	}
 
 	export class InventoryResponseData {
-		@GNHashtableDataMember({ code: GNParameterCode.InfoResponseParameters })
+		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
 	export class InventoryWithItemIdResponseData extends InventoryResponseData {
-		@StringDataMember({ code: GNParameterCode.ItemId })
+		@StringDataMember({ code: ParameterCode.ItemId })
 		public itemId: string;
 
 	}
 
 	export class InventoryLeaderboardResponseData extends InventoryWithItemIdResponseData {
-		@NumberDataMember({ code: GNParameterCode.Position })
+		@NumberDataMember({ code: ParameterCode.Position })
 		public position: number;
 
-		@NumberDataMember({ code: GNParameterCode.BackupValue, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.BackupValue, isOptional: true })
 		public backupValue?: number;
 
 	}
 
 	export class InventoryLogResponseData {
-		@StringDataMember({ code: GNParameterCode.ItemId })
+		@StringDataMember({ code: ParameterCode.ItemId })
 		public itemId: string;
 
-		@NumberDataMember({ code: GNParameterCode.TsCreate })
+		@NumberDataMember({ code: ParameterCode.TsCreate })
 		public tsCreate: number;
 
-		@StringDataMember({ code: GNParameterCode.Log })
+		@StringDataMember({ code: ParameterCode.Log })
 		public log: string;
 
-		@StringDataMember({ code: GNParameterCode.Key })
+		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
 
-		@NumberDataMember({ code: GNParameterCode.Amount })
+		@NumberDataMember({ code: ParameterCode.Amount })
 		public amount: number;
 
-		@NumberDataMember({ code: GNParameterCode.StartValue })
+		@NumberDataMember({ code: ParameterCode.StartValue })
 		public startValue: number;
 
-		@NumberDataMember({ code: GNParameterCode.FinalValue })
+		@NumberDataMember({ code: ParameterCode.FinalValue })
 		public finalValue: number;
 
 	}
 
 	export class GetStatisticsLeaderboardResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: InventoryLeaderboardResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryLeaderboardResponseData })
 		public results: Array<InventoryLeaderboardResponseData>;
 
-		@NumberDataMember({ code: GNParameterCode.TsCreate, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.TsCreate, isOptional: true })
 		public tsCreate: number;
 
 	}
 
 	export class InventoriesWithItemIdResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: InventoryWithItemIdResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryWithItemIdResponseData })
 		public results: Array<InventoryWithItemIdResponseData>;
 
 	}
 
 	export class GetCreateLeaderboardResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: InventoryLeaderboardResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryLeaderboardResponseData })
 		public results: Array<InventoryLeaderboardResponseData>;
 
 	}
 
 	export class GetStatisticsLogResponseData {
-		@GNArrayDataMember({ code: GNParameterCode.Results, elementCls: InventoryLogResponseData })
+		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryLogResponseData })
 		public results: Array<InventoryLogResponseData>;
 
-		@StringDataMember({ code: GNParameterCode.Token, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}

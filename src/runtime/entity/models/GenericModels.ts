@@ -1,135 +1,135 @@
-import { GNParameterCode } from "./../../constant/parameterCode/GNParameterCode";
+import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
 export namespace GenericModels {
 	export class AvatarItem {
-		@NumberDataMember({ code: GNParameterCode.Type })
+		@NumberDataMember({ code: ParameterCode.Type })
 		public type: number;
 
-		@StringDataMember({ code: GNParameterCode.Value })
+		@StringDataMember({ code: ParameterCode.Value })
 		public value: string;
 
 	}
 
 	export class TagItem {
-		@StringDataMember({ code: GNParameterCode.Key })
+		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
 
-		@StringDataMember({ code: GNParameterCode.Value })
+		@StringDataMember({ code: ParameterCode.Value })
 		public value: string;
 
 	}
 
 	export class BanItem {
-		@NumberDataMember({ code: GNParameterCode.TsExpire })
+		@NumberDataMember({ code: ParameterCode.TsExpire })
 		public tsExpire: number;
 
-		@StringDataMember({ code: GNParameterCode.Reason })
+		@StringDataMember({ code: ParameterCode.Reason })
 		public reason: string;
 
 	}
 
 	export class DataItem {
-		@StringDataMember({ code: GNParameterCode.Key })
+		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
 
-		@DataMember({ code: GNParameterCode.Value })
+		@DataMember({ code: ParameterCode.Value })
 		public value: any;
 
 	}
 
 	export class CurrencyItem {
-		@StringDataMember({ code: GNParameterCode.Key })
+		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
 
-		@NumberDataMember({ code: GNParameterCode.Value })
+		@NumberDataMember({ code: ParameterCode.Value })
 		public value: number;
 
 	}
 
 	export class StatisticsItem {
-		@StringDataMember({ code: GNParameterCode.Key })
+		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
 
-		@NumberDataMember({ code: GNParameterCode.Value })
+		@NumberDataMember({ code: ParameterCode.Value })
 		public value: number;
 
 	}
 
 	export class CharacterItem {
-		@StringDataMember({ code: GNParameterCode.CharacterId })
+		@StringDataMember({ code: ParameterCode.CharacterId })
 		public characterId: string;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId })
+		@StringDataMember({ code: ParameterCode.CatalogId })
 		public catalogId: string;
 
 	}
 
 	export class OwnerItem {
-		@NumberDataMember({ code: GNParameterCode.Type })
+		@NumberDataMember({ code: ParameterCode.Type })
 		public type: number;
 
-		@StringDataMember({ code: GNParameterCode.Id })
+		@StringDataMember({ code: ParameterCode.Id })
 		public id: string;
 
 	}
 
 	export class RemoveStatusItem {
-		@NumberDataMember({ code: GNParameterCode.TsRemove })
+		@NumberDataMember({ code: ParameterCode.TsRemove })
 		public tsRemove: number;
 
-		@StringDataMember({ code: GNParameterCode.Reason, isOptional: true })
+		@StringDataMember({ code: ParameterCode.Reason, isOptional: true })
 		public reason?: string;
 
 	}
 
 	export class InventoryItem {
-		@StringDataMember({ code: GNParameterCode.ItemId })
+		@StringDataMember({ code: ParameterCode.ItemId })
 		public itemId: string;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId })
+		@StringDataMember({ code: ParameterCode.CatalogId })
 		public catalogId: string;
 
-		@StringDataMember({ code: GNParameterCode.ClassId })
+		@StringDataMember({ code: ParameterCode.ClassId })
 		public classId: string;
 
 	}
 
 	export class GroupItem {
-		@StringDataMember({ code: GNParameterCode.GroupId })
+		@StringDataMember({ code: ParameterCode.GroupId })
 		public groupId: string;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId })
+		@StringDataMember({ code: ParameterCode.CatalogId })
 		public catalogId: string;
 
-		@NumberDataMember({ code: GNParameterCode.Status })
+		@NumberDataMember({ code: ParameterCode.Status })
 		public status: number;
 
-		@NumberDataMember({ code: GNParameterCode.TsLastStatusUpdate })
+		@NumberDataMember({ code: ParameterCode.TsLastStatusUpdate })
 		public tsLastStatusUpdate: number;
 
 	}
 
 	export class FriendItem {
-		@StringDataMember({ code: GNParameterCode.FriendId })
+		@StringDataMember({ code: ParameterCode.FriendId })
 		public friendId: string;
 
-		@StringDataMember({ code: GNParameterCode.CatalogId })
+		@StringDataMember({ code: ParameterCode.CatalogId })
 		public catalogId: string;
 
-		@NumberDataMember({ code: GNParameterCode.Status })
+		@NumberDataMember({ code: ParameterCode.Status })
 		public status: number;
 
-		@NumberDataMember({ code: GNParameterCode.TsLastStatusUpdate })
+		@NumberDataMember({ code: ParameterCode.TsLastStatusUpdate })
 		public tsLastStatusUpdate: number;
 
 	}
 
 	export class MemberItem {
-		@StringDataMember({ code: GNParameterCode.MemberId })
+		@StringDataMember({ code: ParameterCode.MemberId })
 		public memberId: string;
 
-		@NumberDataMember({ code: GNParameterCode.Status })
+		@NumberDataMember({ code: ParameterCode.Status })
 		public status: number;
 
 	}

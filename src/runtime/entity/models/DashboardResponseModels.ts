@@ -66,15 +66,15 @@ export namespace DashboardResponseModels {
 		}
 	}
 
-	export class GrantAdminAccountOperationResponse extends CustomOperationResponseAbstract<DashboardModels.GrantAdminAccountResponseData> {
+	export class CreateAdminAccountOperationResponse extends CustomOperationResponseAbstract<DashboardModels.CreateAdminAccountResponseData> {
 
 		constructor() {
 			super();
-			this.responseDataCls = DashboardModels.GrantAdminAccountResponseData;
+			this.responseDataCls = DashboardModels.CreateAdminAccountResponseData;
 		}
 	}
 
-	export class GrantGameOperationResponse extends CustomOperationResponseAbstract<DashboardModels.GameWithGameIdResponseData> {
+	export class CreateGameOperationResponse extends CustomOperationResponseAbstract<DashboardModels.GameWithGameIdResponseData> {
 
 		constructor() {
 			super();
@@ -82,7 +82,7 @@ export namespace DashboardResponseModels {
 		}
 	}
 
-	export class GrantSecretInfoOperationResponse extends CustomOperationResponseAbstract<DashboardModels.SecretInfoWithSecretKeyResponseData> {
+	export class CreateSecretInfoOperationResponse extends CustomOperationResponseAbstract<DashboardModels.SecretInfoWithSecretKeyResponseData> {
 
 		constructor() {
 			super();

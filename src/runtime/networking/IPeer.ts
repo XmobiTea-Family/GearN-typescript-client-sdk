@@ -7,12 +7,12 @@ import { OperationResponse } from "./../entity/OperationResponse";
 
 export interface IPeer {
 
-    initPeer(): void;
+	initPeer(): void;
 
-    enqueue(requestType: RequestType, requestRole: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void;
+	enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void;
 
-    isUsing(): boolean;
+	isUsing(): boolean;
 
-    service(): void;
+	service(): void;
 
 }
