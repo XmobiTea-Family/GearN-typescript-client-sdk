@@ -420,7 +420,7 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.AppleSettings, isOptional: true })
 		public appleSettings?: ThirtPartyAppleSettingsParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.GooglePlayGameService, isOptional: true })
+		@GNHashtableDataMember({ code: ParameterCode.GooglePlayGameSettings, isOptional: true })
 		public googlePlayGameSettings?: ThirtPartyGooglePlayGameSettingsParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GameCenterSettings, isOptional: true })
@@ -1015,34 +1015,34 @@ export namespace DashboardModels {
 
 	export class MultiplayerPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.CancelAllMatchmakingTicket, isOptional: true })
-		cancelAllMatchmakingTicket?: PermissionRulesParam;
+		public cancelAllMatchmakingTicket?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.CancelMatchmakingTicket, isOptional: true })
-		cancelMatchmakingTicket?: PermissionRulesParam;
+		public cancelMatchmakingTicket?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.CreateMatchmakingTicket, isOptional: true })
-		createMatchmakingTicket?: PermissionRulesParam;
+		public createMatchmakingTicket?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetMatchmakingTicket, isOptional: true })
-		getMatchmakingTicket?: PermissionRulesParam;
+		public getMatchmakingTicket?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetMatch, isOptional: true })
-		getMatch?: PermissionRulesParam;
+		public getMatch?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetQueueStatistics, isOptional: true })
-		getQueueStatistics?: PermissionRulesParam;
+		public getQueueStatistics?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.JoinMatchmakingTicket, isOptional: true })
-		joinMatchmakingTicket?: PermissionRulesParam;
+		public joinMatchmakingTicket?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.ListMatchmakingTicketsForPlayer, isOptional: true })
-		listMatchmakingTicketsForPlayer?: PermissionRulesParam;
+		public listMatchmakingTicketsForPlayer?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetAllMatchmakingTicket, isOptional: true })
-		getAllMatchmakingTicket?: PermissionRulesParam;
+		public getAllMatchmakingTicket?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetAllMatch, isOptional: true })
-		getAllMatch?: PermissionRulesParam;
+		public getAllMatch?: PermissionRulesParam;
 
 	}
 
@@ -1365,13 +1365,13 @@ export namespace DashboardModels {
 		public secondsBetweenExpansions: number;
 
 		@GNArrayDataMember({ code: ParameterCode.OverrideValue, isOptional: true, elementCls: Object })
-		public overrideValue?: any[];
+		public overrideValue?: Array<any>;
 
 		@GNArrayDataMember({ code: ParameterCode.OverrideMin, isOptional: true, elementCls: Object })
-		public overrideMin?: any[];
+		public overrideMin?: Array<any>;
 
 		@GNArrayDataMember({ code: ParameterCode.OverrideMax, isOptional: true, elementCls: Object })
-		public overrideMax?: any[];
+		public overrideMax?: Array<any>;
 
 	}
 
@@ -1443,10 +1443,10 @@ export namespace DashboardModels {
 		public serverAllocation: ServerAllocationParam;
 
 		@GNArrayDataMember({ code: ParameterCode.Teams, isOptional: true, elementCls: TeamParam })
-		public teams?: TeamParam[];
+		public teams?: Array<TeamParam>;
 
 		@GNArrayDataMember({ code: ParameterCode.Rules, isOptional: true, elementCls: RuleParam })
-		public rules?: RuleParam[];
+		public rules?: Array<RuleParam>;
 
 		@BooleanDataMember({ code: ParameterCode.Remove, isOptional: true })
 		public remove?: boolean;
@@ -1716,7 +1716,7 @@ export namespace DashboardModels {
 		public gameSettings?: GameSettingsParam;
 
 		@GNArrayDataMember({ code: ParameterCode.MatchmakingQueueSettings, isOptional: true, elementCls: MatchmakingQueueSettingsParam })
-		public matchmakingQueueSettings?: MatchmakingQueueSettingsParam[];
+		public matchmakingQueueSettings?: Array<MatchmakingQueueSettingsParam>;
 
 	}
 
@@ -1845,7 +1845,7 @@ export namespace DashboardModels {
 		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
-		@StringDataMember({ code: ParameterCode.Id, minLength: 2, maxLength: 15 })
+		@StringDataMember({ code: ParameterCode.Id, minLength: 2, maxLength: 32 })
 		public id: string;
 
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
@@ -1938,7 +1938,7 @@ export namespace DashboardModels {
 		public gameSettings: GameSettingsParam;
 
 		@GNArrayDataMember({ code: ParameterCode.MatchmakingQueueSettings, elementCls: MatchmakingQueueSettingsParam })
-		public matchmakingQueueSettings: MatchmakingQueueSettingsParam[];
+		public matchmakingQueueSettings: Array<MatchmakingQueueSettingsParam>;
 
 	}
 

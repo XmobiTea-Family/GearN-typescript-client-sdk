@@ -140,6 +140,8 @@ import { CustomOperationResponse, CustomOperationResponseAbstract } from "./runt
 export { CustomOperationResponse, CustomOperationResponseAbstract };
 import { GetAuthInfoResponse } from "./runtime/entity/response/GetAuthInfoResponse";
 export { GetAuthInfoResponse };
+import { HealthCheckResponse } from "./runtime/entity/response/HealthCheckResponse";
+export { HealthCheckResponse };
 import { UploadFileResponse } from "./runtime/entity/response/UploadFileResponse";
 export { UploadFileResponse };
 

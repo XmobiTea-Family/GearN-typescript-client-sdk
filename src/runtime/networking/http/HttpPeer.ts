@@ -56,6 +56,8 @@ export class HttpPeer extends PeerBase {
 		let httpUrl = gnServerSettings.getHttpUrl();
 		let userAgent = "GN-ts-" + GNNetwork.getPlatform() + "@" + GNNetwork.getClientSdkVersion();
 		this.networkingHttpPeerBase.init(httpUrl, userAgent);
+
+		this.networkingHttpPeerBase.setUseReverseProxy(gnServerSettings.getUseReverseProxy());
 	}
 
 	override send(operationPending: OperationPending): void {
@@ -80,7 +82,7 @@ export class HttpPeer extends PeerBase {
 			postType = PostType.Json;
 		}
 
-		let subUri = (postType == PostType.Json ? NetworkingPeer.API_JSON : NetworkingPeer.API_MSG_PACK) + "/" + CodeHelper.getRequestTypeName(operationPending.getRequestType()) + "/" + operationRequest.getOperationCode() + "/" + CodeHelper.getRequestRoleName(operationPending.getRole());
+		let subUri = (postType == PostType.Json ? NetworkingPeer.API_JSON : NetworkingPeer.API_MSG_PACK) + "/" + CodeHelper.getRequestTypeName(operationPending.getRequestType()) + "/" + CodeHelper.getRequestRoleName(operationPending.getRole()) + "/" + operationRequest.getOperationCode();
 		let thiz = this;
 
 		this.networkingHttpPeerBase.postRequest(subUri, operationRequest.getParameters(), postType, (httpAppResponse: HttpAppResponse) => {

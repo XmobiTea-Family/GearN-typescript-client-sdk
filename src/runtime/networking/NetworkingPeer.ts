@@ -18,10 +18,12 @@ import { RequestRole } from "./../constant/enumType/RequestRole";
 import { GetAuthInfoResponse } from "./../entity/response/GetAuthInfoResponse";
 import { UploadFileResponse } from "./../entity/response/UploadFileResponse";
 import { ParameterCode } from "./../constant/parameterCode/ParameterCode";
+import { HealthCheckResponse } from "../entity/response/HealthCheckResponse";
 
 export class NetworkingPeer {
 	static readonly SYNC_TS: string = "ts";
 	static readonly GET_AUTH_INFO: string = "getAuthInfo";
+	static readonly HEALTH_CHECK: string = "healthcheck";
 	static readonly UPLOAD_FILE: string = "upload";
 	static readonly DOWNLOAD_FILE: string = "download";
 	static readonly API_JSON: string = "api/" + Commands.RequestCmd_Json;
@@ -185,6 +187,37 @@ export class NetworkingPeer {
 							response.data.otherDatas = GNHashtable.builder()
 								.addAll(returnDatas.data.otherDatas)
 								.build();
+							onResponse(response);
+						}
+					}
+
+					return;
+				}
+			}
+
+			if (onResponse != null) onResponse({
+				error: httpAppResponse.error,
+			});
+		});
+	}
+
+	healthCheck(onResponse: Action1<HealthCheckResponse>): void {
+		(this.httpPeer as HttpPeer).getRequest(NetworkingPeer.HEALTH_CHECK, (httpAppResponse: HttpAppResponse) => {
+			if (!httpAppResponse.hasError()) {
+				if (httpAppResponse.statusCode == 200) {
+					let returnDatas = JSON.parse(httpAppResponse.text);
+					if (returnDatas.error) {
+						if (onResponse != null) onResponse({
+							error: returnDatas.error,
+						});
+					}
+					else {
+						if (onResponse != null) {
+							let response: HealthCheckResponse = {
+								error: null,
+								data: returnDatas.data,
+							};
+
 							onResponse(response);
 						}
 					}

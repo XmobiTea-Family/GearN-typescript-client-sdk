@@ -34,6 +34,7 @@ import { MultiplayerApi } from "./GNNetworkMultiplayerApi";
 import { CloudScriptApi } from "./GNNetworkCloudScriptApi";
 import { GetAuthInfoResponse } from "./entity/response/GetAuthInfoResponse";
 import { UploadFileResponse } from "./entity/response/UploadFileResponse";
+import { HealthCheckResponse } from "./entity/response/HealthCheckResponse";
 
 export class GNNetwork {
 
@@ -332,13 +333,25 @@ export class GNNetwork {
 		});
 	}
 
+	public static healthCheck(onResponse: Action1<HealthCheckResponse> = null): void {
+		GNNetwork.peer.healthCheck(onResponse);
+	}
+
+	public static healthCheckAsync(): Promise<HealthCheckResponse> {
+		return new Promise((resolve) => {
+			GNNetwork.healthCheck((response: HealthCheckResponse) => {
+				resolve(response);
+			});
+		});
+	}
+
 	public static uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onResponse: Action1<UploadFileResponse> = null): void {
 		GNNetwork.peer.uploadFile(fileId, content, filename, mimetype, onResponse);
 	}
 
 	public static uploadFileAsync(fileId: string, content: Uint8Array, filename: string, mimetype: string): Promise<UploadFileResponse> {
 		return new Promise((resolve) => {
-			GNNetwork.uploadFile(fileId, content, filename, mimetype, (response: GetAuthInfoResponse) => {
+			GNNetwork.uploadFile(fileId, content, filename, mimetype, (response: UploadFileResponse) => {
 				resolve(response);
 			});
 		});

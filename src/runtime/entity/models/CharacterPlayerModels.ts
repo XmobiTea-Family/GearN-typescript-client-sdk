@@ -127,11 +127,8 @@ export namespace CharacterPlayerModels {
 	}
 
 	export class GroupMemberParam {
-		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+		@StringDataMember({ code: ParameterCode.UserId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public userId: string;
-
-		@NumberDataMember({ code: ParameterCode.Role, mustInt: true })
-		public role: number;
 
 	}
 

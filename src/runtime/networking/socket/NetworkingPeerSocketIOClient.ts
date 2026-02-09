@@ -33,7 +33,7 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
 			const url = new URL(this.url);
 
 			this.socketManager = new Manager(url.origin, {
-				path: url.pathname + "/socket.io",
+				path: url.pathname + "socket.io",
 				reconnection: true,
 				reconnectionDelay: this.reconnectDelay,
 				timeout: this.pingTimeout,

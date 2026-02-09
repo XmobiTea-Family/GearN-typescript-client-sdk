@@ -36,5 +36,6 @@
         "./webpack.config.mjs",
         "./webpack.config.min.udm.mjs",
         "./webpack.config.udm.mjs",
+        "./syncCode.js",
     ]
 }
