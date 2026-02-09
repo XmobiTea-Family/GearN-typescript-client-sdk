@@ -142,7 +142,7 @@ export namespace GamePlayerModels {
 
 	export class ServerAddPlayerFriendRequestData extends AddPlayerFriendRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -160,7 +160,7 @@ export namespace GamePlayerModels {
 
 	export class ServerAddSegmentRequestData extends AddSegmentRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -175,7 +175,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetAvatarRequestData extends GetAvatarRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -190,7 +190,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetCountryCodeRequestData extends GetCountryCodeRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -208,7 +208,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetCustomDataRequestData extends GetCustomDataRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -223,7 +223,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetDisplayNameRequestData extends GetDisplayNameRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -253,7 +253,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetFriendStatisticsLeaderboardAroundPlayerRequestData extends GetFriendStatisticsLeaderboardAroundPlayerRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -283,7 +283,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetFriendStatisticsLeaderboardRequestData extends GetFriendStatisticsLeaderboardRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -298,7 +298,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetIpAddressCreateRequestData extends GetIpAddressCreateRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -313,7 +313,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetOnlineStatusRequestData extends GetOnlineStatusRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -328,7 +328,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerBanRequestData extends GetPlayerBanRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -346,7 +346,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerCharacterRequestData extends GetPlayerCharacterRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -364,7 +364,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerCurrencyRequestData extends GetPlayerCurrencyRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -382,7 +382,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerDataRequestData extends GetPlayerDataRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -400,7 +400,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerFriendRequestData extends GetPlayerFriendRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -418,7 +418,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerGroupRequestData extends GetPlayerGroupRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -436,10 +436,10 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerInformationRequestData extends GetPlayerInformationRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 		@BooleanDataMember({ code: GNParameterCode.CreatePlayerIfNotExists, isOptional: true, defaultValue: false })
-		createPlayerIfNotExists?: boolean;
+		public createPlayerIfNotExists?: boolean;
 
 	}
 
@@ -457,7 +457,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerInventoryRequestData extends GetPlayerInventoryRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -475,7 +475,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetPlayerStatisticsRequestData extends GetPlayerStatisticsRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -556,7 +556,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetSegmentRequestData extends GetSegmentRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -586,7 +586,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetStatisticsLeaderboardAroundPlayerRequestData extends GetStatisticsLeaderboardAroundPlayerRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -652,7 +652,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetTagRequestData extends GetTagRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -667,7 +667,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetTsCreateRequestData extends GetTsCreateRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -682,7 +682,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGetTsLastLoginRequestData extends GetTsLastLoginRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -706,7 +706,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGrantGroupRequestData extends GrantGroupRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -723,11 +723,14 @@ export namespace GamePlayerModels {
 		@StringDataMember({ code: GNParameterCode.DisplayName, defaultValue: "", isOptional: true, mustNonNull: true })
 		public displayName?: string;
 
+        @BooleanDataMember({ code: GNParameterCode.UniqueDisplayName, defaultValue: false, isOptional: true })
+        public uniqueDisplayName?: boolean;
+
 	}
 
 	export class ServerGrantPlayerCharacterRequestData extends GrantPlayerCharacterRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -754,7 +757,7 @@ export namespace GamePlayerModels {
 
 	export class ServerGrantPlayerItemRequestData extends GrantPlayerItemRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -772,7 +775,7 @@ export namespace GamePlayerModels {
 
 	export class ServerJoinGroupRequestData extends JoinGroupRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -790,7 +793,7 @@ export namespace GamePlayerModels {
 
 	export class ServerLeaveGroupRequestData extends LeaveGroupRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -808,7 +811,7 @@ export namespace GamePlayerModels {
 
 	export class ServerRemovePlayerCharacterRequestData extends RemovePlayerCharacterRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -826,7 +829,7 @@ export namespace GamePlayerModels {
 
 	export class ServerRemovePlayerFriendRequestData extends RemovePlayerFriendRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -844,7 +847,7 @@ export namespace GamePlayerModels {
 
 	export class ServerRemovePlayerItemRequestData extends RemovePlayerItemRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -862,7 +865,7 @@ export namespace GamePlayerModels {
 
 	export class ServerRemoveSegmentRequestData extends RemoveSegmentRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -880,7 +883,7 @@ export namespace GamePlayerModels {
 
 	export class ServerRemoveTagRequestData extends RemoveTagRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -901,7 +904,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetAvatarRequestData extends SetAvatarRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -919,7 +922,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetCountryCodeRequestData extends SetCountryCodeRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -937,7 +940,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetCustomDataRequestData extends SetCustomDataRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -958,7 +961,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetDisplayNameRequestData extends SetDisplayNameRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -979,7 +982,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetPlayerBanRequestData extends SetPlayerBanRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -1000,7 +1003,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetPlayerCurrencyRequestData extends SetPlayerCurrencyRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -1018,7 +1021,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetPlayerDataRequestData extends SetPlayerDataRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -1039,7 +1042,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetPlayerStatisticsRequestData extends SetPlayerStatisticsRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 
@@ -1060,7 +1063,7 @@ export namespace GamePlayerModels {
 
 	export class ServerSetTagRequestData extends SetTagRequestData {
 		@StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-		public userId: string;
+		public declare userId: string;
 
 	}
 

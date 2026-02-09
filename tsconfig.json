@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "ES2016",
+        "target": "ES2017",
         "module": "ESNext",
         "declaration": true,
         "strict": true,
@@ -19,8 +19,8 @@
         "emitDecoratorMetadata": true,
         "forceConsistentCasingInFileNames": true,
         "lib": [
-            "ES2016",
-            "DOM"
+            "ES2017",
+            "DOM",
         ],
         "allowSyntheticDefaultImports": true,
         "stripInternal": true,
@@ -33,8 +33,8 @@
         "./node_modules/",
         "./dist/",
         "./index.js",
-        "./webpack.config.js",
-        "./webpack.config.min.udm.js",
-        "./webpack.config.udm.js"
+        "./webpack.config.mjs",
+        "./webpack.config.min.udm.mjs",
+        "./webpack.config.udm.mjs",
     ]
 }

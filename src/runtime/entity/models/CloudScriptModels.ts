@@ -57,7 +57,7 @@ export namespace CloudScriptModels {
 
     export class ServerExecuteFunctionRequestData extends ExecuteFunctionRequestData {
         @StringDataMember({ code: GNParameterCode.UserId, minLength: 10, maxLength: 10 })
-        public userId: string;
+        public declare userId: string;
 
     }
 

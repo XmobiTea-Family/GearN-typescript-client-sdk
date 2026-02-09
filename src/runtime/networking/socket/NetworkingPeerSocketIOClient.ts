@@ -17,8 +17,6 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
     private socket: Socket;
     private isConnected: boolean;
 
-    override isWsConnected: boolean;
-
     override sendRequestAuthSocket(): void {
         super.sendRequestAuthSocket();
 

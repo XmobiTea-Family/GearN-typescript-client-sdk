@@ -1,16 +1,16 @@
 {
   "name": "@xmobitea/gn-typescript-client",
-  "version": "2.5.2",
-  "description": "",
+  "version": "2.5.3",
+  "description": "GearN Typescript Client SDK by XmobiTea (Pro)",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "scripts": {
     "dev": "rm -rf ./dist && npm run buildnode && npm run debug",
     "debug": "node index.js",
     "test": "mocha -r ts-node/register ./test/**/*.test.ts",
-    "buildnode": "webpack --config webpack.config.js --mode production --stats-modules",
-    "buildudm": "webpack --config webpack.config.udm.js --mode production --stats-modules",
-    "buildminudm": "webpack --config webpack.config.min.udm.js --mode production --stats-modules",
+    "buildnode": "webpack --config webpack.config.mjs --mode production --stats-modules",
+    "buildudm": "webpack --config webpack.config.udm.mjs --mode production --stats-modules",
+    "buildminudm": "webpack --config webpack.config.min.udm.mjs --mode production --stats-modules",
     "build": "rm -rf ./dist && npm run buildnode && npm run buildudm && npm run buildminudm",
     "build:withoutwebpack": "rm -rf ./dist && tsc",
     "push": "npm run build && npm publish && git push"
@@ -19,6 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/mocha": "^10.0.10",
+    "@types/node": "^22.15.17",
     "@types/store": "^2.0.5",
     "mocha": "^11.0.1",
     "terser-webpack-plugin": "^5.3.10",

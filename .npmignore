@@ -5,12 +5,12 @@ test/
 .gitignore
 tsconfig.json
 tsconfig-build.json
-webpack.config.js
+webpack.config.mjs
 index.js
 scratch/
 tsconfig.udm.json
 tsconfig-build.udm.json
-webpack.config.udm.js
+webpack.config.udm.mjs
 tsconfig.min.udm.json
 tsconfig-build.min.udm.json
-webpack.config.min.udm.js
+webpack.config.min.udm.mjs

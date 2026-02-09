@@ -1,36 +1,42 @@
-const path = require("path");
-const TerserPlugin = require("terser-webpack-plugin");
+import path from "path";
+import TerserPlugin from "terser-webpack-plugin";
+import { fileURLToPath } from "url";
+import nodeExternals from "webpack-node-externals";
 
-module.exports = {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default {
 	entry: "./src/index.ts",
+	target: "node",
+	externals: [nodeExternals()],
 	module: {
 		rules: [
 			{
 				test: /\.ts$/,
 				loader: "ts-loader",
 				options: {
-					configFile: "tsconfig-build.udm.json",
+					configFile: "tsconfig-build.json",
 				},
 			},
 		],
 	},
 	resolve: {
 		extensions: [".ts", ".tsx", ".js", ".jsx"],
-		fallback: {
-
-		},
 	},
 	output: {
-		filename: "gn.js.client.js",
+		filename: "index.js",
 		path: path.resolve(__dirname, "dist"),
 		library: {
-			type: "umd",
-			name: "GN",
-		},
+            type: "module",
+        },
 		environment: {
 			arrowFunction: true,
 		},
 	},
+    experiments: {
+        outputModule: true
+    },
 	optimization: {
 		minimize: false,
 		minimizer: [

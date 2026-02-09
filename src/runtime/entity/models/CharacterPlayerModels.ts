@@ -874,6 +874,9 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: GNParameterCode.DisplayName, minLength: 5, maxLength: 32, mustNonNull: true })
 		public displayName: string;
 
+        @BooleanDataMember({ code: GNParameterCode.UniqueDisplayName, defaultValue: false, isOptional: true })
+        public uniqueDisplayName?: boolean;
+
 	}
 
 	export class ServerSetDisplayNameRequestData extends SetDisplayNameRequestData {
