@@ -1,7 +1,7 @@
 import { RequestRole } from "./../constant/enumType/RequestRole";
 import { RequestType } from "./../constant/enumType/RequestType";
-import { OperationRequest } from "./OperationRequest";
-import { CodeHelper } from "./../helper/CodeHelper";
+import { OperationRequest } from "./../entity/OperationRequest";
+import { CodeHelper } from "./CodeHelper";
 
 export class OperationHelper {
 	public static toSocketData(requestType: RequestType, role: RequestRole, request: OperationRequest): any {

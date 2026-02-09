@@ -165,10 +165,7 @@ export class GNHashtable extends GNData {
 	}
 
 	public containsKey(k: string): boolean {
-		let keys = Object.keys(this.dict);
-		let kStr = k.toString();
-
-		return keys.indexOf(kStr) != -1;
+		return this.dict.hasOwnProperty(k);
 	}
 
 	protected override get<T>(k: string, def?: T): T {
@@ -221,13 +218,13 @@ export class GNArrayBuilder {
 	}
 
 	public build(): GNArray {
-		let awnser = new GNArray();
+		let answer = new GNArray();
 
 		this.array.forEach(o => {
-			awnser.add(o);
+			answer.add(o);
 		});
 
-		return awnser;
+		return answer;
 	}
 
 	constructor() {

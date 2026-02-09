@@ -11,7 +11,7 @@ import { GNSupport } from "./helper/GNSupport";
 import { IServerEventHandler } from "./networking/handler/IServerEventHandler";
 import { NetworkingPeer } from "./networking/NetworkingPeer";
 import { CodeHelper } from "./helper/CodeHelper";
-import store from "store";
+import { StorageService } from "./helper/StorageService";
 import { OperationEvent } from "./entity/OperationEvent";
 import { AuthenticateStatus } from "./networking/AuthenticateStatus";
 import { RequestType } from "./constant/enumType/RequestType";
@@ -80,8 +80,23 @@ export class GNNetwork {
 		return GNNetwork.peer.gameId;
 	}
 
-	public static getPlatform(): number {
-		return 17;
+	public static getPlatform(): string {
+        const platform = GNSupport.getPlatformType();
+
+        // if (platform == "browser" || platform == "nodejs") {
+        //     return platform;
+        // }
+        // else if (platform == "cocos") {
+        //     if (cc.sys.platform === cc.sys.ANDROID) {
+        //         console.log('Running on Android');
+        //     } else if (cc.sys.platform === cc.sys.IPHONE) {
+        //         console.log('Running on iOS');
+        //     } else if (cc.sys.isBrowser) {
+        //         console.log('Running in a Web Browser');
+        //     }
+        // }
+
+		return platform;
 	}
 
 	public static authenticate: AuthenticateApi;
@@ -116,9 +131,9 @@ export class GNNetwork {
 
 		GNNetwork.initGNSocketObject();
 
-		GNNetwork.peer.authenticateStatus.setAuthToken(store.get(GNNetwork.AUTH_TOKEN_KEY, ""));
-		GNNetwork.peer.authenticateStatus.setUserId(store.get(GNNetwork.USER_ID_KEY, ""));
-		GNNetwork.peer.gameId = store.get(GNNetwork.GAME_ID_KEY, "");
+		GNNetwork.peer.authenticateStatus.setAuthToken(StorageService.getString(GNNetwork.AUTH_TOKEN_KEY, ""));
+		GNNetwork.peer.authenticateStatus.setUserId(StorageService.getString(GNNetwork.USER_ID_KEY, ""));
+		GNNetwork.peer.gameId = StorageService.getString(GNNetwork.GAME_ID_KEY, "");
 
 		GNNetwork.authenticate = new AuthenticateApi();
 		GNNetwork.characterPlayer = new CharacterPlayerApi();
@@ -134,15 +149,15 @@ export class GNNetwork {
 	}
 
 	public static setNewAuthenticateStatus(authenticateStatus: AuthenticateStatus) {
-		store.set(GNNetwork.AUTH_TOKEN_KEY, authenticateStatus.getAuthToken());
-		store.set(GNNetwork.USER_ID_KEY, authenticateStatus.getUserId());
+		StorageService.setString(GNNetwork.AUTH_TOKEN_KEY, authenticateStatus.getAuthToken());
+		StorageService.setString(GNNetwork.USER_ID_KEY, authenticateStatus.getUserId());
 
 		GNNetwork.peer.authenticateStatus.setAuthToken(authenticateStatus.getAuthToken());
 		GNNetwork.peer.authenticateStatus.setUserId(authenticateStatus.getUserId());
 	}
 
 	public static setGameId(gameId: string) {
-		store.set(GNNetwork.GAME_ID_KEY, gameId);
+		StorageService.setString(GNNetwork.GAME_ID_KEY, gameId);
 
 		GNNetwork.peer.gameId = gameId;
 	}

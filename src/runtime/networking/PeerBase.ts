@@ -12,7 +12,7 @@ import { GNNetwork } from "./../GNNetwork";
 import { GNDebug } from "./../logger/GNDebug";
 import { IPeer } from "./IPeer";
 import { OperationPending } from "./OperationPending";
-import store from "store";
+import { StorageService } from "./../helper/StorageService";
 
 export abstract class PeerBase implements IPeer {
 	private operationPendingQueue: Array<OperationPending>;
@@ -63,7 +63,7 @@ export abstract class PeerBase implements IPeer {
 	protected abstract initGNSocketObject(): void;
 
 	public enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
-		if (!this.isUsing) {
+		if (!this.isUse) {
 			GNDebug.logError("[GearN] Server Settings dont setup to use this to send operation request.");
 			return;
 		}
@@ -83,7 +83,7 @@ export abstract class PeerBase implements IPeer {
 	}
 
 	service() {
-		if (!this.isUsing)
+		if (!this.isUse)
 			return;
 
 		let nowSecond = Date.now() / 1000;
@@ -167,7 +167,7 @@ export abstract class PeerBase implements IPeer {
 
 						GNNetwork.getAuthenticateStatus().setAuthToken(authToken);
 
-						store.set(GNNetwork.AUTH_TOKEN_KEY, authToken);
+						StorageService.setString(GNNetwork.AUTH_TOKEN_KEY, authToken);
 					}
 
 					if (parameters.containsKey(ParameterCode.UserId)) {
@@ -175,7 +175,7 @@ export abstract class PeerBase implements IPeer {
 
 						GNNetwork.getAuthenticateStatus().setUserId(userId);
 
-						store.set(GNNetwork.USER_ID_KEY, userId);
+						StorageService.setString(GNNetwork.USER_ID_KEY, userId);
 					}
 
 					if (parameters.containsKey(ParameterCode.Ts)) {

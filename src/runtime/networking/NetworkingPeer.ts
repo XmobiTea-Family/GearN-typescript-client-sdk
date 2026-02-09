@@ -18,7 +18,7 @@ import { RequestRole } from "./../constant/enumType/RequestRole";
 import { GetAuthInfoResponse } from "./../entity/response/GetAuthInfoResponse";
 import { UploadFileResponse } from "./../entity/response/UploadFileResponse";
 import { ParameterCode } from "./../constant/parameterCode/ParameterCode";
-import { HealthCheckResponse } from "../entity/response/HealthCheckResponse";
+import { HealthCheckResponse } from "./../entity/response/HealthCheckResponse";
 
 export class NetworkingPeer {
 	static readonly SYNC_TS: string = "ts";
@@ -49,6 +49,7 @@ export class NetworkingPeer {
 			totalPing += (<PeerBase>this.socketPeer).ping;
 		}
 
+		if (count == 0) return -1;
 		return totalPing / count;
 	}
 
@@ -61,15 +62,15 @@ export class NetworkingPeer {
 
 	setServerTimeMilliseconds(currentServerMilliseconds: number): void {
 		this.lastCurrentServerMilliseconds = currentServerMilliseconds;
-		this.lastGetCurrentMilliseconds = Date.now() / 1000;
+		this.lastGetCurrentMilliseconds = Date.now();
 	}
 
 	getServerTimestamp(): number {
-		return this.lastCurrentServerMilliseconds + ((Date.now() / 1000 - this.lastGetCurrentMilliseconds) * 1000);
+		return this.lastCurrentServerMilliseconds + ((Date.now() - this.lastGetCurrentMilliseconds) * 1000);
 	}
 
 	initPeer(): void {
-		this.setServerTimeMilliseconds(new Date().getUTCMilliseconds());
+		this.setServerTimeMilliseconds(Date.now());
 
 		let gnServerSettings = GNNetwork.getGNServerSettings();
 		if (gnServerSettings == null)

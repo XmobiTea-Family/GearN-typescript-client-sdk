@@ -147,12 +147,10 @@ export { UploadFileResponse };
 
 import { InvalidMember } from "./runtime/entity/InvalidMember";
 import { OperationEvent } from "./runtime/entity/OperationEvent";
-import { OperationHelper } from "./runtime/entity/OperationHelper";
 import { OperationRequest } from "./runtime/entity/OperationRequest";
 import { OperationResponse } from "./runtime/entity/OperationResponse";
 export { InvalidMember };
 export { OperationEvent };
-export { OperationHelper };
 export { OperationRequest };
 export { OperationResponse };
 
@@ -224,10 +222,12 @@ import { GNSupport } from "./runtime/helper/GNSupport";
 import { CodeHelper } from "./runtime/helper/CodeHelper";
 import { ConverterService } from "./runtime/helper/ConverterService";
 import { GNUtils } from "./runtime/helper/GNUtils";
+import { OperationHelper } from "./runtime/helper/OperationHelper";
 export { GNSupport };
 export { CodeHelper };
 export { ConverterService };
 export { GNUtils };
+export { OperationHelper };
 
 
 import { DataMember, StringDataMember, BooleanDataMember, GNHashtableDataMember, GNArrayDataMember, NumberDataMember } from "./runtime/entity/DataMember";

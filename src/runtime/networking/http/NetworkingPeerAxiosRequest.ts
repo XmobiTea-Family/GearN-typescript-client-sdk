@@ -105,7 +105,7 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 		}
 		else if (postType == PostType.MsgPack) {
 			let content = param.toData();
-			body = Buffer.from(MessagePackConverterService.serialize(content));
+			body = new Uint8Array(MessagePackConverterService.serialize(content));
 
 			headers[Commands.CONTENT_TYPE] = Commands.APPLICATION_MSGPACK;
 			headers[Commands.ACCEPT] = Commands.APPLICATION_MSGPACK;
