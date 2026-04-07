@@ -50,6 +50,10 @@ Những nhóm API public hiện có:
 - `GNNetwork.multiplayer`
 - `GNNetwork.cloudScript`
 
+### AuthenticateApi
+
+`GNNetwork.authenticate` là nhóm API xác thực player qua HTTP cho các flow `login`, `registerAccount` và `refreshAuthToken`, dùng `RequestType.Authenticate` với `RequestRole.Client`, đồng thời tự cập nhật auth state cache của SDK khi thành công; `GNNetwork.authenticate.server` và `GNNetwork.authenticate.admin` hiện không có operation public để gọi. Xem rule chi tiết dành cho AI code assistant tại [docs/AUTHENTICATE_API_README.md](docs/AUTHENTICATE_API_README.md).
+
 ## 4. Khởi tạo cơ bản
 
 ```ts
