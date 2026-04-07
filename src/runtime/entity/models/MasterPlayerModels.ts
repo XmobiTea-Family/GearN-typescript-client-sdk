@@ -3,7 +3,13 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
+/**
+ * Groups shared data contracts for MasterPlayer.
+ */
 export namespace MasterPlayerModels {
+	/**
+	 * Defines the reusable parameter block CustomDataParam.
+	 */
 	export class CustomDataParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -13,6 +19,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block InfoRequestParam.
+	 */
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: ParameterCode.External, isOptional: true, defaultValue: false })
 		public external?: boolean;
@@ -79,6 +88,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block PlayerCurrencyParam.
+	 */
 	export class PlayerCurrencyParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -88,6 +100,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block PlayerDataParam.
+	 */
 	export class PlayerDataParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -97,6 +112,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block PlayerStatisticsParam.
+	 */
 	export class PlayerStatisticsParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -106,6 +124,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents GenericService.
+	 */
 	export class GenericService {
 		@StringDataMember({ code: ParameterCode.ServiceName })
 		public serviceName: string;
@@ -115,6 +136,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents Device.
+	 */
 	export class Device {
 		@StringDataMember({ code: ParameterCode.CustomDeviceId, isOptional: true })
 		public customDeviceId?: string;
@@ -142,18 +166,27 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents Account.
+	 */
 	export class Account {
 		@StringDataMember({ code: ParameterCode.Username, isOptional: true })
 		public username?: string;
 
 	}
 
+	/**
+	 * Represents Custom.
+	 */
 	export class Custom {
 		@StringDataMember({ code: ParameterCode.CustomId, isOptional: true })
 		public customId?: string;
 
 	}
 
+	/**
+	 * Represents Apple.
+	 */
 	export class Apple {
 		@StringDataMember({ code: ParameterCode.AppleId })
 		public appleId: string;
@@ -163,6 +196,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents Google.
+	 */
 	export class Google {
 		@StringDataMember({ code: ParameterCode.GoogleId })
 		public googleId: string;
@@ -175,6 +211,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents Facebook.
+	 */
 	export class Facebook {
 		@StringDataMember({ code: ParameterCode.FacebookId })
 		public facebookId: string;
@@ -187,6 +226,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents GooglePlayGameService.
+	 */
 	export class GooglePlayGameService {
 		@StringDataMember({ code: ParameterCode.PlayerId })
 		public playerId: string;
@@ -199,6 +241,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents GameCenter.
+	 */
 	export class GameCenter {
 		@StringDataMember({ code: ParameterCode.PlayerId })
 		public playerId: string;
@@ -211,6 +256,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents ExternalItem.
+	 */
 	export class ExternalItem {
 		@GNHashtableDataMember({ code: ParameterCode.Device, isOptional: true })
 		public device?: Device;
@@ -241,6 +289,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for AddSegment.
+	 */
 	export class AddSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -250,15 +301,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerAddSegment.
+	 */
 	export class ServerAddSegmentRequestData extends AddSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminAddSegment.
+	 */
 	export class AdminAddSegmentRequestData extends ServerAddSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for ChangeAccountPassword.
+	 */
 	export class ChangeAccountPasswordRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -271,36 +331,57 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for GetAvatar.
+	 */
 	export class GetAvatarRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetAvatar.
+	 */
 	export class ServerGetAvatarRequestData extends GetAvatarRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetAvatar.
+	 */
 	export class AdminGetAvatarRequestData extends ServerGetAvatarRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetCountryCode.
+	 */
 	export class GetCountryCodeRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCountryCode.
+	 */
 	export class ServerGetCountryCodeRequestData extends GetCountryCodeRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCountryCode.
+	 */
 	export class AdminGetCountryCodeRequestData extends ServerGetCountryCodeRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetCustomData.
+	 */
 	export class GetCustomDataRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -310,90 +391,144 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCustomData.
+	 */
 	export class ServerGetCustomDataRequestData extends GetCustomDataRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCustomData.
+	 */
 	export class AdminGetCustomDataRequestData extends ServerGetCustomDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetDisplayName.
+	 */
 	export class GetDisplayNameRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetDisplayName.
+	 */
 	export class ServerGetDisplayNameRequestData extends GetDisplayNameRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetDisplayName.
+	 */
 	export class AdminGetDisplayNameRequestData extends ServerGetDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetEmail.
+	 */
 	export class GetEmailRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetEmail.
+	 */
 	export class ServerGetEmailRequestData extends GetEmailRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetEmail.
+	 */
 	export class AdminGetEmailRequestData extends ServerGetEmailRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetExternal.
+	 */
 	export class GetExternalRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetExternal.
+	 */
 	export class ServerGetExternalRequestData extends GetExternalRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetExternal.
+	 */
 	export class AdminGetExternalRequestData extends ServerGetExternalRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetIpAddressCreate.
+	 */
 	export class GetIpAddressCreateRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetIpAddressCreate.
+	 */
 	export class ServerGetIpAddressCreateRequestData extends GetIpAddressCreateRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetIpAddressCreate.
+	 */
 	export class AdminGetIpAddressCreateRequestData extends ServerGetIpAddressCreateRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayerBan.
+	 */
 	export class GetPlayerBanRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayerBan.
+	 */
 	export class ServerGetPlayerBanRequestData extends GetPlayerBanRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayerBan.
+	 */
 	export class AdminGetPlayerBanRequestData extends ServerGetPlayerBanRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayerCurrency.
+	 */
 	export class GetPlayerCurrencyRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -403,15 +538,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayerCurrency.
+	 */
 	export class ServerGetPlayerCurrencyRequestData extends GetPlayerCurrencyRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayerCurrency.
+	 */
 	export class AdminGetPlayerCurrencyRequestData extends ServerGetPlayerCurrencyRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayerData.
+	 */
 	export class GetPlayerDataRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -421,15 +565,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayerData.
+	 */
 	export class ServerGetPlayerDataRequestData extends GetPlayerDataRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayerData.
+	 */
 	export class AdminGetPlayerDataRequestData extends ServerGetPlayerDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayerInformation.
+	 */
 	export class GetPlayerInformationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -439,15 +592,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayerInformation.
+	 */
 	export class ServerGetPlayerInformationRequestData extends GetPlayerInformationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayerInformation.
+	 */
 	export class AdminGetPlayerInformationRequestData extends ServerGetPlayerInformationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayerStatistics.
+	 */
 	export class GetPlayerStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -457,15 +619,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayerStatistics.
+	 */
 	export class ServerGetPlayerStatisticsRequestData extends GetPlayerStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayerStatistics.
+	 */
 	export class AdminGetPlayerStatisticsRequestData extends ServerGetPlayerStatisticsRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithApple.
+	 */
 	export class GetPlayersWithAppleRequestData {
 		@GNArrayDataMember({ code: ParameterCode.AppleIds, mustNonNull: true, elementCls: String })
 		public appleIds: Array<string>;
@@ -475,12 +646,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithApple.
+	 */
 	export class ServerGetPlayersWithAppleRequestData extends GetPlayersWithAppleRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithApple.
+	 */
 	export class AdminGetPlayersWithAppleRequestData extends ServerGetPlayersWithAppleRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithDisplayName.
+	 */
 	export class GetPlayersWithDisplayNameRequestData {
 		@StringDataMember({ code: ParameterCode.Keyword, minLength: 2, maxLength: 32 })
 		public keyword: string;
@@ -496,12 +676,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithDisplayName.
+	 */
 	export class ServerGetPlayersWithDisplayNameRequestData extends GetPlayersWithDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithDisplayName.
+	 */
 	export class AdminGetPlayersWithDisplayNameRequestData extends ServerGetPlayersWithDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithFacebook.
+	 */
 	export class GetPlayersWithFacebookRequestData {
 		@GNArrayDataMember({ code: ParameterCode.FacebookIds, mustNonNull: true, elementCls: String })
 		public facebookIds: Array<string>;
@@ -511,12 +700,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithFacebook.
+	 */
 	export class ServerGetPlayersWithFacebookRequestData extends GetPlayersWithFacebookRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithFacebook.
+	 */
 	export class AdminGetPlayersWithFacebookRequestData extends ServerGetPlayersWithFacebookRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithGenericService.
+	 */
 	export class GetPlayersWithGenericServiceRequestData {
 		@StringDataMember({ code: ParameterCode.ServiceName, minLength: 2, maxLength: 32, mustNonNull: true })
 		public serviceName: string;
@@ -529,12 +727,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithGenericService.
+	 */
 	export class ServerGetPlayersWithGenericServiceRequestData extends GetPlayersWithGenericServiceRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithGenericService.
+	 */
 	export class AdminGetPlayersWithGenericServiceRequestData extends ServerGetPlayersWithGenericServiceRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithGoogle.
+	 */
 	export class GetPlayersWithGoogleRequestData {
 		@GNArrayDataMember({ code: ParameterCode.GoogleIds, mustNonNull: true, elementCls: String })
 		public googleIds: Array<string>;
@@ -544,12 +751,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithGoogle.
+	 */
 	export class ServerGetPlayersWithGoogleRequestData extends GetPlayersWithGoogleRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithGoogle.
+	 */
 	export class AdminGetPlayersWithGoogleRequestData extends ServerGetPlayersWithGoogleRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithGooglePlayGameService.
+	 */
 	export class GetPlayersWithGooglePlayGameServiceRequestData {
 		@GNArrayDataMember({ code: ParameterCode.PlayerIds, mustNonNull: true, elementCls: String })
 		public playerIds: Array<string>;
@@ -559,12 +775,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithGooglePlayGameService.
+	 */
 	export class ServerGetPlayersWithGooglePlayGameServiceRequestData extends GetPlayersWithGooglePlayGameServiceRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithGooglePlayGameService.
+	 */
 	export class AdminGetPlayersWithGooglePlayGameServiceRequestData extends ServerGetPlayersWithGooglePlayGameServiceRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithGameCenter.
+	 */
 	export class GetPlayersWithGameCenterRequestData {
 		@GNArrayDataMember({ code: ParameterCode.PlayerIds, mustNonNull: true, elementCls: String })
 		public playerIds: Array<string>;
@@ -574,12 +799,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithGameCenter.
+	 */
 	export class ServerGetPlayersWithGameCenterRequestData extends GetPlayersWithGameCenterRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithGameCenter.
+	 */
 	export class AdminGetPlayersWithGameCenterRequestData extends ServerGetPlayersWithGameCenterRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithSegment.
+	 */
 	export class GetPlayersWithSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
@@ -595,12 +829,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithSegment.
+	 */
 	export class ServerGetPlayersWithSegmentRequestData extends GetPlayersWithSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithSegment.
+	 */
 	export class AdminGetPlayersWithSegmentRequestData extends ServerGetPlayersWithSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPlayersWithTag.
+	 */
 	export class GetPlayersWithTagRequestData {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -619,27 +862,45 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPlayersWithTag.
+	 */
 	export class ServerGetPlayersWithTagRequestData extends GetPlayersWithTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPlayersWithTag.
+	 */
 	export class AdminGetPlayersWithTagRequestData extends ServerGetPlayersWithTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetSegment.
+	 */
 	export class GetSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetSegment.
+	 */
 	export class ServerGetSegmentRequestData extends GetSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetSegment.
+	 */
 	export class AdminGetSegmentRequestData extends ServerGetSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStatisticsLeaderboardAroundPlayer.
+	 */
 	export class GetStatisticsLeaderboardAroundPlayerRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -661,15 +922,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStatisticsLeaderboardAroundPlayer.
+	 */
 	export class ServerGetStatisticsLeaderboardAroundPlayerRequestData extends GetStatisticsLeaderboardAroundPlayerRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStatisticsLeaderboardAroundPlayer.
+	 */
 	export class AdminGetStatisticsLeaderboardAroundPlayerRequestData extends ServerGetStatisticsLeaderboardAroundPlayerRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStatisticsLeaderboard.
+	 */
 	export class GetStatisticsLeaderboardRequestData {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -691,12 +961,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStatisticsLeaderboard.
+	 */
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStatisticsLeaderboard.
+	 */
 	export class AdminGetStatisticsLeaderboardRequestData extends ServerGetStatisticsLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetCreateLeaderboard.
+	 */
 	export class GetCreateLeaderboardRequestData {
 		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
@@ -712,12 +991,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCreateLeaderboard.
+	 */
 	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCreateLeaderboard.
+	 */
 	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetLastLoginLeaderboard.
+	 */
 	export class GetLastLoginLeaderboardRequestData {
 		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
@@ -733,12 +1021,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetLastLoginLeaderboard.
+	 */
 	export class ServerGetLastLoginLeaderboardRequestData extends GetLastLoginLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetLastLoginLeaderboard.
+	 */
 	export class AdminGetLastLoginLeaderboardRequestData extends ServerGetLastLoginLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetTag.
+	 */
 	export class GetTagRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -748,45 +1045,72 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetTag.
+	 */
 	export class ServerGetTagRequestData extends GetTagRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetTag.
+	 */
 	export class AdminGetTagRequestData extends ServerGetTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetTsCreate.
+	 */
 	export class GetTsCreateRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetTsCreate.
+	 */
 	export class ServerGetTsCreateRequestData extends GetTsCreateRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetTsCreate.
+	 */
 	export class AdminGetTsCreateRequestData extends ServerGetTsCreateRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetTsLastLogin.
+	 */
 	export class GetTsLastLoginRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetTsLastLogin.
+	 */
 	export class ServerGetTsLastLoginRequestData extends GetTsLastLoginRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetTsLastLogin.
+	 */
 	export class AdminGetTsLastLoginRequestData extends ServerGetTsLastLoginRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkAccount.
+	 */
 	export class LinkAccountRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -802,15 +1126,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkAccount.
+	 */
 	export class ServerLinkAccountRequestData extends LinkAccountRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkAccount.
+	 */
 	export class AdminLinkAccountRequestData extends ServerLinkAccountRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkAndroidDeviceId.
+	 */
 	export class LinkAndroidDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -823,15 +1156,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkAndroidDeviceId.
+	 */
 	export class ServerLinkAndroidDeviceIdRequestData extends LinkAndroidDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkAndroidDeviceId.
+	 */
 	export class AdminLinkAndroidDeviceIdRequestData extends ServerLinkAndroidDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkApple.
+	 */
 	export class LinkAppleRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -844,15 +1186,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkApple.
+	 */
 	export class ServerLinkAppleRequestData extends LinkAppleRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkApple.
+	 */
 	export class AdminLinkAppleRequestData extends ServerLinkAppleRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkCustomDeviceId.
+	 */
 	export class LinkCustomDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -865,15 +1216,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkCustomDeviceId.
+	 */
 	export class ServerLinkCustomDeviceIdRequestData extends LinkCustomDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkCustomDeviceId.
+	 */
 	export class AdminLinkCustomDeviceIdRequestData extends ServerLinkCustomDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkCustomId.
+	 */
 	export class LinkCustomIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -886,15 +1246,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkCustomId.
+	 */
 	export class ServerLinkCustomIdRequestData extends LinkCustomIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkCustomId.
+	 */
 	export class AdminLinkCustomIdRequestData extends ServerLinkCustomIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkEditorDeviceId.
+	 */
 	export class LinkEditorDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -907,15 +1276,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkEditorDeviceId.
+	 */
 	export class ServerLinkEditorDeviceIdRequestData extends LinkEditorDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkEditorDeviceId.
+	 */
 	export class AdminLinkEditorDeviceIdRequestData extends ServerLinkEditorDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkFacebook.
+	 */
 	export class LinkFacebookRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -928,15 +1306,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkFacebook.
+	 */
 	export class ServerLinkFacebookRequestData extends LinkFacebookRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkFacebook.
+	 */
 	export class AdminLinkFacebookRequestData extends ServerLinkFacebookRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkGenericService.
+	 */
 	export class LinkGenericServiceRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -952,15 +1339,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkGenericService.
+	 */
 	export class ServerLinkGenericServiceRequestData extends LinkGenericServiceRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkGenericService.
+	 */
 	export class AdminLinkGenericServiceRequestData extends ServerLinkGenericServiceRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkGoogle.
+	 */
 	export class LinkGoogleRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -976,15 +1372,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkGoogle.
+	 */
 	export class ServerLinkGoogleRequestData extends LinkGoogleRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkGoogle.
+	 */
 	export class AdminLinkGoogleRequestData extends ServerLinkGoogleRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkGooglePlayGameService.
+	 */
 	export class LinkGooglePlayGameServiceRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -997,15 +1402,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkGooglePlayGameService.
+	 */
 	export class ServerLinkGooglePlayGameServiceRequestData extends LinkGooglePlayGameServiceRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkGooglePlayGameService.
+	 */
 	export class AdminLinkGooglePlayGameServiceRequestData extends ServerLinkGooglePlayGameServiceRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkGameCenter.
+	 */
 	export class LinkGameCenterRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1033,15 +1447,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkGameCenter.
+	 */
 	export class ServerLinkGameCenterRequestData extends LinkGameCenterRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkGameCenter.
+	 */
 	export class AdminLinkGameCenterRequestData extends ServerLinkGameCenterRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkiOSDeviceId.
+	 */
 	export class LinkiOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1054,15 +1477,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkiOSDeviceId.
+	 */
 	export class ServerLinkiOSDeviceIdRequestData extends LinkiOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkiOSDeviceId.
+	 */
 	export class AdminLinkiOSDeviceIdRequestData extends ServerLinkiOSDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkLinuxDeviceId.
+	 */
 	export class LinkLinuxDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1075,15 +1507,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkLinuxDeviceId.
+	 */
 	export class ServerLinkLinuxDeviceIdRequestData extends LinkLinuxDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkLinuxDeviceId.
+	 */
 	export class AdminLinkLinuxDeviceIdRequestData extends ServerLinkLinuxDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkMacOSDeviceId.
+	 */
 	export class LinkMacOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1096,15 +1537,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkMacOSDeviceId.
+	 */
 	export class ServerLinkMacOSDeviceIdRequestData extends LinkMacOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkMacOSDeviceId.
+	 */
 	export class AdminLinkMacOSDeviceIdRequestData extends ServerLinkMacOSDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkWindowsDeviceId.
+	 */
 	export class LinkWindowsDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1117,15 +1567,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkWindowsDeviceId.
+	 */
 	export class ServerLinkWindowsDeviceIdRequestData extends LinkWindowsDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkWindowsDeviceId.
+	 */
 	export class AdminLinkWindowsDeviceIdRequestData extends ServerLinkWindowsDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for LinkWindowsPhoneDeviceId.
+	 */
 	export class LinkWindowsPhoneDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1138,15 +1597,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerLinkWindowsPhoneDeviceId.
+	 */
 	export class ServerLinkWindowsPhoneDeviceIdRequestData extends LinkWindowsPhoneDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminLinkWindowsPhoneDeviceId.
+	 */
 	export class AdminLinkWindowsPhoneDeviceIdRequestData extends ServerLinkWindowsPhoneDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for RemoveSegment.
+	 */
 	export class RemoveSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1156,15 +1624,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerRemoveSegment.
+	 */
 	export class ServerRemoveSegmentRequestData extends RemoveSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminRemoveSegment.
+	 */
 	export class AdminRemoveSegmentRequestData extends ServerRemoveSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for RemoveTag.
+	 */
 	export class RemoveTagRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1174,15 +1651,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerRemoveTag.
+	 */
 	export class ServerRemoveTagRequestData extends RemoveTagRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminRemoveTag.
+	 */
 	export class AdminRemoveTagRequestData extends ServerRemoveTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for ResetAccountPassword.
+	 */
 	export class ResetAccountPasswordRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1192,15 +1678,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerResetAccountPassword.
+	 */
 	export class ServerResetAccountPasswordRequestData extends ResetAccountPasswordRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminResetAccountPassword.
+	 */
 	export class AdminResetAccountPasswordRequestData extends ServerResetAccountPasswordRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetAvatar.
+	 */
 	export class SetAvatarRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1213,15 +1708,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetAvatar.
+	 */
 	export class ServerSetAvatarRequestData extends SetAvatarRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetAvatar.
+	 */
 	export class AdminSetAvatarRequestData extends ServerSetAvatarRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetCountryCode.
+	 */
 	export class SetCountryCodeRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1231,15 +1735,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetCountryCode.
+	 */
 	export class ServerSetCountryCodeRequestData extends SetCountryCodeRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetCountryCode.
+	 */
 	export class AdminSetCountryCodeRequestData extends ServerSetCountryCodeRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetCustomData.
+	 */
 	export class SetCustomDataRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1249,15 +1762,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetCustomData.
+	 */
 	export class ServerSetCustomDataRequestData extends SetCustomDataRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetCustomData.
+	 */
 	export class AdminSetCustomDataRequestData extends ServerSetCustomDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetDisplayName.
+	 */
 	export class SetDisplayNameRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1270,15 +1792,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetDisplayName.
+	 */
 	export class ServerSetDisplayNameRequestData extends SetDisplayNameRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetDisplayName.
+	 */
 	export class AdminSetDisplayNameRequestData extends ServerSetDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetEmail.
+	 */
 	export class SetEmailRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1288,15 +1819,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetEmail.
+	 */
 	export class ServerSetEmailRequestData extends SetEmailRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetEmail.
+	 */
 	export class AdminSetEmailRequestData extends ServerSetEmailRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetPlayerBan.
+	 */
 	export class SetPlayerBanRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1309,15 +1849,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetPlayerBan.
+	 */
 	export class ServerSetPlayerBanRequestData extends SetPlayerBanRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetPlayerBan.
+	 */
 	export class AdminSetPlayerBanRequestData extends ServerSetPlayerBanRequestData {
 	}
 
+	/**
+	 * Defines the request payload for ChangePlayerCurrency.
+	 */
 	export class ChangePlayerCurrencyRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1330,15 +1879,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerChangePlayerCurrency.
+	 */
 	export class ServerChangePlayerCurrencyRequestData extends ChangePlayerCurrencyRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminChangePlayerCurrency.
+	 */
 	export class AdminChangePlayerCurrencyRequestData extends ServerChangePlayerCurrencyRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetPlayerData.
+	 */
 	export class SetPlayerDataRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1348,15 +1906,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetPlayerData.
+	 */
 	export class ServerSetPlayerDataRequestData extends SetPlayerDataRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetPlayerData.
+	 */
 	export class AdminSetPlayerDataRequestData extends ServerSetPlayerDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for ChangePlayerStatistics.
+	 */
 	export class ChangePlayerStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1369,15 +1936,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerChangePlayerStatistics.
+	 */
 	export class ServerChangePlayerStatisticsRequestData extends ChangePlayerStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminChangePlayerStatistics.
+	 */
 	export class AdminChangePlayerStatisticsRequestData extends ServerChangePlayerStatisticsRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetTag.
+	 */
 	export class SetTagRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1390,15 +1966,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetTag.
+	 */
 	export class ServerSetTagRequestData extends SetTagRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetTag.
+	 */
 	export class AdminSetTagRequestData extends ServerSetTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetCurrencyLog.
+	 */
 	export class GetCurrencyLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
@@ -1414,12 +1999,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCurrencyLog.
+	 */
 	export class ServerGetCurrencyLogRequestData extends GetCurrencyLogRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCurrencyLog.
+	 */
 	export class AdminGetCurrencyLogRequestData extends ServerGetCurrencyLogRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStatisticsLog.
+	 */
 	export class GetStatisticsLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
@@ -1435,27 +2029,45 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStatisticsLog.
+	 */
 	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStatisticsLog.
+	 */
 	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetTsLastLogin.
+	 */
 	export class SetTsLastLoginRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetTsLastLogin.
+	 */
 	export class ServerSetTsLastLoginRequestData extends SetTsLastLoginRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSetTsLastLogin.
+	 */
 	export class AdminSetTsLastLoginRequestData extends ServerSetTsLastLoginRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkAccount.
+	 */
 	export class UnlinkAccountRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1465,15 +2077,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkAccount.
+	 */
 	export class ServerUnlinkAccountRequestData extends UnlinkAccountRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkAccount.
+	 */
 	export class AdminUnlinkAccountRequestData extends ServerUnlinkAccountRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkAndroidDeviceId.
+	 */
 	export class UnlinkAndroidDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1483,15 +2104,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkAndroidDeviceId.
+	 */
 	export class ServerUnlinkAndroidDeviceIdRequestData extends UnlinkAndroidDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkAndroidDeviceId.
+	 */
 	export class AdminUnlinkAndroidDeviceIdRequestData extends ServerUnlinkAndroidDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkApple.
+	 */
 	export class UnlinkAppleRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1501,15 +2131,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkApple.
+	 */
 	export class ServerUnlinkAppleRequestData extends UnlinkAppleRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkApple.
+	 */
 	export class AdminUnlinkAppleRequestData extends ServerUnlinkAppleRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkCustomDeviceId.
+	 */
 	export class UnlinkCustomDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1519,15 +2158,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkCustomDeviceId.
+	 */
 	export class ServerUnlinkCustomDeviceIdRequestData extends UnlinkCustomDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkCustomDeviceId.
+	 */
 	export class AdminUnlinkCustomDeviceIdRequestData extends ServerUnlinkCustomDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkCustomId.
+	 */
 	export class UnlinkCustomIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1537,15 +2185,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkCustomId.
+	 */
 	export class ServerUnlinkCustomIdRequestData extends UnlinkCustomIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkCustomId.
+	 */
 	export class AdminUnlinkCustomIdRequestData extends ServerUnlinkCustomIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkEditorDeviceId.
+	 */
 	export class UnlinkEditorDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1555,15 +2212,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkEditorDeviceId.
+	 */
 	export class ServerUnlinkEditorDeviceIdRequestData extends UnlinkEditorDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkEditorDeviceId.
+	 */
 	export class AdminUnlinkEditorDeviceIdRequestData extends ServerUnlinkEditorDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkFacebook.
+	 */
 	export class UnlinkFacebookRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1573,15 +2239,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkFacebook.
+	 */
 	export class ServerUnlinkFacebookRequestData extends UnlinkFacebookRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkFacebook.
+	 */
 	export class AdminUnlinkFacebookRequestData extends ServerUnlinkFacebookRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkGenericService.
+	 */
 	export class UnlinkGenericServiceRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1594,15 +2269,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkGenericService.
+	 */
 	export class ServerUnlinkGenericServiceRequestData extends UnlinkGenericServiceRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkGenericService.
+	 */
 	export class AdminUnlinkGenericServiceRequestData extends ServerUnlinkGenericServiceRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkGoogle.
+	 */
 	export class UnlinkGoogleRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1612,15 +2296,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkGoogle.
+	 */
 	export class ServerUnlinkGoogleRequestData extends UnlinkGoogleRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkGoogle.
+	 */
 	export class AdminUnlinkGoogleRequestData extends ServerUnlinkGoogleRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkGooglePlayGameService.
+	 */
 	export class UnlinkGooglePlayGameServiceRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1630,15 +2323,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkGooglePlayGameService.
+	 */
 	export class ServerUnlinkGooglePlayGameServiceRequestData extends UnlinkGooglePlayGameServiceRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkGooglePlayGameService.
+	 */
 	export class AdminUnlinkGooglePlayGameServiceRequestData extends ServerUnlinkGooglePlayGameServiceRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkGameCenter.
+	 */
 	export class UnlinkGameCenterRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1648,15 +2350,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkGameCenter.
+	 */
 	export class ServerUnlinkGameCenterRequestData extends UnlinkGameCenterRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkGameCenter.
+	 */
 	export class AdminUnlinkGameCenterRequestData extends ServerUnlinkGameCenterRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkiOSDeviceId.
+	 */
 	export class UnlinkiOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1666,15 +2377,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkiOSDeviceId.
+	 */
 	export class ServerUnlinkiOSDeviceIdRequestData extends UnlinkiOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkiOSDeviceId.
+	 */
 	export class AdminUnlinkiOSDeviceIdRequestData extends ServerUnlinkiOSDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkLinuxDeviceId.
+	 */
 	export class UnlinkLinuxDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1684,15 +2404,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkLinuxDeviceId.
+	 */
 	export class ServerUnlinkLinuxDeviceIdRequestData extends UnlinkLinuxDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkLinuxDeviceId.
+	 */
 	export class AdminUnlinkLinuxDeviceIdRequestData extends ServerUnlinkLinuxDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkMacOSDeviceId.
+	 */
 	export class UnlinkMacOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1702,15 +2431,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkMacOSDeviceId.
+	 */
 	export class ServerUnlinkMacOSDeviceIdRequestData extends UnlinkMacOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkMacOSDeviceId.
+	 */
 	export class AdminUnlinkMacOSDeviceIdRequestData extends ServerUnlinkMacOSDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkWindowsDeviceId.
+	 */
 	export class UnlinkWindowsDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1720,15 +2458,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkWindowsDeviceId.
+	 */
 	export class ServerUnlinkWindowsDeviceIdRequestData extends UnlinkWindowsDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkWindowsDeviceId.
+	 */
 	export class AdminUnlinkWindowsDeviceIdRequestData extends ServerUnlinkWindowsDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for UnlinkWindowsPhoneDeviceId.
+	 */
 	export class UnlinkWindowsPhoneDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1738,15 +2485,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerUnlinkWindowsPhoneDeviceId.
+	 */
 	export class ServerUnlinkWindowsPhoneDeviceIdRequestData extends UnlinkWindowsPhoneDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminUnlinkWindowsPhoneDeviceId.
+	 */
 	export class AdminUnlinkWindowsPhoneDeviceIdRequestData extends ServerUnlinkWindowsPhoneDeviceIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SendSocketOperationEvent.
+	 */
 	export class SendSocketOperationEventRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1759,15 +2515,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSendSocketOperationEvent.
+	 */
 	export class ServerSendSocketOperationEventRequestData extends SendSocketOperationEventRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSendSocketOperationEvent.
+	 */
 	export class AdminSendSocketOperationEventRequestData extends ServerSendSocketOperationEventRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SendEmail.
+	 */
 	export class SendEmailRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1780,15 +2545,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSendEmail.
+	 */
 	export class ServerSendEmailRequestData extends SendEmailRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSendEmail.
+	 */
 	export class AdminSendEmailRequestData extends ServerSendEmailRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AddPushNotification.
+	 */
 	export class AddPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1801,30 +2575,48 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerAddPushNotification.
+	 */
 	export class ServerAddPushNotificationRequestData extends AddPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminAddPushNotification.
+	 */
 	export class AdminAddPushNotificationRequestData extends ServerAddPushNotificationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetPushNotification.
+	 */
 	export class GetPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetPushNotification.
+	 */
 	export class ServerGetPushNotificationRequestData extends GetPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminGetPushNotification.
+	 */
 	export class AdminGetPushNotificationRequestData extends ServerGetPushNotificationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for RemovePushNotification.
+	 */
 	export class RemovePushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1834,15 +2626,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerRemovePushNotification.
+	 */
 	export class ServerRemovePushNotificationRequestData extends RemovePushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminRemovePushNotification.
+	 */
 	export class AdminRemovePushNotificationRequestData extends ServerRemovePushNotificationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SendPushNotification.
+	 */
 	export class SendPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
@@ -1867,15 +2668,24 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSendPushNotification.
+	 */
 	export class ServerSendPushNotificationRequestData extends SendPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for AdminSendPushNotification.
+	 */
 	export class AdminSendPushNotificationRequestData extends ServerSendPushNotificationRequestData {
 	}
 
+	/**
+	 * Represents PushNotificationItem.
+	 */
 	export class PushNotificationItem {
 		@StringDataMember({ code: ParameterCode.Token })
 		public token: string;
@@ -1888,6 +2698,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Represents InfoResponseParameters.
+	 */
 	export class InfoResponseParameters {
 		@GNHashtableDataMember({ code: ParameterCode.External, isOptional: true })
 		public external?: ExternalItem;
@@ -1939,96 +2752,144 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayer.
+	 */
 	export class MasterPlayerResponseData {
 		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
+	/**
+	 * Defines the response payload for GenericServiceMasterPlayer.
+	 */
 	export class GenericServiceMasterPlayerResponseData extends MasterPlayerResponseData {
 		@StringDataMember({ code: ParameterCode.ErrorMessage, isOptional: true })
 		public errorMessage?: string;
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayerWithUserId.
+	 */
 	export class MasterPlayerWithUserIdResponseData extends MasterPlayerResponseData {
 		@StringDataMember({ code: ParameterCode.UserId })
 		public userId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayerWithAppleId.
+	 */
 	export class MasterPlayerWithAppleIdResponseData extends MasterPlayerWithUserIdResponseData {
 		@StringDataMember({ code: ParameterCode.AppleId })
 		public appleId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for GetPlayersWithApple.
+	 */
 	export class GetPlayersWithAppleResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerWithAppleIdResponseData })
 		public results: Array<MasterPlayerWithAppleIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayersWithUserId.
+	 */
 	export class MasterPlayersWithUserIdResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerWithUserIdResponseData })
 		public results: Array<MasterPlayerWithUserIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayerWithFacebookId.
+	 */
 	export class MasterPlayerWithFacebookIdResponseData extends MasterPlayerWithUserIdResponseData {
 		@StringDataMember({ code: ParameterCode.FacebookId })
 		public facebookId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for GetPlayersWithFacebook.
+	 */
 	export class GetPlayersWithFacebookResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerWithFacebookIdResponseData })
 		public results: Array<MasterPlayerWithFacebookIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayerWithGenericServiceId.
+	 */
 	export class MasterPlayerWithGenericServiceIdResponseData extends MasterPlayerWithUserIdResponseData {
 		@StringDataMember({ code: ParameterCode.ServiceId })
 		public serviceId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for GetPlayersWithGenericService.
+	 */
 	export class GetPlayersWithGenericServiceResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerWithGenericServiceIdResponseData })
 		public results: Array<MasterPlayerWithGenericServiceIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayerWithGoogleId.
+	 */
 	export class MasterPlayerWithGoogleIdResponseData extends MasterPlayerWithUserIdResponseData {
 		@StringDataMember({ code: ParameterCode.GoogleId })
 		public googleId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for GetPlayersWithGoogle.
+	 */
 	export class GetPlayersWithGoogleResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerWithGoogleIdResponseData })
 		public results: Array<MasterPlayerWithGoogleIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayerWithPlayerId.
+	 */
 	export class MasterPlayerWithPlayerIdResponseData extends MasterPlayerWithUserIdResponseData {
 		@StringDataMember({ code: ParameterCode.PlayerId })
 		public playerId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for GetPlayersWithGooglePlayGameService.
+	 */
 	export class GetPlayersWithGooglePlayGameServiceResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerWithPlayerIdResponseData })
 		public results: Array<MasterPlayerWithPlayerIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for GetPlayersWithGameCenter.
+	 */
 	export class GetPlayersWithGameCenterResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerWithPlayerIdResponseData })
 		public results: Array<MasterPlayerWithPlayerIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayerLeaderboard.
+	 */
 	export class MasterPlayerLeaderboardResponseData extends MasterPlayerWithUserIdResponseData {
 		@NumberDataMember({ code: ParameterCode.Position })
 		public position: number;
@@ -2038,6 +2899,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the response payload for MasterPlayerLog.
+	 */
 	export class MasterPlayerLogResponseData {
 		@StringDataMember({ code: ParameterCode.UserId })
 		public userId: string;
@@ -2062,6 +2926,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetStatisticsLeaderboard.
+	 */
 	export class GetStatisticsLeaderboardResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
 		public results: Array<MasterPlayerLeaderboardResponseData>;
@@ -2071,24 +2938,36 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetCurrencyLeaderboard.
+	 */
 	export class GetCurrencyLeaderboardResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
 		public results: Array<MasterPlayerLeaderboardResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for GetCreateLeaderboard.
+	 */
 	export class GetCreateLeaderboardResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
 		public results: Array<MasterPlayerLeaderboardResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for GetLastLoginLeaderboard.
+	 */
 	export class GetLastLoginLeaderboardResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
 		public results: Array<MasterPlayerLeaderboardResponseData>;
 
 	}
 
+	/**
+	 * Defines the request payload for GetCurrencyLeaderboard.
+	 */
 	export class GetCurrencyLeaderboardRequestData {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -2107,12 +2986,21 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCurrencyLeaderboard.
+	 */
 	export class ServerGetCurrencyLeaderboardRequestData extends GetCurrencyLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCurrencyLeaderboard.
+	 */
 	export class AdminGetCurrencyLeaderboardRequestData extends ServerGetCurrencyLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the response payload for GetStatisticsLog.
+	 */
 	export class GetStatisticsLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLogResponseData })
 		public results: Array<MasterPlayerLogResponseData>;
@@ -2122,6 +3010,9 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetCurrencyLog.
+	 */
 	export class GetCurrencyLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLogResponseData })
 		public results: Array<MasterPlayerLogResponseData>;
@@ -2131,18 +3022,27 @@ export namespace MasterPlayerModels {
 
 	}
 
+	/**
+	 * Defines the response payload for AddPushNotification.
+	 */
 	export class AddPushNotificationResponseData {
 		@StringDataMember({ code: ParameterCode.PushId })
 		public pushId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for SendPushNotification.
+	 */
 	export class SendPushNotificationResponseData {
 		@StringDataMember({ code: ParameterCode.Message })
 		public message: string;
 
 	}
 
+	/**
+	 * Defines the response payload for Empty.
+	 */
 	export class EmptyResponseData {
 	}
 

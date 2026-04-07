@@ -2,8 +2,14 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
+/**
+ * Groups shared data contracts for Inventory.
+ */
 export namespace InventoryModels {
 
+	/**
+	 * Defines the reusable parameter block CustomDataParam.
+	 */
 	export class CustomDataParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -13,6 +19,9 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block InfoRequestParam.
+	 */
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: ParameterCode.CatalogId, isOptional: true, defaultValue: false })
 		public catalogId?: boolean;
@@ -70,6 +79,9 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ItemDataParam.
+	 */
 	export class ItemDataParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -79,6 +91,9 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ItemStatisticsParam.
+	 */
 	export class ItemStatisticsParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -88,6 +103,9 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for AddSegment.
+	 */
 	export class AddSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -97,60 +115,105 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerAddSegment.
+	 */
 	export class ServerAddSegmentRequestData extends AddSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminAddSegment.
+	 */
 	export class AdminAddSegmentRequestData extends ServerAddSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetAmount.
+	 */
 	export class GetAmountRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetAmount.
+	 */
 	export class ServerGetAmountRequestData extends GetAmountRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetAmount.
+	 */
 	export class AdminGetAmountRequestData extends ServerGetAmountRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetAvatar.
+	 */
 	export class GetAvatarRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetAvatar.
+	 */
 	export class ServerGetAvatarRequestData extends GetAvatarRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetAvatar.
+	 */
 	export class AdminGetAvatarRequestData extends ServerGetAvatarRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetCatalogId.
+	 */
 	export class GetCatalogIdRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCatalogId.
+	 */
 	export class ServerGetCatalogIdRequestData extends GetCatalogIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCatalogId.
+	 */
 	export class AdminGetCatalogIdRequestData extends ServerGetCatalogIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetClassId.
+	 */
 	export class GetClassIdRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetClassId.
+	 */
 	export class ServerGetClassIdRequestData extends GetClassIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetClassId.
+	 */
 	export class AdminGetClassIdRequestData extends ServerGetClassIdRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetCustomData.
+	 */
 	export class GetCustomDataRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -160,24 +223,42 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCustomData.
+	 */
 	export class ServerGetCustomDataRequestData extends GetCustomDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCustomData.
+	 */
 	export class AdminGetCustomDataRequestData extends ServerGetCustomDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetDisplayName.
+	 */
 	export class GetDisplayNameRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetDisplayName.
+	 */
 	export class ServerGetDisplayNameRequestData extends GetDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetDisplayName.
+	 */
 	export class AdminGetDisplayNameRequestData extends ServerGetDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetItemData.
+	 */
 	export class GetItemDataRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -187,12 +268,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetItemData.
+	 */
 	export class ServerGetItemDataRequestData extends GetItemDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetItemData.
+	 */
 	export class AdminGetItemDataRequestData extends ServerGetItemDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetItemInformation.
+	 */
 	export class GetItemInformationRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -202,12 +292,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetItemInformation.
+	 */
 	export class ServerGetItemInformationRequestData extends GetItemInformationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetItemInformation.
+	 */
 	export class AdminGetItemInformationRequestData extends ServerGetItemInformationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetItemStatistics.
+	 */
 	export class GetItemStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -217,12 +316,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetItemStatistics.
+	 */
 	export class ServerGetItemStatisticsRequestData extends GetItemStatisticsRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetItemStatistics.
+	 */
 	export class AdminGetItemStatisticsRequestData extends ServerGetItemStatisticsRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetItemsWithDisplayName.
+	 */
 	export class GetItemsWithDisplayNameRequestData {
 		@StringDataMember({ code: ParameterCode.Keyword, minLength: 2, maxLength: 32 })
 		public keyword: string;
@@ -238,12 +346,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetItemsWithDisplayName.
+	 */
 	export class ServerGetItemsWithDisplayNameRequestData extends GetItemsWithDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetItemsWithDisplayName.
+	 */
 	export class AdminGetItemsWithDisplayNameRequestData extends ServerGetItemsWithDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetItemsWithSegment.
+	 */
 	export class GetItemsWithSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.Value, minLength: 2, maxLength: 32, mustNonNull: true })
 		public value: string;
@@ -259,12 +376,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetItemsWithSegment.
+	 */
 	export class ServerGetItemsWithSegmentRequestData extends GetItemsWithSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetItemsWithSegment.
+	 */
 	export class AdminGetItemsWithSegmentRequestData extends ServerGetItemsWithSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetItemsWithTag.
+	 */
 	export class GetItemsWithTagRequestData {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -283,60 +409,105 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetItemsWithTag.
+	 */
 	export class ServerGetItemsWithTagRequestData extends GetItemsWithTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetItemsWithTag.
+	 */
 	export class AdminGetItemsWithTagRequestData extends ServerGetItemsWithTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetItemType.
+	 */
 	export class GetItemTypeRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetItemType.
+	 */
 	export class ServerGetItemTypeRequestData extends GetItemTypeRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetItemType.
+	 */
 	export class AdminGetItemTypeRequestData extends ServerGetItemTypeRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetOwner.
+	 */
 	export class GetOwnerRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetOwner.
+	 */
 	export class ServerGetOwnerRequestData extends GetOwnerRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetOwner.
+	 */
 	export class AdminGetOwnerRequestData extends ServerGetOwnerRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetRemoveStatus.
+	 */
 	export class GetRemoveStatusRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetRemoveStatus.
+	 */
 	export class ServerGetRemoveStatusRequestData extends GetRemoveStatusRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetRemoveStatus.
+	 */
 	export class AdminGetRemoveStatusRequestData extends ServerGetRemoveStatusRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetSegment.
+	 */
 	export class GetSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetSegment.
+	 */
 	export class ServerGetSegmentRequestData extends GetSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetSegment.
+	 */
 	export class AdminGetSegmentRequestData extends ServerGetSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStatisticsLeaderboardAroundItem.
+	 */
 	export class GetStatisticsLeaderboardAroundItemRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -361,12 +532,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStatisticsLeaderboardAroundItem.
+	 */
 	export class ServerGetStatisticsLeaderboardAroundItemRequestData extends GetStatisticsLeaderboardAroundItemRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStatisticsLeaderboardAroundItem.
+	 */
 	export class AdminGetStatisticsLeaderboardAroundItemRequestData extends ServerGetStatisticsLeaderboardAroundItemRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStatisticsLeaderboard.
+	 */
 	export class GetStatisticsLeaderboardRequestData {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -391,12 +571,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStatisticsLeaderboard.
+	 */
 	export class ServerGetStatisticsLeaderboardRequestData extends GetStatisticsLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStatisticsLeaderboard.
+	 */
 	export class AdminGetStatisticsLeaderboardRequestData extends ServerGetStatisticsLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetCreateLeaderboard.
+	 */
 	export class GetCreateLeaderboardRequestData {
 		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
@@ -412,12 +601,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCreateLeaderboard.
+	 */
 	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCreateLeaderboard.
+	 */
 	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetTag.
+	 */
 	export class GetTagRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -427,24 +625,42 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetTag.
+	 */
 	export class ServerGetTagRequestData extends GetTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetTag.
+	 */
 	export class AdminGetTagRequestData extends ServerGetTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetTsCreate.
+	 */
 	export class GetTsCreateRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetTsCreate.
+	 */
 	export class ServerGetTsCreateRequestData extends GetTsCreateRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetTsCreate.
+	 */
 	export class AdminGetTsCreateRequestData extends ServerGetTsCreateRequestData {
 	}
 
+	/**
+	 * Defines the request payload for RemoveSegment.
+	 */
 	export class RemoveSegmentRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -454,12 +670,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerRemoveSegment.
+	 */
 	export class ServerRemoveSegmentRequestData extends RemoveSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminRemoveSegment.
+	 */
 	export class AdminRemoveSegmentRequestData extends ServerRemoveSegmentRequestData {
 	}
 
+	/**
+	 * Defines the request payload for RemoveTag.
+	 */
 	export class RemoveTagRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -469,12 +694,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerRemoveTag.
+	 */
 	export class ServerRemoveTagRequestData extends RemoveTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminRemoveTag.
+	 */
 	export class AdminRemoveTagRequestData extends ServerRemoveTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetAmount.
+	 */
 	export class SetAmountRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -484,12 +718,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetAmount.
+	 */
 	export class ServerSetAmountRequestData extends SetAmountRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetAmount.
+	 */
 	export class AdminSetAmountRequestData extends ServerSetAmountRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetAvatar.
+	 */
 	export class SetAvatarRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -502,12 +745,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetAvatar.
+	 */
 	export class ServerSetAvatarRequestData extends SetAvatarRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetAvatar.
+	 */
 	export class AdminSetAvatarRequestData extends ServerSetAvatarRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetCustomData.
+	 */
 	export class SetCustomDataRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -517,12 +769,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetCustomData.
+	 */
 	export class ServerSetCustomDataRequestData extends SetCustomDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetCustomData.
+	 */
 	export class AdminSetCustomDataRequestData extends ServerSetCustomDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetDisplayName.
+	 */
 	export class SetDisplayNameRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -532,12 +793,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetDisplayName.
+	 */
 	export class ServerSetDisplayNameRequestData extends SetDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetDisplayName.
+	 */
 	export class AdminSetDisplayNameRequestData extends ServerSetDisplayNameRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetItemData.
+	 */
 	export class SetItemDataRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -547,12 +817,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetItemData.
+	 */
 	export class ServerSetItemDataRequestData extends SetItemDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetItemData.
+	 */
 	export class AdminSetItemDataRequestData extends ServerSetItemDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for ChangeItemStatistics.
+	 */
 	export class ChangeItemStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -565,12 +844,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerChangeItemStatistics.
+	 */
 	export class ServerChangeItemStatisticsRequestData extends ChangeItemStatisticsRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminChangeItemStatistics.
+	 */
 	export class AdminChangeItemStatisticsRequestData extends ServerChangeItemStatisticsRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetOwner.
+	 */
 	export class SetOwnerRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public itemId: string;
@@ -583,12 +871,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetOwner.
+	 */
 	export class ServerSetOwnerRequestData extends SetOwnerRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetOwner.
+	 */
 	export class AdminSetOwnerRequestData extends ServerSetOwnerRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetRemoveStatus.
+	 */
 	export class SetRemoveStatusRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -598,12 +895,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetRemoveStatus.
+	 */
 	export class ServerSetRemoveStatusRequestData extends SetRemoveStatusRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetRemoveStatus.
+	 */
 	export class AdminSetRemoveStatusRequestData extends ServerSetRemoveStatusRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetTag.
+	 */
 	export class SetTagRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
@@ -616,12 +922,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetTag.
+	 */
 	export class ServerSetTagRequestData extends SetTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetTag.
+	 */
 	export class AdminSetTagRequestData extends ServerSetTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStatisticsLog.
+	 */
 	export class GetStatisticsLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
@@ -637,12 +952,21 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStatisticsLog.
+	 */
 	export class ServerGetStatisticsLogRequestData extends GetStatisticsLogRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStatisticsLog.
+	 */
 	export class AdminGetStatisticsLogRequestData extends ServerGetStatisticsLogRequestData {
 	}
 
+	/**
+	 * Represents InfoResponseParameters.
+	 */
 	export class InfoResponseParameters {
 		@StringDataMember({ code: ParameterCode.CatalogId, isOptional: true })
 		public catalogId?: string;
@@ -688,18 +1012,27 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for Inventory.
+	 */
 	export class InventoryResponseData {
 		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
+	/**
+	 * Defines the response payload for InventoryWithItemId.
+	 */
 	export class InventoryWithItemIdResponseData extends InventoryResponseData {
 		@StringDataMember({ code: ParameterCode.ItemId })
 		public itemId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for InventoryLeaderboard.
+	 */
 	export class InventoryLeaderboardResponseData extends InventoryWithItemIdResponseData {
 		@NumberDataMember({ code: ParameterCode.Position })
 		public position: number;
@@ -709,6 +1042,9 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for InventoryLog.
+	 */
 	export class InventoryLogResponseData {
 		@StringDataMember({ code: ParameterCode.ItemId })
 		public itemId: string;
@@ -733,6 +1069,9 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetStatisticsLeaderboard.
+	 */
 	export class GetStatisticsLeaderboardResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryLeaderboardResponseData })
 		public results: Array<InventoryLeaderboardResponseData>;
@@ -742,18 +1081,27 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for InventoriesWithItemId.
+	 */
 	export class InventoriesWithItemIdResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryWithItemIdResponseData })
 		public results: Array<InventoryWithItemIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for GetCreateLeaderboard.
+	 */
 	export class GetCreateLeaderboardResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryLeaderboardResponseData })
 		public results: Array<InventoryLeaderboardResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for GetStatisticsLog.
+	 */
 	export class GetStatisticsLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryLogResponseData })
 		public results: Array<InventoryLogResponseData>;
@@ -763,6 +1111,9 @@ export namespace InventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for Empty.
+	 */
 	export class EmptyResponseData {
 	}
 

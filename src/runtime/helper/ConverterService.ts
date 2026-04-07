@@ -1,11 +1,20 @@
 import { GNEnhancedObjectFieldMetadata, GNEnhancedObjectMetadata, GNFieldDataType, getGNObjectMetadata } from "./../entity/DataMember";
 import { GNArray, GNData, GNHashtable } from "./../common/GNData";
 
+/**
+ * Defines the type alias Constructor.
+ */
 type Constructor<T> = { new(...args: any[]): T };
 
+/**
+ * Caches reflected field metadata for decorated model classes.
+ */
 class DataMemberFieldInfoTypeMapper {
 	private readonly declaredFieldsMap: Map<any, GNEnhancedObjectFieldMetadata[]>;
 
+	/**
+	 * Returns cached metadata for the given model class, reflecting it on first use.
+	 */
 	public getGNEnhancedObjectFieldMetadata<T>(cls: Constructor<T>): GNEnhancedObjectFieldMetadata[] {
 		let declaredFields: GNEnhancedObjectFieldMetadata[];
 
@@ -22,14 +31,23 @@ class DataMemberFieldInfoTypeMapper {
 		return declaredFields;
 	}
 
+	/**
+	 * Creates a new DataMemberFieldInfoTypeMapper instance.
+	 */
 	constructor() {
 		this.declaredFieldsMap = new Map();
 	}
 }
 
+/**
+ * Converts GearN containers into typed model instances.
+ */
 class DeserializeConverter {
 	private dataMemberFieldInfoMapper: DataMemberFieldInfoTypeMapper;
 
+	/**
+	 * Deserializes a `GNHashtable` into a typed model instance.
+	 */
 	public deserializeObject<T>(gnHashtable: GNHashtable, cls: Constructor<T>): any {
 		if (gnHashtable == null) return null;
 
@@ -106,6 +124,9 @@ class DeserializeConverter {
 		return answer;
 	}
 
+	/**
+	 * Deserializes a `GNArray` into an array of typed model instances or primitives.
+	 */
 	public deserializeArray<T>(gnArray: GNArray, cls: Constructor<T>): any[] {
 
 		if (gnArray == null) return null;
@@ -137,14 +158,23 @@ class DeserializeConverter {
 		return answer;
 	}
 
+	/**
+	 * Creates a new DeserializeConverter instance.
+	 */
 	constructor(dataMemberFieldInfoMapper: DataMemberFieldInfoTypeMapper) {
 		this.dataMemberFieldInfoMapper = dataMemberFieldInfoMapper;
 	}
 }
 
+/**
+ * Converts typed model instances into GearN containers.
+ */
 class SerializeConverter {
 	private dataMemberFieldInfoMapper: DataMemberFieldInfoTypeMapper;
 
+	/**
+	 * Serializes a typed model instance into a `GNHashtable`.
+	 */
 	public serializeObject<T>(obj: any, cls: Constructor<T>): GNHashtable {
 		if (obj == null) return null;
 
@@ -201,6 +231,9 @@ class SerializeConverter {
 		return answer;
 	}
 
+	/**
+	 * Serializes an array of typed model instances or primitives into a `GNArray`.
+	 */
 	public serializeArray<T>(objLst: any[], cls: Constructor<T>): GNArray {
 		if (objLst == null) return null;
 
@@ -229,31 +262,52 @@ class SerializeConverter {
 		return answer;
 	}
 
+	/**
+	 * Creates a new SerializeConverter instance.
+	 */
 	constructor(dataMemberFieldInfoMapper: DataMemberFieldInfoTypeMapper) {
 		this.dataMemberFieldInfoMapper = dataMemberFieldInfoMapper;
 	}
 }
 
+/**
+ * Exposes the shared serialization and deserialization helpers used by the SDK models.
+ */
 export class ConverterService {
 	private static serializeConverter: SerializeConverter;
 	private static deserializeConverter: DeserializeConverter;
 
+	/**
+	 * Deserializes a `GNHashtable` into a typed model instance.
+	 */
 	public static deserializeObject<T>(gnHashtable: GNHashtable, cls: Constructor<T>): any {
 		return ConverterService.deserializeConverter.deserializeObject(gnHashtable, cls);
 	}
 
+	/**
+	 * Deserializes a `GNArray` into an array of typed model instances or primitives.
+	 */
 	public static deserializeArray<T>(gnArray: GNArray, cls: Constructor<T>): any[] {
 		return ConverterService.deserializeConverter.deserializeArray(gnArray, cls);
 	}
 
+	/**
+	 * Serializes a typed model instance into a `GNHashtable`.
+	 */
 	public static serializeObject<T>(obj: any, cls: Constructor<T>): GNHashtable {
 		return ConverterService.serializeConverter.serializeObject(obj, cls);
 	}
 
+	/**
+	 * Serializes an array of typed model instances or primitives into a `GNArray`.
+	 */
 	public static serializeArray<T>(objLst: [], cls: Constructor<T>): GNArray {
 		return ConverterService.serializeConverter.serializeArray(objLst, cls);
 	}
 
+	/**
+	 * Creates the shared serializer and deserializer instances used across the SDK.
+	 */
 	static init(): void {
 		let dataMemberFieldInfoMapper = new DataMemberFieldInfoTypeMapper();
 

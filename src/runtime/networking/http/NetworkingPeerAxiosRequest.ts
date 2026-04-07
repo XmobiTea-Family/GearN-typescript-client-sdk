@@ -11,15 +11,27 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNNetwork } from "./../../GNNetwork";
 import { MessagePackConverterService } from "./../../helper/MessagePackConverterService";
 
+/**
+ * Implements low-level HTTP calls with Axios.
+ */
 export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
+	/**
+	 * Executes a low-level HTTP GET request.
+	 */
 	public override getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): void {
 		this.getRequestAxios(subUri, onHttpAppResponse, timeout, authToken, secretKey, gameId);
 	}
 
+	/**
+	 * Executes a low-level HTTP POST request.
+	 */
 	public postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
 		this.postRequestAxios(subUri, param, postType, onHttpAppResponse, timeout, authToken, secretKey, customTags, gameId);
 	}
 
+	/**
+	 * Executes a low-level multipart upload request.
+	 */
 	public postRequestUpload(subUri: string, content: Uint8Array, filename: string, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): void {
 		//GNDebug.logWarning("GN JS client sdk does not support upload file yet.");
 
@@ -34,6 +46,9 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 		this.postRequestUploadAxios(subUri, content, filename, mimetype, onHttpAppResponse, timeout);
 	}
 
+	/**
+	 * Executes an HTTP GET request through Axios.
+	 */
 	private async getRequestAxios(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): Promise<void> {
 		let headers: { [k: string]: any } = {};
 
@@ -79,6 +94,9 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 		if (onHttpAppResponse != null) onHttpAppResponse(httpAppResponse);
 	}
 
+	/**
+	 * Executes an HTTP POST request through Axios.
+	 */
 	private async postRequestAxios(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): Promise<void> {
 		let headers: { [k: string]: any } = {};
 
@@ -158,6 +176,9 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 		if (onHttpAppResponse != null) onHttpAppResponse(httpAppResponse);
 	}
 
+	/**
+	 * Executes a multipart upload request through Axios.
+	 */
 	private async postRequestUploadAxios(subUri: string, content: Uint8Array, filename: string, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): Promise<void> {
 		let formData = new FormData();
 		formData.append(Commands.File, new Blob([content.buffer.slice(0) as ArrayBuffer], { type: mimetype }), filename);
@@ -200,10 +221,16 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
 
 	}
 
+	/**
+	 * Converts a Uint8Array payload into a string.
+	 */
 	private uint8ArrayToString(uint8Array: any): string {
 		return decodeURIComponent(escape(String.fromCharCode(...uint8Array)))
 	}
 
+	/**
+	 * Normalizes the raw Axios payload into binary and text forms.
+	 */
 	private toBuffers(data: any): [any, string] {
 		if (GNSupport.isBrowser()) {
 			data = new Uint8Array(data);

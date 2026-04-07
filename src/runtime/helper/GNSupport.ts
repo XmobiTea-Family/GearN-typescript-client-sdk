@@ -3,12 +3,18 @@
 
 type PlatformType = "cocos" | "browser" | "nodejs";
 
+/**
+ * Detects and caches the runtime platform used by the SDK.
+ */
 export class GNSupport {
 	private static _isBrowser: boolean;
 	private static _isCocosCreator: boolean;
 	private static _platformType: PlatformType;
 	private static _initialized: boolean = false;
 
+	/**
+	 * Detects the current runtime once and caches the result for future lookups.
+	 */
 	static init(): void {
 		if (this._initialized) return;
 
@@ -31,28 +37,28 @@ export class GNSupport {
 	}
 
 	/**
-	 * Check if running in standard browser environment
+	 * Returns whether the SDK is running in a browser environment.
 	 */
 	public static isBrowser(): boolean {
 		return this._isBrowser;
 	}
 
 	/**
-	 * Check if running in Cocos Creator 3.x environment
+	 * Returns whether the SDK is running inside Cocos Creator.
 	 */
 	public static isCocosCreator(): boolean {
 		return this._isCocosCreator;
 	}
 
 	/**
-	 * Check if running in Node.js environment
+	 * Returns whether the SDK is running under Node.js.
 	 */
 	public static isNodeJS(): boolean {
 		return this._platformType === "nodejs";
 	}
 
 	/**
-	 * Get the current platform type
+	 * Returns the cached runtime platform type.
 	 */
 	public static getPlatformType(): PlatformType {
 		return this._platformType;

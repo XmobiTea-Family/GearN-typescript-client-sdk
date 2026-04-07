@@ -4,8 +4,14 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 import { MasterPlayerModels } from "./MasterPlayerModels";
 
+/**
+ * Groups shared data contracts for Authenticate.
+ */
 export namespace AuthenticateModels {
 
+	/**
+	 * Defines the reusable parameter block InfoRequestParam.
+	 */
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: ParameterCode.External, isOptional: true, defaultValue: false })
 		public external?: boolean;
@@ -72,6 +78,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByAccount.
+	 */
 	export class LoginByAccountRequestData {
 		@StringDataMember({ code: ParameterCode.Username, minLength: 6, maxLength: 32, mustNonNull: true })
 		public username: string;
@@ -84,6 +93,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByAndroidDeviceId.
+	 */
 	export class LoginByAndroidDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.AndroidDeviceId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public androidDeviceId: string;
@@ -96,6 +108,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByApple.
+	 */
 	export class LoginByAppleRequestData {
 		@StringDataMember({ code: ParameterCode.Token, minLength: 32, maxLength: 2048, mustNonNull: true })
 		public token: string;
@@ -108,6 +123,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByCustomDeviceId.
+	 */
 	export class LoginByCustomDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.CustomDeviceId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public customDeviceId: string;
@@ -120,6 +138,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByCustomId.
+	 */
 	export class LoginByCustomIdRequestData {
 		@StringDataMember({ code: ParameterCode.CustomId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public customId: string;
@@ -132,6 +153,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByEditorDeviceId.
+	 */
 	export class LoginByEditorDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.EditorDeviceId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public editorDeviceId: string;
@@ -144,6 +168,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByFacebook.
+	 */
 	export class LoginByFacebookRequestData {
 		@StringDataMember({ code: ParameterCode.Token, minLength: 32, maxLength: 2048, mustNonNull: true })
 		public token: string;
@@ -156,6 +183,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByGenericService.
+	 */
 	export class LoginByGenericServiceRequestData {
 		@StringDataMember({ code: ParameterCode.ServiceName, minLength: 6, maxLength: 32, mustNonNull: true })
 		public serviceName: string;
@@ -171,6 +201,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByGoogle.
+	 */
 	export class LoginByGoogleRequestData {
 		@StringDataMember({ code: ParameterCode.Token, minLength: 32, maxLength: 2048, mustNonNull: true })
 		public token: string;
@@ -186,6 +219,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByGooglePlayGameService.
+	 */
 	export class LoginByGooglePlayGameServiceRequestData {
 		@StringDataMember({ code: ParameterCode.Token, minLength: 32, maxLength: 2048, mustNonNull: true })
 		public token: string;
@@ -198,6 +234,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByGameCenter.
+	 */
 	export class LoginByGameCenterRequestData {
 		@StringDataMember({ code: ParameterCode.PlayerId, minLength: 2, maxLength: 64, mustNonNull: true })
 		public playerId: string;
@@ -225,6 +264,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByiOSDeviceId.
+	 */
 	export class LoginByiOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.iOSDeviceId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public iOSDeviceId: string;
@@ -237,6 +279,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByLinuxDeviceId.
+	 */
 	export class LoginByLinuxDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.LinuxDeviceId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public linuxDeviceId: string;
@@ -249,6 +294,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByMacOSDeviceId.
+	 */
 	export class LoginByMacOSDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.MacOSDeviceId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public macOSDeviceId: string;
@@ -261,6 +309,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByWindowsDeviceId.
+	 */
 	export class LoginByWindowsDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.WindowsDeviceId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public windowsDeviceId: string;
@@ -273,6 +324,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for LoginByWindowsPhoneDeviceId.
+	 */
 	export class LoginByWindowsPhoneDeviceIdRequestData {
 		@StringDataMember({ code: ParameterCode.WindowsPhoneDeviceId, minLength: 6, maxLength: 64, mustNonNull: true })
 		public windowsPhoneDeviceId: string;
@@ -285,6 +339,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for RegisterAccount.
+	 */
 	export class RegisterAccountRequestData {
 		@StringDataMember({ code: ParameterCode.Username, minLength: 6, maxLength: 32, mustNonNull: true })
 		public username: string;
@@ -297,10 +354,16 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the request payload for RefreshAuthToken.
+	 */
 	export class RefreshAuthTokenRequestData {
 
 	}
 
+	/**
+	 * Defines the response payload for Authenticate.
+	 */
 	export class AuthenticateResponseData extends MasterPlayerModels.MasterPlayerWithUserIdResponseData {
 		@BooleanDataMember({ code: ParameterCode.NewlyCreated, isOptional: true })
 		public newlyCreated?: boolean;
@@ -312,12 +375,18 @@ export namespace AuthenticateModels {
 		public playerBan?: GenericModels.BanItem;
 	}
 
+	/**
+	 * Defines the response payload for GenericServiceAuthenticate.
+	 */
 	export class GenericServiceAuthenticateResponseData extends AuthenticateResponseData {
 		@StringDataMember({ code: ParameterCode.ErrorMessage, isOptional: true })
 		public errorMessage?: string;
 
 	}
 
+	/**
+	 * Defines the response payload for RefreshAuthToken.
+	 */
 	export class RefreshAuthTokenResponseData {
 		@StringDataMember({ code: ParameterCode.AuthToken, isOptional: true })
 		public authToken?: string;
@@ -327,6 +396,9 @@ export namespace AuthenticateModels {
 
 	}
 
+	/**
+	 * Defines the response payload for Empty.
+	 */
 	export class EmptyResponseData {
 	}
 

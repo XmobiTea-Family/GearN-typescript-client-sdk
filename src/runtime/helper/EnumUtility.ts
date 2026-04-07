@@ -1,6 +1,12 @@
+/**
+ * Provides helper methods for parsing and formatting enum values.
+ */
 export class EnumUtility {
 	private static enumKeyCache: Map<object, string[]> = new Map();
 
+	/**
+	 * Returns cached enum member names without numeric reverse-mapping keys.
+	 */
 	private static getEnumKeys(enumType: object): string[] {
 		let keys = this.enumKeyCache.get(enumType);
 		if (!keys) {
@@ -10,6 +16,9 @@ export class EnumUtility {
 		return keys;
 	}
 
+	/**
+	 * Parses a string into an enum value, optionally ignoring case.
+	 */
 	public static parse<T extends Record<string, number | string>>(enumType: T, value: string, ignoreCase?: boolean): T[keyof T] {
 		if (!ignoreCase) {
 			if (value in enumType) {
@@ -30,6 +39,9 @@ export class EnumUtility {
 		return null;
 	}
 
+	/**
+	 * Returns the enum member name for the provided value.
+	 */
 	public static toString<T extends Record<string, number | string>>(enumType: T, value: T[keyof T]): string {
 		let enumKeys = this.getEnumKeys(enumType);
 

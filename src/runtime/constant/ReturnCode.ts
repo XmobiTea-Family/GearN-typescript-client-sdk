@@ -1,3 +1,6 @@
+/**
+ * Enumerates backend return codes used in `OperationResponse`.
+ */
 export class ReturnCode {
 	public static readonly SecretInvalid: number = -10;
 	public static readonly MaxSizeRequestReject: number = -9;

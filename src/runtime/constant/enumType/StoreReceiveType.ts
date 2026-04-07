@@ -1,3 +1,6 @@
+/**
+ * Enumerates values for StoreReceiveType.
+ */
 export enum StoreReceiveType {
 	Buy = 1,
 	Present = 2,

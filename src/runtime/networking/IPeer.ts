@@ -5,6 +5,9 @@ import { Action1 } from "./../common/Action1";
 import { OperationRequest } from "./../entity/OperationRequest";
 import { OperationResponse } from "./../entity/OperationResponse";
 
+/**
+ * Describes IPeer.
+ */
 export interface IPeer {
 
 	initPeer(): void;

@@ -1,3 +1,6 @@
+/**
+ * Enumerates operation codes understood by the GearN backend.
+ */
 export class OperationCode {
 	public static readonly LoginByAdminAccount: string = "loginByAdminAccount";
 	public static readonly ChangePasswordAdminAccount: string = "changePasswordAdminAccount";

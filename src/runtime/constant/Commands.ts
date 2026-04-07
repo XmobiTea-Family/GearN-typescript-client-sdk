@@ -1,3 +1,6 @@
+/**
+ * Centralizes constant header names and socket command names used by the SDK.
+ */
 export class Commands {
 	public static readonly USER_AGENT: string = "User-Agent";
 

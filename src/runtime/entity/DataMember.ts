@@ -6,6 +6,9 @@ import { AbstractConstructor, Constructor, FieldDataType, GNObjectFieldMetadata,
 //@internal
 export const GN_METADATA = "__GN_METADATA__";
 
+/**
+ * Resolves the reflected data type for a decorated field.
+ */
 const getGNReflectedDataType = (prototype: any, propertyKey: string): FieldDataType => {
 	let t = Reflect.getMetadata("design:type", prototype, propertyKey);
 	if (!t) {
@@ -29,6 +32,9 @@ const getGNReflectedDataType = (prototype: any, propertyKey: string): FieldDataT
 	}
 };
 
+/**
+ * Resolves reflected metadata for a decorated field.
+ */
 const getGNReflectedMetadata = (prototype: any, propertyKey: string): {
 	fieldDataType: FieldDataType,
 	prototype: any
@@ -62,6 +68,9 @@ const getGNReflectedMetadata = (prototype: any, propertyKey: string): {
 	return answer;
 };
 
+/**
+ * Initializes metadata storage for a reflected GearN model.
+ */
 export const initGNObjectMetadata = <T extends GNObjectMetadata>(prototype: any): T => {
 	if (prototype === Object.prototype) {
 		return {} as T;
@@ -77,6 +86,9 @@ export const initGNObjectMetadata = <T extends GNObjectMetadata>(prototype: any)
 	return prototype[GN_METADATA];
 };
 
+/**
+ * Initializes metadata for a reflected GearN model field.
+ */
 export const initGNObjectFieldMetadata = <T extends GNObjectFieldMetadata>(prototype: any, propertyKey: string): T => {
 	let meta = initGNObjectMetadata<GNObjectMetadata>(prototype);
 
@@ -101,16 +113,28 @@ export const initGNObjectFieldMetadata = <T extends GNObjectFieldMetadata>(proto
 	}
 };
 
+/**
+ * Returns the reflected metadata attached to a GearN model.
+ */
 export const getGNObjectMetadata = <T extends GNObjectMetadata>(obj: AbstractConstructor<any>): T | undefined => {
 	return obj.prototype[GN_METADATA];
 };
 
+/**
+ * Writes reflected metadata to a GearN model.
+ */
 export const setGNObjectMetadata = <T extends GNObjectMetadata>(obj: AbstractConstructor<any>, metadata: T): void => {
 	obj.prototype[GN_METADATA] = metadata;
 };
 
+/**
+ * Builds the default metadata table name for a reflected model.
+ */
 export const getTableName = (model: Constructor<any>) => model?.name.toLowerCase();
 
+/**
+ * Describes GNEnhancedObjectFieldMetadata.
+ */
 export interface GNEnhancedObjectFieldMetadata extends GNObjectFieldMetadata {
 	code: string;
 	isOptional: boolean;
@@ -127,6 +151,9 @@ export interface GNEnhancedObjectFieldMetadata extends GNObjectFieldMetadata {
 	mustInt?: boolean;
 };
 
+/**
+ * Enumerates values for GNFieldDataType.
+ */
 export enum GNFieldDataType {
 	Other = 0,
 	Number = 1,
@@ -137,11 +164,17 @@ export enum GNFieldDataType {
 
 };
 
+/**
+ * Describes GNEnhancedObjectMetadata.
+ */
 export interface GNEnhancedObjectMetadata extends GNObjectMetadata {
 	fields: GNEnhancedObjectFieldMetadata[];
 
 };
 
+/**
+ * Describes DataMemberBaseArgs.
+ */
 interface DataMemberBaseArgs {
 	code: string;
 	isOptional?: boolean;
@@ -149,15 +182,24 @@ interface DataMemberBaseArgs {
 
 };
 
+/**
+ * Describes DataMemberArgs.
+ */
 interface DataMemberArgs extends DataMemberBaseArgs {
 	gnFieldType?: GNFieldDataType;
 
 };
 
+/**
+ * Describes OtherDataMemberArgs.
+ */
 interface OtherDataMemberArgs extends DataMemberBaseArgs {
 
 };
 
+/**
+ * Describes StringDataMemberArgs.
+ */
 interface StringDataMemberArgs extends OtherDataMemberArgs {
 	defaultValue?: string;
 	mustNonNull?: boolean;
@@ -166,11 +208,17 @@ interface StringDataMemberArgs extends OtherDataMemberArgs {
 
 };
 
+/**
+ * Describes BooleanDataMemberArgs.
+ */
 interface BooleanDataMemberArgs extends OtherDataMemberArgs {
 	defaultValue?: boolean;
 
 };
 
+/**
+ * Describes NumberDataMemberArgs.
+ */
 interface NumberDataMemberArgs extends OtherDataMemberArgs {
 	defaultValue?: number;
 	minValue?: number;
@@ -179,6 +227,9 @@ interface NumberDataMemberArgs extends OtherDataMemberArgs {
 
 };
 
+/**
+ * Describes GNHashtableDataMemberArgs.
+ */
 interface GNHashtableDataMemberArgs extends OtherDataMemberArgs {
 	defaultValue?: GNHashtable;
 	mustNonNull?: boolean;
@@ -186,6 +237,9 @@ interface GNHashtableDataMemberArgs extends OtherDataMemberArgs {
 	maxLength?: number;
 };
 
+/**
+ * Describes GNArrayDataMemberArgs.
+ */
 interface GNArrayDataMemberArgs extends OtherDataMemberArgs {
 	defaultValue?: GNArray;
 	mustNonNull?: boolean;
@@ -194,6 +248,9 @@ interface GNArrayDataMemberArgs extends OtherDataMemberArgs {
 	elementCls?: new (...args: any[]) => any;
 };
 
+/**
+ * Creates the generic field decorator used by reflected models.
+ */
 export const DataMember = (args: DataMemberArgs) => (prototype: any, propertyKey: string) => {
 	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
 	field.code = args.code;
@@ -205,6 +262,9 @@ export const DataMember = (args: DataMemberArgs) => (prototype: any, propertyKey
 
 };
 
+/**
+ * Creates the string field decorator used by reflected models.
+ */
 export const StringDataMember = (args: StringDataMemberArgs) => (prototype: any, propertyKey: string) => {
 	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
 	field.code = args.code;
@@ -234,6 +294,9 @@ export const StringDataMember = (args: StringDataMemberArgs) => (prototype: any,
 
 };
 
+/**
+ * Creates the boolean field decorator used by reflected models.
+ */
 export const BooleanDataMember = (args: BooleanDataMemberArgs) => (prototype: any, propertyKey: string) => {
 	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
 	field.code = args.code;
@@ -245,6 +308,9 @@ export const BooleanDataMember = (args: BooleanDataMemberArgs) => (prototype: an
 
 };
 
+/**
+ * Creates the hash-table field decorator used by reflected models.
+ */
 export const GNHashtableDataMember = (args: GNHashtableDataMemberArgs) => (prototype: any, propertyKey: string) => {
 	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
 
@@ -275,6 +341,9 @@ export const GNHashtableDataMember = (args: GNHashtableDataMemberArgs) => (proto
 
 };
 
+/**
+ * Creates the array field decorator used by reflected models.
+ */
 export const GNArrayDataMember = (args: GNArrayDataMemberArgs) => (prototype: any, propertyKey: string) => {
 	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
 	if (args.elementCls != null) field.cls = args.elementCls;
@@ -306,6 +375,9 @@ export const GNArrayDataMember = (args: GNArrayDataMemberArgs) => (prototype: an
 
 };
 
+/**
+ * Creates the number field decorator used by reflected models.
+ */
 export const NumberDataMember = (args: NumberDataMemberArgs) => (prototype: any, propertyKey: string) => {
 	let field = initGNObjectFieldMetadata<GNEnhancedObjectFieldMetadata>(prototype, propertyKey);
 	field.code = args.code;

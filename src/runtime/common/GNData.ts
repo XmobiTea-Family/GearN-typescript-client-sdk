@@ -1,4 +1,4 @@
-type GNDataType = string | number | boolean | null | GNArray | GNHashtable;
+﻿type GNDataType = string | number | boolean | null | GNArray | GNHashtable;
 
 interface IGNData {
 	clear(): void;
@@ -13,39 +13,58 @@ interface IGNData {
 	getGNArray(k: string | number, def?: GNArray): GNArray;
 }
 
+/**
+ * Provides the abstract base API shared by GNHashtable and GNArray.
+ */
 export abstract class GNData implements IGNData {
+	/**
+	 * Returns the stored value for the given key or index.
+	 * Concrete containers override this method with the correct lookup logic.
+	 */
 	protected get<T>(k: string | number, def?: T): T {
 		return def;
 	}
 
+	/** Clears every stored value from the container. */
 	public abstract clear(): void;
+	/** Removes the given key or index from the container. */
 	public abstract remove(k: string | number): boolean;
+	/** Returns the current number of stored entries. */
 	public abstract count(): string | number;
 
+	/** Returns the stored value cast as a boolean. */
 	public getBoolean(k: string | number, def?: boolean): boolean {
 		return this.get(k, def);
 	}
 
+	/** Returns the stored value cast as an object. */
 	public getObject(k: string | number, def?: object): object {
 		return this.get(k, def);
 	}
 
+	/** Returns the stored value cast as a string. */
 	public getString(k: string | number, def?: string): string {
 		return this.get(k, def);
 	}
 
+	/** Returns the stored value cast as a number. */
 	public getNumber(k: string | number, def?: number): number {
 		return this.get(k, def);
 	}
 
+	/** Returns the stored value cast as a GNHashtable. */
 	public getGNHashtable(k: string | number, def?: GNHashtable): GNHashtable {
 		return this.get(k, def);
 	}
 
+	/** Returns the stored value cast as a GNArray. */
 	public getGNArray(k: string | number, def?: GNArray): GNArray {
 		return this.get(k, def);
 	}
 
+	/**
+	 * Wraps a plain object into a GNHashtable so nested data uses the same container API.
+	 */
 	private static createGNHashtableFromObject(value: any): GNHashtable {
 		let answer = new GNHashtable();
 
@@ -58,6 +77,9 @@ export abstract class GNData implements IGNData {
 		return answer;
 	}
 
+	/**
+	 * Wraps a plain array into a GNArray so nested data uses the same container API.
+	 */
 	private static createGNArrayFromArray(value: any): GNArray {
 		let answer = new GNArray();
 
@@ -69,6 +91,9 @@ export abstract class GNData implements IGNData {
 		return answer;
 	}
 
+	/**
+	 * Converts raw JavaScript data into the GearN container representation.
+	 */
 	protected static createUseDataFromOriginData(value: any): GNDataType {
 		if (value == null) return null;
 
@@ -92,6 +117,9 @@ export abstract class GNData implements IGNData {
 		return null;
 	}
 
+	/**
+	 * Converts the GearN container representation back into plain JavaScript data.
+	 */
 	protected static createDataFromUseData(value: GNDataType): any {
 		if (value == null) return null;
 
@@ -106,18 +134,24 @@ export abstract class GNData implements IGNData {
 		return value;
 	}
 
+	/** Converts the current container into raw JavaScript data. */
 	public abstract toData(): any;
 }
 
+/**
+ * Builds GNHashtable instances through a fluent API.
+ */
 export class GNHashtableBuilder {
 	private dict: { [k: string]: any } = {};
 
+	/** Adds a key-value pair to the builder. */
 	public add(k: string, value: any): GNHashtableBuilder {
 		this.dict[k] = value;
 
 		return this;
 	}
 
+	/** Adds every key-value pair from the provided object to the builder. */
 	public addAll(dict: { [k: string]: any }) {
 		let keys = Object.keys(dict);
 		keys.forEach(keyStr => {
@@ -127,10 +161,12 @@ export class GNHashtableBuilder {
 		return this;
 	}
 
+	/** Creates an empty builder instance. */
 	constructor() {
 		this.dict = {};
 	}
 
+	/** Builds a GNHashtable from the accumulated entries. */
 	public build(): GNHashtable {
 		let answer = new GNHashtable();
 
@@ -144,13 +180,18 @@ export class GNHashtableBuilder {
 
 }
 
+/**
+ * Stores key-value data using the GearN container rules.
+ */
 export class GNHashtable extends GNData {
 	private dict: { [k: string]: GNDataType } = {};
 
+	/** Clears all entries. */
 	public override clear(): void {
 		this.dict = {};
 	}
 
+	/** Removes the given key when it exists. */
 	public override remove(k: string): boolean {
 		if (this.containsKey(k)) {
 			delete this.dict[k];
@@ -160,14 +201,17 @@ export class GNHashtable extends GNData {
 		return false;
 	}
 
+	/** Returns the number of stored keys. */
 	public override count(): number {
 		return Object.keys(this.dict).length;
 	}
 
+	/** Returns whether the given key is present. */
 	public containsKey(k: string): boolean {
 		return this.dict.hasOwnProperty(k);
 	}
 
+	/** Returns the stored value for the given key. */
 	protected override get<T>(k: string, def?: T): T {
 		let value = this.dict[k];
 
@@ -175,10 +219,12 @@ export class GNHashtable extends GNData {
 		return <T>(value as any);
 	}
 
+	/** Stores a value after converting nested objects and arrays into GearN containers. */
 	public add(k: string, value: any) {
 		this.dict[k] = GNData.createUseDataFromOriginData(value);
 	}
 
+	/** Converts the hash table back into a plain JavaScript object. */
 	public override toData(): {} {
 		let anwser: { [k: string]: any } = {};
 
@@ -191,24 +237,31 @@ export class GNHashtable extends GNData {
 		return anwser;
 	}
 
+	/** Returns a fluent builder for GNHashtable. */
 	public static builder(): GNHashtableBuilder {
 		return new GNHashtableBuilder();
 	}
 
+	/** Returns a JSON string useful for debugging. */
 	public toString(): string {
 		return JSON.stringify(this.dict);
 	}
 }
 
+/**
+ * Builds GNArray instances through a fluent API.
+ */
 export class GNArrayBuilder {
 	private array: Array<any> = [];
 
+	/** Adds a value to the builder. */
 	public add(value: any): GNArrayBuilder {
 		this.array.push(value);
 
 		return this;
 	}
 
+	/** Adds every value from the provided array to the builder. */
 	public addAll(array: any[]): GNArrayBuilder {
 		array.forEach(o => {
 			this.add(o);
@@ -217,6 +270,7 @@ export class GNArrayBuilder {
 		return this;
 	}
 
+	/** Builds a GNArray from the accumulated values. */
 	public build(): GNArray {
 		let answer = new GNArray();
 
@@ -227,18 +281,24 @@ export class GNArrayBuilder {
 		return answer;
 	}
 
+	/** Creates an empty builder instance. */
 	constructor() {
 		this.array = [];
 	}
 }
 
+/**
+ * Stores ordered values using the GearN container rules.
+ */
 export class GNArray extends GNData {
 	private array: Array<GNDataType> = [];
 
+	/** Clears all values. */
 	public override clear(): void {
 		this.array = [];
 	}
 
+	/** Removes the given index when it is in range. */
 	public override remove(k: number): boolean {
 		if (k < 0 || k >= this.array.length) return false;
 
@@ -246,10 +306,12 @@ export class GNArray extends GNData {
 		return true;
 	}
 
+	/** Returns the number of stored items. */
 	public override count(): number {
 		return this.array.length;
 	}
 
+	/** Returns the stored value for the given index. */
 	protected override get<T>(k: number, def?: T): T {
 		if (k < 0 || k >= this.array.length) return null;
 
@@ -259,10 +321,12 @@ export class GNArray extends GNData {
 		return <T>(value as any);
 	}
 
+	/** Stores a value after converting nested objects and arrays into GearN containers. */
 	public add(value: any) {
 		this.array.push(GNData.createUseDataFromOriginData(value));
 	}
 
+	/** Converts the array back into a plain JavaScript array. */
 	public override toData(): any[] {
 		let anwser = [];
 
@@ -273,10 +337,12 @@ export class GNArray extends GNData {
 		return anwser;
 	}
 
+	/** Returns a fluent builder for GNArray. */
 	public static builder(): GNArrayBuilder {
 		return new GNArrayBuilder();
 	}
 
+	/** Returns a JSON string useful for debugging. */
 	public toString(): string {
 		return JSON.stringify(this.array);
 	}

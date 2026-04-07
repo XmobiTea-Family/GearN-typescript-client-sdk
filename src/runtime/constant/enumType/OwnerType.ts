@@ -1,3 +1,6 @@
+/**
+ * Enumerates values for OwnerType.
+ */
 export enum OwnerType {
 	MasterPlayer = 1,
 	GamePlayer = 2,

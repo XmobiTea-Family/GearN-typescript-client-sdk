@@ -1,3 +1,6 @@
+/**
+ * Enumerates values for GroupStatus.
+ */
 export enum GroupStatus {
 	Member = 1,
 	WaitingAccept = 2,

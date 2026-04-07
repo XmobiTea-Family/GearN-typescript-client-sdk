@@ -1,6 +1,12 @@
 import { GenericModels } from "./../entity/models/GenericModels";
 
+/**
+ * Converts common response arrays into lookup maps keyed by their stable identifiers.
+ */
 export class GNUtils {
+	/**
+	 * Builds a dictionary of data items keyed by `key`.
+	 */
 	public static toDatasDictionary(datas: Array<GenericModels.DataItem>) {
 		if (datas == null) return null;
 
@@ -15,6 +21,9 @@ export class GNUtils {
 		return answer;
 	}
 
+	/**
+	 * Builds a dictionary of tag items keyed by `key`.
+	 */
 	public static toTagsDictionary(tags: Array<GenericModels.TagItem>) {
 		if (tags == null) return null;
 
@@ -29,6 +38,9 @@ export class GNUtils {
 		return answer;
 	}
 
+	/**
+	 * Builds a dictionary of currency items keyed by `key`.
+	 */
 	public static toCurrenciesDictionary(currencies: Array<GenericModels.CurrencyItem>) {
 		if (currencies == null) return null;
 
@@ -43,6 +55,9 @@ export class GNUtils {
 		return answer;
 	}
 
+	/**
+	 * Builds a dictionary of statistic items keyed by `key`.
+	 */
 	public static toStatisticsDictionary(statistics: Array<GenericModels.StatisticsItem>) {
 		if (statistics == null) return null;
 
@@ -57,6 +72,9 @@ export class GNUtils {
 		return answer;
 	}
 
+	/**
+	 * Builds a dictionary of inventory items keyed by `itemId`.
+	 */
 	public static toInventoriesDictionary(inventories: Array<GenericModels.InventoryItem>) {
 		if (inventories == null) return null;
 
@@ -71,6 +89,9 @@ export class GNUtils {
 		return answer;
 	}
 
+	/**
+	 * Builds a dictionary of group items keyed by `groupId`.
+	 */
 	public static toGroupDictionary(groups: Array<GenericModels.GroupItem>) {
 		if (groups == null) return null;
 
@@ -85,6 +106,9 @@ export class GNUtils {
 		return answer;
 	}
 
+	/**
+	 * Builds a dictionary of friend items keyed by `friendId`.
+	 */
 	public static toFriendDictionary(friends: Array<GenericModels.FriendItem>) {
 		if (friends == null) return null;
 

@@ -1,3 +1,6 @@
+/**
+ * Enumerates values for MatchmakingTicketStatus.
+ */
 export enum MatchmakingTicketStatus {
 	WaitingForMembers = 1,
 	WaitingForMatch = 2,

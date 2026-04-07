@@ -1,3 +1,6 @@
+/**
+ * Enumerates values for RequestType.
+ */
 export enum RequestType {
 	Custom = 0,
 	Authenticate = 1,

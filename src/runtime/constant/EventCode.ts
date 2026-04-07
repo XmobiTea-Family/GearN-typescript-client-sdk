@@ -1,3 +1,6 @@
+/**
+ * Enumerates server event codes pushed through the socket channel.
+ */
 export class EventCode {
 	public static readonly OnGamePlayerFriendUpdate: string = "onGamePlayerFriendUpdate";
 	public static readonly OnCharacterPlayerFriendUpdate: string = "onCharacterPlayerFriendUpdate";

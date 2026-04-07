@@ -1,7 +1,13 @@
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
+/**
+ * Groups shared data contracts for Generic.
+ */
 export namespace GenericModels {
+	/**
+	 * Represents AvatarItem.
+	 */
 	export class AvatarItem {
 		@NumberDataMember({ code: ParameterCode.Type })
 		public type: number;
@@ -11,6 +17,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents TagItem.
+	 */
 	export class TagItem {
 		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
@@ -20,6 +29,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents BanItem.
+	 */
 	export class BanItem {
 		@NumberDataMember({ code: ParameterCode.TsExpire })
 		public tsExpire: number;
@@ -29,6 +41,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents DataItem.
+	 */
 	export class DataItem {
 		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
@@ -38,6 +53,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents CurrencyItem.
+	 */
 	export class CurrencyItem {
 		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
@@ -47,6 +65,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents StatisticsItem.
+	 */
 	export class StatisticsItem {
 		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
@@ -56,6 +77,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents CharacterItem.
+	 */
 	export class CharacterItem {
 		@StringDataMember({ code: ParameterCode.CharacterId })
 		public characterId: string;
@@ -65,6 +89,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents OwnerItem.
+	 */
 	export class OwnerItem {
 		@NumberDataMember({ code: ParameterCode.Type })
 		public type: number;
@@ -74,6 +101,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents RemoveStatusItem.
+	 */
 	export class RemoveStatusItem {
 		@NumberDataMember({ code: ParameterCode.TsRemove })
 		public tsRemove: number;
@@ -83,6 +113,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents InventoryItem.
+	 */
 	export class InventoryItem {
 		@StringDataMember({ code: ParameterCode.ItemId })
 		public itemId: string;
@@ -95,6 +128,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents GroupItem.
+	 */
 	export class GroupItem {
 		@StringDataMember({ code: ParameterCode.GroupId })
 		public groupId: string;
@@ -110,6 +146,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents FriendItem.
+	 */
 	export class FriendItem {
 		@StringDataMember({ code: ParameterCode.FriendId })
 		public friendId: string;
@@ -125,6 +164,9 @@ export namespace GenericModels {
 
 	}
 
+	/**
+	 * Represents MemberItem.
+	 */
 	export class MemberItem {
 		@StringDataMember({ code: ParameterCode.MemberId })
 		public memberId: string;

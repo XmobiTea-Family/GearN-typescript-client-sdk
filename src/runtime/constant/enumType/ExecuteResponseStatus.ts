@@ -1,3 +1,6 @@
+/**
+ * Enumerates values for ExecuteResponseStatus.
+ */
 export enum ExecuteResponseStatus {
 	Ok = 1,
 	Exception = 2,

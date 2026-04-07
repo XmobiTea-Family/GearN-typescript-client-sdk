@@ -1,3 +1,6 @@
+/**
+ * Centralizes serialized parameter keys used in request and response payloads.
+ */
 export class ParameterCode {
 	public static readonly AuthToken: string = "authToken";
 	public static readonly Ts: string = "ts";

@@ -2,7 +2,13 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
+/**
+ * Groups shared data contracts for StoreInventory.
+ */
 export namespace StoreInventoryModels {
+	/**
+	 * Defines the reusable parameter block AvatarParam.
+	 */
 	export class AvatarParam {
 		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
@@ -12,6 +18,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block CurrencyParam.
+	 */
 	export class CurrencyParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -21,6 +30,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block InAppPurchaseParam.
+	 */
 	export class InAppPurchaseParam {
 		@StringDataMember({ code: ParameterCode.FacebookStoreId, minLength: 1, maxLength: 128, mustNonNull: true, isOptional: true })
 		public facebookStoreId?: string;
@@ -36,6 +48,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block InfoRequestParam.
+	 */
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: ParameterCode.StoreItems, isOptional: true, defaultValue: false })
 		public storeItems?: boolean;
@@ -72,6 +87,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block StoreDataParam.
+	 */
 	export class StoreDataParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -81,6 +99,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block StoreItemParam.
+	 */
 	export class StoreItemParam {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
@@ -93,6 +114,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block TagParam.
+	 */
 	export class TagParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -102,6 +126,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Represents InAppPurchaseItem.
+	 */
 	export class InAppPurchaseItem {
 		@StringDataMember({ code: ParameterCode.FacebookStoreId })
 		public facebookStoreId: string;
@@ -117,6 +144,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Represents PriceCurrencyItem.
+	 */
 	export class PriceCurrencyItem {
 		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
@@ -126,6 +156,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Represents OwnerStoreInventoryItem.
+	 */
 	export class OwnerStoreInventoryItem {
 		@StringDataMember({ code: ParameterCode.ItemId })
 		public itemId: string;
@@ -138,6 +171,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Represents StoreInventoryItem.
+	 */
 	export class StoreInventoryItem {
 		@StringDataMember({ code: ParameterCode.CatalogId })
 		public catalogId: string;
@@ -150,6 +186,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for BuyStoreItem.
+	 */
 	export class BuyStoreItemRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
@@ -165,12 +204,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerBuyStoreItem.
+	 */
 	export class ServerBuyStoreItemRequestData extends BuyStoreItemRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminBuyStoreItem.
+	 */
 	export class AdminBuyStoreItemRequestData extends ServerBuyStoreItemRequestData {
 	}
 
+	/**
+	 * Defines the request payload for PresentStoreItem.
+	 */
 	export class PresentStoreItemRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
@@ -186,12 +234,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerPresentStoreItem.
+	 */
 	export class ServerPresentStoreItemRequestData extends PresentStoreItemRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminPresentStoreItem.
+	 */
 	export class AdminPresentStoreItemRequestData extends ServerPresentStoreItemRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStoreLog.
+	 */
 	export class GetStoreLogRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true, isOptional: true })
 		public storeId?: string;
@@ -210,24 +267,42 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStoreLog.
+	 */
 	export class ServerGetStoreLogRequestData extends GetStoreLogRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStoreLog.
+	 */
 	export class AdminGetStoreLogRequestData extends ServerGetStoreLogRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStoreUsed.
+	 */
 	export class GetStoreUsedRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStoreUsed.
+	 */
 	export class ServerGetStoreUsedRequestData extends GetStoreUsedRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStoreUsed.
+	 */
 	export class AdminGetStoreUsedRequestData extends ServerGetStoreUsedRequestData {
 	}
 
+	/**
+	 * Defines the request payload for RemoveStoreUsed.
+	 */
 	export class RemoveStoreUsedRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
@@ -237,12 +312,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerRemoveStoreUsed.
+	 */
 	export class ServerRemoveStoreUsedRequestData extends RemoveStoreUsedRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminRemoveStoreUsed.
+	 */
 	export class AdminRemoveStoreUsedRequestData extends ServerRemoveStoreUsedRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStoreItemInformation.
+	 */
 	export class GetStoreItemInformationRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
@@ -252,12 +336,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStoreItemInformation.
+	 */
 	export class ServerGetStoreItemInformationRequestData extends GetStoreItemInformationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStoreItemInformation.
+	 */
 	export class AdminGetStoreItemInformationRequestData extends ServerGetStoreItemInformationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetStoreItemsWithTag.
+	 */
 	export class GetStoreItemsWithTagRequestData {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -276,12 +369,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetStoreItemsWithTag.
+	 */
 	export class ServerGetStoreItemsWithTagRequestData extends GetStoreItemsWithTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetStoreItemsWithTag.
+	 */
 	export class AdminGetStoreItemsWithTagRequestData extends ServerGetStoreItemsWithTagRequestData {
 	}
 
+	/**
+	 * Defines the request payload for CreateStoreItem.
+	 */
 	export class CreateStoreItemRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true, isOptional: true })
 		public storeId?: string;
@@ -291,12 +393,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerCreateStoreItem.
+	 */
 	export class ServerCreateStoreItemRequestData extends CreateStoreItemRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminCreateStoreItem.
+	 */
 	export class AdminCreateStoreItemRequestData extends ServerCreateStoreItemRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetRemoveStatus.
+	 */
 	export class SetRemoveStatusRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
@@ -306,12 +417,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetRemoveStatus.
+	 */
 	export class ServerSetRemoveStatusRequestData extends SetRemoveStatusRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetRemoveStatus.
+	 */
 	export class AdminSetRemoveStatusRequestData extends ServerSetRemoveStatusRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetStoreItemInformation.
+	 */
 	export class SetStoreItemInformationRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
@@ -345,12 +465,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetStoreItemInformation.
+	 */
 	export class ServerSetStoreItemInformationRequestData extends SetStoreItemInformationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetStoreItemInformation.
+	 */
 	export class AdminSetStoreItemInformationRequestData extends ServerSetStoreItemInformationRequestData {
 	}
 
+	/**
+	 * Defines the request payload for ValidateAppleAppStoreReceipt.
+	 */
 	export class ValidateAppleAppStoreReceiptRequestData {
 		@StringDataMember({ code: ParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
@@ -366,12 +495,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerValidateAppleAppStoreReceipt.
+	 */
 	export class ServerValidateAppleAppStoreReceiptRequestData extends ValidateAppleAppStoreReceiptRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminValidateAppleAppStoreReceipt.
+	 */
 	export class AdminValidateAppleAppStoreReceiptRequestData extends ServerValidateAppleAppStoreReceiptRequestData {
 	}
 
+	/**
+	 * Defines the request payload for ValidateFacebookStoreReceipt.
+	 */
 	export class ValidateFacebookStoreReceiptRequestData {
 		@StringDataMember({ code: ParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
@@ -387,12 +525,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerValidateFacebookStoreReceipt.
+	 */
 	export class ServerValidateFacebookStoreReceiptRequestData extends ValidateFacebookStoreReceiptRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminValidateFacebookStoreReceipt.
+	 */
 	export class AdminValidateFacebookStoreReceiptRequestData extends ServerValidateFacebookStoreReceiptRequestData {
 	}
 
+	/**
+	 * Defines the request payload for ValidateGooglePlayStoreReceipt.
+	 */
 	export class ValidateGooglePlayStoreReceiptRequestData {
 		@StringDataMember({ code: ParameterCode.Receipt, minLength: 10, maxLength: 2048, mustNonNull: true })
 		public receipt: string;
@@ -408,12 +555,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerValidateGooglePlayStoreReceipt.
+	 */
 	export class ServerValidateGooglePlayStoreReceiptRequestData extends ValidateGooglePlayStoreReceiptRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminValidateGooglePlayStoreReceipt.
+	 */
 	export class AdminValidateGooglePlayStoreReceiptRequestData extends ServerValidateGooglePlayStoreReceiptRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetCreateLeaderboard.
+	 */
 	export class GetCreateLeaderboardRequestData {
 		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
@@ -429,12 +585,21 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetCreateLeaderboard.
+	 */
 	export class ServerGetCreateLeaderboardRequestData extends GetCreateLeaderboardRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetCreateLeaderboard.
+	 */
 	export class AdminGetCreateLeaderboardRequestData extends ServerGetCreateLeaderboardRequestData {
 	}
 
+	/**
+	 * Represents InfoResponseParameters.
+	 */
 	export class InfoResponseParameters {
 		@GNArrayDataMember({ code: ParameterCode.StoreItems, isOptional: true, elementCls: StoreInventoryItem })
 		public storeItems?: Array<StoreInventoryItem>;
@@ -471,36 +636,54 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for StoreInventory.
+	 */
 	export class StoreInventoryResponseData {
 		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
+	/**
+	 * Defines the response payload for StoreInventoryWithStoreId.
+	 */
 	export class StoreInventoryWithStoreIdResponseData extends StoreInventoryResponseData {
 		@StringDataMember({ code: ParameterCode.StoreId })
 		public storeId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for StoreInventoryLeaderboard.
+	 */
 	export class StoreInventoryLeaderboardResponseData extends StoreInventoryWithStoreIdResponseData {
 		@NumberDataMember({ code: ParameterCode.Position })
 		public position: number;
 
 	}
 
+	/**
+	 * Defines the response payload for StoreInventoriesWithStoreId.
+	 */
 	export class StoreInventoriesWithStoreIdResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: StoreInventoryWithStoreIdResponseData })
 		public results: Array<StoreInventoryWithStoreIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for CreateStoreItem.
+	 */
 	export class CreateStoreItemResponseData {
 		@StringDataMember({ code: ParameterCode.StoreId })
 		public storeId: string;
 
 	}
 
+	/**
+	 * Represents OwnerInfoResponseParameters.
+	 */
 	export class OwnerInfoResponseParameters {
 		@GNArrayDataMember({ code: ParameterCode.Currencies, isOptional: true, elementCls: PriceCurrencyItem })
 		public currencies?: Array<PriceCurrencyItem>;
@@ -510,6 +693,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for BuyStoreInventory.
+	 */
 	export class BuyStoreInventoryResponseData {
 		@GNArrayDataMember({ code: ParameterCode.StoreCurrencies, isOptional: true, elementCls: StoreInventoryItem })
 		public storeItems?: Array<StoreInventoryItem>;
@@ -525,6 +711,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for PresentStoreInventory.
+	 */
 	export class PresentStoreInventoryResponseData {
 		@GNArrayDataMember({ code: ParameterCode.StoreCurrencies, isOptional: true, elementCls: StoreInventoryItem })
 		public storeItems?: Array<StoreInventoryItem>;
@@ -540,6 +729,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for Currency.
+	 */
 	export class CurrencyResponseData {
 		@StringDataMember({ code: ParameterCode.Key })
 		public key: string;
@@ -549,6 +741,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for StoreItem.
+	 */
 	export class StoreItemResponseData {
 		@StringDataMember({ code: ParameterCode.CatalogId })
 		public catalogId: string;
@@ -561,6 +756,9 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for StoreLog.
+	 */
 	export class StoreLogResponseData {
 		@StringDataMember({ code: ParameterCode.StoreId })
 		public storeId: string;
@@ -605,6 +803,9 @@ export namespace StoreInventoryModels {
 		public log: string;
 	}
 
+	/**
+	 * Defines the response payload for StoreUsed.
+	 */
 	export class StoreUsedResponseData {
 		@StringDataMember({ code: ParameterCode.OwnerId })
 		public id: string;
@@ -617,12 +818,18 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetCreateLeaderboard.
+	 */
 	export class GetCreateLeaderboardResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: StoreInventoryLeaderboardResponseData })
 		public results: Array<StoreInventoryLeaderboardResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for GetStoreLog.
+	 */
 	export class GetStoreLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: StoreLogResponseData })
 		public results: Array<StoreLogResponseData>;
@@ -632,12 +839,18 @@ export namespace StoreInventoryModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetStoreUsed.
+	 */
 	export class GetStoreUsedResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: StoreUsedResponseData })
 		public results: Array<StoreUsedResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for Empty.
+	 */
 	export class EmptyResponseData {
 	}
 

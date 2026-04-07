@@ -253,6 +253,9 @@ export { OnGamePlayerGroupUpdateEventHandler };
 export { OnGroupMemberUpdateEventHandler };
 export { OnGroupMessageUpdateEventHandler };
 
+/**
+ * Collects the bundled SDK surface for namespace-style consumers.
+ */
 const GearN = {
 	GNHashtableBuilder,
 	GNHashtable,

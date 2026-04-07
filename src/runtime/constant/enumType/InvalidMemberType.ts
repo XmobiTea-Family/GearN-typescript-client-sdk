@@ -1,3 +1,6 @@
+/**
+ * Enumerates values for InvalidMemberType.
+ */
 export enum InvalidMemberType {
 	UnknownError = 1,
 	DataRequired = 2,

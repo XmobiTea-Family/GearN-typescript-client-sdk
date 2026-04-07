@@ -1,4 +1,4 @@
-import { RequestRole } from "./../constant/enumType/RequestRole";
+﻿import { RequestRole } from "./../constant/enumType/RequestRole";
 import { RequestType } from "./../constant/enumType/RequestType";
 import { Action1 } from "./../common/Action1";
 import { GNArray, GNHashtable } from "./../common/GNData";
@@ -14,6 +14,9 @@ import { IPeer } from "./IPeer";
 import { OperationPending } from "./OperationPending";
 import { StorageService } from "./../helper/StorageService";
 
+/**
+ * Implements the shared request queue, timeout handling, and response parsing used by both transports.
+ */
 export abstract class PeerBase implements IPeer {
 	private operationPendingQueue: Array<OperationPending>;
 
@@ -25,10 +28,16 @@ export abstract class PeerBase implements IPeer {
 	private nextSendMsgTimer: number = 0;
 	private checkTimeoutOperationPending: number = 0;
 
+	/**
+	 * Returns the configured send rate in messages per second.
+	 */
 	protected getSendRate(): number {
 		return (1000 / this.perMsgTimer);
 	}
 
+	/**
+	 * Converts a send rate in messages per second into the internal service interval.
+	 */
 	protected setSendRate(sendRate: number) {
 		this.perMsgTimer = 1000 / sendRate / 1000;
 	}
@@ -38,6 +47,10 @@ export abstract class PeerBase implements IPeer {
 
 	protected isUse: boolean;
 
+	/**
+	 * Initializes shared queue state, ping tracking, send rate configuration,
+	 * and then lets the concrete transport build its low-level client.
+	 */
 	public initPeer() {
 		if (this.operationWaitingResponseDict == null)
 			this.operationWaitingResponseDict = new Map();
@@ -52,6 +65,9 @@ export abstract class PeerBase implements IPeer {
 		this.initGNSocketObject();
 	}
 
+	/**
+	 * Loads the send rate from the shared server settings.
+	 */
 	private initSendRate(): void {
 		let gnServerSettings = GNNetwork.getGNServerSettings();
 		if (gnServerSettings == null)
@@ -60,8 +76,14 @@ export abstract class PeerBase implements IPeer {
 		this.setSendRate(gnServerSettings.getSendRate());
 	}
 
+	/**
+	 * Lets the concrete transport allocate and configure its low-level client.
+	 */
 	protected abstract initGNSocketObject(): void;
 
+	/**
+	 * Queues a request so service() can send it at the configured rate.
+	 */
 	public enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
 		if (!this.isUse) {
 			GNDebug.logError("[GearN] Server Settings dont setup to use this to send operation request.");
@@ -76,12 +98,21 @@ export abstract class PeerBase implements IPeer {
 		this.onEnqueue(operationPending);
 	}
 
+	/**
+	 * Gives the concrete transport a hook to react immediately after enqueueing.
+	 */
 	protected abstract onEnqueue(operationPending: OperationPending): void;
 
+	/**
+	 * Returns whether the concrete transport is enabled by configuration.
+	 */
 	public isUsing(): boolean {
 		return this.isUse;
 	}
 
+	/**
+	 * Processes timeout checks and sends queued requests at the configured send rate.
+	 */
 	service() {
 		if (!this.isUse)
 			return;
@@ -124,6 +155,10 @@ export abstract class PeerBase implements IPeer {
 		}
 	}
 
+	/**
+	 * Converts a raw transport payload into `OperationResponse`, refreshes cached auth or timing state
+	 * on success, and resolves the pending callback.
+	 */
 	protected onResponseHandler(obj: GNHashtable): void {
 		let responseId = obj.getNumber(ParameterCode.ResponseId);
 		if (this.operationWaitingResponseDict.has(responseId)) {
@@ -162,6 +197,7 @@ export abstract class PeerBase implements IPeer {
 				this.addPing(operationPending.getExecuteTimerInMs());
 
 				if (parameters != null) {
+					// Keep auth and timing state in sync with the latest successful response.
 					if (parameters.containsKey(ParameterCode.AuthToken)) {
 						let authToken = parameters.getString(ParameterCode.AuthToken);
 
@@ -194,6 +230,10 @@ export abstract class PeerBase implements IPeer {
 		}
 	}
 
+	/**
+	 * Marks a pending request as sent and tracks it for correlation
+	 * when a response callback has been provided.
+	 */
 	send(operationPending: OperationPending): void {
 		operationPending.onSend();
 
@@ -206,6 +246,10 @@ export abstract class PeerBase implements IPeer {
 		}
 	}
 
+	/**
+	 * Updates the rolling latency average from the last successful round trip.
+	 * The SDK stores half of the measured round-trip time as transport latency.
+	 */
 	addPing(value: number): void {
 		if (this.pingLst.length > 10)
 			this.pingLst.shift();

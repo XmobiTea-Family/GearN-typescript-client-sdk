@@ -1,7 +1,3 @@
-/**
- * StorageService - Cross-platform storage abstraction for GearN SDK
- * Supports: Browser localStorage, Node.js, Cocos Creator 3.x
- */
 
 import store from "store";
 import { GNSupport } from "./GNSupport";
@@ -11,13 +7,11 @@ import { GNSupport } from "./GNSupport";
 export class StorageService {
 
 	/**
-	 * Get a value from storage
-	 * @param key Storage key
-	 * @param defaultValue Default value if key doesn't exist
+	 * Returns the value as a string.
 	 */
 	static getString(key: string, defaultValue: string = ""): any {
 		try {
-            const _platform = GNSupport.getPlatformType();
+			const _platform = GNSupport.getPlatformType();
 
 			let value: string | null = null;
 
@@ -44,13 +38,11 @@ export class StorageService {
 	}
 
 	/**
-	 * Set a value in storage
-	 * @param key Storage key
-	 * @param value Value to store
+	 * Persists a string value in the platform-specific storage backend.
 	 */
 	static setString(key: string, value: string): void {
 		try {
-            const _platform = GNSupport.getPlatformType();
+			const _platform = GNSupport.getPlatformType();
 
 			switch (_platform) {
 				case "cocos":

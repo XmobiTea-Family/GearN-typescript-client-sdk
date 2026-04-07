@@ -13,11 +13,17 @@ import { GNHashtable } from "./../../common/GNData";
 import { MessagePackConverterService } from "./../../helper/MessagePackConverterService";
 import { MessageType } from "./../../config/GNServerSettings";
 
+/**
+ * Implements low-level socket calls with Socket.IO.
+ */
 export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
 	private socketManager: Manager;
 	private socket: Socket;
 	private isConnected: boolean;
 
+	/**
+	 * Pushes the current auth token to the socket channel.
+	 */
 	override sendRequestAuthSocket(): void {
 		super.sendRequestAuthSocket();
 
@@ -26,6 +32,9 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
 		};
 	}
 
+	/**
+	 * Recreates the low-level socket client when needed.
+	 */
 	override reInitNewSocket(): void {
 		super.reInitNewSocket();
 
@@ -75,42 +84,70 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
 		}
 	}
 
+	/**
+	 * Queues a MessagePack response packet for later processing.
+	 */
 	private onResponseMsgPack(...args: any): void {
 		this.responsePacketLst.push(new SocketPacket(args[0], true));
 	}
 
+	/**
+	 * Queues a MessagePack event packet for later processing.
+	 */
 	private onEventMsgPack(...args: any[]): void {
 		this.eventPacketLst.push(new SocketPacket(args[0], true));
 	}
 
+	/**
+	 * Queues a JSON response packet for later processing.
+	 */
 	private onResponseJson(...args: any[]): void {
 		this.responsePacketLst.push(new SocketPacket(args[0], false));
 	}
 
+	/**
+	 * Queues a JSON event packet for later processing.
+	 */
 	private onEventJson(...args: any[]): void {
 		this.eventPacketLst.push(new SocketPacket(args[0], false));
 	}
 
+	/**
+	 * Handles the low-level socket connect event.
+	 */
 	private onConnect(): void {
 		GNDebug.log("[GN Socket RECV] HandleOpen " + this.socket.id);
 		this.clientId = this.socket.id;
 		this.onConnectHandler();
 	}
 
+	/**
+	 * Handles the low-level socket disconnect event.
+	 */
 	private onDisconnect(): void {
 		GNDebug.log("[GN Socket RECV] HandleClose ");
 		this.clientId = "";
 		this.onDisconnectHandler();
 	}
 
+	/**
+	 * Handles low-level transport errors.
+	 */
 	private onError(error: Error): void {
 		GNDebug.logError(error);
 	}
 
+	/**
+	 * Forwards connection settings to the base implementation.
+	 * Socket.IO client allocation itself happens in `reInitNewSocket()`.
+	 */
 	override init(url: string, reconnectDelay: number, pingInterval: number, pingTimeout: number): void {
 		super.init(url, reconnectDelay, pingInterval, pingTimeout);
 	}
 
+	/**
+	 * Sends the prepared payload through the low-level transport.
+	 */
 	protected override emit(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
 		super.emit(requestType, role, operationRequest, authToken, secretKey, customTags, gameId);
 
@@ -137,6 +174,9 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
 			socket.emit(Commands.RequestCmd_MsgPack, MessagePackConverterService.serialize(dataSend));
 	}
 
+	/**
+	 * Closes the underlying transport connection.
+	 */
 	override close(_onSocketDisconnect: Action0): void {
 		super.close(_onSocketDisconnect);
 
@@ -157,6 +197,9 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
 		this.onDisconnectHandler();
 	}
 
+	/**
+	 * Opens the underlying transport connection.
+	 */
 	override connect(_onSocketConnect: Action0): void {
 		super.connect(_onSocketConnect);
 

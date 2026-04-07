@@ -1,3 +1,6 @@
+/**
+ * Enumerates domain-level error codes returned inside successful GearN responses.
+ */
 export class ErrorCode {
 	public static readonly Ok: number = 1;
 

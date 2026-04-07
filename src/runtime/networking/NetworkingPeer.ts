@@ -1,4 +1,4 @@
-import { Commands } from "./../constant/Commands";
+﻿import { Commands } from "./../constant/Commands";
 import { Action0 } from "./../common/Action0";
 import { Action1 } from "./../common/Action1";
 import { GNArray, GNHashtable } from "./../common/GNData";
@@ -20,6 +20,9 @@ import { UploadFileResponse } from "./../entity/response/UploadFileResponse";
 import { ParameterCode } from "./../constant/parameterCode/ParameterCode";
 import { HealthCheckResponse } from "./../entity/response/HealthCheckResponse";
 
+/**
+ * Coordinates the HTTP and socket peers behind the static GNNetwork facade.
+ */
 export class NetworkingPeer {
 	static readonly SYNC_TS: string = "ts";
 	static readonly GET_AUTH_INFO: string = "getAuthInfo";
@@ -35,6 +38,9 @@ export class NetworkingPeer {
 	authenticateStatus: AuthenticateStatus;
 	gameId: string;
 
+	/**
+	 * Returns the averaged latency reported by whichever transports are active.
+	 */
 	getPing(): number {
 		let count = 0;
 		let totalPing = 0;
@@ -53,6 +59,9 @@ export class NetworkingPeer {
 		return totalPing / count;
 	}
 
+	/**
+	 * Returns the current socket client id.
+	 */
 	getClientId(): string {
 		return (this.socketPeer as SocketPeer).getClientId();
 	}
@@ -60,15 +69,24 @@ export class NetworkingPeer {
 	private lastCurrentServerMilliseconds: number;
 	private lastGetCurrentMilliseconds: number;
 
+	/**
+	 * Stores a fresh server timestamp snapshot so future calls can estimate drift locally.
+	 */
 	setServerTimeMilliseconds(currentServerMilliseconds: number): void {
 		this.lastCurrentServerMilliseconds = currentServerMilliseconds;
 		this.lastGetCurrentMilliseconds = Date.now();
 	}
 
+	/**
+	 * Returns the estimated current server timestamp based on the last sync result.
+	 */
 	getServerTimestamp(): number {
 		return this.lastCurrentServerMilliseconds + ((Date.now() - this.lastGetCurrentMilliseconds) * 1000);
 	}
 
+	/**
+	 * Creates the cached authentication state and initializes both HTTP and socket peers.
+	 */
 	initPeer(): void {
 		this.setServerTimeMilliseconds(Date.now());
 
@@ -85,11 +103,18 @@ export class NetworkingPeer {
 		this.socketPeer.initPeer();
 	}
 
+	/**
+	 * Services both transports so queued work and incoming messages can progress.
+	 */
 	service() {
 		if (this.httpPeer != null) this.httpPeer.service();
 		if (this.socketPeer != null) this.socketPeer.service();
 	}
 
+	/**
+	 * Queues a request for the socket transport, filling missing auth data
+	 * from the shared authentication state and current role settings.
+	 */
 	sendViaSocket(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
 		if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
 		if (secretKey == null) {
@@ -101,6 +126,10 @@ export class NetworkingPeer {
 		this.socketPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, customTags, this.gameId);
 	}
 
+	/**
+	 * Queues a request for the HTTP transport, filling missing auth data
+	 * from the shared authentication state and current role settings.
+	 */
 	sendViaHttp(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
 		if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
 		if (secretKey == null) {
@@ -112,42 +141,72 @@ export class NetworkingPeer {
 		this.httpPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, customTags, this.gameId);
 	}
 
+	/**
+	 * Sends the current auth token through the socket auth command.
+	 */
 	sendRequestAuthSocket(): void {
 		(this.socketPeer as SocketPeer).sendRequestAuthSocket();
 	}
 
+	/**
+	 * Opens the socket transport.
+	 */
 	connectSocket(_onSocketConnect: Action0): void {
 		(this.socketPeer as SocketPeer).connect(_onSocketConnect);
 	}
 
+	/**
+	 * Closes the socket transport.
+	 */
 	disconnectSocket(_onSocketDisconnect: Action0): void {
 		(this.socketPeer as SocketPeer).disconnect(_onSocketDisconnect);
 	}
 
+	/**
+	 * Replaces the raw event callback invoked for every socket event.
+	 */
 	setOnEventHandler(_onEventHandler: Action1<OperationEvent>): void {
 		(this.socketPeer as SocketPeer).setOnEventHandler(_onEventHandler);
 	}
 
+	/**
+	 * Registers an additional socket-connect callback.
+	 */
 	setOnConnectHandler(_onConnectHandler: Action0): void {
 		(this.socketPeer as SocketPeer).setOnConnectHandler(_onConnectHandler);
 	}
 
+	/**
+	 * Registers an additional socket-disconnect callback.
+	 */
 	setOnDisconnectHandler(_onDisconnectHandler: Action0): void {
 		(this.socketPeer as SocketPeer).setOnDisconnectHandler(_onDisconnectHandler);
 	}
 
+	/**
+	 * Removes a socket-connect callback.
+	 */
 	removeOnConnectHandler(_onConnectHandler: Action0): void {
 		(this.socketPeer as SocketPeer).removeOnConnectHandler(_onConnectHandler);
 	}
 
+	/**
+	 * Removes a socket-disconnect callback.
+	 */
 	removeOnDisconnectHandler(_onDisconnectHandler: Action0): void {
 		(this.socketPeer as SocketPeer).removeOnDisconnectHandler(_onDisconnectHandler);
 	}
 
+	/**
+	 * Registers an additional typed server event handler instance.
+	 */
 	subscriberServerEventHandler(serverEventHandler: IServerEventHandler): void {
 		(this.socketPeer as SocketPeer).subscriberAServerEventHandler(serverEventHandler);
 	}
 
+	/**
+	 * Calls the timestamp endpoint and refreshes the local server clock estimate.
+	 */
 	syncTs(onResponse: Action1<number> = null): void {
 		let thiz = this;
 
@@ -168,6 +227,9 @@ export class NetworkingPeer {
 		});
 	}
 
+	/**
+	 * Fetches auth information for the provided token through HTTP.
+	 */
 	getAuthInfo(authToken: string, onResponse: Action1<GetAuthInfoResponse>): void {
 		(this.httpPeer as HttpPeer).getRequest(NetworkingPeer.GET_AUTH_INFO + "?authToken=" + authToken, (httpAppResponse: HttpAppResponse) => {
 			if (!httpAppResponse.hasError()) {
@@ -202,6 +264,9 @@ export class NetworkingPeer {
 		});
 	}
 
+	/**
+	 * Calls the health-check endpoint through HTTP.
+	 */
 	healthCheck(onResponse: Action1<HealthCheckResponse>): void {
 		(this.httpPeer as HttpPeer).getRequest(NetworkingPeer.HEALTH_CHECK, (httpAppResponse: HttpAppResponse) => {
 			if (!httpAppResponse.hasError()) {
@@ -233,6 +298,9 @@ export class NetworkingPeer {
 		});
 	}
 
+	/**
+	 * Uploads a file through the authenticated HTTP upload endpoint.
+	 */
 	uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onResponse: Action1<UploadFileResponse>): void {
 		(this.httpPeer as HttpPeer).uploadFile(fileId, content, filename, mimetype, (httpAppResponse: HttpAppResponse) => {
 			if (!httpAppResponse.hasError()) {

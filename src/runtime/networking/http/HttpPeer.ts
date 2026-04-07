@@ -15,16 +15,25 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { OperationRequest } from "./../../entity/OperationRequest";
 import { CodeHelper } from "./../../helper/CodeHelper";
 
+/**
+ * Represents the normalized HTTP response returned by the transport layer.
+ */
 export class HttpAppResponse {
 	public statusCode: number;
 	public error: string;
 	public data: Uint8Array;
 	public text: string;
 
+	/**
+	 * Returns whether the transport captured an error for this response.
+	 */
 	public hasError(): boolean {
 		return this.error != null;
 	}
 
+	/**
+	 * Returns a debug-friendly string representation of this instance.
+	 */
 	public toString(): string {
 		let answer = " StatusCode: " + this.statusCode;
 		if (this.error) answer += ", <color=red>Error: " + this.error + "</color>";
@@ -34,16 +43,25 @@ export class HttpAppResponse {
 	}
 }
 
+/**
+ * Selects the HTTP request body encoding.
+ */
 export enum PostType {
 	Json = 0,
 	MsgPack = 1,
 }
 
+/**
+ * Wraps the HTTP transport used by the SDK.
+ */
 export class HttpPeer extends PeerBase {
 	private networkingHttpPeerBase: NetworkingHttpPeerBase;
 
 	private static readonly JSON_CHAR_KNOWN: string = "{";
 
+	/**
+	 * Creates and configures the low-level HTTP client from the current server settings.
+	 */
 	protected override initGNSocketObject(): void {
 		let gnServerSettings = GNNetwork.getGNServerSettings();
 		if (gnServerSettings == null)
@@ -60,6 +78,9 @@ export class HttpPeer extends PeerBase {
 		this.networkingHttpPeerBase.setUseReverseProxy(gnServerSettings.getUseReverseProxy());
 	}
 
+	/**
+	 * Marks an operation as sent, chooses the wire format, and forwards it to the HTTP transport.
+	 */
 	override send(operationPending: OperationPending): void {
 		let gnServerSettings = GNNetwork.getGNServerSettings();
 		let operationRequest = operationPending.getOperationRequest();
@@ -90,10 +111,16 @@ export class HttpPeer extends PeerBase {
 		}, operationRequest.getTimeout(), authToken, secretKey, customTags, gameId);
 	}
 
+	/**
+	 * Handles transport-specific work when an operation is queued.
+	 */
 	protected override onEnqueue(operationPending: OperationPending): void {
 		GNDebug.log("[GN Http ENQUEUE] " + operationPending.getOperationRequest().toString());
 	}
 
+	/**
+	 * Normalizes an HTTP response back into the SDK response shape.
+	 */
 	private onSendOperationRequestResponse(operationPending: OperationPending, httpAppResponse: HttpAppResponse): void {
 		let operationRequest = operationPending.getOperationRequest();
 		let obj = new GNHashtable();
@@ -139,10 +166,16 @@ export class HttpPeer extends PeerBase {
 		this.onResponseHandler(obj);
 	}
 
+	/**
+	 * Issues a raw GET request against the configured HTTP base URL.
+	 */
 	getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = OperationRequest.defaultTimeOut, authToken: string = null, secretKey: string = null, gameId: string = null): void {
 		this.networkingHttpPeerBase.getRequest(subUri, onHttpAppResponse, timeout, authToken, secretKey, gameId);
 	}
 
+	/**
+	 * Uploads a file through the authenticated multipart HTTP endpoint.
+	 */
 	uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = 6000): void {
 		let authToken = GNNetwork.getAuthenticateStatus().getAuthToken();
 
