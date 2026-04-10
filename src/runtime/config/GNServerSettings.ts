@@ -1,7 +1,8 @@
 ﻿import { LogType } from "./../logger/GNDebug";
 
 /**
- * Selects the payload format used by HTTP and socket transports.
+ * Selects the preferred payload format used by HTTP and socket transports.
+ * Browser HTTP requests configured as MsgPack are automatically downgraded to JSON by the transport.
  */
 export enum MessageType {
 	Json = 1,
@@ -184,6 +185,7 @@ export class GNServerSettings {
 
 	/**
 	 * Returns the payload format preferred by the SDK.
+	 * Browser HTTP requests may still fall back to JSON when MsgPack is selected.
 	 */
 	public getMessageType(): MessageType {
 		return this.messageType;
@@ -191,6 +193,7 @@ export class GNServerSettings {
 
 	/**
 	 * Updates the payload format preferred by the SDK.
+	 * Browser HTTP requests may still fall back to JSON when MsgPack is selected.
 	 */
 	public setMessageType(messageType: MessageType): void {
 		this.messageType = messageType;

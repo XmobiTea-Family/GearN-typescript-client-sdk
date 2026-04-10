@@ -7,32 +7,6 @@ import { AbstractConstructor, Constructor, FieldDataType, GNObjectFieldMetadata,
 export const GN_METADATA = "__GN_METADATA__";
 
 /**
- * Resolves the reflected data type for a decorated field.
- */
-const getGNReflectedDataType = (prototype: any, propertyKey: string): FieldDataType => {
-	let t = Reflect.getMetadata("design:type", prototype, propertyKey);
-	if (!t) {
-		throw Error(
-			`Cannot get gn reflected data type for ${prototype.constructor.name}:${propertyKey}`
-		);
-	}
-
-	switch (t.name) {
-		case "Boolean":
-			return FieldDataType.Boolean;
-		case "Number":
-			return FieldDataType.Number;
-		case "String":
-			return FieldDataType.String;
-		case "Array":
-			return FieldDataType.Array;
-
-		default:
-			return FieldDataType.Object;
-	}
-};
-
-/**
  * Resolves reflected metadata for a decorated field.
  */
 const getGNReflectedMetadata = (prototype: any, propertyKey: string): {

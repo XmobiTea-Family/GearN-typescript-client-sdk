@@ -1,7 +1,14 @@
 /**
- * Enumerates operation codes understood by the GearN backend.
+ * Enumerates raw operation-code strings understood by the GearN backend.
+ *
+ * These constants are the canonical operation identifiers embedded in request routes,
+ * request/response models, logs, and event-driven workflows. Grouping in this file
+ * follows backend capability areas rather than SDK wrapper class names.
  */
 export class OperationCode {
+	/**
+	 * Dashboard and administrative maintenance operations.
+	 */
 	public static readonly LoginByAdminAccount: string = "loginByAdminAccount";
 	public static readonly ChangePasswordAdminAccount: string = "changePasswordAdminAccount";
 	public static readonly GetGameList: string = "getGameList";
@@ -29,6 +36,9 @@ export class OperationCode {
 	public static readonly GetServerGameData: string = "getServerGameData";
 	public static readonly DeleteInDatabase: string = "deleteInDatabase";
 
+	/**
+	 * Client authentication and account-bootstrap operations.
+	 */
 	public static readonly LoginByAccount: string = "loginByAccount";
 	public static readonly LoginByAndroidDeviceId: string = "loginByAndroidDeviceId";
 	public static readonly LoginByApple: string = "loginByApple";
@@ -45,6 +55,9 @@ export class OperationCode {
 	public static readonly LoginByWindowsPhoneDeviceId: string = "loginByWindowsPhoneDeviceId";
 	public static readonly RegisterAccount: string = "registerAccount";
 
+	/**
+	 * External identity link operations for existing accounts.
+	 */
 	public static readonly LinkAccount: string = "linkAccount";
 	public static readonly LinkAndroidDeviceId: string = "linkAndroidDeviceId";
 	public static readonly LinkApple: string = "linkApple";
@@ -60,6 +73,9 @@ export class OperationCode {
 	public static readonly LinkWindowsDeviceId: string = "linkWindowsDeviceId";
 	public static readonly LinkWindowsPhoneDeviceId: string = "linkWindowsPhoneDeviceId";
 
+	/**
+	 * External identity unlink operations for existing accounts.
+	 */
 	public static readonly UnlinkAccount: string = "unlinkAccount";
 	public static readonly UnlinkAndroidDeviceId: string = "unlinkAndroidDeviceId";
 	public static readonly UnlinkApple: string = "unlinkApple";
@@ -75,6 +91,9 @@ export class OperationCode {
 	public static readonly UnlinkWindowsDeviceId: string = "unlinkWindowsDeviceId";
 	public static readonly UnlinkWindowsPhoneDeviceId: string = "unlinkWindowsPhoneDeviceId";
 
+	/**
+	 * Shared profile metadata operations reused across player-like entities.
+	 */
 	public static readonly AddSegment: string = "addSegment";
 	public static readonly RemoveSegment: string = "removeSegment";
 	public static readonly GetSegment: string = "getSegment";
@@ -116,6 +135,9 @@ export class OperationCode {
 	public static readonly SetPlayerData: string = "setPlayerData";
 	public static readonly GetPlayerData: string = "getPlayerData";
 
+	/**
+	 * Composite profile and search operations.
+	 */
 	public static readonly GetPlayerInformation: string = "getPlayerInformation";
 
 	public static readonly GetPlayersWithApple: string = "getPlayersWithApple";
@@ -183,6 +205,9 @@ export class OperationCode {
 	public static readonly RemoveGroupItem: string = "removeGroupItem";
 	public static readonly GetClassId: string = "getClassId";
 
+	/**
+	 * Store catalog and commerce operations.
+	 */
 	public static readonly GetStoreItemInformation: string = "getStoreItemInformation";
 	public static readonly GetStoreItemsWithTag: string = "getStoreItemsWithTag";
 	public static readonly CreateStoreItem: string = "createStoreItem";
@@ -196,6 +221,9 @@ export class OperationCode {
 	public static readonly SetEmail: string = "setEmail";
 	public static readonly GetEmail: string = "getEmail";
 
+	/**
+	 * Content/file metadata upload and download operations.
+	 */
 	public static readonly CreateNewFileUploadInfo: string = "createNewFileUploadInfo";
 	public static readonly GetFileUploadInfo: string = "getFileUploadInfo";
 	public static readonly RequestDownloadFileUploadInfo: string = "requestDownloadFileUploadInfo";
@@ -204,6 +232,9 @@ export class OperationCode {
 	public static readonly SetStoreItemInformation: string = "setStoreItemInformation";
 	public static readonly RefreshAuthToken: string = "refreshAuthToken";
 
+	/**
+	 * Multiplayer matchmaking and match-query operations.
+	 */
 	public static readonly CancelAllMatchmakingTicket: string = "cancelAllMatchmakingTicket";
 	public static readonly CancelMatchmakingTicket: string = "cancelMatchmakingTicket";
 	public static readonly CreateMatchmakingTicket: string = "createMatchmakingTicket";
@@ -215,12 +246,18 @@ export class OperationCode {
 
 	public static readonly GetCurrencyLeaderboard: string = "getCurrencyLeaderboard";
 
+	/**
+	 * CloudScript management and execution operations.
+	 */
 	public static readonly ExecuteFunction: string = "executeFunction";
 	public static readonly GetFunctions: string = "getFunctions";
 	public static readonly AddFunction: string = "addFunction";
 	public static readonly EditFunction: string = "editFunction";
 	public static readonly GetFunction: string = "getFunction";
 
+	/**
+	 * Provider-specific platform login/link/unlink and lookup operations.
+	 */
 	public static readonly LoginByGooglePlayGameService: string = "loginByGooglePlayGameService";
 	public static readonly LoginByGameCenter: string = "loginByGameCenter";
 	public static readonly LinkGooglePlayGameService: string = "linkGooglePlayGameService";
@@ -232,22 +269,37 @@ export class OperationCode {
 	public static readonly GetLastLoginLeaderboard: string = "getLastLoginLeaderboard";
 	public static readonly GetCreateLeaderboard: string = "getCreateLeaderboard";
 
+	/**
+	 * Administrative multiplayer inspection operations.
+	 */
 	public static readonly GetAllMatchmakingTicket: string = "getAllMatchmakingTicket";
 	public static readonly GetAllMatch: string = "getAllMatch";
 
+	/**
+	 * Event-delivery, audit-log, and realtime utility operations.
+	 */
 	public static readonly SendSocketOperationEvent: string = "sendSocketOperationEvent";
 	public static readonly GetStatisticsLog: string = "getStatisticsLog";
 	public static readonly GetCurrencyLog: string = "getCurrencyLog";
 
+	/**
+	 * Store gifting and store-log inspection operations.
+	 */
 	public static readonly PresentStoreItem: string = "presentStoreItem";
 	public static readonly GetStoreLog: string = "getStoreLog";
 
+	/**
+	 * Outbound email and push-notification operations.
+	 */
 	public static readonly SendEmail: string = "sendEmail";
 	public static readonly SendPushNotification: string = "sendPushNotification";
 	public static readonly AddPushNotification: string = "addPushNotification";
 	public static readonly RemovePushNotification: string = "removePushNotification";
 	public static readonly GetPushNotification: string = "getPushNotification";
 
+	/**
+	 * Post-purchase store-usage tracking operations.
+	 */
 	public static readonly GetStoreUsed: string = "getStoreUsed";
 	public static readonly RemoveStoreUsed: string = "removeStoreUsed";
 

@@ -220,8 +220,8 @@ class SerializeConverter {
 					else if (typeOfValue == "number") answer.add(dataMemberAnno.code, value);
 					else if (value instanceof GNData) answer.add(dataMemberAnno.code, value);
 					else if (typeOfValue == "object") {
-						if (Array.isArray(value)) answer.add(dataMemberAnno.code, this.serializeArray(value, dataMemberAnno.cls));
-						else answer.add(dataMemberAnno.code, GNHashtable.builder().addAll(value).build());
+						if (Array.isArray(value)) answer.add(dataMemberAnno.code, value);
+						else answer.add(dataMemberAnno.code, value);
 					}
 					else answer.add(dataMemberAnno.code, this.serializeObject(value, dataMemberAnno.cls));
 				}
