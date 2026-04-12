@@ -2,7 +2,9 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { MasterPlayerModels } from "./MasterPlayerModels";
 
 /**
- * Groups typed response contracts for MasterPlayer.
+ * Groups typed operation-response wrappers for `RequestType.MasterPlayer`.
+ * Many read operations resolve to `MasterPlayerResponseData` or a derived envelope whose
+ * `infoResponseParameters` content is controlled by the matching request model.
  */
 export namespace MasterPlayerResponseModels {
 	/**

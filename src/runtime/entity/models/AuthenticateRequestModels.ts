@@ -5,7 +5,9 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { AuthenticateModels } from "./AuthenticateModels";
 
 /**
- * Groups typed request contracts for Authenticate.
+ * Groups typed request wrappers for Authenticate.
+ *
+ * Every wrapper in this namespace uses `RequestType.Authenticate` with `RequestRole.Client`.
  */
 export namespace AuthenticateRequestModels {
 	/**
@@ -298,7 +300,9 @@ export namespace AuthenticateRequestModels {
 	}
 
 	/**
-	 * Maps the RefreshAuthToken operation to a typed request wrapper.
+	 * Maps the `RefreshAuthToken` operation to a typed request wrapper.
+	 *
+	 * The wrapped request body is intentionally empty; auth context still comes from the current token.
 	 */
 	export class RefreshAuthTokenOperationRequest extends CustomOperationRequestAbstract<AuthenticateModels.RefreshAuthTokenRequestData> {
 		protected override operationCode: string = OperationCode.RefreshAuthToken;

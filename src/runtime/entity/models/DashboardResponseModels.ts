@@ -2,7 +2,10 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { DashboardModels } from "./DashboardModels";
 
 /**
- * Groups typed response contracts for Dashboard.
+ * Groups typed response wrappers for Dashboard.
+ *
+ * Many dashboard operations resolve to `EmptyResponseData`, while configuration and listing calls
+ * return the richer dashboard-specific response models declared in `DashboardModels`.
  */
 export namespace DashboardResponseModels {
 	/**

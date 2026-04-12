@@ -7,11 +7,15 @@ import { ContentRequestModels } from "./entity/models/ContentRequestModels";
 import { ContentResponseModels } from "./entity/models/ContentResponseModels";
 
 /**
- * Exposes Content operations through GNNetwork.
+ * Exposes client-scoped content and file-metadata operations through `GNNetwork.content`.
+ *
+ * Uploading raw bytes is handled separately by `GNNetwork.uploadFile*`.
  */
 export class ContentApi {
+	/** Server-scoped content operations for trusted backend callers. */
 	public server: ServerContentApi = new ServerContentApi();
 
+	/** Admin-scoped content operations for dashboard or backoffice callers. */
 	public admin: AdminContentApi = new AdminContentApi();
 
 	/**
@@ -117,6 +121,11 @@ export class ContentApi {
 /**
  * Groups server-scoped operations exposed by ServerContentApi.
  */
+/**
+ * Exposes server-scoped content operations through `GNNetwork.content.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerContentApi {
 	/**
 	 * Sends the createNewFileUploadInfo operation and returns the typed response via callback.
@@ -220,6 +229,11 @@ export class ServerContentApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminContentApi.
+ */
+/**
+ * Exposes admin-scoped content operations through `GNNetwork.content.admin`.
+ *
+ * Use this namespace from dashboard or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminContentApi {
 	/**

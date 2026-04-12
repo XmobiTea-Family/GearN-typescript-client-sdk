@@ -272,6 +272,9 @@ class SerializeConverter {
 
 /**
  * Exposes the shared serialization and deserialization helpers used by the SDK models.
+ *
+ * Most SDK consumers do not need to call this service directly because generated request and response
+ * models already use it internally after `GNNetwork.init()`. Use it manually only for advanced custom DTO workflows.
  */
 export class ConverterService {
 	private static serializeConverter: SerializeConverter;
@@ -279,6 +282,8 @@ export class ConverterService {
 
 	/**
 	 * Deserializes a `GNHashtable` into a typed model instance.
+	 *
+	 * The target class should use the GearN DataMember decorators so the field-code mapping can be resolved.
 	 */
 	public static deserializeObject<T>(gnHashtable: GNHashtable, cls: Constructor<T>): any {
 		return ConverterService.deserializeConverter.deserializeObject(gnHashtable, cls);
@@ -286,6 +291,8 @@ export class ConverterService {
 
 	/**
 	 * Deserializes a `GNArray` into an array of typed model instances or primitives.
+	 *
+	 * For arrays of custom objects, `cls` should be the element class decorated with GearN DataMember metadata.
 	 */
 	public static deserializeArray<T>(gnArray: GNArray, cls: Constructor<T>): any[] {
 		return ConverterService.deserializeConverter.deserializeArray(gnArray, cls);
@@ -293,6 +300,8 @@ export class ConverterService {
 
 	/**
 	 * Serializes a typed model instance into a `GNHashtable`.
+	 *
+	 * The target class should use the GearN DataMember decorators so the field-code mapping can be resolved.
 	 */
 	public static serializeObject<T>(obj: any, cls: Constructor<T>): GNHashtable {
 		return ConverterService.serializeConverter.serializeObject(obj, cls);
@@ -300,6 +309,8 @@ export class ConverterService {
 
 	/**
 	 * Serializes an array of typed model instances or primitives into a `GNArray`.
+	 *
+	 * For arrays of custom objects, `cls` should be the element class decorated with GearN DataMember metadata.
 	 */
 	public static serializeArray<T>(objLst: [], cls: Constructor<T>): GNArray {
 		return ConverterService.serializeConverter.serializeArray(objLst, cls);
@@ -307,6 +318,8 @@ export class ConverterService {
 
 	/**
 	 * Creates the shared serializer and deserializer instances used across the SDK.
+	 *
+	 * `GNNetwork.init()` already calls this automatically for normal SDK usage.
 	 */
 	static init(): void {
 		let dataMemberFieldInfoMapper = new DataMemberFieldInfoTypeMapper();

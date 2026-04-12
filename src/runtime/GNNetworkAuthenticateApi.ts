@@ -7,11 +7,15 @@ import { AuthenticateRequestModels } from "./entity/models/AuthenticateRequestMo
 import { AuthenticateResponseModels } from "./entity/models/AuthenticateResponseModels";
 
 /**
- * Exposes Authenticate operations through GNNetwork.
+ * Exposes client-scoped authentication operations through `GNNetwork.authenticate`.
+ *
+ * All public methods in this namespace use HTTP and `RequestRole.Client`.
  */
 export class AuthenticateApi {
+	/** Exposed for namespace symmetry only. Authenticate currently has no public server-scoped methods. */
 	public server: ServerAuthenticateApi = new ServerAuthenticateApi();
 
+	/** Exposed for namespace symmetry only. Authenticate currently has no public admin-scoped methods. */
 	public admin: AdminAuthenticateApi = new AdminAuthenticateApi();
 
 	/**
@@ -268,13 +272,17 @@ export class AuthenticateApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerAuthenticateApi.
+ * Placeholder namespace kept for API symmetry.
+ *
+ * Authenticate does not currently expose any public server-scoped operations.
  */
 export class ServerAuthenticateApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminAuthenticateApi.
+ * Placeholder namespace kept for API symmetry.
+ *
+ * Authenticate does not currently expose any public admin-scoped operations.
  */
 export class AdminAuthenticateApi {
 }

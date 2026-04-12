@@ -5,7 +5,8 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { CloudScriptModels } from "./CloudScriptModels";
 
 /**
- * Groups typed request contracts for CloudScript.
+ * Groups typed operation-request wrappers for `RequestType.CloudScript`.
+ * Execution flows and management flows share the same request type but differ by operation and route role.
  */
 export namespace CloudScriptRequestModels {
 	/**

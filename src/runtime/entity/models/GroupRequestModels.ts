@@ -5,7 +5,9 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { GroupModels } from "./GroupModels";
 
 /**
- * Groups typed request contracts for Group.
+ * Groups typed operation-request wrappers for `RequestType.Group`.
+ * Group workflows target explicit group IDs; server/admin wrappers switch role
+ * without changing the group-centric request-shape semantics.
  */
 export namespace GroupRequestModels {
 	/**

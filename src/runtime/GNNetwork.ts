@@ -39,7 +39,8 @@ import { HealthCheckResponse } from "./entity/response/HealthCheckResponse";
 /**
  * Provides the single static entry point used by SDK consumers.
  *
- * All public domain APIs are exposed from this class after calling init().
+ * All public domain APIs, low-level transports, auth state helpers, and realtime hooks
+ * are exposed from this class after calling init().
  */
 export class GNNetwork {
 
@@ -137,33 +138,35 @@ export class GNNetwork {
 		return platform;
 	}
 
-	/** Exposes authentication operations. */
+	/** Client-scoped authentication operations such as login, register, and refresh token. */
 	public static authenticate: AuthenticateApi;
-	/** Exposes character player operations. */
+	/** Character-scoped gameplay and social operations over HTTP. */
 	public static characterPlayer: CharacterPlayerApi;
-	/** Exposes content operations. */
+	/** Content and file-metadata operations over HTTP. */
 	public static content: ContentApi;
-	/** Exposes dashboard operations. */
+	/** Dashboard and admin-facing HTTP operations. Backend resolves admin context from auth token after admin login. */
 	public static dashboard: DashboardApi;
-	/** Exposes game player operations. */
+	/** Game-player profile, relation, friend, and group operations over HTTP. */
 	public static gamePlayer: GamePlayerApi;
-	/** Exposes group operations. */
+	/** Group metadata, member, message, currency, and statistics operations over HTTP. */
 	public static group: GroupApi;
-	/** Exposes inventory operations. */
+	/** Inventory item metadata, ownership, amount, statistics, and log operations over HTTP. */
 	public static inventory: InventoryApi;
-	/** Exposes master player operations. */
+	/** Master-player account, identity, and profile operations over HTTP. */
 	public static masterPlayer: MasterPlayerApi;
-	/** Exposes store inventory operations. */
+	/** Store catalog, purchase, gift, receipt validation, and audit operations over HTTP. */
 	public static storeInventory: StoreInventoryApi;
-	/** Exposes multiplayer operations. */
+	/** Matchmaking and match-query operations over HTTP. */
 	public static multiplayer: MultiplayerApi;
-	/** Exposes cloud script operations. */
+	/** CloudScript execute, publish, and version-management operations over HTTP. */
 	public static cloudScript: CloudScriptApi;
 
 	/**
 	 * Initializes the static SDK state once.
 	 *
 	 * The call is intentionally idempotent: subsequent calls are ignored.
+	 * Initialization boots helper services, restores cached auth state, creates the shared peer,
+	 * and instantiates every public API namespace.
 	 */
 	public static init(gnServerSettings: GNServerSettings): void {
 		if (GNNetwork.gnServerSettings != null) {
@@ -277,14 +280,16 @@ export class GNNetwork {
 	}
 
 	/**
-	 * Sends a low-level OperationRequest through the socket transport.
+	 * Sends a low-level `OperationRequest` through the socket transport.
+	 *
+	 * Most SDK consumers should prefer the typed `sendViaSocketT*` helpers or domain APIs instead of this raw entry point.
 	 */
 	public static sendViaSocket(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): void {
 		GNNetwork.peer.sendViaSocket(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, customTags);
 	}
 
 	/**
-	 * Promise wrapper around sendViaSocket.
+	 * Promise wrapper around `sendViaSocket`.
 	 */
 	public static async sendViaSocketAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse> {
 		return new Promise((resolve) => {
@@ -297,14 +302,16 @@ export class GNNetwork {
 	}
 
 	/**
-	 * Sends a low-level OperationRequest through the HTTP transport.
+	 * Sends a low-level `OperationRequest` through the HTTP transport.
+	 *
+	 * Most SDK consumers should prefer the typed `sendViaHttpT*` helpers or domain APIs instead of this raw entry point.
 	 */
 	public static sendViaHttp(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): void {
 		GNNetwork.peer.sendViaHttp(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, customTags);
 	}
 
 	/**
-	 * Promise wrapper around sendViaHttp.
+	 * Promise wrapper around `sendViaHttp`.
 	 */
 	public static async sendViaHttpAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse> {
 		return new Promise((resolve) => {
@@ -318,13 +325,15 @@ export class GNNetwork {
 
 	/**
 	 * Sends a typed request through the socket transport and deserializes a typed response.
+	 *
+	 * Use this when you already have a `CustomOperationRequest` subclass and intentionally want socket transport.
 	 */
 	public static sendViaSocketTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): void {
 		GNNetwork.sendViaSocketTResponse(request.getRequestType(), request.getRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
 	}
 
 	/**
-	 * Promise wrapper around sendViaSocketTRequestTResponse.
+	 * Promise wrapper around `sendViaSocketTRequestTResponse`.
 	 */
 	public static async sendViaSocketTRequestTResponseAsync<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
 		return new Promise((resolve) => {
@@ -337,13 +346,15 @@ export class GNNetwork {
 
 	/**
 	 * Sends a typed request through the HTTP transport and deserializes a typed response.
+	 *
+	 * This is the low-level typed helper used internally by the generated API wrappers.
 	 */
 	public static sendViaHttpTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): void {
 		GNNetwork.sendViaHttpTResponse(request.getRequestType(), request.getRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
 	}
 
 	/**
-	 * Promise wrapper around sendViaHttpTRequestTResponse.
+	 * Promise wrapper around `sendViaHttpTRequestTResponse`.
 	 */
 	public static async sendViaHttpTRequestTResponseAsync<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
 		return new Promise((resolve) => {
@@ -356,6 +367,8 @@ export class GNNetwork {
 
 	/**
 	 * Deserializes a typed socket response from a low-level request definition.
+	 *
+	 * Use this when you already have a raw `OperationRequest` but still want a typed response class.
 	 */
 	public static sendViaSocketTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): void {
 		GNNetwork.sendViaSocket(requestType, role, request, response => {
@@ -369,7 +382,7 @@ export class GNNetwork {
 	}
 
 	/**
-	 * Promise wrapper around sendViaSocketTResponse.
+	 * Promise wrapper around `sendViaSocketTResponse`.
 	 */
 	public static async sendViaSocketTResponseAsync<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
 		return new Promise((resolve) => {
@@ -382,6 +395,8 @@ export class GNNetwork {
 
 	/**
 	 * Deserializes a typed HTTP response from a low-level request definition.
+	 *
+	 * Use this when you already have a raw `OperationRequest` but still want a typed response class.
 	 */
 	public static sendViaHttpTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): void {
 		GNNetwork.sendViaHttp(requestType, role, request, response => {
@@ -395,7 +410,7 @@ export class GNNetwork {
 	}
 
 	/**
-	 * Promise wrapper around sendViaHttpTResponse.
+	 * Promise wrapper around `sendViaHttpTResponse`.
 	 */
 	public static async sendViaHttpTResponseAsync<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
 		return new Promise((resolve) => {
@@ -459,6 +474,8 @@ export class GNNetwork {
 
 	/**
 	 * Registers a typed event handler implementation.
+	 *
+	 * The handler must implement `IServerEventHandler` and is usually decorated with `@IServerEventHandler.registerEvent`.
 	 */
 	public static subscriberServerEventHandler(serverEventHandler: IServerEventHandler): void {
 		GNNetwork.peer.subscriberServerEventHandler(serverEventHandler);
@@ -520,6 +537,8 @@ export class GNNetwork {
 
 	/**
 	 * Uploads a file through the authenticated HTTP upload endpoint.
+	 *
+	 * Typical flow: call `content.createNewFileUploadInfo*` first, then pass the returned `fileId` into this method.
 	 */
 	public static uploadFile(fileId: string, content: Uint8Array, filename: string, mimetype: string, onResponse: Action1<UploadFileResponse> = null): void {
 		GNNetwork.peer.uploadFile(fileId, content, filename, mimetype, onResponse);
@@ -538,6 +557,8 @@ export class GNNetwork {
 
 	/**
 	 * Builds the direct download URL for a previously issued download token.
+	 *
+	 * Typical flow: call `content.requestDownloadFileUploadInfo*` first, then pass the returned token into this helper.
 	 */
 	public static getDownloadFileUrl(downloadToken: string): string {
 		return GNNetwork.gnServerSettings.getHttpUrl() + "/" + NetworkingPeer.DOWNLOAD_FILE + "/" + downloadToken;

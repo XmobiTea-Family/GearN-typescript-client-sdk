@@ -5,7 +5,8 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { ContentModels } from "./ContentModels";
 
 /**
- * Groups typed request contracts for Content.
+ * Groups typed operation-request wrappers for `RequestType.Content`.
+ * Content workflows stay HTTP-based even when the binary upload/download bytes are handled by helpers outside the typed operation layer.
  */
 export namespace ContentRequestModels {
 	/**

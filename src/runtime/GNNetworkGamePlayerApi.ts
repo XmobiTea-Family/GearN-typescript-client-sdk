@@ -7,11 +7,15 @@ import { GamePlayerRequestModels } from "./entity/models/GamePlayerRequestModels
 import { GamePlayerResponseModels } from "./entity/models/GamePlayerResponseModels";
 
 /**
- * Exposes GamePlayer operations through GNNetwork.
+ * Exposes client-scoped game-player operations through `GNNetwork.gamePlayer`.
+ *
+ * Use this namespace from player-facing code when working with the authenticated user's gameplay profile over HTTP.
  */
 export class GamePlayerApi {
+	/** Server-scoped game-player operations for trusted backend callers. */
 	public server: ServerGamePlayerApi = new ServerGamePlayerApi();
 
+	/** Admin-scoped game-player operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminGamePlayerApi = new AdminGamePlayerApi();
 
 	/**
@@ -747,6 +751,11 @@ export class GamePlayerApi {
 /**
  * Groups server-scoped operations exposed by ServerGamePlayerApi.
  */
+/**
+ * Exposes server-scoped game-player operations through `GNNetwork.gamePlayer.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerGamePlayerApi {
 	/**
 	 * Sends the addPlayerFriend operation and returns the typed response via callback.
@@ -1480,6 +1489,11 @@ export class ServerGamePlayerApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminGamePlayerApi.
+ */
+/**
+ * Exposes admin-scoped game-player operations through `GNNetwork.gamePlayer.admin`.
+ *
+ * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminGamePlayerApi {
 	/**

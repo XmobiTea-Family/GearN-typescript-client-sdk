@@ -2,7 +2,7 @@
 
 ## Overview
 
-GearN TypeScript SDK hỗ trợ đầy đủ Cocos Creator 3.x thông qua npm package.
+GearN TypeScript SDK dùng được với Cocos Creator 3.x thông qua npm package.
 
 ## Installation
 
@@ -16,7 +16,7 @@ npm install @xmobitea/gn-typescript-client
 
 ### 2. TypeScript Configuration
 
-Đảm bảo `tsconfig.json` của Cocos Creator project có cài đặt tương thích:
+Đảm bảo `tsconfig.json` của project có cấu hình tương thích:
 
 ```json
 {
@@ -32,66 +32,98 @@ npm install @xmobitea/gn-typescript-client
 
 ### Initialize SDK
 
-```typescript
-import { GNNetwork, GNServerSettings, LogType, MessageType } from '@xmobitea/gn-typescript-client';
+```ts
+import { GNNetwork, GNServerSettings, LogType, MessageType } from "@xmobitea/gn-typescript-client";
 
-// Tạo server settings
-const settings = new GNServerSettings({
-    httpUrl: "http://your-server:8080",
-    socketUrl: "ws://your-server:8080",
-    secretKey: "your-secret-key",
+const settings = new GNServerSettings();
+settings.config({
+    serverAddress: "your-server-domain-or-ip",
+    serverPort: 2202,
+    serverSocketPort: 2901,
+    useSsl: false,
     useSocket: true,
     useHttp: true,
-    logType: LogType.All,
-    sendRate: 30,
+    defaultTimeoutInSeconds: 20,
     messageType: MessageType.MsgPack,
+    sendRate: 30,
+    reconnectDelay: 1000,
+    pingInterval: 3000,
+    pingTimeout: 5000,
+    adminSecretKey: "",
+    serverSecretKey: "",
+    clientSecretKey: "your-client-secret",
+    logType: LogType.All,
 });
 
-// Initialize
 GNNetwork.init(settings);
 ```
 
+Ghi chú:
+
+- Trên browser build của Cocos, nếu `messageType = MessageType.MsgPack` thì HTTP transport sẽ tự fallback sang JSON.
+- Chỉ dùng route `.server` hoặc `.admin` khi bạn đã cấu hình secret key tương ứng.
+
 ### Authentication
 
-```typescript
-// Login với Device ID
-const response = await GNNetwork.authenticate.loginDeviceIdAsync({
-    deviceId: "unique-device-id",
-    createAccount: true,
-});
+```ts
+import {
+    AuthenticateModels,
+    ErrorCode,
+    GNNetwork,
+} from "@xmobitea/gn-typescript-client";
 
-if (!response.hasError()) {
-    console.log("User ID:", GNNetwork.getAuthenticateStatus().getUserId());
+const infoRequestParam = new AuthenticateModels.InfoRequestParam();
+infoRequestParam.displayName = true;
+infoRequestParam.avatar = true;
+
+const request = new AuthenticateModels.LoginByCustomDeviceIdRequestData();
+request.customDeviceId = "unique-device-id";
+request.createPlayerIfNotExists = true;
+request.infoRequestParam = infoRequestParam;
+
+const response = await GNNetwork.authenticate.loginByCustomDeviceIdAsync(request);
+
+if (response.hasReturnCodeError()) {
+    throw new Error(response.debugMessage);
 }
+
+if (response.errorCode !== ErrorCode.Ok) {
+    throw new Error(`Business error: ${response.errorCode}`);
+}
+
+console.log("User ID:", GNNetwork.getAuthenticateStatus().getUserId());
 ```
 
 ### Socket Connection
 
-```typescript
-// Subscribe events
+Tuân theo [rule socket chuẩn trong README](../README.MD#socket-auth-flow).
+
+```ts
+import { GNNetwork } from "@xmobitea/gn-typescript-client";
+
 GNNetwork.subscriberOnConnectHandler(() => {
-    console.log("Connected!");
-    GNNetwork.sendRequestAuthSocket();
+    console.log("Connected!", GNNetwork.getSocketSId());
 });
 
 GNNetwork.subscriberOnDisconnectHandler(() => {
     console.log("Disconnected!");
 });
 
-// Connect
-GNNetwork.connectSocket();
+GNNetwork.connectSocket(); // Call this after a successful HTTP login or refresh flow.
 ```
+
+Nếu socket đã connect trước khi token xuất hiện, hoặc token vừa đổi và bạn không muốn reconnect, gọi `GNNetwork.sendRequestAuthSocket()` để re-auth.
 
 ## Example Component
 
-Xem file mẫu hoàn chỉnh tại: [examples/cocos-creator/GearNExample.ts](../examples/cocos-creator/GearNExample.ts)
+Xem file mẫu cập nhật tại: [examples/cocos-creator/GearNExample.ts.txt](../examples/cocos-creator/GearNExample.ts.txt)
 
 ## Platform Detection
 
 SDK tự động phát hiện Cocos Creator environment:
 
-```typescript
-import { GNSupport } from '@xmobitea/gn-typescript-client';
+```ts
+import { GNSupport } from "@xmobitea/gn-typescript-client";
 
 if (GNSupport.isCocosCreator()) {
     console.log("Running in Cocos Creator");
@@ -100,15 +132,22 @@ if (GNSupport.isCocosCreator()) {
 
 ## Storage
 
-SDK tự động sử dụng `cc.sys.localStorage` trong Cocos Creator để lưu auth token.
+SDK tự động dùng `cc.sys.localStorage` trong Cocos Creator để lưu auth token.
 
 ## Troubleshooting
 
 ### Module not found
-Đảm bảo đã chạy `npm install` trong project folder.
+
+Đảm bảo bạn đã chạy `npm install` trong đúng project folder.
 
 ### Build errors
-Kiểm tra `tsconfig.json` có `esModuleInterop: true`.
+
+Kiểm tra `tsconfig.json` có `esModuleInterop: true`, `experimentalDecorators: true`, `emitDecoratorMetadata: true`.
+
+### Socket có connect nhưng không nhận event
+
+- Kiểm tra app đã login HTTP trước khi `connectSocket()` chưa.
+- Nếu socket connect trước khi token có sẵn, gọi `GNNetwork.sendRequestAuthSocket()` để re-auth.
 
 ## Support
 

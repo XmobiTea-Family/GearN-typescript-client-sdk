@@ -3,11 +3,12 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
 /**
- * Groups shared data contracts for CloudScript.
+ * Groups reusable request and response contracts for CloudScript operations.
+ * Function-management flows are separate from function-execution flows.
  */
 export namespace CloudScriptModels {
 	/**
-	 * Defines the request payload for AddFunction.
+	 * Creates a new CloudScript version from raw script source.
 	 */
 	export class AddFunctionRequestData {
 		@StringDataMember({ code: ParameterCode.Script, minLength: 0, maxLength: Number.MAX_SAFE_INTEGER, mustNonNull: true })
@@ -35,7 +36,7 @@ export namespace CloudScriptModels {
 	}
 
 	/**
-	 * Defines the request payload for EditFunction.
+	 * Updates execution flags for an existing CloudScript version without changing its source code.
 	 */
 	export class EditFunctionRequestData {
 		@StringDataMember({ code: ParameterCode.Version, minLength: 7, maxLength: 7, mustNonNull: true })
@@ -63,18 +64,30 @@ export namespace CloudScriptModels {
 	}
 
 	/**
-	 * Defines the request payload for ExecuteFunction.
+	 * Executes one function from the selected CloudScript version.
 	 */
 	export class ExecuteFunctionRequestData {
+		/**
+		 * Optional self-target shortcut on the client route; trusted routes require it through derived classes.
+		 */
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
+		/**
+		 * Function name inside the script version, not the version identifier itself.
+		 */
 		@StringDataMember({ code: ParameterCode.FunctionName, minLength: 3, maxLength: 30, mustNonNull: true })
 		public functionName: string;
 
+		/**
+		 * Arbitrary payload forwarded to the CloudScript function.
+		 */
 		@DataMember({ code: ParameterCode.FunctionParameters, isOptional: true })
 		public functionParameters?: any;
 
+		/**
+		 * Optional version override; when omitted, backend execution rules decide which live version is used.
+		 */
 		@StringDataMember({ code: ParameterCode.Version, minLength: 7, maxLength: 7, isOptional: true })
 		public version?: string;
 
@@ -141,7 +154,7 @@ export namespace CloudScriptModels {
 	}
 
 	/**
-	 * Defines the response payload for AddFunction.
+	 * Returns the created version plus backend validation feedback.
 	 */
 	export class AddFunctionResponseData {
 		@StringDataMember({ code: ParameterCode.Version })
@@ -153,7 +166,7 @@ export namespace CloudScriptModels {
 	}
 
 	/**
-	 * Defines the response payload for EditFunction.
+	 * Returns backend validation feedback for an edit workflow.
 	 */
 	export class EditFunctionResponseData {
 		@StringDataMember({ code: ParameterCode.ErrorMessage })
@@ -162,9 +175,13 @@ export namespace CloudScriptModels {
 	}
 
 	/**
-	 * Defines the response payload for ExecuteFunction.
+	 * Returns runtime telemetry and function output for one execution.
 	 */
 	export class ExecuteFunctionResponseData {
+		/**
+		 * Raw execution status code returned by the backend.
+		 * The public package does not currently expose a dedicated enum for this field.
+		 */
 		@NumberDataMember({ code: ParameterCode.Status })
 		public status: number;
 
@@ -174,19 +191,25 @@ export namespace CloudScriptModels {
 		@NumberDataMember({ code: ParameterCode.MemoryUsedInBytes })
 		public memoryUsedInBytes: number;
 
+		/**
+		 * Arbitrary function return value.
+		 */
 		@DataMember({ code: ParameterCode.FunctionResult })
 		public functionResult: any;
 
 		@StringDataMember({ code: ParameterCode.ErrorMessage })
 		public errorMessage: string;
 
+		/**
+		 * Ordered execution logs captured during the function run.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.FunctionLogs, elementCls: String })
 		public functionLogs: Array<string>;
 
 	}
 
 	/**
-	 * Defines the response payload for GetFunction.
+	 * Returns one full CloudScript version snapshot.
 	 */
 	export class GetFunctionResponseData {
 		@StringDataMember({ code: ParameterCode.Script })
@@ -204,7 +227,7 @@ export namespace CloudScriptModels {
 	}
 
 	/**
-	 * Defines the response payload for Function.
+	 * Describes one lightweight function-version summary.
 	 */
 	export class FunctionResponseData {
 		@StringDataMember({ code: ParameterCode.Version })
@@ -216,7 +239,7 @@ export namespace CloudScriptModels {
 	}
 
 	/**
-	 * Defines the response payload for GetFunctions.
+	 * Returns the available function-version list plus latest/live pointers.
 	 */
 	export class GetFunctionsResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: FunctionResponseData })

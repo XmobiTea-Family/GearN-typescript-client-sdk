@@ -5,7 +5,9 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { CharacterPlayerModels } from "./CharacterPlayerModels";
 
 /**
- * Groups typed request contracts for CharacterPlayer.
+ * Groups typed operation-request wrappers for `RequestType.CharacterPlayer`.
+ * Public character-player workflows target an explicit `characterId`,
+ * while server/admin wrappers switch role without changing the request-shape semantics.
  */
 export namespace CharacterPlayerRequestModels {
 	/**

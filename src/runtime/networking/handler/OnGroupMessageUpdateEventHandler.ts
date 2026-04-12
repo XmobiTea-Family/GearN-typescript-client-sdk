@@ -8,25 +8,29 @@ import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 /**
- * Defines the payload emitted by the corresponding server event.
+ * Defines the payload emitted by the `OnGroupMessageUpdate` server event.
  */
 export class GroupMessageUpdate {
+	/** Updated group message items pushed by the server. */
 	@GNArrayDataMember({ code: ParameterCode.GroupMessages, elementCls: GroupModels.GroupMessageResponseData })
 	public groupMessages: Array<GroupModels.GroupMessageResponseData>;
 
+	/** Group id whose message stream changed. */
 	@StringDataMember({ code: ParameterCode.GroupId })
 	public groupId: string;
 
+	/** Optional character id when the message update is scoped by character context. */
 	@StringDataMember({ code: ParameterCode.CharacterId, isOptional: true })
 	public characterId?: string;
 
 }
 
 /**
- * Handles the event flow implemented by OnGroupMessageUpdateEventHandler.
+ * Handles the `OnGroupMessageUpdate` server event.
  */
 @IServerEventHandler.registerEvent
 export class OnGroupMessageUpdateEventHandler implements IServerEventHandler {
+	/** Optional static callback invoked after the payload is deserialized. */
 	public static onUpdate: Action1<GroupMessageUpdate>;
 
 	/**

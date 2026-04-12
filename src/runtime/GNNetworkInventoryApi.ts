@@ -7,11 +7,15 @@ import { InventoryRequestModels } from "./entity/models/InventoryRequestModels";
 import { InventoryResponseModels } from "./entity/models/InventoryResponseModels";
 
 /**
- * Exposes Inventory operations through GNNetwork.
+ * Exposes client-scoped inventory operations through `GNNetwork.inventory`.
+ *
+ * This namespace covers item metadata, ownership, amount, custom data, statistics, and logs over HTTP.
  */
 export class InventoryApi {
+	/** Server-scoped inventory operations for trusted backend callers. */
 	public server: ServerInventoryApi = new ServerInventoryApi();
 
+	/** Admin-scoped inventory operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminInventoryApi = new AdminInventoryApi();
 
 	/**
@@ -495,6 +499,11 @@ export class InventoryApi {
 /**
  * Groups server-scoped operations exposed by ServerInventoryApi.
  */
+/**
+ * Exposes server-scoped inventory operations through `GNNetwork.inventory.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerInventoryApi {
 	/**
 	 * Sends the addSegment operation and returns the typed response via callback.
@@ -976,6 +985,11 @@ export class ServerInventoryApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminInventoryApi.
+ */
+/**
+ * Exposes admin-scoped inventory operations through `GNNetwork.inventory.admin`.
+ *
+ * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminInventoryApi {
 	/**

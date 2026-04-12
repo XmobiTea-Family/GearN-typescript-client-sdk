@@ -8,18 +8,20 @@ import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 /**
- * Defines the payload emitted by the corresponding server event.
+ * Defines the payload emitted by the `OnGroupMemberUpdate` server event.
  */
 export class GroupMemberUpdate {
+	/** Updated member relation items pushed by the server. */
 	@GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.FriendItem })
 	public members: Array<GenericModels.MemberItem>;
 }
 
 /**
- * Handles the event flow implemented by OnGroupMemberUpdateEventHandler.
+ * Handles the `OnGroupMemberUpdate` server event.
  */
 @IServerEventHandler.registerEvent
 export class OnGroupMemberUpdateEventHandler implements IServerEventHandler {
+	/** Optional static callback invoked after the payload is deserialized. */
 	public static onUpdate: Action1<GroupMemberUpdate>;
 
 	/**

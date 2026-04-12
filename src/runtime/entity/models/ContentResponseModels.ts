@@ -2,7 +2,8 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { ContentModels } from "./ContentModels";
 
 /**
- * Groups typed response contracts for Content.
+ * Groups typed operation-response wrappers for `RequestType.Content`.
+ * File upload and download helpers consume the IDs and download tokens returned by these typed responses.
  */
 export namespace ContentResponseModels {
 	/**

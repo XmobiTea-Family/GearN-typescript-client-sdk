@@ -2,7 +2,9 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { GamePlayerModels } from "./GamePlayerModels";
 
 /**
- * Groups typed response contracts for GamePlayer.
+ * Groups typed operation-response wrappers for `RequestType.GamePlayer`.
+ * Many read operations resolve to `GamePlayerResponseData` or a derived envelope whose
+ * `infoResponseParameters` content is controlled by the matching request model.
  */
 export namespace GamePlayerResponseModels {
 	/**

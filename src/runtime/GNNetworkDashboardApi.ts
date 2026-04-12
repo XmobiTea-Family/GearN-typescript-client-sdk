@@ -7,11 +7,16 @@ import { DashboardRequestModels } from "./entity/models/DashboardRequestModels";
 import { DashboardResponseModels } from "./entity/models/DashboardResponseModels";
 
 /**
- * Exposes Dashboard operations through GNNetwork.
+ * Exposes dashboard and admin-facing operations through `GNNetwork.dashboard`.
+ *
+ * Public wrappers in this namespace currently use HTTP and `RequestRole.Client`.
+ * After a successful admin login, backend middleware resolves dashboard permission from the auth token.
  */
 export class DashboardApi {
+	/** Exposed for namespace symmetry only. Dashboard currently has no public server-scoped methods. */
 	public server: ServerDashboardApi = new ServerDashboardApi();
 
+	/** Exposed for namespace symmetry only. Dashboard currently has no public admin-scoped methods. */
 	public admin: AdminDashboardApi = new AdminDashboardApi();
 
 	/**
@@ -381,13 +386,17 @@ export class DashboardApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerDashboardApi.
+ * Placeholder namespace kept for API symmetry.
+ *
+ * Dashboard does not currently expose any public server-scoped operations.
  */
 export class ServerDashboardApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminDashboardApi.
+ * Placeholder namespace kept for API symmetry.
+ *
+ * Dashboard does not currently expose any public admin-scoped operations.
  */
 export class AdminDashboardApi {
 }

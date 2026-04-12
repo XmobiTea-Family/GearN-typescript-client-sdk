@@ -2,22 +2,31 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
 /**
- * Groups shared data contracts for Dashboard.
+ * Groups reusable request and response contracts for Dashboard operations.
+ *
+ * Public dashboard wrappers currently send these contracts through `RequestType.Dashboard`
+ * with `RequestRole.Client`, while backend middleware resolves admin context from the auth token.
  */
 export namespace DashboardModels {
 	/**
-	 * Defines the reusable parameter block PermissionRulesParam.
+	 * Defines the reusable permission-rule block used by secret-info and master settings payloads.
+	 *
+	 * These flags map directly to the GearN server permission checks described in the public docs.
 	 */
 	export class PermissionRulesParam {
+		/** Allows the operation on resources that belong to the authenticated user context. */
 		@BooleanDataMember({ code: ParameterCode.SelfEnable, isOptional: true })
 		public selfEnable?: boolean;
 
+		/** Allows the operation on resources that do not belong to the authenticated user context. */
 		@BooleanDataMember({ code: ParameterCode.OtherSelfEnable, isOptional: true })
 		public otherSelfEnable?: boolean;
 
+		/** Allows the operation through admin-scoped execution context. */
 		@BooleanDataMember({ code: ParameterCode.AdminSelfEnable, isOptional: true })
 		public adminSelfEnable?: boolean;
 
+		/** Allows the operation through server-scoped execution context. */
 		@BooleanDataMember({ code: ParameterCode.ServerSelfEnable, isOptional: true })
 		public serverSelfEnable?: boolean;
 
@@ -1709,7 +1718,9 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the reusable parameter block PermissionParam.
+	 * Defines the top-level permission tree assigned to one secret info entry.
+	 *
+	 * Each optional property groups permission rules by API domain.
 	 */
 	export class PermissionParam {
 		@GNHashtableDataMember({ code: ParameterCode.Authenticate, isOptional: true })
@@ -1838,25 +1849,34 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the request payload for CreateSecretInfo.
+	 * Defines the request payload for `createSecretInfo`.
+	 *
+	 * `permissionParam` is the authoritative permission tree that controls which operations
+	 * the created secret key may execute on the GearN server.
 	 */
 	export class CreateSecretInfoRequestData {
+		/** Optional custom secret key. If omitted, the backend may generate one. */
 		@StringDataMember({ code: ParameterCode.SecretKey, minLength: 6, maxLength: 64, mustNonNull: true, isOptional: true })
 		public secretKey?: string;
 
+		/** Optional target game id when creating a secret for a specific game. */
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public gameId?: string;
 
+		/** Secret role value. This should match the server-side secret role contract. */
 		@NumberDataMember({ code: ParameterCode.Role, mustInt: true, minValue: 1, maxValue: 3 })
 		public role: number;
 
+		/** Optional permission tree granted to the new secret key. */
 		@GNHashtableDataMember({ code: ParameterCode.PermissionParam, isOptional: true })
 		public permissionParam?: PermissionParam;
 
 	}
 
 	/**
-	 * Defines the request payload for LoginByAdminAccount.
+	 * Defines the request payload for `loginByAdminAccount`.
+	 *
+	 * A successful response returns an auth token that later dashboard calls reuse so backend middleware can resolve admin context.
 	 */
 	export class LoginByAdminAccountRequestData {
 		@StringDataMember({ code: ParameterCode.Username, minLength: 4, maxLength: 32, mustNonNull: true })
@@ -2186,7 +2206,9 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the response payload for GetMasterGameSettings.
+	 * Defines the response payload for `getMasterGameSettings`.
+	 *
+	 * This payload contains the full top-level dashboard configuration snapshot used to provision a game.
 	 */
 	export class GetMasterGameSettingsResponseData {
 		@GNHashtableDataMember({ code: ParameterCode.ThirtPartySettings })
@@ -2204,15 +2226,19 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the response payload for GetSecretInfoInformation.
+	 * Defines the response payload for `getSecretInfoInformation`.
+	 *
+	 * This is the detailed secret-info record, including role, lifecycle flags, and permission tree.
 	 */
 	export class GetSecretInfoInformationResponseData {
+		/** Secret key whose detailed configuration was requested. */
 		@StringDataMember({ code: ParameterCode.SecretKey })
 		public secretKey: string;
 
 		@StringDataMember({ code: ParameterCode.GameId })
 		public gameId: string;
 
+		/** Secret role stored for this secret info entry. */
 		@NumberDataMember({ code: ParameterCode.Role })
 		public role: number;
 
@@ -2231,13 +2257,14 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.Description })
 		public description: string;
 
+		/** Permission tree granted to this secret key. */
 		@GNHashtableDataMember({ code: ParameterCode.PermissionParam })
 		public permissionParam: PermissionParam;
 
 	}
 
 	/**
-	 * Defines the response payload for SecretInfoWithSecretKey.
+	 * Defines a lightweight secret-info item returned by secret-list queries.
 	 */
 	export class SecretInfoWithSecretKeyResponseData {
 		@StringDataMember({ code: ParameterCode.SecretKey })
@@ -2246,15 +2273,20 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the response payload for GetSecretInfoList.
+	 * Defines the response payload for `getSecretInfoList`.
+	 *
+	 * Results are grouped by secret role instead of being returned as one flat array.
 	 */
 	export class GetSecretInfoListResponseData {
+		/** Secret keys whose role is admin. */
 		@GNArrayDataMember({ code: ParameterCode.AdminSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
 		public adminSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
 
+		/** Secret keys whose role is server. */
 		@GNArrayDataMember({ code: ParameterCode.ServerSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
 		public serverSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
 
+		/** Secret keys whose role is player or client-facing. */
 		@GNArrayDataMember({ code: ParameterCode.PlayerSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
 		public playerSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
 
@@ -2279,9 +2311,12 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the response payload for LoginByAdminAccount.
+	 * Defines the response payload for `loginByAdminAccount`.
+	 *
+	 * The returned auth token should be cached and reused for subsequent dashboard requests.
 	 */
 	export class LoginByAdminAccountResponseData {
+		/** Auth token representing the authenticated admin account. */
 		@StringDataMember({ code: ParameterCode.AuthToken })
 		public authToken: string;
 
@@ -2561,7 +2596,9 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the response payload for GetEventCallbackCloudScript.
+	 * Defines the response payload for `getEventCallbackCloudScript`.
+	 *
+	 * Each result links one event callback registration to a CloudScript target.
 	 */
 	export class GetEventCallbackCloudScriptResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: EventCallbackCloudScriptResponseData })
@@ -2602,7 +2639,9 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the response payload for GetServerGameData.
+	 * Defines the response payload for `getServerGameData`.
+	 *
+	 * This is a high-level telemetry snapshot of entity counts, country breakdown, and server version data.
 	 */
 	export class GetServerGameDataResponseData {
 		@NumberDataMember({ code: ParameterCode.MasterPlayerCount, isOptional: true })
@@ -2623,16 +2662,18 @@ export namespace DashboardModels {
 		@NumberDataMember({ code: ParameterCode.GroupCount, isOptional: true })
 		public groupCount?: number;
 
+		/** Optional country-level breakdown returned by the backend. */
 		@GNArrayDataMember({ code: ParameterCode.Country, elementCls: CountryResponseData, isOptional: true })
 		public country?: Array<CountryResponseData>;
 
+		/** Optional server or game-data version string reported by the backend. */
 		@StringDataMember({ code: ParameterCode.Version, isOptional: true })
 		public version?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

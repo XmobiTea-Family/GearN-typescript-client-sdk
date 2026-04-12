@@ -3,7 +3,8 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
 /**
- * Groups shared data contracts for Multiplayer.
+ * Groups reusable request and response contracts for Multiplayer operations.
+ * Public matchmaking workflows usually follow `create/join ticket -> poll ticket -> get match`.
  */
 export namespace MultiplayerModels {
 	/**
@@ -55,18 +56,27 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Defines the request payload for CreateMatchmakingTicket.
+	 * Creates a new matchmaking ticket for the current or target player.
 	 */
 	export class CreateMatchmakingTicketRequestData {
+		/**
+		 * Maximum wait time before the ticket gives up.
+		 */
 		@NumberDataMember({ code: ParameterCode.GiveUpAfterSeconds, mustInt: true, minValue: 20 })
 		public giveUpAfterSeconds: number;
 
 		@StringDataMember({ code: ParameterCode.QueueName, minLength: 6, maxLength: 32 })
 		public queueName: string;
 
+		/**
+		 * Backend-defined matchmaking attribute payload.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.Attribute, isOptional: true })
 		public attribute?: GNHashtable;
 
+		/**
+		 * Optional extra members joined into the same matchmaking party.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.Members, isOptional: true, elementCls: String })
 		public members?: Array<string>;
 
@@ -88,12 +98,15 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetMatchmakingTicket.
+	 * Polls the current state of one matchmaking ticket.
 	 */
 	export class GetMatchmakingTicketRequestData {
 		@StringDataMember({ code: ParameterCode.TicketId, minLength: 10, maxLength: 10 })
 		public ticketId: string;
 
+		/**
+		 * Requests member details in addition to the ticket summary.
+		 */
 		@BooleanDataMember({ code: ParameterCode.ReturnMember, isOptional: true, defaultValue: false })
 		public returnMember?: boolean;
 
@@ -112,12 +125,15 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetMatch.
+	 * Reads a match after matchmaking has produced a `matchId`.
 	 */
 	export class GetMatchRequestData {
 		@StringDataMember({ code: ParameterCode.MatchId, minLength: 15, maxLength: 15 })
 		public matchId: string;
 
+		/**
+		 * Requests member details in addition to the match summary.
+		 */
 		@BooleanDataMember({ code: ParameterCode.ReturnMember, isOptional: true, defaultValue: false })
 		public returnMember?: boolean;
 
@@ -163,9 +179,12 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetAllMatchmakingTicket.
+	 * Lists matchmaking tickets with optional status filtering.
 	 */
 	export class GetAllMatchmakingTicketRequestData {
+		/**
+		 * Ticket status filter mapped by the public `MatchmakingTicketStatus` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.Status, minValue: 1, maxValue: 5, isOptional: true, mustInt: true })
 		public status?: number;
 
@@ -244,7 +263,7 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Defines the request payload for ListMatchmakingTicketsForPlayer.
+	 * Lists ticket IDs for the current or target player within one queue.
 	 */
 	export class ListMatchmakingTicketsForPlayerRequestData {
 		@StringDataMember({ code: ParameterCode.QueueName, minLength: 6, maxLength: 32 })
@@ -287,12 +306,15 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Represents MatchmakingTicketMember.
+	 * Describes one member attached to a matchmaking ticket.
 	 */
 	export class MatchmakingTicketMember {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10 })
 		public userId: string;
 
+		/**
+		 * Member status value defined by backend matchmaking semantics.
+		 */
 		@NumberDataMember({ code: ParameterCode.Status, mustInt: true })
 		public status: number;
 
@@ -302,7 +324,7 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Defines the response payload for MatchmakingTicket.
+	 * Describes the current state of a matchmaking ticket.
 	 */
 	export class MatchmakingTicketResponseData {
 		@NumberDataMember({ code: ParameterCode.TsCreate })
@@ -317,6 +339,9 @@ export namespace MultiplayerModels {
 		@StringDataMember({ code: ParameterCode.QueueName, minLength: 6, maxLength: 32 })
 		public queueName: string;
 
+		/**
+		 * Ticket status mapped by the public `MatchmakingTicketStatus` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.Status, mustInt: true })
 		public status: number;
 
@@ -347,7 +372,7 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Represents MatchMember.
+	 * Describes one member attached to a resolved match.
 	 */
 	export class MatchMember {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10 })
@@ -392,7 +417,8 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Defines the response payload for Match.
+	 * Describes one resolved match.
+	 * The public contract exposes queue/member data but does not include server endpoint fields here.
 	 */
 	export class MatchResponseData {
 		@NumberDataMember({ code: ParameterCode.TsCreate })
@@ -470,7 +496,7 @@ export namespace MultiplayerModels {
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

@@ -1,0 +1,462 @@
+{
+  "schemaVersion": 1,
+  "package": {
+    "name": "@xmobitea/gn-typescript-client",
+    "entryPoint": "GNNetwork",
+    "installCommand": "npm install @xmobitea/gn-typescript-client",
+    "typesEntry": "dist/index.d.ts",
+    "runtimeEntry": "dist/index.js"
+  },
+  "canonicalSources": {
+    "repoAiEntry": "AGENTS.md",
+    "readme": "README.MD",
+    "routeAndPermissionRules": "README.MD#route-and-permission-rules",
+    "socketAuthFlow": "README.MD#socket-auth-flow",
+    "apiDocsDirectory": "docs",
+    "distDirectory": "dist"
+  },
+  "globalRules": {
+    "preferAsyncAwait": true,
+    "requireInitBeforeAnyApiCall": true,
+    "initMethod": "GNNetwork.init(settings)",
+    "initStrategy": "once_per_app_session",
+    "repeatInitBehavior": "ignored",
+    "successCodeCheckOrder": [
+      "returnCode",
+      "errorCode"
+    ],
+    "successCodes": {
+      "returnCodeOk": 1,
+      "errorCodeOk": 1
+    },
+    "doNotAssumeSuccessIsZero": true,
+    "doNotReadSrcForNormalPackageUsage": true
+  },
+  "returnCodeMeanings": {
+    "SecretInvalid": "secretKey sai, thiếu, hoặc không khớp context",
+    "OperationInvalid": "operation không tồn tại hoặc không hợp lệ với request type hoặc role hiện tại",
+    "OperationNotAllow": "secretKey vẫn hợp lệ, operation vẫn tồn tại, nhưng permission rules của secretKey không cho phép chạy operation trong target context hiện tại"
+  },
+  "routing": {
+    "principle": "trust_boundary",
+    "client": "code chạy trong app hoặc player client",
+    "server": "code chạy trong trusted backend như game server, internal service, worker, cron hoặc webhook backend",
+    "admin": "code chạy trong backoffice, dashboard, GM tool, migration tool hoặc vận hành dữ liệu",
+    "rules": [
+      "không chọn server hoặc admin chỉ vì target không thuộc user hiện tại",
+      "không dùng namespace server hoặc admin từ app client chỉ để vượt permission",
+      "không suy diễn route chỉ từ việc request có hay không có userId"
+    ],
+    "defaultSecrets": {
+      "client": "clientSecretKey",
+      "server": "serverSecretKey",
+      "admin": "adminSecretKey"
+    }
+  },
+  "permissionRules": {
+    "selfOtherSelfOnlyApplyOnClientRoute": true,
+    "flags": {
+      "selfEnable": "cho phép thực thi trên chính tài nguyên thuộc user đã authenticate",
+      "otherSelfEnable": "cho phép thực thi trên tài nguyên không thuộc user đã authenticate",
+      "serverSelfEnable": "cho phép thực thi qua route server",
+      "adminSelfEnable": "cho phép thực thi qua route admin"
+    },
+    "selfSemantics": {
+      "masterPlayerAndGamePlayer": "target userId trùng userId đã authenticate thành công",
+      "characterPlayerInventoryGroup": "entity target thuộc ownership của GamePlayer có userId trùng userId đã authenticate",
+      "domainsWithoutClearOwnership": [
+        "ContentApi",
+        "StoreInventoryApi",
+        "MultiplayerApi",
+        "CloudScriptApi"
+      ]
+    },
+    "operationNotAllowChecklist": [
+      "đang dùng đúng route client hoặc server hoặc admin chưa",
+      "secretKey có quyền đúng domain và operation chưa",
+      "operation đang rơi vào self hay other self",
+      "nếu là route server hoặc admin thì secretKey có serverSelfEnable hoặc adminSelfEnable chưa"
+    ]
+  },
+  "authAndSocket": {
+    "flow": [
+      "login hoặc refresh token qua HTTP",
+      "sau khi SDK đã có authToken, nếu cần realtime thì gọi GNNetwork.connectSocket()",
+      "nếu socket connect khi token đã có trong cache, SDK sẽ tự auth socket",
+      "chỉ gọi GNNetwork.sendRequestAuthSocket() khi cần re-auth thủ công"
+    ],
+    "rules": [
+      "không gộp auth socket với auth HTTP",
+      "không bắt buộc gọi tay sendRequestAuthSocket sau mọi lần connectSocket",
+      "nếu socket connect trước khi token xuất hiện hoặc token vừa đổi và không muốn reconnect thì mới gọi sendRequestAuthSocket"
+    ]
+  },
+  "dashboardSpecialCase": {
+    "apiGroup": "DashboardApi",
+    "publicWrapperRequestRole": "Client",
+    "defaultTransportSecret": "clientSecretKey",
+    "backendAuthBehavior": "sau loginByAdminAccountAsync thành công, backend middleware resolve secret context và quyền admin riêng từ authToken",
+    "emptyPublicNamespaces": [
+      "GNNetwork.dashboard.server",
+      "GNNetwork.dashboard.admin"
+    ]
+  },
+  "apiGroups": [
+    {
+      "name": "AuthenticateApi",
+      "doc": "docs/AUTHENTICATE_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkAuthenticateApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/AuthenticateModels.d.ts",
+        "dist/runtime/entity/models/AuthenticateRequestModels.d.ts",
+        "dist/runtime/entity/models/AuthenticateResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.authenticate",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "login player, register account, refresh auth token"
+        }
+      ],
+      "emptyNamespaces": [
+        "GNNetwork.authenticate.server",
+        "GNNetwork.authenticate.admin"
+      ]
+    },
+    {
+      "name": "DashboardApi",
+      "doc": "docs/DASHBOARD_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkDashboardApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/DashboardModels.d.ts",
+        "dist/runtime/entity/models/DashboardRequestModels.d.ts",
+        "dist/runtime/entity/models/DashboardResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.dashboard",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "dashboard, analytics, secret, maintenance, admin login",
+          "specialCase": "backend resolve admin context từ authToken sau login admin"
+        }
+      ],
+      "emptyNamespaces": [
+        "GNNetwork.dashboard.server",
+        "GNNetwork.dashboard.admin"
+      ]
+    },
+    {
+      "name": "ContentApi",
+      "doc": "docs/CONTENT_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkContentApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/ContentModels.d.ts",
+        "dist/runtime/entity/models/ContentRequestModels.d.ts",
+        "dist/runtime/entity/models/ContentResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.content",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "content config hoặc file metadata từ app hoặc player side"
+        },
+        {
+          "namespace": "GNNetwork.content.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend hoặc worker xử lý content hoặc file metadata"
+        },
+        {
+          "namespace": "GNNetwork.content.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "dashboard hoặc backoffice quản trị content hoặc file metadata"
+        }
+      ]
+    },
+    {
+      "name": "MultiplayerApi",
+      "doc": "docs/MULTIPLAYER_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkMultiplayerApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/MultiplayerModels.d.ts",
+        "dist/runtime/entity/models/MultiplayerRequestModels.d.ts",
+        "dist/runtime/entity/models/MultiplayerResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.multiplayer",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "matchmaking ticket hoặc match query gắn với auth token hiện tại"
+        },
+        {
+          "namespace": "GNNetwork.multiplayer.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend thao tác ticket hoặc match của user cụ thể"
+        },
+        {
+          "namespace": "GNNetwork.multiplayer.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "ops hoặc dashboard liệt kê và quản lý ticket hoặc match"
+        }
+      ],
+      "hardRules": [
+        "không dùng socket để tạo hoặc join hoặc cancel hoặc query matchmaking ticket",
+        "flow chuẩn là create hoặc join ticket rồi poll getMatchmakingTicket rồi mới getMatch"
+      ]
+    },
+    {
+      "name": "StoreInventoryApi",
+      "doc": "docs/STORE_INVENTORY_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkStoreInventoryApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/StoreInventoryModels.d.ts",
+        "dist/runtime/entity/models/StoreInventoryRequestModels.d.ts",
+        "dist/runtime/entity/models/StoreInventoryResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.storeInventory",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "store catalog, buy, present, receipt validation cho flow app hoặc player"
+        },
+        {
+          "namespace": "GNNetwork.storeInventory.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend purchase fulfillment hoặc store workflow"
+        },
+        {
+          "namespace": "GNNetwork.storeInventory.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "dashboard hoặc ops quản trị catalog hoặc log"
+        }
+      ]
+    },
+    {
+      "name": "InventoryApi",
+      "doc": "docs/INVENTORY_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkInventoryApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/InventoryModels.d.ts",
+        "dist/runtime/entity/models/InventoryRequestModels.d.ts",
+        "dist/runtime/entity/models/InventoryResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.inventory",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "player app thao tác trên item thuộc session hoặc ownership hiện tại"
+        },
+        {
+          "namespace": "GNNetwork.inventory.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend xử lý item hoặc ownership hoặc statistics"
+        },
+        {
+          "namespace": "GNNetwork.inventory.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "GM tool hoặc dashboard vận hành dữ liệu inventory"
+        }
+      ]
+    },
+    {
+      "name": "GroupApi",
+      "doc": "docs/GROUP_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkGroupApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/GroupModels.d.ts",
+        "dist/runtime/entity/models/GroupRequestModels.d.ts",
+        "dist/runtime/entity/models/GroupResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.group",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "player app thao tác trên group đã tồn tại"
+        },
+        {
+          "namespace": "GNNetwork.group.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend xử lý group lifecycle hoặc member hoặc message"
+        },
+        {
+          "namespace": "GNNetwork.group.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "dashboard hoặc GM tool vận hành dữ liệu group"
+        }
+      ],
+      "realtimeHandlers": [
+        "dist/runtime/networking/handler/OnGroupMessageUpdateEventHandler.d.ts",
+        "dist/runtime/networking/handler/OnGroupMemberUpdateEventHandler.d.ts"
+      ]
+    },
+    {
+      "name": "MasterPlayerApi",
+      "doc": "docs/MASTER_PLAYER_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkMasterPlayerApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/MasterPlayerModels.d.ts",
+        "dist/runtime/entity/models/MasterPlayerRequestModels.d.ts",
+        "dist/runtime/entity/models/MasterPlayerResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.masterPlayer",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "player app thao tác trên account hoặc profile của chính user hiện tại",
+          "userIdBehavior": "có thể bỏ userId để target user hiện tại"
+        },
+        {
+          "namespace": "GNNetwork.masterPlayer.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend xử lý account hoặc profile của player cụ thể",
+          "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
+        },
+        {
+          "namespace": "GNNetwork.masterPlayer.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "dashboard hoặc GM tool vận hành dữ liệu master player",
+          "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
+        }
+      ]
+    },
+    {
+      "name": "GamePlayerApi",
+      "doc": "docs/GAME_PLAYER_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkGamePlayerApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/GamePlayerModels.d.ts",
+        "dist/runtime/entity/models/GamePlayerRequestModels.d.ts",
+        "dist/runtime/entity/models/GamePlayerResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.gamePlayer",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "player app thao tác trên gameplay profile của chính user hiện tại",
+          "userIdBehavior": "có thể bỏ userId để target user hiện tại"
+        },
+        {
+          "namespace": "GNNetwork.gamePlayer.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend xử lý lifecycle game player của user cụ thể",
+          "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
+        },
+        {
+          "namespace": "GNNetwork.gamePlayer.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "dashboard hoặc GM tool vận hành dữ liệu game player",
+          "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
+        }
+      ],
+      "realtimeHandlers": [
+        "dist/runtime/networking/handler/OnGamePlayerFriendUpdateEventHandler.d.ts",
+        "dist/runtime/networking/handler/OnGamePlayerGroupUpdateEventHandler.d.ts"
+      ]
+    },
+    {
+      "name": "CharacterPlayerApi",
+      "doc": "docs/CHARACTER_PLAYER_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkCharacterPlayerApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/CharacterPlayerModels.d.ts",
+        "dist/runtime/entity/models/CharacterPlayerRequestModels.d.ts",
+        "dist/runtime/entity/models/CharacterPlayerResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.characterPlayer",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "player app thao tác trên character cụ thể đang thuộc ownership hợp lệ",
+          "targetBehavior": "gần như luôn phải truyền characterId rõ ràng"
+        },
+        {
+          "namespace": "GNNetwork.characterPlayer.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend xử lý lifecycle hoặc relation của character cụ thể",
+          "targetBehavior": "gần như luôn phải truyền characterId rõ ràng"
+        },
+        {
+          "namespace": "GNNetwork.characterPlayer.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "dashboard hoặc GM tool vận hành dữ liệu character",
+          "targetBehavior": "gần như luôn phải truyền characterId rõ ràng"
+        }
+      ],
+      "realtimeHandlers": [
+        "dist/runtime/networking/handler/OnCharacterPlayerFriendUpdateEventHandler.d.ts",
+        "dist/runtime/networking/handler/OnCharacterPlayerGroupUpdateEventHandler.d.ts"
+      ]
+    },
+    {
+      "name": "CloudScriptApi",
+      "doc": "docs/CLOUDSCRIPT_API_README.md",
+      "apiDts": "dist/runtime/GNNetworkCloudScriptApi.d.ts",
+      "modelDts": [
+        "dist/runtime/entity/models/CloudScriptModels.d.ts",
+        "dist/runtime/entity/models/CloudScriptRequestModels.d.ts",
+        "dist/runtime/entity/models/CloudScriptResponseModels.d.ts"
+      ],
+      "transport": "http",
+      "routes": [
+        {
+          "namespace": "GNNetwork.cloudScript",
+          "requestRole": "Client",
+          "defaultSecretKey": "clientSecretKey",
+          "useWhen": "app public chỉ execute function nếu backend cho phép"
+        },
+        {
+          "namespace": "GNNetwork.cloudScript.server",
+          "requestRole": "Server",
+          "defaultSecretKey": "serverSecretKey",
+          "useWhen": "trusted backend execute hoặc publish theo workflow backend"
+        },
+        {
+          "namespace": "GNNetwork.cloudScript.admin",
+          "requestRole": "Admin",
+          "defaultSecretKey": "adminSecretKey",
+          "useWhen": "dashboard hoặc backoffice quản trị version và live status"
+        }
+      ],
+      "hardRules": [
+        "editFunctionAsync không sửa source code",
+        "muốn đổi source code phải addFunctionAsync để tạo version mới",
+        "không có public delete function hoặc hard delete version"
+      ]
+    }
+  ]
+}

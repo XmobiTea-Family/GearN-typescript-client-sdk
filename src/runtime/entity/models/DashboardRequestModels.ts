@@ -5,7 +5,10 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { DashboardModels } from "./DashboardModels";
 
 /**
- * Groups typed request contracts for Dashboard.
+ * Groups typed request wrappers for Dashboard.
+ *
+ * Every wrapper in this namespace currently uses `RequestType.Dashboard` with `RequestRole.Client`.
+ * Admin authority is resolved by backend middleware from the dashboard auth token after login.
  */
 export namespace DashboardRequestModels {
 	/**

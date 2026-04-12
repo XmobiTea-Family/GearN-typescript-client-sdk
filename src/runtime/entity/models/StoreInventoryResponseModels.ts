@@ -2,7 +2,9 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { StoreInventoryModels } from "./StoreInventoryModels";
 
 /**
- * Groups typed response contracts for StoreInventory.
+ * Groups typed operation-response wrappers for `RequestType.StoreInventory`.
+ * Many read operations resolve to `StoreInventoryResponseData` or a derived envelope whose
+ * `infoResponseParameters` content is controlled by the matching request model.
  */
 export namespace StoreInventoryResponseModels {
 	/**

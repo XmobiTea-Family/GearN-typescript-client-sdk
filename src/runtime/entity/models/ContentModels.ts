@@ -4,7 +4,8 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups shared data contracts for Content.
+ * Groups reusable request and response contracts for Content operations.
+ * File workflows usually follow `create upload info -> upload file out-of-band -> request download token`.
  */
 export namespace ContentModels {
 	/**
@@ -20,7 +21,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the request payload for CreateNewFileUploadInfo.
+	 * Allocates a new upload slot before the binary payload is uploaded through the separate upload helper.
 	 */
 	export class CreateNewFileUploadInfoRequestData {
 		@StringDataMember({ code: ParameterCode.FileName, mustNonNull: true, minLength: 5, maxLength: 50 })
@@ -42,7 +43,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the request payload for GetContentData.
+	 * Reads content configuration blobs, optionally filtered by key list and label.
 	 */
 	export class GetContentDataRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, elementCls: String, isOptional: true })
@@ -135,7 +136,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the request payload for RequestDownloadFileUploadInfo.
+	 * Requests a short-lived download token for an existing uploaded file.
 	 */
 	export class RequestDownloadFileUploadInfoRequestData {
 		@StringDataMember({ code: ParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
@@ -180,7 +181,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the response payload for FileIdUpload.
+	 * Returns the backend-generated file ID for follow-up upload or download workflows.
 	 */
 	export class FileIdUploadResponseData {
 		@StringDataMember({ code: ParameterCode.FileId })
@@ -207,7 +208,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Represents FileUploadItem.
+	 * Describes upload metadata stored for one file entry.
 	 */
 	export class FileUploadItem {
 		@StringDataMember({ code: ParameterCode.MimeType })
@@ -222,7 +223,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the response payload for GetFileUploadInfo.
+	 * Returns metadata for one uploaded file entry.
 	 */
 	export class GetFileUploadInfoResponseData extends FileIdUploadResponseData {
 		@StringDataMember({ code: ParameterCode.FileName })
@@ -234,6 +235,9 @@ export namespace ContentModels {
 		@GNHashtableDataMember({ code: ParameterCode.RemoveStatus })
 		public removeStatus: GenericModels.RemoveStatusItem;
 
+		/**
+		 * Upload-expiration timestamp for unfinished uploads when present.
+		 */
 		@NumberDataMember({ code: ParameterCode.TsUploadExpire, isOptional: true })
 		public tsUploadExpire?: number;
 
@@ -243,7 +247,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the response payload for RequestDownloadFileUploadInfo.
+	 * Returns the download token consumed by the SDK download helper.
 	 */
 	export class RequestDownloadFileUploadInfoResponseData {
 		@StringDataMember({ code: ParameterCode.DownloadToken })
@@ -252,7 +256,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

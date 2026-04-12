@@ -7,11 +7,15 @@ import { StoreInventoryRequestModels } from "./entity/models/StoreInventoryReque
 import { StoreInventoryResponseModels } from "./entity/models/StoreInventoryResponseModels";
 
 /**
- * Exposes StoreInventory operations through GNNetwork.
+ * Exposes client-scoped store and purchase operations through `GNNetwork.storeInventory`.
+ *
+ * This namespace covers store catalog reads, purchases, gifting, receipt validation, and audit queries over HTTP.
  */
 export class StoreInventoryApi {
+	/** Server-scoped store operations for trusted backend callers. */
 	public server: ServerStoreInventoryApi = new ServerStoreInventoryApi();
 
+	/** Admin-scoped store operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminStoreInventoryApi = new AdminStoreInventoryApi();
 
 	/**
@@ -215,6 +219,11 @@ export class StoreInventoryApi {
 /**
  * Groups server-scoped operations exposed by ServerStoreInventoryApi.
  */
+/**
+ * Exposes server-scoped store operations through `GNNetwork.storeInventory.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerStoreInventoryApi {
 	/**
 	 * Sends the buyStoreItem operation and returns the typed response via callback.
@@ -416,6 +425,11 @@ export class ServerStoreInventoryApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminStoreInventoryApi.
+ */
+/**
+ * Exposes admin-scoped store operations through `GNNetwork.storeInventory.admin`.
+ *
+ * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminStoreInventoryApi {
 	/**

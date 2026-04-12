@@ -5,7 +5,9 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { GamePlayerModels } from "./GamePlayerModels";
 
 /**
- * Groups typed request contracts for GamePlayer.
+ * Groups typed operation-request wrappers for `RequestType.GamePlayer`.
+ * Client wrappers target the authenticated player when `userId` is omitted,
+ * while server/admin wrappers switch role and usually require an explicit target user.
  */
 export namespace GamePlayerRequestModels {
 	/**

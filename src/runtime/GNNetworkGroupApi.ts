@@ -7,11 +7,15 @@ import { GroupRequestModels } from "./entity/models/GroupRequestModels";
 import { GroupResponseModels } from "./entity/models/GroupResponseModels";
 
 /**
- * Exposes Group operations through GNNetwork.
+ * Exposes client-scoped group operations through `GNNetwork.group`.
+ *
+ * This namespace covers group metadata, members, messages, currencies, statistics, and inventory over HTTP.
  */
 export class GroupApi {
+	/** Server-scoped group operations for trusted backend callers. */
 	public server: ServerGroupApi = new ServerGroupApi();
 
+	/** Admin-scoped group operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminGroupApi = new AdminGroupApi();
 
 	/**
@@ -579,6 +583,11 @@ export class GroupApi {
 /**
  * Groups server-scoped operations exposed by ServerGroupApi.
  */
+/**
+ * Exposes server-scoped group operations through `GNNetwork.group.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerGroupApi {
 	/**
 	 * Sends the addMember operation and returns the typed response via callback.
@@ -1144,6 +1153,11 @@ export class ServerGroupApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminGroupApi.
+ */
+/**
+ * Exposes admin-scoped group operations through `GNNetwork.group.admin`.
+ *
+ * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminGroupApi {
 	/**

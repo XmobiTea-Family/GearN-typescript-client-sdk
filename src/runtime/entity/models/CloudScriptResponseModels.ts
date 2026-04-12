@@ -2,7 +2,8 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { CloudScriptModels } from "./CloudScriptModels";
 
 /**
- * Groups typed response contracts for CloudScript.
+ * Groups typed operation-response wrappers for `RequestType.CloudScript`.
+ * Execute flows return runtime telemetry, while management flows return version metadata and validation feedback.
  */
 export namespace CloudScriptResponseModels {
 	/**

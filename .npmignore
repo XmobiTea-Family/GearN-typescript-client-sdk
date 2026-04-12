@@ -9,6 +9,8 @@ tsconfig-build.json
 webpack.config.mjs
 index.js
 scratch/
+.npm-cache/
+GNServerSettings.debug.json
 tsconfig.udm.json
 tsconfig-build.udm.json
 webpack.config.udm.mjs

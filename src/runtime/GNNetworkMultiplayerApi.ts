@@ -7,11 +7,15 @@ import { MultiplayerRequestModels } from "./entity/models/MultiplayerRequestMode
 import { MultiplayerResponseModels } from "./entity/models/MultiplayerResponseModels";
 
 /**
- * Exposes Multiplayer operations through GNNetwork.
+ * Exposes client-scoped multiplayer operations through `GNNetwork.multiplayer`.
+ *
+ * This namespace uses HTTP for matchmaking tickets, queue statistics, and match queries; it is not the raw realtime socket transport.
  */
 export class MultiplayerApi {
+	/** Server-scoped multiplayer operations for trusted backend callers. */
 	public server: ServerMultiplayerApi = new ServerMultiplayerApi();
 
+	/** Admin-scoped multiplayer operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminMultiplayerApi = new AdminMultiplayerApi();
 
 	/**
@@ -159,6 +163,11 @@ export class MultiplayerApi {
 /**
  * Groups server-scoped operations exposed by ServerMultiplayerApi.
  */
+/**
+ * Exposes server-scoped multiplayer operations through `GNNetwork.multiplayer.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerMultiplayerApi {
 	/**
 	 * Sends the cancelAllMatchmakingTicket operation and returns the typed response via callback.
@@ -304,6 +313,11 @@ export class ServerMultiplayerApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminMultiplayerApi.
+ */
+/**
+ * Exposes admin-scoped multiplayer operations through `GNNetwork.multiplayer.admin`.
+ *
+ * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminMultiplayerApi {
 	/**

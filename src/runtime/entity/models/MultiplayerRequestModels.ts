@@ -5,7 +5,8 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { MultiplayerModels } from "./MultiplayerModels";
 
 /**
- * Groups typed request contracts for Multiplayer.
+ * Groups typed operation-request wrappers for `RequestType.Multiplayer`.
+ * Multiplayer routes stay HTTP-based even though the resulting match may later connect to a separate realtime server.
  */
 export namespace MultiplayerRequestModels {
 	/**

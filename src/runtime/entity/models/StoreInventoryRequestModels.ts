@@ -5,7 +5,9 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { StoreInventoryModels } from "./StoreInventoryModels";
 
 /**
- * Groups typed request contracts for StoreInventory.
+ * Groups typed operation-request wrappers for `RequestType.StoreInventory`.
+ * Store workflows target a store plus a logical owner context; server/admin wrappers switch role
+ * without changing the store-centric request-shape semantics.
  */
 export namespace StoreInventoryRequestModels {
 	/**

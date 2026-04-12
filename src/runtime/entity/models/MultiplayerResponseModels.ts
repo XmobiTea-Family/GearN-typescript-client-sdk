@@ -2,7 +2,8 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { MultiplayerModels } from "./MultiplayerModels";
 
 /**
- * Groups typed response contracts for Multiplayer.
+ * Groups typed operation-response wrappers for `RequestType.Multiplayer`.
+ * Ticket and match polling flows consume these wrappers sequentially until a `matchId` is available.
  */
 export namespace MultiplayerResponseModels {
 	/**

@@ -2,7 +2,11 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { AuthenticateModels } from "./AuthenticateModels";
 
 /**
- * Groups typed response contracts for Authenticate.
+ * Groups typed response wrappers for Authenticate.
+ *
+ * Most operations resolve to `AuthenticateResponseData`. The main exceptions are
+ * `loginByGenericService`, which returns `GenericServiceAuthenticateResponseData`,
+ * and `refreshAuthToken`, which returns `RefreshAuthTokenResponseData`.
  */
 export namespace AuthenticateResponseModels {
 	/**

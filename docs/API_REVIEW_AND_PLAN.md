@@ -2,7 +2,7 @@
 
 ## Mục đích
 
-File này dùng để chốt lại những gì đã làm trong pass review comment và pass viết tài liệu AI cho `AuthenticateApi`, đồng thời đưa ra plan rõ ràng cho các nhóm API còn lại để các pass sau không bị sót phạm vi.
+File này dùng để chốt lại những gì đã làm trong pass review comment và pass viết tài liệu AI cho toàn bộ nhóm API public chính, đồng thời giữ lại checklist chuẩn để các pass sau không bị sót phạm vi.
 
 ## Những gì đã hoàn thành
 
@@ -25,71 +25,87 @@ File này dùng để chốt lại những gì đã làm trong pass review comme
   - best practice
   - anti-pattern
   - ví dụ `async/await`
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `DashboardApi` và sửa lại note secret key theo đúng implementation hiện tại.
+- Đã tạo `docs/DASHBOARD_API_README.md` theo cùng format AI rule-based cho `DashboardApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `ContentApi`.
+- Đã tạo `docs/CONTENT_API_README.md` theo cùng format AI rule-based cho `ContentApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `MultiplayerApi`.
+- Đã tạo `docs/MULTIPLAYER_API_README.md` theo cùng format AI rule-based cho `MultiplayerApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `StoreInventoryApi`.
+- Đã tạo `docs/STORE_INVENTORY_API_README.md` theo cùng format AI rule-based cho `StoreInventoryApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `InventoryApi`.
+- Đã tạo `docs/INVENTORY_API_README.md` theo cùng format AI rule-based cho `InventoryApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `GroupApi`.
+- Đã tạo `docs/GROUP_API_README.md` theo cùng format AI rule-based cho `GroupApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `MasterPlayerApi`.
+- Đã tạo `docs/MASTER_PLAYER_API_README.md` theo cùng format AI rule-based cho `MasterPlayerApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `GamePlayerApi`.
+- Đã tạo `docs/GAME_PLAYER_API_README.md` theo cùng format AI rule-based cho `GamePlayerApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `CharacterPlayerApi`.
+- Đã tạo `docs/CHARACTER_PLAYER_API_README.md` theo cùng format AI rule-based cho `CharacterPlayerApi`.
+- Đã cập nhật `README.MD` để thêm mô tả ngắn cho `CloudScriptApi`.
+- Đã tạo `docs/CLOUDSCRIPT_API_README.md` theo cùng format AI rule-based cho `CloudScriptApi`.
 - Đã đổi toàn bộ reference trong doc `AuthenticateApi` từ `../src/...` sang `../dist/...d.ts` để phù hợp bản build publish.
 
 ## Phần chưa làm xong hoàn toàn
 
 - Nhiều model DTO trong `src/runtime/entity/models/*Models.ts` vẫn còn comment kiểu `Represents X`.
 - Các comment này không sai nghĩa, nhưng vẫn còn chung chung và chưa đồng bộ với style mô tả mới.
-- Mới chỉ có AI guide chi tiết cho `AuthenticateApi`.
-- Các nhóm API còn lại chưa có file `docs/<GROUP>_API_README.md`.
+- Mới chỉ có AI guide chi tiết cho các nhóm API public chính; phần còn lại chủ yếu là các model DTO comment còn chung chung.
+- Không còn nhóm API public chính nào thiếu file `docs/<GROUP>_API_README.md` trong plan hiện tại.
 
 ## Trạng thái theo nhóm API
 
 | Nhóm API | Namespace có operation | Tổng public method | Trạng thái tài liệu AI | Ghi chú |
 | --- | --- | ---: | --- | --- |
 | `AuthenticateApi` | `client` | 18 | Done | `server` và `admin` đang rỗng, không dùng |
-| `DashboardApi` | `client` | 26 | Pending | `server` và `admin` đang rỗng |
-| `CloudScriptApi` | `client`, `server`, `admin` | 15 | Pending | Nhóm nhỏ, phù hợp để chốt template tiếp theo |
-| `ContentApi` | `client`, `server`, `admin` | 21 | Pending | Có flow upload/download content |
-| `MultiplayerApi` | `client`, `server`, `admin` | 30 | Pending | Có liên hệ với socket/game session |
-| `StoreInventoryApi` | `client`, `server`, `admin` | 42 | Pending | Quy mô vừa |
-| `InventoryApi` | `client`, `server`, `admin` | 102 | Pending | Bắt đầu có bề mặt lớn |
-| `GroupApi` | `client`, `server`, `admin` | 120 | Pending | Có cả operation và event realtime |
-| `GamePlayerApi` | `client`, `server`, `admin` | 156 | Pending | Nhóm lớn, nhiều flow gameplay |
-| `CharacterPlayerApi` | `client`, `server`, `admin` | 159 | Pending | Nhóm lớn, nhiều flow social/profile |
-| `MasterPlayerApi` | `client`, `server`, `admin` | 256 | Pending | Nhóm lớn nhất, rủi ro sót cao nhất |
+| `DashboardApi` | `client` | 26 | Done | `server` và `admin` đang rỗng |
+| `ContentApi` | `client`, `server`, `admin` | 21 | Done | Có flow upload/download content |
+| `MultiplayerApi` | `client`, `server`, `admin` | 30 | Done | Semantics là multiplayer nhưng wrapper hiện tại vẫn là HTTP |
+| `StoreInventoryApi` | `client`, `server`, `admin` | 42 | Done | Có nhiều enum và cursor log dễ dùng sai |
+| `InventoryApi` | `client`, `server`, `admin` | 102 | Done | Query lớn phụ thuộc nhiều vào `infoRequestParam` |
+| `GroupApi` | `client`, `server`, `admin` | 120 | Done | Operation là HTTP, realtime update tách riêng qua socket event |
+| `GamePlayerApi` | `client`, `server`, `admin` | 156 | Done | Có realtime friend/group riêng qua socket event nhưng operation vẫn là HTTP |
+| `CharacterPlayerApi` | `client`, `server`, `admin` | 159 | Done | Character-level API, gần như mọi flow target đều cần `characterId` rõ ràng |
+| `MasterPlayerApi` | `client`, `server`, `admin` | 256 | Done | Có nhiều flow identity, leaderboard, push và socket event dễ dùng sai |
+| `CloudScriptApi` | `client`, `server`, `admin` | 15 | Done | API versioned script, `editFunction` không sửa source code và `server/admin execute` bắt buộc có `userId` |
 
 ## Thứ tự triển khai đề xuất
 
-### Phase 1: chốt template trên nhóm nhỏ và dễ kiểm soát
+### Phase 1: đã chốt nhóm data lớn đầu tiên
 
-1. `DashboardApi`
-2. `CloudScriptApi`
-3. `ContentApi`
-4. `MultiplayerApi`
-5. `StoreInventoryApi`
+1. `InventoryApi`
 
 Lý do:
 
-- Các nhóm này có bề mặt nhỏ hoặc vừa.
-- Dễ chốt format tài liệu cho AI trước khi đi vào nhóm rất lớn.
-- `DashboardApi` là case đặc biệt giống `AuthenticateApi` ở chỗ chỉ có `client`, nên nên làm sớm để tránh AI suy diễn sai về `server/admin`.
+- `DashboardApi` đã được chốt xong và xác nhận thêm một case quan trọng: dù semantics là dashboard/admin, code hiện tại vẫn đi theo `RequestRole.Client`.
+- `ContentApi` đã được chốt xong và bổ sung luôn sequence upload/download để tránh AI sinh thiếu bước.
+- `MultiplayerApi` đã được chốt xong và khóa rõ điểm dễ nhầm nhất: đây không phải nhóm socket API dù tên là multiplayer.
+- `StoreInventoryApi` đã được chốt xong và khóa luôn các enum nhạy cảm như `StoreItemType`, `StoreReceiveType`, `OwnerType`.
+- `InventoryApi` đã được chốt xong và bổ sung thêm các rule dễ nhầm như `statisticsKeys` vs `itemStatisticsKeys`, `setAmount` vs `changeItemStatistics`, và `setOwner` vs transfer ownership.
 
-### Phase 2: nhóm gameplay/data có độ rộng cao
+### Phase 2: đã chốt xong nhóm gameplay/data có độ rộng cao
 
-1. `InventoryApi`
-2. `GroupApi`
-3. `GamePlayerApi`
-4. `CharacterPlayerApi`
+1. `CharacterPlayerApi`
 
 Lý do:
 
 - Bắt đầu có nhiều operation và nhiều biến thể theo role.
-- `GroupApi` và `GamePlayerApi` có yếu tố realtime hoặc event, cần viết rule rõ để AI không nhầm HTTP với socket.
-- `CharacterPlayerApi` và `GamePlayerApi` dễ bị AI chọn sai method nếu không có decision matrix đủ chặt.
+- `GroupApi` đã được chốt xong và khóa rõ điểm dễ nhầm nhất: operation dùng HTTP nhưng realtime update đi bằng socket event handler riêng.
+- `MasterPlayerApi` đã được chốt xong theo yêu cầu và khóa rõ điểm quan trọng: `client` có thể tự target current player, còn `server/admin` phải truyền `userId`, đồng thời email/push/socket-event vẫn là HTTP wrapper.
+- `GamePlayerApi` đã được chốt xong và khóa rõ điểm dễ nhầm nhất: lifecycle friend/group đi qua HTTP, còn realtime update đi bằng `OnGamePlayerFriendUpdateEventHandler` và `OnGamePlayerGroupUpdateEventHandler`.
+- `CharacterPlayerApi` đã được chốt xong và khóa rõ điểm dễ nhầm nhất: gần như toàn bộ flow target đều cần `characterId`, relation item chỉ là snapshot nhẹ, và create character không nằm trong nhóm này.
 
-### Phase 3: nhóm lớn nhất, làm sau cùng nhưng phải làm sâu
+### Phase 3: đã chốt xong nhóm cuối theo yêu cầu hiện tại
 
-1. `MasterPlayerApi`
+1. `CloudScriptApi`
 
 Lý do:
 
-- Đây là nhóm có footprint lớn nhất.
-- Nhiều operation tên gần giống nhau, dễ sinh code sai nếu chỉ nhìn tên method.
-- Nên chỉ làm sau khi template, checklist và style tài liệu đã ổn định ở các nhóm trước.
+- Đã có yêu cầu rõ ràng là triển khai `CloudScriptApi` cuối cùng.
+- `CloudScriptApi` đã được chốt xong và khóa rõ điểm dễ nhầm nhất: `editFunction` không đổi source code, `version` khác `functionName`, và `server/admin execute` bắt buộc có `userId`.
 
-## Checklist bắt buộc cho mỗi nhóm API còn lại
+## Checklist bắt buộc cho mỗi nhóm API còn lại hoặc pass review tiếp theo
 
 - Đọc `src/runtime/GNNetwork<Group>Api.ts` để xác định toàn bộ namespace có operation thật.
 - Đọc `src/runtime/entity/models/<Group>Models.ts`, `<Group>RequestModels.ts`, `<Group>ResponseModels.ts` để xác nhận:
@@ -117,6 +133,11 @@ Lý do:
 
 - Không để markdown link trong docs trỏ về `../src/...`; chỉ dùng `../dist/...d.ts`.
 - Không giả định `server` hoặc `admin` usable chỉ vì class được expose trong SDK.
+- Với mọi API có `.server` hoặc `.admin` trừ `DashboardApi`, phải ghi rõ rule cứng: chỉ dùng khi đã cấu hình đúng `serverSecretKey` / `adminSecretKey` hoặc cố ý `overrideSecretKey`.
+- `client/server/admin` là trust boundary của caller, không phải cách phân loại target là của mình hay của người khác.
+- `self/other self` là target context backend suy ra thêm trên route `client`; không được nhầm nó với `server/admin`.
+- Với các domain không có ownership semantics rõ như `ContentApi`, `StoreInventoryApi`, `MultiplayerApi`, `CloudScriptApi`, không cố viết giải thích `self/other self` khi contract thật không dùng logic đó.
+- Mọi API doc cần reference về rule chuẩn trong `README.MD#route-and-permission-rules` thay vì tự diễn giải lại theo cách riêng.
 - Không giả định success là `0`; hiện tại `ReturnCode.Ok === 1` và `ErrorCode.Ok === 1`.
 - Không gộp auth socket vào auth HTTP; socket auth là bước riêng sau khi đã có token hợp lệ.
 - Không mô tả method theo tên gọi marketing; phải mô tả theo behavior thật trong code.
@@ -140,19 +161,12 @@ Lý do:
 
 ## Gợi ý tên file cho các pass tiếp theo
 
-- `docs/DASHBOARD_API_README.md`
-- `docs/CLOUDSCRIPT_API_README.md`
-- `docs/CONTENT_API_README.md`
-- `docs/MULTIPLAYER_API_README.md`
-- `docs/STORE_INVENTORY_API_README.md`
-- `docs/INVENTORY_API_README.md`
-- `docs/GROUP_API_README.md`
-- `docs/GAME_PLAYER_API_README.md`
-- `docs/CHARACTER_PLAYER_API_README.md`
-- `docs/MASTER_PLAYER_API_README.md`
+- Hiện không còn file `docs/<GROUP>_API_README.md` nào bị thiếu trong phạm vi plan này.
+- Nếu làm pass tiếp theo, trọng tâm hợp lý là rewrite comment DTO/model ở `src/runtime/entity/models/*Models.ts`.
 
 ## Kết luận ngắn
 
-- Pass hiện tại đã xong phần review comment nền tảng và đã có template tài liệu AI hoàn chỉnh cho `AuthenticateApi`.
-- Việc còn lại chủ yếu là rollout cùng format đó cho 10 nhóm API còn lại.
-- Để giảm rủi ro sót, nên đi theo đúng thứ tự phase ở trên và giữ checklist này làm chuẩn cố định cho mọi pass sau.
+- Pass hiện tại đã xong phần review comment nền tảng và đã có template tài liệu AI hoàn chỉnh cho `AuthenticateApi`, `DashboardApi`, `ContentApi`, `MultiplayerApi`, `StoreInventoryApi`, `InventoryApi`, `GroupApi`, `MasterPlayerApi`, `GamePlayerApi`, `CharacterPlayerApi` và `CloudScriptApi`.
+- Trong phạm vi plan hiện tại, toàn bộ nhóm API public chính đã có file guide riêng cho AI.
+- Việc còn lại nếu làm tiếp nên chuyển sang pass chất lượng comment DTO/model và đồng bộ câu mô tả ở `src/runtime/entity/models`.
+- Để giảm rủi ro sót, nên giữ checklist này làm chuẩn cố định cho mọi pass sau.

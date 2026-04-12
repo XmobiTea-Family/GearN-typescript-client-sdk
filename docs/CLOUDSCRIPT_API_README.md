@@ -1,0 +1,336 @@
+# CloudScriptApi
+
+Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiêu là chọn đúng namespace `client/server/admin`, phân biệt đúng publish version với execute function, và không sinh sai request ở các field `version`, `functionName`, `userId`, `script`.
+
+## 1. Scope
+
+- Áp dụng cho:
+  - `GNNetwork.cloudScript`
+  - `GNNetwork.cloudScript.server`
+  - `GNNetwork.cloudScript.admin`
+- Toàn bộ method hiện tại của `CloudScriptApi` đều gửi qua HTTP.
+- `CloudScriptApi` có đủ 3 role thật:
+  - `GNNetwork.cloudScript` -> `RequestRole.Client`
+  - `GNNetwork.cloudScript.server` -> `RequestRole.Server`
+  - `GNNetwork.cloudScript.admin` -> `RequestRole.Admin`
+- Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
+- Chỉ dùng namespace `.server` khi bạn đã cấu hình `serverSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `adminSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [README](../README.MD#route-and-permission-rules). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
+- Public surface hiện chỉ có 5 operation trên mỗi namespace:
+  - `addFunctionAsync`
+  - `editFunctionAsync`
+  - `executeFunctionAsync`
+  - `getFunctionAsync`
+  - `getFunctionsAsync`
+- `CloudScriptApi` không có public method `removeFunction` hoặc hard-delete version.
+- `CloudScriptApi` không có socket transport, không có realtime event handler riêng.
+- Từ contract hiện tại, `version` đại diện cho một snapshot script đã publish; `functionName` là tên function sẽ được gọi bên trong snapshot đó.
+- `DashboardApi.getEventCallbackCloudScriptAsync` và `setEventCallbackCloudScriptAsync` là nhóm khác; không nằm trong `CloudScriptApi`.
+
+## 2. Hard Rules
+
+- Luôn ưu tiên `async/await`. Mặc định dùng `*Async()`.
+- Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
+- Không dùng socket cho `CloudScriptApi`.
+- Chọn namespace theo trust boundary:
+  - app/player execute function -> `GNNetwork.cloudScript`
+  - trusted backend/service -> `GNNetwork.cloudScript.server`
+  - dashboard/ops/tooling -> `GNNetwork.cloudScript.admin`
+- Không dùng `GNNetwork.cloudScript` để quản trị version trong production trừ khi backend policy của bạn cho phép rõ ràng.
+- `AddFunctionRequestData.script` là bắt buộc và phải là source script hoàn chỉnh cho version mới.
+- `addFunctionAsync` tạo version mới từ `script`; không phải update tại chỗ một version cũ.
+- `editFunctionAsync` chỉ sửa metadata của version hiện có:
+  - `canExecute`
+  - `isLive`
+- `editFunctionAsync` không có field `script`; AI không được giả định nó sửa source code.
+- Nếu cần thay đổi source code, phải publish version mới bằng `addFunctionAsync`.
+- `GetFunctionRequestData.version`, `EditFunctionRequestData.version` và `ExecuteFunctionRequestData.version` nếu có đều phải theo đúng version string dài `7` ký tự.
+- `ExecuteFunctionRequestData.functionName` là bắt buộc, độ dài `3..30`.
+- `ExecuteFunctionRequestData.functionParameters` là `any`, nhưng thực tế nên dùng object/array/primitive JSON-serializable.
+- `GNNetwork.cloudScript.executeFunctionAsync` cho phép `userId` optional.
+- `GNNetwork.cloudScript.server.executeFunctionAsync` và `GNNetwork.cloudScript.admin.executeFunctionAsync` bắt buộc có `userId`.
+- `getFunctionsAsync` không nhận filter, không có pagination; request data là object rỗng.
+- `ExecuteFunctionResponseData.status` hiện là số thô; package không export enum public tương ứng.
+- `GetFunctionsResponseData.results[]` chỉ có `version` và `canExecute`.
+- `GetFunctionsResponseData.results[]` không có `isLive`; nếu cần biết version live, phải đọc `liveLatestVersion`.
+- `GetFunctionResponseData` không trả lại `version`; nếu cần giữ `version`, phải giữ từ request hoặc lấy từ danh sách trước đó.
+
+## 3. Chọn Namespace
+
+| Namespace | Role thật | Secret mặc định | Dùng khi nào |
+| --- | --- | --- | --- |
+| `GNNetwork.cloudScript` | `Client` | `clientSecretKey` | player app chỉ cần execute function đã được backend cho phép |
+| `GNNetwork.cloudScript.server` | `Server` | `serverSecretKey` | trusted backend, worker, game server execute/publish theo workflow backend |
+| `GNNetwork.cloudScript.admin` | `Admin` | `adminSecretKey` | dashboard, backoffice, vận hành version, promote live version |
+
+Rule nhanh:
+
+- Flow execute từ app public: ưu tiên `GNNetwork.cloudScript`.
+- Flow execute thay mặt một user từ backend: ưu tiên `GNNetwork.cloudScript.server`.
+- Flow publish script, promote live version, audit version: ưu tiên `GNNetwork.cloudScript.admin`.
+- Không chọn namespace theo cảm tính; request shape gần giống nhau nhưng trust boundary khác nhau.
+
+## 4. Chọn Method
+
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
+| --- | --- | --- | --- | --- |
+| `addFunctionAsync` | Publish một script version mới | `script`, `canExecute`, `isLive` | `AddFunctionResponseData` | Trả `version` mới và `errorMessage` |
+| `editFunctionAsync` | Bật/tắt execute hoặc promote/demote live cho version cũ | `version`, `canExecute`, `isLive` | `EditFunctionResponseData` | Không sửa `script` |
+| `executeFunctionAsync` | Chạy một function trong CloudScript | `functionName`, `functionParameters?`, `version?`, `userId?` | `ExecuteFunctionResponseData` | `server/admin` bắt buộc có `userId` |
+| `getFunctionAsync` | Đọc chi tiết source và metadata của một version cụ thể | `version` | `GetFunctionResponseData` | Trả `script`, `canExecute`, `isLive`, `tsCreate` |
+| `getFunctionsAsync` | Liệt kê các version hiện có | request object rỗng | `GetFunctionsResponseData` | Trả `results`, `latestVersion`, `liveLatestVersion` |
+
+## 5. Decision Rules
+
+- Cần publish source code mới: dùng `addFunctionAsync`.
+- Cần đổi source code của script đang có: không dùng `editFunctionAsync`; phải tạo version mới bằng `addFunctionAsync`.
+- Cần bật/tắt quyền execute của một version: dùng `editFunctionAsync`.
+- Cần đổi version live: dùng `editFunctionAsync` với đúng `version`.
+- Cần chạy một function business: dùng `executeFunctionAsync`.
+- Cần inspect source code hoặc metadata của đúng một version: dùng `getFunctionAsync`.
+- Cần lấy `latestVersion` hoặc `liveLatestVersion`: dùng `getFunctionsAsync`.
+- Cần cấu hình event callback CloudScript ở hệ thống dashboard: không dùng `CloudScriptApi`; dùng `DashboardApi`.
+
+## 6. Request Rules Và Reference
+
+- Schema publish để AI tham chiếu:
+  - [../dist/runtime/entity/models/CloudScriptModels.d.ts](../dist/runtime/entity/models/CloudScriptModels.d.ts)
+  - [../dist/runtime/entity/models/CloudScriptRequestModels.d.ts](../dist/runtime/entity/models/CloudScriptRequestModels.d.ts)
+  - [../dist/runtime/entity/models/CloudScriptResponseModels.d.ts](../dist/runtime/entity/models/CloudScriptResponseModels.d.ts)
+- `AddFunctionRequestData.script` là bắt buộc.
+- `AddFunctionRequestData.canExecute` và `AddFunctionRequestData.isLive` nên luôn set explicit, không dựa vào default ngầm.
+- `EditFunctionRequestData.version` là bắt buộc, đúng `7` ký tự.
+- `EditFunctionRequestData` không có `script`.
+- `ExecuteFunctionRequestData.functionName` là bắt buộc.
+- `ExecuteFunctionRequestData.version` là optional.
+- `ExecuteFunctionRequestData.userId`:
+  - optional ở namespace `client`
+  - bắt buộc ở namespace `server`
+  - bắt buộc ở namespace `admin`
+- `GetFunctionRequestData.version` là bắt buộc.
+- `GetFunctionsRequestData` hiện không có field nào; không được tự thêm `version`, `skip`, `limit`, `keyword` hoặc filter giả định.
+
+## 7. Response Rules
+
+Tất cả typed response của `CloudScriptApi` đều có:
+
+- `returnCode`
+- `debugMessage`
+- `invalidMembers`
+- `errorCode`
+- `responseData`
+
+Rule kiểm tra response:
+
+```ts
+if (response.hasReturnCodeError()) {
+    throw new Error(response.debugMessage);
+}
+
+if (response.errorCode !== ErrorCode.Ok) {
+    throw new Error(`Business error: ${response.errorCode}`);
+}
+```
+
+Rule bổ sung theo từng operation:
+
+- `addFunctionAsync`:
+  - đọc `responseData.version` để lấy version mới
+  - kiểm tra `responseData.errorMessage` trước khi coi publish là thành công hoàn toàn
+- `editFunctionAsync`:
+  - response chỉ có `errorMessage`
+  - không có `version` mới, không có `script`
+- `executeFunctionAsync`:
+  - đọc `responseData.status`
+  - đọc `responseData.functionResult`
+  - đọc `responseData.functionLogs`
+  - đọc `responseData.errorMessage`
+  - đọc `responseData.executionTimeInMs` và `memoryUsedInBytes` nếu cần telemetry
+- `getFunctionAsync`:
+  - trả `script`, `canExecute`, `isLive`, `tsCreate`
+- `getFunctionsAsync`:
+  - `results[]` chỉ là summary nhẹ
+  - dùng `latestVersion` để biết version mới nhất
+  - dùng `liveLatestVersion` để biết version live mới nhất
+
+## 8. Best Practices
+
+- Ưu tiên `client` cho execute, ưu tiên `server/admin` cho publish và quản trị version.
+- Sau `addFunctionAsync`, luôn lưu lại `responseData.version`.
+- Nếu cần promote live version, nên `getFunctionsAsync` trước để xác nhận `latestVersion` và `liveLatestVersion`.
+- Với `executeFunctionAsync`, giữ `functionParameters` ở dạng JSON đơn giản; tránh class instance, method, circular reference.
+- Với `executeFunctionAsync` ở `server/admin`, giữ `userId` ở biến riêng và truyền explicit.
+- Với debug hoặc vận hành, log lại `functionLogs`, `executionTimeInMs`, `memoryUsedInBytes`.
+- Nếu workflow phụ thuộc source code của một version, lấy lại bằng `getFunctionAsync`; đừng suy diễn từ `getFunctionsAsync`.
+- Nếu cần callback CloudScript cho event hệ thống, chuyển sang `DashboardApi`, không nhét logic đó vào `CloudScriptApi`.
+
+## 9. Ví Dụ Khuyến Nghị
+
+### Admin publish version mới rồi lấy `version`
+
+```ts
+import {
+    CloudScriptModels,
+    ErrorCode,
+    GNNetwork,
+} from "@xmobitea/gn-typescript-client";
+
+const request = new CloudScriptModels.AdminAddFunctionRequestData();
+request.script = `
+function ping(args) {
+    return {
+        ok: true,
+        echo: args
+    };
+}
+`;
+request.canExecute = true;
+request.isLive = false;
+
+const response = await GNNetwork.cloudScript.admin.addFunctionAsync(request);
+
+if (response.hasReturnCodeError()) {
+    throw new Error(response.debugMessage);
+}
+
+if (response.errorCode !== ErrorCode.Ok) {
+    throw new Error(`Business error: ${response.errorCode}`);
+}
+
+if (response.responseData.errorMessage) {
+    throw new Error(response.responseData.errorMessage);
+}
+
+const newVersion = response.responseData.version;
+```
+
+### Admin promote một version thành live
+
+```ts
+import {
+    CloudScriptModels,
+    ErrorCode,
+    GNNetwork,
+} from "@xmobitea/gn-typescript-client";
+
+const request = new CloudScriptModels.AdminEditFunctionRequestData();
+request.version = "ABC1234";
+request.canExecute = true;
+request.isLive = true;
+
+const response = await GNNetwork.cloudScript.admin.editFunctionAsync(request);
+
+if (response.hasReturnCodeError()) {
+    throw new Error(response.debugMessage);
+}
+
+if (response.errorCode !== ErrorCode.Ok) {
+    throw new Error(`Business error: ${response.errorCode}`);
+}
+
+if (response.responseData.errorMessage) {
+    throw new Error(response.responseData.errorMessage);
+}
+```
+
+### Server execute function cho một user cụ thể
+
+```ts
+import {
+    CloudScriptModels,
+    ErrorCode,
+    GNNetwork,
+} from "@xmobitea/gn-typescript-client";
+
+const request = new CloudScriptModels.ServerExecuteFunctionRequestData();
+request.userId = "USER000001";
+request.functionName = "grantDailyReward";
+request.version = "ABC1234";
+request.functionParameters = {
+    rewardId: "daily_01",
+    amount: 1
+};
+
+const response = await GNNetwork.cloudScript.server.executeFunctionAsync(request);
+
+if (response.hasReturnCodeError()) {
+    throw new Error(response.debugMessage);
+}
+
+if (response.errorCode !== ErrorCode.Ok) {
+    throw new Error(`Business error: ${response.errorCode}`);
+}
+
+if (response.responseData.errorMessage) {
+    throw new Error(response.responseData.errorMessage);
+}
+
+const result = response.responseData.functionResult;
+const logs = response.responseData.functionLogs;
+const executionTimeInMs = response.responseData.executionTimeInMs;
+```
+
+### Đọc summary version rồi lấy source của version live
+
+```ts
+import {
+    CloudScriptModels,
+    ErrorCode,
+    GNNetwork,
+} from "@xmobitea/gn-typescript-client";
+
+const listRequest = new CloudScriptModels.GetFunctionsRequestData();
+const listResponse = await GNNetwork.cloudScript.getFunctionsAsync(listRequest);
+
+if (listResponse.hasReturnCodeError()) {
+    throw new Error(listResponse.debugMessage);
+}
+
+if (listResponse.errorCode !== ErrorCode.Ok) {
+    throw new Error(`Business error: ${listResponse.errorCode}`);
+}
+
+const liveVersion = listResponse.responseData.liveLatestVersion;
+
+const getRequest = new CloudScriptModels.GetFunctionRequestData();
+getRequest.version = liveVersion;
+
+const getResponse = await GNNetwork.cloudScript.getFunctionAsync(getRequest);
+
+if (getResponse.hasReturnCodeError()) {
+    throw new Error(getResponse.debugMessage);
+}
+
+if (getResponse.errorCode !== ErrorCode.Ok) {
+    throw new Error(`Business error: ${getResponse.errorCode}`);
+}
+
+const script = getResponse.responseData.script;
+```
+
+## 10. Anti-Patterns
+
+- Không dùng `editFunctionAsync` để đổi source code.
+- Không tự thêm field `script` vào `EditFunctionRequestData`.
+- Không quên `userId` khi dùng `cloudScript.server.executeFunctionAsync` hoặc `cloudScript.admin.executeFunctionAsync`.
+- Không nhầm `version` với `functionName`.
+- Không giả định `getFunctionsAsync` có phân trang hoặc filter.
+- Không suy diễn `isLive` từ `results[]`; phải đọc `liveLatestVersion`.
+- Không bỏ qua `responseData.errorMessage` ở `addFunctionAsync`, `editFunctionAsync`, `executeFunctionAsync`.
+- Không dùng object phức tạp, class instance hoặc circular reference trong `functionParameters`.
+- Không dùng `CloudScriptApi` để cấu hình event callback dashboard.
+- Không giả định package có enum public cho `ExecuteFunctionResponseData.status`.
+- Không giả định SDK có public delete version.
+
+## 11. AI Checklist
+
+- Đã `GNNetwork.init(settings)` chưa.
+- Đã chọn đúng namespace `cloudScript` / `cloudScript.server` / `cloudScript.admin` chưa.
+- Nếu đang execute ở `server/admin`, đã truyền `userId` chưa.
+- Nếu đang update source code, có đang dùng sai `editFunctionAsync` thay vì `addFunctionAsync` không.
+- Nếu đang cần version live, có đang đọc `liveLatestVersion` chưa.
+- Nếu đang cần source của một version, có đang dùng `getFunctionAsync` thay vì chỉ nhìn `getFunctionsAsync` không.
+- Nếu đang đọc kết quả execute, có kiểm tra cả `errorCode` lẫn `responseData.errorMessage` chưa.
+- Nếu đang truyền `functionParameters`, có giữ payload JSON-serializable không.
+- Nếu flow là cấu hình event callback CloudScript, có đang dùng nhầm `CloudScriptApi` không.

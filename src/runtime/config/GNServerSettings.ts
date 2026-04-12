@@ -13,24 +13,40 @@ export enum MessageType {
  * Describes the full runtime configuration accepted by GNServerSettings.config.
  */
 export interface GNServerSettingsOptions {
+	/** Public host name or IP address exposed by the GearN server. */
 	serverAddress: string;
+	/** Public HTTP port. Use `-1` when a proxy exposes the default port directly. */
 	serverPort: number;
+	/** Public socket port. Use `-1` when a proxy exposes the default port directly. */
 	serverSocketPort: number;
+	/** Builds secure URLs (`https`) for HTTP and socket.io transports. */
 	useSsl: boolean;
+	/** Enables the socket transport and related realtime features. */
 	useSocket: boolean;
+	/** Enables the HTTP transport used by all public API wrappers. */
 	useHttp: boolean;
 
+	/** Default timeout applied to requests that do not override `timeout`. */
 	defaultTimeoutInSeconds: number;
+	/** Preferred payload format. Browser HTTP requests fall back to JSON when MsgPack is selected. */
 	messageType: MessageType;
+	/** Maximum send rate requested by the transport loop, expressed as messages per second. */
 	sendRate: number;
+	/** Reconnect delay for the socket client, expressed in milliseconds. */
 	reconnectDelay: number;
+	/** Ping interval for the socket client, expressed in milliseconds. */
 	pingInterval: number;
+	/** Ping timeout for the socket client, expressed in milliseconds. */
 	pingTimeout: number;
 
+	/** Secret key used automatically by `RequestRole.Admin` routes. */
 	adminSecretKey: string;
+	/** Secret key used automatically by `RequestRole.Server` routes. */
 	serverSecretKey: string;
+	/** Secret key used automatically by `RequestRole.Client` routes and by Dashboard transport defaults. */
 	clientSecretKey: string;
 
+	/** Log verbosity consumed by `GNDebug`. */
 	logType: LogType;
 }
 
@@ -62,6 +78,8 @@ export class GNServerSettings {
 
 	/**
 	 * Applies a complete configuration snapshot to the current settings instance.
+	 *
+	 * This method replaces every configurable value stored in the object; it does not merge partial updates.
 	 */
 	public config(options: GNServerSettingsOptions): void {
 		this.serverAddress = options.serverAddress;
@@ -329,6 +347,8 @@ export class GNServerSettings {
 
 	/**
 	 * Enables or disables reverse-proxy mode for HTTP requests.
+	 *
+	 * When enabled, low-level HTTP helpers may skip adding their own request path prefix because a proxy already handles it.
 	 */
 	public setUseReverseProxy(useReverseProxy: boolean) {
 		this.useReverseProxy = useReverseProxy;

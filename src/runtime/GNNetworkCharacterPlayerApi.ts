@@ -7,11 +7,15 @@ import { CharacterPlayerRequestModels } from "./entity/models/CharacterPlayerReq
 import { CharacterPlayerResponseModels } from "./entity/models/CharacterPlayerResponseModels";
 
 /**
- * Exposes CharacterPlayer operations through GNNetwork.
+ * Exposes client-scoped character-player operations through `GNNetwork.characterPlayer`.
+ *
+ * Use this namespace from player-facing code when working with a concrete character id over HTTP.
  */
 export class CharacterPlayerApi {
+	/** Server-scoped character-player operations for trusted backend callers. */
 	public server: ServerCharacterPlayerApi = new ServerCharacterPlayerApi();
 
+	/** Admin-scoped character-player operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminCharacterPlayerApi = new AdminCharacterPlayerApi();
 
 	/**
@@ -761,6 +765,11 @@ export class CharacterPlayerApi {
 /**
  * Groups server-scoped operations exposed by ServerCharacterPlayerApi.
  */
+/**
+ * Exposes server-scoped character-player operations through `GNNetwork.characterPlayer.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerCharacterPlayerApi {
 	/**
 	 * Sends the addPlayerFriend operation and returns the typed response via callback.
@@ -1508,6 +1517,11 @@ export class ServerCharacterPlayerApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminCharacterPlayerApi.
+ */
+/**
+ * Exposes admin-scoped character-player operations through `GNNetwork.characterPlayer.admin`.
+ *
+ * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminCharacterPlayerApi {
 	/**

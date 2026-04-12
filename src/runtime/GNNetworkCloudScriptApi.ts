@@ -7,11 +7,15 @@ import { CloudScriptRequestModels } from "./entity/models/CloudScriptRequestMode
 import { CloudScriptResponseModels } from "./entity/models/CloudScriptResponseModels";
 
 /**
- * Exposes CloudScript operations through GNNetwork.
+ * Exposes client-scoped CloudScript operations through `GNNetwork.cloudScript`.
+ *
+ * This namespace uses HTTP and is typically limited to execute flows that the backend allows for client callers.
  */
 export class CloudScriptApi {
+	/** Server-scoped CloudScript operations for trusted backend callers. */
 	public server: ServerCloudScriptApi = new ServerCloudScriptApi();
 
+	/** Admin-scoped CloudScript operations for dashboard or backoffice callers. */
 	public admin: AdminCloudScriptApi = new AdminCloudScriptApi();
 
 	/**
@@ -89,6 +93,11 @@ export class CloudScriptApi {
 /**
  * Groups server-scoped operations exposed by ServerCloudScriptApi.
  */
+/**
+ * Exposes server-scoped CloudScript operations through `GNNetwork.cloudScript.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerCloudScriptApi {
 	/**
 	 * Sends the addFunction operation and returns the typed response via callback.
@@ -164,6 +173,11 @@ export class ServerCloudScriptApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminCloudScriptApi.
+ */
+/**
+ * Exposes admin-scoped CloudScript operations through `GNNetwork.cloudScript.admin`.
+ *
+ * Use this namespace from dashboard or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminCloudScriptApi {
 	/**

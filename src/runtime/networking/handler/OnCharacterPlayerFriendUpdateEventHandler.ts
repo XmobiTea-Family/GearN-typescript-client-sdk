@@ -8,21 +8,24 @@ import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 /**
- * Defines the payload emitted by the corresponding server event.
+ * Defines the payload emitted by the `OnCharacterPlayerFriendUpdate` server event.
  */
 export class CharacterPlayerFriendUpdate {
+	/** Character id whose friend relation changed. */
 	@StringDataMember({ code: ParameterCode.CharacterId })
 	public characterId: string;
 
+	/** Updated friend relation items pushed by the server. */
 	@GNArrayDataMember({ code: ParameterCode.PlayerFriends, elementCls: GenericModels.FriendItem })
 	public playerFriends: Array<GenericModels.FriendItem>;
 }
 
 /**
- * Handles the event flow implemented by OnCharacterPlayerFriendUpdateEventHandler.
+ * Handles the `OnCharacterPlayerFriendUpdate` server event.
  */
 @IServerEventHandler.registerEvent
 export class OnCharacterPlayerFriendUpdateEventHandler implements IServerEventHandler {
+	/** Optional static callback invoked after the payload is deserialized. */
 	public static onUpdate: Action1<CharacterPlayerFriendUpdate>;
 
 	/**

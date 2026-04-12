@@ -18,7 +18,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Mọi method trừ `refreshAuthToken` đều phải truyền `infoRequestParam` khác `null`.
 - Không dùng `GNNetwork.authenticate.server.*` hoặc `GNNetwork.authenticate.admin.*` vì hiện chưa có method nào để gọi.
 - Sau khi login hoặc refresh token thành công, nếu backend trả `authToken` và `userId`, SDK sẽ tự cache vào `GNNetwork.getAuthenticateStatus()` và `StorageService`.
-- Nếu cần dùng socket sau login, flow đúng là: login HTTP thành công -> `GNNetwork.connectSocket()` -> khi socket connect xong gọi `GNNetwork.sendRequestAuthSocket()`.
+- Nếu cần dùng socket sau login, tuân theo [rule socket chuẩn trong README](../README.MD#socket-auth-flow). Flow khuyến nghị là login HTTP thành công -> `GNNetwork.connectSocket()`, SDK sẽ auto-auth nếu `authToken` đã có trong cache.
 
 ## 3. Chọn Method
 
@@ -214,16 +214,16 @@ if (response.errorCode !== ErrorCode.Ok) {
 }
 ```
 
-### Auth socket sau khi đã có token
+### Kết nối socket sau khi đã có token
 
 ```ts
 import { GNNetwork } from "@xmobitea/gn-typescript-client";
 
 GNNetwork.subscriberOnConnectHandler(() => {
-    GNNetwork.sendRequestAuthSocket();
+    console.log("socket connected", GNNetwork.getSocketSId());
 });
 
-GNNetwork.connectSocket();
+GNNetwork.connectSocket(); // Follow README socket rule. SDK auto-auths if authToken is already cached.
 ```
 
 ## 9. Anti-Patterns
@@ -243,4 +243,4 @@ GNNetwork.connectSocket();
 - Có `infoRequestParam` chưa.
 - Có dùng `*Async()` không.
 - Có check `hasReturnCodeError()` trước `errorCode` không.
-- Nếu cần socket event sau login, đã gọi `connectSocket()` rồi `sendRequestAuthSocket()` chưa.
+- Nếu cần socket event sau login, đã tuân theo [rule socket chuẩn trong README](../README.MD#socket-auth-flow) chưa.

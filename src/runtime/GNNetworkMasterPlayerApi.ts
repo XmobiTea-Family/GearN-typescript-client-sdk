@@ -7,11 +7,15 @@ import { MasterPlayerRequestModels } from "./entity/models/MasterPlayerRequestMo
 import { MasterPlayerResponseModels } from "./entity/models/MasterPlayerResponseModels";
 
 /**
- * Exposes MasterPlayer operations through GNNetwork.
+ * Exposes client-scoped master-player account and identity operations through `GNNetwork.masterPlayer`.
+ *
+ * Use this namespace from player-facing code when working with the authenticated user's account or profile over HTTP.
  */
 export class MasterPlayerApi {
+	/** Server-scoped master-player operations for trusted backend callers. */
 	public server: ServerMasterPlayerApi = new ServerMasterPlayerApi();
 
+	/** Admin-scoped master-player operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminMasterPlayerApi = new AdminMasterPlayerApi();
 
 	/**
@@ -1223,6 +1227,11 @@ export class MasterPlayerApi {
 /**
  * Groups server-scoped operations exposed by ServerMasterPlayerApi.
  */
+/**
+ * Exposes server-scoped master-player operations through `GNNetwork.masterPlayer.server`.
+ *
+ * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ */
 export class ServerMasterPlayerApi {
 	/**
 	 * Sends the addSegment operation and returns the typed response via callback.
@@ -2418,6 +2427,11 @@ export class ServerMasterPlayerApi {
 
 /**
  * Groups admin-scoped operations exposed by AdminMasterPlayerApi.
+ */
+/**
+ * Exposes admin-scoped master-player operations through `GNNetwork.masterPlayer.admin`.
+ *
+ * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
  */
 export class AdminMasterPlayerApi {
 	/**

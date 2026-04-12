@@ -2,7 +2,9 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { CharacterPlayerModels } from "./CharacterPlayerModels";
 
 /**
- * Groups typed response contracts for CharacterPlayer.
+ * Groups typed operation-response wrappers for `RequestType.CharacterPlayer`.
+ * Many read operations resolve to `CharacterPlayerResponseData` or a derived envelope whose
+ * `infoResponseParameters` content is controlled by the matching request model.
  */
 export namespace CharacterPlayerResponseModels {
 	/**
