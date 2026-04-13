@@ -81,7 +81,7 @@ export class NetworkingPeer {
 	 * Returns the estimated current server timestamp based on the last sync result.
 	 */
 	getServerTimestamp(): number {
-		return this.lastCurrentServerMilliseconds + ((Date.now() - this.lastGetCurrentMilliseconds) * 1000);
+		return this.lastCurrentServerMilliseconds + (Date.now() - this.lastGetCurrentMilliseconds);
 	}
 
 	/**
@@ -218,7 +218,7 @@ export class NetworkingPeer {
 						.addAll(returnDatas)
 						.build();
 
-					let newServerTimestamp = gnHashtable.getNumber(ParameterCode.Ts, new Date().getUTCMilliseconds());
+					let newServerTimestamp = gnHashtable.getNumber(ParameterCode.Ts, Date.now());
 					thiz.setServerTimeMilliseconds(newServerTimestamp);
 				}
 			}

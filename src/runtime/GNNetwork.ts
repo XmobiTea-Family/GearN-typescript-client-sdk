@@ -99,7 +99,7 @@ export class GNNetwork {
 	 * or a best-effort fallback before the shared peer exists.
 	 */
 	public static getServerTimestamp(): number {
-		return GNNetwork.peer != null ? GNNetwork.peer.getServerTimestamp() : new Date().getUTCMilliseconds();
+		return GNNetwork.peer != null ? GNNetwork.peer.getServerTimestamp() : Date.now();
 	}
 
 	/**

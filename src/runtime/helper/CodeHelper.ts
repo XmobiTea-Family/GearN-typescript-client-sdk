@@ -1,3 +1,4 @@
+import { InvalidMemberType } from "./../constant/enumType/InvalidMemberType";
 import { RequestRole } from "./../constant/enumType/RequestRole";
 import { RequestType } from "./../constant/enumType/RequestType";
 import { ReturnCode } from "./../constant/ReturnCode";
@@ -32,6 +33,7 @@ export class CodeHelper {
 	private static returnCodeHelper: CodeHelperBase;
 	private static requestTypeHelper: CodeHelperBase;
 	private static requestRoleHelper: CodeHelperBase;
+	private static invalidMemberHelper: CodeHelperBase;
 
 	/**
 	 * Returns the readable name for a backend return code.
@@ -55,12 +57,22 @@ export class CodeHelper {
 	}
 
 	/**
+	 * Returns the invalid member name.
+	 * @param invalidMember Provides the invalidMember.
+	 * @returns Returns the invalid member name.
+	 */
+	public static getInvalidMemberName(invalidMember: number): string {
+		return CodeHelper.invalidMemberHelper.getCodeName(invalidMember);
+	}
+
+	/**
 	 * Builds all lookup dictionaries used by the SDK logging helpers.
 	 */
 	static init(): void {
 		this.setReturnCodeDic();
 		this.setRequestTypeDic();
 		this.setRequestRoleDic();
+		this.setInvalidMemberDic();
 	}
 
 	/**
@@ -125,6 +137,25 @@ export class CodeHelper {
 		for (let i = 0; i < keys.length; i++) {
 			let key = keys[i];
 			this.requestRoleHelper.codeDict.set(values[i], key[0].toLowerCase() + key.slice(1));
+		}
+	}
+
+	private static setInvalidMemberDic(): void {
+		this.invalidMemberHelper = new CodeHelperBase(new Map());
+
+		this.addInvalidMemberDic(InvalidMemberType);
+	}
+
+	public static addInvalidMemberDic(invalidMember: any): void {
+		// Stores the keys value used in the current execution flow.
+		let keys = Object.keys(invalidMember) as Array<string>;
+		// Stores the values value used in the current execution flow.
+		let values = Object.values(invalidMember) as Array<number>;
+
+		for (let i = 0; i < keys.length; i++) {
+			// Stores the key value used in the current execution flow.
+			let key = keys[i];
+			this.invalidMemberHelper.codeDict.set(values[i], key[0].toLowerCase() + key.slice(1));
 		}
 	}
 

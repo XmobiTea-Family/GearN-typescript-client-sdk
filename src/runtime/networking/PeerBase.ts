@@ -215,7 +215,7 @@ export abstract class PeerBase implements IPeer {
 					}
 
 					if (parameters.containsKey(ParameterCode.Ts)) {
-						GNNetwork.peer.setServerTimeMilliseconds(parameters.getNumber(ParameterCode.Ts, new Date().getUTCMilliseconds()));
+						GNNetwork.peer.setServerTimeMilliseconds(parameters.getNumber(ParameterCode.Ts, Date.now()));
 					}
 				}
 			}
