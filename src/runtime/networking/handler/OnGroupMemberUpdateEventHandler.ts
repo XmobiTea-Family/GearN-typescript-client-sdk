@@ -1,7 +1,7 @@
 import { Action1 } from "./../../common/Action1";
 import { EventCode } from "./../../constant/EventCode";
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
-import { GNArrayDataMember } from "./../../entity/DataMember";
+import { GNArrayDataMember, StringDataMember } from "./../../entity/DataMember";
 import { OperationEvent } from "./../../entity/OperationEvent";
 import { GenericModels } from "./../../entity/models/GenericModels";
 import { ConverterService } from "./../../helper/ConverterService";
@@ -12,8 +12,12 @@ import { IServerEventHandler } from "./IServerEventHandler";
  */
 export class GroupMemberUpdate {
 	/** Updated member relation items pushed by the server. */
-	@GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.FriendItem })
+	@GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.MemberItem })
 	public members: Array<GenericModels.MemberItem>;
+
+	/** Group Id for updated member relation items pushed by the server. */
+	@StringDataMember({ code: ParameterCode.GroupId })
+	public groupId: string;
 }
 
 /**

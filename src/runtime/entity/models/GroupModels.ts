@@ -146,8 +146,8 @@ export namespace GroupModels {
 	 * Defines the request payload for AddMember.
 	 */
 	export class AddMemberRequestData {
-		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
-		public userId: string;
+		@StringDataMember({ code: ParameterCode.MemberId, minLength: 10, maxLength: 11, mustNonNull: true })
+		public memberId: string;
 
 		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
@@ -794,8 +794,8 @@ export namespace GroupModels {
 	 * Defines the request payload for RemoveMember.
 	 */
 	export class RemoveMemberRequestData {
-		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
-		public userId: string;
+		@StringDataMember({ code: ParameterCode.MemberId, minLength: 10, maxLength: 11, mustNonNull: true })
+		public memberId: string;
 
 		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;

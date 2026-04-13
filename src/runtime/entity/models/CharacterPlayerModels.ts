@@ -178,8 +178,8 @@ export namespace CharacterPlayerModels {
 	 * Describes one game-player member included when creating a group from a character context.
 	 */
 	export class GroupMemberParam {
-		@StringDataMember({ code: ParameterCode.UserId, minLength: 11, maxLength: 11, mustNonNull: true })
-		public userId: string;
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		public characterId: string;
 
 	}
 
