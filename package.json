@@ -9,7 +9,8 @@
     "docs",
     "README.MD",
     "LICENSE",
-    "AGENTS.md"
+    "AGENTS.md",
+    "llms.txt"
   ],
   "scripts": {
     "dev": "rm -rf ./dist && npm run build:node && npm run debug",

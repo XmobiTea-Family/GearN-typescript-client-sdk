@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "package": {
     "name": "@xmobitea/gn-typescript-client",
     "entryPoint": "GNNetwork",
@@ -7,13 +7,46 @@
     "typesEntry": "dist/index.d.ts",
     "runtimeEntry": "dist/index.js"
   },
-  "canonicalSources": {
-    "repoAiEntry": "AGENTS.md",
-    "readme": "README.MD",
-    "routeAndPermissionRules": "README.MD#route-and-permission-rules",
-    "socketAuthFlow": "README.MD#socket-auth-flow",
-    "apiDocsDirectory": "docs",
-    "distDirectory": "dist"
+  "docs": {
+    "readingOrderForAi": [
+      "docs/AI_CHEATSHEET.md",
+      "docs/RULES.md",
+      "docs/ai-manifest.json",
+      "docs/reference/API_INDEX.md",
+      "docs/reference/ERROR_HANDLING.md",
+      "docs/reference/CONFIG.md",
+      "docs/reference/EVENTS.md",
+      "docs/reference/ENUMS.md",
+      "docs/COOKBOOK.md",
+      "docs/llms-full.txt"
+    ],
+    "entryPoints": {
+      "cheatsheet": "docs/AI_CHEATSHEET.md",
+      "rules": "docs/RULES.md",
+      "agentGuide": "AGENTS.md",
+      "llmstxtIndex": "llms.txt",
+      "fullBundle": "docs/llms-full.txt"
+    },
+    "reference": {
+      "apiIndex": "docs/reference/API_INDEX.md",
+      "dtoIndex": "docs/reference/DTO_INDEX.md",
+      "dtoDirectory": "docs/reference/dto",
+      "enums": "docs/reference/ENUMS.md",
+      "config": "docs/reference/CONFIG.md",
+      "events": "docs/reference/EVENTS.md",
+      "errorHandling": "docs/reference/ERROR_HANDLING.md"
+    },
+    "cookbook": "docs/COOKBOOK.md",
+    "guidesDirectory": "docs/guides",
+    "guidanceForAiConsumer": [
+      "đọc docs/AI_CHEATSHEET.md trước (one-page) để biết file nào cần mở tiếp",
+      "đọc docs/RULES.md cho rule cross-cutting (route, permission, self/other-self, socket, error)",
+      "tra method signature qua docs/reference/API_<GROUP>.md",
+      "tra DTO field qua docs/reference/dto/<DOMAIN>.md hoặc grep DTO_INDEX.md (~2506 rows, đừng load full)",
+      "tra enum value numeric qua docs/reference/ENUMS.md",
+      "scenario end-to-end xem docs/COOKBOOK.md (15 scenarios)",
+      "chỉ fall back đọc dist/*.d.ts khi câu hỏi nằm ngoài scope docs"
+    ]
   },
   "globalRules": {
     "preferAsyncAwait": true,
@@ -30,12 +63,21 @@
       "errorCodeOk": 1
     },
     "doNotAssumeSuccessIsZero": true,
-    "doNotReadSrcForNormalPackageUsage": true
+    "doNotReadSrcForNormalPackageUsage": true,
+    "responseFieldAccess": "public_fields_not_getters"
   },
   "returnCodeMeanings": {
-    "SecretInvalid": "secretKey sai, thiếu, hoặc không khớp context",
-    "OperationInvalid": "operation không tồn tại hoặc không hợp lệ với request type hoặc role hiện tại",
-    "OperationNotAllow": "secretKey vẫn hợp lệ, operation vẫn tồn tại, nhưng permission rules của secretKey không cho phép chạy operation trong target context hiện tại"
+    "Ok": "success, sang tầng errorCode để check business",
+    "OperationTimeout": "timeout từ SDK hoặc backend; retry với backoff nếu operation idempotent",
+    "OperationNotAllow": "secretKey hợp lệ nhưng permission rules không cho phép operation trong target context; check route + flag self/other/server/admin",
+    "InternalServerError": "backend exception; có thể retry 1 lần rồi escalate",
+    "OperationInvalid": "operation code không tồn tại hoặc không hợp lệ với request type/role",
+    "InvalidRequestParameters": "request shape sai; đọc res.invalidMembers",
+    "OperationNotAuthorized": "caller chưa auth; refresh token hoặc re-login",
+    "MaxCCUReject": "vượt CCU limit; backoff retry",
+    "MaxRequestReject": "rate limit; exponential backoff",
+    "MaxSizeRequestReject": "payload vượt size; paginate hoặc split",
+    "SecretInvalid": "secretKey sai, thiếu, hoặc không khớp game; KHÔNG retry, fix config"
   },
   "routing": {
     "principle": "trust_boundary",
@@ -101,10 +143,143 @@
       "GNNetwork.dashboard.admin"
     ]
   },
+  "enums": {
+    "docPath": "docs/reference/ENUMS.md",
+    "list": [
+      { "name": "ReturnCode", "anchor": "returncode", "okValue": 1, "role": "transport" },
+      { "name": "ErrorCode", "anchor": "errorcode", "okValue": 1, "role": "domain" },
+      { "name": "RequestRole", "anchor": "requestrole" },
+      { "name": "RequestType", "anchor": "requesttype" },
+      { "name": "MessageType", "anchor": "messagetype" },
+      { "name": "LogType", "anchor": "logtype" },
+      { "name": "FriendStatus", "anchor": "friendstatus" },
+      { "name": "GroupStatus", "anchor": "groupstatus" },
+      { "name": "GoogleLoginType", "anchor": "googlelogintype" },
+      { "name": "InvalidMemberType", "anchor": "invalidmembertype" },
+      { "name": "ItemType", "anchor": "itemtype" },
+      { "name": "OwnerType", "anchor": "ownertype" },
+      { "name": "PushPlatformType", "anchor": "pushplatformtype" },
+      { "name": "MatchmakingMemberStatus", "anchor": "matchmakingmemberstatus" },
+      { "name": "MatchmakingTicketStatus", "anchor": "matchmakingticketstatus" },
+      { "name": "ExecuteResponseStatus", "anchor": "executeresponsestatus" },
+      { "name": "StoreItemType", "anchor": "storeitemtype" },
+      { "name": "StoreReceiveType", "anchor": "storereceivetype" },
+      { "name": "PermissionDataItem", "anchor": "permissiondataitem" }
+    ]
+  },
+  "events": {
+    "docPath": "docs/reference/EVENTS.md",
+    "subscribePattern": "<Handler>.onUpdate = (payload) => { … }",
+    "unsubscribePattern": "<Handler>.onUpdate = null",
+    "prerequisite": "socket connected + authenticated",
+    "subscribeOrder": "subscribe trước khi gọi GNNetwork.connectSocket() để không bỏ lỡ event ngay sau handshake",
+    "list": [
+      {
+        "name": "OnGroupMessageUpdateEventHandler",
+        "payloadClass": "GroupMessageUpdate",
+        "anchor": "ongroupmessageupdateeventhandler",
+        "scope": "Group",
+        "payloadKeys": ["groupMessages", "groupId", "characterId?"]
+      },
+      {
+        "name": "OnGroupMemberUpdateEventHandler",
+        "payloadClass": "GroupMemberUpdate",
+        "anchor": "ongroupmemberupdateeventhandler",
+        "scope": "Group",
+        "payloadKeys": ["members", "groupId"]
+      },
+      {
+        "name": "OnGamePlayerFriendUpdateEventHandler",
+        "payloadClass": "GamePlayerFriendUpdate",
+        "anchor": "ongameplayerfriendupdateeventhandler",
+        "scope": "GamePlayer",
+        "payloadKeys": ["playerFriends", "characterId?"]
+      },
+      {
+        "name": "OnGamePlayerGroupUpdateEventHandler",
+        "payloadClass": "GamePlayerGroupUpdate",
+        "anchor": "ongameplayergroupupdateeventhandler",
+        "scope": "GamePlayer",
+        "payloadKeys": ["playerGroups", "characterId?"]
+      },
+      {
+        "name": "OnCharacterPlayerFriendUpdateEventHandler",
+        "payloadClass": "CharacterPlayerFriendUpdate",
+        "anchor": "oncharacterplayerfriendupdateeventhandler",
+        "scope": "CharacterPlayer",
+        "payloadKeys": ["playerFriends", "characterId"]
+      },
+      {
+        "name": "OnCharacterPlayerGroupUpdateEventHandler",
+        "payloadClass": "CharacterPlayerGroupUpdate",
+        "anchor": "oncharacterplayergroupupdateeventhandler",
+        "scope": "CharacterPlayer",
+        "payloadKeys": ["playerGroups", "characterId"]
+      }
+    ]
+  },
+  "configSchema": {
+    "docPath": "docs/reference/CONFIG.md",
+    "class": "GNServerSettingsOptions",
+    "ctorUsage": "new GNServerSettings({ serverAddress, serverPort, ... })",
+    "fields": [
+      { "name": "serverAddress", "type": "string", "default": "127.0.0.1" },
+      { "name": "serverPort", "type": "number", "default": 2202, "unit": "port" },
+      { "name": "serverSocketPort", "type": "number", "default": 2901, "unit": "port" },
+      { "name": "useSsl", "type": "boolean", "default": false },
+      { "name": "useSocket", "type": "boolean", "default": true },
+      { "name": "useHttp", "type": "boolean", "default": true },
+      { "name": "useReverseProxy", "type": "boolean", "default": false },
+      { "name": "defaultTimeoutInSeconds", "type": "number", "default": 20, "unit": "seconds" },
+      { "name": "messageType", "type": "MessageType", "default": "MsgPack" },
+      { "name": "sendRate", "type": "number", "default": 20, "unit": "messages_per_second" },
+      { "name": "reconnectDelay", "type": "number", "default": 5000, "unit": "milliseconds" },
+      { "name": "pingInterval", "type": "number", "default": 20000, "unit": "milliseconds" },
+      { "name": "pingTimeout", "type": "number", "default": 20000, "unit": "milliseconds" },
+      { "name": "clientSecretKey", "type": "string" },
+      { "name": "serverSecretKey", "type": "string" },
+      { "name": "adminSecretKey", "type": "string" },
+      { "name": "logType", "type": "LogType", "default": "All" }
+    ]
+  },
+  "errorHandling": {
+    "docPath": "docs/reference/ERROR_HANDLING.md",
+    "responseFieldAccess": "public_fields",
+    "responseFields": ["returnCode", "errorCode", "invalidMembers", "debugMessage", "responseData"],
+    "checkOrder": [
+      "if (res.returnCode !== ReturnCode.Ok) return;",
+      "if (res.errorCode !== ErrorCode.Ok) return;",
+      "useResult(res.responseData);"
+    ],
+    "okValue": 1,
+    "warning": "Typed response (mọi *Async() và callback form) dùng PUBLIC FIELDS, KHÔNG phải getter. Low-level OperationResponse (raw transport) mới dùng getReturnCode() etc."
+  },
+  "scenarios": {
+    "docPath": "docs/COOKBOOK.md",
+    "list": [
+      { "id": 1, "title": "Init SDK + bootstrap tối thiểu", "anchor": "scenario-1-init-sdk--bootstrap-tối-thiểu", "apis": ["GNNetwork.init"] },
+      { "id": 2, "title": "Login by account + retrieve profile", "anchor": "scenario-2-login-by-account--retrieve-profile", "apis": ["GNNetwork.authenticate.loginByAccountAsync"] },
+      { "id": 3, "title": "Refresh token và persist session", "anchor": "scenario-3-refresh-token-và-persist-session", "apis": ["GNNetwork.authenticate.refreshAuthTokenAsync"] },
+      { "id": 4, "title": "Login by social (Google/Apple/Facebook)", "anchor": "scenario-4-login-by-social-googleapplefacebook", "apis": ["GNNetwork.authenticate.loginByGoogleAsync", "GNNetwork.authenticate.loginByAppleAsync", "GNNetwork.authenticate.loginByFacebookAsync"] },
+      { "id": 5, "title": "Connect socket + handle reconnect", "anchor": "scenario-5-connect-socket--handle-reconnect", "apis": ["GNNetwork.connectSocket", "GNNetwork.subscriberOnConnectHandler"] },
+      { "id": 6, "title": "Subscribe friend updates", "anchor": "scenario-6-subscribe-friend-updates", "events": ["OnGamePlayerFriendUpdateEventHandler"] },
+      { "id": 7, "title": "Subscribe + send group message", "anchor": "scenario-7-subscribe--send-group-message", "events": ["OnGroupMessageUpdateEventHandler"], "apis": ["GNNetwork.group.addGroupMessageAsync"] },
+      { "id": 8, "title": "Group member lifecycle + realtime update", "anchor": "scenario-8-group-member-lifecycle-join--leave--kick--realtime-update", "events": ["OnGroupMemberUpdateEventHandler"], "apis": ["GNNetwork.group.joinGroupAsync", "GNNetwork.group.leaveGroupAsync"] },
+      { "id": 9, "title": "Matchmaking ticket flow", "anchor": "scenario-9-matchmaking-ticket-flow", "apis": ["GNNetwork.multiplayer.createMatchmakingTicketAsync", "GNNetwork.multiplayer.getMatchmakingTicketAsync", "GNNetwork.multiplayer.cancelMatchmakingTicketAsync"] },
+      { "id": 10, "title": "Inventory query + grant item (server role)", "anchor": "scenario-10-inventory-query--grant-item-server-role", "apis": ["GNNetwork.inventory.getInventoryItemListAsync", "GNNetwork.inventory.server.addInventoryItemAsync"] },
+      { "id": 11, "title": "Store list → purchase → validate receipt", "anchor": "scenario-11-store-list-catalog--purchase--validate-receipt", "apis": ["GNNetwork.storeInventory.getStoreItemListAsync", "GNNetwork.storeInventory.buyStoreItemAsync"] },
+      { "id": 12, "title": "CloudScript execute + customTags", "anchor": "scenario-12-cloudscript-execute-function--customtags", "apis": ["GNNetwork.cloudScript.executeFunctionAsync"] },
+      { "id": 13, "title": "Override authToken / secret", "anchor": "scenario-13-override-authtoken--secret-impersonate-cross-role" },
+      { "id": 14, "title": "Admin login qua DashboardApi", "anchor": "scenario-14-admin-login-qua-dashboardapi", "apis": ["GNNetwork.dashboard.loginByAdminAccountAsync"] },
+      { "id": 15, "title": "Cleanup & shutdown flow", "anchor": "scenario-15-cleanup--shutdown-flow", "apis": ["GNNetwork.disconnectSocket"] }
+    ]
+  },
   "apiGroups": [
     {
       "name": "AuthenticateApi",
-      "doc": "docs/AUTHENTICATE_API_README.md",
+      "guideDoc": "docs/guides/AUTHENTICATE.md",
+      "referenceDoc": "docs/reference/API_AUTHENTICATE.md",
+      "dtoDoc": "docs/reference/dto/AUTHENTICATE.md",
       "apiDts": "dist/runtime/GNNetworkAuthenticateApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/AuthenticateModels.d.ts",
@@ -112,6 +287,7 @@
         "dist/runtime/entity/models/AuthenticateResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 18,
       "routes": [
         {
           "namespace": "GNNetwork.authenticate",
@@ -127,7 +303,9 @@
     },
     {
       "name": "DashboardApi",
-      "doc": "docs/DASHBOARD_API_README.md",
+      "guideDoc": "docs/guides/DASHBOARD.md",
+      "referenceDoc": "docs/reference/API_DASHBOARD.md",
+      "dtoDoc": "docs/reference/dto/DASHBOARD.md",
       "apiDts": "dist/runtime/GNNetworkDashboardApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/DashboardModels.d.ts",
@@ -135,6 +313,7 @@
         "dist/runtime/entity/models/DashboardResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 26,
       "routes": [
         {
           "namespace": "GNNetwork.dashboard",
@@ -151,7 +330,9 @@
     },
     {
       "name": "ContentApi",
-      "doc": "docs/CONTENT_API_README.md",
+      "guideDoc": "docs/guides/CONTENT.md",
+      "referenceDoc": "docs/reference/API_CONTENT.md",
+      "dtoDoc": "docs/reference/dto/CONTENT.md",
       "apiDts": "dist/runtime/GNNetworkContentApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/ContentModels.d.ts",
@@ -159,6 +340,7 @@
         "dist/runtime/entity/models/ContentResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 21,
       "routes": [
         {
           "namespace": "GNNetwork.content",
@@ -182,7 +364,9 @@
     },
     {
       "name": "MultiplayerApi",
-      "doc": "docs/MULTIPLAYER_API_README.md",
+      "guideDoc": "docs/guides/MULTIPLAYER.md",
+      "referenceDoc": "docs/reference/API_MULTIPLAYER.md",
+      "dtoDoc": "docs/reference/dto/MULTIPLAYER.md",
       "apiDts": "dist/runtime/GNNetworkMultiplayerApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/MultiplayerModels.d.ts",
@@ -190,6 +374,7 @@
         "dist/runtime/entity/models/MultiplayerResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 30,
       "routes": [
         {
           "namespace": "GNNetwork.multiplayer",
@@ -217,7 +402,9 @@
     },
     {
       "name": "StoreInventoryApi",
-      "doc": "docs/STORE_INVENTORY_API_README.md",
+      "guideDoc": "docs/guides/STORE_INVENTORY.md",
+      "referenceDoc": "docs/reference/API_STORE_INVENTORY.md",
+      "dtoDoc": "docs/reference/dto/STORE_INVENTORY.md",
       "apiDts": "dist/runtime/GNNetworkStoreInventoryApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/StoreInventoryModels.d.ts",
@@ -225,6 +412,7 @@
         "dist/runtime/entity/models/StoreInventoryResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 42,
       "routes": [
         {
           "namespace": "GNNetwork.storeInventory",
@@ -248,7 +436,9 @@
     },
     {
       "name": "InventoryApi",
-      "doc": "docs/INVENTORY_API_README.md",
+      "guideDoc": "docs/guides/INVENTORY.md",
+      "referenceDoc": "docs/reference/API_INVENTORY.md",
+      "dtoDoc": "docs/reference/dto/INVENTORY.md",
       "apiDts": "dist/runtime/GNNetworkInventoryApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/InventoryModels.d.ts",
@@ -256,6 +446,7 @@
         "dist/runtime/entity/models/InventoryResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 102,
       "routes": [
         {
           "namespace": "GNNetwork.inventory",
@@ -279,7 +470,9 @@
     },
     {
       "name": "GroupApi",
-      "doc": "docs/GROUP_API_README.md",
+      "guideDoc": "docs/guides/GROUP.md",
+      "referenceDoc": "docs/reference/API_GROUP.md",
+      "dtoDoc": "docs/reference/dto/GROUP.md",
       "apiDts": "dist/runtime/GNNetworkGroupApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/GroupModels.d.ts",
@@ -287,6 +480,7 @@
         "dist/runtime/entity/models/GroupResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 120,
       "routes": [
         {
           "namespace": "GNNetwork.group",
@@ -314,7 +508,9 @@
     },
     {
       "name": "MasterPlayerApi",
-      "doc": "docs/MASTER_PLAYER_API_README.md",
+      "guideDoc": "docs/guides/MASTER_PLAYER.md",
+      "referenceDoc": "docs/reference/API_MASTER_PLAYER.md",
+      "dtoDoc": "docs/reference/dto/MASTER_PLAYER.md",
       "apiDts": "dist/runtime/GNNetworkMasterPlayerApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/MasterPlayerModels.d.ts",
@@ -322,6 +518,7 @@
         "dist/runtime/entity/models/MasterPlayerResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 256,
       "routes": [
         {
           "namespace": "GNNetwork.masterPlayer",
@@ -348,7 +545,9 @@
     },
     {
       "name": "GamePlayerApi",
-      "doc": "docs/GAME_PLAYER_API_README.md",
+      "guideDoc": "docs/guides/GAME_PLAYER.md",
+      "referenceDoc": "docs/reference/API_GAME_PLAYER.md",
+      "dtoDoc": "docs/reference/dto/GAME_PLAYER.md",
       "apiDts": "dist/runtime/GNNetworkGamePlayerApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/GamePlayerModels.d.ts",
@@ -356,6 +555,7 @@
         "dist/runtime/entity/models/GamePlayerResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 156,
       "routes": [
         {
           "namespace": "GNNetwork.gamePlayer",
@@ -386,7 +586,9 @@
     },
     {
       "name": "CharacterPlayerApi",
-      "doc": "docs/CHARACTER_PLAYER_API_README.md",
+      "guideDoc": "docs/guides/CHARACTER_PLAYER.md",
+      "referenceDoc": "docs/reference/API_CHARACTER_PLAYER.md",
+      "dtoDoc": "docs/reference/dto/CHARACTER_PLAYER.md",
       "apiDts": "dist/runtime/GNNetworkCharacterPlayerApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/CharacterPlayerModels.d.ts",
@@ -394,6 +596,7 @@
         "dist/runtime/entity/models/CharacterPlayerResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 159,
       "routes": [
         {
           "namespace": "GNNetwork.characterPlayer",
@@ -424,7 +627,9 @@
     },
     {
       "name": "CloudScriptApi",
-      "doc": "docs/CLOUDSCRIPT_API_README.md",
+      "guideDoc": "docs/guides/CLOUDSCRIPT.md",
+      "referenceDoc": "docs/reference/API_CLOUDSCRIPT.md",
+      "dtoDoc": "docs/reference/dto/CLOUDSCRIPT.md",
       "apiDts": "dist/runtime/GNNetworkCloudScriptApi.d.ts",
       "modelDts": [
         "dist/runtime/entity/models/CloudScriptModels.d.ts",
@@ -432,6 +637,7 @@
         "dist/runtime/entity/models/CloudScriptResponseModels.d.ts"
       ],
       "transport": "http",
+      "methodCount": 15,
       "routes": [
         {
           "namespace": "GNNetwork.cloudScript",
@@ -453,7 +659,7 @@
         }
       ],
       "hardRules": [
-        "editFunctionAsync không sửa source code",
+        "editFunctionAsync không sửa source code, chỉ flag enabled hoặc live của version",
         "muốn đổi source code phải addFunctionAsync để tạo version mới",
         "không có public delete function hoặc hard delete version"
       ]

@@ -17,7 +17,7 @@ File này dùng để chốt lại những gì đã làm trong pass review comme
   - qua transport nào
   - trả về typed response nào
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `AuthenticateApi` và dẫn link sang tài liệu chi tiết.
-- Đã tạo `docs/AUTHENTICATE_API_README.md` theo format dành cho AI:
+- Đã tạo `docs/guides/AUTHENTICATE.md` theo format dành cho AI:
   - hard rules
   - decision matrix
   - required input
@@ -26,25 +26,25 @@ File này dùng để chốt lại những gì đã làm trong pass review comme
   - anti-pattern
   - ví dụ `async/await`
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `DashboardApi` và sửa lại note secret key theo đúng implementation hiện tại.
-- Đã tạo `docs/DASHBOARD_API_README.md` theo cùng format AI rule-based cho `DashboardApi`.
+- Đã tạo `docs/guides/DASHBOARD.md` theo cùng format AI rule-based cho `DashboardApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `ContentApi`.
-- Đã tạo `docs/CONTENT_API_README.md` theo cùng format AI rule-based cho `ContentApi`.
+- Đã tạo `docs/guides/CONTENT.md` theo cùng format AI rule-based cho `ContentApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `MultiplayerApi`.
-- Đã tạo `docs/MULTIPLAYER_API_README.md` theo cùng format AI rule-based cho `MultiplayerApi`.
+- Đã tạo `docs/guides/MULTIPLAYER.md` theo cùng format AI rule-based cho `MultiplayerApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `StoreInventoryApi`.
-- Đã tạo `docs/STORE_INVENTORY_API_README.md` theo cùng format AI rule-based cho `StoreInventoryApi`.
+- Đã tạo `docs/guides/STORE_INVENTORY.md` theo cùng format AI rule-based cho `StoreInventoryApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `InventoryApi`.
-- Đã tạo `docs/INVENTORY_API_README.md` theo cùng format AI rule-based cho `InventoryApi`.
+- Đã tạo `docs/guides/INVENTORY.md` theo cùng format AI rule-based cho `InventoryApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `GroupApi`.
-- Đã tạo `docs/GROUP_API_README.md` theo cùng format AI rule-based cho `GroupApi`.
+- Đã tạo `docs/guides/GROUP.md` theo cùng format AI rule-based cho `GroupApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `MasterPlayerApi`.
-- Đã tạo `docs/MASTER_PLAYER_API_README.md` theo cùng format AI rule-based cho `MasterPlayerApi`.
+- Đã tạo `docs/guides/MASTER_PLAYER.md` theo cùng format AI rule-based cho `MasterPlayerApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `GamePlayerApi`.
-- Đã tạo `docs/GAME_PLAYER_API_README.md` theo cùng format AI rule-based cho `GamePlayerApi`.
+- Đã tạo `docs/guides/GAME_PLAYER.md` theo cùng format AI rule-based cho `GamePlayerApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `CharacterPlayerApi`.
-- Đã tạo `docs/CHARACTER_PLAYER_API_README.md` theo cùng format AI rule-based cho `CharacterPlayerApi`.
+- Đã tạo `docs/guides/CHARACTER_PLAYER.md` theo cùng format AI rule-based cho `CharacterPlayerApi`.
 - Đã cập nhật `README.MD` để thêm mô tả ngắn cho `CloudScriptApi`.
-- Đã tạo `docs/CLOUDSCRIPT_API_README.md` theo cùng format AI rule-based cho `CloudScriptApi`.
+- Đã tạo `docs/guides/CLOUDSCRIPT.md` theo cùng format AI rule-based cho `CloudScriptApi`.
 - Đã đổi toàn bộ reference trong doc `AuthenticateApi` từ `../src/...` sang `../dist/...d.ts` để phù hợp bản build publish.
 
 ## Phần chưa làm xong hoàn toàn
