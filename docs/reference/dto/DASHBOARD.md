@@ -40,7 +40,7 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
   - [GenericServiceSettingsParam](#genericservicesettingsparam)
   - [GroupPermissionRulesParam](#grouppermissionrulesparam)
   - [InventoryPermissionRulesParam](#inventorypermissionrulesparam)
-  - [MasterAdminPermissionRulesParam](#masteradminpermissionrulesparam)
+  - [DashboardPermissionRulesParam](#dashboardpermissionrulesparam)
   - [MultiplayerPermissionRulesParam](#multiplayerpermissionrulesparam)
   - [MasterPlayerPermissionRulesParam](#masterplayerpermissionrulesparam)
   - [MasterPlayerSettingsParam](#masterplayersettingsparam)
@@ -659,9 +659,9 @@ Defines the reusable parameter block InventoryPermissionRulesParam.
 | `getCreateLeaderboard` | `PermissionRulesParam` | no | — |
 | `getStatisticsLog` | `PermissionRulesParam` | no | — |
 
-### MasterAdminPermissionRulesParam
+### DashboardPermissionRulesParam
 
-Defines the reusable parameter block MasterAdminPermissionRulesParam.
+Defines the reusable parameter block DashboardPermissionRulesParam.
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
@@ -975,7 +975,7 @@ Defines the top-level permission tree assigned to one secret info entry. Each op
 | `group` | `GroupPermissionRulesParam` | no | — |
 | `inventory` | `InventoryPermissionRulesParam` | no | — |
 | `storeInventory` | `StoreInventoryPermissionRulesParam` | no | — |
-| `masterAdmin` | `MasterAdminPermissionRulesParam` | no | — |
+| `dashboard` | `DashboardPermissionRulesParam` | no | — |
 | `multiplayer` | `MultiplayerPermissionRulesParam` | no | — |
 | `cloudScript` | `CloudScriptPermissionRulesParam` | no | — |
 

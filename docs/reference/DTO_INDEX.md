@@ -611,7 +611,7 @@ Tổng cộng **2506** DTO class trên **12** domain.
 | DASHBOARD | `DashboardModels` | [GenericServiceSettingsParam](dto/DASHBOARD.md#genericservicesettingsparam) | 1 | — |
 | DASHBOARD | `DashboardModels` | [GroupPermissionRulesParam](dto/DASHBOARD.md#grouppermissionrulesparam) | 40 | — |
 | DASHBOARD | `DashboardModels` | [InventoryPermissionRulesParam](dto/DASHBOARD.md#inventorypermissionrulesparam) | 34 | — |
-| DASHBOARD | `DashboardModels` | [MasterAdminPermissionRulesParam](dto/DASHBOARD.md#masteradminpermissionrulesparam) | 25 | — |
+| DASHBOARD | `DashboardModels` | [DashboardPermissionRulesParam](dto/DASHBOARD.md#dashboardpermissionrulesparam) | 25 | — |
 | DASHBOARD | `DashboardModels` | [MultiplayerPermissionRulesParam](dto/DASHBOARD.md#multiplayerpermissionrulesparam) | 10 | — |
 | DASHBOARD | `DashboardModels` | [MasterPlayerPermissionRulesParam](dto/DASHBOARD.md#masterplayerpermissionrulesparam) | 86 | — |
 | DASHBOARD | `DashboardModels` | [MasterPlayerSettingsParam](dto/DASHBOARD.md#masterplayersettingsparam) | 6 | — |

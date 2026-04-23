@@ -1035,9 +1035,9 @@ export namespace DashboardModels {
 	}
 
 	/**
-	 * Defines the reusable parameter block MasterAdminPermissionRulesParam.
+	 * Defines the reusable parameter block DashboardPermissionRulesParam.
 	 */
-	export class MasterAdminPermissionRulesParam {
+	export class DashboardPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.SetMasterGameSettings, isOptional: true })
 		public setMasterGameSettings?: PermissionRulesParam;
 
@@ -1747,8 +1747,8 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.StoreInventory, isOptional: true })
 		public storeInventory?: StoreInventoryPermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.MasterAdmin, isOptional: true })
-		public masterAdmin?: MasterAdminPermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.Dashboard, isOptional: true })
+		public dashboard?: DashboardPermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.Multiplayer, isOptional: true })
 		public multiplayer?: MultiplayerPermissionRulesParam;
