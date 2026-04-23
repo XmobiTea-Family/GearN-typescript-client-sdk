@@ -23,6 +23,7 @@ import { ItemType } from "./runtime/constant/enumType/ItemType";
 import { StoreItemType } from "./runtime/constant/enumType/StoreItemType";
 import { MatchmakingMemberStatus } from "./runtime/constant/enumType/MatchmakingMemberStatus";
 import { MatchmakingTicketStatus } from "./runtime/constant/enumType/MatchmakingTicketStatus";
+import { MatchStatus } from "./runtime/constant/enumType/MatchStatus";
 import { OwnerType } from "./runtime/constant/enumType/OwnerType";
 import { PermissionDataItem } from "./runtime/constant/enumType/PermissionDataItem";
 import { RequestRole } from "./runtime/constant/enumType/RequestRole";
@@ -38,6 +39,7 @@ export { ItemType };
 export { StoreItemType };
 export { MatchmakingMemberStatus };
 export { MatchmakingTicketStatus };
+export { MatchStatus };
 export { OwnerType };
 export { PermissionDataItem };
 export { RequestRole };
@@ -272,6 +274,7 @@ const GearN = {
 	StoreItemType,
 	MatchmakingMemberStatus,
 	MatchmakingTicketStatus,
+	MatchStatus,
 	OwnerType,
 	PermissionDataItem,
 	PushPlatformType,

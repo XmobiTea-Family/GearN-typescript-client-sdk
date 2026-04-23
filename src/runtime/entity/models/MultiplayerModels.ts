@@ -433,6 +433,9 @@ export namespace MultiplayerModels {
 		@NumberDataMember({ code: ParameterCode.TimeToMatchInSeconds })
 		public timeToMatchInSeconds: number;
 
+		@NumberDataMember({ code: ParameterCode.Status, mustInt: true })
+		public status: number;
+
 	}
 
 	/**

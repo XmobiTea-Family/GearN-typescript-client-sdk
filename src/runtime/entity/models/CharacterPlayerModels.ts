@@ -1075,7 +1075,7 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: ParameterCode.DisplayName, defaultValue: "", isOptional: true })
 		public displayName?: string;
 
-		@NumberDataMember({ code: ParameterCode.Amount, defaultValue: 1, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Amount, defaultValue: 1, mustInt: true, minValue: 1, maxValue: 256, isOptional: true })
 		public amount?: number;
 
 	}
