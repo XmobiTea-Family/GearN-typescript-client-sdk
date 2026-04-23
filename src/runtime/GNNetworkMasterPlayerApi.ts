@@ -1230,7 +1230,7 @@ export class MasterPlayerApi {
 /**
  * Exposes server-scoped master-player operations through `GNNetwork.masterPlayer.server`.
  *
- * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
  */
 export class ServerMasterPlayerApi {
 	/**
@@ -2431,7 +2431,7 @@ export class ServerMasterPlayerApi {
 /**
  * Exposes admin-scoped master-player operations through `GNNetwork.masterPlayer.admin`.
  *
- * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
+ * Use this namespace from dashboard, GM, or backoffice code with `secretKey` or `overrideSecretKey`.
  */
 export class AdminMasterPlayerApi {
 	/**

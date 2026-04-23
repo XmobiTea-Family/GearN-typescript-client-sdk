@@ -8,7 +8,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Không áp dụng cho `GNNetwork.dashboard.server` và `GNNetwork.dashboard.admin` vì hiện tại 2 namespace này rỗng, không có method public.
 - Toàn bộ method hiện tại của `DashboardApi` đều gửi qua HTTP.
 - Toàn bộ request wrapper hiện tại của `DashboardApi` đều dùng `RequestType.Dashboard` với `RequestRole.Client`.
-- Hệ quả rất quan trọng ở tầng SDK: nếu không truyền `overrideSecretKey`, request sẽ mặc định gắn `clientSecretKey`, không tự lấy `adminSecretKey`.
+- Hệ quả rất quan trọng ở tầng SDK: nếu không truyền `overrideSecretKey`, request sẽ mặc định gắn `secretKey`
 - Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [README](../README.MD#route-and-permission-rules), nhưng `DashboardApi` là ngoại lệ vì public SDK wrapper này vẫn đi qua `RequestRole.Client`.
 - Trong triển khai GearN server hiện tại, sau `loginByAdminAccountAsync` thành công backend middleware sẽ resolve secret context và quyền riêng của admin từ `authToken` cho các request dashboard tiếp theo.
 - Đây là nhóm API dành cho dashboard, backoffice, provisioning, analytics và maintenance. Không dùng thay cho gameplay API của player.
@@ -19,7 +19,6 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Luôn ưu tiên `async/await`. Mặc định dùng `GNNetwork.dashboard.*Async()`.
 - Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
 - Không dùng `GNNetwork.dashboard.server.*` hoặc `GNNetwork.dashboard.admin.*` vì hiện chưa có method nào để gọi.
-- Không giả định `DashboardApi` tự đổi secret key local sang `adminSecretKey`. Theo code hiện tại, request dashboard vẫn đi theo `RequestRole.Client`.
 - Với triển khai GearN server hiện tại, quyền admin riêng của account sau login được backend middleware resolve từ `authToken`, không phải do SDK tự đổi sang admin secret key local.
 - Chỉ truyền `overrideSecretKey` khi bạn cố ý bypass flow mặc định ở trên.
 - `DashboardApi` không có flow socket. Không dùng `connectSocket()` hay `sendRequestAuthSocket()` cho nhóm này.
@@ -58,9 +57,9 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
 | --- | --- | --- | --- | --- |
-| `getSecretInfoListAsync` | Liệt kê secret key theo role | request rỗng | `GetSecretInfoListResponseData` | Trả tách riêng `adminSecretKeys`, `serverSecretKeys`, `playerSecretKeys` |
-| `getSecretInfoInformationAsync` | Xem chi tiết một secret key | `secretKey` | `GetSecretInfoInformationResponseData` | Trả `role`, `gameId`, `permissionParam`, `tsExpire`, `remove` |
-| `createSecretInfoAsync` | Tạo secret key mới cho một role | `role` và tùy chọn `secretKey`, `gameId`, `permissionParam` | `SecretInfoWithSecretKeyResponseData` | `secretKey` đang optional trong model; AI có thể bỏ qua nếu muốn backend sinh key |
+| `getSecretInfoListAsync` | Liệt kê secret key theo role | request rỗng | `GetSecretInfoListResponseData` | Trả `secretKeys` |
+| `getSecretInfoInformationAsync` | Xem chi tiết một secret key | `secretKey` | `GetSecretInfoInformationResponseData` | Trả `gameId`, `permissionParam`, `tsExpire`, `remove` |
+| `createSecretInfoAsync` | Tạo secret key mới và tùy chọn `secretKey`, `gameId`, `permissionParam` | `SecretInfoWithSecretKeyResponseData` | `secretKey` đang optional trong model; AI có thể bỏ qua nếu muốn backend sinh key |
 | `setSecretInfoInformationAsync` | Cập nhật expire, description, permission hoặc remove flag của secret key | `secretKey` và field cần đổi | `EmptyResponseData` | Dùng để revoke hoặc thay permission |
 
 ### Analytics, logs và callback
@@ -100,7 +99,6 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - [../dist/runtime/entity/models/DashboardResponseModels.d.ts](../dist/runtime/entity/models/DashboardResponseModels.d.ts)
 - `DashboardApi` hiện không có file enum riêng cho các numeric field như `type` trong `resetStatisticsLeaderboard` hoặc `deleteInDatabase`.
 - Nếu codebase hiện tại không có constant nghiệp vụ cho các numeric field đó, AI không được tự bịa giá trị.
-- `CreateSecretInfoRequestData.role` có thể map theo [../dist/runtime/constant/enumType/RequestRole.d.ts](../dist/runtime/constant/enumType/RequestRole.d.ts) vì model giới hạn `1..3`.
 - `GetServerLogRequestData` có phân trang mềm bằng `skip` và `limit`; không request log vô hạn.
 - `GetAnalyticsRequestData` và `GetServerGameDataRequestData` đều dùng nhiều boolean flag để điều khiển payload; chỉ bật field thật sự cần.
 
@@ -230,7 +228,6 @@ import {
 } from "@xmobitea/gn-typescript-client";
 
 const request = new DashboardModels.CreateSecretInfoRequestData();
-request.role = RequestRole.Server;
 request.gameId = "demo-game";
 
 const response = await GNNetwork.dashboard.createSecretInfoAsync(request);
@@ -249,7 +246,6 @@ const generatedSecretKey = response.responseData.secretKey;
 ## 9. Anti-Patterns
 
 - Không gọi `GNNetwork.dashboard.server` hoặc `GNNetwork.dashboard.admin`.
-- Không giả định SDK tự đổi local secret key sang `adminSecretKey` sau login.
 - Không bỏ qua bước `loginByAdminAccountAsync` rồi vẫn mong backend tự hiểu request dashboard là admin request.
 - Không dùng `DashboardApi` như gameplay API cho client/player thường.
 - Không đoán numeric `type` cho `resetStatisticsLeaderboardAsync` hoặc `deleteInDatabaseAsync`.
@@ -263,7 +259,6 @@ const generatedSecretKey = response.responseData.secretKey;
 - Đã `GNNetwork.init(settings)` chưa.
 - Có đang dùng đúng `GNNetwork.dashboard.*Async()` không.
 - Có nhớ rằng toàn bộ `DashboardApi` hiện dùng `RequestRole.Client` và HTTP không.
-- Có hiểu rằng SDK vẫn gắn `clientSecretKey` mặc định nhưng backend middleware sẽ resolve quyền admin từ `authToken` sau login không.
 - Có cần login admin trước khi gọi operation hiện tại không.
 - Nếu operation là destructive, đã có xác nhận rõ về hậu quả chưa.
 - Nếu operation cần numeric `type`, nguồn giá trị đó có thật trong codebase hoặc backend spec chưa.

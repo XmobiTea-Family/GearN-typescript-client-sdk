@@ -7,14 +7,14 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Chỉ áp dụng cho `GNNetwork.authenticate`.
 - Không áp dụng cho `GNNetwork.authenticate.server` và `GNNetwork.authenticate.admin` vì hiện tại 2 namespace này rỗng, không có method public.
 - Nếu cần login admin dashboard, dùng API khác. Không dùng `AuthenticateApi`.
-- Nếu cần gọi server-side operation, dùng API group tương ứng với `serverSecretKey`. Không dùng `AuthenticateApi.server`.
+- Nếu cần gọi server-side operation, dùng API group tương ứng với `secretKey` có `permission rules` `server` hợp lệ. Không dùng `AuthenticateApi.server`.
 
 ## 2. Hard Rules
 
 - Luôn ưu tiên `async/await`. Mặc định dùng `GNNetwork.authenticate.*Async()`.
 - Tất cả method của `AuthenticateApi` hiện gửi qua HTTP, không login qua socket.
 - Trước khi gọi `AuthenticateApi`, bắt buộc đã `GNNetwork.init(settings)`.
-- `GNServerSettings` phải có `clientSecretKey` hợp lệ. Không dựa vào `adminSecretKey` hay `serverSecretKey` cho `AuthenticateApi`.
+- `GNServerSettings` phải có `secretKey` hợp lệ.
 - Mọi method trừ `refreshAuthToken` đều phải truyền `infoRequestParam` khác `null`.
 - Không dùng `GNNetwork.authenticate.server.*` hoặc `GNNetwork.authenticate.admin.*` vì hiện chưa có method nào để gọi.
 - Sau khi login hoặc refresh token thành công, nếu backend trả `authToken` và `userId`, SDK sẽ tự cache vào `GNNetwork.getAuthenticateStatus()` và `StorageService`.
@@ -238,7 +238,7 @@ GNNetwork.connectSocket(); // Follow README socket rule. SDK auto-auths if authT
 ## 10. AI Checklist
 
 - Đã `GNNetwork.init(settings)` chưa.
-- `clientSecretKey` đã có chưa.
+- `secretKey` đã có chưa.
 - Method được chọn có đúng với nguồn identity không.
 - Có `infoRequestParam` chưa.
 - Có dùng `*Async()` không.

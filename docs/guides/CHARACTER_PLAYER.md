@@ -14,8 +14,8 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - `GNNetwork.characterPlayer.server` -> `RequestRole.Server`
   - `GNNetwork.characterPlayer.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
-- Chỉ dùng namespace `.server` khi bạn đã cấu hình `serverSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `adminSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [README](../README.MD#route-and-permission-rules). Không tự suy diễn route chỉ từ target ownership.
 - Khác với `GamePlayerApi`, public contract hiện tại gần như luôn yêu cầu `characterId` rõ ràng cho các flow target một character cụ thể.
 - `client`, `server`, `admin` hiện dùng cùng shape request; khác biệt chính là trust boundary và secret key mặc định.
@@ -81,11 +81,11 @@ Realtime rule:
 
 ## 4. Chọn Namespace
 
-| Namespace | Role thật | Secret mặc định | Dùng khi nào |
-| --- | --- | --- | --- |
-| `GNNetwork.characterPlayer` | `Client` | `clientSecretKey` | player app thao tác trên character cụ thể mà client đang giữ `characterId` |
-| `GNNetwork.characterPlayer.server` | `Server` | `serverSecretKey` | trusted backend, game server, worker xử lý lifecycle character |
-| `GNNetwork.characterPlayer.admin` | `Admin` | `adminSecretKey` | GM tool, dashboard, migration, vận hành dữ liệu character |
+| Namespace | Role thật | Dùng khi nào |
+| --- | --- | --- |
+| `GNNetwork.characterPlayer` | `Client` | player app thao tác trên character cụ thể mà client đang giữ `characterId` |
+| `GNNetwork.characterPlayer.server` | `Server` | trusted backend, game server, worker xử lý lifecycle character |
+| `GNNetwork.characterPlayer.admin` | `Admin` | GM tool, dashboard, migration, vận hành dữ liệu character |
 
 Rule nhanh:
 

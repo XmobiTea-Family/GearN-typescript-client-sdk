@@ -14,8 +14,8 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - `GNNetwork.cloudScript.server` -> `RequestRole.Server`
   - `GNNetwork.cloudScript.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
-- Chỉ dùng namespace `.server` khi bạn đã cấu hình `serverSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `adminSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [README](../README.MD#route-and-permission-rules). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
 - Public surface hiện chỉ có 5 operation trên mỗi namespace:
   - `addFunctionAsync`
@@ -58,11 +58,11 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Namespace
 
-| Namespace | Role thật | Secret mặc định | Dùng khi nào |
-| --- | --- | --- | --- |
-| `GNNetwork.cloudScript` | `Client` | `clientSecretKey` | player app chỉ cần execute function đã được backend cho phép |
-| `GNNetwork.cloudScript.server` | `Server` | `serverSecretKey` | trusted backend, worker, game server execute/publish theo workflow backend |
-| `GNNetwork.cloudScript.admin` | `Admin` | `adminSecretKey` | dashboard, backoffice, vận hành version, promote live version |
+| Namespace | Role thật | Dùng khi nào |
+| --- | --- | --- |
+| `GNNetwork.cloudScript` | `Client` | player app chỉ cần execute function đã được backend cho phép |
+| `GNNetwork.cloudScript.server` | `Server` | trusted backend, worker, game server execute/publish theo workflow backend |
+| `GNNetwork.cloudScript.admin` | `Admin` | dashboard, backoffice, vận hành version, promote live version |
 
 Rule nhanh:
 

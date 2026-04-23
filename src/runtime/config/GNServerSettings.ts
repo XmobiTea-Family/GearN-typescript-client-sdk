@@ -39,12 +39,8 @@ export interface GNServerSettingsOptions {
 	/** Ping timeout for the socket client, expressed in milliseconds. */
 	pingTimeout: number;
 
-	/** Secret key used automatically by `RequestRole.Admin` routes. */
-	adminSecretKey: string;
-	/** Secret key used automatically by `RequestRole.Server` routes. */
-	serverSecretKey: string;
-	/** Secret key used automatically by `RequestRole.Client` routes and by Dashboard transport defaults. */
-	clientSecretKey: string;
+	/** Secret key used automatically. */
+	secretKey: string;
 
 	/** Log verbosity consumed by `GNDebug`. */
 	logType: LogType;
@@ -68,9 +64,7 @@ export class GNServerSettings {
 	private pingInterval: number = 20000;
 	private pingTimeout: number = 20000;
 
-	private adminSecretKey: string;
-	private serverSecretKey: string;
-	private clientSecretKey: string;
+	private secretKey: string;
 
 	private logType: LogType = LogType.All;
 
@@ -96,9 +90,7 @@ export class GNServerSettings {
 		this.pingInterval = options.pingInterval;
 		this.pingTimeout = options.pingTimeout;
 
-		this.adminSecretKey = options.adminSecretKey;
-		this.serverSecretKey = options.serverSecretKey;
-		this.clientSecretKey = options.clientSecretKey;
+		this.secretKey = options.secretKey;
 
 		this.logType = options.logType;
 	}
@@ -274,45 +266,17 @@ export class GNServerSettings {
 	}
 
 	/**
-	 * Returns the admin secret key used when RequestRole.Admin is selected.
+	 * Returns the default secret key used.
 	 */
-	public getAdminSecretKey(): string {
-		return this.adminSecretKey;
+	public getSecretKey(): string {
+		return this.secretKey;
 	}
 
 	/**
-	 * Updates the admin secret key used when RequestRole.Admin is selected.
+	 * Updates the default secret key used.
 	 */
-	public setAdminSecretKey(adminSecretKey: string): void {
-		this.adminSecretKey = adminSecretKey;
-	}
-
-	/**
-	 * Returns the server secret key used when RequestRole.Server is selected.
-	 */
-	public getServerSecretKey(): string {
-		return this.serverSecretKey;
-	}
-
-	/**
-	 * Updates the server secret key used when RequestRole.Server is selected.
-	 */
-	public setServerSecretKey(serverSecretKey: string): void {
-		this.serverSecretKey = serverSecretKey;
-	}
-
-	/**
-	 * Returns the client secret key used when RequestRole.Client is selected.
-	 */
-	public getClientSecretKey(): string {
-		return this.clientSecretKey;
-	}
-
-	/**
-	 * Updates the client secret key used when RequestRole.Client is selected.
-	 */
-	public setClientSecretKey(clientSecretKey: string): void {
-		this.clientSecretKey = clientSecretKey;
+	public setSecretKey(secretKey: string): void {
+		this.secretKey = secretKey;
 	}
 
 	/**

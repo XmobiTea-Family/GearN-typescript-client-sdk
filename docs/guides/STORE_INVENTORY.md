@@ -14,8 +14,8 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - `GNNetwork.storeInventory.server` -> `RequestRole.Server`
   - `GNNetwork.storeInventory.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
-- Chỉ dùng namespace `.server` khi bạn đã cấu hình `serverSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `adminSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [README](../README.MD#route-and-permission-rules). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
 - Khác với `MultiplayerApi`, namespace `server/admin` ở đây không thêm field `userId`; payload shape giữa 3 role hiện gần như giống nhau.
 
@@ -32,11 +32,11 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Namespace
 
-| Namespace | Role thật | Secret mặc định | Dùng khi nào |
-| --- | --- | --- | --- |
-| `GNNetwork.storeInventory` | `Client` | `clientSecretKey` | client/player mua item hoặc đọc store catalog cho chính session hiện tại |
-| `GNNetwork.storeInventory.server` | `Server` | `serverSecretKey` | trusted backend, server worker, purchase fulfillment |
-| `GNNetwork.storeInventory.admin` | `Admin` | `adminSecretKey` | dashboard, ops, GM tool, quản trị store |
+| Namespace | Role thật | Dùng khi nào |
+| --- | --- | --- |
+| `GNNetwork.storeInventory` | `Client` | client/player mua item hoặc đọc store catalog cho chính session hiện tại |
+| `GNNetwork.storeInventory.server` | `Server` | trusted backend, server worker, purchase fulfillment |
+| `GNNetwork.storeInventory.admin` | `Admin` | dashboard, ops, GM tool, quản trị store |
 
 Rule nhanh:
 

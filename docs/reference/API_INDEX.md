@@ -41,8 +41,8 @@ DTO shape (field-by-field) không inline trong API reference — xem [DTO_INDEX.
 
 ## Khi nào dùng `server` / `admin` variant?
 
-- `.server` (role `Server`) — trusted backend-to-backend call, ví dụ CloudScript runtime gọi SDK, hoặc backend microservice grant item cho player khác. Yêu cầu `serverSecretKey` cấu hình trong `GNServerSettings`.
-- `.admin` (role `Admin`) — admin tool / dashboard script mutate state bất kỳ player. Yêu cầu `adminSecretKey`.
+- `.server` (role `Server`) — trusted backend-to-backend call, ví dụ CloudScript runtime gọi SDK, hoặc backend microservice grant item cho player khác.
+- `.admin` (role `Admin`) — admin tool / dashboard script mutate state bất kỳ player.
 - Không có `.server` / `.admin` namespace nghĩa là group đó chỉ expose cho client (hoặc admin flow đã wrap trong namespace riêng, ví dụ `dashboard`).
 
 Xem [AGENTS.md](../../AGENTS.md) §"Chọn Đúng API Group" + [CONFIG.md](CONFIG.md) cho secret key config.

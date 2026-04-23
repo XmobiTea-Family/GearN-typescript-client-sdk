@@ -117,11 +117,7 @@ export class NetworkingPeer {
 	 */
 	sendViaSocket(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
 		if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
-		if (secretKey == null) {
-			if (role == RequestRole.Admin) secretKey = GNNetwork.getGNServerSettings().getAdminSecretKey();
-			else if (role == RequestRole.Server) secretKey = GNNetwork.getGNServerSettings().getServerSecretKey();
-			else if (role == RequestRole.Client) secretKey = GNNetwork.getGNServerSettings().getClientSecretKey();
-		}
+		if (secretKey == null) secretKey = GNNetwork.getGNServerSettings().getSecretKey();
 
 		this.socketPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, customTags, this.gameId);
 	}
@@ -132,11 +128,7 @@ export class NetworkingPeer {
 	 */
 	sendViaHttp(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
 		if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
-		if (secretKey == null) {
-			if (role == RequestRole.Admin) secretKey = GNNetwork.getGNServerSettings().getAdminSecretKey();
-			else if (role == RequestRole.Server) secretKey = GNNetwork.getGNServerSettings().getServerSecretKey();
-			else if (role == RequestRole.Client) secretKey = GNNetwork.getGNServerSettings().getClientSecretKey();
-		}
+		if (secretKey == null) secretKey = GNNetwork.getGNServerSettings().getSecretKey();
 
 		this.httpPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, customTags, this.gameId);
 	}

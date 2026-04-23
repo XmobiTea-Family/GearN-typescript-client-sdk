@@ -768,7 +768,7 @@ export class CharacterPlayerApi {
 /**
  * Exposes server-scoped character-player operations through `GNNetwork.characterPlayer.server`.
  *
- * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
  */
 export class ServerCharacterPlayerApi {
 	/**
@@ -1521,7 +1521,7 @@ export class ServerCharacterPlayerApi {
 /**
  * Exposes admin-scoped character-player operations through `GNNetwork.characterPlayer.admin`.
  *
- * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
+ * Use this namespace from dashboard, GM, or backoffice code with `secretKey` or `overrideSecretKey`.
  */
 export class AdminCharacterPlayerApi {
 	/**

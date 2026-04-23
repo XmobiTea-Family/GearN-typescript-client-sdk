@@ -21,9 +21,7 @@ settings.config({
 	pingInterval: 20000,
 	pingTimeout: 20000,
 
-	clientSecretKey: "<client-secret>",
-	serverSecretKey: "",
-	adminSecretKey: "",
+	secretKey: "<secret-key>",
 
 	logType: LogType.All,
 } satisfies GNServerSettingsOptions);
@@ -35,7 +33,7 @@ GNNetwork.init(settings);
 
 - `GNNetwork.init(settings)` là **idempotent**: gọi 1 lần ở bootstrap, các lần sau bị bỏ qua (không reset config).
 - `GNServerSettings.config(options)` thay thế toàn bộ snapshot — không merge partial. Nếu muốn đổi từng field, dùng setter như `setServerAddress`.
-- Không commit production secret key vào client bundle. Giữ `serverSecretKey` / `adminSecretKey` rỗng ở môi trường client.
+- Không commit `secretKey` chứa `permission rules` có permission `admin` hoặc `server` vào production.
 
 ---
 
@@ -55,9 +53,7 @@ GNNetwork.init(settings);
 | `reconnectDelay` | `number` | yes | `5000` | ms | Reconnect delay của socket client |
 | `pingInterval` | `number` | yes | `20000` | ms | Ping interval socket client |
 | `pingTimeout` | `number` | yes | `20000` | ms | Timeout phát hiện socket stale |
-| `adminSecretKey` | `string` | yes | — (nên `""` ở client) | — | Auto gắn cho route `RequestRole.Admin` |
-| `serverSecretKey` | `string` | yes | — (nên `""` ở client) | — | Auto gắn cho route `RequestRole.Server` |
-| `clientSecretKey` | `string` | yes | — | — | Auto gắn cho route `RequestRole.Client` và Dashboard transport default |
+| `secretKey` | `string` | yes | — | — | Auto gắn cho mọi route nếu không dùng overrideSecretKey |
 | `logType` | `LogType` | yes | `LogType.All` | enum | Verbosity `GNDebug` |
 
 Default column phản ánh giá trị khởi tạo trong class `GNServerSettings` trước khi gọi `config()`. `config()` yêu cầu cung cấp đầy đủ mọi field (strict replace).

@@ -14,8 +14,8 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - `GNNetwork.group.server` -> `RequestRole.Server`
   - `GNNetwork.group.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
-- Chỉ dùng namespace `.server` khi bạn đã cấu hình `serverSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `adminSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [README](../README.MD#route-and-permission-rules). Không tự suy diễn route chỉ từ target ownership.
 - `GroupApi` thao tác trên group đã tồn tại. Không có public operation `createGroup`, `joinGroup`, `leaveGroup`, `removeGroup` trong nhóm này.
 - Realtime update của group là luồng riêng qua socket event, không phải transport của các method `GroupApi`.
@@ -66,11 +66,11 @@ Realtime rule:
 
 ## 4. Chọn Namespace
 
-| Namespace | Role thật | Secret mặc định | Dùng khi nào |
-| --- | --- | --- | --- |
-| `GNNetwork.group` | `Client` | `clientSecretKey` | player app thao tác với group thuộc session hiện tại |
-| `GNNetwork.group.server` | `Server` | `serverSecretKey` | trusted backend, game server, worker xử lý group |
-| `GNNetwork.group.admin` | `Admin` | `adminSecretKey` | GM tool, dashboard, migration, vận hành dữ liệu group |
+| Namespace | Role thật | Dùng khi nào |
+| --- | --- | --- |
+| `GNNetwork.group` | `Client` | player app thao tác với group thuộc session hiện tại |
+| `GNNetwork.group.server` | `Server` | trusted backend, game server, worker xử lý group |
+| `GNNetwork.group.admin` | `Admin` | GM tool, dashboard, migration, vận hành dữ liệu group |
 
 Rule nhanh:
 

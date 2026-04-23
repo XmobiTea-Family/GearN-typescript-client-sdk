@@ -50,7 +50,7 @@ Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.
 
 - `ReturnCode.SecretInvalid` (-10): secret key sai, thiếu, hoặc không khớp game context.
 - `ReturnCode.OperationInvalid` (-4): operation code không tồn tại, hoặc sai với request type + role hiện tại.
-- `ReturnCode.OperationNotAllow` (-2): operation tồn tại và secret hợp lệ, NHƯNG permission rules của secret không cho phép operation trong target context. **Không phải** thiếu secret.
+- `ReturnCode.OperationNotAllow` (-2): operation tồn tại và secret hợp lệ, NHƯNG `permission rules` của secret không cho phép operation trong target context. **Không phải** thiếu secret.
 
 ---
 
@@ -58,27 +58,26 @@ Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.
 
 Route `client / server / admin` mô tả **bên gọi** thực sự ở đâu, không phải target của mình hay của người khác.
 
-| Route | Dùng khi code chạy ở | Default secret |
-|---|---|---|
-| `client` (`GNNetwork.<group>`) | App / browser / mobile của player | `clientSecretKey` |
-| `server` (`GNNetwork.<group>.server`) | Trusted backend: game server, internal service, worker, cron, webhook | `serverSecretKey` |
-| `admin` (`GNNetwork.<group>.admin`) | Backoffice, dashboard, GM tool, migration tool, ops | `adminSecretKey` |
+| Route | Dùng khi code chạy ở |
+|---|---|
+| `client` (`GNNetwork.<group>`) | App / browser / mobile của player |
+| `server` (`GNNetwork.<group>.server`) | Trusted backend: game server, internal service, worker, cron, webhook |
+| `admin` (`GNNetwork.<group>.admin`) | Backoffice, dashboard, GM tool, migration tool, ops |
 
 Rule cứng:
 
 - Không chọn `server`/`admin` chỉ vì target không thuộc user hiện tại.
 - Không dùng `.server` / `.admin` từ app client chỉ để vượt permission — bị coi là trust boundary leak, secret sẽ bị expose.
 - Không suy diễn route chỉ từ việc request có hay không có `userId`.
-- Route `server` chỉ gọi được khi `GNServerSettings.serverSecretKey` được set (hoặc truyền `overrideSecretKey`).
-- Route `admin` tương tự, cần `adminSecretKey`.
+- Route `server` chỉ gọi được khi `secretKey` được setup có `permission rules` là `server` hợp lệ được set (hoặc truyền `overrideSecretKey`).
+- Route `admin` tương tự, cần `secretKey` được setup có `permission rules` là `admin` hợp lệ.
 
 ### Ngoại lệ: `DashboardApi`
 
 Wrapper public hiện tại của `DashboardApi`:
-- Vẫn đi `RequestRole.Client` + `clientSecretKey` mặc định.
+- Không cần dùng `secretKey` mặc định, sau khi login thành công sẽ luôn được dùng bằng `secretKey` của riêng admin này, backend tự xử lí không cần xử lí phía client.
 - Sau `loginByAdminAccountAsync` thành công, backend middleware resolve secret context và quyền admin từ `authToken` cho các request dashboard tiếp theo.
 - `GNNetwork.dashboard.server` và `GNNetwork.dashboard.admin` hiện **rỗng** (không có operation public).
-- Không giả định SDK tự đổi local secret key sang `adminSecretKey`.
 
 ---
 

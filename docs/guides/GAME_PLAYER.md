@@ -14,8 +14,8 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - `GNNetwork.gamePlayer.server` -> `RequestRole.Server`
   - `GNNetwork.gamePlayer.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
-- Chỉ dùng namespace `.server` khi bạn đã cấu hình `serverSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `adminSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [README](../README.MD#route-and-permission-rules). Không tự suy diễn route chỉ từ target ownership.
 - Với hầu hết flow thao tác trên một player cụ thể:
   - `client` cho phép `userId?`
@@ -85,11 +85,11 @@ Realtime rule:
 
 ## 4. Chọn Namespace
 
-| Namespace | Role thật | Secret mặc định | `userId` behavior | Dùng khi nào |
-| --- | --- | --- | --- | --- |
-| `GNNetwork.gamePlayer` | `Client` | `clientSecretKey` | Có thể bỏ `userId` để target player hiện tại | player app thao tác trên game profile của chính user hiện tại |
-| `GNNetwork.gamePlayer.server` | `Server` | `serverSecretKey` | Phải truyền `userId` ở các flow self-target | trusted backend, game server, worker xử lý lifecycle player |
-| `GNNetwork.gamePlayer.admin` | `Admin` | `adminSecretKey` | Phải truyền `userId` ở các flow self-target | GM tool, dashboard, migration, vận hành dữ liệu game player |
+| Namespace | Role thật | `userId` behavior | Dùng khi nào |
+| --- | --- | --- | --- |
+| `GNNetwork.gamePlayer` | `Client` | Có thể bỏ `userId` để target player hiện tại | player app thao tác trên game profile của chính user hiện tại |
+| `GNNetwork.gamePlayer.server` | `Server` | Phải truyền `userId` ở các flow self-target | trusted backend, game server, worker xử lý lifecycle player |
+| `GNNetwork.gamePlayer.admin` | `Admin` | Phải truyền `userId` ở các flow self-target | GM tool, dashboard, migration, vận hành dữ liệu game player |
 
 Rule nhanh:
 

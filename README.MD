@@ -1,4 +1,4 @@
-# GearN TypeScript Client SDK
+﻿# GearN TypeScript Client SDK
 
 SDK TypeScript client cho GearN Server.
 
@@ -87,9 +87,7 @@ settings.config({
   reconnectDelay: 5000,
   pingInterval: 20000,
   pingTimeout: 20000,
-  adminSecretKey: "",                  // chỉ set khi dùng .admin route
-  serverSecretKey: "",                 // chỉ set khi dùng .server route
-  clientSecretKey: "your-client-secret",
+  secretKey: "secret-key",
   logType: LogType.All,
 });
 
@@ -199,7 +197,7 @@ Realtime event handler (6 handler, subscribe bằng gán `static onUpdate`): [do
 
 ## 8. Dashboard / admin login
 
-`DashboardApi` public wrapper đi `RequestRole.Client` + `clientSecretKey`. Sau `loginByAdminAccountAsync`, backend resolve admin context từ `authToken`. Không giả định SDK tự đổi sang `adminSecretKey`.
+`DashboardApi` public wrapper đi `RequestRole.Client`. Sau `loginByAdminAccountAsync`, backend resolve admin context từ `authToken`.
 
 ```ts
 import {
@@ -399,7 +397,7 @@ Full checklist + recommended action: [docs/reference/ERROR_HANDLING.md](docs/ref
 - **Gọi API trước `init()`** → namespace `undefined`. Init 1 lần ở bootstrap.
 - **`returnCode === Ok` nhưng `errorCode !== Ok`** → business fail, check tầng 2.
 - **Socket connect nhưng không nhận auth** → token đến sau socket up. Gọi `sendRequestAuthSocket()` re-auth.
-- **Sai secret / sai namespace route** → check `clientSecretKey` / `serverSecretKey` / `adminSecretKey` match với namespace đang gọi.
+- **Sai secret / sai namespace route** → check `permission rules` của `secretKey` match với namespace đang gọi xem có đủ quyền hay không.
 - **`OperationNotAllow`** → permission rule cấm, không phải thiếu secret. Check route + permission flag `selfEnable` / `otherSelfEnable` / `serverSelfEnable` / `adminSelfEnable`.
 - **Tưởng success là `0`** → SAI, `Ok === 1` cả hai tầng.
 

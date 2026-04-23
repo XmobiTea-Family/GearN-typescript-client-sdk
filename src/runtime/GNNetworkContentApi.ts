@@ -124,7 +124,7 @@ export class ContentApi {
 /**
  * Exposes server-scoped content operations through `GNNetwork.content.server`.
  *
- * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
  */
 export class ServerContentApi {
 	/**
@@ -233,7 +233,7 @@ export class ServerContentApi {
 /**
  * Exposes admin-scoped content operations through `GNNetwork.content.admin`.
  *
- * Use this namespace from dashboard or backoffice code with `adminSecretKey` or `overrideSecretKey`.
+ * Use this namespace from dashboard or backoffice code with `secretKey` or `overrideSecretKey`.
  */
 export class AdminContentApi {
 	/**

@@ -28,7 +28,7 @@
 
 **Problem:** Lần đầu khởi chạy ứng dụng — cần init SDK để bất kỳ API nào hoạt động.
 
-**Prerequisites:** biết server address/port và `clientSecretKey` backend cấp.
+**Prerequisites:** biết server address/port và `secretKey` backend cấp.
 
 **APIs used:** `GNNetwork.init()`, `GNServerSettings`.
 
@@ -50,9 +50,7 @@ const settings = new GNServerSettings({
   reconnectDelay: 5000,
   pingInterval: 20000,
   pingTimeout: 20000,
-  clientSecretKey: "<client-secret>",
-  serverSecretKey: "",
-  adminSecretKey: "",
+  secretKey: "<secret-key>",
   logType: LogType.Error,
 });
 
@@ -400,7 +398,7 @@ async function sendGroupChat(groupId: string, text: string) {
 
 **Prerequisites:** đã login + connect socket.
 
-**APIs used:** `GNNetwork.group.joinGroupAsync`, `GNNetwork.group.leaveGroupAsync`, `GNNetwork.group.server.kickGroupMemberAsync`, [`OnGroupMemberUpdateEventHandler`](reference/EVENTS.md#ongroupmemberupdateeventhandler).
+**APIs used:** `GNNetwork.group.joinGroupAsync`, `GNNetwork.group.leaveGroupAsync`, `GNNetwork.group.server.removeMemberAsync`, [`OnGroupMemberUpdateEventHandler`](reference/EVENTS.md#ongroupmemberupdateeventhandler).
 
 ### Code
 
@@ -449,7 +447,7 @@ async function leave(groupId: string) {
 
 ### Pitfalls
 
-- `kickGroupMember` là method `.server` namespace — chỉ call được nếu có `serverSecretKey`. Từ client thường expose qua CloudScript.
+- `removeMember` là method `.server` namespace — chỉ call được nếu có `secretKey` có `permission rules` có `group.removeMember.serverSelfEnable`. Từ client thường expose qua CloudScript.
 
 ---
 
@@ -519,7 +517,7 @@ async function findMatch(queueName: string) {
 
 **Problem:** Client xem inventory; backend/CloudScript grant item cho player khác.
 
-**Prerequisites:** client login; `serverSecretKey` cấu hình ở backend/CloudScript.
+**Prerequisites:** client login; `secretKey` có `permission rules` là `admin` hoặc `server` cấu hình ở backend/CloudScript.
 
 **APIs used:** [`GNNetwork.inventory.getInventoryItemListAsync`](reference/API_INVENTORY.md) (client), `GNNetwork.inventory.server.addInventoryItemAsync` (server).
 
@@ -551,11 +549,11 @@ async function grantSword(targetUserId: string) {
 ### Return paths
 
 - Client query → chỉ thấy inventory của chính mình (backend enforce ownerId = authToken.userId).
-- Server grant → nếu `serverSecretKey` sai → `ReturnCode.PermissionDenied`.
+- Server grant → nếu `secretKey` sai → `ReturnCode.OperationNotAllow`.
 
 ### Pitfalls
 
-- Gọi `.server.*` từ frontend browser → leak `serverSecretKey` ra client → bug lớn. CHỈ gọi `.server` trong backend Node service hoặc CloudScript.
+- NÊN gọi `.server` trong backend Node service hoặc CloudScript.
 
 ---
 
@@ -695,7 +693,7 @@ async function callOtherGame(gameSecret: string) {
 ### Return paths
 
 - Token override bypass cache; request này KHÔNG update cached token.
-- Secret override bypass `clientSecretKey`/`serverSecretKey`/`adminSecretKey` mặc định.
+- Secret override bypass `secretKey` mặc định.
 
 ### Pitfalls
 

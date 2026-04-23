@@ -963,7 +963,7 @@ Defines the reusable parameter block CloudScriptPermissionRulesParam.
 
 ### PermissionParam
 
-Defines the top-level permission tree assigned to one secret info entry. Each optional property groups permission rules by API domain.
+Defines the top-level permission tree assigned to one secret info entry. Each optional property groups `permission rules` by API domain.
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
@@ -1060,7 +1060,6 @@ Defines the request payload for `createSecretInfo`. `permissionParam` is the aut
 |-------|------|----------|-------|
 | `secretKey` | `string` | yes | Optional custom secret key. If omitted, the backend may generate one. — _minLength=6, maxLength=64_ |
 | `gameId` | `string` | yes | Optional target game id when creating a secret for a specific game. — _minLength=2, maxLength=32_ |
-| `role` | `number` | yes | Secret role value. This should match the server-side secret role contract. — _min=1, max=3_ |
 | `permissionParam` | `PermissionParam` | no | Optional permission tree granted to the new secret key. |
 
 ### LoginByAdminAccountRequestData
@@ -1313,9 +1312,7 @@ Defines the response payload for `getSecretInfoList`. Results are grouped by sec
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
-| `adminSecretKeys` | `Array<SecretInfoWithSecretKeyResponseData>` | yes | Secret keys whose role is admin. — _elementCls=SecretInfoWithSecretKeyResponseData_ |
-| `serverSecretKeys` | `Array<SecretInfoWithSecretKeyResponseData>` | yes | Secret keys whose role is server. — _elementCls=SecretInfoWithSecretKeyResponseData_ |
-| `playerSecretKeys` | `Array<SecretInfoWithSecretKeyResponseData>` | yes | Secret keys whose role is player or client-facing. — _elementCls=SecretInfoWithSecretKeyResponseData_ |
+| `secretKeys` | `Array<SecretInfoWithSecretKeyResponseData>` | yes | Secret keys. — _elementCls=SecretInfoWithSecretKeyResponseData_ |
 
 ### AdminAccountWithUserIdResponseData
 

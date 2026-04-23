@@ -14,8 +14,8 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - `GNNetwork.multiplayer.server` -> `RequestRole.Server`
   - `GNNetwork.multiplayer.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
-- Chỉ dùng namespace `.server` khi bạn đã cấu hình `serverSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `adminSecretKey` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
+- Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [README](../README.MD#route-and-permission-rules). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
 - `MultiplayerApi` xử lý matchmaking ticket, queue statistics và dữ liệu match. Nó không thay thế socket transport của SDK.
 
@@ -34,11 +34,11 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Namespace
 
-| Namespace | Role thật | Secret mặc định | Dùng khi nào |
-| --- | --- | --- | --- |
-| `GNNetwork.multiplayer` | `Client` | `clientSecretKey` | player app tự thao tác ticket của chính user hiện tại |
-| `GNNetwork.multiplayer.server` | `Server` | `serverSecretKey` | backend service thao tác ticket/match của user cụ thể |
-| `GNNetwork.multiplayer.admin` | `Admin` | `adminSecretKey` | dashboard, GM tool, vận hành |
+| Namespace | Role thật | Dùng khi nào |
+| --- | --- | --- |
+| `GNNetwork.multiplayer` | `Client` | player app tự thao tác ticket của chính user hiện tại |
+| `GNNetwork.multiplayer.server` | `Server` | backend service thao tác ticket/match của user cụ thể |
+| `GNNetwork.multiplayer.admin` | `Admin` | dashboard, GM tool, vận hành |
 
 Rule nhanh:
 

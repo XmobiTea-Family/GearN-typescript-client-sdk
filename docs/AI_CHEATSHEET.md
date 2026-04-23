@@ -25,9 +25,7 @@ GNNetwork.init(new GNServerSettings({
   reconnectDelay: 5000,
   pingInterval: 20000,
   pingTimeout: 20000,
-  clientSecretKey: "<client-secret>",
-  serverSecretKey: "",   // chỉ set khi backend dùng .server
-  adminSecretKey: "",    // chỉ set khi backend dùng .admin
+  secretKey: "<secret-key>",
   logType: LogType.Error,
 }));
 
@@ -74,10 +72,10 @@ Route = **trust boundary của caller**, KHÔNG phải target ownership.
 
 ```
 Code chạy ở đâu?
-├─ App / browser của player           → GNNetwork.<group>           (Client, clientSecretKey)
-├─ Trusted backend (game server,       → GNNetwork.<group>.server    (Server, serverSecretKey)
+├─ App / browser của player           → GNNetwork.<group>           (Client)
+├─ Trusted backend (game server,       → GNNetwork.<group>.server    (Server)
 │  worker, webhook, internal svc)
-└─ Backoffice / GM tool / dashboard    → GNNetwork.<group>.admin     (Admin, adminSecretKey)
+└─ Backoffice / GM tool / dashboard    → GNNetwork.<group>.admin     (Admin)
 
 Ngoại lệ: DashboardApi public wrapper vẫn đi RequestRole.Client; backend resolve admin từ authToken sau loginByAdminAccountAsync.
 ```

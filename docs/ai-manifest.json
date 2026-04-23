@@ -88,12 +88,7 @@
       "không chọn server hoặc admin chỉ vì target không thuộc user hiện tại",
       "không dùng namespace server hoặc admin từ app client chỉ để vượt permission",
       "không suy diễn route chỉ từ việc request có hay không có userId"
-    ],
-    "defaultSecrets": {
-      "client": "clientSecretKey",
-      "server": "serverSecretKey",
-      "admin": "adminSecretKey"
-    }
+    ]
   },
   "permissionRules": {
     "selfOtherSelfOnlyApplyOnClientRoute": true,
@@ -136,7 +131,6 @@
   "dashboardSpecialCase": {
     "apiGroup": "DashboardApi",
     "publicWrapperRequestRole": "Client",
-    "defaultTransportSecret": "clientSecretKey",
     "backendAuthBehavior": "sau loginByAdminAccountAsync thành công, backend middleware resolve secret context và quyền admin riêng từ authToken",
     "emptyPublicNamespaces": [
       "GNNetwork.dashboard.server",
@@ -236,9 +230,7 @@
       { "name": "reconnectDelay", "type": "number", "default": 5000, "unit": "milliseconds" },
       { "name": "pingInterval", "type": "number", "default": 20000, "unit": "milliseconds" },
       { "name": "pingTimeout", "type": "number", "default": 20000, "unit": "milliseconds" },
-      { "name": "clientSecretKey", "type": "string" },
-      { "name": "serverSecretKey", "type": "string" },
-      { "name": "adminSecretKey", "type": "string" },
+      { "name": "secretKey", "type": "string" },
       { "name": "logType", "type": "LogType", "default": "All" }
     ]
   },
@@ -292,7 +284,6 @@
         {
           "namespace": "GNNetwork.authenticate",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "login player, register account, refresh auth token"
         }
       ],
@@ -318,7 +309,6 @@
         {
           "namespace": "GNNetwork.dashboard",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "dashboard, analytics, secret, maintenance, admin login",
           "specialCase": "backend resolve admin context từ authToken sau login admin"
         }
@@ -345,19 +335,16 @@
         {
           "namespace": "GNNetwork.content",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "content config hoặc file metadata từ app hoặc player side"
         },
         {
           "namespace": "GNNetwork.content.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend hoặc worker xử lý content hoặc file metadata"
         },
         {
           "namespace": "GNNetwork.content.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "dashboard hoặc backoffice quản trị content hoặc file metadata"
         }
       ]
@@ -379,19 +366,16 @@
         {
           "namespace": "GNNetwork.multiplayer",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "matchmaking ticket hoặc match query gắn với auth token hiện tại"
         },
         {
           "namespace": "GNNetwork.multiplayer.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend thao tác ticket hoặc match của user cụ thể"
         },
         {
           "namespace": "GNNetwork.multiplayer.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "ops hoặc dashboard liệt kê và quản lý ticket hoặc match"
         }
       ],
@@ -417,19 +401,16 @@
         {
           "namespace": "GNNetwork.storeInventory",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "store catalog, buy, present, receipt validation cho flow app hoặc player"
         },
         {
           "namespace": "GNNetwork.storeInventory.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend purchase fulfillment hoặc store workflow"
         },
         {
           "namespace": "GNNetwork.storeInventory.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "dashboard hoặc ops quản trị catalog hoặc log"
         }
       ]
@@ -451,19 +432,16 @@
         {
           "namespace": "GNNetwork.inventory",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "player app thao tác trên item thuộc session hoặc ownership hiện tại"
         },
         {
           "namespace": "GNNetwork.inventory.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend xử lý item hoặc ownership hoặc statistics"
         },
         {
           "namespace": "GNNetwork.inventory.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "GM tool hoặc dashboard vận hành dữ liệu inventory"
         }
       ]
@@ -485,19 +463,16 @@
         {
           "namespace": "GNNetwork.group",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "player app thao tác trên group đã tồn tại"
         },
         {
           "namespace": "GNNetwork.group.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend xử lý group lifecycle hoặc member hoặc message"
         },
         {
           "namespace": "GNNetwork.group.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "dashboard hoặc GM tool vận hành dữ liệu group"
         }
       ],
@@ -523,21 +498,18 @@
         {
           "namespace": "GNNetwork.masterPlayer",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "player app thao tác trên account hoặc profile của chính user hiện tại",
           "userIdBehavior": "có thể bỏ userId để target user hiện tại"
         },
         {
           "namespace": "GNNetwork.masterPlayer.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend xử lý account hoặc profile của player cụ thể",
           "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
         },
         {
           "namespace": "GNNetwork.masterPlayer.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "dashboard hoặc GM tool vận hành dữ liệu master player",
           "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
         }
@@ -560,21 +532,18 @@
         {
           "namespace": "GNNetwork.gamePlayer",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "player app thao tác trên gameplay profile của chính user hiện tại",
           "userIdBehavior": "có thể bỏ userId để target user hiện tại"
         },
         {
           "namespace": "GNNetwork.gamePlayer.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend xử lý lifecycle game player của user cụ thể",
           "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
         },
         {
           "namespace": "GNNetwork.gamePlayer.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "dashboard hoặc GM tool vận hành dữ liệu game player",
           "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
         }
@@ -601,21 +570,18 @@
         {
           "namespace": "GNNetwork.characterPlayer",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "player app thao tác trên character cụ thể đang thuộc ownership hợp lệ",
           "targetBehavior": "gần như luôn phải truyền characterId rõ ràng"
         },
         {
           "namespace": "GNNetwork.characterPlayer.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend xử lý lifecycle hoặc relation của character cụ thể",
           "targetBehavior": "gần như luôn phải truyền characterId rõ ràng"
         },
         {
           "namespace": "GNNetwork.characterPlayer.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "dashboard hoặc GM tool vận hành dữ liệu character",
           "targetBehavior": "gần như luôn phải truyền characterId rõ ràng"
         }
@@ -642,19 +608,16 @@
         {
           "namespace": "GNNetwork.cloudScript",
           "requestRole": "Client",
-          "defaultSecretKey": "clientSecretKey",
           "useWhen": "app public chỉ execute function nếu backend cho phép"
         },
         {
           "namespace": "GNNetwork.cloudScript.server",
           "requestRole": "Server",
-          "defaultSecretKey": "serverSecretKey",
           "useWhen": "trusted backend execute hoặc publish theo workflow backend"
         },
         {
           "namespace": "GNNetwork.cloudScript.admin",
           "requestRole": "Admin",
-          "defaultSecretKey": "adminSecretKey",
           "useWhen": "dashboard hoặc backoffice quản trị version và live status"
         }
       ],

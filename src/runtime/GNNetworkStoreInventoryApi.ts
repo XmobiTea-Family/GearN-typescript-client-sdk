@@ -222,7 +222,7 @@ export class StoreInventoryApi {
 /**
  * Exposes server-scoped store operations through `GNNetwork.storeInventory.server`.
  *
- * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
  */
 export class ServerStoreInventoryApi {
 	/**
@@ -429,7 +429,7 @@ export class ServerStoreInventoryApi {
 /**
  * Exposes admin-scoped store operations through `GNNetwork.storeInventory.admin`.
  *
- * Use this namespace from dashboard, GM, or backoffice code with `adminSecretKey` or `overrideSecretKey`.
+ * Use this namespace from dashboard, GM, or backoffice code with `secretKey` or `overrideSecretKey`.
  */
 export class AdminStoreInventoryApi {
 	/**

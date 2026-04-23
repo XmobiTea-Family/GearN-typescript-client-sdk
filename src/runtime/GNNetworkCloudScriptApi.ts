@@ -96,7 +96,7 @@ export class CloudScriptApi {
 /**
  * Exposes server-scoped CloudScript operations through `GNNetwork.cloudScript.server`.
  *
- * Use this namespace from trusted backend code with `serverSecretKey` or `overrideSecretKey`.
+ * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
  */
 export class ServerCloudScriptApi {
 	/**
@@ -177,7 +177,7 @@ export class ServerCloudScriptApi {
 /**
  * Exposes admin-scoped CloudScript operations through `GNNetwork.cloudScript.admin`.
  *
- * Use this namespace from dashboard or backoffice code with `adminSecretKey` or `overrideSecretKey`.
+ * Use this namespace from dashboard or backoffice code with `secretKey` or `overrideSecretKey`.
  */
 export class AdminCloudScriptApi {
 	/**

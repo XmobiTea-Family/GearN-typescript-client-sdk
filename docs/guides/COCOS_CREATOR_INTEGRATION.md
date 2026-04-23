@@ -49,9 +49,7 @@ settings.config({
     reconnectDelay: 1000,
     pingInterval: 3000,
     pingTimeout: 5000,
-    adminSecretKey: "",
-    serverSecretKey: "",
-    clientSecretKey: "your-client-secret",
+    secretKey: "your-secret-key",
     logType: LogType.All,
 });
 

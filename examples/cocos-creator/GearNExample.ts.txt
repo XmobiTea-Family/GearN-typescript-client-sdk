@@ -34,7 +34,7 @@ export class GearNExample extends Component {
     serverSocketPort: number = 2901;
 
     @property({ tooltip: "Client secret key" })
-    clientSecretKey: string = "";
+    secretKey: string = "";
 
     @property({ tooltip: "Use HTTPS public endpoint" })
     useSsl: boolean = false;
@@ -65,9 +65,7 @@ export class GearNExample extends Component {
                 reconnectDelay: 1000,
                 pingInterval: 3000,
                 pingTimeout: 5000,
-                adminSecretKey: "",
-                serverSecretKey: "",
-                clientSecretKey: this.clientSecretKey,
+                secretKey: this.secretKey,
                 logType: this.enableDebugLog ? LogType.All : LogType.None,
             });
 

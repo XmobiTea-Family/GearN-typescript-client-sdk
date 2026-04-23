@@ -60,7 +60,7 @@ Hiểu nhanh:
 
 - `SecretInvalid`: secret key sai, thiếu, hoặc không khớp context.
 - `OperationInvalid`: operation không tồn tại hoặc không hợp lệ với request type/role.
-- `OperationNotAllow`: secret key vẫn hợp lệ, operation vẫn tồn tại, nhưng permission rules của secret key không cho phép chạy operation trong target context hiện tại.
+- `OperationNotAllow`: secret key vẫn hợp lệ, operation vẫn tồn tại, nhưng `permission rules` của secret key không cho phép chạy operation trong target context hiện tại.
 
 Nếu gặp `OperationNotAllow`, phải kiểm tra:
 
@@ -85,9 +85,7 @@ Rule cứng:
 
 Secret key:
 
-- Route `client` dùng `clientSecretKey` nếu không truyền `overrideSecretKey`.
-- Route `server` chỉ dùng khi đã cấu hình `serverSecretKey` hợp lệ hoặc chủ động truyền `overrideSecretKey`.
-- Route `admin` chỉ dùng khi đã cấu hình `adminSecretKey` hợp lệ hoặc chủ động truyền `overrideSecretKey`.
+- Mọi route dùng `secretKey` nếu không truyền `overrideSecretKey`.
 
 ## 5. Hiểu `self` và `other self`
 
@@ -128,9 +126,8 @@ Rule cứng:
 Rule đúng:
 
 - Public wrapper hiện tại của `DashboardApi` dùng `RequestRole.Client`.
-- Nếu không truyền `overrideSecretKey`, transport mặc định vẫn gắn `clientSecretKey`.
+- Nếu không truyền `overrideSecretKey`, transport mặc định vẫn gắn `secretKey`.
 - Sau `loginByAdminAccountAsync`, backend middleware sẽ resolve secret context và quyền admin riêng từ `authToken`.
-- Không giả định SDK tự đổi local secret key sang `adminSecretKey`.
 - Không dùng `GNNetwork.dashboard.server.*` hoặc `GNNetwork.dashboard.admin.*` vì hiện chưa có public method nào để gọi.
 
 ## 8. Chọn Đúng API Group
@@ -225,8 +222,8 @@ DTO shape (field-by-field) không inline trong API reference — xem [DTO_INDEX.
 
 ## Khi nào dùng `server` / `admin` variant?
 
-- `.server` (role `Server`) — trusted backend-to-backend call, ví dụ CloudScript runtime gọi SDK, hoặc backend microservice grant item cho player khác. Yêu cầu `serverSecretKey` cấu hình trong `GNServerSettings`.
-- `.admin` (role `Admin`) — admin tool / dashboard script mutate state bất kỳ player. Yêu cầu `adminSecretKey`.
+- `.server` (role `Server`) — trusted backend-to-backend call, ví dụ CloudScript runtime gọi SDK, hoặc backend microservice grant item cho player khác.
+- `.admin` (role `Admin`) — admin tool / dashboard script mutate state bất kỳ player.
 - Không có `.server` / `.admin` namespace nghĩa là group đó chỉ expose cho client (hoặc admin flow đã wrap trong namespace riêng, ví dụ `dashboard`).
 
 Xem [AGENTS.md](../../AGENTS.md) §"Chọn Đúng API Group" + [CONFIG.md](CONFIG.md) cho secret key config.
@@ -2383,9 +2380,7 @@ settings.config({
 	pingInterval: 20000,
 	pingTimeout: 20000,
 
-	clientSecretKey: "<client-secret>",
-	serverSecretKey: "",
-	adminSecretKey: "",
+	secretKey: "<secret-key>",
 
 	logType: LogType.All,
 } satisfies GNServerSettingsOptions);
@@ -2397,7 +2392,7 @@ GNNetwork.init(settings);
 
 - `GNNetwork.init(settings)` là **idempotent**: gọi 1 lần ở bootstrap, các lần sau bị bỏ qua (không reset config).
 - `GNServerSettings.config(options)` thay thế toàn bộ snapshot — không merge partial. Nếu muốn đổi từng field, dùng setter như `setServerAddress`.
-- Không commit production secret key vào client bundle. Giữ `serverSecretKey` / `adminSecretKey` rỗng ở môi trường client.
+- Không commit production `secretKey` có `permission rules` là `admin` hoặc `server` vào client bundle.
 
 ---
 
@@ -2417,9 +2412,7 @@ GNNetwork.init(settings);
 | `reconnectDelay` | `number` | yes | `5000` | ms | Reconnect delay của socket client |
 | `pingInterval` | `number` | yes | `20000` | ms | Ping interval socket client |
 | `pingTimeout` | `number` | yes | `20000` | ms | Timeout phát hiện socket stale |
-| `adminSecretKey` | `string` | yes | — (nên `""` ở client) | — | Auto gắn cho route `RequestRole.Admin` |
-| `serverSecretKey` | `string` | yes | — (nên `""` ở client) | — | Auto gắn cho route `RequestRole.Server` |
-| `clientSecretKey` | `string` | yes | — | — | Auto gắn cho route `RequestRole.Client` và Dashboard transport default |
+| `secretKey` | `string` | yes | — | — | Auto gắn cho mọi route nếu không truyền `overrideSecretKey` |
 | `logType` | `LogType` | yes | `LogType.All` | enum | Verbosity `GNDebug` |
 
 Default column phản ánh giá trị khởi tạo trong class `GNServerSettings` trước khi gọi `config()`. `config()` yêu cầu cung cấp đầy đủ mọi field (strict replace).
@@ -2864,7 +2857,7 @@ FILE: docs/COOKBOOK.md
 
 **Problem:** Lần đầu khởi chạy ứng dụng — cần init SDK để bất kỳ API nào hoạt động.
 
-**Prerequisites:** biết server address/port và `clientSecretKey` backend cấp.
+**Prerequisites:** biết server address/port và `secretKey` backend cấp.
 
 **APIs used:** `GNNetwork.init()`, `GNServerSettings`.
 
@@ -2886,9 +2879,7 @@ const settings = new GNServerSettings({
   reconnectDelay: 5000,
   pingInterval: 20000,
   pingTimeout: 20000,
-  clientSecretKey: "<client-secret>",
-  serverSecretKey: "",
-  adminSecretKey: "",
+  secretKey: "<secret-key>",
   logType: LogType.Error,
 });
 
@@ -3285,7 +3276,7 @@ async function leave(groupId: string) {
 
 ### Pitfalls
 
-- `kickGroupMember` là method `.server` namespace — chỉ call được nếu có `serverSecretKey`. Từ client thường expose qua CloudScript.
+- `kickGroupMember` là method `.server` namespace — chỉ call được nếu có `secretKey` chứa `permission rules` là `server` hợp lệ. Từ client thường expose qua CloudScript.
 
 ---
 
@@ -3355,8 +3346,6 @@ async function findMatch(queueName: string) {
 
 **Problem:** Client xem inventory; backend/CloudScript grant item cho player khác.
 
-**Prerequisites:** client login; `serverSecretKey` cấu hình ở backend/CloudScript.
-
 **APIs used:** [`GNNetwork.inventory.getInventoryItemListAsync`](reference/API_INVENTORY.md) (client), `GNNetwork.inventory.server.addInventoryItemAsync` (server).
 
 ### Code
@@ -3387,11 +3376,11 @@ async function grantSword(targetUserId: string) {
 ### Return paths
 
 - Client query → chỉ thấy inventory của chính mình (backend enforce ownerId = authToken.userId).
-- Server grant → nếu `serverSecretKey` sai → `ReturnCode.PermissionDenied`.
+- Server grant → nếu `secretKey` sai → `ReturnCode.OperationNotAllow`.
 
 ### Pitfalls
 
-- Gọi `.server.*` từ frontend browser → leak `serverSecretKey` ra client → bug lớn. CHỈ gọi `.server` trong backend Node service hoặc CloudScript.
+- NÊN gọi `.server` trong backend Node service hoặc CloudScript.
 
 ---
 
@@ -3531,7 +3520,7 @@ async function callOtherGame(gameSecret: string) {
 ### Return paths
 
 - Token override bypass cache; request này KHÔNG update cached token.
-- Secret override bypass `clientSecretKey`/`serverSecretKey`/`adminSecretKey` mặc định.
+- Secret override bypass `secretKey` mặc định.
 
 ### Pitfalls
 

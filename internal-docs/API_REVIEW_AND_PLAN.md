@@ -133,7 +133,7 @@ Lý do:
 
 - Không để markdown link trong docs trỏ về `../src/...`; chỉ dùng `../dist/...d.ts`.
 - Không giả định `server` hoặc `admin` usable chỉ vì class được expose trong SDK.
-- Với mọi API có `.server` hoặc `.admin` trừ `DashboardApi`, phải ghi rõ rule cứng: chỉ dùng khi đã cấu hình đúng `serverSecretKey` / `adminSecretKey` hoặc cố ý `overrideSecretKey`.
+- Với mọi API có `.server` hoặc `.admin` trừ `DashboardApi`, phải ghi rõ rule cứng: chỉ dùng khi đã cấu hình đúng `permission rules` cho `secretKey` hoặc cố ý `overrideSecretKey`.
 - `client/server/admin` là trust boundary của caller, không phải cách phân loại target là của mình hay của người khác.
 - `self/other self` là target context backend suy ra thêm trên route `client`; không được nhầm nó với `server/admin`.
 - Với các domain không có ownership semantics rõ như `ContentApi`, `StoreInventoryApi`, `MultiplayerApi`, `CloudScriptApi`, không cố viết giải thích `self/other self` khi contract thật không dùng logic đó.

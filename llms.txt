@@ -10,7 +10,7 @@ Golden rules (đọc trước khi sinh code):
 - Check 2 tầng theo thứ tự: `if (res.returnCode !== ReturnCode.Ok) return; if (res.errorCode !== ErrorCode.Ok) return;`.
 - `Ok === 1` cả `ReturnCode` và `ErrorCode`. KHÔNG giả định `Ok === 0`.
 - Route `client/server/admin` là trust boundary của caller, KHÔNG phải target ownership.
-- `.server` / `.admin` chỉ dùng từ trusted backend; cấu hình `serverSecretKey` / `adminSecretKey` tương ứng.
+- `.server` / `.admin` chỉ dùng từ trusted backend; cấu hình `secretKey` chứa permissions rules tương ứng.
 - `DashboardApi` là ngoại lệ: public wrapper vẫn `RequestRole.Client`, backend resolve admin từ `authToken` sau `loginByAdminAccountAsync`.
 - Socket auth là bước riêng sau HTTP login; SDK auto-auth nếu token có trong cache.
 
