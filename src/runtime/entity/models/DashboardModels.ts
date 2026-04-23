@@ -1863,10 +1863,6 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public gameId?: string;
 
-		/** Secret role value. This should match the server-side secret role contract. */
-		@NumberDataMember({ code: ParameterCode.Role, mustInt: true, minValue: 1, maxValue: 3 })
-		public role: number;
-
 		/** Optional permission tree granted to the new secret key. */
 		@GNHashtableDataMember({ code: ParameterCode.PermissionParam, isOptional: true })
 		public permissionParam?: PermissionParam;
@@ -2238,10 +2234,6 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.GameId })
 		public gameId: string;
 
-		/** Secret role stored for this secret info entry. */
-		@NumberDataMember({ code: ParameterCode.Role })
-		public role: number;
-
 		@NumberDataMember({ code: ParameterCode.TsCreate })
 		public tsCreate: number;
 
@@ -2279,16 +2271,8 @@ export namespace DashboardModels {
 	 */
 	export class GetSecretInfoListResponseData {
 		/** Secret keys whose role is admin. */
-		@GNArrayDataMember({ code: ParameterCode.AdminSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
-		public adminSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
-
-		/** Secret keys whose role is server. */
-		@GNArrayDataMember({ code: ParameterCode.ServerSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
-		public serverSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
-
-		/** Secret keys whose role is player or client-facing. */
-		@GNArrayDataMember({ code: ParameterCode.PlayerSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
-		public playerSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
+		@GNArrayDataMember({ code: ParameterCode.SecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
+		public secretKeys: Array<SecretInfoWithSecretKeyResponseData>;
 
 	}
 
