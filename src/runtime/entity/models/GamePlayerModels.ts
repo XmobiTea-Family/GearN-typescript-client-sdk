@@ -72,6 +72,12 @@ export namespace GamePlayerModels {
 		public playerGroups?: boolean;
 
 		/**
+		 * Includes the player's online status, if supported by the connected game server
+		 */
+		@BooleanDataMember({ code: ParameterCode.OnlineStatus, isOptional: true, defaultValue: false })
+		public onlineStatus?: boolean;
+
+		/**
 		 * Includes relation items for friends attached to the player, optionally filtered by `friendCatalogIds`.
 		 */
 		@BooleanDataMember({ code: ParameterCode.PlayerFriends, isOptional: true, defaultValue: false })
@@ -1680,6 +1686,9 @@ export namespace GamePlayerModels {
 		@GNArrayDataMember({ code: ParameterCode.PlayerStatistics, isOptional: true, elementCls: GenericModels.StatisticsItem })
 		public playerStatistics?: Array<GenericModels.StatisticsItem>;
 
+		@GNHashtableDataMember({ code: ParameterCode.OnlineStatus, isOptional: true })
+		public onlineStatus?: OnlineStatusItem;
+
 		/**
 		 * Lightweight relation items for owned character players, not full character snapshots.
 		 */
@@ -1826,7 +1835,7 @@ export namespace GamePlayerModels {
 	/**
 	 * Reports the latest known login timestamp and active socket identity for a player.
 	 */
-	export class OnlineStatusResponseData {
+	export class OnlineStatusItem {
 		@NumberDataMember({ code: ParameterCode.TsLastLogin })
 		public tsLastLogin: number;
 
