@@ -118,16 +118,53 @@ GearN Server map quyền theo từng domain + operation (ví dụ `masterPlayer.
 | `serverSelfEnable` | Cho phép thực thi qua route `server` |
 | `adminSelfEnable` | Cho phép thực thi qua route `admin` |
 
-### Khi gặp `ReturnCode.OperationNotAllow`
+Danh sách operation đầy đủ theo domain: **https://docs.gearn.net/permissionRules** (authoritative source, backend admin config qua dashboard).
 
-Kiểm tra đúng thứ tự:
+### 6.1 Mapping (route, target) → required flag
 
-1. Đang dùng đúng route `client / server / admin` chưa?
-2. Secret key active có permission đúng domain + operation chưa?
-3. Operation rơi vào nhánh `self` hay `other self`?
-4. Nếu route `server` / `admin`: secret có `serverSelfEnable` / `adminSelfEnable` chưa?
+Đây là quy tắc **uniform** cho mọi operation. Kết hợp với [§ 4 self / other self](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client) để xác định target.
 
-Không retry — đây là config fix, không phải transient error.
+| Caller gọi | Target | Flag cần trên secret key |
+|---|---|---|
+| `GNNetwork.<group>.<method>()` — bỏ userId hoặc userId trùng auth | Self | `selfEnable` của operation |
+| `GNNetwork.<group>.<method>(otherUserId)` | Other self | `otherSelfEnable` của operation |
+| `GNNetwork.<group>.server.<method>(...)` | Bất kỳ | `serverSelfEnable` của operation |
+| `GNNetwork.<group>.admin.<method>(...)` | Bất kỳ | `adminSelfEnable` của operation |
+
+Ngoại lệ: domain không có ownership (`ContentApi`, `StoreInventoryApi`, `MultiplayerApi`, `CloudScriptApi`) — `self` / `other self` không áp dụng trên route `client`; backend áp rule theo contract operation.
+
+### 6.2 Ai config flag, client có đổi được không?
+
+- Permission rule được **backend admin** config trên dashboard GearN Server theo **từng `secretKey` × từng operation × từng flag**.
+- Client **không** tự đổi được flag. Chỉ có 3 option khi thiếu quyền:
+  1. Dùng `secretKey` khác trong `GNServerSettings` (cấu hình từ bootstrap).
+  2. Truyền `overrideSecretKey` per-request.
+  3. Yêu cầu backend admin bật flag cho secret hiện tại.
+- Danh sách operation theo domain (authoritative): [docs.gearn.net/permissionRules](https://docs.gearn.net/permissionRules).
+
+### 6.3 Scenario điển hình trigger `OperationNotAllow`
+
+| # | Code thực tế | Root cause | Fix |
+|---|---|---|---|
+| 1 | App player: `masterPlayer.getPlayerInformationAsync(otherUserId)` | Secret client không có `otherSelfEnable` cho `masterPlayer.getPlayerInformation` | Backend admin bật `otherSelfEnable`, hoặc chuyển flow sang server-side |
+| 2 | Script dev: `inventory.admin.setAmountAsync(...)` với secret client thường | Secret không có `adminSelfEnable` cho `inventory.setAmount` | Dùng secret admin qua `overrideSecretKey`, hoặc cấu hình `GNServerSettings.secretKey` = secret admin |
+| 3 | Game server: `GNNetwork.group.joinGroupAsync(...)` (route client) | Secret server không có `selfEnable` cho `group.joinGroup` | Chuyển sang `GNNetwork.group.server.joinGroupAsync(...)` — dùng `serverSelfEnable` |
+| 4 | Backend worker: `gamePlayer.server.changePlayerCurrencyAsync(...)` bỏ `userId` | Route `server`/`admin` yêu cầu `userId` rõ ràng (xem [§ 4](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)) | Truyền `userId` target |
+| 5 | Admin tool: `masterPlayer.admin.setPlayerBanAsync(...)` | Secret admin bị backend giới hạn operation đó | Hỏi backend admin bật `adminSelfEnable` cho `masterPlayer.setPlayerBan` |
+
+### 6.4 Checklist nhanh khi gặp `ReturnCode.OperationNotAllow`
+
+Theo đúng thứ tự:
+
+1. Xác định route đang gọi (`client` / `.server` / `.admin`).
+2. Xác định target là `self` hay `other self` (xem [§ 4](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)).
+3. Tra bảng § 6.1 → ra flag cần (ví dụ `otherSelfEnable`).
+4. Check secret key active có flag đó cho operation đang gọi không? → xem backend dashboard hoặc hỏi admin.
+5. Nếu không → 3 option ở § 6.2.
+
+**Không retry** — đây là config fix, không phải transient error.
+
+Diagnose end-to-end với code: [COOKBOOK Scenario 16](COOKBOOK.md#scenario-16-diagnose-operationnotallow).
 
 ---
 

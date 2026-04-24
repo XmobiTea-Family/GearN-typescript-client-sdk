@@ -97,7 +97,7 @@ Bảng đầy đủ 50 giá trị xem [ENUMS.md § ErrorCode](ENUMS.md#errorcode
 | `AccountPasswordWrong` (3), `PlayerBan` (38) | Auth fail nghiệp vụ — show rõ cho user, không retry cùng input |
 | `NotEnoughCurrency` (8), `CanNotBuyThisStoreItem` (32) | Điều kiện business không đủ — UX hướng dẫn user nạp/thử item khác |
 | `ExternalLinked*` (27, 28) | Identity conflict — UX hướng dẫn unlink/choose account |
-| `MatchmakingPlayerHasJoinedOtherTicket` (43), `MatchmakingTicketAlreadyCompleted` (40) | State transition không hợp lệ — poll state mới rồi retry logic |
+| `MatchmakingPlayerJoinedOtherTicket` (43), `MatchmakingTicketAlreadyCompleted` (40) | State transition không hợp lệ — poll state mới rồi retry logic |
 | `ExecuteError` (46) | CloudScript throw — đọc payload execute response để debug |
 
 ---

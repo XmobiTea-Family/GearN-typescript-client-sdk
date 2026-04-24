@@ -1,6 +1,6 @@
 # Cookbook
 
-15 scenario end-to-end phổ biến. Mỗi scenario có: problem, prerequisites, APIs used, code snippet, return path handling, pitfall.
+16 scenario end-to-end phổ biến. Mỗi scenario có: problem, prerequisites, APIs used, code snippet, return path handling, pitfall.
 
 > Tất cả snippet dùng import từ package name `@xmobitea/gn-typescript-client`. Ví dụ dùng dạng `async/await` (form `*Async()`). Thay phần comment `// TODO: …` bằng logic ứng dụng của bạn.
 
@@ -21,6 +21,7 @@
 13. [Override authToken / secret (impersonate, cross-role)](#scenario-13-override-authtoken--secret-impersonate-cross-role)
 14. [Admin login qua DashboardApi](#scenario-14-admin-login-qua-dashboardapi)
 15. [Cleanup & shutdown flow](#scenario-15-cleanup--shutdown-flow)
+16. [Diagnose `OperationNotAllow`](#scenario-16-diagnose-operationnotallow)
 
 ---
 
@@ -763,6 +764,109 @@ function logoutAndCleanup() {
 
 - Không clear event handler → new session fire vào callback cũ trỏ tới UI component đã unmount, gây crash.
 - Không đợi `disconnectSocket` callback mà shutdown process ngay → socket có thể không gửi packet `logout` tới server → backend phải đợi timeout để cleanup session.
+
+---
+
+## Scenario 16: Diagnose `OperationNotAllow`
+
+**Problem:** Một API call trả `ReturnCode.OperationNotAllow`. Cần xác định root cause và fix.
+
+**Prerequisites:** biết method đang gọi, namespace (`client` / `.server` / `.admin`), target user (nếu có), secret key đang dùng.
+
+**Key insight:** `OperationNotAllow` **không** phải thiếu secret hoặc operation không tồn tại (đó là `SecretInvalid` và `OperationInvalid`). Đây là: secret hợp lệ, operation tồn tại, nhưng **permission rule** của secret không cho phép operation trong target context. Xem [RULES § 5](RULES.md#5-phân-biệt-3-returncode-dễ-nhầm).
+
+### Decision tree
+
+```
+Gặp returnCode === OperationNotAllow
+│
+├─ Bước 1: Xác định route đang gọi
+│    • GNNetwork.<group>.<method>(...)         → route = client
+│    • GNNetwork.<group>.server.<method>(...)  → route = server
+│    • GNNetwork.<group>.admin.<method>(...)   → route = admin
+│
+├─ Bước 2: Xác định target (chỉ áp dụng route client)
+│    • Bỏ userId HOẶC userId trùng auth       → target = self
+│    • userId khác auth user                   → target = other-self
+│    • Domain không có ownership (Content,
+│      StoreInventory, Multiplayer, CloudScript) → bỏ qua bước 2
+│
+├─ Bước 3: Map route + target → flag cần (RULES § 6.1)
+│    • client + self        → selfEnable
+│    • client + other-self  → otherSelfEnable
+│    • server               → serverSelfEnable
+│    • admin                → adminSelfEnable
+│
+├─ Bước 4: Check secret active có flag đó cho operation đang gọi không?
+│    → xem dashboard GearN Server hoặc hỏi backend admin
+│    → danh sách operation: https://docs.gearn.net/permissionRules
+│
+└─ Bước 5: Nếu không có flag, chọn 1 trong 3 action:
+     (a) Dùng secret khác qua GNServerSettings.secretKey (cần restart process)
+     (b) Override per-request: truyền overrideSecretKey vào method
+     (c) Yêu cầu backend admin bật flag tương ứng cho secret hiện tại
+```
+
+### Code
+
+```ts
+import {
+  GNNetwork,
+  ReturnCode,
+  InventoryModels,
+} from "@xmobitea/gn-typescript-client";
+
+async function grantItem(userId: string, itemId: string, amount: number) {
+  const req = new InventoryModels.SetAmountRequestData();
+  req.itemId = itemId;
+  req.amount = amount;
+
+  // Attempt 1: route admin với secret mặc định của app
+  let res = await GNNetwork.inventory.admin.setAmountAsync(req);
+
+  if (res.returnCode === ReturnCode.OperationNotAllow) {
+    console.warn("OperationNotAllow on admin route — secret thiếu adminSelfEnable cho inventory.setAmount");
+    console.warn("debugMessage:", res.debugMessage);
+
+    // Attempt 2: fallback override secret admin cho 1 request
+    const ADMIN_SECRET = process.env.GEARN_ADMIN_SECRET; // KHÔNG hardcode
+    if (ADMIN_SECRET) {
+      res = await GNNetwork.inventory.admin.setAmountAsync(
+        req,
+        undefined,      // overrideAuthToken
+        ADMIN_SECRET,   // overrideSecretKey
+      );
+    }
+  }
+
+  if (res.returnCode !== ReturnCode.Ok) {
+    // Vẫn fail sau fallback → báo ops, KHÔNG retry
+    throw new Error(`grant failed: returnCode=${res.returnCode}, debug=${res.debugMessage}`);
+  }
+  return res.responseData;
+}
+```
+
+### Return paths
+
+- `OperationNotAllow` → **không retry cùng secret**, đó là config fix.
+- Sau fallback `overrideSecretKey` vẫn `OperationNotAllow` → secret admin cũng thiếu flag, phải liên hệ backend admin.
+- Nếu chuyển sang `SecretInvalid` sau fallback → override secret sai format / không khớp game context (khác lỗi, xem [RULES § 5](RULES.md#5-phân-biệt-3-returncode-dễ-nhầm)).
+
+### Pitfalls
+
+- **Nhầm `OperationNotAllow` với `SecretInvalid`** → sửa sai hướng, đổi secret vô nghĩa khi rule chưa được bật.
+- **Dùng `.server` / `.admin` từ frontend app để vượt permission** → trust boundary leak, secret bị expose. Route phải match caller thực tế (xem [RULES § 3](RULES.md#3-route--trust-boundary-của-caller)).
+- **Retry tự động khi gặp `OperationNotAllow`** → không bao giờ giải quyết được, chỉ tốn request budget.
+- **Giả định rule `selfEnable` tự bật** → backend admin config per-operation, không default bật tất cả.
+- **Không check self vs other-self khi ở route `client`** → ví dụ gọi `masterPlayer.getPlayerInformationAsync(otherId)` mà nghĩ vẫn là self → sai flag → debug lâu.
+
+### Liên kết
+
+- Mapping rule đầy đủ: [RULES § 6.1](RULES.md#61-mapping-route-target--required-flag)
+- Scenario điển hình (5 case): [RULES § 6.3](RULES.md#63-scenario-điển-hình-trigger-operationnotallow)
+- Checklist nhanh: [RULES § 6.4](RULES.md#64-checklist-nhanh-khi-gặp-returncodeoperationnotallow)
+- Danh sách operation per-domain: [docs.gearn.net/permissionRules](https://docs.gearn.net/permissionRules)
 
 ---
 

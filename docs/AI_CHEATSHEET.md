@@ -162,6 +162,8 @@ Realtime KHÔNG tự chạy chỉ vì đã gọi HTTP (friend/group/...). Phải
 
 So sánh bằng enum symbol, không hardcode số. Giá trị numeric: [reference/ENUMS.md](reference/ENUMS.md). Full table + `ErrorCode`: [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md).
 
+Gặp `OperationNotAllow` — decision tree + code fallback: [COOKBOOK Scenario 16](COOKBOOK.md#scenario-16-diagnose-operationnotallow). Mapping route → flag cần: [RULES § 6.1](RULES.md#61-mapping-route-target--required-flag).
+
 ---
 
 ## 8. Khi nào ĐƯỢC đọc `src/`

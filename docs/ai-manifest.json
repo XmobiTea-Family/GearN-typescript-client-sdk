@@ -91,12 +91,30 @@
     ]
   },
   "permissionRules": {
+    "authoritativeDoc": "https://docs.gearn.net/permissionRules",
+    "note": "Backend GearN Server là source-of-truth per-operation. SDK docs chỉ cung cấp mapping rule uniform.",
     "selfOtherSelfOnlyApplyOnClientRoute": true,
     "flags": {
       "selfEnable": "cho phép thực thi trên chính tài nguyên thuộc user đã authenticate",
       "otherSelfEnable": "cho phép thực thi trên tài nguyên không thuộc user đã authenticate",
       "serverSelfEnable": "cho phép thực thi qua route server",
       "adminSelfEnable": "cho phép thực thi qua route admin"
+    },
+    "routeToFlagMapping": [
+      { "callerNamespace": "GNNetwork.<group>.<method>()",        "route": "client", "target": "self",       "requiredFlag": "selfEnable" },
+      { "callerNamespace": "GNNetwork.<group>.<method>(otherId)", "route": "client", "target": "other-self", "requiredFlag": "otherSelfEnable" },
+      { "callerNamespace": "GNNetwork.<group>.server.<method>()", "route": "server", "target": "*",          "requiredFlag": "serverSelfEnable" },
+      { "callerNamespace": "GNNetwork.<group>.admin.<method>()",  "route": "admin",  "target": "*",          "requiredFlag": "adminSelfEnable" }
+    ],
+    "configOwnership": {
+      "configuredBy": "backend_admin_on_gearn_dashboard",
+      "configGranularity": "per secretKey x per operation x per flag",
+      "clientCanChange": false,
+      "recommendedActionOnOperationNotAllow": [
+        "dùng secretKey khác qua GNServerSettings.secretKey",
+        "truyền overrideSecretKey per-request",
+        "yêu cầu backend admin bật flag cho secret hiện tại"
+      ]
     },
     "selfSemantics": {
       "masterPlayerAndGamePlayer": "target userId trùng userId đã authenticate thành công",
@@ -109,11 +127,14 @@
       ]
     },
     "operationNotAllowChecklist": [
-      "đang dùng đúng route client hoặc server hoặc admin chưa",
-      "secretKey có quyền đúng domain và operation chưa",
-      "operation đang rơi vào self hay other self",
-      "nếu là route server hoặc admin thì secretKey có serverSelfEnable hoặc adminSelfEnable chưa"
-    ]
+      "xác định route đang gọi: client hay .server hay .admin",
+      "xác định target self hay other-self theo self-semantics của domain",
+      "tra routeToFlagMapping ra flag cần",
+      "check secretKey active có flag đó cho operation này không (xem backend dashboard hoặc hỏi admin)",
+      "nếu không có: dùng secret khác, overrideSecretKey, hoặc yêu cầu backend admin bật flag",
+      "KHÔNG retry - đây là config fix"
+    ],
+    "diagnoseWorkflow": "docs/COOKBOOK.md#scenario-16-diagnose-operationnotallow"
   },
   "authAndSocket": {
     "flow": [
@@ -290,7 +311,13 @@
       "emptyNamespaces": [
         "GNNetwork.authenticate.server",
         "GNNetwork.authenticate.admin"
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#authenticate",
+      "recommendedSecretPermissions": {
+        "client": "otherSelfEnable cho các method login/register (login luôn là acting-on-unauth-user)",
+        "server": "serverSelfEnable nếu backend cần issue token cho user cụ thể",
+        "admin": "adminSelfEnable nếu dashboard cần impersonate/provision tài khoản"
+      }
     },
     {
       "name": "DashboardApi",
@@ -316,7 +343,11 @@
       "emptyNamespaces": [
         "GNNetwork.dashboard.server",
         "GNNetwork.dashboard.admin"
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#dashboard",
+      "recommendedSecretPermissions": {
+        "client": "secretKey bootstrap chỉ cần cho phép loginByAdminAccount; sau login backend tự resolve quyền admin từ authToken"
+      }
     },
     {
       "name": "ContentApi",
@@ -347,7 +378,13 @@
           "requestRole": "Admin",
           "useWhen": "dashboard hoặc backoffice quản trị content hoặc file metadata"
         }
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#content",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho các method app-level query; otherSelfEnable nếu cần đọc content của user khác",
+        "server": "serverSelfEnable cho trusted backend upload/download metadata",
+        "admin": "adminSelfEnable cho dashboard quản trị content"
+      }
     },
     {
       "name": "MultiplayerApi",
@@ -382,7 +419,13 @@
       "hardRules": [
         "không dùng socket để tạo hoặc join hoặc cancel hoặc query matchmaking ticket",
         "flow chuẩn là create hoặc join ticket rồi poll getMatchmakingTicket rồi mới getMatch"
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#multiplayer",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho create/cancel ticket của chính user; otherSelfEnable nếu cần query ticket user khác",
+        "server": "serverSelfEnable cho trusted backend điều phối match",
+        "admin": "adminSelfEnable cho dashboard liệt kê/quản lý ticket"
+      }
     },
     {
       "name": "StoreInventoryApi",
@@ -413,7 +456,13 @@
           "requestRole": "Admin",
           "useWhen": "dashboard hoặc ops quản trị catalog hoặc log"
         }
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#storeInventory",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho buy/present/validate receipt của chính user",
+        "server": "serverSelfEnable cho backend fulfillment, webhook validate receipt",
+        "admin": "adminSelfEnable cho dashboard CRUD catalog, log, remove status"
+      }
     },
     {
       "name": "InventoryApi",
@@ -444,7 +493,13 @@
           "requestRole": "Admin",
           "useWhen": "GM tool hoặc dashboard vận hành dữ liệu inventory"
         }
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#inventory",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho query/statistics item của chính user; otherSelfEnable nếu xem item user khác",
+        "server": "serverSelfEnable cho grant/transfer/remove item từ trusted backend",
+        "admin": "adminSelfEnable cho GM tool setAmount, setOwner, setRemoveStatus"
+      }
     },
     {
       "name": "GroupApi",
@@ -479,7 +534,13 @@
       "realtimeHandlers": [
         "dist/runtime/networking/handler/OnGroupMessageUpdateEventHandler.d.ts",
         "dist/runtime/networking/handler/OnGroupMemberUpdateEventHandler.d.ts"
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#group",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho member của group đã join; otherSelfEnable cho query group khác",
+        "server": "serverSelfEnable cho backend manage lifecycle, currency, message",
+        "admin": "adminSelfEnable cho GM tool kick member, reset statistics, setRemoveStatus"
+      }
     },
     {
       "name": "MasterPlayerApi",
@@ -513,7 +574,13 @@
           "useWhen": "dashboard hoặc GM tool vận hành dữ liệu master player",
           "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
         }
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#masterPlayer",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho profile/identity/currency của chính user; otherSelfEnable cho search/leaderboard/xem user khác",
+        "server": "serverSelfEnable cho backend provisioning, link/unlink identity, change currency",
+        "admin": "adminSelfEnable cho GM tool ban, reset password, send push notification"
+      }
     },
     {
       "name": "GamePlayerApi",
@@ -551,7 +618,13 @@
       "realtimeHandlers": [
         "dist/runtime/networking/handler/OnGamePlayerFriendUpdateEventHandler.d.ts",
         "dist/runtime/networking/handler/OnGamePlayerGroupUpdateEventHandler.d.ts"
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#gamePlayer",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho gameplay profile/relation của chính user; otherSelfEnable cho friend/group query sang user khác",
+        "server": "serverSelfEnable cho backend create character, change currency, manage friend/group",
+        "admin": "adminSelfEnable cho GM tool"
+      }
     },
     {
       "name": "CharacterPlayerApi",
@@ -589,7 +662,13 @@
       "realtimeHandlers": [
         "dist/runtime/networking/handler/OnCharacterPlayerFriendUpdateEventHandler.d.ts",
         "dist/runtime/networking/handler/OnCharacterPlayerGroupUpdateEventHandler.d.ts"
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#characterPlayer",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho character thuộc ownership user; otherSelfEnable cho view character khác",
+        "server": "serverSelfEnable cho backend create/remove character, manage friend/group ở cấp character",
+        "admin": "adminSelfEnable cho GM tool"
+      }
     },
     {
       "name": "CloudScriptApi",
@@ -625,7 +704,13 @@
         "editFunctionAsync không sửa source code, chỉ flag enabled hoặc live của version",
         "muốn đổi source code phải addFunctionAsync để tạo version mới",
         "không có public delete function hoặc hard delete version"
-      ]
+      ],
+      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#cloudScript",
+      "recommendedSecretPermissions": {
+        "client": "selfEnable cho executeFunction nếu backend cho phép app public execute",
+        "server": "serverSelfEnable cho backend execute/publish theo workflow trusted",
+        "admin": "adminSelfEnable cho dashboard addFunction/editFunction/publish version"
+      }
     }
   ]
 }
