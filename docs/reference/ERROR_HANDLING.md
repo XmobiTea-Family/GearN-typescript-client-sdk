@@ -42,30 +42,22 @@ Typed response (trả từ mọi `*Async()` và callback path) expose field `pub
 
 ## Tầng 1: `ReturnCode`
 
-Kiểm tra bằng `response.returnCode`. Bảng đầy đủ và giá trị xem [ENUMS.md § ReturnCode](ENUMS.md#returncode).
+Kiểm tra bằng `res.returnCode`. So sánh bằng enum symbol. Giá trị numeric: [ENUMS.md § ReturnCode](ENUMS.md#returncode).
 
 | ReturnCode | Khi nào gặp | Recommended action |
 |------------|-------------|--------------------|
-| `Ok` (1) | Happy path | Sang tầng 2 check `errorCode` |
-| `UnknownError` (0) | Backend fail nhưng không map code cụ thể | Log + show lỗi chung; không retry tự động |
-| `OperationTimeout` (-1) | Request timeout (SDK hoặc backend) | Retry với backoff nếu operation idempotent; báo user nếu không |
-| `OperationNotAllow` (-2) | Permission rule của secret key không cho chạy operation ở target context | Sai route (`client/server/admin`) hoặc secret thiếu `selfEnable`/`otherSelfEnable`/`serverSelfEnable`/`adminSelfEnable`. Không retry — fix config |
-| `InternalServerError` (-3) | Backend crash internal | Log + show lỗi chung; có thể retry 1 lần rồi escalate |
-| `OperationInvalid` (-4) | Operation code không tồn tại / sai với request type + role | Sai namespace: kiểm tra đang gọi đúng `GNNetwork.<domain>.<method>`. Không retry |
-| `InvalidRequestParameters` (-5) | Request shape / field invalid | Đọc `response.getInvalidMembers()`; fix field rồi gửi lại |
-| `OperationNotAuthorized` (-6) | Caller không auth với role/target resource | Kiểm tra `authToken` hợp lệ; re-login hoặc refresh token |
-| `MaxCCUReject` (-7) | Vượt concurrent user limit | Backoff + retry; escalate lên ops nếu recurring |
-| `MaxRequestReject` (-8) | Vượt rate limit | Exponential backoff retry; xem lại client usage pattern |
-| `MaxSizeRequestReject` (-9) | Payload vượt max size | Không retry; giảm size request (paginate, split) |
-| `SecretInvalid` (-10) | Secret key sai / thiếu / không khớp game | Fix cấu hình `GNServerSettingsOptions`, không retry |
-
-### Khi gặp `OperationNotAllow`
-
-Kiểm tra theo thứ tự:
-1. Đang dùng đúng route `client/server/admin` chưa? Route là trust boundary của **caller**, không phải cách phân loại target.
-2. Secret key active có quyền operation trong domain này không?
-3. Operation rơi vào nhánh `self` hay `other self`? (Xem [AGENTS.md § 5](../../AGENTS.md#5-hiểu-self-và-other-self))
-4. Nếu route `server`/`admin`: secret key có `serverSelfEnable`/`adminSelfEnable` enable chưa?
+| `Ok` | Happy path | Sang tầng 2 check `errorCode` |
+| `UnknownError` | Backend fail nhưng không map code cụ thể | Log + show lỗi chung; không retry tự động |
+| `OperationTimeout` | Request timeout (SDK hoặc backend) | Retry với backoff nếu operation idempotent; báo user nếu không |
+| `OperationNotAllow` | Permission rule của secret key không cho chạy operation ở target context | Sai route (`client/server/admin`) hoặc secret thiếu `selfEnable`/`otherSelfEnable`/`serverSelfEnable`/`adminSelfEnable`. Không retry — fix config. Checklist chi tiết: [RULES.md § 6](../RULES.md#6-permission-flags) |
+| `InternalServerError` | Backend crash internal | Log + show lỗi chung; có thể retry 1 lần rồi escalate |
+| `OperationInvalid` | Operation code không tồn tại / sai với request type + role | Sai namespace: kiểm tra đang gọi đúng `GNNetwork.<domain>.<method>`. Không retry |
+| `InvalidRequestParameters` | Request shape / field invalid | Đọc `res.invalidMembers`; fix field rồi gửi lại |
+| `OperationNotAuthorized` | Caller không auth với role/target resource | Kiểm tra `authToken` hợp lệ; re-login hoặc refresh token |
+| `MaxCCUReject` | Vượt concurrent user limit | Backoff + retry; escalate lên ops nếu recurring |
+| `MaxRequestReject` | Vượt rate limit | Exponential backoff retry; xem lại client usage pattern |
+| `MaxSizeRequestReject` | Payload vượt max size | Không retry; giảm size request (paginate, split) |
+| `SecretInvalid` | Secret key sai / thiếu / không khớp game | Fix cấu hình `GNServerSettingsOptions`, không retry |
 
 ### Khi gặp `InvalidRequestParameters`
 
@@ -156,5 +148,5 @@ Mặc định ưu tiên `*Async`.
 ## Liên kết
 
 - Enum đầy đủ: [ENUMS.md](ENUMS.md)
-- Route / permission: [README.MD § route-and-permission-rules](../../README.MD#route-and-permission-rules)
-- Self / other self: [AGENTS.md § 5](../../AGENTS.md#5-hiểu-self-và-other-self)
+- Route / permission: [RULES.md § 3](../RULES.md#3-route--trust-boundary-của-caller)
+- Self / other self: [RULES.md § 4](../RULES.md#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)

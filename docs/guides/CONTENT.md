@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [README](../README.MD#route-and-permission-rules). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
 - Payload shape giữa `client`, `server`, `admin` của cùng một operation là giống nhau; khác biệt chính là role.
 - `ContentApi` không upload byte trực tiếp. Nó chỉ quản lý metadata và token cho flow file; phần upload byte thật đi qua `GNNetwork.uploadFileAsync(...)`.
 

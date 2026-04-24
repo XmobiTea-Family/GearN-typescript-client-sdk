@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [README](../README.MD#route-and-permission-rules). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - `GroupApi` thao tác trên group đã tồn tại. Không có public operation `createGroup`, `joinGroup`, `leaveGroup`, `removeGroup` trong nhóm này.
 - Realtime update của group là luồng riêng qua socket event, không phải transport của các method `GroupApi`.
 
@@ -30,7 +30,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - dashboard/ops/tooling -> `GNNetwork.group.admin`
 - Không được gọi `GroupApi` để tạo group hoặc join/leave group. Các flow đó nằm ở API player khác.
 - Toàn bộ operation trong `GroupApi` hiện đi qua HTTP, kể cả `sendGroupMessageAsync`.
-- Realtime update group tuân theo [rule socket chuẩn trong README](../README.MD#socket-auth-flow).
+- Realtime update group tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow).
 - `getGroupInformationAsync`, `getGroupsWithDisplayNameAsync`, `getGroupsWithSegmentAsync`, `getGroupsWithTagAsync`, `getStatisticsLeaderboardAroundGroupAsync`, `getStatisticsLeaderboardAsync`, `getCurrencyLeaderboardAsync` và `getCreateLeaderboardAsync` đều bắt buộc có `infoRequestParam`.
 - `getGroupStatisticsAsync` dùng `statisticsKeys`, còn `infoRequestParam` dùng `groupStatisticsKeys`. Không được dùng lẫn hai field này.
 - `getGroupDataAsync` dùng `groupDataKeys`, `getGroupCurrencyAsync` dùng `groupCurrencyKeys`, `getGroupInventoryAsync` dùng `itemCatalogIds`.
@@ -412,7 +412,7 @@ const nextToken = response.responseData.token;
 - Đã `GNNetwork.init(settings)` chưa.
 - Có chọn đúng namespace `group` / `group.server` / `group.admin` chưa.
 - Có nhớ rằng operation của `GroupApi` hiện đi qua HTTP không.
-- Nếu flow cần realtime, đã tuân theo [rule socket chuẩn trong README](../README.MD#socket-auth-flow) chưa.
+- Nếu flow cần realtime, đã tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow) chưa.
 - Nếu đang gọi method có `infoRequestParam`, đã truyền object này chưa.
 - Nếu đang đọc statistics bằng getter chuyên biệt, có dùng đúng `statisticsKeys` chưa.
 - Nếu đang đọc history message, có dùng `skip/limit` chưa.

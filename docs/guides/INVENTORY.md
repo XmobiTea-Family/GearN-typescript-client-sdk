@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [README](../README.MD#route-and-permission-rules). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - Payload shape hiện tại giữa `client`, `server`, `admin` là giống nhau; khác biệt chính là trust boundary và secret key mặc định.
 - `InventoryApi` không có flow tạo inventory item mới trong public surface hiện tại. Không được tự suy diễn `createInventoryItem`.
 

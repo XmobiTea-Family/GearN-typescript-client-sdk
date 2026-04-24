@@ -2,28 +2,18 @@
 
 > TypeScript SDK cho GearN backend: authenticate, realtime socket, player/inventory/group/multiplayer/cloudscript APIs. Package: `@xmobitea/gn-typescript-client`. Entrypoint: static class `GNNetwork`. Cài: `npm install @xmobitea/gn-typescript-client`.
 
-Golden rules (đọc trước khi sinh code):
-
-- Luôn `GNNetwork.init(new GNServerSettings({...}))` 1 lần ở bootstrap. Idempotent.
-- Mặc định `*Async()` (Promise). Param chung: `(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?)`.
-- Typed response expose PUBLIC FIELDS: `res.returnCode`, `res.errorCode`, `res.invalidMembers`, `res.debugMessage`, `res.responseData` (KHÔNG getter).
-- Check 2 tầng theo thứ tự: `if (res.returnCode !== ReturnCode.Ok) return; if (res.errorCode !== ErrorCode.Ok) return;`.
-- `Ok === 1` cả `ReturnCode` và `ErrorCode`. KHÔNG giả định `Ok === 0`.
-- Route `client/server/admin` là trust boundary của caller, KHÔNG phải target ownership.
-- `.server` / `.admin` chỉ dùng từ trusted backend; cấu hình `secretKey` chứa permissions rules tương ứng.
-- `DashboardApi` là ngoại lệ: public wrapper vẫn `RequestRole.Client`, backend resolve admin từ `authToken` sau `loginByAdminAccountAsync`.
-- Socket auth là bước riêng sau HTTP login; SDK auto-auth nếu token có trong cache.
+Rule canonical: [docs/RULES.md](docs/RULES.md). Đọc trước khi sinh code.
 
 ## Start here
 
 - [docs/AI_CHEATSHEET.md](docs/AI_CHEATSHEET.md): one-page reference (decision tree, mandatory pattern, top pitfalls)
 - [docs/RULES.md](docs/RULES.md): single source of truth cho route, permission, self/other-self, socket, error
 - [AGENTS.md](AGENTS.md): full AI entry guide
-- [docs/ai-manifest.json](docs/ai-manifest.json): machine-readable manifest (schemaVersion=2)
+- [docs/ai-manifest.json](docs/ai-manifest.json): machine-readable manifest (schemaVersion=3)
 
 ## Reference
 
-- [docs/reference/API_INDEX.md](docs/reference/API_INDEX.md): 11 API group, 945 method (bảng method → DTO → response class)
+- [docs/reference/API_INDEX.md](docs/reference/API_INDEX.md): 11 API group, ~900+ method (bảng method → DTO → response class)
 - [docs/reference/DTO_INDEX.md](docs/reference/DTO_INDEX.md): 2506 DTO, grep target (đừng load full)
 - [docs/reference/dto/](docs/reference/dto/): DTO field-level theo từng domain
 - [docs/reference/ENUMS.md](docs/reference/ENUMS.md): giá trị numeric của mọi enum

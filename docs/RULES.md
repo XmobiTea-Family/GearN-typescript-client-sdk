@@ -44,13 +44,7 @@ Rule cứng:
 - `*Async()` **không throw** business/transport error — reject Promise chỉ khi transport layer thật sự fail (network exception, serialization fail).
 - Low-level raw `OperationResponse` (không dùng typed wrapper) có getter `getReturnCode()` etc. — chỉ dùng khi tự viết custom op.
 
-Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md).
-
-### Phân biệt 3 return code dễ nhầm
-
-- `ReturnCode.SecretInvalid` (-10): secret key sai, thiếu, hoặc không khớp game context.
-- `ReturnCode.OperationInvalid` (-4): operation code không tồn tại, hoặc sai với request type + role hiện tại.
-- `ReturnCode.OperationNotAllow` (-2): operation tồn tại và secret hợp lệ, NHƯNG `permission rules` của secret không cho phép operation trong target context. **Không phải** thiếu secret.
+Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md). Phân biệt `SecretInvalid` / `OperationInvalid` / `OperationNotAllow` → § 5.
 
 ---
 
@@ -69,14 +63,12 @@ Rule cứng:
 - Không chọn `server`/`admin` chỉ vì target không thuộc user hiện tại.
 - Không dùng `.server` / `.admin` từ app client chỉ để vượt permission — bị coi là trust boundary leak, secret sẽ bị expose.
 - Không suy diễn route chỉ từ việc request có hay không có `userId`.
-- Route `server` chỉ gọi được khi `secretKey` được setup có `permission rules` là `server` hợp lệ được set (hoặc truyền `overrideSecretKey`).
-- Route `admin` tương tự, cần `secretKey` được setup có `permission rules` là `admin` hợp lệ.
+- Route `server`/`admin` yêu cầu `secretKey` có flag `serverSelfEnable` / `adminSelfEnable` tương ứng (hoặc truyền `overrideSecretKey`).
 
 ### Ngoại lệ: `DashboardApi`
 
-Wrapper public hiện tại của `DashboardApi`:
-- Không cần dùng `secretKey` mặc định, sau khi login thành công sẽ luôn được dùng bằng `secretKey` của riêng admin này, backend tự xử lí không cần xử lí phía client.
-- Sau `loginByAdminAccountAsync` thành công, backend middleware resolve secret context và quyền admin từ `authToken` cho các request dashboard tiếp theo.
+- Sau `loginByAdminAccountAsync` thành công, backend resolve admin context từ `authToken` — caller **không** cần cấu hình `secretKey` admin riêng.
+- Public wrapper `GNNetwork.dashboard.*` vẫn đi `RequestRole.Client`.
 - `GNNetwork.dashboard.server` và `GNNetwork.dashboard.admin` hiện **rỗng** (không có operation public).
 
 ---
@@ -103,7 +95,19 @@ Rule cứng:
 
 ---
 
-## 5. Permission flags
+## 5. Phân biệt 3 ReturnCode dễ nhầm
+
+| Code | Nghĩa | Fix |
+|---|---|---|
+| `SecretInvalid` | Secret key sai, thiếu, hoặc không khớp game context | Fix `GNServerSettings.secretKey`. **KHÔNG retry**. |
+| `OperationInvalid` | Operation code không tồn tại, hoặc không hợp lệ với `RequestType` + `RequestRole` hiện tại | Check namespace đang gọi + đúng method trong `API_<GROUP>.md`. |
+| `OperationNotAllow` | Secret hợp lệ **và** operation tồn tại, NHƯNG permission rule của secret không cho phép trong target context | Check route + flag `selfEnable`/`otherSelfEnable`/`serverSelfEnable`/`adminSelfEnable`. **KHÔNG retry**. |
+
+Cùng gia đình nhưng ý nghĩa khác hẳn — đừng confuse "secret sai" với "secret đúng nhưng không đủ quyền".
+
+---
+
+## 6. Permission flags
 
 GearN Server map quyền theo từng domain + operation (ví dụ `masterPlayer.getPlayerInformation`, `group.sendGroupMessage`). Mỗi secret key có 4 flag chính:
 
@@ -127,7 +131,7 @@ Không retry — đây là config fix, không phải transient error.
 
 ---
 
-## 6. Auth & Socket flow
+## 7. Auth & Socket flow
 
 Flow chuẩn:
 
@@ -158,7 +162,7 @@ Helper state:
 
 ---
 
-## 7. Method signature & override params
+## 8. Method signature & override params
 
 Đa số method có 2 form:
 
@@ -188,7 +192,7 @@ const tags = GNHashtable.builder()
 
 ---
 
-## 8. Platform & transport
+## 9. Platform & transport
 
 - Node ≥ 20. Custom DTO có decorator cần bật `experimentalDecorators` + `emitDecoratorMetadata`.
 - `MessageType.MsgPack` + HTTP trên browser → SDK tự fallback JSON. Không cần override toàn SDK sang `MessageType.Json`.
@@ -197,23 +201,34 @@ const tags = GNHashtable.builder()
 
 ---
 
-## 9. Anti-patterns (BẮT BUỘC tránh)
+## 10. Anti-patterns & pitfalls
 
-- ❌ Bịa method / field không có trong `dist/*.d.ts`.
-- ❌ Suy diễn "operation tương tự chắc cũng trả id" khi docs không nói.
-- ❌ Giả định realtime tự chạy chỉ vì đã gọi HTTP.
-- ❌ Giả định `MultiplayerApi` dùng socket (hiện là HTTP).
-- ❌ Giả định `editFunctionAsync` (CloudScript) sửa source code (chỉ flag enabled/live).
-- ❌ Dùng `.server` / `.admin` chỉ vì target là user khác.
-- ❌ Bỏ qua `overrideAuthToken`, `overrideSecretKey`, `customTags`, `timeout` nếu use case thực tế cần.
-- ❌ Dùng `src/` làm nguồn public contract — `src/` chỉ đọc khi sửa SDK, debug internal, hoặc verify điểm mà docs + dist chưa đủ.
-- ❌ Giả định success là `0`.
-- ❌ Skip check `returnCode`, đọc thẳng `errorCode`.
-- ❌ Dùng getter `res.getReturnCode()` trên typed response (chỉ dùng trên raw `OperationResponse`).
+Bảng hợp nhất — cột "Triệu chứng" mô tả lỗi runtime thường thấy, cột "Fix" là hành động đúng.
+
+| # | Anti-pattern | Triệu chứng | Fix |
+|---|---|---|---|
+| 1 | Giả định success là `0` | So sánh `=== 0` luôn false, code tưởng fail | `Ok === 1` cả `ReturnCode` và `ErrorCode`. So sánh bằng enum symbol. |
+| 2 | Skip tầng 1, đọc thẳng `errorCode` | Business code branching nhầm vì `errorCode` chưa valid | Check `returnCode !== Ok` **trước**, return sớm. |
+| 3 | Dùng getter `res.getReturnCode()` | `undefined is not a function` trên typed response | Typed response dùng PUBLIC FIELDS. Getter chỉ trên raw `OperationResponse`. |
+| 4 | Gọi API trước `GNNetwork.init()` | `TypeError`, namespace `undefined` | Init 1 lần ở bootstrap. Idempotent — không re-init để đổi config. |
+| 5 | Re-init để đổi config | Config cũ vẫn active | `init()` idempotent; restart process mới đổi được. |
+| 6 | Dùng `.server` / `.admin` từ frontend để vượt permission | Trust boundary leak, secret expose | Route là trust boundary của **caller**, không phải target ownership. |
+| 7 | Tự gọi `sendRequestAuthSocket()` sau mọi `connectSocket()` | Redundant call, có thể gây re-auth loop | SDK auto-auth nếu token có. Chỉ gọi tay khi token đến sau socket up hoặc token vừa đổi. |
+| 8 | Subscribe event SAU `connectSocket()` | Miss event ngay sau handshake | Subscribe handler trước, rồi mới connect. |
+| 9 | `editFunctionAsync` (CloudScript) để sửa source code | Source không đổi, chỉ flag thay | Đổi source = `addFunctionAsync` tạo version mới. |
+| 10 | `MultiplayerApi` gửi qua socket | Không reach backend | Multiplayer dùng HTTP. Flow: create ticket → poll `getMatchmakingTicket` → `getMatch`. |
+| 11 | `infoRequestParam = null` trong login | Backend không hydrate gì cả | Truyền instance dù chỉ bật ít field. |
+| 12 | Bulk-set mọi field của `infoRequestParam` | Payload bự, slow | Chỉ bật field thật sự render. |
+| 13 | Browser + `MessageType.MsgPack` → override toàn SDK sang JSON | Over-engineering | HTTP transport auto-fallback JSON; giữ MsgPack là ok. |
+| 14 | `OperationNotAllow` = thiếu secret | Fix sai hướng, thay secret vô nghĩa | Xem § 5: secret hợp lệ nhưng permission rule cấm. |
+| 15 | Bịa method / field không có trong `dist/*.d.ts` | Compile fail hoặc runtime `undefined` | Tra `API_<GROUP>.md` / `dto/<DOMAIN>.md` / `dist/*.d.ts`. Không suy diễn. |
+| 16 | Giả định realtime tự chạy sau HTTP call | Không nhận event | Phải subscribe handler trong [reference/EVENTS.md](reference/EVENTS.md). |
+| 17 | Bỏ qua `overrideAuthToken` / `overrideSecretKey` / `customTags` / `timeout` khi cần | Impersonate fail, timeout mặc định không đủ | Xem § 8. |
+| 18 | Dùng `src/` làm nguồn public contract | Phụ thuộc internal, rot nhanh | `src/` chỉ khi sửa SDK / debug nội bộ. |
 
 ---
 
-## 10. Canonical sources (thứ tự ưu tiên)
+## 11. Canonical sources (thứ tự ưu tiên)
 
 Khi sinh code:
 

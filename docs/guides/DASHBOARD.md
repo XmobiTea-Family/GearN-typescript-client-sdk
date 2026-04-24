@@ -9,7 +9,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Toàn bộ method hiện tại của `DashboardApi` đều gửi qua HTTP.
 - Toàn bộ request wrapper hiện tại của `DashboardApi` đều dùng `RequestType.Dashboard` với `RequestRole.Client`.
 - Hệ quả rất quan trọng ở tầng SDK: nếu không truyền `overrideSecretKey`, request sẽ mặc định gắn `secretKey`
-- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [README](../README.MD#route-and-permission-rules), nhưng `DashboardApi` là ngoại lệ vì public SDK wrapper này vẫn đi qua `RequestRole.Client`.
+- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](../RULES.md#3-route--trust-boundary-của-caller), nhưng `DashboardApi` là ngoại lệ vì public SDK wrapper này vẫn đi qua `RequestRole.Client`.
 - Trong triển khai GearN server hiện tại, sau `loginByAdminAccountAsync` thành công backend middleware sẽ resolve secret context và quyền riêng của admin từ `authToken` cho các request dashboard tiếp theo.
 - Đây là nhóm API dành cho dashboard, backoffice, provisioning, analytics và maintenance. Không dùng thay cho gameplay API của player.
 - Nếu cần login player, dùng `AuthenticateApi`. Nếu cần data/player runtime, dùng group tương ứng khác.

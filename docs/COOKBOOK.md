@@ -32,31 +32,7 @@
 
 **APIs used:** `GNNetwork.init()`, `GNServerSettings`.
 
-### Code
-
-```typescript
-import { GNNetwork, GNServerSettings, MessageType, LogType } from "@xmobitea/gn-typescript-client";
-
-const settings = new GNServerSettings({
-  serverAddress: "api.mygame.com",
-  serverPort: 443,
-  serverSocketPort: 443,
-  useSsl: true,
-  useSocket: true,
-  useHttp: true,
-  defaultTimeoutInSeconds: 20,
-  messageType: MessageType.MsgPack,
-  sendRate: 20,
-  reconnectDelay: 5000,
-  pingInterval: 20000,
-  pingTimeout: 20000,
-  secretKey: "<secret-key>",
-  logType: LogType.Error,
-});
-
-GNNetwork.init(settings);
-console.log("SDK ready, version", GNNetwork.getClientSdkVersion());
-```
+Code mẫu đầy đủ (có comment từng field): [README § 4](../README.MD#4-khởi-tạo-cơ-bản). Minimal pattern: [AI_CHEATSHEET § 1](AI_CHEATSHEET.md#1-mandatory-pattern-sao-chép--dùng).
 
 ### Return paths
 
@@ -65,11 +41,9 @@ console.log("SDK ready, version", GNNetwork.getClientSdkVersion());
 
 ### Pitfalls
 
-- Gọi API (ví dụ `GNNetwork.authenticate.*`) trước `init()` → namespace `undefined`, TypeError.
 - `logType: LogType.All` trong production làm console spam. Dùng `LogType.Error` hoặc `LogType.None`.
-- Đổi `settings` sau khi `init()` KHÔNG có hiệu lực (idempotent). Phải restart process để config mới áp dụng — hoặc dùng setter của `GNServerSettings` instance đã inject, không phải clone mới.
-
-Xem chi tiết field config: [reference/CONFIG.md](reference/CONFIG.md).
+- Đổi `settings` sau `init()` không có hiệu lực (idempotent). Phải restart process.
+- Full anti-patterns: [RULES § 10](RULES.md#10-anti-patterns--pitfalls). Full field schema: [reference/CONFIG.md](reference/CONFIG.md).
 
 ---
 

@@ -18,7 +18,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Mọi method trừ `refreshAuthToken` đều phải truyền `infoRequestParam` khác `null`.
 - Không dùng `GNNetwork.authenticate.server.*` hoặc `GNNetwork.authenticate.admin.*` vì hiện chưa có method nào để gọi.
 - Sau khi login hoặc refresh token thành công, nếu backend trả `authToken` và `userId`, SDK sẽ tự cache vào `GNNetwork.getAuthenticateStatus()` và `StorageService`.
-- Nếu cần dùng socket sau login, tuân theo [rule socket chuẩn trong README](../README.MD#socket-auth-flow). Flow khuyến nghị là login HTTP thành công -> `GNNetwork.connectSocket()`, SDK sẽ auto-auth nếu `authToken` đã có trong cache.
+- Nếu cần dùng socket sau login, tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow). Flow khuyến nghị là login HTTP thành công -> `GNNetwork.connectSocket()`, SDK sẽ auto-auth nếu `authToken` đã có trong cache.
 
 ## 3. Chọn Method
 
@@ -243,4 +243,4 @@ GNNetwork.connectSocket(); // Follow README socket rule. SDK auto-auths if authT
 - Có `infoRequestParam` chưa.
 - Có dùng `*Async()` không.
 - Có check `hasReturnCodeError()` trước `errorCode` không.
-- Nếu cần socket event sau login, đã tuân theo [rule socket chuẩn trong README](../README.MD#socket-auth-flow) chưa.
+- Nếu cần socket event sau login, đã tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow) chưa.

@@ -259,7 +259,7 @@ Loại credential Google được cung cấp cho login/link flow.
 
 ## InvalidMemberType
 
-Category lỗi validation report qua `OperationResponse.getInvalidMembers()`. Chỉ xuất hiện khi `returnCode === ReturnCode.InvalidRequestParameters`.
+Category lỗi validation expose qua `res.invalidMembers`. Chỉ xuất hiện khi `res.returnCode === ReturnCode.InvalidRequestParameters`.
 
 | Name | Value | Meaning |
 |------|-------|---------|

@@ -132,42 +132,35 @@ Realtime KHÔNG tự chạy chỉ vì đã gọi HTTP (friend/group/...). Phải
 
 ---
 
-## 6. Common pitfalls (top mistakes)
+## 6. Top 5 pitfalls (phải tránh)
 
-1. **Tưởng success là `0`** → đúng là `Ok === 1` cả 2 tầng.
-2. **Skip tầng `returnCode`, đọc thẳng `errorCode`** → khi `returnCode !== Ok`, `errorCode` và `responseData` không đáng tin.
-3. **Dùng getter style `res.getReturnCode()`** → typed response (`*Async`) dùng PUBLIC FIELDS. Getter chỉ trên low-level `OperationResponse` raw.
-4. **Gọi API trước `GNNetwork.init()`** → namespace `undefined`, `TypeError`. Init 1 lần ở bootstrap.
-5. **Re-init để đổi config** → `init()` idempotent, lần thứ 2 bị ignore. Phải restart process.
-6. **Dùng `.server` / `.admin` từ frontend chỉ để vượt permission** → trust boundary leak; secret bị expose. Sai về thiết kế.
-7. **Tự gọi `sendRequestAuthSocket()` sau mọi `connectSocket()`** → SDK đã auto-auth nếu token có. Chỉ gọi tay khi token đến SAU socket connect.
-8. **Subscribe event SAU `connectSocket()`** → có thể miss event ngay sau handshake. Subscribe trước.
-9. **`editFunctionAsync` (CloudScript) sửa source code** → SAI, edit chỉ flag enabled/live. Đổi source = `addFunctionAsync` tạo version mới.
-10. **`MultiplayerApi` gửi qua socket** → SAI, toàn bộ wrapper hiện tại dùng HTTP. Flow là create ticket → poll `getMatchmakingTicket` → `getMatch`.
-11. **`infoRequestParam = null` trong login** → backend sẽ không hydrate gì cả; truyền instance dù chỉ bật ít field.
-12. **`bulk-set` mọi field của `infoRequestParam`** → payload bự, slow; chỉ bật field thật sự render.
-13. **Browser + `MessageType.MsgPack`** → HTTP transport tự fallback JSON; KHÔNG cần override toàn SDK sang JSON.
-14. **`OperationNotAllow` = thiếu secret** → SAI. Secret hợp lệ nhưng permission rule cấm operation. Check route + `selfEnable` / `otherSelfEnable` / `serverSelfEnable` / `adminSelfEnable`.
+1. **Tưởng success là `0`** → `Ok === 1` cả 2 tầng.
+2. **Skip tầng `returnCode`, đọc thẳng `errorCode`** → khi `returnCode !== Ok`, `errorCode` + `responseData` không đáng tin.
+3. **Dùng getter `res.getReturnCode()`** → typed response dùng PUBLIC FIELDS.
+4. **Dùng `.server` / `.admin` từ frontend để vượt permission** → trust boundary leak.
+5. **`OperationNotAllow` = thiếu secret** → SAI. Secret hợp lệ nhưng permission rule cấm. Check route + flag.
+
+18 anti-patterns đầy đủ + cột "Triệu chứng / Fix": [RULES.md § 10](RULES.md#10-anti-patterns--pitfalls).
 
 ---
 
 ## 7. Diagnose `ReturnCode` (nhanh)
 
-| Code | Nghĩa thật | Fix |
+| Code | Nghĩa | Fix |
 |---|---|---|
-| `Ok` (1) | Sang tầng `errorCode` | — |
-| `OperationTimeout` (-1) | Network/backend chậm | Retry với backoff nếu idempotent |
-| `OperationNotAllow` (-2) | Permission rule cấm | Check route + permission flag (KHÔNG retry) |
-| `InternalServerError` (-3) | Backend exception | Báo ops, có thể retry 1 lần |
-| `OperationInvalid` (-4) | Operation không tồn tại với role hiện tại | Đang gọi sai namespace, sai `RequestType`/`RequestRole` |
-| `InvalidRequestParameters` (-5) | Field invalid | Đọc `res.invalidMembers` để biết field nào |
-| `OperationNotAuthorized` (-6) | Không auth với target | Check `authToken` còn hợp lệ |
-| `MaxCCUReject` (-7) | Vượt CCU limit | Backoff retry |
-| `MaxRequestReject` (-8) | Rate limit | Exponential backoff |
-| `MaxSizeRequestReject` (-9) | Payload quá to | Paginate / split |
-| `SecretInvalid` (-10) | Secret sai/thiếu/không khớp game | Fix `GNServerSettings` (KHÔNG retry) |
+| `Ok` | Sang tầng `errorCode` | — |
+| `OperationTimeout` | Network/backend chậm | Retry với backoff nếu idempotent |
+| `OperationNotAllow` | Permission rule cấm | Check route + permission flag (KHÔNG retry) |
+| `InternalServerError` | Backend exception | Báo ops, có thể retry 1 lần |
+| `OperationInvalid` | Operation không tồn tại với role hiện tại | Đang gọi sai namespace, sai `RequestType`/`RequestRole` |
+| `InvalidRequestParameters` | Field invalid | Đọc `res.invalidMembers` để biết field nào |
+| `OperationNotAuthorized` | Không auth với target | Check `authToken` còn hợp lệ |
+| `MaxCCUReject` | Vượt CCU limit | Backoff retry |
+| `MaxRequestReject` | Rate limit | Exponential backoff |
+| `MaxSizeRequestReject` | Payload quá to | Paginate / split |
+| `SecretInvalid` | Secret sai/thiếu/không khớp game | Fix `GNServerSettings` (KHÔNG retry) |
 
-Full table + `ErrorCode` 50 giá trị: [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md).
+So sánh bằng enum symbol, không hardcode số. Giá trị numeric: [reference/ENUMS.md](reference/ENUMS.md). Full table + `ErrorCode`: [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md).
 
 ---
 

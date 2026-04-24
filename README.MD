@@ -6,18 +6,7 @@ SDK TypeScript client cho GearN Server.
 
 > **AI / code assistant:** đọc [docs/AI_CHEATSHEET.md](docs/AI_CHEATSHEET.md) trước (one-page), rồi [docs/RULES.md](docs/RULES.md) cho rule chi tiết (route, permission, self/other-self, socket, error). Machine-readable manifest: [docs/ai-manifest.json](docs/ai-manifest.json).
 
-## Quick rules
-
-- Package publish: `@xmobitea/gn-typescript-client`.
-- Public entrypoint duy nhất: `GNNetwork`.
-- Luôn `GNNetwork.init(settings)` **1 lần** ở bootstrap; idempotent.
-- Ưu tiên `async/await` và method `*Async()`.
-- Check 2 tầng: `returnCode` trước, `errorCode` sau. `Ok === 1` ở cả hai.
-- Route `client / server / admin` = trust boundary của caller, KHÔNG phải target ownership.
-- Socket auth là bước riêng sau HTTP auth; SDK auto-auth nếu token đã cache.
-- `DashboardApi` là ngoại lệ: public wrapper vẫn `RequestRole.Client`, backend resolve admin từ `authToken`.
-
-Chi tiết đầy đủ (gồm phân biệt `SecretInvalid` / `OperationInvalid` / `OperationNotAllow`, self-semantics theo domain, permission flag, socket re-auth, anti-patterns) → [docs/RULES.md](docs/RULES.md).
+Package publish: `@xmobitea/gn-typescript-client`. Rule canonical: [docs/RULES.md](docs/RULES.md).
 
 ## 1. Yêu cầu
 
@@ -79,26 +68,22 @@ settings.config({
   serverPort: 2202,                    // HTTP port
   serverSocketPort: 2901,              // Socket port
   useSsl: false,                       // true khi public endpoint dùng HTTPS
-  useSocket: true,
-  useHttp: true,
-  defaultTimeoutInSeconds: 20,
-  messageType: MessageType.MsgPack,    // browser tự fallback JSON cho HTTP
-  sendRate: 20,
-  reconnectDelay: 5000,
-  pingInterval: 20000,
-  pingTimeout: 20000,
-  secretKey: "secret-key",
-  logType: LogType.All,
+  useSocket: true,                     // true nếu GearN server enable socket và client muốn sử dụng socket
+  useHttp: true,                       // luôn luôn là true
+  defaultTimeoutInSeconds: 20,         // default timeout tính bằng giây mỗi request tính từ lúc bắt đầu gửi OperationRequest và chờ OperationResponse từ phía server, nếu vượt quá thời gian này, 1 mã lỗi ReturnCode.OperationTimeout sẽ được trả về
+  messageType: MessageType.MsgPack,    // browser tự fallback JSON cho HTTP, sử dụng msgPack giúp gói tin nhỏ nhẹ hơn, tăng tỉ lệ gửi thành công và tránh mất nhiều bandwidth, băng thông
+  sendRate: 20,                        // tỉ lệ gửi OperationRequest mỗi giây, 20 có nghĩa là gửi 20 OperationRequest mỗi giây 
+  reconnectDelay: 5000,                // khi sử dụng socket, thời gian dạng milliseconds reconnect lại kể từ lúc mất kết nối là bao nhiêu 
+  pingInterval: 20000,                 // khi sử dụng socket, tần suất ping milliseconds
+  pingTimeout: 20000,                  // khi sử dụng socket, bao lâu thì timeout
+  secretKey: "secret-key",             // secretKey để có thể dùng client này
+  logType: LogType.All,                // log ra tất cả vấn đề thuộc loại nào
 });
 
 GNNetwork.init(settings);
 ```
 
-Full field schema: [docs/reference/CONFIG.md](docs/reference/CONFIG.md).
-
-<a id="route-and-permission-rules"></a>
-
-Rule đầy đủ về route / permission / self / other-self: [docs/RULES.md](docs/RULES.md).
+Full field schema: [docs/reference/CONFIG.md](docs/reference/CONFIG.md). Rule route / permission / self / other-self: [docs/RULES.md](docs/RULES.md).
 
 ## 5. Quick start: login bằng custom device id
 
@@ -153,8 +138,6 @@ const res = await GNNetwork.authenticate.loginByAccountAsync(request);
 if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
 if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
 ```
-
-<a id="socket-auth-flow"></a>
 
 ## 7. Socket
 
@@ -220,29 +203,11 @@ Rule chi tiết DashboardApi: [docs/guides/DASHBOARD.md](docs/guides/DASHBOARD.m
 
 ## 9. Method signature
 
-Mọi method có 2 form:
-
-```ts
-// Callback
-method(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
-
-// Async (preferred)
-methodAsync(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
-```
-
-Param `overrideAuthToken`, `overrideSecretKey`, `customTags`, `timeout`: xem [docs/RULES.md § 7](docs/RULES.md#7-method-signature--override-params).
+Signature đầy đủ + bảng override param (`overrideAuthToken`, `overrideSecretKey`, `customTags`, `timeout`): [docs/RULES.md § 8](docs/RULES.md#8-method-signature--override-params).
 
 ## 10. Response model
 
-Typed response expose PUBLIC FIELDS (KHÔNG getter):
-
-- `returnCode` — transport/protocol
-- `debugMessage` — backend debug
-- `invalidMembers` — field invalid nếu `returnCode === InvalidRequestParameters`
-- `errorCode` — business error
-- `responseData` — typed payload
-
-Check pattern + full table (ReturnCode/ErrorCode + recommended action): [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md).
+Typed response có 5 public field (không getter): `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Pattern check 2 tầng + full table ReturnCode/ErrorCode: [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md).
 
 ## 11. Auth state, gameId, health check, upload
 
@@ -392,14 +357,7 @@ npm run build            # tất cả output chính
 
 ## 16. Lỗi hay gặp
 
-Full checklist + recommended action: [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md). Tóm tắt:
-
-- **Gọi API trước `init()`** → namespace `undefined`. Init 1 lần ở bootstrap.
-- **`returnCode === Ok` nhưng `errorCode !== Ok`** → business fail, check tầng 2.
-- **Socket connect nhưng không nhận auth** → token đến sau socket up. Gọi `sendRequestAuthSocket()` re-auth.
-- **Sai secret / sai namespace route** → check `permission rules` của `secretKey` match với namespace đang gọi xem có đủ quyền hay không.
-- **`OperationNotAllow`** → permission rule cấm, không phải thiếu secret. Check route + permission flag `selfEnable` / `otherSelfEnable` / `serverSelfEnable` / `adminSelfEnable`.
-- **Tưởng success là `0`** → SAI, `Ok === 1` cả hai tầng.
+Full checklist + anti-patterns: [docs/RULES.md § 10](docs/RULES.md#10-anti-patterns--pitfalls). Return/error code table: [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md).
 
 ## 17. File tham khảo trong repo
 

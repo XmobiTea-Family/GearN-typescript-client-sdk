@@ -137,7 +137,7 @@ Lý do:
 - `client/server/admin` là trust boundary của caller, không phải cách phân loại target là của mình hay của người khác.
 - `self/other self` là target context backend suy ra thêm trên route `client`; không được nhầm nó với `server/admin`.
 - Với các domain không có ownership semantics rõ như `ContentApi`, `StoreInventoryApi`, `MultiplayerApi`, `CloudScriptApi`, không cố viết giải thích `self/other self` khi contract thật không dùng logic đó.
-- Mọi API doc cần reference về rule chuẩn trong `README.MD#route-and-permission-rules` thay vì tự diễn giải lại theo cách riêng.
+- Mọi API doc cần reference về rule chuẩn trong `docs/RULES.md` thay vì tự diễn giải lại theo cách riêng.
 - Không giả định success là `0`; hiện tại `ReturnCode.Ok === 1` và `ErrorCode.Ok === 1`.
 - Không gộp auth socket vào auth HTTP; socket auth là bước riêng sau khi đã có token hợp lệ.
 - Không mô tả method theo tên gọi marketing; phải mô tả theo behavior thật trong code.
