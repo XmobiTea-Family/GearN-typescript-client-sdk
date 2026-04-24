@@ -2129,27 +2129,27 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for SetTsLastLogin.
+	 * Defines the request payload for UpdateTsLastLogin.
 	 */
-	export class SetTsLastLoginRequestData {
+	export class UpdateTsLastLoginRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
 	/**
-	 * Defines the request payload for ServerSetTsLastLogin.
+	 * Defines the request payload for ServerUpdateTsLastLogin.
 	 */
-	export class ServerSetTsLastLoginRequestData extends SetTsLastLoginRequestData {
+	export class ServerUpdateTsLastLoginRequestData extends UpdateTsLastLoginRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
 	/**
-	 * Defines the request payload for AdminSetTsLastLogin.
+	 * Defines the request payload for AdminUpdateTsLastLogin.
 	 */
-	export class AdminSetTsLastLoginRequestData extends ServerSetTsLastLoginRequestData {
+	export class AdminUpdateTsLastLoginRequestData extends ServerUpdateTsLastLoginRequestData {
 	}
 
 	/**

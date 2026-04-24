@@ -1886,9 +1886,9 @@ Tổng cộng **2506** DTO class trên **12** domain.
 | MASTER_PLAYER | `MasterPlayerModels` | [GetStatisticsLogRequestData](dto/MASTER_PLAYER.md#getstatisticslogrequestdata) | 4 | — |
 | MASTER_PLAYER | `MasterPlayerModels` | [ServerGetStatisticsLogRequestData](dto/MASTER_PLAYER.md#servergetstatisticslogrequestdata) | 0 | `GetStatisticsLogRequestData` |
 | MASTER_PLAYER | `MasterPlayerModels` | [AdminGetStatisticsLogRequestData](dto/MASTER_PLAYER.md#admingetstatisticslogrequestdata) | 0 | `ServerGetStatisticsLogRequestData` |
-| MASTER_PLAYER | `MasterPlayerModels` | [SetTsLastLoginRequestData](dto/MASTER_PLAYER.md#settslastloginrequestdata) | 1 | — |
-| MASTER_PLAYER | `MasterPlayerModels` | [ServerSetTsLastLoginRequestData](dto/MASTER_PLAYER.md#serversettslastloginrequestdata) | 0 | `SetTsLastLoginRequestData` |
-| MASTER_PLAYER | `MasterPlayerModels` | [AdminSetTsLastLoginRequestData](dto/MASTER_PLAYER.md#adminsettslastloginrequestdata) | 0 | `ServerSetTsLastLoginRequestData` |
+| MASTER_PLAYER | `MasterPlayerModels` | [UpdateTsLastLoginRequestData](dto/MASTER_PLAYER.md#settslastloginrequestdata) | 1 | — |
+| MASTER_PLAYER | `MasterPlayerModels` | [ServerUpdateTsLastLoginRequestData](dto/MASTER_PLAYER.md#serversettslastloginrequestdata) | 0 | `UpdateTsLastLoginRequestData` |
+| MASTER_PLAYER | `MasterPlayerModels` | [AdminUpdateTsLastLoginRequestData](dto/MASTER_PLAYER.md#adminsettslastloginrequestdata) | 0 | `ServerUpdateTsLastLoginRequestData` |
 | MASTER_PLAYER | `MasterPlayerModels` | [UnlinkAccountRequestData](dto/MASTER_PLAYER.md#unlinkaccountrequestdata) | 2 | — |
 | MASTER_PLAYER | `MasterPlayerModels` | [ServerUnlinkAccountRequestData](dto/MASTER_PLAYER.md#serverunlinkaccountrequestdata) | 0 | `UnlinkAccountRequestData` |
 | MASTER_PLAYER | `MasterPlayerModels` | [AdminUnlinkAccountRequestData](dto/MASTER_PLAYER.md#adminunlinkaccountrequestdata) | 0 | `ServerUnlinkAccountRequestData` |
@@ -2158,9 +2158,9 @@ Tổng cộng **2506** DTO class trên **12** domain.
 | MASTER_PLAYER | `MasterPlayerRequestModels` | [SetTagOperationRequest](dto/MASTER_PLAYER.md#settagoperationrequest) | 0 | `CustomOperationRequestAbstract<MasterPlayerModels.SetTagRequestData>` |
 | MASTER_PLAYER | `MasterPlayerRequestModels` | [ServerSetTagOperationRequest](dto/MASTER_PLAYER.md#serversettagoperationrequest) | 0 | `SetTagOperationRequest` |
 | MASTER_PLAYER | `MasterPlayerRequestModels` | [AdminSetTagOperationRequest](dto/MASTER_PLAYER.md#adminsettagoperationrequest) | 0 | `SetTagOperationRequest` |
-| MASTER_PLAYER | `MasterPlayerRequestModels` | [SetTsLastLoginOperationRequest](dto/MASTER_PLAYER.md#settslastloginoperationrequest) | 0 | `CustomOperationRequestAbstract<MasterPlayerModels.SetTsLastLoginRequestData>` |
-| MASTER_PLAYER | `MasterPlayerRequestModels` | [ServerSetTsLastLoginOperationRequest](dto/MASTER_PLAYER.md#serversettslastloginoperationrequest) | 0 | `SetTsLastLoginOperationRequest` |
-| MASTER_PLAYER | `MasterPlayerRequestModels` | [AdminSetTsLastLoginOperationRequest](dto/MASTER_PLAYER.md#adminsettslastloginoperationrequest) | 0 | `SetTsLastLoginOperationRequest` |
+| MASTER_PLAYER | `MasterPlayerRequestModels` | [UpdateTsLastLoginOperationRequest](dto/MASTER_PLAYER.md#settslastloginoperationrequest) | 0 | `CustomOperationRequestAbstract<MasterPlayerModels.UpdateTsLastLoginRequestData>` |
+| MASTER_PLAYER | `MasterPlayerRequestModels` | [ServerUpdateTsLastLoginOperationRequest](dto/MASTER_PLAYER.md#serversettslastloginoperationrequest) | 0 | `UpdateTsLastLoginOperationRequest` |
+| MASTER_PLAYER | `MasterPlayerRequestModels` | [AdminUpdateTsLastLoginOperationRequest](dto/MASTER_PLAYER.md#adminsettslastloginoperationrequest) | 0 | `UpdateTsLastLoginOperationRequest` |
 | MASTER_PLAYER | `MasterPlayerRequestModels` | [UnlinkAccountOperationRequest](dto/MASTER_PLAYER.md#unlinkaccountoperationrequest) | 0 | `CustomOperationRequestAbstract<MasterPlayerModels.UnlinkAccountRequestData>` |
 | MASTER_PLAYER | `MasterPlayerRequestModels` | [ServerUnlinkAccountOperationRequest](dto/MASTER_PLAYER.md#serverunlinkaccountoperationrequest) | 0 | `UnlinkAccountOperationRequest` |
 | MASTER_PLAYER | `MasterPlayerRequestModels` | [AdminUnlinkAccountOperationRequest](dto/MASTER_PLAYER.md#adminunlinkaccountoperationrequest) | 0 | `UnlinkAccountOperationRequest` |
@@ -2300,7 +2300,7 @@ Tổng cộng **2506** DTO class trên **12** domain.
 | MASTER_PLAYER | `MasterPlayerResponseModels` | [SetPlayerDataOperationResponse](dto/MASTER_PLAYER.md#setplayerdataoperationresponse) | 0 | `CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData>` |
 | MASTER_PLAYER | `MasterPlayerResponseModels` | [ChangePlayerStatisticsOperationResponse](dto/MASTER_PLAYER.md#changeplayerstatisticsoperationresponse) | 0 | `CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData>` |
 | MASTER_PLAYER | `MasterPlayerResponseModels` | [SetTagOperationResponse](dto/MASTER_PLAYER.md#settagoperationresponse) | 0 | `CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData>` |
-| MASTER_PLAYER | `MasterPlayerResponseModels` | [SetTsLastLoginOperationResponse](dto/MASTER_PLAYER.md#settslastloginoperationresponse) | 0 | `CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData>` |
+| MASTER_PLAYER | `MasterPlayerResponseModels` | [UpdateTsLastLoginOperationResponse](dto/MASTER_PLAYER.md#settslastloginoperationresponse) | 0 | `CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData>` |
 | MASTER_PLAYER | `MasterPlayerResponseModels` | [UnlinkAccountOperationResponse](dto/MASTER_PLAYER.md#unlinkaccountoperationresponse) | 0 | `CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData>` |
 | MASTER_PLAYER | `MasterPlayerResponseModels` | [UnlinkAndroidDeviceIdOperationResponse](dto/MASTER_PLAYER.md#unlinkandroiddeviceidoperationresponse) | 0 | `CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData>` |
 | MASTER_PLAYER | `MasterPlayerResponseModels` | [UnlinkAppleOperationResponse](dto/MASTER_PLAYER.md#unlinkappleoperationresponse) | 0 | `CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData>` |

@@ -820,12 +820,12 @@ export namespace MasterPlayerResponseModels {
 	}
 
 	/**
-	 * Maps the SetTsLastLogin operation to a typed response wrapper.
+	 * Maps the UpdateTsLastLogin operation to a typed response wrapper.
 	 */
-	export class SetTsLastLoginOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class UpdateTsLastLoginOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
 
 		/**
-		 * Creates a new SetTsLastLoginOperationResponse instance.
+		 * Creates a new UpdateTsLastLoginOperationResponse instance.
 		 */
 		constructor() {
 			super();

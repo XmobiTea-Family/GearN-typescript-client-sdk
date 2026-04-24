@@ -98,7 +98,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `setPlayerData` | `MasterPlayerModels.SetPlayerDataRequestData` | `setPlayerDataAsync(...)` | `MasterPlayerResponseModels.SetPlayerDataOperationResponse` |
 | `changePlayerStatistics` | `MasterPlayerModels.ChangePlayerStatisticsRequestData` | `changePlayerStatisticsAsync(...)` | `MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse` |
 | `setTag` | `MasterPlayerModels.SetTagRequestData` | `setTagAsync(...)` | `MasterPlayerResponseModels.SetTagOperationResponse` |
-| `setTsLastLogin` | `MasterPlayerModels.SetTsLastLoginRequestData` | `setTsLastLoginAsync(...)` | `MasterPlayerResponseModels.SetTsLastLoginOperationResponse` |
+| `updateTsLastLogin` | `MasterPlayerModels.UpdateTsLastLoginRequestData` | `updateTsLastLoginAsync(...)` | `MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse` |
 | `unlinkAccount` | `MasterPlayerModels.UnlinkAccountRequestData` | `unlinkAccountAsync(...)` | `MasterPlayerResponseModels.UnlinkAccountOperationResponse` |
 | `unlinkAndroidDeviceId` | `MasterPlayerModels.UnlinkAndroidDeviceIdRequestData` | `unlinkAndroidDeviceIdAsync(...)` | `MasterPlayerResponseModels.UnlinkAndroidDeviceIdOperationResponse` |
 | `unlinkApple` | `MasterPlayerModels.UnlinkAppleRequestData` | `unlinkAppleAsync(...)` | `MasterPlayerResponseModels.UnlinkAppleOperationResponse` |
@@ -189,7 +189,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `setPlayerData` | `MasterPlayerModels.ServerSetPlayerDataRequestData` | `setPlayerDataAsync(...)` | `MasterPlayerResponseModels.SetPlayerDataOperationResponse` |
 | `changePlayerStatistics` | `MasterPlayerModels.ServerChangePlayerStatisticsRequestData` | `changePlayerStatisticsAsync(...)` | `MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse` |
 | `setTag` | `MasterPlayerModels.ServerSetTagRequestData` | `setTagAsync(...)` | `MasterPlayerResponseModels.SetTagOperationResponse` |
-| `setTsLastLogin` | `MasterPlayerModels.ServerSetTsLastLoginRequestData` | `setTsLastLoginAsync(...)` | `MasterPlayerResponseModels.SetTsLastLoginOperationResponse` |
+| `updateTsLastLogin` | `MasterPlayerModels.ServerUpdateTsLastLoginRequestData` | `updateTsLastLoginAsync(...)` | `MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse` |
 | `unlinkAccount` | `MasterPlayerModels.ServerUnlinkAccountRequestData` | `unlinkAccountAsync(...)` | `MasterPlayerResponseModels.UnlinkAccountOperationResponse` |
 | `unlinkAndroidDeviceId` | `MasterPlayerModels.ServerUnlinkAndroidDeviceIdRequestData` | `unlinkAndroidDeviceIdAsync(...)` | `MasterPlayerResponseModels.UnlinkAndroidDeviceIdOperationResponse` |
 | `unlinkApple` | `MasterPlayerModels.ServerUnlinkAppleRequestData` | `unlinkAppleAsync(...)` | `MasterPlayerResponseModels.UnlinkAppleOperationResponse` |
@@ -280,7 +280,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `setPlayerData` | `MasterPlayerModels.AdminSetPlayerDataRequestData` | `setPlayerDataAsync(...)` | `MasterPlayerResponseModels.SetPlayerDataOperationResponse` |
 | `changePlayerStatistics` | `MasterPlayerModels.AdminChangePlayerStatisticsRequestData` | `changePlayerStatisticsAsync(...)` | `MasterPlayerResponseModels.ChangePlayerStatisticsOperationResponse` |
 | `setTag` | `MasterPlayerModels.AdminSetTagRequestData` | `setTagAsync(...)` | `MasterPlayerResponseModels.SetTagOperationResponse` |
-| `setTsLastLogin` | `MasterPlayerModels.AdminSetTsLastLoginRequestData` | `setTsLastLoginAsync(...)` | `MasterPlayerResponseModels.SetTsLastLoginOperationResponse` |
+| `updateTsLastLogin` | `MasterPlayerModels.AdminUpdateTsLastLoginRequestData` | `updateTsLastLoginAsync(...)` | `MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse` |
 | `unlinkAccount` | `MasterPlayerModels.AdminUnlinkAccountRequestData` | `unlinkAccountAsync(...)` | `MasterPlayerResponseModels.UnlinkAccountOperationResponse` |
 | `unlinkAndroidDeviceId` | `MasterPlayerModels.AdminUnlinkAndroidDeviceIdRequestData` | `unlinkAndroidDeviceIdAsync(...)` | `MasterPlayerResponseModels.UnlinkAndroidDeviceIdOperationResponse` |
 | `unlinkApple` | `MasterPlayerModels.AdminUnlinkAppleRequestData` | `unlinkAppleAsync(...)` | `MasterPlayerResponseModels.UnlinkAppleOperationResponse` |

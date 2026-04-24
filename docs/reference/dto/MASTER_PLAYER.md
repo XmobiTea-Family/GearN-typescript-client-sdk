@@ -210,9 +210,9 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
   - [GetStatisticsLogRequestData](#getstatisticslogrequestdata)
   - [ServerGetStatisticsLogRequestData](#servergetstatisticslogrequestdata)
   - [AdminGetStatisticsLogRequestData](#admingetstatisticslogrequestdata)
-  - [SetTsLastLoginRequestData](#settslastloginrequestdata)
-  - [ServerSetTsLastLoginRequestData](#serversettslastloginrequestdata)
-  - [AdminSetTsLastLoginRequestData](#adminsettslastloginrequestdata)
+  - [UpdateTsLastLoginRequestData](#settslastloginrequestdata)
+  - [ServerUpdateTsLastLoginRequestData](#serversettslastloginrequestdata)
+  - [AdminUpdateTsLastLoginRequestData](#adminsettslastloginrequestdata)
   - [UnlinkAccountRequestData](#unlinkaccountrequestdata)
   - [ServerUnlinkAccountRequestData](#serverunlinkaccountrequestdata)
   - [AdminUnlinkAccountRequestData](#adminunlinkaccountrequestdata)
@@ -483,9 +483,9 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
   - [SetTagOperationRequest](#settagoperationrequest)
   - [ServerSetTagOperationRequest](#serversettagoperationrequest)
   - [AdminSetTagOperationRequest](#adminsettagoperationrequest)
-  - [SetTsLastLoginOperationRequest](#settslastloginoperationrequest)
-  - [ServerSetTsLastLoginOperationRequest](#serversettslastloginoperationrequest)
-  - [AdminSetTsLastLoginOperationRequest](#adminsettslastloginoperationrequest)
+  - [UpdateTsLastLoginOperationRequest](#settslastloginoperationrequest)
+  - [ServerUpdateTsLastLoginOperationRequest](#serversettslastloginoperationrequest)
+  - [AdminUpdateTsLastLoginOperationRequest](#adminsettslastloginoperationrequest)
   - [UnlinkAccountOperationRequest](#unlinkaccountoperationrequest)
   - [ServerUnlinkAccountOperationRequest](#serverunlinkaccountoperationrequest)
   - [AdminUnlinkAccountOperationRequest](#adminunlinkaccountoperationrequest)
@@ -626,7 +626,7 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
   - [SetPlayerDataOperationResponse](#setplayerdataoperationresponse)
   - [ChangePlayerStatisticsOperationResponse](#changeplayerstatisticsoperationresponse)
   - [SetTagOperationResponse](#settagoperationresponse)
-  - [SetTsLastLoginOperationResponse](#settslastloginoperationresponse)
+  - [UpdateTsLastLoginOperationResponse](#settslastloginoperationresponse)
   - [UnlinkAccountOperationResponse](#unlinkaccountoperationresponse)
   - [UnlinkAndroidDeviceIdOperationResponse](#unlinkandroiddeviceidoperationresponse)
   - [UnlinkAppleOperationResponse](#unlinkappleoperationresponse)
@@ -2407,27 +2407,27 @@ Defines the request payload for AdminGetStatisticsLog.
 
 _Không có field public (payload rỗng)._ 
 
-### SetTsLastLoginRequestData
+### UpdateTsLastLoginRequestData
 
-Defines the request payload for SetTsLastLogin.
+Defines the request payload for UpdateTsLastLogin.
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 
-### ServerSetTsLastLoginRequestData
+### ServerUpdateTsLastLoginRequestData
 
-Extends: `SetTsLastLoginRequestData`
+Extends: `UpdateTsLastLoginRequestData`
 
-Defines the request payload for ServerSetTsLastLogin.
+Defines the request payload for ServerUpdateTsLastLogin.
 
 _Không có field public (payload rỗng)._ 
 
-### AdminSetTsLastLoginRequestData
+### AdminUpdateTsLastLoginRequestData
 
-Extends: `ServerSetTsLastLoginRequestData`
+Extends: `ServerUpdateTsLastLoginRequestData`
 
-Defines the request payload for AdminSetTsLastLogin.
+Defines the request payload for AdminUpdateTsLastLogin.
 
 _Không có field public (payload rỗng)._ 
 
@@ -4660,27 +4660,27 @@ Maps the AdminSetTag operation to a typed request wrapper.
 
 _Không có field public (payload rỗng)._ 
 
-### SetTsLastLoginOperationRequest
+### UpdateTsLastLoginOperationRequest
 
-Extends: `CustomOperationRequestAbstract<MasterPlayerModels.SetTsLastLoginRequestData>`
+Extends: `CustomOperationRequestAbstract<MasterPlayerModels.UpdateTsLastLoginRequestData>`
 
-Maps the SetTsLastLogin operation to a typed request wrapper.
-
-_Không có field public (payload rỗng)._ 
-
-### ServerSetTsLastLoginOperationRequest
-
-Extends: `SetTsLastLoginOperationRequest`
-
-Maps the ServerSetTsLastLogin operation to a typed request wrapper.
+Maps the UpdateTsLastLogin operation to a typed request wrapper.
 
 _Không có field public (payload rỗng)._ 
 
-### AdminSetTsLastLoginOperationRequest
+### ServerUpdateTsLastLoginOperationRequest
 
-Extends: `SetTsLastLoginOperationRequest`
+Extends: `UpdateTsLastLoginOperationRequest`
 
-Maps the AdminSetTsLastLogin operation to a typed request wrapper.
+Maps the ServerUpdateTsLastLogin operation to a typed request wrapper.
+
+_Không có field public (payload rỗng)._ 
+
+### AdminUpdateTsLastLoginOperationRequest
+
+Extends: `UpdateTsLastLoginOperationRequest`
+
+Maps the AdminUpdateTsLastLogin operation to a typed request wrapper.
 
 _Không có field public (payload rỗng)._ 
 
@@ -5798,11 +5798,11 @@ Maps the SetTag operation to a typed response wrapper.
 
 _Không có field public (payload rỗng)._ 
 
-### SetTsLastLoginOperationResponse
+### UpdateTsLastLoginOperationResponse
 
 Extends: `CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData>`
 
-Maps the SetTsLastLogin operation to a typed response wrapper.
+Maps the UpdateTsLastLogin operation to a typed response wrapper.
 
 _Không có field public (payload rỗng)._ 
 

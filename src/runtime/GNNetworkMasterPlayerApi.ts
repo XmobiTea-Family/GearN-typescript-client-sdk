@@ -831,17 +831,17 @@ export class MasterPlayerApi {
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and returns the typed response via callback.
+	 * Sends the updateTsLastLogin operation and returns the typed response via callback.
 	 */
-	public setTsLastLogin(requestData: MasterPlayerModels.SetTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.SetTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public updateTsLastLogin(requestData: MasterPlayerModels.UpdateTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.UpdateTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and resolves with the typed response.
+	 * Sends the updateTsLastLogin operation and resolves with the typed response.
 	 */
-	public async setTsLastLoginAsync(requestData: MasterPlayerModels.SetTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SetTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public async updateTsLastLoginAsync(requestData: MasterPlayerModels.UpdateTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.UpdateTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
@@ -2032,17 +2032,17 @@ export class ServerMasterPlayerApi {
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and returns the typed response via callback.
+	 * Sends the updateTsLastLogin operation and returns the typed response via callback.
 	 */
-	public setTsLastLogin(requestData: MasterPlayerModels.ServerSetTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerSetTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public updateTsLastLogin(requestData: MasterPlayerModels.ServerUpdateTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerUpdateTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and resolves with the typed response.
+	 * Sends the updateTsLastLogin operation and resolves with the typed response.
 	 */
-	public async setTsLastLoginAsync(requestData: MasterPlayerModels.ServerSetTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSetTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public async updateTsLastLoginAsync(requestData: MasterPlayerModels.ServerUpdateTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerUpdateTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
@@ -3233,17 +3233,17 @@ export class AdminMasterPlayerApi {
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and returns the typed response via callback.
+	 * Sends the updateTsLastLogin operation and returns the typed response via callback.
 	 */
-	public setTsLastLogin(requestData: MasterPlayerModels.AdminSetTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminSetTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public updateTsLastLogin(requestData: MasterPlayerModels.AdminUpdateTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminUpdateTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and resolves with the typed response.
+	 * Sends the updateTsLastLogin operation and resolves with the typed response.
 	 */
-	public async setTsLastLoginAsync(requestData: MasterPlayerModels.AdminSetTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSetTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public async updateTsLastLoginAsync(requestData: MasterPlayerModels.AdminUpdateTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminUpdateTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**

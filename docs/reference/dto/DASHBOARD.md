@@ -756,7 +756,7 @@ Defines the reusable parameter block MasterPlayerPermissionRulesParam.
 | `setDisplayName` | `PermissionRulesParam` | no | — |
 | `getTsCreate` | `PermissionRulesParam` | no | — |
 | `getIpAddressCreate` | `PermissionRulesParam` | no | — |
-| `setTsLastLogin` | `PermissionRulesParam` | no | — |
+| `updateTsLastLogin` | `PermissionRulesParam` | no | — |
 | `getTsLastLogin` | `PermissionRulesParam` | no | — |
 | `setPlayerBan` | `PermissionRulesParam` | no | — |
 | `getPlayerBan` | `PermissionRulesParam` | no | — |

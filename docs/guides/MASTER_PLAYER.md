@@ -44,7 +44,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - `getCurrencyLogAsync` và `getStatisticsLogAsync` phân trang bằng `token`, không dùng `skip`.
 - `changePlayerCurrencyAsync` và `changePlayerStatisticsAsync` là delta change, không phải set tuyệt đối.
 - `changeAccountPasswordAsync` bắt buộc có `currentPassword`. `resetAccountPasswordAsync` không cần `currentPassword`.
-- `setTsLastLoginAsync` chỉ cập nhật dữ liệu last login, không làm mới auth token hoặc socket auth.
+- `updateTsLastLoginAsync` chỉ cập nhật dữ liệu last login, không làm mới auth token hoặc socket auth.
 - `sendSocketOperationEventAsync` là HTTP wrapper để backend phát socket event tới player, không phải client-side socket send trực tiếp.
 - `linkGoogleAsync` phải map `type` bằng `GoogleLoginType`.
 - `addPushNotificationAsync` phải map `platformType` bằng `PushPlatformType`.
@@ -164,7 +164,7 @@ Rule nhanh:
 | `changePlayerCurrencyAsync` | Cộng/trừ currency | `userId?`, `playerCurrencies[]`, `log?` | `MasterPlayerResponseData` | Đây là delta change |
 | `setPlayerDataAsync` | Set player data theo nhiều key | `userId?`, `playerDatas[]` | `MasterPlayerResponseData` | |
 | `changePlayerStatisticsAsync` | Cộng/trừ statistics | `userId?`, `playerStatistics[]`, `log?` | `MasterPlayerResponseData` | Đây là delta change |
-| `setTsLastLoginAsync` | Cập nhật timestamp last login | `userId?` | `EmptyResponseData` | Không refresh session |
+| `updateTsLastLoginAsync` | Cập nhật timestamp last login | `userId?` | `EmptyResponseData` | Không refresh session |
 | `changeAccountPasswordAsync` | Đổi password có xác thực password cũ | `userId?`, `currentPassword`, `password` | `EmptyResponseData` | Flow an toàn hơn nếu user biết password hiện tại |
 | `resetAccountPasswordAsync` | Reset password không cần password cũ | `userId?`, `password` | `EmptyResponseData` | Nên ưu tiên backend/admin |
 | `sendSocketOperationEventAsync` | Yêu cầu backend đẩy socket event tới player | `userId?`, `eventCode`, `eventParameters?` | `EmptyResponseData` | Bản thân method vẫn là HTTP |
@@ -292,7 +292,7 @@ Những response chính AI cần nhớ:
 - `getPushNotificationAsync` trả `MasterPlayerResponseData`; danh sách push nằm ở `responseData.infoResponseParameters.pushNotifications`.
 - `addPushNotificationAsync` trả `AddPushNotificationResponseData` với `pushId`.
 - `sendPushNotificationAsync` trả `SendPushNotificationResponseData` với `message`.
-- `addSegmentAsync`, `removeSegmentAsync`, `setTagAsync`, `removeTagAsync`, `changeAccountPasswordAsync`, `resetAccountPasswordAsync`, `setAvatarAsync`, `setCountryCodeAsync`, `setDisplayNameAsync`, `setEmailAsync`, `setPlayerBanAsync`, `setTsLastLoginAsync`, toàn bộ `unlink*Async`, `sendSocketOperationEventAsync`, `sendEmailAsync`, `removePushNotificationAsync` trả `EmptyResponseData`.
+- `addSegmentAsync`, `removeSegmentAsync`, `setTagAsync`, `removeTagAsync`, `changeAccountPasswordAsync`, `resetAccountPasswordAsync`, `setAvatarAsync`, `setCountryCodeAsync`, `setDisplayNameAsync`, `setEmailAsync`, `setPlayerBanAsync`, `updateTsLastLoginAsync`, toàn bộ `unlink*Async`, `sendSocketOperationEventAsync`, `sendEmailAsync`, `removePushNotificationAsync` trả `EmptyResponseData`.
 - `setCustomDataAsync`, `changePlayerCurrencyAsync`, `setPlayerDataAsync`, `changePlayerStatisticsAsync` và đa số `link*Async` trả `MasterPlayerResponseData`.
 
 ## 9. Cảnh Báo Implementation Hiện Tại

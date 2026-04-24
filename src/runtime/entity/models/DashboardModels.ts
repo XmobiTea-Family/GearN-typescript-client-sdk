@@ -1281,8 +1281,8 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.GetIpAddressCreate, isOptional: true })
 		public getIpAddressCreate?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetTsLastLogin, isOptional: true })
-		public setTsLastLogin?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.UpdateTsLastLogin, isOptional: true })
+		public updateTsLastLogin?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetTsLastLogin, isOptional: true })
 		public getTsLastLogin?: PermissionRulesParam;
