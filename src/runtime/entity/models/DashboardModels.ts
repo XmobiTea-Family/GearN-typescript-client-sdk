@@ -11,7 +11,7 @@ export namespace DashboardModels {
 	/**
 	 * Defines the reusable permission-rule block used by secret-info and master settings payloads.
 	 *
-	 * These flags map directly to the GearN server permission checks described in the public docs.
+	 * These flags map directly to the GearN Server permission checks described in the public docs.
 	 */
 	export class PermissionRulesParam {
 		/** Allows the operation on resources that belong to the authenticated user context. */
@@ -1852,7 +1852,7 @@ export namespace DashboardModels {
 	 * Defines the request payload for `createSecretInfo`.
 	 *
 	 * `permissionParam` is the authoritative permission tree that controls which operations
-	 * the created secret key may execute on the GearN server.
+	 * the created secret key may execute on the GearN Server.
 	 */
 	export class CreateSecretInfoRequestData {
 		/** Optional custom secret key. If omitted, the backend may generate one. */

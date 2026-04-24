@@ -24,7 +24,7 @@ const { ccclass, property } = _decorator;
 
 @ccclass("GearNExample")
 export class GearNExample extends Component {
-    @property({ tooltip: "GearN server host or IP" })
+    @property({ tooltip: "GearN Server host or IP" })
     serverAddress: string = "127.0.0.1";
 
     @property({ tooltip: "GearN HTTP port" })

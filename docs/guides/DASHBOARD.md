@@ -10,7 +10,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Toàn bộ request wrapper hiện tại của `DashboardApi` đều dùng `RequestType.Dashboard` với `RequestRole.Client`.
 - Hệ quả rất quan trọng ở tầng SDK: nếu không truyền `overrideSecretKey`, request sẽ mặc định gắn `secretKey`
 - Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](../RULES.md#3-route--trust-boundary-của-caller), nhưng `DashboardApi` là ngoại lệ vì public SDK wrapper này vẫn đi qua `RequestRole.Client`.
-- Trong triển khai GearN server hiện tại, sau `loginByAdminAccountAsync` thành công backend middleware sẽ resolve secret context và quyền riêng của admin từ `authToken` cho các request dashboard tiếp theo.
+- Trong triển khai GearN Server hiện tại, sau `loginByAdminAccountAsync` thành công backend middleware sẽ resolve secret context và quyền riêng của admin từ `authToken` cho các request dashboard tiếp theo.
 - Đây là nhóm API dành cho dashboard, backoffice, provisioning, analytics và maintenance. Không dùng thay cho gameplay API của player.
 - Nếu cần login player, dùng `AuthenticateApi`. Nếu cần data/player runtime, dùng group tương ứng khác.
 
@@ -19,7 +19,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Luôn ưu tiên `async/await`. Mặc định dùng `GNNetwork.dashboard.*Async()`.
 - Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
 - Không dùng `GNNetwork.dashboard.server.*` hoặc `GNNetwork.dashboard.admin.*` vì hiện chưa có method nào để gọi.
-- Với triển khai GearN server hiện tại, quyền admin riêng của account sau login được backend middleware resolve từ `authToken`, không phải do SDK tự đổi sang admin secret key local.
+- Với triển khai GearN Server hiện tại, quyền admin riêng của account sau login được backend middleware resolve từ `authToken`, không phải do SDK tự đổi sang admin secret key local.
 - Chỉ truyền `overrideSecretKey` khi bạn cố ý bypass flow mặc định ở trên.
 - `DashboardApi` không có flow socket. Không dùng `connectSocket()` hay `sendRequestAuthSocket()` cho nhóm này.
 - `loginByAdminAccountAsync` là entrypoint hợp lý để lấy admin auth token trước khi gọi các operation quản trị khác.
@@ -137,7 +137,7 @@ Những response quan trọng AI cần nhớ:
 Ghi chú quan trọng:
 
 - `loginByAdminAccountAsync` có thể giúp SDK cache `authToken`.
-- Trong triển khai GearN server hiện tại, chính `authToken` này là thứ backend middleware dùng để resolve secret context và quyền riêng của admin cho các request dashboard tiếp theo.
+- Trong triển khai GearN Server hiện tại, chính `authToken` này là thứ backend middleware dùng để resolve secret context và quyền riêng của admin cho các request dashboard tiếp theo.
 - Không có bằng chứng từ response model rằng flow này cũng trả `userId`, nên AI không được giả định `GNNetwork.getAuthenticateStatus().getUserId()` sẽ có giá trị mới sau login admin.
 
 ## 7. Best Practices

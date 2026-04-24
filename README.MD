@@ -2,7 +2,7 @@
 
 SDK TypeScript client cho GearN Server.
 
-`GNNetwork` là entrypoint duy nhất ở tầng public API. Sau `init()`, toàn bộ thao tác đi qua các nhóm API tĩnh: `GNNetwork.authenticate`, `GNNetwork.dashboard`, `GNNetwork.inventory`, `GNNetwork.group`, ...
+`GNNetwork` là entrypoint duy nhất ở tầng public API. Sau `init()`, toàn bộ thao tác đi qua các nhóm API tĩnh, gồm: `GNNetwork.authenticate`, `GNNetwork.masterPlayer`, `GNNetwork.gamePlayer`, `GNNetwork.characterPlayer`, `GNNetwork.dashboard`, `GNNetwork.group`, `GNNetwork.inventory`, `GNNetwork.storeInventory`, `GNNetwork.content`, `GNNetwork.multiplayer`, `GNNetwork.cloudScript`, `GNNetwork.dashboard`.
 
 > **AI / code assistant:** đọc [docs/AI_CHEATSHEET.md](docs/AI_CHEATSHEET.md) trước (one-page), rồi [docs/RULES.md](docs/RULES.md) cho rule chi tiết (route, permission, self/other-self, socket, error). Machine-readable manifest: [docs/ai-manifest.json](docs/ai-manifest.json).
 
@@ -33,24 +33,64 @@ npm install @xmobitea/gn-typescript-client
 Flow chuẩn:
 
 1. Tạo `GNServerSettings`.
-2. Gọi `GNNetwork.init(settings)` đúng 1 lần.
+```ts
+const settings = new GNServerSettings();
+settings.config({
+  serverAddress: "api.example.com",
+  serverPort: 443,
+  serverSocketPort: 443,
+  useSsl: true,
+  useSocket: true,
+  useHttp: true,
+  defaultTimeoutInSeconds: 20,
+  messageType: MessageType.MsgPack,
+  sendRate: 20,
+  reconnectDelay: 5000,
+  pingInterval: 20000,
+  pingTimeout: 20000,
+  secretKey: "<secret-key>",
+  logType: LogType.Error,
+});
+```
+2. Gọi `GNNetwork.init(settings)` đúng 1 lần khi app chạy lần đầu tiên.
+```ts
+GNNetwork.init(settings);
+```
 3. Gọi API qua `GNNetwork.*`.
-4. Nếu app cần realtime, sau khi đã có `authToken` → `GNNetwork.connectSocket()`.
+```ts
+const loginByCustomIdResponse = await GNNetwork.authenticate.loginByCustomIdAsync({
+    customId: "a custom id, store this custom id and use it to login next time",
+    createPlayerIfNotExists: true,
+    infoRequestParam: {
+        countryCode: true,
+        displayName: true,
+    }
+});
+
+if (loginByCustomIdResponse.returnCode != ReturnCode.Ok || loginByCustomIdResponse.errorCode != ErrorCode.Ok) {
+  console.log("login by custom id failed because the returnCode is " + loginByCustomIdResponse.returnCode + ", errorCode is " + loginByCustomIdResponse.errorCode);
+  return;
+}
+
+console.log("Your userId: " + loginByCustomIdResponse.responseData.userId);
+console.log("Your countryCode: " + loginByCustomIdResponse.responseData.infoResponseParameters.countryCode);
+console.log("Your displayName: " + loginByCustomIdResponse.responseData.infoResponseParameters.displayName);
+```
+4. Nếu app cần realtime, sau khi đã có `authToken` → `GNNetwork.connectSocket()`, đồng thời `GearN Server` phải settings options.socketAppSettings.enable = true.
 5. Socket auto-auth nếu token đã cache; chỉ `GNNetwork.sendRequestAuthSocket()` thủ công khi cần re-auth.
 
 11 API group public:
 
 - `GNNetwork.authenticate` — player login/register/refresh. [Guide](docs/guides/AUTHENTICATE.md).
-- `GNNetwork.dashboard` — admin login + quản trị game/secret/analytics/maintenance. [Guide](docs/guides/DASHBOARD.md).
-- `GNNetwork.content` — content config, file upload/download metadata. [Guide](docs/guides/CONTENT.md).
-- `GNNetwork.multiplayer` — matchmaking ticket (HTTP, không socket). [Guide](docs/guides/MULTIPLAYER.md).
-- `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](docs/guides/STORE_INVENTORY.md).
-- `GNNetwork.inventory` — inventory item metadata, statistics, log. [Guide](docs/guides/INVENTORY.md).
-- `GNNetwork.group` — group metadata/member/message/currency. [Guide](docs/guides/GROUP.md).
 - `GNNetwork.masterPlayer` — master player account/profile/identity. [Guide](docs/guides/MASTER_PLAYER.md).
 - `GNNetwork.gamePlayer` — game player gameplay/profile/friend/group/character. [Guide](docs/guides/GAME_PLAYER.md).
-- `GNNetwork.characterPlayer` — character-level gameplay/social. [Guide](docs/guides/CHARACTER_PLAYER.md).
-- `GNNetwork.cloudScript` — CloudScript publish/version/execute. [Guide](docs/guides/CLOUDSCRIPT.md).
+- `GNNetwork.characterPlayer` — character-level (trong trường hợp 1 game player có nhiều nhân vật nhỏ) gameplay/social. [Guide](docs/guides/CHARACTER_PLAYER.md).
+- `GNNetwork.group` — group metadata/member/message/currency. [Guide](docs/guides/GROUP.md).
+- `GNNetwork.inventory` — inventory item metadata, statistics, log. [Guide](docs/guides/INVENTORY.md).- `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](docs/guides/STORE_INVENTORY.md).
+- `GNNetwork.content` — content config, file upload/download metadata, small game asset. [Guide](docs/guides/CONTENT.md).
+- `GNNetwork.multiplayer` — matchmaking ticket (HTTP, không socket). [Guide](docs/guides/MULTIPLAYER.md).
+- `GNNetwork.cloudScript` — CloudScript publish/version/execute, khi cần phải phối hợp các function lại với nhau, hoặc cần để server validate, cần phải viết cloudScript code từ `GearN Dashboard`. [Guide](docs/guides/CLOUDSCRIPT.md).
+- `GNNetwork.dashboard` — admin login + quản trị game/secret/analytics, không nên sử dụng nếu code game client. [Guide](docs/guides/DASHBOARD.md).
 
 ## 4. Khởi tạo cơ bản
 
@@ -64,20 +104,20 @@ import {
 
 const settings = new GNServerSettings();
 settings.config({
-  serverAddress: "127.0.0.1",          // GearN server host / IP
-  serverPort: 2202,                    // HTTP port
-  serverSocketPort: 2901,              // Socket port
-  useSsl: false,                       // true khi public endpoint dùng HTTPS
-  useSocket: true,                     // true nếu GearN server enable socket và client muốn sử dụng socket
-  useHttp: true,                       // luôn luôn là true
-  defaultTimeoutInSeconds: 20,         // default timeout tính bằng giây mỗi request tính từ lúc bắt đầu gửi OperationRequest và chờ OperationResponse từ phía server, nếu vượt quá thời gian này, 1 mã lỗi ReturnCode.OperationTimeout sẽ được trả về
-  messageType: MessageType.MsgPack,    // browser tự fallback JSON cho HTTP, sử dụng msgPack giúp gói tin nhỏ nhẹ hơn, tăng tỉ lệ gửi thành công và tránh mất nhiều bandwidth, băng thông
-  sendRate: 20,                        // tỉ lệ gửi OperationRequest mỗi giây, 20 có nghĩa là gửi 20 OperationRequest mỗi giây 
-  reconnectDelay: 5000,                // khi sử dụng socket, thời gian dạng milliseconds reconnect lại kể từ lúc mất kết nối là bao nhiêu 
-  pingInterval: 20000,                 // khi sử dụng socket, tần suất ping milliseconds
-  pingTimeout: 20000,                  // khi sử dụng socket, bao lâu thì timeout
-  secretKey: "secret-key",             // secretKey để có thể dùng client này
-  logType: LogType.All,                // log ra tất cả vấn đề thuộc loại nào
+  serverAddress: "127.0.0.1",          // GearN Server host / IP
+  serverPort: 2202,                    // HTTP port, dựa vào options.applicationSettings.port và options.httpAppSettings.enable của GearN Server
+  serverSocketPort: 2901,              // Socket port, dựa vào options.applicationSettings.socketPort của GearN Server
+  useSsl: false,                       // true khi public endpoint dùng HTTPS, nếu useSsl thì setup serverPort và serverSocketPort thành -1, đồng thời serverAddress là url hợp lệ
+  useSocket: true,                     // client muốn sử dụng socket để nhận các gói tin chủ động từ phía GearN Server, dựa vào options.socketAppSettings.enable của GearN Server
+  useHttp: true,                       // luôn luôn là true, dựa vào options.httpAppSettings.enable của GearN Server
+  defaultTimeoutInSeconds: 20,         // default timeout tính bằng giây, thời gian để timeout tính từ lúc bắt đầu gửi OperationRequest và chờ OperationResponse từ phía server, nếu vượt quá thời gian này, 1 mã lỗi ReturnCode.OperationTimeout sẽ được trả về
+  messageType: MessageType.MsgPack,    // browser client sẽ tự fallback JSON cho HTTP, sử dụng msgPack giúp gói tin nhỏ nhẹ hơn nếu là client hoặc server, tăng tỉ lệ gửi thành công và tránh mất nhiều bandwidth, băng thông, dựa vào options.httpAppSettings.enablePostViaMsgPack và options.httpAppSettings.enablePostViaJson của GearN Server
+  sendRate: 20,                        // tỉ lệ gửi OperationRequest mỗi giây, 20 có nghĩa là gửi 20 OperationRequest mỗi giây
+  reconnectDelay: 5000,                // khi sử dụng socket, reconnectDelay socket io
+  pingInterval: 20000,                 // khi sử dụng socket, pingInterval socket io
+  pingTimeout: 20000,                  // khi sử dụng socket, pingTimeout socket io
+  secretKey: "secret-key",             // secretKey để có thể dùng client này, lấy từ tab Settings/SecretInfo GearN Dashboard, lựa chọn secretKey với các Permission Rules phù hợp
+  logType: LogType.All,                // console log ra tất cả vấn đề thuộc loại nào
 });
 
 GNNetwork.init(settings);
@@ -110,7 +150,9 @@ const res = await GNNetwork.authenticate.loginByCustomDeviceIdAsync(request);
 if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
 if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
 
+console.log("userId",    res.responseData.userId);
 console.log("userId",    GNNetwork.getAuthenticateStatus().getUserId());
+console.log("authToken", res.responseData.authToken);
 console.log("authToken", GNNetwork.getAuthenticateStatus().getAuthToken());
 console.log("player",    res.responseData);
 ```

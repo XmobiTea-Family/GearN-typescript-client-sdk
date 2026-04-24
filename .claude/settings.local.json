@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(node scripts/_phase2-gen.mjs)",
-      "Bash(node -e \"const inv = JSON.parse\\(require\\('fs'\\).readFileSync\\('scripts/_phase2-inventory.json','utf8'\\)\\); for \\(const [d,c] of Object.entries\\(inv\\)\\) { const total = Object.values\\(c\\).reduce\\(\\(a,b\\)=>a+b.length,0\\); const variants = Object.entries\\(c\\).map\\(\\([k,v]\\)=>k+'='+v.length\\).join\\(' '\\); console.log\\(d, total, variants\\); }\")"
-    ]
-  }
-}

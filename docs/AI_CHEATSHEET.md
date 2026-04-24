@@ -11,8 +11,7 @@ One-page reference cho AI agent / code assistant. Đọc file này trước, đ�
 ```ts
 import { GNNetwork, GNServerSettings, ReturnCode, ErrorCode, MessageType, LogType } from "@xmobitea/gn-typescript-client";
 
-// Bootstrap — gọi 1 lần, idempotent
-GNNetwork.init(new GNServerSettings({
+const settings: GNServerSettings = {
   serverAddress: "api.example.com",
   serverPort: 443,
   serverSocketPort: 443,
@@ -27,7 +26,10 @@ GNNetwork.init(new GNServerSettings({
   pingTimeout: 20000,
   secretKey: "<secret-key>",
   logType: LogType.Error,
-}));
+}
+
+// Bootstrap — gọi 1 lần, idempotent
+GNNetwork.init(settings);
 
 // Mọi call: 2-tier check, KHÔNG throw business error
 const res = await GNNetwork.<group>.<method>Async(req);

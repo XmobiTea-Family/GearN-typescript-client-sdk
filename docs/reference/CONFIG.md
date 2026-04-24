@@ -41,7 +41,7 @@ GNNetwork.init(settings);
 
 | Field | Type | Required | Default | Unit | Notes |
 |-------|------|----------|---------|------|-------|
-| `serverAddress` | `string` | yes | `"127.0.0.1"` | host | Host name hoặc IP public của GearN server |
+| `serverAddress` | `string` | yes | `"127.0.0.1"` | host | Host name hoặc IP public của GearN Server |
 | `serverPort` | `number` | yes | `2202` | port | HTTP port. Set `-1` khi proxy đã expose default port trực tiếp |
 | `serverSocketPort` | `number` | yes | `2901` | port | Socket port. Set `-1` khi proxy đã expose default port trực tiếp |
 | `useSsl` | `boolean` | yes | `false` | — | `true` để build HTTPS/WSS URL |

@@ -176,7 +176,7 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
 
 ### PermissionRulesParam
 
-Defines the reusable permission-rule block used by secret-info and master settings payloads. These flags map directly to the GearN server permission checks described in the public docs.
+Defines the reusable permission-rule block used by secret-info and master settings payloads. These flags map directly to the GearN Server permission checks described in the public docs.
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
@@ -1054,7 +1054,7 @@ Defines the request payload for CreateGame.
 
 ### CreateSecretInfoRequestData
 
-Defines the request payload for `createSecretInfo`. `permissionParam` is the authoritative permission tree that controls which operations the created secret key may execute on the GearN server.
+Defines the request payload for `createSecretInfo`. `permissionParam` is the authoritative permission tree that controls which operations the created secret key may execute on the GearN Server.
 
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|

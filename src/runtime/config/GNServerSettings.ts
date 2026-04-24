@@ -13,7 +13,7 @@ export enum MessageType {
  * Describes the full runtime configuration accepted by GNServerSettings.config.
  */
 export interface GNServerSettingsOptions {
-	/** Public host name or IP address exposed by the GearN server. */
+	/** Public host name or IP address exposed by the GearN Server. */
 	serverAddress: string;
 	/** Public HTTP port. Use `-1` when a proxy exposes the default port directly. */
 	serverPort: number;
