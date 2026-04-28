@@ -7,9 +7,53 @@ import { MasterPlayerRequestModels } from "./entity/models/MasterPlayerRequestMo
 import { MasterPlayerResponseModels } from "./entity/models/MasterPlayerResponseModels";
 
 /**
- * Exposes client-scoped master-player account and identity operations through `GNNetwork.masterPlayer`.
+ * Public client-scoped namespace for the MasterPlayer domain.
  *
- * Use this namespace from player-facing code when working with the authenticated user's account or profile over HTTP.
+ * Reachable through {@link GNNetwork.masterPlayer} after
+ * {@link GNNetwork.init}. Manages the **account-level** record
+ * — the top-level user identity that owns one or more
+ * game-player records ({@link GNNetwork.gamePlayer}) which in
+ * turn own per-character records
+ * ({@link GNNetwork.characterPlayer}).
+ *
+ * Functional groupings:
+ *
+ * 1. **Account & password** — `changePasswordAccount`,
+ *    `setPassword`, `getMasterPlayerInformation`,
+ *    `getMasterPlayer`, `getMasterPlayerBan`.
+ * 2. **Identity link / unlink** (one method per identity
+ *    provider) — `linkAccount`, `linkAndroidDeviceId`,
+ *    `linkApple`, `linkCustomDeviceId`, `linkCustomId`,
+ *    `linkEditorDeviceId`, `linkFacebook`,
+ *    `linkGenericService`, `linkGoogle`,
+ *    `linkGooglePlayGameService`, `linkGameCenter`,
+ *    `linkiOSDeviceId`, `linkLinuxDeviceId`,
+ *    `linkMacOSDeviceId`, `linkWindowsDeviceId`,
+ *    `linkWindowsPhoneDeviceId`. Each has a matching
+ *    `unlink*` method. Pair with the corresponding
+ *    `loginBy*` flows on {@link AuthenticateApi}.
+ * 3. **Profile fields** — `getDisplayName`, `setDisplayName`,
+ *    `getAvatar`, `setAvatar`, `getCountryCode`,
+ *    `getIpAddressCreate`, `getOnlineStatus`, `getEmail`,
+ *    `setEmail`, `getTsCreate`, `getTsLastLogin`.
+ * 4. **Custom data / tags / segments** — `getCustomData`,
+ *    `setCustomData`, `getTag`, `setTag`, `getSegment`,
+ *    `addSegment`, `removeSegment`, etc.
+ * 5. **Account currencies & statistics** —
+ *    `getAccountCurrency`, `setAccountCurrency`,
+ *    `addAccountCurrency`, `subtractAccountCurrency`,
+ *    `getAccountStatistics`, `setAccountStatistics`,
+ *    `addAccountStatistics`.
+ * 6. **Push notifications** —
+ *    `registerPushNotification`,
+ *    `unregisterPushNotification`,
+ *    `getPushNotifications`. The `platformType` field uses
+ *    {@link PushPlatformType}.
+ *
+ * Common contract: same as {@link GamePlayerApi} (HTTP /
+ * `RequestType.MasterPlayer` / `RequestRole.Client`,
+ * callback + Promise variants, `.server` / `.admin`
+ * sub-namespaces).
  */
 export class MasterPlayerApi {
 	/** Server-scoped master-player operations for trusted backend callers. */
@@ -1225,12 +1269,14 @@ export class MasterPlayerApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerMasterPlayerApi.
- */
-/**
- * Exposes server-scoped master-player operations through `GNNetwork.masterPlayer.server`.
+ * Server-scoped MasterPlayer namespace, reachable through
+ * `GNNetwork.masterPlayer.server`.
  *
- * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
+ * Mirrors every method on {@link MasterPlayerApi} but uses the
+ * `Server*RequestData` DTO variants. The server flavour
+ * accepts an explicit `userId` so a trusted backend can act on
+ * behalf of any account without holding the player's auth
+ * token. Always pass a valid server-side `secretKey`.
  */
 export class ServerMasterPlayerApi {
 	/**
@@ -2426,12 +2472,15 @@ export class ServerMasterPlayerApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminMasterPlayerApi.
- */
-/**
- * Exposes admin-scoped master-player operations through `GNNetwork.masterPlayer.admin`.
+ * Admin-scoped MasterPlayer namespace, reachable through
+ * `GNNetwork.masterPlayer.admin`.
  *
- * Use this namespace from dashboard, GM, or backoffice code with `secretKey` or `overrideSecretKey`.
+ * Mirrors {@link ServerMasterPlayerApi} but routed through
+ * {@link RequestRole.Admin}. The backend uses the caller's
+ * admin auth token to authorise privileged operations such as
+ * touching another tenant's accounts, force-resetting
+ * credentials, granting / revoking bans, etc. Reserved for
+ * dashboard / GM / backoffice tools.
  */
 export class AdminMasterPlayerApi {
 	/**

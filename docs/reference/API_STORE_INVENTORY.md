@@ -38,62 +38,62 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 
 ## Client methods (`GNNetwork.storeInventory.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `buyStoreItem` | `StoreInventoryModels.BuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` |
-| `getStoreItemInformation` | `StoreInventoryModels.GetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` |
-| `getStoreItemsWithTag` | `StoreInventoryModels.GetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` |
-| `createStoreItem` | `StoreInventoryModels.CreateStoreItemRequestData` | `createStoreItemAsync(...)` | `StoreInventoryResponseModels.CreateStoreItemOperationResponse` |
-| `setRemoveStatus` | `StoreInventoryModels.SetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `StoreInventoryResponseModels.SetRemoveStatusOperationResponse` |
-| `setStoreItemInformation` | `StoreInventoryModels.SetStoreItemInformationRequestData` | `setStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.SetStoreItemInformationOperationResponse` |
-| `validateAppleAppStoreReceipt` | `StoreInventoryModels.ValidateAppleAppStoreReceiptRequestData` | `validateAppleAppStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateAppleAppStoreReceiptOperationResponse` |
-| `validateFacebookStoreReceipt` | `StoreInventoryModels.ValidateFacebookStoreReceiptRequestData` | `validateFacebookStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateFacebookStoreReceiptOperationResponse` |
-| `validateGooglePlayStoreReceipt` | `StoreInventoryModels.ValidateGooglePlayStoreReceiptRequestData` | `validateGooglePlayStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateGooglePlayStoreReceiptOperationResponse` |
-| `getCreateLeaderboard` | `StoreInventoryModels.GetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `StoreInventoryResponseModels.GetCreateLeaderboardOperationResponse` |
-| `presentStoreItem` | `StoreInventoryModels.PresentStoreItemRequestData` | `presentStoreItemAsync(...)` | `StoreInventoryResponseModels.PresentStoreItemOperationResponse` |
-| `getStoreLog` | `StoreInventoryModels.GetStoreLogRequestData` | `getStoreLogAsync(...)` | `StoreInventoryResponseModels.GetStoreLogOperationResponse` |
-| `getStoreUsed` | `StoreInventoryModels.GetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` |
-| `removeStoreUsed` | `StoreInventoryModels.RemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `id` khác với những `entity` liên quan mà `gamePlayer` đang được authenticated không phải owner nếu `type` là `OwnerType.CharacterPlayer` hoặc không phải member nếu là `type` `OwnerType.Group` |
+|--------|-------------|------------|----------------|--------------------------|---------------------------------------------------------------------------------------------------------|
+| `buyStoreItem` | `StoreInventoryModels.BuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` | `storeInventory.buyStoreItem.selfEnable` | `storeInventory.buyStoreItem.otherSelfEnable` |
+| `getStoreItemInformation` | `StoreInventoryModels.GetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` | `storeInventory.getStoreItemInformation.otherSelfEnable` | |
+| `getStoreItemsWithTag` | `StoreInventoryModels.GetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` | `storeInventory.getStoreItemsWithTag.otherSelfEnable` | |
+| `createStoreItem` | `StoreInventoryModels.CreateStoreItemRequestData` | `createStoreItemAsync(...)` | `StoreInventoryResponseModels.CreateStoreItemOperationResponse` | `storeInventory.createStoreItem.otherSelfEnable` | |
+| `setRemoveStatus` | `StoreInventoryModels.SetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `StoreInventoryResponseModels.SetRemoveStatusOperationResponse` | `storeInventory.setRemoveStatus.otherSelfEnable` | |
+| `setStoreItemInformation` | `StoreInventoryModels.SetStoreItemInformationRequestData` | `setStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.SetStoreItemInformationOperationResponse` | `storeInventory.setStoreItemInformation.otherSelfEnable` | |
+| `validateAppleAppStoreReceipt` | `StoreInventoryModels.ValidateAppleAppStoreReceiptRequestData` | `validateAppleAppStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateAppleAppStoreReceiptOperationResponse` | `storeInventory.validateAppleAppStoreReceipt.selfEnable` | `storeInventory.validateAppleAppStoreReceipt.otherSelfEnable` |
+| `validateFacebookStoreReceipt` | `StoreInventoryModels.ValidateFacebookStoreReceiptRequestData` | `validateFacebookStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateFacebookStoreReceiptOperationResponse` | `storeInventory.validateFacebookStoreReceipt.selfEnable` | `storeInventory.validateFacebookStoreReceipt.otherSelfEnable` |
+| `validateGooglePlayStoreReceipt` | `StoreInventoryModels.ValidateGooglePlayStoreReceiptRequestData` | `validateGooglePlayStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateGooglePlayStoreReceiptOperationResponse` | `storeInventory.validateGooglePlayStoreReceipt.selfEnable` | `storeInventory.validateGooglePlayStoreReceipt.otherSelfEnable` |
+| `getCreateLeaderboard` | `StoreInventoryModels.GetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `StoreInventoryResponseModels.GetCreateLeaderboardOperationResponse` | `storeInventory.getCreateLeaderboard.otherSelfEnable` | |
+| `presentStoreItem` | `StoreInventoryModels.PresentStoreItemRequestData` | `presentStoreItemAsync(...)` | `StoreInventoryResponseModels.PresentStoreItemOperationResponse` | `storeInventory.presentStoreItem.selfEnable` | `storeInventory.presentStoreItem.otherSelfEnable` |
+| `getStoreLog` | `StoreInventoryModels.GetStoreLogRequestData` | `getStoreLogAsync(...)` | `StoreInventoryResponseModels.GetStoreLogOperationResponse` | `storeInventory.getStoreLog.otherSelfEnable` | |
+| `getStoreUsed` | `StoreInventoryModels.GetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` | `storeInventory.getStoreUsed.otherSelfEnable` | |
+| `removeStoreUsed` | `StoreInventoryModels.RemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` | `storeInventory.removeStoreUsed.otherSelfEnable` | |
 
 
 ## Server methods (`GNNetwork.storeInventory.server.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `buyStoreItem` | `StoreInventoryModels.ServerBuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` |
-| `getStoreItemInformation` | `StoreInventoryModels.ServerGetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` |
-| `getStoreItemsWithTag` | `StoreInventoryModels.ServerGetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` |
-| `createStoreItem` | `StoreInventoryModels.ServerCreateStoreItemRequestData` | `createStoreItemAsync(...)` | `StoreInventoryResponseModels.CreateStoreItemOperationResponse` |
-| `setRemoveStatus` | `StoreInventoryModels.ServerSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `StoreInventoryResponseModels.SetRemoveStatusOperationResponse` |
-| `setStoreItemInformation` | `StoreInventoryModels.ServerSetStoreItemInformationRequestData` | `setStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.SetStoreItemInformationOperationResponse` |
-| `validateAppleAppStoreReceipt` | `StoreInventoryModels.ServerValidateAppleAppStoreReceiptRequestData` | `validateAppleAppStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateAppleAppStoreReceiptOperationResponse` |
-| `validateFacebookStoreReceipt` | `StoreInventoryModels.ServerValidateFacebookStoreReceiptRequestData` | `validateFacebookStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateFacebookStoreReceiptOperationResponse` |
-| `validateGooglePlayStoreReceipt` | `StoreInventoryModels.ServerValidateGooglePlayStoreReceiptRequestData` | `validateGooglePlayStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateGooglePlayStoreReceiptOperationResponse` |
-| `getCreateLeaderboard` | `StoreInventoryModels.ServerGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `StoreInventoryResponseModels.GetCreateLeaderboardOperationResponse` |
-| `presentStoreItem` | `StoreInventoryModels.ServerPresentStoreItemRequestData` | `presentStoreItemAsync(...)` | `StoreInventoryResponseModels.PresentStoreItemOperationResponse` |
-| `getStoreLog` | `StoreInventoryModels.ServerGetStoreLogRequestData` | `getStoreLogAsync(...)` | `StoreInventoryResponseModels.GetStoreLogOperationResponse` |
-| `getStoreUsed` | `StoreInventoryModels.ServerGetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` |
-| `removeStoreUsed` | `StoreInventoryModels.ServerRemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `buyStoreItem` | `StoreInventoryModels.ServerBuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` | `storeInventory.buyStoreItem.serverSelfEnable` |
+| `getStoreItemInformation` | `StoreInventoryModels.ServerGetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` | `storeInventory.getStoreItemInformation.serverSelfEnable` |
+| `getStoreItemsWithTag` | `StoreInventoryModels.ServerGetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` | `storeInventory.getStoreItemsWithTag.serverSelfEnable` |
+| `createStoreItem` | `StoreInventoryModels.ServerCreateStoreItemRequestData` | `createStoreItemAsync(...)` | `StoreInventoryResponseModels.CreateStoreItemOperationResponse` | `storeInventory.createStoreItem.serverSelfEnable` |
+| `setRemoveStatus` | `StoreInventoryModels.ServerSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `StoreInventoryResponseModels.SetRemoveStatusOperationResponse` | `storeInventory.setRemoveStatus.serverSelfEnable` |
+| `setStoreItemInformation` | `StoreInventoryModels.ServerSetStoreItemInformationRequestData` | `setStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.SetStoreItemInformationOperationResponse` | `storeInventory.setStoreItemInformation.serverSelfEnable` |
+| `validateAppleAppStoreReceipt` | `StoreInventoryModels.ServerValidateAppleAppStoreReceiptRequestData` | `validateAppleAppStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateAppleAppStoreReceiptOperationResponse` | `storeInventory.validateAppleAppStoreReceipt.serverSelfEnable` |
+| `validateFacebookStoreReceipt` | `StoreInventoryModels.ServerValidateFacebookStoreReceiptRequestData` | `validateFacebookStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateFacebookStoreReceiptOperationResponse` | `storeInventory.validateFacebookStoreReceipt.serverSelfEnable` |
+| `validateGooglePlayStoreReceipt` | `StoreInventoryModels.ServerValidateGooglePlayStoreReceiptRequestData` | `validateGooglePlayStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateGooglePlayStoreReceiptOperationResponse` | `storeInventory.validateGooglePlayStoreReceipt.serverSelfEnable` |
+| `getCreateLeaderboard` | `StoreInventoryModels.ServerGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `StoreInventoryResponseModels.GetCreateLeaderboardOperationResponse` | `storeInventory.getCreateLeaderboard.serverSelfEnable` |
+| `presentStoreItem` | `StoreInventoryModels.ServerPresentStoreItemRequestData` | `presentStoreItemAsync(...)` | `StoreInventoryResponseModels.PresentStoreItemOperationResponse` | `storeInventory.presentStoreItem.serverSelfEnable` |
+| `getStoreLog` | `StoreInventoryModels.ServerGetStoreLogRequestData` | `getStoreLogAsync(...)` | `StoreInventoryResponseModels.GetStoreLogOperationResponse` | `storeInventory.getStoreLog.serverSelfEnable` |
+| `getStoreUsed` | `StoreInventoryModels.ServerGetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` | `storeInventory.getStoreUsed.serverSelfEnable` |
+| `removeStoreUsed` | `StoreInventoryModels.ServerRemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` | `storeInventory.removeStoreUsed.serverSelfEnable` |
 
 
 ## Admin methods (`GNNetwork.storeInventory.admin.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `buyStoreItem` | `StoreInventoryModels.AdminBuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` |
-| `getStoreItemInformation` | `StoreInventoryModels.AdminGetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` |
-| `getStoreItemsWithTag` | `StoreInventoryModels.AdminGetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` |
-| `createStoreItem` | `StoreInventoryModels.AdminCreateStoreItemRequestData` | `createStoreItemAsync(...)` | `StoreInventoryResponseModels.CreateStoreItemOperationResponse` |
-| `setRemoveStatus` | `StoreInventoryModels.AdminSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `StoreInventoryResponseModels.SetRemoveStatusOperationResponse` |
-| `setStoreItemInformation` | `StoreInventoryModels.AdminSetStoreItemInformationRequestData` | `setStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.SetStoreItemInformationOperationResponse` |
-| `validateAppleAppStoreReceipt` | `StoreInventoryModels.AdminValidateAppleAppStoreReceiptRequestData` | `validateAppleAppStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateAppleAppStoreReceiptOperationResponse` |
-| `validateFacebookStoreReceipt` | `StoreInventoryModels.AdminValidateFacebookStoreReceiptRequestData` | `validateFacebookStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateFacebookStoreReceiptOperationResponse` |
-| `validateGooglePlayStoreReceipt` | `StoreInventoryModels.AdminValidateGooglePlayStoreReceiptRequestData` | `validateGooglePlayStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateGooglePlayStoreReceiptOperationResponse` |
-| `getCreateLeaderboard` | `StoreInventoryModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `StoreInventoryResponseModels.GetCreateLeaderboardOperationResponse` |
-| `presentStoreItem` | `StoreInventoryModels.AdminPresentStoreItemRequestData` | `presentStoreItemAsync(...)` | `StoreInventoryResponseModels.PresentStoreItemOperationResponse` |
-| `getStoreLog` | `StoreInventoryModels.AdminGetStoreLogRequestData` | `getStoreLogAsync(...)` | `StoreInventoryResponseModels.GetStoreLogOperationResponse` |
-| `getStoreUsed` | `StoreInventoryModels.AdminGetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` |
-| `removeStoreUsed` | `StoreInventoryModels.AdminRemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `buyStoreItem` | `StoreInventoryModels.AdminBuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` | `storeInventory.buyStoreItem.adminSelfEnable` |
+| `getStoreItemInformation` | `StoreInventoryModels.AdminGetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` | `storeInventory.getStoreItemInformation.adminSelfEnable` |
+| `getStoreItemsWithTag` | `StoreInventoryModels.AdminGetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` | `storeInventory.getStoreItemsWithTag.adminSelfEnable` |
+| `createStoreItem` | `StoreInventoryModels.AdminCreateStoreItemRequestData` | `createStoreItemAsync(...)` | `StoreInventoryResponseModels.CreateStoreItemOperationResponse` | `storeInventory.createStoreItem.adminSelfEnable` |
+| `setRemoveStatus` | `StoreInventoryModels.AdminSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `StoreInventoryResponseModels.SetRemoveStatusOperationResponse` | `storeInventory.setRemoveStatus.adminSelfEnable` |
+| `setStoreItemInformation` | `StoreInventoryModels.AdminSetStoreItemInformationRequestData` | `setStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.SetStoreItemInformationOperationResponse` | `storeInventory.setStoreItemInformation.adminSelfEnable` |
+| `validateAppleAppStoreReceipt` | `StoreInventoryModels.AdminValidateAppleAppStoreReceiptRequestData` | `validateAppleAppStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateAppleAppStoreReceiptOperationResponse` | `storeInventory.validateAppleAppStoreReceipt.adminSelfEnable` |
+| `validateFacebookStoreReceipt` | `StoreInventoryModels.AdminValidateFacebookStoreReceiptRequestData` | `validateFacebookStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateFacebookStoreReceiptOperationResponse` | `storeInventory.validateFacebookStoreReceipt.adminSelfEnable` |
+| `validateGooglePlayStoreReceipt` | `StoreInventoryModels.AdminValidateGooglePlayStoreReceiptRequestData` | `validateGooglePlayStoreReceiptAsync(...)` | `StoreInventoryResponseModels.ValidateGooglePlayStoreReceiptOperationResponse` | `storeInventory.validateGooglePlayStoreReceipt.adminSelfEnable` |
+| `getCreateLeaderboard` | `StoreInventoryModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `StoreInventoryResponseModels.GetCreateLeaderboardOperationResponse` | `storeInventory.getCreateLeaderboard.adminSelfEnable` |
+| `presentStoreItem` | `StoreInventoryModels.AdminPresentStoreItemRequestData` | `presentStoreItemAsync(...)` | `StoreInventoryResponseModels.PresentStoreItemOperationResponse` | `storeInventory.presentStoreItem.adminSelfEnable` |
+| `getStoreLog` | `StoreInventoryModels.AdminGetStoreLogRequestData` | `getStoreLogAsync(...)` | `StoreInventoryResponseModels.GetStoreLogOperationResponse` | `storeInventory.getStoreLog.adminSelfEnable` |
+| `getStoreUsed` | `StoreInventoryModels.AdminGetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` | `storeInventory.getStoreUsed.adminSelfEnable` |
+| `removeStoreUsed` | `StoreInventoryModels.AdminRemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` | `storeInventory.removeStoreUsed.adminSelfEnable` |
 
 
 ## Ví dụ tối thiểu

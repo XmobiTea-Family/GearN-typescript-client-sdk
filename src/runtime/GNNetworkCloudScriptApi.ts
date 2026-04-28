@@ -7,9 +7,33 @@ import { CloudScriptRequestModels } from "./entity/models/CloudScriptRequestMode
 import { CloudScriptResponseModels } from "./entity/models/CloudScriptResponseModels";
 
 /**
- * Exposes client-scoped CloudScript operations through `GNNetwork.cloudScript`.
+ * Public client-scoped namespace for the CloudScript domain.
  *
- * This namespace uses HTTP and is typically limited to execute flows that the backend allows for client callers.
+ * Reachable through {@link GNNetwork.cloudScript} after
+ * {@link GNNetwork.init}. Provides client-side access to
+ * server-hosted JavaScript / TypeScript functions ("CloudScript")
+ * that the GearN backend executes on demand.
+ *
+ * Functional groupings:
+ *
+ * 1. **Function execution** — `executeFunction`. The backend
+ *    runs the named function in the selected script version
+ *    and returns the result inside a typed response. The
+ *    outcome is described by {@link ExecuteResponseStatus}
+ *    (`Ok`, `Exception`, `FunctionNameNotFound`,
+ *    `VersionInvalid`, `Timeout`).
+ *
+ * 2. **Function management** (server / admin only) —
+ *    `addFunction`, `setFunction`, `removeFunction`,
+ *    `getFunctionList`, plus version management
+ *    (`addVersion`, `setActiveVersion`, ...). These are
+ *    placeholder client-side endpoints; in practice they are
+ *    invoked through the dashboard.
+ *
+ * Common contract: same as {@link GamePlayerApi} (HTTP /
+ * `RequestType.CloudScript` / `RequestRole.Client`,
+ * callback + Promise variants, `.server` / `.admin`
+ * sub-namespaces).
  */
 export class CloudScriptApi {
 	/** Server-scoped CloudScript operations for trusted backend callers. */
@@ -91,12 +115,14 @@ export class CloudScriptApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerCloudScriptApi.
- */
-/**
- * Exposes server-scoped CloudScript operations through `GNNetwork.cloudScript.server`.
+ * Server-scoped CloudScript namespace, reachable through
+ * `GNNetwork.cloudScript.server`.
  *
- * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
+ * Mirrors {@link CloudScriptApi} but with the `Server*RequestData`
+ * DTO variants. Used by trusted backend code that needs to
+ * execute or manage CloudScript functions on behalf of any
+ * player without holding their auth token. Always pass a valid
+ * server-side `secretKey`.
  */
 export class ServerCloudScriptApi {
 	/**
@@ -172,12 +198,14 @@ export class ServerCloudScriptApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminCloudScriptApi.
- */
-/**
- * Exposes admin-scoped CloudScript operations through `GNNetwork.cloudScript.admin`.
+ * Admin-scoped CloudScript namespace, reachable through
+ * `GNNetwork.cloudScript.admin`.
  *
- * Use this namespace from dashboard or backoffice code with `secretKey` or `overrideSecretKey`.
+ * Used by the dashboard / backoffice tooling for the
+ * full CloudScript management surface (publish new versions,
+ * promote / demote versions, grant execution permissions).
+ * Routed through {@link RequestRole.Admin} and authorised
+ * against the admin auth token.
  */
 export class AdminCloudScriptApi {
 	/**

@@ -2,9 +2,18 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { GroupModels } from "./GroupModels";
 
 /**
- * Groups typed operation-response wrappers for `RequestType.Group`.
- * Many read operations resolve to `GroupResponseData` or a derived envelope whose
- * `infoResponseParameters` content is controlled by the matching request model.
+ * Typed response wrappers for the Group domain.
+ *
+ * Each class extends {@link CustomOperationResponseAbstract}
+ * and binds a response DTO from {@link GroupModels}. The same
+ * wrapper class is reused across the client / server / admin
+ * role variants because the response shape does not depend on
+ * the role.
+ *
+ * Many read operations resolve to a profile-style envelope
+ * (`GroupResponseData` or a derived shape) whose
+ * `infoResponseParameters` field is gated by the matching
+ * request DTO's `infoRequestParam` flags.
  */
 export namespace GroupResponseModels {
 	/**

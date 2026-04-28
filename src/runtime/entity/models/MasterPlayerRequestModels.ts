@@ -5,9 +5,22 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { MasterPlayerModels } from "./MasterPlayerModels";
 
 /**
- * Groups typed operation-request wrappers for `RequestType.MasterPlayer`.
- * Client wrappers target the authenticated player when `userId` is omitted,
- * while server/admin wrappers switch role and usually require an explicit target user.
+ * Typed request wrappers for the MasterPlayer domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from
+ * {@link MasterPlayerModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.MasterPlayer} domain;
+ * - the appropriate {@link RequestRole} based on the wrapper
+ *   name prefix.
+ *
+ * The MasterPlayer domain owns the largest set of operations in
+ * the SDK because it covers (a) every identity link / unlink
+ * operation for all supported providers and (b) every account-
+ * level resource (currencies, statistics, custom data, push
+ * notifications). See {@link MasterPlayerApi} for the
+ * functional grouping.
  */
 export namespace MasterPlayerRequestModels {
 	/**

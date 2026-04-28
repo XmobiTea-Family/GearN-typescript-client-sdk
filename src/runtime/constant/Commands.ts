@@ -1,6 +1,28 @@
 /**
- * Centralizes HTTP header names, content-type values, socket frame commands,
- * and multipart field names used by the SDK transport layer.
+ * Wire-format string constants used by both transports.
+ *
+ * Centralises HTTP header names, content-type values, socket
+ * command identifiers and multipart field names. The values are
+ * the literal strings the GearN backend recognises on the wire,
+ * so they cannot be renamed without a coordinated backend change.
+ *
+ * Categories:
+ * - `USER_AGENT`, `CONTENT_TYPE`, `ACCEPT`, `CONTENT_LENGTH` —
+ *   generic HTTP headers consumed by
+ *   {@link NetworkingPeerAxiosRequest}.
+ * - `APPLICATION_JSON`, `APPLICATION_MSGPACK` — MIME values for
+ *   the matching wire format.
+ * - `RequestAuthTokenCmd`, `RequestSecretCmd`, `RequestGameIdCmd` —
+ *   GearN-specific HTTP headers (also used as the auth-frame name
+ *   on the socket transport).
+ * - `RequestCmd_*`, `ResponseCmd_*`, `EventCmd_*` — socket.io
+ *   event names for outbound requests, inbound responses and
+ *   inbound server-pushed events. Two flavours each (MsgPack
+ *   binary vs JSON text).
+ * - `Data`, `File` — multipart form-data field names for the
+ *   upload endpoint.
+ * - `BaseUrl` — reverse-proxy header that forwards the original
+ *   base URL when relative-path mode is enabled.
  */
 export class Commands {
 	/**

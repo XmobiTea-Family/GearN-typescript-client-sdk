@@ -98,71 +98,71 @@ Rule nhanh:
 
 ### Đọc 1 character hoặc 1 phần metadata
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getAvatarAsync` | Cần đọc avatar | `characterId` | `CharacterPlayerResponseData` | `avatar.type` hiện là số thô |
-| `getCatalogIdAsync` | Cần đọc `catalogId` của character | `characterId` | `CharacterPlayerResponseData` | Kết quả ở `infoResponseParameters.catalogId` |
-| `getCountryCodeAsync` | Cần đọc quốc gia | `characterId` | `CharacterPlayerResponseData` | |
-| `getCustomDataAsync` | Cần đọc custom data | `characterId`, `customDataKeys?` | `CharacterPlayerResponseData` | Có thể filter theo key |
-| `getDisplayNameAsync` | Cần đọc display name | `characterId` | `CharacterPlayerResponseData` | |
-| `getIpAddressCreateAsync` | Cần đọc IP lúc tạo character | `characterId` | `CharacterPlayerResponseData` | Trường này thường nhạy cảm, ưu tiên backend/admin |
-| `getOwnerAsync` | Cần đọc owner hiện tại | `characterId` | `CharacterPlayerResponseData` | Map `owner.type` bằng `OwnerType` |
-| `getPlayerBanAsync` | Cần đọc trạng thái ban | `characterId` | `CharacterPlayerResponseData` | |
-| `getPlayerCurrencyAsync` | Cần đọc currency | `characterId`, `playerCurrencyKeys?` | `CharacterPlayerResponseData` | Không dùng `infoRequestParam` |
-| `getPlayerDataAsync` | Cần đọc player data | `characterId`, `playerDataKeys?` | `CharacterPlayerResponseData` | Không dùng `infoRequestParam` |
-| `getPlayerFriendAsync` | Cần đọc relation friend ở cấp character | `characterId`, `friendCatalogIds?` | `CharacterPlayerResponseData` | Mỗi phần tử chỉ có `friendId`, `catalogId`, `status`, `tsLastStatusUpdate` |
-| `getPlayerGroupAsync` | Cần đọc relation group của character | `characterId`, `groupCatalogIds?` | `CharacterPlayerResponseData` | Mỗi phần tử chỉ có `groupId`, `catalogId`, `status`, `tsLastStatusUpdate` |
-| `getPlayerInformationAsync` | Cần lấy snapshot tổng hợp của character | `characterId`, `infoRequestParam` | `CharacterPlayerResponseData` | Flow đọc tổng hợp quan trọng nhất |
-| `getPlayerInventoryAsync` | Cần đọc relation inventory của character | `characterId`, `itemCatalogIds?` | `CharacterPlayerResponseData` | Mỗi phần tử chỉ có `itemId`, `catalogId`, `classId` |
-| `getPlayerStatisticsAsync` | Cần đọc statistics theo key | `characterId`, `statisticsKeys?` | `CharacterPlayerResponseData` | Không dùng `playerStatisticsKeys` ở đây |
-| `getRemoveStatusAsync` | Cần đọc trạng thái remove | `characterId` | `CharacterPlayerResponseData` | Kết quả ở `infoResponseParameters.removeStatus` |
-| `getSegmentAsync` | Cần đọc segment | `characterId` | `CharacterPlayerResponseData` | |
-| `getTagAsync` | Cần đọc tag theo key | `characterId`, `tagKeys` | `CharacterPlayerResponseData` | |
-| `getTsCreateAsync` | Cần đọc thời điểm tạo character | `characterId` | `CharacterPlayerResponseData` | |
-| `getTsLastLoginAsync` | Cần đọc lần login gần nhất | `characterId` | `CharacterPlayerResponseData` | |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getAvatarAsync` | Cần đọc avatar | `characterId` | `CharacterPlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `CharacterPlayerNotFound` |
+| `getCatalogIdAsync` | Cần đọc `catalogId` của character | `characterId` | `CharacterPlayerResponseData` | Kết quả ở `infoResponseParameters.catalogId` | `Ok`, `CharacterPlayerNotFound` |
+| `getCountryCodeAsync` | Cần đọc quốc gia | `characterId` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound` |
+| `getCustomDataAsync` | Cần đọc custom data | `characterId`, `customDataKeys?` | `CharacterPlayerResponseData` | Có thể filter theo key | `Ok`, `CharacterPlayerNotFound` |
+| `getDisplayNameAsync` | Cần đọc display name | `characterId` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound` |
+| `getIpAddressCreateAsync` | Cần đọc IP lúc tạo character | `characterId` | `CharacterPlayerResponseData` | Trường này thường nhạy cảm, ưu tiên backend/admin | `Ok`, `CharacterPlayerNotFound` |
+| `getOwnerAsync` | Cần đọc owner hiện tại | `characterId` | `CharacterPlayerResponseData` | Map `owner.type` bằng `OwnerType` | `Ok`, `CharacterPlayerNotFound` |
+| `getPlayerBanAsync` | Cần đọc trạng thái ban | `characterId` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound` |
+| `getPlayerCurrencyAsync` | Cần đọc currency | `characterId`, `playerCurrencyKeys?` | `CharacterPlayerResponseData` | Không dùng `infoRequestParam` | `Ok`, `CharacterPlayerNotFound` |
+| `getPlayerDataAsync` | Cần đọc player data | `characterId`, `playerDataKeys?` | `CharacterPlayerResponseData` | Không dùng `infoRequestParam` | `Ok`, `CharacterPlayerNotFound` |
+| `getPlayerFriendAsync` | Cần đọc relation friend ở cấp character | `characterId`, `friendCatalogIds?` | `CharacterPlayerResponseData` | Mỗi phần tử chỉ có `friendId`, `catalogId`, `status`, `tsLastStatusUpdate` | `Ok`, `CharacterPlayerNotFound` |
+| `getPlayerGroupAsync` | Cần đọc relation group của character | `characterId`, `groupCatalogIds?` | `CharacterPlayerResponseData` | Mỗi phần tử chỉ có `groupId`, `catalogId`, `status`, `tsLastStatusUpdate` | `Ok`, `CharacterPlayerNotFound` |
+| `getPlayerInformationAsync` | Cần lấy snapshot tổng hợp của character | `characterId`, `infoRequestParam` | `CharacterPlayerResponseData` | Flow đọc tổng hợp quan trọng nhất | `Ok`, `CharacterPlayerNotFound` |
+| `getPlayerInventoryAsync` | Cần đọc relation inventory của character | `characterId`, `itemCatalogIds?` | `CharacterPlayerResponseData` | Mỗi phần tử chỉ có `itemId`, `catalogId`, `classId` | `Ok`, `CharacterPlayerNotFound` |
+| `getPlayerStatisticsAsync` | Cần đọc statistics theo key | `characterId`, `statisticsKeys?` | `CharacterPlayerResponseData` | Không dùng `playerStatisticsKeys` ở đây | `Ok`, `CharacterPlayerNotFound` |
+| `getRemoveStatusAsync` | Cần đọc trạng thái remove | `characterId` | `CharacterPlayerResponseData` | Kết quả ở `infoResponseParameters.removeStatus` | `Ok`, `CharacterPlayerNotFound` |
+| `getSegmentAsync` | Cần đọc segment | `characterId` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound` |
+| `getTagAsync` | Cần đọc tag theo key | `characterId`, `tagKeys` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound` |
+| `getTsCreateAsync` | Cần đọc thời điểm tạo character | `characterId` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound` |
+| `getTsLastLoginAsync` | Cần đọc lần login gần nhất | `characterId` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound` |
 
 ### Search, leaderboard và log
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getPlayersWithDisplayNameAsync` | Tìm character theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | Kết quả trả `characterId` |
-| `getPlayersWithSegmentAsync` | Tìm character theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | |
-| `getPlayersWithTagAsync` | Tìm character theo tag | `key`, `value`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | |
-| `getFriendStatisticsLeaderboardAroundPlayerAsync` | Cần bảng xếp hạng quanh một character trong mạng bạn bè của character đó | `characterId`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetStatisticsLeaderboardResponseData` | Không phải global leaderboard |
-| `getFriendStatisticsLeaderboardAsync` | Cần bảng xếp hạng friend-only theo key | `characterId`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetStatisticsLeaderboardResponseData` | Scope là bạn bè của character target |
-| `getStatisticsLeaderboardAroundPlayerAsync` | Cần bảng xếp hạng toàn cục quanh một character | `characterId`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `catalogId?` | `GetStatisticsLeaderboardResponseData` | Có thể filter theo `catalogId` |
-| `getStatisticsLeaderboardAsync` | Cần bảng xếp hạng statistics toàn cục theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `version?`, `catalogId?` | `GetStatisticsLeaderboardResponseData` | `version` chỉ có ở method này |
-| `getCurrencyLeaderboardAsync` | Cần bảng xếp hạng currency theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `catalogId?` | `GetCurrencyLeaderboardResponseData` | Có thể filter theo `catalogId` |
-| `getCreateLeaderboardAsync` | Cần bảng xếp hạng theo thời điểm tạo character | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCreateLeaderboardResponseData` | Không cần `key` |
-| `getLastLoginLeaderboardAsync` | Cần bảng xếp hạng theo lần login gần nhất | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetLastLoginLeaderboardResponseData` | Không cần `key` |
-| `getStatisticsLogAsync` | Cần audit statistics log | `keys?`, `characterId?`, `limit?`, `token?` | `GetStatisticsLogResponseData` | Phân trang bằng `token` |
-| `getCurrencyLogAsync` | Cần audit currency log | `keys?`, `characterId?`, `limit?`, `token?` | `GetCurrencyLogResponseData` | Phân trang bằng `token` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getPlayersWithDisplayNameAsync` | Tìm character theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | Kết quả trả `characterId` | `Ok` |
+| `getPlayersWithSegmentAsync` | Tìm character theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | | `Ok` |
+| `getPlayersWithTagAsync` | Tìm character theo tag | `key`, `value`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | | `Ok`, `KeyNotFound` |
+| `getFriendStatisticsLeaderboardAroundPlayerAsync` | Cần bảng xếp hạng quanh một character trong mạng bạn bè của character đó | `characterId`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetStatisticsLeaderboardResponseData` | Không phải global leaderboard | `Ok`, `CharacterPlayerNotFound`, `KeyNotFound` |
+| `getFriendStatisticsLeaderboardAsync` | Cần bảng xếp hạng friend-only theo key | `characterId`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetStatisticsLeaderboardResponseData` | Scope là bạn bè của character target | `Ok`, `CharacterPlayerNotFound`, `KeyNotFound` |
+| `getStatisticsLeaderboardAroundPlayerAsync` | Cần bảng xếp hạng toàn cục quanh một character | `characterId`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `catalogId?` | `GetStatisticsLeaderboardResponseData` | Có thể filter theo `catalogId` | `Ok`, `KeyNotFound` |
+| `getStatisticsLeaderboardAsync` | Cần bảng xếp hạng statistics toàn cục theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `version?`, `catalogId?` | `GetStatisticsLeaderboardResponseData` | `version` chỉ có ở method này | `Ok`, `KeyNotFound`, `VersionInvalid` |
+| `getCurrencyLeaderboardAsync` | Cần bảng xếp hạng currency theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `catalogId?` | `GetCurrencyLeaderboardResponseData` | Có thể filter theo `catalogId` | `Ok`, `KeyNotFound` |
+| `getCreateLeaderboardAsync` | Cần bảng xếp hạng theo thời điểm tạo character | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCreateLeaderboardResponseData` | Không cần `key` | `Ok` |
+| `getLastLoginLeaderboardAsync` | Cần bảng xếp hạng theo lần login gần nhất | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetLastLoginLeaderboardResponseData` | Không cần `key` | `Ok` |
+| `getStatisticsLogAsync` | Cần audit statistics log | `keys?`, `characterId?`, `limit?`, `token?` | `GetStatisticsLogResponseData` | Phân trang bằng `token` | `Ok` |
+| `getCurrencyLogAsync` | Cần audit currency log | `keys?`, `characterId?`, `limit?`, `token?` | `GetCurrencyLogResponseData` | Phân trang bằng `token` | `Ok` |
 
 ### Friend, group, item lifecycle và mutation
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `addPlayerFriendAsync` | Thêm một quan hệ friend ở cấp character | `characterId`, `friendId`, `catalogId` | `EmptyResponseData` | `friendId` là id ở cấp character |
-| `removePlayerFriendAsync` | Gỡ một quan hệ friend | `characterId`, `friendId` | `EmptyResponseData` | |
-| `createGroupAsync` | Tạo group từ góc nhìn character | `characterId`, `catalogId`, `groupMembers?`, `displayName?` | `CharacterPlayerResponseData` | `groupMembers[]` dùng `userId`, không dùng `characterId` |
-| `joinGroupAsync` | Cho character join vào group đã tồn tại | `characterId`, `groupId` | `EmptyResponseData` | Flow lifecycle ở phía character |
-| `leaveGroupAsync` | Cho character rời khỏi group | `characterId`, `groupId` | `EmptyResponseData` | |
-| `createPlayerItemAsync` | Tạo item mới cho character | `characterId`, `catalogId`, `classId`, `displayName?`, `amount?` | `CharacterPlayerResponseData` | Không có contract riêng cho `itemId` mới tạo |
-| `removePlayerItemAsync` | Xóa item khỏi character theo `itemId` | `characterId`, `itemId` | `EmptyResponseData` | |
-| `addSegmentAsync` | Gắn thêm segment | `characterId`, `value` | `EmptyResponseData` | |
-| `removeSegmentAsync` | Gỡ segment | `characterId`, `value` | `EmptyResponseData` | |
-| `setTagAsync` | Set hoặc upsert tag | `characterId`, `key`, `value` | `EmptyResponseData` | |
-| `removeTagAsync` | Xóa tag theo key | `characterId`, `key` | `EmptyResponseData` | Không truyền `value` |
-| `setAvatarAsync` | Set avatar | `characterId`, `type`, `value` | `EmptyResponseData` | `type` chưa có enum public |
-| `setCountryCodeAsync` | Set country code | `characterId`, `countryCode` | `EmptyResponseData` | |
-| `setCustomDataAsync` | Set custom data theo nhiều key | `characterId`, `customDatas[]` | `CharacterPlayerResponseData` | |
-| `setDisplayNameAsync` | Set display name | `characterId`, `displayName`, `uniqueDisplayName?` | `EmptyResponseData` | Có option ép unique |
-| `setOwnerAsync` | Chuyển owner của character | `characterId`, `newOwnerId` | `EmptyResponseData` | Public contract không có `newOwnerType` |
-| `setPlayerBanAsync` | Ban character đến thời điểm cụ thể | `characterId`, `tsExpire`, `reason` | `EmptyResponseData` | |
-| `changePlayerCurrencyAsync` | Cộng/trừ currency | `characterId`, `playerCurrencies[]`, `log?` | `CharacterPlayerResponseData` | Đây là delta change |
-| `setPlayerDataAsync` | Set player data theo nhiều key | `characterId`, `playerDatas[]` | `CharacterPlayerResponseData` | |
-| `changePlayerStatisticsAsync` | Cộng/trừ statistics | `characterId`, `playerStatistics[]`, `log?` | `CharacterPlayerResponseData` | Đây là delta change |
-| `setRemoveStatusAsync` | Đánh dấu character bị remove | `characterId`, `reason?` | `EmptyResponseData` | Soft remove, không phải hard delete |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `addPlayerFriendAsync` | Thêm một quan hệ friend ở cấp character | `characterId`, `friendId`, `catalogId` | `EmptyResponseData` | `friendId` là id ở cấp character | `Ok`, `CharacterPlayerNotFound`, `CatalogIdNotFound`, `PlayerBan` |
+| `removePlayerFriendAsync` | Gỡ một quan hệ friend | `characterId`, `friendId` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |
+| `createGroupAsync` | Tạo group từ góc nhìn character | `characterId`, `catalogId`, `groupMembers?`, `displayName?` | `CharacterPlayerResponseData` | `groupMembers[]` dùng `userId`, không dùng `characterId` | `Ok`, `CharacterPlayerNotFound`, `CatalogIdNotFound`, `PlayerBan` |
+| `joinGroupAsync` | Cho character join vào group đã tồn tại | `characterId`, `groupId` | `EmptyResponseData` | Flow lifecycle ở phía character | `Ok`, `CharacterPlayerNotFound`, `GroupNotFound`, `PlayerBan` |
+| `leaveGroupAsync` | Cho character rời khỏi group | `characterId`, `groupId` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `GroupNotFound`, `PlayerBan` |
+| `createPlayerItemAsync` | Tạo item mới cho character | `characterId`, `catalogId`, `classId`, `displayName?`, `amount?` | `CharacterPlayerResponseData` | Không có contract riêng cho `itemId` mới tạo | `Ok`, `CharacterPlayerNotFound`, `CatalogIdNotFound`, `ClassIdNotFound`, `PlayerBan` |
+| `removePlayerItemAsync` | Xóa item khỏi character theo `itemId` | `characterId`, `itemId` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `ItemNotFound`, `PlayerBan` |
+| `addSegmentAsync` | Gắn thêm segment | `characterId`, `value` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |
+| `removeSegmentAsync` | Gỡ segment | `characterId`, `value` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |
+| `setTagAsync` | Set hoặc upsert tag | `characterId`, `key`, `value` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `KeyNotFound`, `PlayerBan` |
+| `removeTagAsync` | Xóa tag theo key | `characterId`, `key` | `EmptyResponseData` | Không truyền `value` | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |
+| `setAvatarAsync` | Set avatar | `characterId`, `type`, `value` | `EmptyResponseData` | `type` chưa có enum public | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |
+| `setCountryCodeAsync` | Set country code | `characterId`, `countryCode` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |
+| `setCustomDataAsync` | Set custom data theo nhiều key | `characterId`, `customDatas[]` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound`, `KeyNotFound`, `PlayerBan` |
+| `setDisplayNameAsync` | Set display name | `characterId`, `displayName`, `uniqueDisplayName?` | `EmptyResponseData` | Có option ép unique | `Ok`, `CharacterPlayerNotFound`, `DisplayNameUsed`, `PlayerBan` |
+| `setOwnerAsync` | Chuyển owner của character | `characterId`, `newOwnerId` | `EmptyResponseData` | Public contract không có `newOwnerType` | `Ok`, `CharacterPlayerNotFound`, `OwnerNotFound`, `GamePlayerNotFound`, `PlayerBan` |
+| `setPlayerBanAsync` | Ban character đến thời điểm cụ thể | `characterId`, `tsExpire`, `reason` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |
+| `changePlayerCurrencyAsync` | Cộng/trừ currency | `characterId`, `playerCurrencies[]`, `log?` | `CharacterPlayerResponseData` | Đây là delta change | `Ok`, `CharacterPlayerNotFound`, `NotEnoughCurrency`, `KeyNotFound`, `PlayerBan` |
+| `setPlayerDataAsync` | Set player data theo nhiều key | `characterId`, `playerDatas[]` | `CharacterPlayerResponseData` | | `Ok`, `CharacterPlayerNotFound`, `KeyNotFound`, `PlayerBan` |
+| `changePlayerStatisticsAsync` | Cộng/trừ statistics | `characterId`, `playerStatistics[]`, `log?` | `CharacterPlayerResponseData` | Đây là delta change | `Ok`, `CharacterPlayerNotFound`, `KeyNotFound`, `PlayerBan` |
+| `setRemoveStatusAsync` | Đánh dấu character bị remove | `characterId`, `reason?` | `EmptyResponseData` | Soft remove, không phải hard delete | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |
 
 ## 6. Enum Và Reference
 

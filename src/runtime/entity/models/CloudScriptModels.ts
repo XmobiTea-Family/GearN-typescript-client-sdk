@@ -3,8 +3,28 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
 /**
- * Groups reusable request and response contracts for CloudScript operations.
- * Function-management flows are separate from function-execution flows.
+ * Reusable request and response DTOs for the CloudScript
+ * domain.
+ *
+ * Two distinct flows live here:
+ *
+ * 1. **Function execution** — `ExecuteFunctionRequestData` /
+ *    `ExecuteFunctionResponseData`. The application invokes a
+ *    named function inside a specific script version and
+ *    receives the result, which carries an
+ *    {@link ExecuteResponseStatus} discriminator. Available to
+ *    Client / Server / Admin roles depending on the backend
+ *    permission table.
+ *
+ * 2. **Function management** — `AddFunctionRequestData` /
+ *    `SetFunctionRequestData` / `RemoveFunctionRequestData` /
+ *    version-management DTOs. Reserved for Server / Admin
+ *    callers in practice; the dashboard is the primary
+ *    consumer.
+ *
+ * Validation rules declared on each `@*DataMember` decorator
+ * are enforced server-side; failures surface as
+ * {@link InvalidMember} entries.
  */
 export namespace CloudScriptModels {
 	/**

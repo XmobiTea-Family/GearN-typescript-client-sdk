@@ -5,10 +5,20 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { DashboardModels } from "./DashboardModels";
 
 /**
- * Groups typed request wrappers for Dashboard.
+ * Typed request wrappers for the Dashboard domain.
  *
- * Every wrapper in this namespace currently uses `RequestType.Dashboard` with `RequestRole.Client`.
- * Admin authority is resolved by backend middleware from the dashboard auth token after login.
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from
+ * {@link DashboardModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.Dashboard} domain;
+ * - {@link RequestRole.Client} (the wire role is always
+ *   `Client`; admin privilege is resolved by the backend from
+ *   the auth token issued by `loginByAdminAccount`).
+ *
+ * Application code rarely instantiates these directly — the
+ * `GNNetwork.dashboard.*` helpers in {@link DashboardApi} build
+ * them under the hood.
  */
 export namespace DashboardRequestModels {
 	/**

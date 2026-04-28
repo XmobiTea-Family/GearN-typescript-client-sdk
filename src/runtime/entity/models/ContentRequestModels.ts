@@ -5,8 +5,30 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { ContentModels } from "./ContentModels";
 
 /**
- * Groups typed operation-request wrappers for `RequestType.Content`.
- * Content workflows stay HTTP-based even when the binary upload/download bytes are handled by helpers outside the typed operation layer.
+ * Typed request wrappers for the Content domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from {@link ContentModels} to
+ * the matching {@link OperationCode}, the
+ * {@link RequestType.Content} domain, and one of the three
+ * {@link RequestRole} variants.
+ *
+ * The wrappers cover three role flavours:
+ * - **Client** — used from player-facing application code
+ *   (`GNNetwork.content.*`).
+ * - **Server** (`Server*OperationRequest`) — used from trusted
+ *   backend code (`GNNetwork.content.server.*`); accepts
+ *   additional `userId` / `ownerId` parameters so a backend can
+ *   act on behalf of any player.
+ * - **Admin** (`Admin*OperationRequest`) — used from dashboard /
+ *   backoffice tooling (`GNNetwork.content.admin.*`).
+ *
+ * Note that Content operations stay strictly HTTP — the binary
+ * upload / download bytes are transferred through the dedicated
+ * helpers {@link GNNetwork.uploadFile} and
+ * {@link GNNetwork.getDownloadFileUrl}, not through the typed
+ * operation layer. The `*FileUploadInfo*` operations only
+ * register / inspect / revoke the metadata slot.
  */
 export namespace ContentRequestModels {
 	/**

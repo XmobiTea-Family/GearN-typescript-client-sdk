@@ -7,10 +7,52 @@ import { DashboardRequestModels } from "./entity/models/DashboardRequestModels";
 import { DashboardResponseModels } from "./entity/models/DashboardResponseModels";
 
 /**
- * Exposes dashboard and admin-facing operations through `GNNetwork.dashboard`.
+ * Public dashboard / admin-facing namespace.
  *
- * Public wrappers in this namespace currently use HTTP and `RequestRole.Client`.
- * After a successful admin login, backend middleware resolves dashboard permission from the auth token.
+ * Reachable through {@link GNNetwork.dashboard} after
+ * {@link GNNetwork.init}. Provides the operations that backend
+ * tooling (admin dashboards, ops scripts, internal CLIs) calls
+ * to manage games, accounts, secrets, analytics, server logs
+ * and CloudScript event-callback wiring.
+ *
+ * **Permission model**: methods on this class still route
+ * through {@link RequestRole.Client} on the wire; the backend
+ * resolves dashboard permission from the **auth token itself**
+ * — typically a token issued by `loginByAdminAccount`. Calling
+ * these methods with a regular player auth token will fail with
+ * `ReturnCode.OperationNotAuthorized`.
+ *
+ * Functional groupings:
+ *
+ * 1. **Admin auth & accounts** —
+ *    `loginByAdminAccount`, `changePasswordAdminAccount`,
+ *    `setPasswordAdminAccount`,
+ *    `setSecretKeyAdminAccount`, `createAdminAccount`,
+ *    `removeAdminAccount`, `getAdminAccountList`,
+ *    `getUsernameAdminAccount`.
+ * 2. **Game & game settings** — `getGameList`,
+ *    `createGame`, `getGameInformation`,
+ *    `setGameInformation`, `getMasterGameSettings`,
+ *    `setMasterGameSettings`.
+ * 3. **Secrets** — `getSecretInfoList`,
+ *    `getSecretInfoInformation`, `createSecretInfo`,
+ *    `setSecretInfoInformation`.
+ * 4. **Server diagnostics & analytics** — `getServerLog`,
+ *    `getServerGameData`, `getAnalytics`.
+ * 5. **CloudScript glue** —
+ *    `getEventCallbackCloudScript`,
+ *    `setEventCallbackCloudScript` (binds named events to
+ *    CloudScript functions).
+ * 6. **Leaderboards & data ops** —
+ *    `resetStatisticsLeaderboard`,
+ *    `getBackupStatisticsLeaderboardVersion`,
+ *    `deleteInDatabase`. Use the latter with extreme care; it
+ *    is a destructive maintenance operation.
+ *
+ * Common contract: HTTP / {@link RequestType.Dashboard} /
+ * {@link RequestRole.Client}, plus admin auth-token
+ * authorisation. Companion {@link ServerDashboardApi} and
+ * {@link AdminDashboardApi} are placeholders today.
  */
 export class DashboardApi {
 	/** Exposed for namespace symmetry only. Dashboard currently has no public server-scoped methods. */
@@ -386,17 +428,22 @@ export class DashboardApi {
 }
 
 /**
- * Placeholder namespace kept for API symmetry.
+ * Server-scoped Dashboard sub-namespace — placeholder.
  *
- * Dashboard does not currently expose any public server-scoped operations.
+ * Reserved for future server-only dashboard operations.
+ * Allocated by {@link DashboardApi} so the `.server` property
+ * name is always defined, even though no methods are exposed
+ * yet.
  */
 export class ServerDashboardApi {
 }
 
 /**
- * Placeholder namespace kept for API symmetry.
+ * Admin-scoped Dashboard sub-namespace — placeholder.
  *
- * Dashboard does not currently expose any public admin-scoped operations.
+ * Reserved for future admin-only dashboard operations.
+ * Allocated for the same symmetry reason as
+ * {@link ServerDashboardApi}.
  */
 export class AdminDashboardApi {
 }

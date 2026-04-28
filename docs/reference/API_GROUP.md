@@ -38,140 +38,140 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 
 ## Client methods (`GNNetwork.group.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `addMember` | `GroupModels.AddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` |
-| `addSegment` | `GroupModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` |
-| `getAvatar` | `GroupModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` |
-| `getCatalogId` | `GroupModels.GetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `GroupResponseModels.GetCatalogIdOperationResponse` |
-| `getCustomData` | `GroupModels.GetCustomDataRequestData` | `getCustomDataAsync(...)` | `GroupResponseModels.GetCustomDataOperationResponse` |
-| `getDisplayName` | `GroupModels.GetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `GroupResponseModels.GetDisplayNameOperationResponse` |
-| `getGroupCurrency` | `GroupModels.GetGroupCurrencyRequestData` | `getGroupCurrencyAsync(...)` | `GroupResponseModels.GetGroupCurrencyOperationResponse` |
-| `getGroupData` | `GroupModels.GetGroupDataRequestData` | `getGroupDataAsync(...)` | `GroupResponseModels.GetGroupDataOperationResponse` |
-| `getGroupInformation` | `GroupModels.GetGroupInformationRequestData` | `getGroupInformationAsync(...)` | `GroupResponseModels.GetGroupInformationOperationResponse` |
-| `getGroupInventory` | `GroupModels.GetGroupInventoryRequestData` | `getGroupInventoryAsync(...)` | `GroupResponseModels.GetGroupInventoryOperationResponse` |
-| `getGroupMessage` | `GroupModels.GetGroupMessageRequestData` | `getGroupMessageAsync(...)` | `GroupResponseModels.GetGroupMessageOperationResponse` |
-| `getGroupStatistics` | `GroupModels.GetGroupStatisticsRequestData` | `getGroupStatisticsAsync(...)` | `GroupResponseModels.GetGroupStatisticsOperationResponse` |
-| `getGroupsWithDisplayName` | `GroupModels.GetGroupsWithDisplayNameRequestData` | `getGroupsWithDisplayNameAsync(...)` | `GroupResponseModels.GetGroupsWithDisplayNameOperationResponse` |
-| `getGroupsWithSegment` | `GroupModels.GetGroupsWithSegmentRequestData` | `getGroupsWithSegmentAsync(...)` | `GroupResponseModels.GetGroupsWithSegmentOperationResponse` |
-| `getGroupsWithTag` | `GroupModels.GetGroupsWithTagRequestData` | `getGroupsWithTagAsync(...)` | `GroupResponseModels.GetGroupsWithTagOperationResponse` |
-| `getMembers` | `GroupModels.GetMembersRequestData` | `getMembersAsync(...)` | `GroupResponseModels.GetMembersOperationResponse` |
-| `getRemoveStatus` | `GroupModels.GetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `GroupResponseModels.GetRemoveStatusOperationResponse` |
-| `getSegment` | `GroupModels.GetSegmentRequestData` | `getSegmentAsync(...)` | `GroupResponseModels.GetSegmentOperationResponse` |
-| `getStatisticsLeaderboardAroundGroup` | `GroupModels.GetStatisticsLeaderboardAroundGroupRequestData` | `getStatisticsLeaderboardAroundGroupAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardAroundGroupOperationResponse` |
-| `getStatisticsLeaderboard` | `GroupModels.GetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardOperationResponse` |
-| `getTag` | `GroupModels.GetTagRequestData` | `getTagAsync(...)` | `GroupResponseModels.GetTagOperationResponse` |
-| `getTsCreate` | `GroupModels.GetTsCreateRequestData` | `getTsCreateAsync(...)` | `GroupResponseModels.GetTsCreateOperationResponse` |
-| `createGroupItem` | `GroupModels.CreateGroupItemRequestData` | `createGroupItemAsync(...)` | `GroupResponseModels.CreateGroupItemOperationResponse` |
-| `removeGroupItem` | `GroupModels.RemoveGroupItemRequestData` | `removeGroupItemAsync(...)` | `GroupResponseModels.RemoveGroupItemOperationResponse` |
-| `removeMember` | `GroupModels.RemoveMemberRequestData` | `removeMemberAsync(...)` | `GroupResponseModels.RemoveMemberOperationResponse` |
-| `removeSegment` | `GroupModels.RemoveSegmentRequestData` | `removeSegmentAsync(...)` | `GroupResponseModels.RemoveSegmentOperationResponse` |
-| `removeTag` | `GroupModels.RemoveTagRequestData` | `removeTagAsync(...)` | `GroupResponseModels.RemoveTagOperationResponse` |
-| `sendGroupMessage` | `GroupModels.SendGroupMessageRequestData` | `sendGroupMessageAsync(...)` | `GroupResponseModels.SendGroupMessageOperationResponse` |
-| `setAvatar` | `GroupModels.SetAvatarRequestData` | `setAvatarAsync(...)` | `GroupResponseModels.SetAvatarOperationResponse` |
-| `setCustomData` | `GroupModels.SetCustomDataRequestData` | `setCustomDataAsync(...)` | `GroupResponseModels.SetCustomDataOperationResponse` |
-| `setDisplayName` | `GroupModels.SetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `GroupResponseModels.SetDisplayNameOperationResponse` |
-| `changeGroupCurrency` | `GroupModels.ChangeGroupCurrencyRequestData` | `changeGroupCurrencyAsync(...)` | `GroupResponseModels.ChangeGroupCurrencyOperationResponse` |
-| `setGroupData` | `GroupModels.SetGroupDataRequestData` | `setGroupDataAsync(...)` | `GroupResponseModels.SetGroupDataOperationResponse` |
-| `changeGroupStatistics` | `GroupModels.ChangeGroupStatisticsRequestData` | `changeGroupStatisticsAsync(...)` | `GroupResponseModels.ChangeGroupStatisticsOperationResponse` |
-| `setRemoveStatus` | `GroupModels.SetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `GroupResponseModels.SetRemoveStatusOperationResponse` |
-| `setTag` | `GroupModels.SetTagRequestData` | `setTagAsync(...)` | `GroupResponseModels.SetTagOperationResponse` |
-| `getCurrencyLeaderboard` | `GroupModels.GetCurrencyLeaderboardRequestData` | `getCurrencyLeaderboardAsync(...)` | `GroupResponseModels.GetCurrencyLeaderboardOperationResponse` |
-| `getCreateLeaderboard` | `GroupModels.GetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `GroupResponseModels.GetCreateLeaderboardOperationResponse` |
-| `getStatisticsLog` | `GroupModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` |
-| `getCurrencyLog` | `GroupModels.GetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `groupId` mà `gamePlayer` đang authenticated và những `characterPlayer` có owner của `gamePlayer` đều không phải là member của `group` này |
+|--------|-------------|------------|----------------|--------------------------|-------------------------------------------------------------------------------|
+| `addMember` | `GroupModels.AddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` | `group.addMember.selfEnable` | `group.addMember.otherSelfEnable` |
+| `addSegment` | `GroupModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` | `group.addSegment.selfEnable` | `group.addSegment.otherSelfEnable` |
+| `getAvatar` | `GroupModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` | `group.getAvatar.selfEnable` | `group.getAvatar.otherSelfEnable` |
+| `getCatalogId` | `GroupModels.GetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `GroupResponseModels.GetCatalogIdOperationResponse` | `group.getCatalogId.selfEnable` | `group.getCatalogId.otherSelfEnable` |
+| `getCustomData` | `GroupModels.GetCustomDataRequestData` | `getCustomDataAsync(...)` | `GroupResponseModels.GetCustomDataOperationResponse` | `group.getCustomData.selfEnable` | `group.getCustomData.otherSelfEnable` |
+| `getDisplayName` | `GroupModels.GetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `GroupResponseModels.GetDisplayNameOperationResponse` | `group.getDisplayName.selfEnable` | `group.getDisplayName.otherSelfEnable` |
+| `getGroupCurrency` | `GroupModels.GetGroupCurrencyRequestData` | `getGroupCurrencyAsync(...)` | `GroupResponseModels.GetGroupCurrencyOperationResponse` | `group.getGroupCurrency.selfEnable` | `group.getGroupCurrency.otherSelfEnable` |
+| `getGroupData` | `GroupModels.GetGroupDataRequestData` | `getGroupDataAsync(...)` | `GroupResponseModels.GetGroupDataOperationResponse` | `group.getGroupData.selfEnable` | `group.getGroupData.otherSelfEnable` |
+| `getGroupInformation` | `GroupModels.GetGroupInformationRequestData` | `getGroupInformationAsync(...)` | `GroupResponseModels.GetGroupInformationOperationResponse` | `group.getGroupInformation.selfEnable` | `group.getGroupInformation.otherSelfEnable` |
+| `getGroupInventory` | `GroupModels.GetGroupInventoryRequestData` | `getGroupInventoryAsync(...)` | `GroupResponseModels.GetGroupInventoryOperationResponse` | `group.getGroupInventory.selfEnable` | `group.getGroupInventory.otherSelfEnable` |
+| `getGroupMessage` | `GroupModels.GetGroupMessageRequestData` | `getGroupMessageAsync(...)` | `GroupResponseModels.GetGroupMessageOperationResponse` | `group.getGroupMessage.selfEnable` | `group.getGroupMessage.otherSelfEnable` |
+| `getGroupStatistics` | `GroupModels.GetGroupStatisticsRequestData` | `getGroupStatisticsAsync(...)` | `GroupResponseModels.GetGroupStatisticsOperationResponse` | `group.getGroupStatistics.selfEnable` | `group.getGroupStatistics.otherSelfEnable` |
+| `getGroupsWithDisplayName` | `GroupModels.GetGroupsWithDisplayNameRequestData` | `getGroupsWithDisplayNameAsync(...)` | `GroupResponseModels.GetGroupsWithDisplayNameOperationResponse` | `group.getGroupsWithDisplayName.otherSelfEnable` | |
+| `getGroupsWithSegment` | `GroupModels.GetGroupsWithSegmentRequestData` | `getGroupsWithSegmentAsync(...)` | `GroupResponseModels.GetGroupsWithSegmentOperationResponse` | `group.getGroupsWithSegment.otherSelfEnable` | |
+| `getGroupsWithTag` | `GroupModels.GetGroupsWithTagRequestData` | `getGroupsWithTagAsync(...)` | `GroupResponseModels.GetGroupsWithTagOperationResponse` | `group.getGroupsWithTag.otherSelfEnable` | |
+| `getMembers` | `GroupModels.GetMembersRequestData` | `getMembersAsync(...)` | `GroupResponseModels.GetMembersOperationResponse` | `group.getMembers.selfEnable` | `group.getMembers.otherSelfEnable` |
+| `getRemoveStatus` | `GroupModels.GetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `GroupResponseModels.GetRemoveStatusOperationResponse` | `group.getRemoveStatus.selfEnable` | `group.getRemoveStatus.otherSelfEnable` |
+| `getSegment` | `GroupModels.GetSegmentRequestData` | `getSegmentAsync(...)` | `GroupResponseModels.GetSegmentOperationResponse` | `group.getSegment.selfEnable` | `group.getSegment.otherSelfEnable` |
+| `getStatisticsLeaderboardAroundGroup` | `GroupModels.GetStatisticsLeaderboardAroundGroupRequestData` | `getStatisticsLeaderboardAroundGroupAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardAroundGroupOperationResponse` | `group.getStatisticsLeaderboardAroundGroup.selfEnable` | `group.getStatisticsLeaderboardAroundGroup.otherSelfEnable` |
+| `getStatisticsLeaderboard` | `GroupModels.GetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardOperationResponse` | `group.getStatisticsLeaderboard.otherSelfEnable` | |
+| `getTag` | `GroupModels.GetTagRequestData` | `getTagAsync(...)` | `GroupResponseModels.GetTagOperationResponse` | `group.getTag.selfEnable` | `group.getTag.otherSelfEnable` |
+| `getTsCreate` | `GroupModels.GetTsCreateRequestData` | `getTsCreateAsync(...)` | `GroupResponseModels.GetTsCreateOperationResponse` | `group.getTsCreate.selfEnable` | `group.getTsCreate.otherSelfEnable` |
+| `createGroupItem` | `GroupModels.CreateGroupItemRequestData` | `createGroupItemAsync(...)` | `GroupResponseModels.CreateGroupItemOperationResponse` | `group.createGroupItem.selfEnable` | `group.createGroupItem.otherSelfEnable` |
+| `removeGroupItem` | `GroupModels.RemoveGroupItemRequestData` | `removeGroupItemAsync(...)` | `GroupResponseModels.RemoveGroupItemOperationResponse` | `group.removeGroupItem.selfEnable` | `group.removeGroupItem.otherSelfEnable` |
+| `removeMember` | `GroupModels.RemoveMemberRequestData` | `removeMemberAsync(...)` | `GroupResponseModels.RemoveMemberOperationResponse` | `group.removeMember.selfEnable` | `group.removeMember.otherSelfEnable` |
+| `removeSegment` | `GroupModels.RemoveSegmentRequestData` | `removeSegmentAsync(...)` | `GroupResponseModels.RemoveSegmentOperationResponse` | `group.removeSegment.selfEnable` | `group.removeSegment.otherSelfEnable` |
+| `removeTag` | `GroupModels.RemoveTagRequestData` | `removeTagAsync(...)` | `GroupResponseModels.RemoveTagOperationResponse` | `group.removeTag.selfEnable` | `group.removeTag.otherSelfEnable` |
+| `sendGroupMessage` | `GroupModels.SendGroupMessageRequestData` | `sendGroupMessageAsync(...)` | `GroupResponseModels.SendGroupMessageOperationResponse` | `group.sendGroupMessage.selfEnable` | `group.sendGroupMessage.otherSelfEnable` |
+| `setAvatar` | `GroupModels.SetAvatarRequestData` | `setAvatarAsync(...)` | `GroupResponseModels.SetAvatarOperationResponse` | `group.setAvatar.selfEnable` | `group.setAvatar.otherSelfEnable` |
+| `setCustomData` | `GroupModels.SetCustomDataRequestData` | `setCustomDataAsync(...)` | `GroupResponseModels.SetCustomDataOperationResponse` | `group.setCustomData.selfEnable` | `group.setCustomData.otherSelfEnable` |
+| `setDisplayName` | `GroupModels.SetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `GroupResponseModels.SetDisplayNameOperationResponse` | `group.setDisplayName.selfEnable` | `group.setDisplayName.otherSelfEnable` |
+| `changeGroupCurrency` | `GroupModels.ChangeGroupCurrencyRequestData` | `changeGroupCurrencyAsync(...)` | `GroupResponseModels.ChangeGroupCurrencyOperationResponse` | `group.changeGroupCurrency.selfEnable` | `group.changeGroupCurrency.otherSelfEnable` |
+| `setGroupData` | `GroupModels.SetGroupDataRequestData` | `setGroupDataAsync(...)` | `GroupResponseModels.SetGroupDataOperationResponse` | `group.setGroupData.selfEnable` | `group.setGroupData.otherSelfEnable` |
+| `changeGroupStatistics` | `GroupModels.ChangeGroupStatisticsRequestData` | `changeGroupStatisticsAsync(...)` | `GroupResponseModels.ChangeGroupStatisticsOperationResponse` | `group.changeGroupStatistics.selfEnable` | `group.changeGroupStatistics.otherSelfEnable` |
+| `setRemoveStatus` | `GroupModels.SetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `GroupResponseModels.SetRemoveStatusOperationResponse` | `group.setRemoveStatus.selfEnable` | `group.setRemoveStatus.otherSelfEnable` |
+| `setTag` | `GroupModels.SetTagRequestData` | `setTagAsync(...)` | `GroupResponseModels.SetTagOperationResponse` | `group.setTag.selfEnable` | `group.setTag.otherSelfEnable` |
+| `getCurrencyLeaderboard` | `GroupModels.GetCurrencyLeaderboardRequestData` | `getCurrencyLeaderboardAsync(...)` | `GroupResponseModels.GetCurrencyLeaderboardOperationResponse` | `group.getCurrencyLeaderboard.otherSelfEnable` | |
+| `getCreateLeaderboard` | `GroupModels.GetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `GroupResponseModels.GetCreateLeaderboardOperationResponse` | `group.getCreateLeaderboard.otherSelfEnable` | |
+| `getStatisticsLog` | `GroupModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` | `group.getStatisticsLog.selfEnable` | `group.getStatisticsLog.otherSelfEnable` |
+| `getCurrencyLog` | `GroupModels.GetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` | `group.getCurrencyLog.selfEnable` | `group.getCurrencyLog.otherSelfEnable` |
 
 
 ## Server methods (`GNNetwork.group.server.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `addMember` | `GroupModels.ServerAddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` |
-| `addSegment` | `GroupModels.ServerAddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` |
-| `getAvatar` | `GroupModels.ServerGetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` |
-| `getCatalogId` | `GroupModels.ServerGetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `GroupResponseModels.GetCatalogIdOperationResponse` |
-| `getCustomData` | `GroupModels.ServerGetCustomDataRequestData` | `getCustomDataAsync(...)` | `GroupResponseModels.GetCustomDataOperationResponse` |
-| `getDisplayName` | `GroupModels.ServerGetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `GroupResponseModels.GetDisplayNameOperationResponse` |
-| `getGroupCurrency` | `GroupModels.ServerGetGroupCurrencyRequestData` | `getGroupCurrencyAsync(...)` | `GroupResponseModels.GetGroupCurrencyOperationResponse` |
-| `getGroupData` | `GroupModels.ServerGetGroupDataRequestData` | `getGroupDataAsync(...)` | `GroupResponseModels.GetGroupDataOperationResponse` |
-| `getGroupInformation` | `GroupModels.ServerGetGroupInformationRequestData` | `getGroupInformationAsync(...)` | `GroupResponseModels.GetGroupInformationOperationResponse` |
-| `getGroupInventory` | `GroupModels.ServerGetGroupInventoryRequestData` | `getGroupInventoryAsync(...)` | `GroupResponseModels.GetGroupInventoryOperationResponse` |
-| `getGroupMessage` | `GroupModels.ServerGetGroupMessageRequestData` | `getGroupMessageAsync(...)` | `GroupResponseModels.GetGroupMessageOperationResponse` |
-| `getGroupStatistics` | `GroupModels.ServerGetGroupStatisticsRequestData` | `getGroupStatisticsAsync(...)` | `GroupResponseModels.GetGroupStatisticsOperationResponse` |
-| `getGroupsWithDisplayName` | `GroupModels.ServerGetGroupsWithDisplayNameRequestData` | `getGroupsWithDisplayNameAsync(...)` | `GroupResponseModels.GetGroupsWithDisplayNameOperationResponse` |
-| `getGroupsWithSegment` | `GroupModels.ServerGetGroupsWithSegmentRequestData` | `getGroupsWithSegmentAsync(...)` | `GroupResponseModels.GetGroupsWithSegmentOperationResponse` |
-| `getGroupsWithTag` | `GroupModels.ServerGetGroupsWithTagRequestData` | `getGroupsWithTagAsync(...)` | `GroupResponseModels.GetGroupsWithTagOperationResponse` |
-| `getMembers` | `GroupModels.ServerGetMembersRequestData` | `getMembersAsync(...)` | `GroupResponseModels.GetMembersOperationResponse` |
-| `getRemoveStatus` | `GroupModels.ServerGetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `GroupResponseModels.GetRemoveStatusOperationResponse` |
-| `getSegment` | `GroupModels.ServerGetSegmentRequestData` | `getSegmentAsync(...)` | `GroupResponseModels.GetSegmentOperationResponse` |
-| `getStatisticsLeaderboardAroundGroup` | `GroupModels.ServerGetStatisticsLeaderboardAroundGroupRequestData` | `getStatisticsLeaderboardAroundGroupAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardAroundGroupOperationResponse` |
-| `getStatisticsLeaderboard` | `GroupModels.ServerGetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardOperationResponse` |
-| `getTag` | `GroupModels.ServerGetTagRequestData` | `getTagAsync(...)` | `GroupResponseModels.GetTagOperationResponse` |
-| `getTsCreate` | `GroupModels.ServerGetTsCreateRequestData` | `getTsCreateAsync(...)` | `GroupResponseModels.GetTsCreateOperationResponse` |
-| `createGroupItem` | `GroupModels.ServerCreateGroupItemRequestData` | `createGroupItemAsync(...)` | `GroupResponseModels.CreateGroupItemOperationResponse` |
-| `removeGroupItem` | `GroupModels.ServerRemoveGroupItemRequestData` | `removeGroupItemAsync(...)` | `GroupResponseModels.RemoveGroupItemOperationResponse` |
-| `removeMember` | `GroupModels.ServerRemoveMemberRequestData` | `removeMemberAsync(...)` | `GroupResponseModels.RemoveMemberOperationResponse` |
-| `removeSegment` | `GroupModels.ServerRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `GroupResponseModels.RemoveSegmentOperationResponse` |
-| `removeTag` | `GroupModels.ServerRemoveTagRequestData` | `removeTagAsync(...)` | `GroupResponseModels.RemoveTagOperationResponse` |
-| `sendGroupMessage` | `GroupModels.ServerSendGroupMessageRequestData` | `sendGroupMessageAsync(...)` | `GroupResponseModels.SendGroupMessageOperationResponse` |
-| `setAvatar` | `GroupModels.ServerSetAvatarRequestData` | `setAvatarAsync(...)` | `GroupResponseModels.SetAvatarOperationResponse` |
-| `setCustomData` | `GroupModels.ServerSetCustomDataRequestData` | `setCustomDataAsync(...)` | `GroupResponseModels.SetCustomDataOperationResponse` |
-| `setDisplayName` | `GroupModels.ServerSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `GroupResponseModels.SetDisplayNameOperationResponse` |
-| `changeGroupCurrency` | `GroupModels.ServerChangeGroupCurrencyRequestData` | `changeGroupCurrencyAsync(...)` | `GroupResponseModels.ChangeGroupCurrencyOperationResponse` |
-| `setGroupData` | `GroupModels.ServerSetGroupDataRequestData` | `setGroupDataAsync(...)` | `GroupResponseModels.SetGroupDataOperationResponse` |
-| `changeGroupStatistics` | `GroupModels.ServerChangeGroupStatisticsRequestData` | `changeGroupStatisticsAsync(...)` | `GroupResponseModels.ChangeGroupStatisticsOperationResponse` |
-| `setRemoveStatus` | `GroupModels.ServerSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `GroupResponseModels.SetRemoveStatusOperationResponse` |
-| `setTag` | `GroupModels.ServerSetTagRequestData` | `setTagAsync(...)` | `GroupResponseModels.SetTagOperationResponse` |
-| `getCurrencyLeaderboard` | `GroupModels.ServerGetCurrencyLeaderboardRequestData` | `getCurrencyLeaderboardAsync(...)` | `GroupResponseModels.GetCurrencyLeaderboardOperationResponse` |
-| `getCreateLeaderboard` | `GroupModels.ServerGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `GroupResponseModels.GetCreateLeaderboardOperationResponse` |
-| `getStatisticsLog` | `GroupModels.ServerGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` |
-| `getCurrencyLog` | `GroupModels.ServerGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `addMember` | `GroupModels.ServerAddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` | `group.addMember.serverSelfEnable` |
+| `addSegment` | `GroupModels.ServerAddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` | `group.addSegment.serverSelfEnable` |
+| `getAvatar` | `GroupModels.ServerGetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` | `group.getAvatar.serverSelfEnable` |
+| `getCatalogId` | `GroupModels.ServerGetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `GroupResponseModels.GetCatalogIdOperationResponse` | `group.getCatalogId.serverSelfEnable` |
+| `getCustomData` | `GroupModels.ServerGetCustomDataRequestData` | `getCustomDataAsync(...)` | `GroupResponseModels.GetCustomDataOperationResponse` | `group.getCustomData.serverSelfEnable` |
+| `getDisplayName` | `GroupModels.ServerGetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `GroupResponseModels.GetDisplayNameOperationResponse` | `group.getDisplayName.serverSelfEnable` |
+| `getGroupCurrency` | `GroupModels.ServerGetGroupCurrencyRequestData` | `getGroupCurrencyAsync(...)` | `GroupResponseModels.GetGroupCurrencyOperationResponse` | `group.getGroupCurrency.serverSelfEnable` |
+| `getGroupData` | `GroupModels.ServerGetGroupDataRequestData` | `getGroupDataAsync(...)` | `GroupResponseModels.GetGroupDataOperationResponse` | `group.getGroupData.serverSelfEnable` |
+| `getGroupInformation` | `GroupModels.ServerGetGroupInformationRequestData` | `getGroupInformationAsync(...)` | `GroupResponseModels.GetGroupInformationOperationResponse` | `group.getGroupInformation.serverSelfEnable` |
+| `getGroupInventory` | `GroupModels.ServerGetGroupInventoryRequestData` | `getGroupInventoryAsync(...)` | `GroupResponseModels.GetGroupInventoryOperationResponse` | `group.getGroupInventory.serverSelfEnable` |
+| `getGroupMessage` | `GroupModels.ServerGetGroupMessageRequestData` | `getGroupMessageAsync(...)` | `GroupResponseModels.GetGroupMessageOperationResponse` | `group.getGroupMessage.serverSelfEnable` |
+| `getGroupStatistics` | `GroupModels.ServerGetGroupStatisticsRequestData` | `getGroupStatisticsAsync(...)` | `GroupResponseModels.GetGroupStatisticsOperationResponse` | `group.getGroupStatistics.serverSelfEnable` |
+| `getGroupsWithDisplayName` | `GroupModels.ServerGetGroupsWithDisplayNameRequestData` | `getGroupsWithDisplayNameAsync(...)` | `GroupResponseModels.GetGroupsWithDisplayNameOperationResponse` | `group.getGroupsWithDisplayName.serverSelfEnable` |
+| `getGroupsWithSegment` | `GroupModels.ServerGetGroupsWithSegmentRequestData` | `getGroupsWithSegmentAsync(...)` | `GroupResponseModels.GetGroupsWithSegmentOperationResponse` | `group.getGroupsWithSegment.serverSelfEnable` |
+| `getGroupsWithTag` | `GroupModels.ServerGetGroupsWithTagRequestData` | `getGroupsWithTagAsync(...)` | `GroupResponseModels.GetGroupsWithTagOperationResponse` | `group.getGroupsWithTag.serverSelfEnable` |
+| `getMembers` | `GroupModels.ServerGetMembersRequestData` | `getMembersAsync(...)` | `GroupResponseModels.GetMembersOperationResponse` | `group.getMembers.serverSelfEnable` |
+| `getRemoveStatus` | `GroupModels.ServerGetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `GroupResponseModels.GetRemoveStatusOperationResponse` | `group.getRemoveStatus.serverSelfEnable` |
+| `getSegment` | `GroupModels.ServerGetSegmentRequestData` | `getSegmentAsync(...)` | `GroupResponseModels.GetSegmentOperationResponse` | `group.getSegment.serverSelfEnable` |
+| `getStatisticsLeaderboardAroundGroup` | `GroupModels.ServerGetStatisticsLeaderboardAroundGroupRequestData` | `getStatisticsLeaderboardAroundGroupAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardAroundGroupOperationResponse` | `group.getStatisticsLeaderboardAroundGroup.serverSelfEnable` |
+| `getStatisticsLeaderboard` | `GroupModels.ServerGetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardOperationResponse` | `group.getStatisticsLeaderboard.serverSelfEnable` |
+| `getTag` | `GroupModels.ServerGetTagRequestData` | `getTagAsync(...)` | `GroupResponseModels.GetTagOperationResponse` | `group.getTag.serverSelfEnable` |
+| `getTsCreate` | `GroupModels.ServerGetTsCreateRequestData` | `getTsCreateAsync(...)` | `GroupResponseModels.GetTsCreateOperationResponse` | `group.getTsCreate.serverSelfEnable` |
+| `createGroupItem` | `GroupModels.ServerCreateGroupItemRequestData` | `createGroupItemAsync(...)` | `GroupResponseModels.CreateGroupItemOperationResponse` | `group.createGroupItem.serverSelfEnable` |
+| `removeGroupItem` | `GroupModels.ServerRemoveGroupItemRequestData` | `removeGroupItemAsync(...)` | `GroupResponseModels.RemoveGroupItemOperationResponse` | `group.removeGroupItem.serverSelfEnable` |
+| `removeMember` | `GroupModels.ServerRemoveMemberRequestData` | `removeMemberAsync(...)` | `GroupResponseModels.RemoveMemberOperationResponse` | `group.removeMember.serverSelfEnable` |
+| `removeSegment` | `GroupModels.ServerRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `GroupResponseModels.RemoveSegmentOperationResponse` | `group.removeSegment.serverSelfEnable` |
+| `removeTag` | `GroupModels.ServerRemoveTagRequestData` | `removeTagAsync(...)` | `GroupResponseModels.RemoveTagOperationResponse` | `group.removeTag.serverSelfEnable` |
+| `sendGroupMessage` | `GroupModels.ServerSendGroupMessageRequestData` | `sendGroupMessageAsync(...)` | `GroupResponseModels.SendGroupMessageOperationResponse` | `group.sendGroupMessage.serverSelfEnable` |
+| `setAvatar` | `GroupModels.ServerSetAvatarRequestData` | `setAvatarAsync(...)` | `GroupResponseModels.SetAvatarOperationResponse` | `group.setAvatar.serverSelfEnable` |
+| `setCustomData` | `GroupModels.ServerSetCustomDataRequestData` | `setCustomDataAsync(...)` | `GroupResponseModels.SetCustomDataOperationResponse` | `group.setCustomData.serverSelfEnable` |
+| `setDisplayName` | `GroupModels.ServerSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `GroupResponseModels.SetDisplayNameOperationResponse` | `group.setDisplayName.serverSelfEnable` |
+| `changeGroupCurrency` | `GroupModels.ServerChangeGroupCurrencyRequestData` | `changeGroupCurrencyAsync(...)` | `GroupResponseModels.ChangeGroupCurrencyOperationResponse` | `group.changeGroupCurrency.serverSelfEnable` |
+| `setGroupData` | `GroupModels.ServerSetGroupDataRequestData` | `setGroupDataAsync(...)` | `GroupResponseModels.SetGroupDataOperationResponse` | `group.setGroupData.serverSelfEnable` |
+| `changeGroupStatistics` | `GroupModels.ServerChangeGroupStatisticsRequestData` | `changeGroupStatisticsAsync(...)` | `GroupResponseModels.ChangeGroupStatisticsOperationResponse` | `group.changeGroupStatistics.serverSelfEnable` |
+| `setRemoveStatus` | `GroupModels.ServerSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `GroupResponseModels.SetRemoveStatusOperationResponse` | `group.setRemoveStatus.serverSelfEnable` |
+| `setTag` | `GroupModels.ServerSetTagRequestData` | `setTagAsync(...)` | `GroupResponseModels.SetTagOperationResponse` | `group.setTag.serverSelfEnable` |
+| `getCurrencyLeaderboard` | `GroupModels.ServerGetCurrencyLeaderboardRequestData` | `getCurrencyLeaderboardAsync(...)` | `GroupResponseModels.GetCurrencyLeaderboardOperationResponse` | `group.getCurrencyLeaderboard.serverSelfEnable` |
+| `getCreateLeaderboard` | `GroupModels.ServerGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `GroupResponseModels.GetCreateLeaderboardOperationResponse` | `group.getCreateLeaderboard.serverSelfEnable` |
+| `getStatisticsLog` | `GroupModels.ServerGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` | `group.getStatisticsLog.serverSelfEnable` |
+| `getCurrencyLog` | `GroupModels.ServerGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` | `group.getCurrencyLog.serverSelfEnable` |
 
 
 ## Admin methods (`GNNetwork.group.admin.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `addMember` | `GroupModels.AdminAddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` |
-| `addSegment` | `GroupModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` |
-| `getAvatar` | `GroupModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` |
-| `getCatalogId` | `GroupModels.AdminGetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `GroupResponseModels.GetCatalogIdOperationResponse` |
-| `getCustomData` | `GroupModels.AdminGetCustomDataRequestData` | `getCustomDataAsync(...)` | `GroupResponseModels.GetCustomDataOperationResponse` |
-| `getDisplayName` | `GroupModels.AdminGetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `GroupResponseModels.GetDisplayNameOperationResponse` |
-| `getGroupCurrency` | `GroupModels.AdminGetGroupCurrencyRequestData` | `getGroupCurrencyAsync(...)` | `GroupResponseModels.GetGroupCurrencyOperationResponse` |
-| `getGroupData` | `GroupModels.AdminGetGroupDataRequestData` | `getGroupDataAsync(...)` | `GroupResponseModels.GetGroupDataOperationResponse` |
-| `getGroupInformation` | `GroupModels.AdminGetGroupInformationRequestData` | `getGroupInformationAsync(...)` | `GroupResponseModels.GetGroupInformationOperationResponse` |
-| `getGroupInventory` | `GroupModels.AdminGetGroupInventoryRequestData` | `getGroupInventoryAsync(...)` | `GroupResponseModels.GetGroupInventoryOperationResponse` |
-| `getGroupMessage` | `GroupModels.AdminGetGroupMessageRequestData` | `getGroupMessageAsync(...)` | `GroupResponseModels.GetGroupMessageOperationResponse` |
-| `getGroupStatistics` | `GroupModels.AdminGetGroupStatisticsRequestData` | `getGroupStatisticsAsync(...)` | `GroupResponseModels.GetGroupStatisticsOperationResponse` |
-| `getGroupsWithDisplayName` | `GroupModels.AdminGetGroupsWithDisplayNameRequestData` | `getGroupsWithDisplayNameAsync(...)` | `GroupResponseModels.GetGroupsWithDisplayNameOperationResponse` |
-| `getGroupsWithSegment` | `GroupModels.AdminGetGroupsWithSegmentRequestData` | `getGroupsWithSegmentAsync(...)` | `GroupResponseModels.GetGroupsWithSegmentOperationResponse` |
-| `getGroupsWithTag` | `GroupModels.AdminGetGroupsWithTagRequestData` | `getGroupsWithTagAsync(...)` | `GroupResponseModels.GetGroupsWithTagOperationResponse` |
-| `getMembers` | `GroupModels.AdminGetMembersRequestData` | `getMembersAsync(...)` | `GroupResponseModels.GetMembersOperationResponse` |
-| `getRemoveStatus` | `GroupModels.AdminGetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `GroupResponseModels.GetRemoveStatusOperationResponse` |
-| `getSegment` | `GroupModels.AdminGetSegmentRequestData` | `getSegmentAsync(...)` | `GroupResponseModels.GetSegmentOperationResponse` |
-| `getStatisticsLeaderboardAroundGroup` | `GroupModels.AdminGetStatisticsLeaderboardAroundGroupRequestData` | `getStatisticsLeaderboardAroundGroupAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardAroundGroupOperationResponse` |
-| `getStatisticsLeaderboard` | `GroupModels.AdminGetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardOperationResponse` |
-| `getTag` | `GroupModels.AdminGetTagRequestData` | `getTagAsync(...)` | `GroupResponseModels.GetTagOperationResponse` |
-| `getTsCreate` | `GroupModels.AdminGetTsCreateRequestData` | `getTsCreateAsync(...)` | `GroupResponseModels.GetTsCreateOperationResponse` |
-| `createGroupItem` | `GroupModels.AdminCreateGroupItemRequestData` | `createGroupItemAsync(...)` | `GroupResponseModels.CreateGroupItemOperationResponse` |
-| `removeGroupItem` | `GroupModels.AdminRemoveGroupItemRequestData` | `removeGroupItemAsync(...)` | `GroupResponseModels.RemoveGroupItemOperationResponse` |
-| `removeMember` | `GroupModels.AdminRemoveMemberRequestData` | `removeMemberAsync(...)` | `GroupResponseModels.RemoveMemberOperationResponse` |
-| `removeSegment` | `GroupModels.AdminRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `GroupResponseModels.RemoveSegmentOperationResponse` |
-| `removeTag` | `GroupModels.AdminRemoveTagRequestData` | `removeTagAsync(...)` | `GroupResponseModels.RemoveTagOperationResponse` |
-| `sendGroupMessage` | `GroupModels.AdminSendGroupMessageRequestData` | `sendGroupMessageAsync(...)` | `GroupResponseModels.SendGroupMessageOperationResponse` |
-| `setAvatar` | `GroupModels.AdminSetAvatarRequestData` | `setAvatarAsync(...)` | `GroupResponseModels.SetAvatarOperationResponse` |
-| `setCustomData` | `GroupModels.AdminSetCustomDataRequestData` | `setCustomDataAsync(...)` | `GroupResponseModels.SetCustomDataOperationResponse` |
-| `setDisplayName` | `GroupModels.AdminSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `GroupResponseModels.SetDisplayNameOperationResponse` |
-| `changeGroupCurrency` | `GroupModels.AdminChangeGroupCurrencyRequestData` | `changeGroupCurrencyAsync(...)` | `GroupResponseModels.ChangeGroupCurrencyOperationResponse` |
-| `setGroupData` | `GroupModels.AdminSetGroupDataRequestData` | `setGroupDataAsync(...)` | `GroupResponseModels.SetGroupDataOperationResponse` |
-| `changeGroupStatistics` | `GroupModels.AdminChangeGroupStatisticsRequestData` | `changeGroupStatisticsAsync(...)` | `GroupResponseModels.ChangeGroupStatisticsOperationResponse` |
-| `setRemoveStatus` | `GroupModels.AdminSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `GroupResponseModels.SetRemoveStatusOperationResponse` |
-| `setTag` | `GroupModels.AdminSetTagRequestData` | `setTagAsync(...)` | `GroupResponseModels.SetTagOperationResponse` |
-| `getCurrencyLeaderboard` | `GroupModels.AdminGetCurrencyLeaderboardRequestData` | `getCurrencyLeaderboardAsync(...)` | `GroupResponseModels.GetCurrencyLeaderboardOperationResponse` |
-| `getCreateLeaderboard` | `GroupModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `GroupResponseModels.GetCreateLeaderboardOperationResponse` |
-| `getStatisticsLog` | `GroupModels.AdminGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` |
-| `getCurrencyLog` | `GroupModels.AdminGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `addMember` | `GroupModels.AdminAddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` | `group.addMember.adminSelfEnable` |
+| `addSegment` | `GroupModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` | `group.addSegment.adminSelfEnable` |
+| `getAvatar` | `GroupModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` | `group.getAvatar.adminSelfEnable` |
+| `getCatalogId` | `GroupModels.AdminGetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `GroupResponseModels.GetCatalogIdOperationResponse` | `group.getCatalogId.adminSelfEnable` |
+| `getCustomData` | `GroupModels.AdminGetCustomDataRequestData` | `getCustomDataAsync(...)` | `GroupResponseModels.GetCustomDataOperationResponse` | `group.getCustomData.adminSelfEnable` |
+| `getDisplayName` | `GroupModels.AdminGetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `GroupResponseModels.GetDisplayNameOperationResponse` | `group.getDisplayName.adminSelfEnable` |
+| `getGroupCurrency` | `GroupModels.AdminGetGroupCurrencyRequestData` | `getGroupCurrencyAsync(...)` | `GroupResponseModels.GetGroupCurrencyOperationResponse` | `group.getGroupCurrency.adminSelfEnable` |
+| `getGroupData` | `GroupModels.AdminGetGroupDataRequestData` | `getGroupDataAsync(...)` | `GroupResponseModels.GetGroupDataOperationResponse` | `group.getGroupData.adminSelfEnable` |
+| `getGroupInformation` | `GroupModels.AdminGetGroupInformationRequestData` | `getGroupInformationAsync(...)` | `GroupResponseModels.GetGroupInformationOperationResponse` | `group.getGroupInformation.adminSelfEnable` |
+| `getGroupInventory` | `GroupModels.AdminGetGroupInventoryRequestData` | `getGroupInventoryAsync(...)` | `GroupResponseModels.GetGroupInventoryOperationResponse` | `group.getGroupInventory.adminSelfEnable` |
+| `getGroupMessage` | `GroupModels.AdminGetGroupMessageRequestData` | `getGroupMessageAsync(...)` | `GroupResponseModels.GetGroupMessageOperationResponse` | `group.getGroupMessage.adminSelfEnable` |
+| `getGroupStatistics` | `GroupModels.AdminGetGroupStatisticsRequestData` | `getGroupStatisticsAsync(...)` | `GroupResponseModels.GetGroupStatisticsOperationResponse` | `group.getGroupStatistics.adminSelfEnable` |
+| `getGroupsWithDisplayName` | `GroupModels.AdminGetGroupsWithDisplayNameRequestData` | `getGroupsWithDisplayNameAsync(...)` | `GroupResponseModels.GetGroupsWithDisplayNameOperationResponse` | `group.getGroupsWithDisplayName.adminSelfEnable` |
+| `getGroupsWithSegment` | `GroupModels.AdminGetGroupsWithSegmentRequestData` | `getGroupsWithSegmentAsync(...)` | `GroupResponseModels.GetGroupsWithSegmentOperationResponse` | `group.getGroupsWithSegment.adminSelfEnable` |
+| `getGroupsWithTag` | `GroupModels.AdminGetGroupsWithTagRequestData` | `getGroupsWithTagAsync(...)` | `GroupResponseModels.GetGroupsWithTagOperationResponse` | `group.getGroupsWithTag.adminSelfEnable` |
+| `getMembers` | `GroupModels.AdminGetMembersRequestData` | `getMembersAsync(...)` | `GroupResponseModels.GetMembersOperationResponse` | `group.getMembers.adminSelfEnable` |
+| `getRemoveStatus` | `GroupModels.AdminGetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `GroupResponseModels.GetRemoveStatusOperationResponse` | `group.getRemoveStatus.adminSelfEnable` |
+| `getSegment` | `GroupModels.AdminGetSegmentRequestData` | `getSegmentAsync(...)` | `GroupResponseModels.GetSegmentOperationResponse` | `group.getSegment.adminSelfEnable` |
+| `getStatisticsLeaderboardAroundGroup` | `GroupModels.AdminGetStatisticsLeaderboardAroundGroupRequestData` | `getStatisticsLeaderboardAroundGroupAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardAroundGroupOperationResponse` | `group.getStatisticsLeaderboardAroundGroup.adminSelfEnable` |
+| `getStatisticsLeaderboard` | `GroupModels.AdminGetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `GroupResponseModels.GetStatisticsLeaderboardOperationResponse` | `group.getStatisticsLeaderboard.adminSelfEnable` |
+| `getTag` | `GroupModels.AdminGetTagRequestData` | `getTagAsync(...)` | `GroupResponseModels.GetTagOperationResponse` | `group.getTag.adminSelfEnable` |
+| `getTsCreate` | `GroupModels.AdminGetTsCreateRequestData` | `getTsCreateAsync(...)` | `GroupResponseModels.GetTsCreateOperationResponse` | `group.getTsCreate.adminSelfEnable` |
+| `createGroupItem` | `GroupModels.AdminCreateGroupItemRequestData` | `createGroupItemAsync(...)` | `GroupResponseModels.CreateGroupItemOperationResponse` | `group.createGroupItem.adminSelfEnable` |
+| `removeGroupItem` | `GroupModels.AdminRemoveGroupItemRequestData` | `removeGroupItemAsync(...)` | `GroupResponseModels.RemoveGroupItemOperationResponse` | `group.removeGroupItem.adminSelfEnable` |
+| `removeMember` | `GroupModels.AdminRemoveMemberRequestData` | `removeMemberAsync(...)` | `GroupResponseModels.RemoveMemberOperationResponse` | `group.removeMember.adminSelfEnable` |
+| `removeSegment` | `GroupModels.AdminRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `GroupResponseModels.RemoveSegmentOperationResponse` | `group.removeSegment.adminSelfEnable` |
+| `removeTag` | `GroupModels.AdminRemoveTagRequestData` | `removeTagAsync(...)` | `GroupResponseModels.RemoveTagOperationResponse` | `group.removeTag.adminSelfEnable` |
+| `sendGroupMessage` | `GroupModels.AdminSendGroupMessageRequestData` | `sendGroupMessageAsync(...)` | `GroupResponseModels.SendGroupMessageOperationResponse` | `group.sendGroupMessage.adminSelfEnable` |
+| `setAvatar` | `GroupModels.AdminSetAvatarRequestData` | `setAvatarAsync(...)` | `GroupResponseModels.SetAvatarOperationResponse` | `group.setAvatar.adminSelfEnable` |
+| `setCustomData` | `GroupModels.AdminSetCustomDataRequestData` | `setCustomDataAsync(...)` | `GroupResponseModels.SetCustomDataOperationResponse` | `group.setCustomData.adminSelfEnable` |
+| `setDisplayName` | `GroupModels.AdminSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `GroupResponseModels.SetDisplayNameOperationResponse` | `group.setDisplayName.adminSelfEnable` |
+| `changeGroupCurrency` | `GroupModels.AdminChangeGroupCurrencyRequestData` | `changeGroupCurrencyAsync(...)` | `GroupResponseModels.ChangeGroupCurrencyOperationResponse` | `group.changeGroupCurrency.adminSelfEnable` |
+| `setGroupData` | `GroupModels.AdminSetGroupDataRequestData` | `setGroupDataAsync(...)` | `GroupResponseModels.SetGroupDataOperationResponse` | `group.setGroupData.adminSelfEnable` |
+| `changeGroupStatistics` | `GroupModels.AdminChangeGroupStatisticsRequestData` | `changeGroupStatisticsAsync(...)` | `GroupResponseModels.ChangeGroupStatisticsOperationResponse` | `group.changeGroupStatistics.adminSelfEnable` |
+| `setRemoveStatus` | `GroupModels.AdminSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `GroupResponseModels.SetRemoveStatusOperationResponse` | `group.setRemoveStatus.adminSelfEnable` |
+| `setTag` | `GroupModels.AdminSetTagRequestData` | `setTagAsync(...)` | `GroupResponseModels.SetTagOperationResponse` | `group.setTag.adminSelfEnable` |
+| `getCurrencyLeaderboard` | `GroupModels.AdminGetCurrencyLeaderboardRequestData` | `getCurrencyLeaderboardAsync(...)` | `GroupResponseModels.GetCurrencyLeaderboardOperationResponse` | `group.getCurrencyLeaderboard.adminSelfEnable` |
+| `getCreateLeaderboard` | `GroupModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `GroupResponseModels.GetCreateLeaderboardOperationResponse` | `group.getCreateLeaderboard.adminSelfEnable` |
+| `getStatisticsLog` | `GroupModels.AdminGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` | `group.getStatisticsLog.adminSelfEnable` |
+| `getCurrencyLog` | `GroupModels.AdminGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` | `group.getCurrencyLog.adminSelfEnable` |
 
 
 ## Ví dụ tối thiểu

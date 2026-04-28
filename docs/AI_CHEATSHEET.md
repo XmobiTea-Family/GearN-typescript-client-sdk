@@ -25,13 +25,14 @@ const settings: GNServerSettings = {
   pingInterval: 20000,
   pingTimeout: 20000,
   secretKey: "<secret-key>",
+  gameId: "<game-id>",
   logType: LogType.Error,
 }
 
 // Bootstrap — gọi 1 lần, idempotent
 GNNetwork.init(settings);
 
-// Mọi call: 2-tier check, KHÔNG throw business error
+// Mọi call: 2-tier check
 const res = await GNNetwork.<group>.<method>Async(req);
 if (res.returnCode !== ReturnCode.Ok) return; // transport / permission
 if (res.errorCode  !== ErrorCode.Ok)  return; // business

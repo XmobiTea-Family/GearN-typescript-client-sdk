@@ -3,9 +3,26 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups reusable request and response contracts for Group operations.
- * Public routes always target a concrete group entity by `groupId`;
- * client permission checks depend on whether that group belongs to the authenticated player context.
+ * Reusable request and response DTOs for the Group domain.
+ *
+ * Group operations target a **specific group entity** by
+ * `groupId`. On the client variants the backend additionally
+ * cross-checks that the authenticated player is currently a
+ * member with the right role (e.g. `Officer` to invite,
+ * `Owner` to disband).
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.group`, scoped
+ *   to groups the caller has permission to act on.
+ * - **`Server*`**: used by `GNNetwork.group.server`, can act on
+ *   any group with a valid server `secretKey`.
+ * - **`Admin*`**: used by `GNNetwork.group.admin`, full
+ *   privileged access for backoffice tooling.
+ *
+ * Group state changes propagate to every connected member
+ * device through the realtime events
+ * {@link OnGroupMemberUpdateEventHandler} (member roster) and
+ * {@link OnGroupMessageUpdateEventHandler} (chat / wall).
  */
 export namespace GroupModels {
 

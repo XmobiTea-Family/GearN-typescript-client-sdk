@@ -38,122 +38,122 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 
 ## Client methods (`GNNetwork.inventory.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `addSegment` | `InventoryModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` |
-| `getAmount` | `InventoryModels.GetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` |
-| `getAvatar` | `InventoryModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` |
-| `getCatalogId` | `InventoryModels.GetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `InventoryResponseModels.GetCatalogIdOperationResponse` |
-| `getClassId` | `InventoryModels.GetClassIdRequestData` | `getClassIdAsync(...)` | `InventoryResponseModels.GetClassIdOperationResponse` |
-| `getCustomData` | `InventoryModels.GetCustomDataRequestData` | `getCustomDataAsync(...)` | `InventoryResponseModels.GetCustomDataOperationResponse` |
-| `getDisplayName` | `InventoryModels.GetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `InventoryResponseModels.GetDisplayNameOperationResponse` |
-| `getItemData` | `InventoryModels.GetItemDataRequestData` | `getItemDataAsync(...)` | `InventoryResponseModels.GetItemDataOperationResponse` |
-| `getItemInformation` | `InventoryModels.GetItemInformationRequestData` | `getItemInformationAsync(...)` | `InventoryResponseModels.GetItemInformationOperationResponse` |
-| `getItemStatistics` | `InventoryModels.GetItemStatisticsRequestData` | `getItemStatisticsAsync(...)` | `InventoryResponseModels.GetItemStatisticsOperationResponse` |
-| `getItemsWithDisplayName` | `InventoryModels.GetItemsWithDisplayNameRequestData` | `getItemsWithDisplayNameAsync(...)` | `InventoryResponseModels.GetItemsWithDisplayNameOperationResponse` |
-| `getItemsWithSegment` | `InventoryModels.GetItemsWithSegmentRequestData` | `getItemsWithSegmentAsync(...)` | `InventoryResponseModels.GetItemsWithSegmentOperationResponse` |
-| `getItemsWithTag` | `InventoryModels.GetItemsWithTagRequestData` | `getItemsWithTagAsync(...)` | `InventoryResponseModels.GetItemsWithTagOperationResponse` |
-| `getItemType` | `InventoryModels.GetItemTypeRequestData` | `getItemTypeAsync(...)` | `InventoryResponseModels.GetItemTypeOperationResponse` |
-| `getOwner` | `InventoryModels.GetOwnerRequestData` | `getOwnerAsync(...)` | `InventoryResponseModels.GetOwnerOperationResponse` |
-| `getRemoveStatus` | `InventoryModels.GetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `InventoryResponseModels.GetRemoveStatusOperationResponse` |
-| `getSegment` | `InventoryModels.GetSegmentRequestData` | `getSegmentAsync(...)` | `InventoryResponseModels.GetSegmentOperationResponse` |
-| `getStatisticsLeaderboardAroundItem` | `InventoryModels.GetStatisticsLeaderboardAroundItemRequestData` | `getStatisticsLeaderboardAroundItemAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardAroundItemOperationResponse` |
-| `getStatisticsLeaderboard` | `InventoryModels.GetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardOperationResponse` |
-| `getTag` | `InventoryModels.GetTagRequestData` | `getTagAsync(...)` | `InventoryResponseModels.GetTagOperationResponse` |
-| `getTsCreate` | `InventoryModels.GetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` |
-| `removeSegment` | `InventoryModels.RemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` |
-| `removeTag` | `InventoryModels.RemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` |
-| `setAmount` | `InventoryModels.SetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` |
-| `setAvatar` | `InventoryModels.SetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` |
-| `setCustomData` | `InventoryModels.SetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` |
-| `setDisplayName` | `InventoryModels.SetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` |
-| `setItemData` | `InventoryModels.SetItemDataRequestData` | `setItemDataAsync(...)` | `InventoryResponseModels.SetItemDataOperationResponse` |
-| `changeItemStatistics` | `InventoryModels.ChangeItemStatisticsRequestData` | `changeItemStatisticsAsync(...)` | `InventoryResponseModels.ChangeItemStatisticsOperationResponse` |
-| `setOwner` | `InventoryModels.SetOwnerRequestData` | `setOwnerAsync(...)` | `InventoryResponseModels.SetOwnerOperationResponse` |
-| `setRemoveStatus` | `InventoryModels.SetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `InventoryResponseModels.SetRemoveStatusOperationResponse` |
-| `setTag` | `InventoryModels.SetTagRequestData` | `setTagAsync(...)` | `InventoryResponseModels.SetTagOperationResponse` |
-| `getCreateLeaderboard` | `InventoryModels.GetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` |
-| `getStatisticsLog` | `InventoryModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `itemId` mà `gamePlayer` đang authenticated hoặc các `characterPlayer` thuộc về `gamePlayer` không phải là owner của `inventory` này |
+|--------|-------------|------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------|
+| `addSegment` | `InventoryModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` | `inventory.addSegment.selfEnable` | `inventory.addSegment.otherSelfEnable` |
+| `getAmount` | `InventoryModels.GetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` | `inventory.getAmount.selfEnable` | `inventory.getAmount.otherSelfEnable` |
+| `getAvatar` | `InventoryModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` | `inventory.getAvatar.selfEnable` | `inventory.getAvatar.otherSelfEnable` |
+| `getCatalogId` | `InventoryModels.GetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `InventoryResponseModels.GetCatalogIdOperationResponse` | `inventory.getCatalogId.selfEnable` | `inventory.getCatalogId.otherSelfEnable` |
+| `getClassId` | `InventoryModels.GetClassIdRequestData` | `getClassIdAsync(...)` | `InventoryResponseModels.GetClassIdOperationResponse` | `inventory.getClassId.selfEnable` | `inventory.getClassId.otherSelfEnable` |
+| `getCustomData` | `InventoryModels.GetCustomDataRequestData` | `getCustomDataAsync(...)` | `InventoryResponseModels.GetCustomDataOperationResponse` | `inventory.getCustomData.selfEnable` | `inventory.getCustomData.otherSelfEnable` |
+| `getDisplayName` | `InventoryModels.GetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `InventoryResponseModels.GetDisplayNameOperationResponse` | `inventory.getDisplayName.selfEnable` | `inventory.getDisplayName.otherSelfEnable` |
+| `getItemData` | `InventoryModels.GetItemDataRequestData` | `getItemDataAsync(...)` | `InventoryResponseModels.GetItemDataOperationResponse` | `inventory.getItemData.selfEnable` | `inventory.getItemData.otherSelfEnable` |
+| `getItemInformation` | `InventoryModels.GetItemInformationRequestData` | `getItemInformationAsync(...)` | `InventoryResponseModels.GetItemInformationOperationResponse` | `inventory.getItemInformation.selfEnable` | `inventory.getItemInformation.otherSelfEnable` |
+| `getItemStatistics` | `InventoryModels.GetItemStatisticsRequestData` | `getItemStatisticsAsync(...)` | `InventoryResponseModels.GetItemStatisticsOperationResponse` | `inventory.getItemStatistics.selfEnable` | `inventory.getItemStatistics.otherSelfEnable` |
+| `getItemsWithDisplayName` | `InventoryModels.GetItemsWithDisplayNameRequestData` | `getItemsWithDisplayNameAsync(...)` | `InventoryResponseModels.GetItemsWithDisplayNameOperationResponse` | `inventory.getItemsWithDisplayName.otherSelfEnable` | |
+| `getItemsWithSegment` | `InventoryModels.GetItemsWithSegmentRequestData` | `getItemsWithSegmentAsync(...)` | `InventoryResponseModels.GetItemsWithSegmentOperationResponse` | `inventory.getItemsWithSegment.otherSelfEnable` | |
+| `getItemsWithTag` | `InventoryModels.GetItemsWithTagRequestData` | `getItemsWithTagAsync(...)` | `InventoryResponseModels.GetItemsWithTagOperationResponse` | `inventory.getItemsWithTag.otherSelfEnable` | |
+| `getItemType` | `InventoryModels.GetItemTypeRequestData` | `getItemTypeAsync(...)` | `InventoryResponseModels.GetItemTypeOperationResponse` | `inventory.getItemType.selfEnable` | `inventory.getItemType.otherSelfEnable` |
+| `getOwner` | `InventoryModels.GetOwnerRequestData` | `getOwnerAsync(...)` | `InventoryResponseModels.GetOwnerOperationResponse` | `inventory.getOwner.selfEnable` | `inventory.getOwner.otherSelfEnable` |
+| `getRemoveStatus` | `InventoryModels.GetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `InventoryResponseModels.GetRemoveStatusOperationResponse` | `inventory.getRemoveStatus.selfEnable` | `inventory.getRemoveStatus.otherSelfEnable` |
+| `getSegment` | `InventoryModels.GetSegmentRequestData` | `getSegmentAsync(...)` | `InventoryResponseModels.GetSegmentOperationResponse` | `inventory.getSegment.selfEnable` | `inventory.getSegment.otherSelfEnable` |
+| `getStatisticsLeaderboardAroundItem` | `InventoryModels.GetStatisticsLeaderboardAroundItemRequestData` | `getStatisticsLeaderboardAroundItemAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardAroundItemOperationResponse` | `inventory.getStatisticsLeaderboardAroundItem.selfEnable` | `inventory.getStatisticsLeaderboardAroundItem.otherSelfEnable` |
+| `getStatisticsLeaderboard` | `InventoryModels.GetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardOperationResponse` | `inventory.getStatisticsLeaderboard.otherSelfEnable` | |
+| `getTag` | `InventoryModels.GetTagRequestData` | `getTagAsync(...)` | `InventoryResponseModels.GetTagOperationResponse` | `inventory.getTag.selfEnable` | `inventory.getTag.otherSelfEnable` |
+| `getTsCreate` | `InventoryModels.GetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` | `inventory.getTsCreate.selfEnable` | `inventory.getTsCreate.otherSelfEnable` |
+| `removeSegment` | `InventoryModels.RemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` | `inventory.removeSegment.selfEnable` | `inventory.removeSegment.otherSelfEnable` |
+| `removeTag` | `InventoryModels.RemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` | `inventory.removeTag.selfEnable` | `inventory.removeTag.otherSelfEnable` |
+| `setAmount` | `InventoryModels.SetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` | `inventory.setAmount.selfEnable` | `inventory.setAmount.otherSelfEnable` |
+| `setAvatar` | `InventoryModels.SetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` | `inventory.setAvatar.selfEnable` | `inventory.setAvatar.otherSelfEnable` |
+| `setCustomData` | `InventoryModels.SetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` | `inventory.setCustomData.selfEnable` | `inventory.setCustomData.otherSelfEnable` |
+| `setDisplayName` | `InventoryModels.SetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` | `inventory.setDisplayName.selfEnable` | `inventory.setDisplayName.otherSelfEnable` |
+| `setItemData` | `InventoryModels.SetItemDataRequestData` | `setItemDataAsync(...)` | `InventoryResponseModels.SetItemDataOperationResponse` | `inventory.setItemData.selfEnable` | `inventory.setItemData.otherSelfEnable` |
+| `changeItemStatistics` | `InventoryModels.ChangeItemStatisticsRequestData` | `changeItemStatisticsAsync(...)` | `InventoryResponseModels.ChangeItemStatisticsOperationResponse` | `inventory.changeItemStatistics.selfEnable` | `inventory.changeItemStatistics.otherSelfEnable` |
+| `setOwner` | `InventoryModels.SetOwnerRequestData` | `setOwnerAsync(...)` | `InventoryResponseModels.SetOwnerOperationResponse` | `inventory.setOwner.selfEnable` | `inventory.setOwner.otherSelfEnable` |
+| `setRemoveStatus` | `InventoryModels.SetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `InventoryResponseModels.SetRemoveStatusOperationResponse` | `inventory.setRemoveStatus.selfEnable` | `inventory.setRemoveStatus.otherSelfEnable` |
+| `setTag` | `InventoryModels.SetTagRequestData` | `setTagAsync(...)` | `InventoryResponseModels.SetTagOperationResponse` | `inventory.setTag.selfEnable` | `inventory.setTag.otherSelfEnable` |
+| `getCreateLeaderboard` | `InventoryModels.GetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` | `inventory.getCreateLeaderboard.otherSelfEnable` | |
+| `getStatisticsLog` | `InventoryModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` | `inventory.getStatisticsLog.selfEnable` | `inventory.getStatisticsLog.otherSelfEnable` |
 
 
 ## Server methods (`GNNetwork.inventory.server.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `addSegment` | `InventoryModels.ServerAddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` |
-| `getAmount` | `InventoryModels.ServerGetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` |
-| `getAvatar` | `InventoryModels.ServerGetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` |
-| `getCatalogId` | `InventoryModels.ServerGetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `InventoryResponseModels.GetCatalogIdOperationResponse` |
-| `getClassId` | `InventoryModels.ServerGetClassIdRequestData` | `getClassIdAsync(...)` | `InventoryResponseModels.GetClassIdOperationResponse` |
-| `getCustomData` | `InventoryModels.ServerGetCustomDataRequestData` | `getCustomDataAsync(...)` | `InventoryResponseModels.GetCustomDataOperationResponse` |
-| `getDisplayName` | `InventoryModels.ServerGetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `InventoryResponseModels.GetDisplayNameOperationResponse` |
-| `getItemData` | `InventoryModels.ServerGetItemDataRequestData` | `getItemDataAsync(...)` | `InventoryResponseModels.GetItemDataOperationResponse` |
-| `getItemInformation` | `InventoryModels.ServerGetItemInformationRequestData` | `getItemInformationAsync(...)` | `InventoryResponseModels.GetItemInformationOperationResponse` |
-| `getItemStatistics` | `InventoryModels.ServerGetItemStatisticsRequestData` | `getItemStatisticsAsync(...)` | `InventoryResponseModels.GetItemStatisticsOperationResponse` |
-| `getItemsWithDisplayName` | `InventoryModels.ServerGetItemsWithDisplayNameRequestData` | `getItemsWithDisplayNameAsync(...)` | `InventoryResponseModels.GetItemsWithDisplayNameOperationResponse` |
-| `getItemsWithSegment` | `InventoryModels.ServerGetItemsWithSegmentRequestData` | `getItemsWithSegmentAsync(...)` | `InventoryResponseModels.GetItemsWithSegmentOperationResponse` |
-| `getItemsWithTag` | `InventoryModels.ServerGetItemsWithTagRequestData` | `getItemsWithTagAsync(...)` | `InventoryResponseModels.GetItemsWithTagOperationResponse` |
-| `getItemType` | `InventoryModels.ServerGetItemTypeRequestData` | `getItemTypeAsync(...)` | `InventoryResponseModels.GetItemTypeOperationResponse` |
-| `getOwner` | `InventoryModels.ServerGetOwnerRequestData` | `getOwnerAsync(...)` | `InventoryResponseModels.GetOwnerOperationResponse` |
-| `getRemoveStatus` | `InventoryModels.ServerGetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `InventoryResponseModels.GetRemoveStatusOperationResponse` |
-| `getSegment` | `InventoryModels.ServerGetSegmentRequestData` | `getSegmentAsync(...)` | `InventoryResponseModels.GetSegmentOperationResponse` |
-| `getStatisticsLeaderboardAroundItem` | `InventoryModels.ServerGetStatisticsLeaderboardAroundItemRequestData` | `getStatisticsLeaderboardAroundItemAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardAroundItemOperationResponse` |
-| `getStatisticsLeaderboard` | `InventoryModels.ServerGetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardOperationResponse` |
-| `getTag` | `InventoryModels.ServerGetTagRequestData` | `getTagAsync(...)` | `InventoryResponseModels.GetTagOperationResponse` |
-| `getTsCreate` | `InventoryModels.ServerGetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` |
-| `removeSegment` | `InventoryModels.ServerRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` |
-| `removeTag` | `InventoryModels.ServerRemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` |
-| `setAmount` | `InventoryModels.ServerSetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` |
-| `setAvatar` | `InventoryModels.ServerSetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` |
-| `setCustomData` | `InventoryModels.ServerSetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` |
-| `setDisplayName` | `InventoryModels.ServerSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` |
-| `setItemData` | `InventoryModels.ServerSetItemDataRequestData` | `setItemDataAsync(...)` | `InventoryResponseModels.SetItemDataOperationResponse` |
-| `changeItemStatistics` | `InventoryModels.ServerChangeItemStatisticsRequestData` | `changeItemStatisticsAsync(...)` | `InventoryResponseModels.ChangeItemStatisticsOperationResponse` |
-| `setOwner` | `InventoryModels.ServerSetOwnerRequestData` | `setOwnerAsync(...)` | `InventoryResponseModels.SetOwnerOperationResponse` |
-| `setRemoveStatus` | `InventoryModels.ServerSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `InventoryResponseModels.SetRemoveStatusOperationResponse` |
-| `setTag` | `InventoryModels.ServerSetTagRequestData` | `setTagAsync(...)` | `InventoryResponseModels.SetTagOperationResponse` |
-| `getCreateLeaderboard` | `InventoryModels.ServerGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` |
-| `getStatisticsLog` | `InventoryModels.ServerGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `addSegment` | `InventoryModels.ServerAddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` | `inventory.addSegment.serverSelfEnable` |
+| `getAmount` | `InventoryModels.ServerGetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` | `inventory.getAmount.serverSelfEnable` |
+| `getAvatar` | `InventoryModels.ServerGetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` | `inventory.getAvatar.serverSelfEnable` |
+| `getCatalogId` | `InventoryModels.ServerGetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `InventoryResponseModels.GetCatalogIdOperationResponse` | `inventory.getCatalogId.serverSelfEnable` |
+| `getClassId` | `InventoryModels.ServerGetClassIdRequestData` | `getClassIdAsync(...)` | `InventoryResponseModels.GetClassIdOperationResponse` | `inventory.getClassId.serverSelfEnable` |
+| `getCustomData` | `InventoryModels.ServerGetCustomDataRequestData` | `getCustomDataAsync(...)` | `InventoryResponseModels.GetCustomDataOperationResponse` | `inventory.getCustomData.serverSelfEnable` |
+| `getDisplayName` | `InventoryModels.ServerGetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `InventoryResponseModels.GetDisplayNameOperationResponse` | `inventory.getDisplayName.serverSelfEnable` |
+| `getItemData` | `InventoryModels.ServerGetItemDataRequestData` | `getItemDataAsync(...)` | `InventoryResponseModels.GetItemDataOperationResponse` | `inventory.getItemData.serverSelfEnable` |
+| `getItemInformation` | `InventoryModels.ServerGetItemInformationRequestData` | `getItemInformationAsync(...)` | `InventoryResponseModels.GetItemInformationOperationResponse` | `inventory.getItemInformation.serverSelfEnable` |
+| `getItemStatistics` | `InventoryModels.ServerGetItemStatisticsRequestData` | `getItemStatisticsAsync(...)` | `InventoryResponseModels.GetItemStatisticsOperationResponse` | `inventory.getItemStatistics.serverSelfEnable` |
+| `getItemsWithDisplayName` | `InventoryModels.ServerGetItemsWithDisplayNameRequestData` | `getItemsWithDisplayNameAsync(...)` | `InventoryResponseModels.GetItemsWithDisplayNameOperationResponse` | `inventory.getItemsWithDisplayName.serverSelfEnable` |
+| `getItemsWithSegment` | `InventoryModels.ServerGetItemsWithSegmentRequestData` | `getItemsWithSegmentAsync(...)` | `InventoryResponseModels.GetItemsWithSegmentOperationResponse` | `inventory.getItemsWithSegment.serverSelfEnable` |
+| `getItemsWithTag` | `InventoryModels.ServerGetItemsWithTagRequestData` | `getItemsWithTagAsync(...)` | `InventoryResponseModels.GetItemsWithTagOperationResponse` | `inventory.getItemsWithTag.serverSelfEnable` |
+| `getItemType` | `InventoryModels.ServerGetItemTypeRequestData` | `getItemTypeAsync(...)` | `InventoryResponseModels.GetItemTypeOperationResponse` | `inventory.getItemType.serverSelfEnable` |
+| `getOwner` | `InventoryModels.ServerGetOwnerRequestData` | `getOwnerAsync(...)` | `InventoryResponseModels.GetOwnerOperationResponse` | `inventory.getOwner.serverSelfEnable` |
+| `getRemoveStatus` | `InventoryModels.ServerGetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `InventoryResponseModels.GetRemoveStatusOperationResponse` | `inventory.getRemoveStatus.serverSelfEnable` |
+| `getSegment` | `InventoryModels.ServerGetSegmentRequestData` | `getSegmentAsync(...)` | `InventoryResponseModels.GetSegmentOperationResponse` | `inventory.getSegment.serverSelfEnable` |
+| `getStatisticsLeaderboardAroundItem` | `InventoryModels.ServerGetStatisticsLeaderboardAroundItemRequestData` | `getStatisticsLeaderboardAroundItemAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardAroundItemOperationResponse` | `inventory.getStatisticsLeaderboardAroundItem.serverSelfEnable` |
+| `getStatisticsLeaderboard` | `InventoryModels.ServerGetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardOperationResponse` | `inventory.getStatisticsLeaderboard.serverSelfEnable` |
+| `getTag` | `InventoryModels.ServerGetTagRequestData` | `getTagAsync(...)` | `InventoryResponseModels.GetTagOperationResponse` | `inventory.getTag.serverSelfEnable` |
+| `getTsCreate` | `InventoryModels.ServerGetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` | `inventory.getTsCreate.serverSelfEnable` |
+| `removeSegment` | `InventoryModels.ServerRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` | `inventory.removeSegment.serverSelfEnable` |
+| `removeTag` | `InventoryModels.ServerRemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` | `inventory.removeTag.serverSelfEnable` |
+| `setAmount` | `InventoryModels.ServerSetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` | `inventory.setAmount.serverSelfEnable` |
+| `setAvatar` | `InventoryModels.ServerSetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` | `inventory.setAvatar.serverSelfEnable` |
+| `setCustomData` | `InventoryModels.ServerSetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` | `inventory.setCustomData.serverSelfEnable` |
+| `setDisplayName` | `InventoryModels.ServerSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` | `inventory.setDisplayName.serverSelfEnable` |
+| `setItemData` | `InventoryModels.ServerSetItemDataRequestData` | `setItemDataAsync(...)` | `InventoryResponseModels.SetItemDataOperationResponse` | `inventory.setItemData.serverSelfEnable` |
+| `changeItemStatistics` | `InventoryModels.ServerChangeItemStatisticsRequestData` | `changeItemStatisticsAsync(...)` | `InventoryResponseModels.ChangeItemStatisticsOperationResponse` | `inventory.changeItemStatistics.serverSelfEnable` |
+| `setOwner` | `InventoryModels.ServerSetOwnerRequestData` | `setOwnerAsync(...)` | `InventoryResponseModels.SetOwnerOperationResponse` | `inventory.setOwner.serverSelfEnable` |
+| `setRemoveStatus` | `InventoryModels.ServerSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `InventoryResponseModels.SetRemoveStatusOperationResponse` | `inventory.setRemoveStatus.serverSelfEnable` |
+| `setTag` | `InventoryModels.ServerSetTagRequestData` | `setTagAsync(...)` | `InventoryResponseModels.SetTagOperationResponse` | `inventory.setTag.serverSelfEnable` |
+| `getCreateLeaderboard` | `InventoryModels.ServerGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` | `inventory.getCreateLeaderboard.serverSelfEnable` |
+| `getStatisticsLog` | `InventoryModels.ServerGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` | `inventory.getStatisticsLog.serverSelfEnable` |
 
 
 ## Admin methods (`GNNetwork.inventory.admin.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `addSegment` | `InventoryModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` |
-| `getAmount` | `InventoryModels.AdminGetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` |
-| `getAvatar` | `InventoryModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` |
-| `getCatalogId` | `InventoryModels.AdminGetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `InventoryResponseModels.GetCatalogIdOperationResponse` |
-| `getClassId` | `InventoryModels.AdminGetClassIdRequestData` | `getClassIdAsync(...)` | `InventoryResponseModels.GetClassIdOperationResponse` |
-| `getCustomData` | `InventoryModels.AdminGetCustomDataRequestData` | `getCustomDataAsync(...)` | `InventoryResponseModels.GetCustomDataOperationResponse` |
-| `getDisplayName` | `InventoryModels.AdminGetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `InventoryResponseModels.GetDisplayNameOperationResponse` |
-| `getItemData` | `InventoryModels.AdminGetItemDataRequestData` | `getItemDataAsync(...)` | `InventoryResponseModels.GetItemDataOperationResponse` |
-| `getItemInformation` | `InventoryModels.AdminGetItemInformationRequestData` | `getItemInformationAsync(...)` | `InventoryResponseModels.GetItemInformationOperationResponse` |
-| `getItemStatistics` | `InventoryModels.AdminGetItemStatisticsRequestData` | `getItemStatisticsAsync(...)` | `InventoryResponseModels.GetItemStatisticsOperationResponse` |
-| `getItemsWithDisplayName` | `InventoryModels.AdminGetItemsWithDisplayNameRequestData` | `getItemsWithDisplayNameAsync(...)` | `InventoryResponseModels.GetItemsWithDisplayNameOperationResponse` |
-| `getItemsWithSegment` | `InventoryModels.AdminGetItemsWithSegmentRequestData` | `getItemsWithSegmentAsync(...)` | `InventoryResponseModels.GetItemsWithSegmentOperationResponse` |
-| `getItemsWithTag` | `InventoryModels.AdminGetItemsWithTagRequestData` | `getItemsWithTagAsync(...)` | `InventoryResponseModels.GetItemsWithTagOperationResponse` |
-| `getItemType` | `InventoryModels.AdminGetItemTypeRequestData` | `getItemTypeAsync(...)` | `InventoryResponseModels.GetItemTypeOperationResponse` |
-| `getOwner` | `InventoryModels.AdminGetOwnerRequestData` | `getOwnerAsync(...)` | `InventoryResponseModels.GetOwnerOperationResponse` |
-| `getRemoveStatus` | `InventoryModels.AdminGetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `InventoryResponseModels.GetRemoveStatusOperationResponse` |
-| `getSegment` | `InventoryModels.AdminGetSegmentRequestData` | `getSegmentAsync(...)` | `InventoryResponseModels.GetSegmentOperationResponse` |
-| `getStatisticsLeaderboardAroundItem` | `InventoryModels.AdminGetStatisticsLeaderboardAroundItemRequestData` | `getStatisticsLeaderboardAroundItemAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardAroundItemOperationResponse` |
-| `getStatisticsLeaderboard` | `InventoryModels.AdminGetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardOperationResponse` |
-| `getTag` | `InventoryModels.AdminGetTagRequestData` | `getTagAsync(...)` | `InventoryResponseModels.GetTagOperationResponse` |
-| `getTsCreate` | `InventoryModels.AdminGetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` |
-| `removeSegment` | `InventoryModels.AdminRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` |
-| `removeTag` | `InventoryModels.AdminRemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` |
-| `setAmount` | `InventoryModels.AdminSetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` |
-| `setAvatar` | `InventoryModels.AdminSetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` |
-| `setCustomData` | `InventoryModels.AdminSetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` |
-| `setDisplayName` | `InventoryModels.AdminSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` |
-| `setItemData` | `InventoryModels.AdminSetItemDataRequestData` | `setItemDataAsync(...)` | `InventoryResponseModels.SetItemDataOperationResponse` |
-| `changeItemStatistics` | `InventoryModels.AdminChangeItemStatisticsRequestData` | `changeItemStatisticsAsync(...)` | `InventoryResponseModels.ChangeItemStatisticsOperationResponse` |
-| `setOwner` | `InventoryModels.AdminSetOwnerRequestData` | `setOwnerAsync(...)` | `InventoryResponseModels.SetOwnerOperationResponse` |
-| `setRemoveStatus` | `InventoryModels.AdminSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `InventoryResponseModels.SetRemoveStatusOperationResponse` |
-| `setTag` | `InventoryModels.AdminSetTagRequestData` | `setTagAsync(...)` | `InventoryResponseModels.SetTagOperationResponse` |
-| `getCreateLeaderboard` | `InventoryModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` |
-| `getStatisticsLog` | `InventoryModels.AdminGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `addSegment` | `InventoryModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` | `inventory.addSegment.adminSelfEnable` |
+| `getAmount` | `InventoryModels.AdminGetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` | `inventory.getAmount.adminSelfEnable` |
+| `getAvatar` | `InventoryModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` | `inventory.getAvatar.adminSelfEnable` |
+| `getCatalogId` | `InventoryModels.AdminGetCatalogIdRequestData` | `getCatalogIdAsync(...)` | `InventoryResponseModels.GetCatalogIdOperationResponse` | `inventory.getCatalogId.adminSelfEnable` |
+| `getClassId` | `InventoryModels.AdminGetClassIdRequestData` | `getClassIdAsync(...)` | `InventoryResponseModels.GetClassIdOperationResponse` | `inventory.getClassId.adminSelfEnable` |
+| `getCustomData` | `InventoryModels.AdminGetCustomDataRequestData` | `getCustomDataAsync(...)` | `InventoryResponseModels.GetCustomDataOperationResponse` | `inventory.getCustomData.adminSelfEnable` |
+| `getDisplayName` | `InventoryModels.AdminGetDisplayNameRequestData` | `getDisplayNameAsync(...)` | `InventoryResponseModels.GetDisplayNameOperationResponse` | `inventory.getDisplayName.adminSelfEnable` |
+| `getItemData` | `InventoryModels.AdminGetItemDataRequestData` | `getItemDataAsync(...)` | `InventoryResponseModels.GetItemDataOperationResponse` | `inventory.getItemData.adminSelfEnable` |
+| `getItemInformation` | `InventoryModels.AdminGetItemInformationRequestData` | `getItemInformationAsync(...)` | `InventoryResponseModels.GetItemInformationOperationResponse` | `inventory.getItemInformation.adminSelfEnable` |
+| `getItemStatistics` | `InventoryModels.AdminGetItemStatisticsRequestData` | `getItemStatisticsAsync(...)` | `InventoryResponseModels.GetItemStatisticsOperationResponse` | `inventory.getItemStatistics.adminSelfEnable` |
+| `getItemsWithDisplayName` | `InventoryModels.AdminGetItemsWithDisplayNameRequestData` | `getItemsWithDisplayNameAsync(...)` | `InventoryResponseModels.GetItemsWithDisplayNameOperationResponse` | `inventory.getItemsWithDisplayName.adminSelfEnable` |
+| `getItemsWithSegment` | `InventoryModels.AdminGetItemsWithSegmentRequestData` | `getItemsWithSegmentAsync(...)` | `InventoryResponseModels.GetItemsWithSegmentOperationResponse` | `inventory.getItemsWithSegment.adminSelfEnable` |
+| `getItemsWithTag` | `InventoryModels.AdminGetItemsWithTagRequestData` | `getItemsWithTagAsync(...)` | `InventoryResponseModels.GetItemsWithTagOperationResponse` | `inventory.getItemsWithTag.adminSelfEnable` |
+| `getItemType` | `InventoryModels.AdminGetItemTypeRequestData` | `getItemTypeAsync(...)` | `InventoryResponseModels.GetItemTypeOperationResponse` | `inventory.getItemType.adminSelfEnable` |
+| `getOwner` | `InventoryModels.AdminGetOwnerRequestData` | `getOwnerAsync(...)` | `InventoryResponseModels.GetOwnerOperationResponse` | `inventory.getOwner.adminSelfEnable` |
+| `getRemoveStatus` | `InventoryModels.AdminGetRemoveStatusRequestData` | `getRemoveStatusAsync(...)` | `InventoryResponseModels.GetRemoveStatusOperationResponse` | `inventory.getRemoveStatus.adminSelfEnable` |
+| `getSegment` | `InventoryModels.AdminGetSegmentRequestData` | `getSegmentAsync(...)` | `InventoryResponseModels.GetSegmentOperationResponse` | `inventory.getSegment.adminSelfEnable` |
+| `getStatisticsLeaderboardAroundItem` | `InventoryModels.AdminGetStatisticsLeaderboardAroundItemRequestData` | `getStatisticsLeaderboardAroundItemAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardAroundItemOperationResponse` | `inventory.getStatisticsLeaderboardAroundItem.adminSelfEnable` |
+| `getStatisticsLeaderboard` | `InventoryModels.AdminGetStatisticsLeaderboardRequestData` | `getStatisticsLeaderboardAsync(...)` | `InventoryResponseModels.GetStatisticsLeaderboardOperationResponse` | `inventory.getStatisticsLeaderboard.adminSelfEnable` |
+| `getTag` | `InventoryModels.AdminGetTagRequestData` | `getTagAsync(...)` | `InventoryResponseModels.GetTagOperationResponse` | `inventory.getTag.adminSelfEnable` |
+| `getTsCreate` | `InventoryModels.AdminGetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` | `inventory.getTsCreate.adminSelfEnable` |
+| `removeSegment` | `InventoryModels.AdminRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` | `inventory.removeSegment.adminSelfEnable` |
+| `removeTag` | `InventoryModels.AdminRemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` | `inventory.removeTag.adminSelfEnable` |
+| `setAmount` | `InventoryModels.AdminSetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` | `inventory.setAmount.adminSelfEnable` |
+| `setAvatar` | `InventoryModels.AdminSetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` | `inventory.setAvatar.adminSelfEnable` |
+| `setCustomData` | `InventoryModels.AdminSetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` | `inventory.setCustomData.adminSelfEnable` |
+| `setDisplayName` | `InventoryModels.AdminSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` | `inventory.setDisplayName.adminSelfEnable` |
+| `setItemData` | `InventoryModels.AdminSetItemDataRequestData` | `setItemDataAsync(...)` | `InventoryResponseModels.SetItemDataOperationResponse` | `inventory.setItemData.adminSelfEnable` |
+| `changeItemStatistics` | `InventoryModels.AdminChangeItemStatisticsRequestData` | `changeItemStatisticsAsync(...)` | `InventoryResponseModels.ChangeItemStatisticsOperationResponse` | `inventory.changeItemStatistics.adminSelfEnable` |
+| `setOwner` | `InventoryModels.AdminSetOwnerRequestData` | `setOwnerAsync(...)` | `InventoryResponseModels.SetOwnerOperationResponse` | `inventory.setOwner.adminSelfEnable` |
+| `setRemoveStatus` | `InventoryModels.AdminSetRemoveStatusRequestData` | `setRemoveStatusAsync(...)` | `InventoryResponseModels.SetRemoveStatusOperationResponse` | `inventory.setRemoveStatus.adminSelfEnable` |
+| `setTag` | `InventoryModels.AdminSetTagRequestData` | `setTagAsync(...)` | `InventoryResponseModels.SetTagOperationResponse` | `inventory.setTag.adminSelfEnable` |
+| `getCreateLeaderboard` | `InventoryModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` | `inventory.getCreateLeaderboard.adminSelfEnable` |
+| `getStatisticsLog` | `InventoryModels.AdminGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` | `inventory.getStatisticsLog.adminSelfEnable` |
 
 
 ## Ví dụ tối thiểu

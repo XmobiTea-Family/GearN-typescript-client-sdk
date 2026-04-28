@@ -1290,7 +1290,6 @@ Defines the response payload for `getSecretInfoInformation`. This is the detaile
 |-------|------|----------|-------|
 | `secretKey` | `string` | yes | Secret key whose detailed configuration was requested. |
 | `gameId` | `string` | yes | — |
-| `role` | `number` | yes | Secret role stored for this secret info entry. |
 | `tsCreate` | `number` | yes | — |
 | `creatorId` | `string` | yes | — |
 | `remove` | `boolean` | yes | — |

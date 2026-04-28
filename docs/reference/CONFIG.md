@@ -22,6 +22,7 @@ settings.config({
 	pingTimeout: 20000,
 
 	secretKey: "<secret-key>",
+	gameId: "<game-id>",
 
 	logType: LogType.All,
 } satisfies GNServerSettingsOptions);

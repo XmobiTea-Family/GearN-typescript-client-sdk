@@ -5,9 +5,21 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { GroupModels } from "./GroupModels";
 
 /**
- * Groups typed operation-request wrappers for `RequestType.Group`.
- * Group workflows target explicit group IDs; server/admin wrappers switch role
- * without changing the group-centric request-shape semantics.
+ * Typed request wrappers for the Group domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from {@link GroupModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.Group} domain;
+ * - the appropriate {@link RequestRole} based on the wrapper
+ *   name prefix (`XxxOperationRequest` → Client,
+ *   `ServerXxxOperationRequest` → Server,
+ *   `AdminXxxOperationRequest` → Admin).
+ *
+ * All wrappers carry an explicit `groupId`; the backend
+ * cross-checks the caller's permissions against that group
+ * (membership + role for Client, secret key for Server, admin
+ * token for Admin).
  */
 export namespace GroupRequestModels {
 	/**

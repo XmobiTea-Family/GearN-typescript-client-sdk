@@ -2,8 +2,20 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { ContentModels } from "./ContentModels";
 
 /**
- * Groups typed operation-response wrappers for `RequestType.Content`.
- * File upload and download helpers consume the IDs and download tokens returned by these typed responses.
+ * Typed response wrappers for the Content domain.
+ *
+ * Each class extends {@link CustomOperationResponseAbstract} and
+ * binds a response DTO from {@link ContentModels}. Most file
+ * operations resolve to lightweight responses that carry just
+ * the `fileId` plus the associated upload / download token —
+ * pair them with the byte-transfer helpers
+ * {@link GNNetwork.uploadFile} and
+ * {@link GNNetwork.getDownloadFileUrl} to complete the workflow.
+ *
+ * The same wrapper classes are reused across the
+ * client / server / admin role variants because the response
+ * shape is identical regardless of which role issued the
+ * request.
  */
 export namespace ContentResponseModels {
 	/**

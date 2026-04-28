@@ -2,9 +2,18 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { StoreInventoryModels } from "./StoreInventoryModels";
 
 /**
- * Groups typed operation-response wrappers for `RequestType.StoreInventory`.
- * Many read operations resolve to `StoreInventoryResponseData` or a derived envelope whose
- * `infoResponseParameters` content is controlled by the matching request model.
+ * Typed response wrappers for the StoreInventory domain.
+ *
+ * Each class extends {@link CustomOperationResponseAbstract}
+ * and binds a response DTO from {@link StoreInventoryModels}.
+ * The same wrapper is reused across the
+ * client / server / admin role variants because the response
+ * shape does not depend on the role.
+ *
+ * Many read operations resolve to a list-style envelope
+ * (`StoreInventoryResponseData` or a derived shape) whose
+ * `infoResponseParameters` field is gated by the matching
+ * request DTO's `infoRequestParam` flags.
  */
 export namespace StoreInventoryResponseModels {
 	/**

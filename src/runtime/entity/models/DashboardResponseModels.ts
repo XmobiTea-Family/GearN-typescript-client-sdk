@@ -2,10 +2,18 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { DashboardModels } from "./DashboardModels";
 
 /**
- * Groups typed response wrappers for Dashboard.
+ * Typed response wrappers for the Dashboard domain.
  *
- * Many dashboard operations resolve to `EmptyResponseData`, while configuration and listing calls
- * return the richer dashboard-specific response models declared in `DashboardModels`.
+ * Each class extends {@link CustomOperationResponseAbstract}
+ * and binds a response DTO from {@link DashboardModels}.
+ *
+ * Many mutation operations (create / set / remove) resolve to
+ * an `EmptyResponseData` because the only useful signal is
+ * the transport return code + domain `errorCode`. Read /
+ * listing operations resolve to richer dashboard-specific DTOs
+ * such as `GameInformationResponseData`,
+ * `AdminAccountListResponseData`, `AnalyticsResponseData`,
+ * etc.
  */
 export namespace DashboardResponseModels {
 	/**

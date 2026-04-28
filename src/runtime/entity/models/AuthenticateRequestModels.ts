@@ -5,9 +5,25 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { AuthenticateModels } from "./AuthenticateModels";
 
 /**
- * Groups typed request wrappers for Authenticate.
+ * Typed request wrappers for the Authenticate domain.
  *
- * Every wrapper in this namespace uses `RequestType.Authenticate` with `RequestRole.Client`.
+ * Each class in this namespace extends
+ * {@link CustomOperationRequestAbstract} and binds a typed
+ * `*RequestData` DTO from {@link AuthenticateModels} to the
+ * matching {@link OperationCode}, plus the
+ * {@link RequestType.Authenticate} domain and
+ * {@link RequestRole.Client} permission scope.
+ *
+ * Application code rarely instantiates these directly — the
+ * `GNNetwork.authenticate.*` helpers in
+ * {@link AuthenticateApi} build them under the hood. Reach for
+ * the raw wrapper only when issuing a request through the
+ * low-level helpers such as
+ * {@link GNNetwork.sendViaHttpTRequestTResponse}.
+ *
+ * Wire-format conversion happens in
+ * {@link CustomOperationRequestAbstract.build} which serialises
+ * the DTO via {@link ConverterService.serializeObject}.
  */
 export namespace AuthenticateRequestModels {
 	/**

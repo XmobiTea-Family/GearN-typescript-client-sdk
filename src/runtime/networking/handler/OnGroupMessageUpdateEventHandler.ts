@@ -8,40 +8,70 @@ import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 /**
- * Defines the payload emitted by the `OnGroupMessageUpdate` server event.
+ * Decoded payload of the `OnGroupMessageUpdate` server event.
+ *
+ * Pushed by the backend whenever new messages arrive in a group
+ * channel the local client is subscribed to. Use it to drive the
+ * group chat / wall UI in real time.
+ *
+ * Unlike the friend / member events, the payload here is a delta —
+ * `groupMessages` only contains the **new** messages since the last
+ * push, not the full history. The application is expected to append
+ * these to its own log.
  */
 export class GroupMessageUpdate {
-	/** Updated group message items pushed by the server. */
+	/**
+	 * New group message items the application should append. Each
+	 * entry is a fully decoded {@link GroupModels.GroupMessageResponseData}
+	 * with sender id, timestamp, body and any embedded metadata.
+	 */
 	@GNArrayDataMember({ code: ParameterCode.GroupMessages, elementCls: GroupModels.GroupMessageResponseData })
 	public groupMessages: Array<GroupModels.GroupMessageResponseData>;
 
-	/** Group id whose message stream changed. */
+	/**
+	 * Identifier of the group whose message stream changed.
+	 */
 	@StringDataMember({ code: ParameterCode.GroupId })
 	public groupId: string;
 
-	/** Optional character id when the message update is scoped by character context. */
+	/**
+	 * Optional character id when the message update is scoped to a
+	 * specific character context (multi-character titles).
+	 */
 	@StringDataMember({ code: ParameterCode.CharacterId, isOptional: true })
 	public characterId?: string;
 
 }
 
 /**
- * Handles the `OnGroupMessageUpdate` server event.
+ * Auto-registered event handler for the `OnGroupMessageUpdate`
+ * server event.
+ *
+ * Application setup:
+ * ```ts
+ * OnGroupMessageUpdateEventHandler.onUpdate = update => {
+ *     for (const msg of update.groupMessages) appendChat(update.groupId, msg);
+ * };
+ * ```
  */
 @IServerEventHandler.registerEvent
 export class OnGroupMessageUpdateEventHandler implements IServerEventHandler {
-	/** Optional static callback invoked after the payload is deserialized. */
+	/**
+	 * Static callback the application registers. Leave `null` to
+	 * silently drop incoming messages.
+	 */
 	public static onUpdate: Action1<GroupMessageUpdate>;
 
 	/**
-	 * Returns the event code handled by this implementation.
+	 * Returns {@link EventCode.OnGroupMessageUpdate}.
 	 */
 	public getEventCode(): string {
 		return EventCode.OnGroupMessageUpdate;
 	}
 
 	/**
-	 * Deserializes the event payload and forwards it to the registered static callback.
+	 * Deserialises the parameters into a {@link GroupMessageUpdate}
+	 * and forwards to {@link onUpdate}.
 	 */
 	public handle(operationEvent: OperationEvent): void {
 		if (OnGroupMessageUpdateEventHandler.onUpdate != null)

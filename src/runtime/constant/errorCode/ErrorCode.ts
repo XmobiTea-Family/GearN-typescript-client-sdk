@@ -1,8 +1,34 @@
 /**
- * Enumerates domain-level error codes returned inside successful GearN responses.
+ * Domain-level error codes carried **inside successful responses**.
  *
- * These codes are business errors carried inside the response payload after
- * `returnCode === ReturnCode.Ok`. They do not replace low-level return codes.
+ * These are **not** transport errors — for transport-level
+ * failures see {@link ReturnCode}. The two-tier model:
+ * - {@link ReturnCode} describes "did the request reach the server,
+ *   pass validation, and produce a response?".
+ * - `ErrorCode` describes "given that the request was processed,
+ *   what did the business logic return?".
+ *
+ * The SDK reads this value out of `ParameterCode.ErrorCode` on
+ * the response parameter bag inside
+ * {@link CustomOperationResponse.setupOperationResponse} and
+ * exposes it as `responseObject.errorCode`. Application code
+ * checks both layers in order:
+ *
+ * ```ts
+ * if (response.hasReturnCodeError()) return showTransportError(response);
+ * if (response.errorCode !== ErrorCode.Ok) return showDomainError(response);
+ * // success path: read response.responseData
+ * ```
+ *
+ * The error catalogue is intentionally large because the GearN
+ * backend uses fine-grained codes so the application can pick the
+ * right localised user message. Most codes are self-explanatory
+ * but the per-entry comments below capture any non-obvious
+ * scenarios (rate-limit triggers, prerequisite chains, ...).
+ *
+ * Wire-protocol contract: the numeric values are persisted in
+ * server logs and analytics so reordering them is a
+ * coordinated-change operation.
  */
 export class ErrorCode {
 	/**

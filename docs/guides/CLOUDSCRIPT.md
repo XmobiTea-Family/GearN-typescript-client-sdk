@@ -73,13 +73,13 @@ Rule nhanh:
 
 ## 4. Chọn Method
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `addFunctionAsync` | Publish một script version mới | `script`, `canExecute`, `isLive` | `AddFunctionResponseData` | Trả `version` mới và `errorMessage` |
-| `editFunctionAsync` | Bật/tắt execute hoặc promote/demote live cho version cũ | `version`, `canExecute`, `isLive` | `EditFunctionResponseData` | Không sửa `script` |
-| `executeFunctionAsync` | Chạy một function trong CloudScript | `functionName`, `functionParameters?`, `version?`, `userId?` | `ExecuteFunctionResponseData` | `server/admin` bắt buộc có `userId` |
-| `getFunctionAsync` | Đọc chi tiết source và metadata của một version cụ thể | `version` | `GetFunctionResponseData` | Trả `script`, `canExecute`, `isLive`, `tsCreate` |
-| `getFunctionsAsync` | Liệt kê các version hiện có | request object rỗng | `GetFunctionsResponseData` | Trả `results`, `latestVersion`, `liveLatestVersion` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `addFunctionAsync` | Publish một script version mới | `script`, `canExecute`, `isLive` | `AddFunctionResponseData` | Trả `version` mới và `errorMessage` | `Ok`, `GameNotFound`, `ExecuteError` |
+| `editFunctionAsync` | Bật/tắt execute hoặc promote/demote live cho version cũ | `version`, `canExecute`, `isLive` | `EditFunctionResponseData` | Không sửa `script` | `Ok`, `GameNotFound`, `ExecuteError` |
+| `executeFunctionAsync` | Chạy một function trong CloudScript | `functionName`, `functionParameters?`, `version?`, `userId?` | `ExecuteFunctionResponseData` | `server/admin` bắt buộc có `userId` | `Ok`, `GameNotFound`, `ExecuteError` |
+| `getFunctionAsync` | Đọc chi tiết source và metadata của một version cụ thể | `version` | `GetFunctionResponseData` | Trả `script`, `canExecute`, `isLive`, `tsCreate` | `Ok`, `GameNotFound`, `VersionInvalid` |
+| `getFunctionsAsync` | Liệt kê các version hiện có | request object rỗng | `GetFunctionsResponseData` | Trả `results`, `latestVersion`, `liveLatestVersion` | `Ok`, `GameNotFound` |
 
 ## 5. Decision Rules
 

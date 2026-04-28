@@ -36,6 +36,9 @@ export class GearNExample extends Component {
     @property({ tooltip: "Client secret key" })
     secretKey: string = "";
 
+    @property({ tooltip: "Game id" })
+    gameId: string = "";
+
     @property({ tooltip: "Use HTTPS public endpoint" })
     useSsl: boolean = false;
 
@@ -66,6 +69,7 @@ export class GearNExample extends Component {
                 pingInterval: 3000,
                 pingTimeout: 5000,
                 secretKey: this.secretKey,
+                gameId: this.gameId,
                 logType: this.enableDebugLog ? LogType.All : LogType.None,
             });
 

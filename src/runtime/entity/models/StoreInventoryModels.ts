@@ -3,8 +3,28 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups reusable request and response contracts for StoreInventory operations.
- * Store workflows target a logical owner using `id + type` and operate against a concrete `storeId`.
+ * Reusable request and response DTOs for the StoreInventory
+ * domain.
+ *
+ * Store operations target a **logical owner** identified by
+ * `(ownerId, ownerType)` (see {@link OwnerType}) and operate
+ * against a concrete `storeId`. The store catalog is configured
+ * server-side; clients only read it.
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.storeInventory`,
+ *   the owner is implicitly the authenticated player.
+ * - **`Server*`**: used by `GNNetwork.storeInventory.server`,
+ *   accepts explicit owner parameters so a backend can issue
+ *   purchases / gifts on behalf of any player.
+ * - **`Admin*`**: used by `GNNetwork.storeInventory.admin`,
+ *   plus catalog-edit and refund operations.
+ *
+ * Receipt-validation flows ship the platform receipt blob plus
+ * optional metadata; the backend records the
+ * {@link StoreReceiveType} on the audit log entry so analytics
+ * can distinguish in-game-currency purchases from platform-IAP
+ * grants.
  */
 export namespace StoreInventoryModels {
 	/**

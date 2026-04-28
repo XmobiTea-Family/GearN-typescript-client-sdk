@@ -38,41 +38,41 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 
 ## Client methods (`GNNetwork.content.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `createNewFileUploadInfo` | `ContentModels.CreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` |
-| `getContentData` | `ContentModels.GetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` |
-| `getFileUploadInfoList` | `ContentModels.GetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` |
-| `getFileUploadInfo` | `ContentModels.GetFileUploadInfoRequestData` | `getFileUploadInfoAsync(...)` | `ContentResponseModels.GetFileUploadInfoOperationResponse` |
-| `removeFileUploadInfo` | `ContentModels.RemoveFileUploadInfoRequestData` | `removeFileUploadInfoAsync(...)` | `ContentResponseModels.RemoveFileUploadInfoOperationResponse` |
-| `requestDownloadFileUploadInfo` | `ContentModels.RequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` |
-| `setContentData` | `ContentModels.SetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `createNewFileUploadInfo` | `ContentModels.CreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` | `content.createNewFileUploadInfo.selfEnable` |
+| `getContentData` | `ContentModels.GetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` | `content.getContentData.otherSelfEnable` |
+| `getFileUploadInfoList` | `ContentModels.GetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` | `content.getFileUploadInfoList.selfEnable` |
+| `getFileUploadInfo` | `ContentModels.GetFileUploadInfoRequestData` | `getFileUploadInfoAsync(...)` | `ContentResponseModels.GetFileUploadInfoOperationResponse` | `content.getFileUploadInfo.selfEnable` |
+| `removeFileUploadInfo` | `ContentModels.RemoveFileUploadInfoRequestData` | `removeFileUploadInfoAsync(...)` | `ContentResponseModels.RemoveFileUploadInfoOperationResponse` | `content.removeFileUploadInfo.selfEnable` |
+| `requestDownloadFileUploadInfo` | `ContentModels.RequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` | `content.requestDownloadFileUploadInfo.otherSelfEnable` |
+| `setContentData` | `ContentModels.SetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` | `content.setContentData.otherSelfEnable` |
 
 
 ## Server methods (`GNNetwork.content.server.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `createNewFileUploadInfo` | `ContentModels.ServerCreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` |
-| `getContentData` | `ContentModels.ServerGetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` |
-| `getFileUploadInfoList` | `ContentModels.ServerGetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` |
-| `getFileUploadInfo` | `ContentModels.ServerGetFileUploadInfoRequestData` | `getFileUploadInfoAsync(...)` | `ContentResponseModels.GetFileUploadInfoOperationResponse` |
-| `removeFileUploadInfo` | `ContentModels.ServerRemoveFileUploadInfoRequestData` | `removeFileUploadInfoAsync(...)` | `ContentResponseModels.RemoveFileUploadInfoOperationResponse` |
-| `requestDownloadFileUploadInfo` | `ContentModels.ServerRequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` |
-| `setContentData` | `ContentModels.ServerSetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `createNewFileUploadInfo` | `ContentModels.ServerCreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` | `content.createNewFileUploadInfo.serverSelfEnable` |
+| `getContentData` | `ContentModels.ServerGetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` | `content.getContentData.serverSelfEnable` |
+| `getFileUploadInfoList` | `ContentModels.ServerGetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` | `content.getFileUploadInfoList.serverSelfEnable` |
+| `getFileUploadInfo` | `ContentModels.ServerGetFileUploadInfoRequestData` | `getFileUploadInfoAsync(...)` | `ContentResponseModels.GetFileUploadInfoOperationResponse` | `content.getFileUploadInfo.serverSelfEnable` |
+| `removeFileUploadInfo` | `ContentModels.ServerRemoveFileUploadInfoRequestData` | `removeFileUploadInfoAsync(...)` | `ContentResponseModels.RemoveFileUploadInfoOperationResponse` | `content.removeFileUploadInfo.serverSelfEnable` |
+| `requestDownloadFileUploadInfo` | `ContentModels.ServerRequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` | `content.requestDownloadFileUploadInfo.serverSelfEnable` |
+| `setContentData` | `ContentModels.ServerSetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` | `content.setContentData.serverSelfEnable` |
 
 
 ## Admin methods (`GNNetwork.content.admin.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `createNewFileUploadInfo` | `ContentModels.AdminCreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` |
-| `getContentData` | `ContentModels.AdminGetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` |
-| `getFileUploadInfoList` | `ContentModels.AdminGetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` |
-| `getFileUploadInfo` | `ContentModels.AdminGetFileUploadInfoRequestData` | `getFileUploadInfoAsync(...)` | `ContentResponseModels.GetFileUploadInfoOperationResponse` |
-| `removeFileUploadInfo` | `ContentModels.AdminRemoveFileUploadInfoRequestData` | `removeFileUploadInfoAsync(...)` | `ContentResponseModels.RemoveFileUploadInfoOperationResponse` |
-| `requestDownloadFileUploadInfo` | `ContentModels.AdminRequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` |
-| `setContentData` | `ContentModels.AdminSetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `createNewFileUploadInfo` | `ContentModels.AdminCreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` | `content.createNewFileUploadInfo.adminSelfEnable` |
+| `getContentData` | `ContentModels.AdminGetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` | `content.getContentData.adminSelfEnable` |
+| `getFileUploadInfoList` | `ContentModels.AdminGetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` | `content.getFileUploadInfoList.adminSelfEnable` |
+| `getFileUploadInfo` | `ContentModels.AdminGetFileUploadInfoRequestData` | `getFileUploadInfoAsync(...)` | `ContentResponseModels.GetFileUploadInfoOperationResponse` | `content.getFileUploadInfo.adminSelfEnable` |
+| `removeFileUploadInfo` | `ContentModels.AdminRemoveFileUploadInfoRequestData` | `removeFileUploadInfoAsync(...)` | `ContentResponseModels.RemoveFileUploadInfoOperationResponse` | `content.removeFileUploadInfo.adminSelfEnable` |
+| `requestDownloadFileUploadInfo` | `ContentModels.AdminRequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` | `content.requestDownloadFileUploadInfo.adminSelfEnable` |
+| `setContentData` | `ContentModels.AdminSetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` | `content.setContentData.adminSelfEnable` |
 
 
 ## Ví dụ tối thiểu

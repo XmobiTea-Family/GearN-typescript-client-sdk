@@ -2,10 +2,25 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
 /**
- * Groups reusable request and response contracts for Dashboard operations.
+ * Reusable request and response DTOs for the Dashboard
+ * domain.
  *
- * Public dashboard wrappers currently send these contracts through `RequestType.Dashboard`
- * with `RequestRole.Client`, while backend middleware resolves admin context from the auth token.
+ * Dashboard operations cover game / account / secret
+ * management, server analytics, server logs, leaderboard
+ * maintenance and CloudScript event-callback wiring. They are
+ * sent over HTTP with {@link RequestType.Dashboard} and
+ * {@link RequestRole.Client} — the backend resolves admin
+ * privilege from the auth token (`loginByAdminAccount`)
+ * rather than from the wire role.
+ *
+ * Most DTOs accept an explicit `gameId` so multi-game
+ * dashboards can switch between games on the same admin
+ * session. Some destructive maintenance DTOs
+ * (`DeleteInDatabaseRequestData`,
+ * `RemoveAdminAccountRequestData`,
+ * `ResetStatisticsLeaderboardRequestData`) require additional
+ * confirmation fields server-side; consult the backend
+ * documentation before use.
  */
 export namespace DashboardModels {
 	/**

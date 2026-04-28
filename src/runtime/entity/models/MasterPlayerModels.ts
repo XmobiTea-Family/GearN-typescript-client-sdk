@@ -4,9 +4,35 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups reusable request and response contracts for MasterPlayer operations.
- * Client routes may omit `userId` to target the authenticated master player itself,
- * while server/admin routes use dedicated subclasses that require an explicit target user.
+ * Reusable request and response DTOs for the MasterPlayer
+ * domain.
+ *
+ * MasterPlayer operations target the **account-level** record
+ * — the top-level user identity. Client variants imply the
+ * authenticated user (`userId` omitted); Server / Admin
+ * variants require an explicit `userId`.
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): routed through
+ *   `GNNetwork.masterPlayer`, `userId` is implicit.
+ * - **`Server*`**: routed through
+ *   `GNNetwork.masterPlayer.server`, requires explicit
+ *   `userId` and a server `secretKey`.
+ * - **`Admin*`**: routed through
+ *   `GNNetwork.masterPlayer.admin`, plus admin-only knobs
+ *   (force overrides, bypass-validation flags).
+ *
+ * Identity link / unlink DTOs follow the convention
+ * `Link<Provider>RequestData` / `Unlink<Provider>RequestData`
+ * — there is one pair per supported provider (Apple, Google,
+ * Facebook, Game Center, ten device-id flavours, custom-id,
+ * generic-service). Each maps onto the matching `loginBy*`
+ * flow on {@link AuthenticateApi}.
+ *
+ * Validation rules declared on each `@*DataMember` decorator
+ * are enforced server-side; failures surface as
+ * {@link InvalidMember} entries with the matching
+ * {@link InvalidMemberType} code.
  */
 export namespace MasterPlayerModels {
 	/**

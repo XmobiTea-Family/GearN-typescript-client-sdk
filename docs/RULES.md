@@ -173,7 +173,7 @@ Diagnose end-to-end với code: [COOKBOOK Scenario 16](COOKBOOK.md#scenario-16-d
 Flow chuẩn:
 
 ```
-1. Login HTTP (GNNetwork.authenticate.loginByXxxAsync) → SDK cache authToken + userId + gameId vào StorageService
+1. Login HTTP (GNNetwork.authenticate.loginByXxxAsync) → SDK cache authToken + userId vào StorageService
 2. Nếu app cần realtime: GNNetwork.connectSocket()
 3. Khi socket connect, SDK tự gửi authToken hiện tại cho backend
 4. (Chỉ khi cần) GNNetwork.sendRequestAuthSocket() — re-auth thủ công, không reconnect
@@ -195,7 +195,6 @@ Helper state:
 - `GNNetwork.getPing()` — ping trung bình từ active transport.
 - `GNNetwork.syncTs()` — sync local estimate của server timestamp.
 - `GNNetwork.getAuthenticateStatus().getAuthToken() / .getUserId()` — đọc auth cache.
-- `GNNetwork.getGameId() / .setGameId(...)` — gameId persist qua `StorageService`.
 
 ---
 

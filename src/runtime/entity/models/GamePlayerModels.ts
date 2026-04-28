@@ -4,9 +4,32 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups reusable request and response contracts for GamePlayer operations.
- * Client routes may omit `userId` to target the authenticated game player itself,
- * while server/admin routes use dedicated subclasses that require an explicit target user.
+ * Reusable request and response DTOs for the GamePlayer domain.
+ *
+ * GamePlayer operations target the **account-level** player
+ * record — the per-game profile that sits between the master
+ * player and the per-character profiles. The DTOs here are
+ * organised into three role variants:
+ *
+ * - **Client variants** (no prefix): routed through
+ *   `GNNetwork.gamePlayer`, target the authenticated user. The
+ *   `userId` is implicit (taken from the cached
+ *   {@link AuthenticateStatus}) so most client-flavour DTOs
+ *   either omit it or expose only a small filtered slice.
+ * - **`Server*` variants**: routed through
+ *   `GNNetwork.gamePlayer.server`. Always require an explicit
+ *   `userId` so a trusted backend can act on behalf of an
+ *   arbitrary player.
+ * - **`Admin*` variants**: routed through
+ *   `GNNetwork.gamePlayer.admin`. Same shape as `Server*` plus
+ *   any extra knobs the backend exposes only to admin tokens
+ *   (forced overrides, bypass-validation flags, ...).
+ *
+ * Validation rules declared on each `@*DataMember` decorator
+ * (`mustNonNull`, `minLength`, `maxLength`, `minValue`,
+ * `maxValue`) are enforced server-side; failures surface as
+ * {@link InvalidMember} entries on the response with the
+ * matching {@link InvalidMemberType}.
  */
 export namespace GamePlayerModels {
 	/**

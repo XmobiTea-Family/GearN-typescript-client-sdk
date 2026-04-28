@@ -2,8 +2,20 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { CloudScriptModels } from "./CloudScriptModels";
 
 /**
- * Groups typed operation-response wrappers for `RequestType.CloudScript`.
- * Execute flows return runtime telemetry, while management flows return version metadata and validation feedback.
+ * Typed response wrappers for the CloudScript domain.
+ *
+ * Each class extends {@link CustomOperationResponseAbstract}
+ * and binds a response DTO from {@link CloudScriptModels}.
+ *
+ * - **Execute flows** return the function result plus runtime
+ *   telemetry: execution time, memory used, log lines emitted
+ *   by the script, and an {@link ExecuteResponseStatus}
+ *   discriminator describing the outcome
+ *   (`Ok` / `Exception` / `FunctionNameNotFound` /
+ *   `VersionInvalid` / `Timeout`).
+ * - **Management flows** return version metadata and any
+ *   validation feedback the backend produced when accepting
+ *   the new function source.
  */
 export namespace CloudScriptResponseModels {
 	/**

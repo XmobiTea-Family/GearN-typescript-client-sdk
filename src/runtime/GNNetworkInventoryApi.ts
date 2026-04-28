@@ -7,9 +7,41 @@ import { InventoryRequestModels } from "./entity/models/InventoryRequestModels";
 import { InventoryResponseModels } from "./entity/models/InventoryResponseModels";
 
 /**
- * Exposes client-scoped inventory operations through `GNNetwork.inventory`.
+ * Public client-scoped namespace for the Inventory domain.
  *
- * This namespace covers item metadata, ownership, amount, custom data, statistics, and logs over HTTP.
+ * Reachable through {@link GNNetwork.inventory} after
+ * {@link GNNetwork.init}. Manages every item-level entity in
+ * the system — both the catalog metadata (per `classId`) and
+ * the per-owner inventory ledger (per `itemId`).
+ *
+ * Functional groupings:
+ *
+ * 1. **Catalog metadata** — `getItemMetadata`,
+ *    `getItemsMetadata`, `getItemsMetadataWithSegment`. The
+ *    catalog is configured server-side and exposes
+ *    `ItemType` ({@link ItemType}) plus optional descriptive
+ *    fields.
+ * 2. **Ownership lookup** — `getItem`, `getItems`,
+ *    `getItemsWithOwner` (filter by {@link OwnerType} +
+ *    `ownerId`), `getItemsWithClassId`,
+ *    `getItemsWithSegment`, `getItemsWithTag`.
+ * 3. **Mutations** — `createItem`, `removeItem`,
+ *    `setItemAmount` (for `Stackable` items),
+ *    `addItemAmount`, `subtractItemAmount`,
+ *    `transferItem`, `transferItemAmount`. Stackability is
+ *    governed by {@link ItemType} on the catalog row.
+ * 4. **Per-item custom data / tags / segments** —
+ *    `getCustomData`, `setCustomData`, `getTag`, `setTag`,
+ *    `getSegment`, `addSegment`, `removeSegment`.
+ * 5. **Statistics & audit log** — `getItemStatistics`,
+ *    `setItemStatistics`, `addItemStatistics`,
+ *    `getItemLog`. The audit log is read-only and tracks
+ *    every state mutation for compliance.
+ *
+ * Common contract: same as {@link GamePlayerApi} (HTTP /
+ * `RequestType.Inventory` / `RequestRole.Client`,
+ * callback + Promise variants, `.server` / `.admin`
+ * sub-namespaces).
  */
 export class InventoryApi {
 	/** Server-scoped inventory operations for trusted backend callers. */
@@ -497,12 +529,15 @@ export class InventoryApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerInventoryApi.
- */
-/**
- * Exposes server-scoped inventory operations through `GNNetwork.inventory.server`.
+ * Server-scoped Inventory namespace, reachable through
+ * `GNNetwork.inventory.server`.
  *
- * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
+ * Mirrors every method on {@link InventoryApi} but uses the
+ * `Server*RequestData` DTO variants. The server flavour
+ * accepts an explicit `ownerType` + `ownerId` so a trusted
+ * backend can act on any owner's inventory ledger without
+ * holding their auth token. Always pass a valid server-side
+ * `secretKey`.
  */
 export class ServerInventoryApi {
 	/**
@@ -984,12 +1019,15 @@ export class ServerInventoryApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminInventoryApi.
- */
-/**
- * Exposes admin-scoped inventory operations through `GNNetwork.inventory.admin`.
+ * Admin-scoped Inventory namespace, reachable through
+ * `GNNetwork.inventory.admin`.
  *
- * Use this namespace from dashboard, GM, or backoffice code with `secretKey` or `overrideSecretKey`.
+ * Mirrors {@link ServerInventoryApi} but routed through
+ * {@link RequestRole.Admin}. The backend uses the caller's
+ * admin auth token to authorise privileged operations such as
+ * editing catalog metadata, force-creating items, bypassing
+ * stack-limit checks, etc. Reserved for dashboard / GM /
+ * backoffice tools.
  */
 export class AdminInventoryApi {
 	/**

@@ -3,9 +3,28 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups reusable request and response contracts for Inventory operations.
- * Public routes always target a concrete inventory item by `itemId`;
- * client permission checks depend on whether that item belongs to the authenticated player context.
+ * Reusable request and response DTOs for the Inventory domain.
+ *
+ * Inventory operations target a **specific item entity** by
+ * `itemId` (the per-owner ledger row, distinct from the
+ * catalog's `classId`). On client variants the backend
+ * cross-checks that the authenticated player owns the item
+ * (or has permission via group membership when `ownerType ==
+ * Group`).
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.inventory`,
+ *   scoped to items the caller owns.
+ * - **`Server*`**: used by `GNNetwork.inventory.server`, can
+ *   target any owner with a valid server `secretKey`.
+ * - **`Admin*`**: used by `GNNetwork.inventory.admin`, full
+ *   privileged access including catalog edits.
+ *
+ * Stackability rules ({@link ItemType}) determine which
+ * mutation operations make sense for a given catalog row:
+ * `setItemAmount` / `addItemAmount` / `subtractItemAmount` only
+ * apply to `Stackable` items; `NonStackable` items always have
+ * an implicit amount of `1`.
  */
 export namespace InventoryModels {
 

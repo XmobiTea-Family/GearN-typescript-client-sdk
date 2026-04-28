@@ -50,6 +50,7 @@ settings.config({
     pingInterval: 3000,
     pingTimeout: 5000,
     secretKey: "your-secret-key",
+    gameId: "your-game-id",
     logType: LogType.All,
 });
 

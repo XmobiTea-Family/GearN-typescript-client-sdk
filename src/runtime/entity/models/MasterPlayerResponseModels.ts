@@ -2,9 +2,19 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { MasterPlayerModels } from "./MasterPlayerModels";
 
 /**
- * Groups typed operation-response wrappers for `RequestType.MasterPlayer`.
- * Many read operations resolve to `MasterPlayerResponseData` or a derived envelope whose
- * `infoResponseParameters` content is controlled by the matching request model.
+ * Typed response wrappers for the MasterPlayer domain.
+ *
+ * Each class extends {@link CustomOperationResponseAbstract}
+ * and binds a response DTO from {@link MasterPlayerModels}.
+ * The same wrapper is reused across the
+ * client / server / admin role variants because the response
+ * shape is identical regardless of which role issued the
+ * request.
+ *
+ * Many read operations resolve to a profile-style envelope
+ * (`MasterPlayerResponseData` or a derived shape) whose
+ * `infoResponseParameters` field is gated by the matching
+ * request DTO's `infoRequestParam` flags.
  */
 export namespace MasterPlayerResponseModels {
 	/**

@@ -1,19 +1,32 @@
 /**
- * Enumerates low-level return codes surfaced through `OperationResponse`.
+ * Transport-level return codes surfaced through
+ * {@link OperationResponse.getReturnCode}.
  *
- * These codes describe transport, gateway, authorization, validation, throttling,
- * or operation-level execution status. They are not business-domain errors.
+ * These codes describe **transport**, gateway, authorisation,
+ * validation, throttling and operation-level execution status —
+ * **not** business-domain errors. Domain errors travel inside
+ * successful responses through {@link ErrorCode} and are checked
+ * only after the transport return code is `Ok`.
  *
- * Read order:
- * 1. Check `returnCode` first.
- * 2. Only when `returnCode === ReturnCode.Ok` should callers trust typed `parameters`
- *    and then continue checking the business `errorCode` inside the response payload.
+ * Wire-protocol contract: the codes here are mirrored verbatim
+ * onto every response, plus synthesised by
+ * {@link PeerBase.service} for client-side timeouts. Adding a new
+ * value requires a coordinated backend change.
+ *
+ * Read order for callers:
+ * 1. Inspect {@link OperationResponse.getReturnCode} (or the
+ *    typed wrapper's {@link CustomOperationResponse.hasReturnCodeError}).
+ *    Anything other than {@link Ok} indicates a transport failure.
+ * 2. When the return code is {@link Ok}, switch to the business
+ *    layer and inspect `errorCode` (from {@link ErrorCode}) on the
+ *    typed response.
  *
  * Value conventions:
- * - `1`: the request completed successfully at protocol level
- * - `0`: the request failed without a more specific mapped return code
- * - negative values: the request was rejected, timed out, or failed before a valid
- *   business response could be produced
+ * - `1`: the request completed successfully at the protocol level.
+ * - `0`: the request failed without a more specific mapped return
+ *   code.
+ * - negative values: the request was rejected, timed out, or
+ *   failed before a valid business response could be produced.
  */
 export class ReturnCode {
 	/**

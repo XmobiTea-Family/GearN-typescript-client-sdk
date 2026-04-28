@@ -38,35 +38,34 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 
 ## Client methods (`GNNetwork.dashboard.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `changePasswordAdminAccount` | `DashboardModels.ChangePasswordAdminAccountRequestData` | `changePasswordAdminAccountAsync(...)` | `DashboardResponseModels.ChangePasswordAdminAccountOperationResponse` |
-| `getAdminAccountList` | `DashboardModels.GetAdminAccountListRequestData` | `getAdminAccountListAsync(...)` | `DashboardResponseModels.GetAdminAccountListOperationResponse` |
-| `getGameInformation` | `DashboardModels.GetGameInformationRequestData` | `getGameInformationAsync(...)` | `DashboardResponseModels.GetGameInformationOperationResponse` |
-| `getGameList` | `DashboardModels.GetGameListRequestData` | `getGameListAsync(...)` | `DashboardResponseModels.GetGameListOperationResponse` |
-| `getMasterGameSettings` | `DashboardModels.GetMasterGameSettingsRequestData` | `getMasterGameSettingsAsync(...)` | `DashboardResponseModels.GetMasterGameSettingsOperationResponse` |
-| `getSecretInfoInformation` | `DashboardModels.GetSecretInfoInformationRequestData` | `getSecretInfoInformationAsync(...)` | `DashboardResponseModels.GetSecretInfoInformationOperationResponse` |
-| `getSecretInfoList` | `DashboardModels.GetSecretInfoListRequestData` | `getSecretInfoListAsync(...)` | `DashboardResponseModels.GetSecretInfoListOperationResponse` |
-| `getServerLog` | `DashboardModels.GetServerLogRequestData` | `getServerLogAsync(...)` | `DashboardResponseModels.GetServerLogOperationResponse` |
-| `createAdminAccount` | `DashboardModels.CreateAdminAccountRequestData` | `createAdminAccountAsync(...)` | `DashboardResponseModels.CreateAdminAccountOperationResponse` |
-| `createGame` | `DashboardModels.CreateGameRequestData` | `createGameAsync(...)` | `DashboardResponseModels.CreateGameOperationResponse` |
-| `createSecretInfo` | `DashboardModels.CreateSecretInfoRequestData` | `createSecretInfoAsync(...)` | `DashboardResponseModels.CreateSecretInfoOperationResponse` |
-| `loginByAdminAccount` | `DashboardModels.LoginByAdminAccountRequestData` | `loginByAdminAccountAsync(...)` | `DashboardResponseModels.LoginByAdminAccountOperationResponse` |
-| `removeAdminAccount` | `DashboardModels.RemoveAdminAccountRequestData` | `removeAdminAccountAsync(...)` | `DashboardResponseModels.RemoveAdminAccountOperationResponse` |
-| `setGameInformation` | `DashboardModels.SetGameInformationRequestData` | `setGameInformationAsync(...)` | `DashboardResponseModels.SetGameInformationOperationResponse` |
-| `setMasterGameSettings` | `DashboardModels.SetMasterGameSettingsRequestData` | `setMasterGameSettingsAsync(...)` | `DashboardResponseModels.SetMasterGameSettingsOperationResponse` |
-| `setPasswordAdminAccount` | `DashboardModels.SetPasswordAdminAccountRequestData` | `setPasswordAdminAccountAsync(...)` | `DashboardResponseModels.SetPasswordAdminAccountOperationResponse` |
-| `setSecretInfoInformation` | `DashboardModels.SetSecretInfoInformationRequestData` | `setSecretInfoInformationAsync(...)` | `DashboardResponseModels.SetSecretInfoInformationOperationResponse` |
-| `setSecretKeyAdminAccount` | `DashboardModels.SetSecretKeyAdminAccountRequestData` | `setSecretKeyAdminAccountAsync(...)` | `DashboardResponseModels.SetSecretKeyAdminAccountOperationResponse` |
-| `getUsernameAdminAccount` | `DashboardModels.GetUsernameAdminAccountRequestData` | `getUsernameAdminAccountAsync(...)` | `DashboardResponseModels.GetUsernameAdminAccountOperationResponse` |
-| `getAnalytics` | `DashboardModels.GetAnalyticsRequestData` | `getAnalyticsAsync(...)` | `DashboardResponseModels.GetAnalyticsOperationResponse` |
-| `getEventCallbackCloudScript` | `DashboardModels.GetEventCallbackCloudScriptRequestData` | `getEventCallbackCloudScriptAsync(...)` | `DashboardResponseModels.GetEventCallbackCloudScriptOperationResponse` |
-| `setEventCallbackCloudScript` | `DashboardModels.SetEventCallbackCloudScriptRequestData` | `setEventCallbackCloudScriptAsync(...)` | `DashboardResponseModels.SetEventCallbackCloudScriptOperationResponse` |
-| `resetStatisticsLeaderboard` | `DashboardModels.ResetStatisticsLeaderboardRequestData` | `resetStatisticsLeaderboardAsync(...)` | `DashboardResponseModels.ResetStatisticsLeaderboardOperationResponse` |
-| `getBackupStatisticsLeaderboardVersion` | `DashboardModels.GetBackupStatisticsLeaderboardVersionRequestData` | `getBackupStatisticsLeaderboardVersionAsync(...)` | `DashboardResponseModels.GetBackupStatisticsLeaderboardVersionOperationResponse` |
-| `getServerGameData` | `DashboardModels.GetServerGameDataRequestData` | `getServerGameDataAsync(...)` | `DashboardResponseModels.GetServerGameDataOperationResponse` |
-| `deleteInDatabase` | `DashboardModels.DeleteInDatabaseRequestData` | `deleteInDatabaseAsync(...)` | `DashboardResponseModels.DeleteInDatabaseOperationResponse` |
-
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `changePasswordAdminAccount` | `DashboardModels.ChangePasswordAdminAccountRequestData` | `changePasswordAdminAccountAsync(...)` | `DashboardResponseModels.ChangePasswordAdminAccountOperationResponse` | `dashboard.changePasswordAdminAccount.selfEnable` |
+| `getAdminAccountList` | `DashboardModels.GetAdminAccountListRequestData` | `getAdminAccountListAsync(...)` | `DashboardResponseModels.GetAdminAccountListOperationResponse` | `dashboard.getAdminAccountList.selfEnable` |
+| `getGameInformation` | `DashboardModels.GetGameInformationRequestData` | `getGameInformationAsync(...)` | `DashboardResponseModels.GetGameInformationOperationResponse` | `dashboard.getGameInformation.selfEnable` |
+| `getGameList` | `DashboardModels.GetGameListRequestData` | `getGameListAsync(...)` | `DashboardResponseModels.GetGameListOperationResponse` | `dashboard.getGameList.selfEnable` |
+| `getMasterGameSettings` | `DashboardModels.GetMasterGameSettingsRequestData` | `getMasterGameSettingsAsync(...)` | `DashboardResponseModels.GetMasterGameSettingsOperationResponse` | `dashboard.getMasterGameSettings.selfEnable` |
+| `getSecretInfoInformation` | `DashboardModels.GetSecretInfoInformationRequestData` | `getSecretInfoInformationAsync(...)` | `DashboardResponseModels.GetSecretInfoInformationOperationResponse` | `dashboard.getSecretInfoInformation.selfEnable` |
+| `getSecretInfoList` | `DashboardModels.GetSecretInfoListRequestData` | `getSecretInfoListAsync(...)` | `DashboardResponseModels.GetSecretInfoListOperationResponse` | `dashboard.getSecretInfoList.selfEnable` |
+| `getServerLog` | `DashboardModels.GetServerLogRequestData` | `getServerLogAsync(...)` | `DashboardResponseModels.GetServerLogOperationResponse` | `dashboard.getServerLog.selfEnable` |
+| `createAdminAccount` | `DashboardModels.CreateAdminAccountRequestData` | `createAdminAccountAsync(...)` | `DashboardResponseModels.CreateAdminAccountOperationResponse` | `dashboard.createAdminAccount.selfEnable` |
+| `createGame` | `DashboardModels.CreateGameRequestData` | `createGameAsync(...)` | `DashboardResponseModels.CreateGameOperationResponse` | `dashboard.createGame.selfEnable` |
+| `createSecretInfo` | `DashboardModels.CreateSecretInfoRequestData` | `createSecretInfoAsync(...)` | `DashboardResponseModels.CreateSecretInfoOperationResponse` | `dashboard.createSecretInfo.selfEnable` |
+| `loginByAdminAccount` | `DashboardModels.LoginByAdminAccountRequestData` | `loginByAdminAccountAsync(...)` | `DashboardResponseModels.LoginByAdminAccountOperationResponse` | `dashboard.loginByAdminAccount.selfEnable` |
+| `removeAdminAccount` | `DashboardModels.RemoveAdminAccountRequestData` | `removeAdminAccountAsync(...)` | `DashboardResponseModels.RemoveAdminAccountOperationResponse` | `dashboard.removeAdminAccount.selfEnable` |
+| `setGameInformation` | `DashboardModels.SetGameInformationRequestData` | `setGameInformationAsync(...)` | `DashboardResponseModels.SetGameInformationOperationResponse` | `dashboard.setGameInformation.selfEnable` |
+| `setMasterGameSettings` | `DashboardModels.SetMasterGameSettingsRequestData` | `setMasterGameSettingsAsync(...)` | `DashboardResponseModels.SetMasterGameSettingsOperationResponse` | `dashboard.setMasterGameSettings.selfEnable` |
+| `setPasswordAdminAccount` | `DashboardModels.SetPasswordAdminAccountRequestData` | `setPasswordAdminAccountAsync(...)` | `DashboardResponseModels.SetPasswordAdminAccountOperationResponse` | `dashboard.setPasswordAdminAccount.selfEnable` |
+| `setSecretInfoInformation` | `DashboardModels.SetSecretInfoInformationRequestData` | `setSecretInfoInformationAsync(...)` | `DashboardResponseModels.SetSecretInfoInformationOperationResponse` | `dashboard.setSecretInfoInformation.selfEnable` |
+| `setSecretKeyAdminAccount` | `DashboardModels.SetSecretKeyAdminAccountRequestData` | `setSecretKeyAdminAccountAsync(...)` | `DashboardResponseModels.SetSecretKeyAdminAccountOperationResponse` | `dashboard.setSecretKeyAdminAccount.selfEnable` |
+| `getUsernameAdminAccount` | `DashboardModels.GetUsernameAdminAccountRequestData` | `getUsernameAdminAccountAsync(...)` | `DashboardResponseModels.GetUsernameAdminAccountOperationResponse` | `dashboard.getUsernameAdminAccount.selfEnable` |
+| `getAnalytics` | `DashboardModels.GetAnalyticsRequestData` | `getAnalyticsAsync(...)` | `DashboardResponseModels.GetAnalyticsOperationResponse` | `dashboard.getAnalytics.selfEnable` |
+| `getEventCallbackCloudScript` | `DashboardModels.GetEventCallbackCloudScriptRequestData` | `getEventCallbackCloudScriptAsync(...)` | `DashboardResponseModels.GetEventCallbackCloudScriptOperationResponse` | `dashboard.getEventCallbackCloudScript.selfEnable` |
+| `setEventCallbackCloudScript` | `DashboardModels.SetEventCallbackCloudScriptRequestData` | `setEventCallbackCloudScriptAsync(...)` | `DashboardResponseModels.SetEventCallbackCloudScriptOperationResponse` | `dashboard.setEventCallbackCloudScript.selfEnable` |
+| `resetStatisticsLeaderboard` | `DashboardModels.ResetStatisticsLeaderboardRequestData` | `resetStatisticsLeaderboardAsync(...)` | `DashboardResponseModels.ResetStatisticsLeaderboardOperationResponse` | `dashboard.resetStatisticsLeaderboard.selfEnable` |
+| `getBackupStatisticsLeaderboardVersion` | `DashboardModels.GetBackupStatisticsLeaderboardVersionRequestData` | `getBackupStatisticsLeaderboardVersionAsync(...)` | `DashboardResponseModels.GetBackupStatisticsLeaderboardVersionOperationResponse` | `dashboard.getBackupStatisticsLeaderboardVersion.selfEnable` |
+| `getServerGameData` | `DashboardModels.GetServerGameDataRequestData` | `getServerGameDataAsync(...)` | `DashboardResponseModels.GetServerGameDataOperationResponse` | `dashboard.getServerGameData.selfEnable` |
+| `deleteInDatabase` | `DashboardModels.DeleteInDatabaseRequestData` | `deleteInDatabaseAsync(...)` | `DashboardResponseModels.DeleteInDatabaseOperationResponse` | `dashboard.deleteInDatabase.selfEnable` |
 
 
 

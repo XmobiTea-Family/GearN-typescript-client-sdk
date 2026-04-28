@@ -5,8 +5,20 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { MultiplayerModels } from "./MultiplayerModels";
 
 /**
- * Groups typed operation-request wrappers for `RequestType.Multiplayer`.
- * Multiplayer routes stay HTTP-based even though the resulting match may later connect to a separate realtime server.
+ * Typed request wrappers for the Multiplayer domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from
+ * {@link MultiplayerModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.Multiplayer} domain;
+ * - the appropriate {@link RequestRole} based on the wrapper
+ *   name prefix.
+ *
+ * Multiplayer wrappers always go through HTTP — once a ticket
+ * succeeds and the match record contains the dedicated-server
+ * connection details, the application connects to the
+ * realtime server out-of-band relative to the GearN SDK.
  */
 export namespace MultiplayerRequestModels {
 	/**

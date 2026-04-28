@@ -48,8 +48,9 @@ settings.config({
   reconnectDelay: 5000,
   pingInterval: 20000,
   pingTimeout: 20000,
-  secretKey: "<secret-key>",
   logType: LogType.Error,
+  secretKey: "<secret-key>",
+  gameId: "<game-id>",
 });
 ```
 2. Gọi `GNNetwork.init(settings)` đúng 1 lần khi app chạy lần đầu tiên.
@@ -87,8 +88,8 @@ console.log("Your displayName: " + loginByCustomIdResponse.responseData.infoResp
 - `GNNetwork.characterPlayer` — character-level (trong trường hợp 1 game player có nhiều nhân vật nhỏ) gameplay/social. [Guide](docs/guides/CHARACTER_PLAYER.md).
 - `GNNetwork.group` — group metadata/member/message/currency. [Guide](docs/guides/GROUP.md).
 - `GNNetwork.inventory` — inventory item metadata, statistics, log. [Guide](docs/guides/INVENTORY.md).- `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](docs/guides/STORE_INVENTORY.md).
-- `GNNetwork.content` — content config, file upload/download metadata, small game asset. [Guide](docs/guides/CONTENT.md).
-- `GNNetwork.multiplayer` — matchmaking ticket (HTTP, không socket). [Guide](docs/guides/MULTIPLAYER.md).
+- `GNNetwork.content` — content config, file upload/download metadata, small game asset, avatar asset. [Guide](docs/guides/CONTENT.md).
+- `GNNetwork.multiplayer` — matchmaking ticket, handle matchmaking trận đấu (HTTP, không socket). [Guide](docs/guides/MULTIPLAYER.md).
 - `GNNetwork.cloudScript` — CloudScript publish/version/execute, khi cần phải phối hợp các function lại với nhau, hoặc cần để server validate, cần phải viết cloudScript code từ `GearN Dashboard`. [Guide](docs/guides/CLOUDSCRIPT.md).
 - `GNNetwork.dashboard` — admin login + quản trị game/secret/analytics, không nên sử dụng nếu code game client. [Guide](docs/guides/DASHBOARD.md).
 
@@ -116,7 +117,8 @@ settings.config({
   reconnectDelay: 5000,                // khi sử dụng socket, reconnectDelay socket io
   pingInterval: 20000,                 // khi sử dụng socket, pingInterval socket io
   pingTimeout: 20000,                  // khi sử dụng socket, pingTimeout socket io
-  secretKey: "secret-key",             // secretKey để có thể dùng client này, lấy từ tab Settings/SecretInfo GearN Dashboard, lựa chọn secretKey với các Permission Rules phù hợp
+  secretKey: "secret-key",             // secretKey để có thể dùng client này, lấy từ GearN Dashboard tab Settings/SecretInfo, lựa chọn secretKey với các Permission Rules phù hợp
+  gameId: "game-id",                   // game id giành cho secretKey trong settings này hoặc override lại để chọn đúng game enviroment phù hợp, lấy từ GearN Dashboard từ tab Settings/SecretInfo
   logType: LogType.All,                // console log ra tất cả vấn đề thuộc loại nào
 });
 
@@ -258,9 +260,8 @@ Typed response có 5 public field (không getter): `returnCode`, `errorCode`, `i
 GNNetwork.getAuthenticateStatus().getAuthToken();
 GNNetwork.getAuthenticateStatus().getUserId();
 
-// Game id (persist qua StorageService)
-GNNetwork.setGameId("your-game-id");
-GNNetwork.getGameId();
+// trong trường hợp secret key có thể dùng cho game id nào cũng được, trường hợp muốn đùng riêng cho game id xác định thì sử dụng hàm này
+GNNetwork.getGNServerSettings().setGameId("your-game-id");
 
 // Health check
 await GNNetwork.healthCheckAsync();

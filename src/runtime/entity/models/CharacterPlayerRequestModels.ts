@@ -5,9 +5,22 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { CharacterPlayerModels } from "./CharacterPlayerModels";
 
 /**
- * Groups typed operation-request wrappers for `RequestType.CharacterPlayer`.
- * Public character-player workflows target an explicit `characterId`,
- * while server/admin wrappers switch role without changing the request-shape semantics.
+ * Typed request wrappers for the CharacterPlayer domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from
+ * {@link CharacterPlayerModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.CharacterPlayer} domain;
+ * - the appropriate {@link RequestRole} based on the wrapper
+ *   name prefix (`XxxOperationRequest` → Client,
+ *   `ServerXxxOperationRequest` → Server,
+ *   `AdminXxxOperationRequest` → Admin).
+ *
+ * All wrappers carry an explicit `characterId` even on the
+ * client variants — the CharacterPlayer domain operates on a
+ * specific character rather than the authenticated user's
+ * implicit "current" character.
  */
 export namespace CharacterPlayerRequestModels {
 	/**

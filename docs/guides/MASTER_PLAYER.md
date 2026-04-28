@@ -71,107 +71,107 @@ Rule nhanh:
 
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
 | --- | --- | --- | --- | --- |
-| `getAvatarAsync` | Cần đọc avatar | `userId?` | `MasterPlayerResponseData` | `avatar.type` hiện là số thô |
-| `getCountryCodeAsync` | Cần đọc quốc gia | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.countryCode` |
-| `getCustomDataAsync` | Cần đọc custom data | `userId?`, `customDataKeys?` | `MasterPlayerResponseData` | Có thể filter theo key |
-| `getDisplayNameAsync` | Cần đọc display name | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.displayName` |
-| `getEmailAsync` | Cần đọc email | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.email` |
-| `getExternalAsync` | Cần đọc toàn bộ external identity đã link | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.external` |
-| `getIpAddressCreateAsync` | Cần đọc IP lúc tạo account | `userId?` | `MasterPlayerResponseData` | Trường này thường nhạy cảm, ưu tiên backend/admin |
-| `getPlayerBanAsync` | Cần đọc trạng thái ban | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.playerBan` |
-| `getPlayerCurrencyAsync` | Cần đọc player currencies | `userId?`, `playerCurrencyKeys?` | `MasterPlayerResponseData` | Không dùng `infoRequestParam` |
-| `getPlayerDataAsync` | Cần đọc player data | `userId?`, `playerDataKeys?` | `MasterPlayerResponseData` | Không dùng `infoRequestParam` |
-| `getPlayerInformationAsync` | Cần lấy nhiều field hồ sơ trong một lần gọi | `userId?`, `infoRequestParam` | `MasterPlayerResponseData` | Flow đọc tổng hợp quan trọng nhất |
-| `getPlayerStatisticsAsync` | Cần đọc statistics theo key | `userId?`, `playerStatisticsKeys?` | `MasterPlayerResponseData` | Không dùng `infoRequestParam` |
-| `getSegmentAsync` | Cần đọc segment | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.segments` |
-| `getTagAsync` | Cần đọc tag theo key | `userId?`, `tagKeys` | `MasterPlayerResponseData` | Không query theo value |
-| `getTsCreateAsync` | Cần đọc thời điểm tạo account | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.tsCreate` |
-| `getTsLastLoginAsync` | Cần đọc lần login gần nhất | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.tsLastLogin` |
-| `getPushNotificationAsync` | Cần đọc danh sách push token đã đăng ký | `userId?` | `MasterPlayerResponseData` | Dữ liệu nằm ở `infoResponseParameters.pushNotifications`, không phải `results` |
+| `getAvatarAsync` | Cần đọc avatar | `userId?` | `MasterPlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `MasterPlayerNotFound` |
+| `getCountryCodeAsync` | Cần đọc quốc gia | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.countryCode` | `Ok`, `MasterPlayerNotFound` |
+| `getCustomDataAsync` | Cần đọc custom data | `userId?`, `customDataKeys?` | `MasterPlayerResponseData` | Có thể filter theo key | `Ok`, `MasterPlayerNotFound` |
+| `getDisplayNameAsync` | Cần đọc display name | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.displayName` | `Ok`, `MasterPlayerNotFound` |
+| `getEmailAsync` | Cần đọc email | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.email` | `Ok`, `MasterPlayerNotFound` |
+| `getExternalAsync` | Cần đọc toàn bộ external identity đã link | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.external` | `Ok`, `MasterPlayerNotFound` |
+| `getIpAddressCreateAsync` | Cần đọc IP lúc tạo account | `userId?` | `MasterPlayerResponseData` | Trường này thường nhạy cảm, ưu tiên backend/admin | `Ok`, `MasterPlayerNotFound` |
+| `getPlayerBanAsync` | Cần đọc trạng thái ban | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.playerBan` | `Ok`, `MasterPlayerNotFound` |
+| `getPlayerCurrencyAsync` | Cần đọc player currencies | `userId?`, `playerCurrencyKeys?` | `MasterPlayerResponseData` | Không dùng `infoRequestParam` | `Ok`, `MasterPlayerNotFound` |
+| `getPlayerDataAsync` | Cần đọc player data | `userId?`, `playerDataKeys?` | `MasterPlayerResponseData` | Không dùng `infoRequestParam` | `Ok`, `MasterPlayerNotFound` |
+| `getPlayerInformationAsync` | Cần lấy nhiều field hồ sơ trong một lần gọi | `userId?`, `infoRequestParam` | `MasterPlayerResponseData` | Flow đọc tổng hợp quan trọng nhất | `Ok`, `MasterPlayerNotFound` |
+| `getPlayerStatisticsAsync` | Cần đọc statistics theo key | `userId?`, `playerStatisticsKeys?` | `MasterPlayerResponseData` | Không dùng `infoRequestParam` | `Ok`, `MasterPlayerNotFound` |
+| `getSegmentAsync` | Cần đọc segment | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.segments` | `Ok`, `MasterPlayerNotFound` |
+| `getTagAsync` | Cần đọc tag theo key | `userId?`, `tagKeys` | `MasterPlayerResponseData` | Không query theo value | `Ok`, `MasterPlayerNotFound` |
+| `getTsCreateAsync` | Cần đọc thời điểm tạo account | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.tsCreate` | `Ok`, `MasterPlayerNotFound` |
+| `getTsLastLoginAsync` | Cần đọc lần login gần nhất | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.tsLastLogin` | `Ok`, `MasterPlayerNotFound` |
+| `getPushNotificationAsync` | Cần đọc danh sách push token đã đăng ký | `userId?` | `MasterPlayerResponseData` | Dữ liệu nằm ở `infoResponseParameters.pushNotifications`, không phải `results` | `Ok`, `MasterPlayerNotFound` |
 
 ### Search player, leaderboard và log
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getPlayersWithAppleAsync` | Tìm player theo `appleId` | `appleIds[]`, `infoRequestParam` | `GetPlayersWithAppleResponseData` | Mỗi phần tử trả `appleId`, `userId`, `infoResponseParameters` |
-| `getPlayersWithFacebookAsync` | Tìm player theo `facebookId` | `facebookIds[]`, `infoRequestParam` | `GetPlayersWithFacebookResponseData` | Không dùng cho Google |
-| `getPlayersWithGenericServiceAsync` | Tìm player theo external service tự định nghĩa | `serviceName`, `genericIds[]`, `infoRequestParam` | `GetPlayersWithGenericServiceResponseData` | Dùng khi backend quản external provider riêng |
-| `getPlayersWithGoogleAsync` | Tìm player theo `googleId` | `googleIds[]`, `infoRequestParam` | `GetPlayersWithGoogleResponseData` | Không dùng cho Google Play Games |
-| `getPlayersWithGooglePlayGameServiceAsync` | Tìm player theo Google Play Games `playerId` | `playerIds[]`, `infoRequestParam` | `GetPlayersWithGooglePlayGameServiceResponseData` | Khác với Google account thường |
-| `getPlayersWithGameCenterAsync` | Tìm player theo Game Center `playerId` | `playerIds[]`, `infoRequestParam` | `GetPlayersWithGameCenterResponseData` | Chỉ dành cho Apple Game Center |
-| `getPlayersWithDisplayNameAsync` | Tìm player theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `MasterPlayersWithUserIdResponseData` | Phân trang bằng `skip/limit` |
-| `getPlayersWithSegmentAsync` | Tìm player theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `MasterPlayersWithUserIdResponseData` | Query theo exact segment value |
-| `getPlayersWithTagAsync` | Tìm player theo tag | `key`, `value`, `infoRequestParam`, `skip?`, `limit?` | `MasterPlayersWithUserIdResponseData` | Query theo cặp `key/value` |
-| `getStatisticsLeaderboardAroundPlayerAsync` | Cần bảng xếp hạng quanh một player cụ thể | `userId?`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetStatisticsLeaderboardResponseData` | Ở `server/admin` phải truyền `userId` |
-| `getStatisticsLeaderboardAsync` | Cần bảng xếp hạng statistics toàn cục theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `version?` | `GetStatisticsLeaderboardResponseData` | `version` chỉ có ở method này |
-| `getCurrencyLeaderboardAsync` | Cần bảng xếp hạng currency theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCurrencyLeaderboardResponseData` | Không có `version` |
-| `getCreateLeaderboardAsync` | Cần bảng xếp hạng theo thời điểm tạo account | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCreateLeaderboardResponseData` | Không cần `key` |
-| `getLastLoginLeaderboardAsync` | Cần bảng xếp hạng theo lần login gần nhất | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetLastLoginLeaderboardResponseData` | Không cần `key` |
-| `getStatisticsLogAsync` | Cần audit statistics log | `keys?`, `userId?`, `limit?`, `token?` | `GetStatisticsLogResponseData` | Phân trang bằng `token` |
-| `getCurrencyLogAsync` | Cần audit currency log | `keys?`, `userId?`, `limit?`, `token?` | `GetCurrencyLogResponseData` | Phân trang bằng `token` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getPlayersWithAppleAsync` | Tìm player theo `appleId` | `appleIds[]`, `infoRequestParam` | `GetPlayersWithAppleResponseData` | Mỗi phần tử trả `appleId`, `userId`, `infoResponseParameters` | `Ok` |
+| `getPlayersWithFacebookAsync` | Tìm player theo `facebookId` | `facebookIds[]`, `infoRequestParam` | `GetPlayersWithFacebookResponseData` | Không dùng cho Google | `Ok` |
+| `getPlayersWithGenericServiceAsync` | Tìm player theo external service tự định nghĩa | `serviceName`, `genericIds[]`, `infoRequestParam` | `GetPlayersWithGenericServiceResponseData` | Dùng khi backend quản external provider riêng | `Ok` |
+| `getPlayersWithGoogleAsync` | Tìm player theo `googleId` | `googleIds[]`, `infoRequestParam` | `GetPlayersWithGoogleResponseData` | Không dùng cho Google Play Games | `Ok` |
+| `getPlayersWithGooglePlayGameServiceAsync` | Tìm player theo Google Play Games `playerId` | `playerIds[]`, `infoRequestParam` | `GetPlayersWithGooglePlayGameServiceResponseData` | Khác với Google account thường | `Ok` |
+| `getPlayersWithGameCenterAsync` | Tìm player theo Game Center `playerId` | `playerIds[]`, `infoRequestParam` | `GetPlayersWithGameCenterResponseData` | Chỉ dành cho Apple Game Center | `Ok` |
+| `getPlayersWithDisplayNameAsync` | Tìm player theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `MasterPlayersWithUserIdResponseData` | Phân trang bằng `skip/limit` | `Ok` |
+| `getPlayersWithSegmentAsync` | Tìm player theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `MasterPlayersWithUserIdResponseData` | Query theo exact segment value | `Ok` |
+| `getPlayersWithTagAsync` | Tìm player theo tag | `key`, `value`, `infoRequestParam`, `skip?`, `limit?` | `MasterPlayersWithUserIdResponseData` | Query theo cặp `key/value` | `Ok`, `KeyNotFound` |
+| `getStatisticsLeaderboardAroundPlayerAsync` | Cần bảng xếp hạng quanh một player cụ thể | `userId?`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetStatisticsLeaderboardResponseData` | Ở `server/admin` phải truyền `userId` | `Ok`, `KeyNotFound` |
+| `getStatisticsLeaderboardAsync` | Cần bảng xếp hạng statistics toàn cục theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `version?` | `GetStatisticsLeaderboardResponseData` | `version` chỉ có ở method này | `Ok`, `KeyNotFound`, `VersionInvalid` |
+| `getCurrencyLeaderboardAsync` | Cần bảng xếp hạng currency theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCurrencyLeaderboardResponseData` | Không có `version` | `Ok`, `KeyNotFound` |
+| `getCreateLeaderboardAsync` | Cần bảng xếp hạng theo thời điểm tạo account | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCreateLeaderboardResponseData` | Không cần `key` | `Ok` |
+| `getLastLoginLeaderboardAsync` | Cần bảng xếp hạng theo lần login gần nhất | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetLastLoginLeaderboardResponseData` | Không cần `key` | `Ok` |
+| `getStatisticsLogAsync` | Cần audit statistics log | `keys?`, `userId?`, `limit?`, `token?` | `GetStatisticsLogResponseData` | Phân trang bằng `token` | `Ok` |
+| `getCurrencyLogAsync` | Cần audit currency log | `keys?`, `userId?`, `limit?`, `token?` | `GetCurrencyLogResponseData` | Phân trang bằng `token` | `Ok` |
 
 ### Link và unlink identity
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `linkAccountAsync` | Link account/password truyền thống | `userId?`, `username`, `password`, `forceLink?` | `MasterPlayerResponseData` | Dùng khi muốn gắn username/password vào player hiện tại |
-| `linkCustomIdAsync` | Link custom id của hệ thống riêng | `userId?`, `customId`, `forceLink?` | `MasterPlayerResponseData` | Không phải device id |
-| `linkAppleAsync` | Link Apple Sign-In | `userId?`, `token`, `forceLink?` | `MasterPlayerResponseData` | Token đến từ Apple login flow |
-| `linkFacebookAsync` | Link Facebook login | `userId?`, `token`, `forceLink?` | `MasterPlayerResponseData` | Không dùng cho Google |
-| `linkGoogleAsync` | Link Google account | `userId?`, `token`, `type`, `forceLink?` | `MasterPlayerResponseData` | `type` phải map bằng `GoogleLoginType` |
-| `linkGooglePlayGameServiceAsync` | Link Google Play Games | `userId?`, `token`, `forceLink?` | `MasterPlayerResponseData` | Khác với Google account thường |
-| `linkGameCenterAsync` | Link Game Center | `userId?`, `playerId`, `name`, `publicKeyUrl`, `signature`, `salt`, `timestamp`, `forceLink?` | `MasterPlayerResponseData` | Cần full verification bundle |
-| `linkGenericServiceAsync` | Link external provider tự định nghĩa | `userId?`, `serviceName`, `serviceData`, `forceLink?` | `GenericServiceMasterPlayerResponseData` | Có thể có `errorMessage` ở response |
-| `linkCustomDeviceIdAsync` | Link custom device id | `userId?`, `customDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device |
-| `linkAndroidDeviceIdAsync` | Link Android device id | `userId?`, `androidDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device |
-| `linkiOSDeviceIdAsync` | Link iOS device id | `userId?`, `iOSDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device |
-| `linkWindowsPhoneDeviceIdAsync` | Link Windows Phone device id | `userId?`, `windowsPhoneDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device |
-| `linkWindowsDeviceIdAsync` | Link Windows device id | `userId?`, `windowsDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device |
-| `linkLinuxDeviceIdAsync` | Link Linux device id | `userId?`, `linuxDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device |
-| `linkMacOSDeviceIdAsync` | Link macOS device id | `userId?`, `macOSDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device |
-| `linkEditorDeviceIdAsync` | Link editor device id | `userId?`, `editorDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Hữu ích cho dev/editor flow |
-| `unlinkAccountAsync` | Gỡ account/password đã link | `userId?`, `username` | `EmptyResponseData` | Không cần password ở flow unlink |
-| `unlinkCustomIdAsync` | Gỡ custom id | `userId?`, `customId` | `EmptyResponseData` | |
-| `unlinkAppleAsync` | Gỡ Apple identity | `userId?`, `appleId` | `EmptyResponseData` | |
-| `unlinkFacebookAsync` | Gỡ Facebook identity | `userId?`, `facebookId` | `EmptyResponseData` | |
-| `unlinkGoogleAsync` | Gỡ Google identity | `userId?`, `googleId` | `EmptyResponseData` | |
-| `unlinkGooglePlayGameServiceAsync` | Gỡ Google Play Games identity | `userId?`, `playerId` | `EmptyResponseData` | |
-| `unlinkGameCenterAsync` | Gỡ Game Center identity | `userId?`, `playerId` | `EmptyResponseData` | |
-| `unlinkGenericServiceAsync` | Gỡ external provider tự định nghĩa | `userId?`, `serviceName`, `serviceId` | `EmptyResponseData` | Cần đúng cặp `serviceName/serviceId` |
-| `unlinkCustomDeviceIdAsync` | Gỡ custom device id | `userId?`, `customDeviceId` | `EmptyResponseData` | Thuộc nhóm device |
-| `unlinkAndroidDeviceIdAsync` | Gỡ Android device id | `userId?`, `androidDeviceId` | `EmptyResponseData` | Thuộc nhóm device |
-| `unlinkiOSDeviceIdAsync` | Gỡ iOS device id | `userId?`, `iOSDeviceId` | `EmptyResponseData` | Thuộc nhóm device |
-| `unlinkWindowsPhoneDeviceIdAsync` | Gỡ Windows Phone device id | `userId?`, `windowsPhoneDeviceId` | `EmptyResponseData` | Thuộc nhóm device |
-| `unlinkWindowsDeviceIdAsync` | Gỡ Windows device id | `userId?`, `windowsDeviceId` | `EmptyResponseData` | Thuộc nhóm device |
-| `unlinkLinuxDeviceIdAsync` | Gỡ Linux device id | `userId?`, `linuxDeviceId` | `EmptyResponseData` | Thuộc nhóm device |
-| `unlinkMacOSDeviceIdAsync` | Gỡ macOS device id | `userId?`, `macOSDeviceId` | `EmptyResponseData` | Thuộc nhóm device |
-| `unlinkEditorDeviceIdAsync` | Gỡ editor device id | `userId?`, `editorDeviceId` | `EmptyResponseData` | Thuộc nhóm device |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `linkAccountAsync` | Link account/password truyền thống | `userId?`, `username`, `password`, `forceLink?` | `MasterPlayerResponseData` | Dùng khi muốn gắn username/password vào player hiện tại | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkCustomIdAsync` | Link custom id của hệ thống riêng | `userId?`, `customId`, `forceLink?` | `MasterPlayerResponseData` | Không phải device id | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkAppleAsync` | Link Apple Sign-In | `userId?`, `token`, `forceLink?` | `MasterPlayerResponseData` | Token đến từ Apple login flow | `Ok`, `VerifyTokenError`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkFacebookAsync` | Link Facebook login | `userId?`, `token`, `forceLink?` | `MasterPlayerResponseData` | Không dùng cho Google | `Ok`, `VerifyTokenError`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkGoogleAsync` | Link Google account | `userId?`, `token`, `type`, `forceLink?` | `MasterPlayerResponseData` | `type` phải map bằng `GoogleLoginType` | `Ok`, `VerifyTokenError`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkGooglePlayGameServiceAsync` | Link Google Play Games | `userId?`, `token`, `forceLink?` | `MasterPlayerResponseData` | Khác với Google account thường | `Ok`, `VerifyTokenError`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkGameCenterAsync` | Link Game Center | `userId?`, `playerId`, `name`, `publicKeyUrl`, `signature`, `salt`, `timestamp`, `forceLink?` | `MasterPlayerResponseData` | Cần full verification bundle | `Ok`, `VerifyTokenError`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkGenericServiceAsync` | Link external provider tự định nghĩa | `userId?`, `serviceName`, `serviceData`, `forceLink?` | `GenericServiceMasterPlayerResponseData` | Có thể có `errorMessage` ở response | `Ok`, `VerifyFailed`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkCustomDeviceIdAsync` | Link custom device id | `userId?`, `customDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkAndroidDeviceIdAsync` | Link Android device id | `userId?`, `androidDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkiOSDeviceIdAsync` | Link iOS device id | `userId?`, `iOSDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkWindowsPhoneDeviceIdAsync` | Link Windows Phone device id | `userId?`, `windowsPhoneDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkWindowsDeviceIdAsync` | Link Windows device id | `userId?`, `windowsDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkLinuxDeviceIdAsync` | Link Linux device id | `userId?`, `linuxDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkMacOSDeviceIdAsync` | Link macOS device id | `userId?`, `macOSDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Thuộc nhóm device | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `linkEditorDeviceIdAsync` | Link editor device id | `userId?`, `editorDeviceId`, `forceLink?` | `MasterPlayerResponseData` | Hữu ích cho dev/editor flow | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkAccountAsync` | Gỡ account/password đã link | `userId?`, `username` | `EmptyResponseData` | Không cần password ở flow unlink | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkCustomIdAsync` | Gỡ custom id | `userId?`, `customId` | `EmptyResponseData` | | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkAppleAsync` | Gỡ Apple identity | `userId?`, `appleId` | `EmptyResponseData` | | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkFacebookAsync` | Gỡ Facebook identity | `userId?`, `facebookId` | `EmptyResponseData` | | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkGoogleAsync` | Gỡ Google identity | `userId?`, `googleId` | `EmptyResponseData` | | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkGooglePlayGameServiceAsync` | Gỡ Google Play Games identity | `userId?`, `playerId` | `EmptyResponseData` | | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkGameCenterAsync` | Gỡ Game Center identity | `userId?`, `playerId` | `EmptyResponseData` | | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkGenericServiceAsync` | Gỡ external provider tự định nghĩa | `userId?`, `serviceName`, `serviceId` | `EmptyResponseData` | Cần đúng cặp `serviceName/serviceId` | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkCustomDeviceIdAsync` | Gỡ custom device id | `userId?`, `customDeviceId` | `EmptyResponseData` | Thuộc nhóm device | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkAndroidDeviceIdAsync` | Gỡ Android device id | `userId?`, `androidDeviceId` | `EmptyResponseData` | Thuộc nhóm device | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkiOSDeviceIdAsync` | Gỡ iOS device id | `userId?`, `iOSDeviceId` | `EmptyResponseData` | Thuộc nhóm device | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkWindowsPhoneDeviceIdAsync` | Gỡ Windows Phone device id | `userId?`, `windowsPhoneDeviceId` | `EmptyResponseData` | Thuộc nhóm device | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkWindowsDeviceIdAsync` | Gỡ Windows device id | `userId?`, `windowsDeviceId` | `EmptyResponseData` | Thuộc nhóm device | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkLinuxDeviceIdAsync` | Gỡ Linux device id | `userId?`, `linuxDeviceId` | `EmptyResponseData` | Thuộc nhóm device | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkMacOSDeviceIdAsync` | Gỡ macOS device id | `userId?`, `macOSDeviceId` | `EmptyResponseData` | Thuộc nhóm device | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `unlinkEditorDeviceIdAsync` | Gỡ editor device id | `userId?`, `editorDeviceId` | `EmptyResponseData` | Thuộc nhóm device | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
 
 ### Mutation hồ sơ, account và outbound operation
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `addSegmentAsync` | Gắn thêm segment | `userId?`, `value` | `EmptyResponseData` | Thêm một segment value |
-| `removeSegmentAsync` | Gỡ segment | `userId?`, `value` | `EmptyResponseData` | Xóa theo exact value |
-| `setTagAsync` | Set hoặc upsert tag | `userId?`, `key`, `value` | `EmptyResponseData` | |
-| `removeTagAsync` | Xóa tag theo key | `userId?`, `key` | `EmptyResponseData` | Không truyền `value` |
-| `setAvatarAsync` | Set avatar | `userId?`, `type`, `value` | `EmptyResponseData` | `type` chưa có enum public |
-| `setCountryCodeAsync` | Set country code | `userId?`, `countryCode` | `EmptyResponseData` | |
-| `setCustomDataAsync` | Set custom data theo nhiều key | `userId?`, `customDatas[]` | `MasterPlayerResponseData` | |
-| `setDisplayNameAsync` | Set display name | `userId?`, `displayName`, `uniqueDisplayName?` | `EmptyResponseData` | Có option ép unique |
-| `setEmailAsync` | Set email | `userId?`, `email` | `EmptyResponseData` | |
-| `setPlayerBanAsync` | Ban player đến thời điểm cụ thể | `userId?`, `tsExpire`, `reason` | `EmptyResponseData` | Nên dùng ở backend/admin |
-| `changePlayerCurrencyAsync` | Cộng/trừ currency | `userId?`, `playerCurrencies[]`, `log?` | `MasterPlayerResponseData` | Đây là delta change |
-| `setPlayerDataAsync` | Set player data theo nhiều key | `userId?`, `playerDatas[]` | `MasterPlayerResponseData` | |
-| `changePlayerStatisticsAsync` | Cộng/trừ statistics | `userId?`, `playerStatistics[]`, `log?` | `MasterPlayerResponseData` | Đây là delta change |
-| `updateTsLastLoginAsync` | Cập nhật timestamp last login | `userId?` | `EmptyResponseData` | Không refresh session |
-| `changeAccountPasswordAsync` | Đổi password có xác thực password cũ | `userId?`, `currentPassword`, `password` | `EmptyResponseData` | Flow an toàn hơn nếu user biết password hiện tại |
-| `resetAccountPasswordAsync` | Reset password không cần password cũ | `userId?`, `password` | `EmptyResponseData` | Nên ưu tiên backend/admin |
-| `sendSocketOperationEventAsync` | Yêu cầu backend đẩy socket event tới player | `userId?`, `eventCode`, `eventParameters?` | `EmptyResponseData` | Bản thân method vẫn là HTTP |
-| `sendEmailAsync` | Gửi email tới player | `userId?`, `subject`, `contentHtml` | `EmptyResponseData` | Nên ưu tiên backend/admin |
-| `addPushNotificationAsync` | Đăng ký một push token mới | `userId?`, `token`, `platformType` | `AddPushNotificationResponseData` | `platformType` map bằng `PushPlatformType` |
-| `removePushNotificationAsync` | Xóa một push registration | `userId?`, `pushId` | `EmptyResponseData` | `pushId` lấy từ `addPushNotificationAsync` hoặc `getPushNotificationAsync` |
-| `sendPushNotificationAsync` | Gửi push notification tới player | `userId?`, `title`, `body`, `badge?`, `sound?`, `icon?`, `data?` | `SendPushNotificationResponseData` | Response có `message` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `addSegmentAsync` | Gắn thêm segment | `userId?`, `value` | `EmptyResponseData` | Thêm một segment value | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `removeSegmentAsync` | Gỡ segment | `userId?`, `value` | `EmptyResponseData` | Xóa theo exact value | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `setTagAsync` | Set hoặc upsert tag | `userId?`, `key`, `value` | `EmptyResponseData` | | `Ok`, `KeyNotFound`, `MasterPlayerNotFound`, `PlayerBan` |
+| `removeTagAsync` | Xóa tag theo key | `userId?`, `key` | `EmptyResponseData` | Không truyền `value` | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `setAvatarAsync` | Set avatar | `userId?`, `type`, `value` | `EmptyResponseData` | `type` chưa có enum public | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `setCountryCodeAsync` | Set country code | `userId?`, `countryCode` | `EmptyResponseData` | | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `setCustomDataAsync` | Set custom data theo nhiều key | `userId?`, `customDatas[]` | `MasterPlayerResponseData` | | `Ok`, `KeyNotFound`, `MasterPlayerNotFound`, `PlayerBan` |
+| `setDisplayNameAsync` | Set display name | `userId?`, `displayName`, `uniqueDisplayName?` | `EmptyResponseData` | Có option ép unique | `Ok`, `MasterPlayerNotFound`, `DisplayNameUsed`, `PlayerBan` |
+| `setEmailAsync` | Set email | `userId?`, `email` | `EmptyResponseData` | | `Ok`, `MasterPlayerNotFound`, `PlayerBan`, `EmailInvalid` |
+| `setPlayerBanAsync` | Ban player đến thời điểm cụ thể | `userId?`, `tsExpire`, `reason` | `EmptyResponseData` | Nên dùng ở backend/admin | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `changePlayerCurrencyAsync` | Cộng/trừ currency | `userId?`, `playerCurrencies[]`, `log?` | `MasterPlayerResponseData` | Đây là delta change | `Ok`, `NotEnoughCurrency`, `KeyNotFound`, `MasterPlayerNotFound`, `PlayerBan` |
+| `setPlayerDataAsync` | Set player data theo nhiều key | `userId?`, `playerDatas[]` | `MasterPlayerResponseData` | | `Ok`, `KeyNotFound`, `MasterPlayerNotFound`, `PlayerBan` |
+| `changePlayerStatisticsAsync` | Cộng/trừ statistics | `userId?`, `playerStatistics[]`, `log?` | `MasterPlayerResponseData` | Đây là delta change | `Ok`, `KeyNotFound`, `MasterPlayerNotFound`, `PlayerBan` |
+| `updateTsLastLoginAsync` | Cập nhật timestamp last login | `userId?` | `EmptyResponseData` | Không refresh session | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `changeAccountPasswordAsync` | Đổi password có xác thực password cũ | `userId?`, `currentPassword`, `password` | `EmptyResponseData` | Flow an toàn hơn nếu user biết password hiện tại | `Ok`, `AccountPasswordWrong`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `resetAccountPasswordAsync` | Reset password không cần password cũ | `userId?`, `password` | `EmptyResponseData` | Nên ưu tiên backend/admin | `Ok`, `ExternalNotLinked`, `MasterPlayerNotFound`, `PlayerBan` |
+| `sendSocketOperationEventAsync` | Yêu cầu backend đẩy socket event tới player | `userId?`, `eventCode`, `eventParameters?` | `EmptyResponseData` | Bản thân method vẫn là HTTP | `Ok`, `PlayerBan` |
+| `sendEmailAsync` | Gửi email tới player | `userId?`, `subject`, `contentHtml` | `EmptyResponseData` | Nên ưu tiên backend/admin | `Ok`, `AccountNotFound`, `PlayerBan`, `EmailInvalid` |
+| `addPushNotificationAsync` | Đăng ký một push token mới | `userId?`, `token`, `platformType` | `AddPushNotificationResponseData` | `platformType` map bằng `PushPlatformType` | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `removePushNotificationAsync` | Xóa một push registration | `userId?`, `pushId` | `EmptyResponseData` | `pushId` lấy từ `addPushNotificationAsync` hoặc `getPushNotificationAsync` | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
+| `sendPushNotificationAsync` | Gửi push notification tới player | `userId?`, `title`, `body`, `badge?`, `sound?`, `icon?`, `data?` | `SendPushNotificationResponseData` | Response có `message` | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
 
 ## 5. Enum Và Reference
 

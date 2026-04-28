@@ -4,8 +4,38 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups reusable request and response contracts for Content operations.
- * File workflows usually follow `create upload info -> upload file out-of-band -> request download token`.
+ * Reusable request and response DTOs for the Content domain.
+ *
+ * The Content domain manages two distinct kinds of content:
+ *
+ * 1. **`contentData` blobs** — small structured values keyed by
+ *    a content key (`ContentDataParam.key`, `minLength: 2,
+ *    maxLength: 32, mustNonNull: true`). Useful for game-wide
+ *    config, MOTD strings, remote config flags. Manipulated via
+ *    `getContentData` / `setContentData`.
+ *
+ * 2. **File uploads** — binary blobs identified by a `fileId`.
+ *    The typed operations only manage the **metadata** slot;
+ *    the actual byte transfer happens through
+ *    {@link GNNetwork.uploadFile} (push) and
+ *    {@link GNNetwork.getDownloadFileUrl} (pull). The standard
+ *    workflow is:
+ *
+ *    ```
+ *    create upload info  → returns fileId + upload token
+ *      ↓
+ *    GNNetwork.uploadFile (out of band, multipart POST)
+ *      ↓
+ *    request download info → returns short-lived download token
+ *      ↓
+ *    GNNetwork.getDownloadFileUrl (out of band, plain GET)
+ *    ```
+ *
+ * Each request DTO has three role variants
+ * (`Client*`, `Server*`, `Admin*`) corresponding to the matching
+ * sub-namespace on `GNNetwork.content`. Server / Admin variants
+ * usually accept additional `userId` / `ownerId` parameters so
+ * trusted callers can act on behalf of any player.
  */
 export namespace ContentModels {
 	/**

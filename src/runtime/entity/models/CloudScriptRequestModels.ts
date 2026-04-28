@@ -5,8 +5,21 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { CloudScriptModels } from "./CloudScriptModels";
 
 /**
- * Groups typed operation-request wrappers for `RequestType.CloudScript`.
- * Execution flows and management flows share the same request type but differ by operation and route role.
+ * Typed request wrappers for the CloudScript domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from
+ * {@link CloudScriptModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.CloudScript} domain;
+ * - the appropriate {@link RequestRole} based on the wrapper
+ *   name prefix.
+ *
+ * Both execution wrappers (`ExecuteFunction*`) and management
+ * wrappers (`AddFunction*`, `SetFunction*`, etc.) share the
+ * same {@link RequestType.CloudScript} value — they are
+ * distinguished only by their operation code and required
+ * role.
  */
 export namespace CloudScriptRequestModels {
 	/**

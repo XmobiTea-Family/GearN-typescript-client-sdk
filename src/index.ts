@@ -1,3 +1,31 @@
+/**
+ * Public barrel of the GearN TypeScript client SDK.
+ *
+ * This file is the single entry point declared in `package.json` (`main`
+ * and `module` fields). Everything that is part of the public API
+ * surface is re-exported from here; anything not listed below is
+ * considered an internal implementation detail and may change without a
+ * SemVer bump.
+ *
+ * Three consumption styles are supported, all backed by the same set of
+ * symbols:
+ *
+ * 1. **Named imports** — preferred for tree-shaking:
+ *    ```ts
+ *    import { GNNetwork, GNServerSettings, MessageType } from "@xmobitea/gn-typescript-client";
+ *    ```
+ *
+ * 2. **Namespace import** — useful for live debugging:
+ *    ```ts
+ *    import * as GearN from "@xmobitea/gn-typescript-client";
+ *    GearN.GNNetwork.init(settings);
+ *    ```
+ *
+ * 3. **Bundled object** — see the {@link GearN} constant at the bottom
+ *    of this file. It re-exposes every exported symbol so SDK consumers
+ *    that want a single object-like surface (script tags, REPL sessions)
+ *    can grab them all in one go.
+ */
 import { Action0 } from "./runtime/common/Action0";
 import { Action1 } from "./runtime/common/Action1";
 import { Action2 } from "./runtime/common/Action2";
@@ -256,7 +284,18 @@ export { OnGroupMemberUpdateEventHandler };
 export { OnGroupMessageUpdateEventHandler };
 
 /**
- * Collects the bundled SDK surface for namespace-style consumers.
+ * Bundled SDK surface for consumers that prefer a single object reference
+ * over individual named imports.
+ *
+ * Every public class, namespace, enum and helper exported above is also
+ * mirrored on this object. Useful when you want to:
+ * - Drop the SDK into a global (`window.GearN = GearN`) for quick
+ *   experiments in the browser DevTools.
+ * - Forward the entire SDK to a sandboxed eval context where ES module
+ *   imports are not available.
+ *
+ * For application code, prefer the named imports above so that the
+ * bundler can tree-shake unused symbols out of your build.
  */
 const GearN = {
 	GNHashtableBuilder,

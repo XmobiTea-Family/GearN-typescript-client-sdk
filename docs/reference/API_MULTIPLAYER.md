@@ -38,50 +38,50 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 
 ## Client methods (`GNNetwork.multiplayer.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `cancelAllMatchmakingTicket` | `MultiplayerModels.CancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` |
-| `cancelMatchmakingTicket` | `MultiplayerModels.CancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` |
-| `createMatchmakingTicket` | `MultiplayerModels.CreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` |
-| `getMatchmakingTicket` | `MultiplayerModels.GetMatchmakingTicketRequestData` | `getMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetMatchmakingTicketOperationResponse` |
-| `getMatch` | `MultiplayerModels.GetMatchRequestData` | `getMatchAsync(...)` | `MultiplayerResponseModels.GetMatchOperationResponse` |
-| `getQueueStatistics` | `MultiplayerModels.GetQueueStatisticsRequestData` | `getQueueStatisticsAsync(...)` | `MultiplayerResponseModels.GetQueueStatisticsOperationResponse` |
-| `joinMatchmakingTicket` | `MultiplayerModels.JoinMatchmakingTicketRequestData` | `joinMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.JoinMatchmakingTicketOperationResponse` |
-| `listMatchmakingTicketsForPlayer` | `MultiplayerModels.ListMatchmakingTicketsForPlayerRequestData` | `listMatchmakingTicketsForPlayerAsync(...)` | `MultiplayerResponseModels.ListMatchmakingTicketsForPlayerOperationResponse` |
-| `getAllMatch` | `MultiplayerModels.GetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` |
-| `getAllMatchmakingTicket` | `MultiplayerModels.GetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `cancelAllMatchmakingTicket` | `MultiplayerModels.CancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` | `multiplayer.cancelAllMatchmakingTicket.selfEnable` |
+| `cancelMatchmakingTicket` | `MultiplayerModels.CancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` | `multiplayer.cancelMatchmakingTicket.selfEnable` |
+| `createMatchmakingTicket` | `MultiplayerModels.CreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` | `multiplayer.createMatchmakingTicket.selfEnable` |
+| `getMatchmakingTicket` | `MultiplayerModels.GetMatchmakingTicketRequestData` | `getMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetMatchmakingTicketOperationResponse` | `multiplayer.getMatchmakingTicket.selfEnable` |
+| `getMatch` | `MultiplayerModels.GetMatchRequestData` | `getMatchAsync(...)` | `MultiplayerResponseModels.GetMatchOperationResponse` | `multiplayer.getMatch.selfEnable` |
+| `getQueueStatistics` | `MultiplayerModels.GetQueueStatisticsRequestData` | `getQueueStatisticsAsync(...)` | `MultiplayerResponseModels.GetQueueStatisticsOperationResponse` | `multiplayer.getQueueStatistics.selfEnable` |
+| `joinMatchmakingTicket` | `MultiplayerModels.JoinMatchmakingTicketRequestData` | `joinMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.JoinMatchmakingTicketOperationResponse` | `multiplayer.joinMatchmakingTicket.selfEnable` |
+| `listMatchmakingTicketsForPlayer` | `MultiplayerModels.ListMatchmakingTicketsForPlayerRequestData` | `listMatchmakingTicketsForPlayerAsync(...)` | `MultiplayerResponseModels.ListMatchmakingTicketsForPlayerOperationResponse` | `multiplayer.listMatchmakingTicketsForPlayer.selfEnable` |
+| `getAllMatch` | `MultiplayerModels.GetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` | `multiplayer.getAllMatch.selfEnable` |
+| `getAllMatchmakingTicket` | `MultiplayerModels.GetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` | `multiplayer.getAllMatchmakingTicket.selfEnable` |
 
 
 ## Server methods (`GNNetwork.multiplayer.server.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `cancelAllMatchmakingTicket` | `MultiplayerModels.ServerCancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` |
-| `cancelMatchmakingTicket` | `MultiplayerModels.ServerCancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` |
-| `createMatchmakingTicket` | `MultiplayerModels.ServerCreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` |
-| `getMatchmakingTicket` | `MultiplayerModels.ServerGetMatchmakingTicketRequestData` | `getMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetMatchmakingTicketOperationResponse` |
-| `getMatch` | `MultiplayerModels.ServerGetMatchRequestData` | `getMatchAsync(...)` | `MultiplayerResponseModels.GetMatchOperationResponse` |
-| `getQueueStatistics` | `MultiplayerModels.ServerGetQueueStatisticsRequestData` | `getQueueStatisticsAsync(...)` | `MultiplayerResponseModels.GetQueueStatisticsOperationResponse` |
-| `joinMatchmakingTicket` | `MultiplayerModels.ServerJoinMatchmakingTicketRequestData` | `joinMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.JoinMatchmakingTicketOperationResponse` |
-| `listMatchmakingTicketsForPlayer` | `MultiplayerModels.ServerListMatchmakingTicketsForPlayerRequestData` | `listMatchmakingTicketsForPlayerAsync(...)` | `MultiplayerResponseModels.ListMatchmakingTicketsForPlayerOperationResponse` |
-| `getAllMatch` | `MultiplayerModels.ServerGetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` |
-| `getAllMatchmakingTicket` | `MultiplayerModels.ServerGetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `cancelAllMatchmakingTicket` | `MultiplayerModels.ServerCancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` | `multiplayer.cancelAllMatchmakingTicket.serverSelfEnable` |
+| `cancelMatchmakingTicket` | `MultiplayerModels.ServerCancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` | `multiplayer.cancelMatchmakingTicket.serverSelfEnable` |
+| `createMatchmakingTicket` | `MultiplayerModels.ServerCreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` | `multiplayer.createMatchmakingTicket.serverSelfEnable` |
+| `getMatchmakingTicket` | `MultiplayerModels.ServerGetMatchmakingTicketRequestData` | `getMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetMatchmakingTicketOperationResponse` | `multiplayer.getMatchmakingTicket.serverSelfEnable` |
+| `getMatch` | `MultiplayerModels.ServerGetMatchRequestData` | `getMatchAsync(...)` | `MultiplayerResponseModels.GetMatchOperationResponse` | `multiplayer.getMatch.serverSelfEnable` |
+| `getQueueStatistics` | `MultiplayerModels.ServerGetQueueStatisticsRequestData` | `getQueueStatisticsAsync(...)` | `MultiplayerResponseModels.GetQueueStatisticsOperationResponse` | `multiplayer.getQueueStatistics.serverSelfEnable` |
+| `joinMatchmakingTicket` | `MultiplayerModels.ServerJoinMatchmakingTicketRequestData` | `joinMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.JoinMatchmakingTicketOperationResponse` | `multiplayer.joinMatchmakingTicket.serverSelfEnable` |
+| `listMatchmakingTicketsForPlayer` | `MultiplayerModels.ServerListMatchmakingTicketsForPlayerRequestData` | `listMatchmakingTicketsForPlayerAsync(...)` | `MultiplayerResponseModels.ListMatchmakingTicketsForPlayerOperationResponse` | `multiplayer.listMatchmakingTicketsForPlayer.serverSelfEnable` |
+| `getAllMatch` | `MultiplayerModels.ServerGetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` | `multiplayer.getAllMatch.serverSelfEnable` |
+| `getAllMatchmakingTicket` | `MultiplayerModels.ServerGetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` | `multiplayer.getAllMatchmakingTicket.serverSelfEnable` |
 
 
 ## Admin methods (`GNNetwork.multiplayer.admin.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `cancelAllMatchmakingTicket` | `MultiplayerModels.AdminCancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` |
-| `cancelMatchmakingTicket` | `MultiplayerModels.AdminCancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` |
-| `createMatchmakingTicket` | `MultiplayerModels.AdminCreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` |
-| `getMatchmakingTicket` | `MultiplayerModels.AdminGetMatchmakingTicketRequestData` | `getMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetMatchmakingTicketOperationResponse` |
-| `getMatch` | `MultiplayerModels.AdminGetMatchRequestData` | `getMatchAsync(...)` | `MultiplayerResponseModels.GetMatchOperationResponse` |
-| `getQueueStatistics` | `MultiplayerModels.AdminGetQueueStatisticsRequestData` | `getQueueStatisticsAsync(...)` | `MultiplayerResponseModels.GetQueueStatisticsOperationResponse` |
-| `joinMatchmakingTicket` | `MultiplayerModels.AdminJoinMatchmakingTicketRequestData` | `joinMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.JoinMatchmakingTicketOperationResponse` |
-| `listMatchmakingTicketsForPlayer` | `MultiplayerModels.AdminListMatchmakingTicketsForPlayerRequestData` | `listMatchmakingTicketsForPlayerAsync(...)` | `MultiplayerResponseModels.ListMatchmakingTicketsForPlayerOperationResponse` |
-| `getAllMatch` | `MultiplayerModels.AdminGetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` |
-| `getAllMatchmakingTicket` | `MultiplayerModels.AdminGetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `cancelAllMatchmakingTicket` | `MultiplayerModels.AdminCancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` | `multiplayer.cancelAllMatchmakingTicket.adminSelfEnable` |
+| `cancelMatchmakingTicket` | `MultiplayerModels.AdminCancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` | `multiplayer.cancelMatchmakingTicket.adminSelfEnable` |
+| `createMatchmakingTicket` | `MultiplayerModels.AdminCreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` | `multiplayer.createMatchmakingTicket.adminSelfEnable` |
+| `getMatchmakingTicket` | `MultiplayerModels.AdminGetMatchmakingTicketRequestData` | `getMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetMatchmakingTicketOperationResponse` | `multiplayer.getMatchmakingTicket.adminSelfEnable` |
+| `getMatch` | `MultiplayerModels.AdminGetMatchRequestData` | `getMatchAsync(...)` | `MultiplayerResponseModels.GetMatchOperationResponse` | `multiplayer.getMatch.adminSelfEnable` |
+| `getQueueStatistics` | `MultiplayerModels.AdminGetQueueStatisticsRequestData` | `getQueueStatisticsAsync(...)` | `MultiplayerResponseModels.GetQueueStatisticsOperationResponse` | `multiplayer.getQueueStatistics.adminSelfEnable` |
+| `joinMatchmakingTicket` | `MultiplayerModels.AdminJoinMatchmakingTicketRequestData` | `joinMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.JoinMatchmakingTicketOperationResponse` | `multiplayer.joinMatchmakingTicket.adminSelfEnable` |
+| `listMatchmakingTicketsForPlayer` | `MultiplayerModels.AdminListMatchmakingTicketsForPlayerRequestData` | `listMatchmakingTicketsForPlayerAsync(...)` | `MultiplayerResponseModels.ListMatchmakingTicketsForPlayerOperationResponse` | `multiplayer.listMatchmakingTicketsForPlayer.adminSelfEnable` |
+| `getAllMatch` | `MultiplayerModels.AdminGetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` | `multiplayer.getAllMatch.adminSelfEnable` |
+| `getAllMatchmakingTicket` | `MultiplayerModels.AdminGetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` | `multiplayer.getAllMatchmakingTicket.adminSelfEnable` |
 
 
 ## Ví dụ tối thiểu

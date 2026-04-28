@@ -7,9 +7,52 @@ import { CharacterPlayerRequestModels } from "./entity/models/CharacterPlayerReq
 import { CharacterPlayerResponseModels } from "./entity/models/CharacterPlayerResponseModels";
 
 /**
- * Exposes client-scoped character-player operations through `GNNetwork.characterPlayer`.
+ * Public client-scoped namespace for the CharacterPlayer domain.
  *
- * Use this namespace from player-facing code when working with a concrete character id over HTTP.
+ * Reachable through {@link GNNetwork.characterPlayer} after
+ * {@link GNNetwork.init}. Manages the **per-character** profile
+ * (a single in-game character) layered above the
+ * account-level {@link GNNetwork.gamePlayer} record.
+ *
+ * Functional groupings (matching {@link OperationCode} prefixes):
+ *
+ * 1. **Identity & profile** — `getDisplayName`,
+ *    `setDisplayName`, `getAvatar`, `setAvatar`,
+ *    `getCharacterInformation`, `getOnlineStatus`,
+ *    `getTsCreate`, `getTsLastLogin`, `getCharacterBan`.
+ * 2. **Custom data / tags / segments** — `getCustomData`,
+ *    `setCustomData`, `getTag`, `setTag`, `getSegment`,
+ *    `addSegment`, `removeSegment`, `getCharactersWithTag`,
+ *    `getCharactersWithSegment`, `getCharactersWithDisplayName`.
+ * 3. **Currencies & statistics** — `getPlayerCurrency`,
+ *    `setPlayerCurrency`, `addPlayerCurrency`,
+ *    `subtractPlayerCurrency`, `getPlayerStatistics`,
+ *    `setPlayerStatistics`, `addPlayerStatistics`,
+ *    `getStatisticsLeaderboard`,
+ *    `getStatisticsLeaderboardAroundPlayer`,
+ *    `getFriendStatisticsLeaderboard`,
+ *    `getFriendStatisticsLeaderboardAroundPlayer`.
+ * 4. **Friends (character-level social graph)** —
+ *    `getPlayerFriend`, `addPlayerFriend`,
+ *    `acceptPlayerFriend`, `rejectPlayerFriend`,
+ *    `removePlayerFriend`,
+ *    `removePlayerFriendRequestSent`, `getOtherPlayerFriend`.
+ *    Real-time updates arrive through
+ *    {@link OnCharacterPlayerFriendUpdateEventHandler}.
+ * 5. **Groups (character-level group membership)** —
+ *    `getPlayerGroup`, `createGroup`, `acceptGroupMember`,
+ *    `rejectGroupMember`, `leaveGroup`, `addGroupMember`,
+ *    `removeGroupMember`, `cancelInviteGroupMember`. Real-time
+ *    updates arrive through
+ *    {@link OnCharacterPlayerGroupUpdateEventHandler}.
+ * 6. **Inventory (per-character)** — `getPlayerInventory` and
+ *    related read-only helpers; mutations live on
+ *    `GNNetwork.inventory`.
+ *
+ * Common contract: same as {@link GamePlayerApi} (HTTP /
+ * `RequestType.CharacterPlayer` / `RequestRole.Client`,
+ * callback + Promise variants per method, sub-namespaces
+ * `.server` and `.admin` for elevated callers).
  */
 export class CharacterPlayerApi {
 	/** Server-scoped character-player operations for trusted backend callers. */
@@ -763,12 +806,15 @@ export class CharacterPlayerApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerCharacterPlayerApi.
- */
-/**
- * Exposes server-scoped character-player operations through `GNNetwork.characterPlayer.server`.
+ * Server-scoped CharacterPlayer namespace, reachable through
+ * `GNNetwork.characterPlayer.server`.
  *
- * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
+ * Mirrors every method on {@link CharacterPlayerApi} but uses
+ * the `Server*RequestData` DTO variants. The server flavour
+ * accepts an explicit `characterId` (and usually `userId`) so a
+ * trusted backend can act on behalf of any character without
+ * holding the player's auth token. Always pass a valid
+ * server-side `secretKey`.
  */
 export class ServerCharacterPlayerApi {
 	/**
@@ -1516,12 +1562,15 @@ export class ServerCharacterPlayerApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminCharacterPlayerApi.
- */
-/**
- * Exposes admin-scoped character-player operations through `GNNetwork.characterPlayer.admin`.
+ * Admin-scoped CharacterPlayer namespace, reachable through
+ * `GNNetwork.characterPlayer.admin`.
  *
- * Use this namespace from dashboard, GM, or backoffice code with `secretKey` or `overrideSecretKey`.
+ * Mirrors {@link ServerCharacterPlayerApi} but routed through
+ * {@link RequestRole.Admin}. The backend uses the caller's
+ * admin auth token to authorise privileged operations such as
+ * touching another tenant's characters, granting / revoking
+ * bans, or bypassing validation. Reserved for dashboard / GM /
+ * backoffice tools.
  */
 export class AdminCharacterPlayerApi {
 	/**

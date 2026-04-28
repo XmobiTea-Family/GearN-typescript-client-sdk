@@ -38,26 +38,26 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 
 ## Client methods (`GNNetwork.authenticate.*`)
 
-| Method | Request DTO | Async form | Response class |
-|--------|-------------|------------|----------------|
-| `loginByAccount` | `AuthenticateModels.LoginByAccountRequestData` | `loginByAccountAsync(...)` | `AuthenticateResponseModels.LoginByAccountOperationResponse` |
-| `loginByAndroidDeviceId` | `AuthenticateModels.LoginByAndroidDeviceIdRequestData` | `loginByAndroidDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse` |
-| `loginByApple` | `AuthenticateModels.LoginByAppleRequestData` | `loginByAppleAsync(...)` | `AuthenticateResponseModels.LoginByAppleOperationResponse` |
-| `loginByCustomDeviceId` | `AuthenticateModels.LoginByCustomDeviceIdRequestData` | `loginByCustomDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse` |
-| `loginByCustomId` | `AuthenticateModels.LoginByCustomIdRequestData` | `loginByCustomIdAsync(...)` | `AuthenticateResponseModels.LoginByCustomIdOperationResponse` |
-| `loginByEditorDeviceId` | `AuthenticateModels.LoginByEditorDeviceIdRequestData` | `loginByEditorDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse` |
-| `loginByFacebook` | `AuthenticateModels.LoginByFacebookRequestData` | `loginByFacebookAsync(...)` | `AuthenticateResponseModels.LoginByFacebookOperationResponse` |
-| `loginByGenericService` | `AuthenticateModels.LoginByGenericServiceRequestData` | `loginByGenericServiceAsync(...)` | `AuthenticateResponseModels.LoginByGenericServiceOperationResponse` |
-| `loginByGoogle` | `AuthenticateModels.LoginByGoogleRequestData` | `loginByGoogleAsync(...)` | `AuthenticateResponseModels.LoginByGoogleOperationResponse` |
-| `loginByGooglePlayGameService` | `AuthenticateModels.LoginByGooglePlayGameServiceRequestData` | `loginByGooglePlayGameServiceAsync(...)` | `AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse` |
-| `loginByGameCenter` | `AuthenticateModels.LoginByGameCenterRequestData` | `loginByGameCenterAsync(...)` | `AuthenticateResponseModels.LoginByGameCenterOperationResponse` |
-| `loginByiOSDeviceId` | `AuthenticateModels.LoginByiOSDeviceIdRequestData` | `loginByiOSDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse` |
-| `loginByLinuxDeviceId` | `AuthenticateModels.LoginByLinuxDeviceIdRequestData` | `loginByLinuxDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse` |
-| `loginByMacOSDeviceId` | `AuthenticateModels.LoginByMacOSDeviceIdRequestData` | `loginByMacOSDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse` |
-| `loginByWindowsDeviceId` | `AuthenticateModels.LoginByWindowsDeviceIdRequestData` | `loginByWindowsDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse` |
-| `loginByWindowsPhoneDeviceId` | `AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData` | `loginByWindowsPhoneDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse` |
-| `registerAccount` | `AuthenticateModels.RegisterAccountRequestData` | `registerAccountAsync(...)` | `AuthenticateResponseModels.RegisterAccountOperationResponse` |
-| `refreshAuthToken` | `AuthenticateModels.RefreshAuthTokenRequestData` | `refreshAuthTokenAsync(...)` | `AuthenticateResponseModels.RefreshAuthTokenOperationResponse` |
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `loginByAccount` | `AuthenticateModels.LoginByAccountRequestData` | `loginByAccountAsync(...)` | `AuthenticateResponseModels.LoginByAccountOperationResponse` | `authenticate.loginByAccount.selfEnable` |
+| `loginByAndroidDeviceId` | `AuthenticateModels.LoginByAndroidDeviceIdRequestData` | `loginByAndroidDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse` | `authenticate.loginByAndroidDeviceId.selfEnable` |
+| `loginByApple` | `AuthenticateModels.LoginByAppleRequestData` | `loginByAppleAsync(...)` | `AuthenticateResponseModels.LoginByAppleOperationResponse` | `authenticate.loginByApple.selfEnable` |
+| `loginByCustomDeviceId` | `AuthenticateModels.LoginByCustomDeviceIdRequestData` | `loginByCustomDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse` | `authenticate.loginByCustomDeviceId.selfEnable` |
+| `loginByCustomId` | `AuthenticateModels.LoginByCustomIdRequestData` | `loginByCustomIdAsync(...)` | `AuthenticateResponseModels.LoginByCustomIdOperationResponse` | `authenticate.loginByCustomId.selfEnable` |
+| `loginByEditorDeviceId` | `AuthenticateModels.LoginByEditorDeviceIdRequestData` | `loginByEditorDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse` | `authenticate.loginByEditorDeviceId.selfEnable` |
+| `loginByFacebook` | `AuthenticateModels.LoginByFacebookRequestData` | `loginByFacebookAsync(...)` | `AuthenticateResponseModels.LoginByFacebookOperationResponse` | `authenticate.loginByFacebook.selfEnable` |
+| `loginByGenericService` | `AuthenticateModels.LoginByGenericServiceRequestData` | `loginByGenericServiceAsync(...)` | `AuthenticateResponseModels.LoginByGenericServiceOperationResponse` | `authenticate.loginByGenericService.selfEnable` |
+| `loginByGoogle` | `AuthenticateModels.LoginByGoogleRequestData` | `loginByGoogleAsync(...)` | `AuthenticateResponseModels.LoginByGoogleOperationResponse` | `authenticate.loginByGoogle.selfEnable` |
+| `loginByGooglePlayGameService` | `AuthenticateModels.LoginByGooglePlayGameServiceRequestData` | `loginByGooglePlayGameServiceAsync(...)` | `AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse` | `authenticate.loginByGooglePlayGameService.selfEnable` |
+| `loginByGameCenter` | `AuthenticateModels.LoginByGameCenterRequestData` | `loginByGameCenterAsync(...)` | `AuthenticateResponseModels.LoginByGameCenterOperationResponse` | `authenticate.loginByGameCenter.selfEnable` |
+| `loginByiOSDeviceId` | `AuthenticateModels.LoginByiOSDeviceIdRequestData` | `loginByiOSDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse` | `authenticate.loginByiOSDeviceId.selfEnable` |
+| `loginByLinuxDeviceId` | `AuthenticateModels.LoginByLinuxDeviceIdRequestData` | `loginByLinuxDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse` | `authenticate.loginByLinuxDeviceId.selfEnable` |
+| `loginByMacOSDeviceId` | `AuthenticateModels.LoginByMacOSDeviceIdRequestData` | `loginByMacOSDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse` | `authenticate.loginByMacOSDeviceId.selfEnable` |
+| `loginByWindowsDeviceId` | `AuthenticateModels.LoginByWindowsDeviceIdRequestData` | `loginByWindowsDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse` | `authenticate.loginByWindowsDeviceId.selfEnable` |
+| `loginByWindowsPhoneDeviceId` | `AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData` | `loginByWindowsPhoneDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse` | `authenticate.loginByWindowsPhoneDeviceId.selfEnable` |
+| `registerAccount` | `AuthenticateModels.RegisterAccountRequestData` | `registerAccountAsync(...)` | `AuthenticateResponseModels.RegisterAccountOperationResponse` | `authenticate.registerAccount.selfEnable` |
+| `refreshAuthToken` | `AuthenticateModels.RefreshAuthTokenRequestData` | `refreshAuthTokenAsync(...)` | `AuthenticateResponseModels.RefreshAuthTokenOperationResponse` | `authenticate.refreshAuthToken.selfEnable` |
 
 
 

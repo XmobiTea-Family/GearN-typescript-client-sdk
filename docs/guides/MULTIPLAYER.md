@@ -48,18 +48,18 @@ Rule nhanh:
 
 ## 4. Chọn Method
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `createMatchmakingTicketAsync` | Tạo ticket mới để bắt đầu matchmaking | `giveUpAfterSeconds`, `queueName`, `attribute?`, `members?` | `CreateMatchmakingTicketResponseData` | Trả `ticketId`; với `server/admin` cần thêm `userId` |
-| `joinMatchmakingTicketAsync` | Thêm user vào ticket đã tồn tại | `ticketId`, `attribute?` | `EmptyResponseData` | Với `server/admin` cần thêm `userId` |
-| `cancelMatchmakingTicketAsync` | Hủy 1 ticket cụ thể | `ticketId` | `EmptyResponseData` | Với `server/admin` cần thêm `userId` |
-| `cancelAllMatchmakingTicketAsync` | Hủy toàn bộ ticket của 1 queue | `queueName` | `CancelAllMatchmakingTicketResponseData` | Với `server/admin` cần thêm `userId`; response trả `ticketIds` |
-| `getMatchmakingTicketAsync` | Poll trạng thái ticket cụ thể | `ticketId`, `returnMember?` | `GetMatchmakingTicketResponseData` | Khi `status` đổi sang matched có thể có `matchId` |
-| `listMatchmakingTicketsForPlayerAsync` | Liệt kê ticket của user trong một queue | `queueName` | `ListMatchmakingTicketsForPlayerResponseData` | Với `server/admin` cần thêm `userId` |
-| `getMatchAsync` | Lấy chi tiết 1 match theo `matchId` | `matchId`, `returnMember?` | `GetMatchResponseData` | Không giả định có server endpoint |
-| `getAllMatchAsync` | Liệt kê match hiện có | `returnMember?`, `skip?`, `limit?` | `GetAllMatchResponseData` | Dùng cho admin/ops/listing |
-| `getAllMatchmakingTicketAsync` | Liệt kê ticket hiện có | `status?`, `returnMember?`, `skip?`, `limit?` | `GetAllMatchmakingTicketResponseData` | `status` nên map bằng enum |
-| `getQueueStatisticsAsync` | Lấy thống kê queue trong một time window | `queueName`, `timeInSeconds` | `GetQueueStatisticsResponseData` | `timeInSeconds >= 20` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `createMatchmakingTicketAsync` | Tạo ticket mới để bắt đầu matchmaking | `giveUpAfterSeconds`, `queueName`, `attribute?`, `members?` | `CreateMatchmakingTicketResponseData` | Trả `ticketId`; với `server/admin` cần thêm `userId` | `Ok`, `MatchmakingPlayerJoinedOtherTicket`, `MatchmakingQueueNotFound`, `TicketSizeError` |
+| `joinMatchmakingTicketAsync` | Thêm user vào ticket đã tồn tại | `ticketId`, `attribute?` | `EmptyResponseData` | Với `server/admin` cần thêm `userId` | `Ok`, `MatchmakingTicketNotFound`, `MatchmakingTicketAlreadyCompleted`, `MatchmakingPlayerJoinedOtherTicket`, `MatchmakingQueueNotFound` |
+| `cancelMatchmakingTicketAsync` | Hủy 1 ticket cụ thể | `ticketId` | `EmptyResponseData` | Với `server/admin` cần thêm `userId` | `Ok`, `MatchmakingTicketNotFound`, `MatchmakingTicketAlreadyCompleted`, `MatchmakingPlayerNotJoinedTicket` |
+| `cancelAllMatchmakingTicketAsync` | Hủy toàn bộ ticket của 1 queue | `queueName` | `CancelAllMatchmakingTicketResponseData` | Với `server/admin` cần thêm `userId`; response trả `ticketIds` | `Ok`, `MatchmakingQueueNotFound` |
+| `getMatchmakingTicketAsync` | Poll trạng thái ticket cụ thể | `ticketId`, `returnMember?` | `GetMatchmakingTicketResponseData` | Khi `status` đổi sang matched có thể có `matchId` | `Ok`, `MatchmakingTicketNotFound` |
+| `listMatchmakingTicketsForPlayerAsync` | Liệt kê ticket của user trong một queue | `queueName` | `ListMatchmakingTicketsForPlayerResponseData` | Với `server/admin` cần thêm `userId` | `Ok`, `MatchmakingQueueNotFound` |
+| `getMatchAsync` | Lấy chi tiết 1 match theo `matchId` | `matchId`, `returnMember?` | `GetMatchResponseData` | Không giả định có server endpoint | `Ok`, `MatchNotFound` |
+| `getAllMatchAsync` | Liệt kê match hiện có | `returnMember?`, `skip?`, `limit?` | `GetAllMatchResponseData` | Dùng cho admin/ops/listing | `Ok` |
+| `getAllMatchmakingTicketAsync` | Liệt kê ticket hiện có | `status?`, `returnMember?`, `skip?`, `limit?` | `GetAllMatchmakingTicketResponseData` | `status` nên map bằng enum | `Ok` |
+| `getQueueStatisticsAsync` | Lấy thống kê queue trong một time window | `queueName`, `timeInSeconds` | `GetQueueStatisticsResponseData` | `timeInSeconds >= 20` | `Ok`, `MatchmakingQueueNotFound` |
 
 ## 5. Matchmaking Sequence
 

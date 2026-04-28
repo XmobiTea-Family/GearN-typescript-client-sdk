@@ -2,11 +2,27 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { AuthenticateModels } from "./AuthenticateModels";
 
 /**
- * Groups typed response wrappers for Authenticate.
+ * Typed response wrappers for the Authenticate domain.
  *
- * Most operations resolve to `AuthenticateResponseData`. The main exceptions are
- * `loginByGenericService`, which returns `GenericServiceAuthenticateResponseData`,
- * and `refreshAuthToken`, which returns `RefreshAuthTokenResponseData`.
+ * Each class extends {@link CustomOperationResponseAbstract} and
+ * binds the corresponding response DTO from
+ * {@link AuthenticateModels}. Most login flows resolve to the
+ * shared {@link AuthenticateModels.AuthenticateResponseData},
+ * which carries the auth token plus the optional profile fields
+ * requested via `infoRequestParam`.
+ *
+ * Exceptions:
+ * - `loginByGenericService` resolves to
+ *   {@link AuthenticateModels.GenericServiceAuthenticateResponseData}
+ *   so the provider-specific `errorMessage` field is preserved.
+ * - `refreshAuthToken` resolves to
+ *   {@link AuthenticateModels.RefreshAuthTokenResponseData},
+ *   which only carries the new token plus optional ban state.
+ *
+ * Application code reads the typed payload through
+ * `response.responseData` after confirming
+ * `response.hasReturnCodeError() === false` and
+ * `response.errorCode === ErrorCode.Ok`.
  */
 export namespace AuthenticateResponseModels {
 	/**

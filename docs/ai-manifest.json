@@ -252,6 +252,7 @@
       { "name": "pingInterval", "type": "number", "default": 20000, "unit": "milliseconds" },
       { "name": "pingTimeout", "type": "number", "default": 20000, "unit": "milliseconds" },
       { "name": "secretKey", "type": "string" },
+      { "name": "gameId", "type": "string" },
       { "name": "logType", "type": "LogType", "default": "All" }
     ]
   },

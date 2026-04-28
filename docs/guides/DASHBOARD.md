@@ -30,54 +30,54 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Auth và quản trị admin account
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `loginByAdminAccountAsync` | Login dashboard/admin tool | `username`, `password` | `LoginByAdminAccountResponseData` | Response chỉ có `authToken` |
-| `changePasswordAdminAccountAsync` | Admin hiện tại tự đổi mật khẩu của chính mình | `currentPassword`, `password` | `EmptyResponseData` | Nên dùng sau khi đã login |
-| `getAdminAccountListAsync` | Liệt kê admin account | request rỗng | `GetAdminAccountListResponseData` | Dùng cho màn hình quản trị account |
-| `createAdminAccountAsync` | Tạo admin account mới | `username`, `password`, `secretKey` | `CreateAdminAccountResponseData` | Response trả danh sách `userId` tạo ra |
-| `getUsernameAdminAccountAsync` | Tìm username từ `userId` admin | `userId` | `GetUsernameAdminAccountResponseData` | Dùng khi chỉ có `userId` |
-| `setPasswordAdminAccountAsync` | Đặt lại mật khẩu cho admin khác | `userId`, `password` | `EmptyResponseData` | Không dùng cho self-service đổi mật khẩu |
-| `setSecretKeyAdminAccountAsync` | Gán hoặc đổi secret key của admin account | `userId`, `secretKey` | `EmptyResponseData` | Thao tác nhạy cảm |
-| `removeAdminAccountAsync` | Xóa admin account | `userId` | `EmptyResponseData` | Destructive |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `loginByAdminAccountAsync` | Login dashboard/admin tool | `username`, `password` | `LoginByAdminAccountResponseData` | Response chỉ có `authToken` | `Ok`, `AccountNotFound` |
+| `changePasswordAdminAccountAsync` | Admin hiện tại tự đổi mật khẩu của chính mình | `currentPassword`, `password` | `EmptyResponseData` | Nên dùng sau khi đã login | `Ok`, `AccountNotFound` |
+| `getAdminAccountListAsync` | Liệt kê admin account | request rỗng | `GetAdminAccountListResponseData` | Dùng cho màn hình quản trị account | `Ok` |
+| `createAdminAccountAsync` | Tạo admin account mới | `username`, `password`, `secretKey` | `CreateAdminAccountResponseData` | Response trả danh sách `userId` tạo ra | `Ok`, `AccountUsernameExists` |
+| `getUsernameAdminAccountAsync` | Tìm username từ `userId` admin | `userId` | `GetUsernameAdminAccountResponseData` | Dùng khi chỉ có `userId` | `Ok`, `AccountNotFound` |
+| `setPasswordAdminAccountAsync` | Đặt lại mật khẩu cho admin khác | `userId`, `password` | `EmptyResponseData` | Không dùng cho self-service đổi mật khẩu | `Ok`, `AccountNotFound` |
+| `setSecretKeyAdminAccountAsync` | Gán hoặc đổi secret key của admin account | `userId`, `secretKey` | `EmptyResponseData` | Thao tác nhạy cảm | `Ok`, `AccountNotFound`, `SecretInfoNotFound` |
+| `removeAdminAccountAsync` | Xóa admin account | `userId` | `EmptyResponseData` | Destructive | `Ok`, `AccountNotFound` |
 
 ### Quản lý game và cấu hình
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getGameListAsync` | Liệt kê game id hiện có | request rỗng | `GetGameListResponseData` | Dùng trước khi chọn `gameId` |
-| `createGameAsync` | Tạo game mới | `gameId` | `GameWithGameIdResponseData` | Chỉ tạo identity cơ bản của game |
-| `getGameInformationAsync` | Đọc metadata và settings của một game | `gameId` | `GetGameInformationResponseData` | Trả `gameName`, `gameDescription`, `gameSettings`, `matchmakingQueueSettings` |
-| `setGameInformationAsync` | Cập nhật metadata/settings của game | `gameId` và field cần đổi | `EmptyResponseData` | Chỉ set field thật sự cần đổi |
-| `getMasterGameSettingsAsync` | Đọc global settings của server/game platform | request rỗng | `GetMasterGameSettingsResponseData` | Trả `thirtPartySettings`, `masterPlayerSettings`, `emailSettings`, `pushNotificationSettings` |
-| `setMasterGameSettingsAsync` | Cập nhật global settings | hashtable settings cần đổi | `EmptyResponseData` | Không nên gửi full object nếu không cần |
-| `getServerGameDataAsync` | Lấy snapshot số lượng entity và version của một game | `gameId` và các boolean flag cần lấy | `GetServerGameDataResponseData` | Chỉ bật các flag cần thiết để giảm payload |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getGameListAsync` | Liệt kê game id hiện có | request rỗng | `GetGameListResponseData` | Dùng trước khi chọn `gameId` | `Ok` |
+| `createGameAsync` | Tạo game mới | `gameId` | `GameWithGameIdResponseData` | Chỉ tạo identity cơ bản của game | `Ok`, `GameExists` |
+| `getGameInformationAsync` | Đọc metadata và settings của một game | `gameId` | `GetGameInformationResponseData` | Trả `gameName`, `gameDescription`, `gameSettings`, `matchmakingQueueSettings` | `Ok`, `GameNotFound` |
+| `setGameInformationAsync` | Cập nhật metadata/settings của game | `gameId` và field cần đổi | `EmptyResponseData` | Chỉ set field thật sự cần đổi | `Ok`, `GameNotFound` |
+| `getMasterGameSettingsAsync` | Đọc global settings của server/game platform | request rỗng | `GetMasterGameSettingsResponseData` | Trả `thirtPartySettings`, `masterPlayerSettings`, `emailSettings`, `pushNotificationSettings` | `Ok` |
+| `setMasterGameSettingsAsync` | Cập nhật global settings | hashtable settings cần đổi | `EmptyResponseData` | Không nên gửi full object nếu không cần | `Ok` |
+| `getServerGameDataAsync` | Lấy snapshot số lượng entity và version của một game | `gameId` và các boolean flag cần lấy | `GetServerGameDataResponseData` | Chỉ bật các flag cần thiết để giảm payload | `Ok` |
 
 ### Secret key và permission
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getSecretInfoListAsync` | Liệt kê secret key theo role | request rỗng | `GetSecretInfoListResponseData` | Trả `secretKeys` |
-| `getSecretInfoInformationAsync` | Xem chi tiết một secret key | `secretKey` | `GetSecretInfoInformationResponseData` | Trả `gameId`, `permissionParam`, `tsExpire`, `remove` |
-| `createSecretInfoAsync` | Tạo secret key mới và tùy chọn `secretKey`, `gameId`, `permissionParam` | `SecretInfoWithSecretKeyResponseData` | `secretKey` đang optional trong model; AI có thể bỏ qua nếu muốn backend sinh key |
-| `setSecretInfoInformationAsync` | Cập nhật expire, description, permission hoặc remove flag của secret key | `secretKey` và field cần đổi | `EmptyResponseData` | Dùng để revoke hoặc thay permission |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getSecretInfoListAsync` | Liệt kê secret key theo role | request rỗng | `GetSecretInfoListResponseData` | Trả `secretKeys` | `Ok` |
+| `getSecretInfoInformationAsync` | Xem chi tiết một secret key | `secretKey` | `GetSecretInfoInformationResponseData` | Trả `gameId`, `permissionParam`, `tsExpire`, `remove` | `Ok`, `SecretInfoNotFound` |
+| `createSecretInfoAsync` | Tạo secret key mới và tùy chọn `secretKey`, `gameId`, `permissionParam` | `SecretInfoWithSecretKeyResponseData` | `secretKey` đang optional trong model; AI có thể bỏ qua nếu muốn backend sinh key | `Ok`, `SecretInfoExists` |
+| `setSecretInfoInformationAsync` | Cập nhật expire, description, permission hoặc remove flag của secret key | `secretKey` và field cần đổi | `EmptyResponseData` | Dùng để revoke hoặc thay permission | `Ok`, `SecretInfoNotFound` |
 
 ### Analytics, logs và callback
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getAnalyticsAsync` | Lấy analytics tổng hợp | các boolean flag cần lấy, `timestamp?` | `GetAnalyticsResponseData` | Không bật tất cả flag một cách mù quáng |
-| `getServerLogAsync` | Lấy log server dạng phân trang | `skip?`, `limit?` | `GetServerLogResponseData` | Model mặc định `skip = 0`, `limit = 50` |
-| `getEventCallbackCloudScriptAsync` | Liệt kê callback CloudScript theo event | request rỗng | `GetEventCallbackCloudScriptResponseData` | Dùng để inspect cấu hình hiện tại |
-| `setEventCallbackCloudScriptAsync` | Tạo hoặc sửa callback CloudScript theo event | `eventName`, `script` | `SetEventCallbackCloudScriptResponseData` | Response có `errorMessage` |
-| `getBackupStatisticsLeaderboardVersionAsync` | Liệt kê version backup của leaderboard | `gameId`, `type`, `key` | `GetBackupStatisticsLeaderboardVersionResponseData` | `type` là numeric field, không được đoán bừa |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getAnalyticsAsync` | Lấy analytics tổng hợp | các boolean flag cần lấy, `timestamp?` | `GetAnalyticsResponseData` | Không bật tất cả flag một cách mù quáng | `Ok`, `ItemNotFound` |
+| `getServerLogAsync` | Lấy log server dạng phân trang | `skip?`, `limit?` | `GetServerLogResponseData` | Model mặc định `skip = 0`, `limit = 50` | `Ok` |
+| `getEventCallbackCloudScriptAsync` | Liệt kê callback CloudScript theo event | request rỗng | `GetEventCallbackCloudScriptResponseData` | Dùng để inspect cấu hình hiện tại | `Ok` |
+| `setEventCallbackCloudScriptAsync` | Tạo hoặc sửa callback CloudScript theo event | `eventName`, `script` | `SetEventCallbackCloudScriptResponseData` | Response có `errorMessage` | `Ok`, `ExecuteError` |
+| `getBackupStatisticsLeaderboardVersionAsync` | Liệt kê version backup của leaderboard | `gameId`, `type`, `key` | `GetBackupStatisticsLeaderboardVersionResponseData` | `type` phải lấy từ `OwnerType` | `Ok`, `OwnerNotFound` |
 
 ### Maintenance và thao tác phá hủy
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `resetStatisticsLeaderboardAsync` | Reset một version leaderboard | `type`, `key`, `version`, `gameId`, `log?`, `catalogId?` | `EmptyResponseData` | Destructive; chỉ dùng khi operator đã chốt loại leaderboard |
-| `deleteInDatabaseAsync` | Xóa dữ liệu trực tiếp theo loại và id | `type`, `id`, `gameId`, `log?` | `EmptyResponseData` | Cực kỳ nhạy cảm; không đoán numeric `type` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `resetStatisticsLeaderboardAsync` | Reset một version leaderboard | `type`, `key`, `version`, `gameId`, `log?`, `catalogId?` | `EmptyResponseData` | Destructive; chỉ dùng khi operator đã chốt loại leaderboard | `Ok`, `KeyNotFound`, `OwnerTypeNotSupport`, `VersionInvalid` |
+| `deleteInDatabaseAsync` | Xóa dữ liệu trực tiếp theo loại và id | `type`, `id`, `gameId`, `log?` | `EmptyResponseData` | `type` phải lấy từ `OwnerType` | `Ok`, `ItemNotFound` |
 
 ## 4. Decision Rules
 
@@ -97,7 +97,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - [../dist/runtime/entity/models/DashboardModels.d.ts](../dist/runtime/entity/models/DashboardModels.d.ts)
   - [../dist/runtime/entity/models/DashboardRequestModels.d.ts](../dist/runtime/entity/models/DashboardRequestModels.d.ts)
   - [../dist/runtime/entity/models/DashboardResponseModels.d.ts](../dist/runtime/entity/models/DashboardResponseModels.d.ts)
-- `DashboardApi` hiện không có file enum riêng cho các numeric field như `type` trong `resetStatisticsLeaderboard` hoặc `deleteInDatabase`.
+- `DashboardApi` hiện `type` phải lấy từ `OwnerType` trong `resetStatisticsLeaderboard` hoặc `deleteInDatabase`.
 - Nếu codebase hiện tại không có constant nghiệp vụ cho các numeric field đó, AI không được tự bịa giá trị.
 - `GetServerLogRequestData` có phân trang mềm bằng `skip` và `limit`; không request log vô hạn.
 - `GetAnalyticsRequestData` và `GetServerGameDataRequestData` đều dùng nhiều boolean flag để điều khiển payload; chỉ bật field thật sự cần.
@@ -248,7 +248,6 @@ const generatedSecretKey = response.responseData.secretKey;
 - Không gọi `GNNetwork.dashboard.server` hoặc `GNNetwork.dashboard.admin`.
 - Không bỏ qua bước `loginByAdminAccountAsync` rồi vẫn mong backend tự hiểu request dashboard là admin request.
 - Không dùng `DashboardApi` như gameplay API cho client/player thường.
-- Không đoán numeric `type` cho `resetStatisticsLeaderboardAsync` hoặc `deleteInDatabaseAsync`.
 - Không gọi `deleteInDatabaseAsync` hoặc `resetStatisticsLeaderboardAsync` nếu chưa có xác nhận vận hành rõ ràng.
 - Không request full analytics/full snapshot nếu chỉ cần một vài metric.
 - Không giả định `loginByAdminAccountAsync` trả `userId`.
@@ -261,5 +260,4 @@ const generatedSecretKey = response.responseData.secretKey;
 - Có nhớ rằng toàn bộ `DashboardApi` hiện dùng `RequestRole.Client` và HTTP không.
 - Có cần login admin trước khi gọi operation hiện tại không.
 - Nếu operation là destructive, đã có xác nhận rõ về hậu quả chưa.
-- Nếu operation cần numeric `type`, nguồn giá trị đó có thật trong codebase hoặc backend spec chưa.
 - Có kiểm tra `hasReturnCodeError()` trước `errorCode` chưa.

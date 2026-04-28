@@ -3,9 +3,30 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups reusable request and response contracts for CharacterPlayer operations.
- * Public routes always target a concrete character entity, so `characterId` is typically required
- * even on the client route instead of being inferred from the authenticated user.
+ * Reusable request and response DTOs for the CharacterPlayer
+ * domain.
+ *
+ * CharacterPlayer operations target a **single in-game
+ * character** rather than the account-level player record.
+ * Because a single GearN account can own multiple characters,
+ * every public route — including the client-flavoured
+ * variants — requires an explicit `characterId` rather than
+ * inferring the target from the authenticated user.
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.characterPlayer`,
+ *   targets a character owned by the authenticated user. The
+ *   backend cross-checks ownership.
+ * - **`Server*`**: used by `GNNetwork.characterPlayer.server`,
+ *   targets any character. Requires server `secretKey`.
+ * - **`Admin*`**: used by `GNNetwork.characterPlayer.admin`,
+ *   targets any character with admin privileges and
+ *   bypass-validation knobs.
+ *
+ * Validation rules declared on each `@*DataMember` decorator
+ * are enforced server-side; failures surface as
+ * {@link InvalidMember} entries with the matching
+ * {@link InvalidMemberType} code.
  */
 export namespace CharacterPlayerModels {
 	/**

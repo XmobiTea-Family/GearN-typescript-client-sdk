@@ -3,8 +3,36 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
 /**
- * Groups reusable request and response contracts for Multiplayer operations.
- * Public matchmaking workflows usually follow `create/join ticket -> poll ticket -> get match`.
+ * Reusable request and response DTOs for the Multiplayer
+ * domain.
+ *
+ * Standard matchmaking flow:
+ *
+ * ```
+ * createMatchmakingTicket → returns ticketId
+ *      ↓ (poll, or rely on ticket-update push if available)
+ * getMatchmakingTicket    → ticket transitions through
+ *                            MatchmakingTicketStatus values
+ *      ↓ (status === Matched)
+ * getMatch                → returns match record + connection
+ *                            details
+ *      ↓ (out of band)
+ * application connects to the dedicated game server
+ * ```
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.multiplayer`,
+ *   the acting player is the authenticated user.
+ * - **`Server*`**: used by `GNNetwork.multiplayer.server`,
+ *   typically by dedicated servers reporting match completion
+ *   or matchmaking adjuncts cleaning up stale tickets.
+ * - **`Admin*`**: used by `GNNetwork.multiplayer.admin`,
+ *   reserved for monitoring / force-cancel tooling.
+ *
+ * The DTOs reference {@link MatchStatus},
+ * {@link MatchmakingTicketStatus} and
+ * {@link MatchmakingMemberStatus} enums for the lifecycle
+ * fields.
  */
 export namespace MultiplayerModels {
 	/**

@@ -22,26 +22,26 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Method
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `loginByAccountAsync` | Đã có tài khoản username/password trong hệ thống | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng để tạo tài khoản mới |
-| `registerAccountAsync` | Muốn tạo tài khoản username/password mới | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng lặp lại ở mỗi lần mở app |
-| `refreshAuthTokenAsync` | Đã có auth token hợp lệ hoặc gần hết hạn và muốn refresh phiên | `new AuthenticateModels.RefreshAuthTokenRequestData()` | `RefreshAuthTokenResponseData` | Request data rỗng, token hiện tại lấy từ SDK cache hoặc `overrideAuthToken` |
-| `loginByCustomDeviceIdAsync` | Muốn login theo định danh thiết bị hoặc cài đặt app do client tự quản lý | `customDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Phù hợp guest/anonymous hoặc định danh cục bộ |
-| `loginByCustomIdAsync` | App đã có user id nghiệp vụ riêng, không phải username/password | `customId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng khi id thuộc business domain của app, không buộc phải là device id |
-| `loginByEditorDeviceIdAsync` | Chạy local/dev tool trong editor | `editorDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Chỉ nên dùng cho môi trường phát triển |
-| `loginByAndroidDeviceIdAsync` | Có Android device id và muốn login theo device | `androidDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Chỉ dùng khi nguồn identity thực sự là Android device id |
-| `loginByiOSDeviceIdAsync` | Có iOS device id và muốn login theo device | `iOSDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không thay bằng method khác nếu identity source là iOS |
-| `loginByLinuxDeviceIdAsync` | Có Linux device id và muốn login theo device | `linuxDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity |
-| `loginByMacOSDeviceIdAsync` | Có macOS device id và muốn login theo device | `macOSDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity |
-| `loginByWindowsDeviceIdAsync` | Có Windows device id và muốn login theo device | `windowsDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity |
-| `loginByWindowsPhoneDeviceIdAsync` | Có Windows Phone device id | `windowsPhoneDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Legacy platform flow |
-| `loginByGoogleAsync` | Có token Google từ SDK/provider flow chuẩn | `token`, `type`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | `type` phải lấy từ `GoogleLoginType` |
-| `loginByGooglePlayGameServiceAsync` | Có credential từ Google Play Game Services | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không thay bằng `loginByGoogleAsync` nếu nguồn identity là GPGS |
-| `loginByFacebookAsync` | Có token Facebook hợp lệ | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không truyền `facebookId` thô vào method này |
-| `loginByAppleAsync` | Có token Apple hợp lệ | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không truyền `appleId` thô vào method này |
-| `loginByGameCenterAsync` | Có payload xác thực từ Game Center | `playerId`, `name`, `publicKeyUrl`, `signature`, `salt`, `timestamp`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Cần đủ payload xác thực của Game Center |
-| `loginByGenericServiceAsync` | Tích hợp provider tùy biến do backend hỗ trợ | `serviceName`, `serviceData`, `createPlayerIfNotExists?`, `infoRequestParam` | `GenericServiceAuthenticateResponseData` | Dùng khi source identity không khớp các method có sẵn |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `loginByAccountAsync` | Đã có tài khoản username/password trong hệ thống | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng để tạo tài khoản mới | `Ok`, `AccountNotFound`, `AccountPasswordWrong` |
+| `registerAccountAsync` | Muốn tạo tài khoản username/password mới | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng lặp lại ở mỗi lần mở app | `Ok`, `AccountUsernameExists` |
+| `refreshAuthTokenAsync` | Đã có auth token hợp lệ hoặc gần hết hạn và muốn refresh phiên | `new AuthenticateModels.RefreshAuthTokenRequestData()` | `RefreshAuthTokenResponseData` | Request data rỗng, token hiện tại lấy từ SDK cache hoặc `overrideAuthToken` | `Ok`, `AccountNotFound`, `PlayerBan` |
+| `loginByCustomDeviceIdAsync` | Muốn login theo định danh thiết bị hoặc cài đặt app do client tự quản lý | `customDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Phù hợp guest/anonymous hoặc định danh cục bộ | `Ok`, `AccountNotFound` |
+| `loginByCustomIdAsync` | App đã có user id nghiệp vụ riêng, không phải username/password | `customId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng khi id thuộc business domain của app, không buộc phải là device id | `Ok`, `AccountNotFound` |
+| `loginByEditorDeviceIdAsync` | Chạy local/dev tool trong editor | `editorDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Chỉ nên dùng cho môi trường phát triển | `Ok`, `AccountNotFound` |
+| `loginByAndroidDeviceIdAsync` | Có Android device id và muốn login theo device | `androidDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Chỉ dùng khi nguồn identity thực sự là Android device id | `Ok`, `AccountNotFound` |
+| `loginByiOSDeviceIdAsync` | Có iOS device id và muốn login theo device | `iOSDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không thay bằng method khác nếu identity source là iOS | `Ok`, `AccountNotFound` |
+| `loginByLinuxDeviceIdAsync` | Có Linux device id và muốn login theo device | `linuxDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity | `Ok`, `AccountNotFound` |
+| `loginByMacOSDeviceIdAsync` | Có macOS device id và muốn login theo device | `macOSDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity | `Ok`, `AccountNotFound` |
+| `loginByWindowsDeviceIdAsync` | Có Windows device id và muốn login theo device | `windowsDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity | `Ok`, `AccountNotFound` |
+| `loginByWindowsPhoneDeviceIdAsync` | Có Windows Phone device id | `windowsPhoneDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Legacy platform flow | `Ok`, `AccountNotFound` |
+| `loginByGoogleAsync` | Có token Google từ SDK/provider flow chuẩn | `token`, `type`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | `type` phải lấy từ `GoogleLoginType` | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByGooglePlayGameServiceAsync` | Có credential từ Google Play Game Services | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không thay bằng `loginByGoogleAsync` nếu nguồn identity là GPGS | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByFacebookAsync` | Có token Facebook hợp lệ | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không truyền `facebookId` thô vào method này | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByAppleAsync` | Có token Apple hợp lệ | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không truyền `appleId` thô vào method này | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByGameCenterAsync` | Có payload xác thực từ Game Center | `playerId`, `name`, `publicKeyUrl`, `signature`, `salt`, `timestamp`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Cần đủ payload xác thực của Game Center | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByGenericServiceAsync` | Tích hợp provider tùy biến do backend hỗ trợ | `serviceName`, `serviceData`, `createPlayerIfNotExists?`, `infoRequestParam` | `GenericServiceAuthenticateResponseData` | Dùng khi source identity không khớp các method có sẵn | `Ok`, `AccountNotFound`, `VerifyFailed` |
 
 ## 4. Decision Rules
 

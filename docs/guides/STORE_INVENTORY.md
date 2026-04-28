@@ -48,24 +48,24 @@ Rule nhanh:
 
 ### Catalog và discovery
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `createStoreItemAsync` | Tạo store item mới | `storeId?`, `displayName?` | `CreateStoreItemResponseData` | Nếu bỏ `storeId`, backend có thể sinh id |
-| `setStoreItemInformationAsync` | Cập nhật catalog, giá, IAP mapping, metadata | `storeId` và field cần đổi | `StoreInventoryResponseData` | `storeItemType` nên map bằng enum |
-| `setRemoveStatusAsync` | Đánh dấu remove/hide store item | `storeId`, `reason?` | `EmptyResponseData` | Thường dùng để disable item |
-| `getStoreItemInformationAsync` | Đọc chi tiết một store item | `storeId`, `infoRequestParam` | `StoreInventoryResponseData` | Chỉ bật field thật sự cần trong `infoRequestParam` |
-| `getStoreItemsWithTagAsync` | Tìm store item theo tag | `key`, `value`, `infoRequestParam`, `skip?`, `limit?` | `StoreInventoriesWithStoreIdResponseData` | Hữu ích cho listing/filter |
-| `getCreateLeaderboardAsync` | Lấy leaderboard create của store item | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCreateLeaderboardResponseData` | Response có `position` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `createStoreItemAsync` | Tạo store item mới | `storeId?`, `displayName?` | `CreateStoreItemResponseData` | Nếu bỏ `storeId`, backend có thể sinh id | `Ok`, `StoreItemExists` |
+| `setStoreItemInformationAsync` | Cập nhật catalog, giá, IAP mapping, metadata | `storeId` và field cần đổi | `StoreInventoryResponseData` | `storeItemType` nên map bằng enum | `Ok`, `StoreItemNotFound`, `StoreInvalid` |
+| `setRemoveStatusAsync` | Đánh dấu remove/hide store item | `storeId`, `reason?` | `EmptyResponseData` | Thường dùng để disable item | `Ok`, `StoreItemNotFound` |
+| `getStoreItemInformationAsync` | Đọc chi tiết một store item | `storeId`, `infoRequestParam` | `StoreInventoryResponseData` | Chỉ bật field thật sự cần trong `infoRequestParam` | `Ok`, `StoreItemNotFound` |
+| `getStoreItemsWithTagAsync` | Tìm store item theo tag | `key`, `value`, `infoRequestParam`, `skip?`, `limit?` | `StoreInventoriesWithStoreIdResponseData` | Hữu ích cho listing/filter | `Ok` |
+| `getCreateLeaderboardAsync` | Lấy leaderboard create của store item | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCreateLeaderboardResponseData` | Response có `position` | `Ok` |
 
 ### Purchase, gift và receipt
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `buyStoreItemAsync` | Mua store item bằng flow nội bộ | `storeId`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` |
-| `presentStoreItemAsync` | Tặng/phát store item | `storeId`, `id`, `type`, `log?` | `PresentStoreInventoryResponseData` | `type` nên map bằng `OwnerType` |
-| `validateAppleAppStoreReceiptAsync` | Validate receipt Apple và fulfill purchase | `receipt`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` |
-| `validateFacebookStoreReceiptAsync` | Validate receipt Facebook và fulfill purchase | `receipt`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` |
-| `validateGooglePlayStoreReceiptAsync` | Validate receipt Google Play và fulfill purchase | `receipt`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `buyStoreItemAsync` | Mua store item bằng flow nội bộ | `storeId`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` | `Ok`, `NotEnoughCurrency`, `StoreItemNotFound`, `BuyerNotFound`, `CanNotBuyThisStoreItem`, `StoreItemRemoved`, `StoreItemPurchasedAndNonConsumable` |
+| `presentStoreItemAsync` | Tặng/phát store item | `storeId`, `id`, `type`, `log?` | `PresentStoreInventoryResponseData` | `type` nên map bằng `OwnerType` | `Ok`, `StoreItemNotFound`, `BuyerNotFound`, `StoreItemRemoved`, `StoreItemPurchasedAndNonConsumable` |
+| `validateAppleAppStoreReceiptAsync` | Validate receipt Apple và fulfill purchase | `receipt`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` | `Ok`, `StoreItemNotFound`, `BuyerNotFound`, `ExceptionWhenValidateReceipt`, `StoreInvalid`, `ReceiptInvalid`, `StoreItemRemoved`, `StoreItemPurchasedAndNonConsumable` |
+| `validateFacebookStoreReceiptAsync` | Validate receipt Facebook và fulfill purchase | `receipt`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` | `Ok`, `StoreItemNotFound`, `BuyerNotFound`, `ExceptionWhenValidateReceipt`, `StoreInvalid`, `ReceiptInvalid`, `StoreItemRemoved`, `StoreItemPurchasedAndNonConsumable` |
+| `validateGooglePlayStoreReceiptAsync` | Validate receipt Google Play và fulfill purchase | `receipt`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` | `Ok`, `StoreItemNotFound`, `BuyerNotFound`, `ExceptionWhenValidateReceipt`, `StoreInvalid`, `ReceiptInvalid`, `StoreItemRemoved`, `StoreItemPurchasedAndNonConsumable` |
 
 ### Audit và used state
 
@@ -87,7 +87,7 @@ Rule nhanh:
   - [../dist/runtime/constant/enumType/OwnerType.d.ts](../dist/runtime/constant/enumType/OwnerType.d.ts)
 - `SetStoreItemInformationRequestData.storeItemType` có range `1..2`, nên map bằng `StoreItemType`.
 - `GetStoreLogRequestData.storeReceiveTypes` nên map bằng `StoreReceiveType`.
-- `BuyStoreItemRequestData.type`, `PresentStoreItemRequestData.type` và các request validate receipt nhiều khả năng là owner type; theo model/response hiện tại nên map bằng `OwnerType`.
+- `BuyStoreItemRequestData.type`, `PresentStoreItemRequestData.type` và các request validate receipt, là OwnerType; theo model/response hiện tại map bằng `OwnerType`.
 
 ## 6. InfoRequestParam Rules
 

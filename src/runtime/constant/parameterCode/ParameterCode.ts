@@ -1,5 +1,34 @@
 /**
- * Centralizes serialized parameter keys used in request and response payloads.
+ * Wire-level parameter key catalogue.
+ *
+ * Every value here is the literal string used as a dictionary key
+ * inside the {@link GNHashtable} payloads exchanged between the
+ * SDK and the GearN backend. The `@*DataMember({ code: ... })`
+ * decorators on the model classes consume these constants to map
+ * a TypeScript property name onto the matching wire key (and the
+ * inverse for deserialisation).
+ *
+ * The constants are also used directly by:
+ * - {@link PeerBase.onResponseHandler} when it reads
+ *   `ReturnCode`, `Parameters`, `DebugMessage`, `ResponseId`,
+ *   `InvalidRequestParameters` from the raw response.
+ * - The auth-token / user-id / `Ts` mirror inside the same handler.
+ * - {@link SocketPeer.onEventHandler} when it pulls `EventCode`
+ *   and `Parameters` from a server-pushed event frame.
+ *
+ * Wire-protocol contract: renaming a value here without a
+ * coordinated backend change breaks every operation that uses
+ * it. The list grows over time but ordering is irrelevant — keys
+ * are looked up by name, not by index.
+ *
+ * Reading the entries: each constant is named in `PascalCase` and
+ * holds the matching `camelCase` wire key. Use the matching
+ * `@*DataMember` decorator to bind a property to a key:
+ *
+ * ```ts
+ * @StringDataMember({ code: ParameterCode.Username, mustNonNull: true })
+ * public username: string;
+ * ```
  */
 export class ParameterCode {
 	public static readonly AuthToken: string = "authToken";

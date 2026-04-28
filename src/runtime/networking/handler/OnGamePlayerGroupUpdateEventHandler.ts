@@ -8,35 +8,61 @@ import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 /**
- * Defines the payload emitted by the `OnGamePlayerGroupUpdate` server event.
+ * Decoded payload of the `OnGamePlayerGroupUpdate` server event.
+ *
+ * Pushed by the backend whenever the master-player group membership
+ * changes — invitation, accept, leave, kick, role change. The
+ * account-level analogue of
+ * {@link CharacterPlayerGroupUpdate}; use it to refresh
+ * lobby / account-level group UI without polling.
  */
 export class GamePlayerGroupUpdate {
-	/** Optional character id when the group update is scoped by character context. */
+	/**
+	 * Optional character id when the backend scopes the update to
+	 * a specific character context. Absent for purely
+	 * account-scoped group changes.
+	 */
 	@StringDataMember({ code: ParameterCode.CharacterId, isOptional: true })
 	public characterId?: string;
 
-	/** Updated group relation items pushed by the server. */
+	/**
+	 * Authoritative group membership list after the change. Treat
+	 * as a complete replacement.
+	 */
 	@GNArrayDataMember({ code: ParameterCode.PlayerGroups, elementCls: GenericModels.GroupItem })
 	public playerGroups: Array<GenericModels.GroupItem>;
 }
 
 /**
- * Handles the `OnGamePlayerGroupUpdate` server event.
+ * Auto-registered event handler for the
+ * `OnGamePlayerGroupUpdate` server event.
+ *
+ * Application setup:
+ * ```ts
+ * OnGamePlayerGroupUpdateEventHandler.onUpdate = update => {
+ *     refreshLobbyGroupsUi(update.playerGroups);
+ * };
+ * ```
  */
 @IServerEventHandler.registerEvent
 export class OnGamePlayerGroupUpdateEventHandler implements IServerEventHandler {
-	/** Optional static callback invoked after the payload is deserialized. */
+	/**
+	 * Static callback the application registers. Leave `null` to
+	 * silently drop the event.
+	 */
 	public static onUpdate: Action1<GamePlayerGroupUpdate>;
 
 	/**
-	 * Returns the event code handled by this implementation.
+	 * Returns {@link EventCode.OnGamePlayerGroupUpdate}.
 	 */
 	public getEventCode(): string {
 		return EventCode.OnGamePlayerGroupUpdate;
 	}
 
 	/**
-	 * Deserializes the event payload and forwards it to the registered static callback.
+	 * Deserialises the parameters into a
+	 * {@link GamePlayerGroupUpdate} and forwards to
+	 * {@link onUpdate}.
 	 */
 	public handle(operationEvent: OperationEvent): void {
 		if (OnGamePlayerGroupUpdateEventHandler.onUpdate != null)

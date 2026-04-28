@@ -2880,6 +2880,7 @@ const settings = new GNServerSettings({
   pingInterval: 20000,
   pingTimeout: 20000,
   secretKey: "<secret-key>",
+  gameId: "<game-id>",
   logType: LogType.Error,
 });
 

@@ -2,9 +2,24 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { GamePlayerModels } from "./GamePlayerModels";
 
 /**
- * Groups typed operation-response wrappers for `RequestType.GamePlayer`.
- * Many read operations resolve to `GamePlayerResponseData` or a derived envelope whose
- * `infoResponseParameters` content is controlled by the matching request model.
+ * Typed response wrappers for the GamePlayer domain.
+ *
+ * Each class extends {@link CustomOperationResponseAbstract}
+ * and binds a response DTO from {@link GamePlayerModels}. The
+ * same wrapper class is reused across the
+ * client / server / admin role variants because the response
+ * shape does not depend on which role issued the request.
+ *
+ * Many read operations resolve to a profile-style envelope
+ * (`GamePlayerResponseData` or a derived shape) whose
+ * `infoResponseParameters` field is gated by the matching
+ * request DTO's `infoRequestParam` flags — only the fields the
+ * caller asked for are populated.
+ *
+ * Application code reads the typed payload through
+ * `response.responseData` after confirming
+ * `response.hasReturnCodeError() === false` and
+ * `response.errorCode === ErrorCode.Ok`.
  */
 export namespace GamePlayerResponseModels {
 	/**

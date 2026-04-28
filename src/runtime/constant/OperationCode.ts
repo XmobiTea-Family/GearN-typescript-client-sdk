@@ -1,9 +1,27 @@
 /**
- * Enumerates raw operation-code strings understood by the GearN backend.
+ * Canonical operation-code strings recognised by the GearN backend.
  *
- * These constants are the canonical operation identifiers embedded in request routes,
- * request/response models, logs, and event-driven workflows. Grouping in this file
- * follows backend capability areas rather than SDK wrapper class names.
+ * Every typed `*OperationRequest` wrapper sets one of these values
+ * as its `operationCode`, the SDK transports embed the value into
+ * the wire frame produced by {@link OperationHelper.toSocketData}
+ * and the URL produced by {@link HttpPeer.send}, and log lines
+ * surface the same string for traceability.
+ *
+ * Grouping inside this class mirrors the backend's capability
+ * areas (dashboard / authenticate / link / unlink / character /
+ * game-player / master-player / group / inventory / store /
+ * multiplayer / cloudscript / content). Each group maps roughly
+ * to a {@link RequestType} value and to a public `*Api`
+ * namespace on {@link GNNetwork}, but the mapping is not strictly
+ * one-to-one: dashboard operations span several `*Api` instances
+ * (`.dashboard`, `.authenticate.admin`, ...) because the backend
+ * resolves the role from the auth token rather than from a
+ * dedicated request type.
+ *
+ * Adding a new code: extend the matching group and ship a typed
+ * wrapper that references the new name, plus the matching method
+ * on the relevant `*Api` class. Renaming an existing code requires
+ * a coordinated backend change.
  */
 export class OperationCode {
 	/**

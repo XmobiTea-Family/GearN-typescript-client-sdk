@@ -82,58 +82,58 @@ Rule nhanh:
 
 ### Đọc 1 group hoặc 1 phần dữ liệu group
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getAvatarAsync` | Cần đọc avatar group | `groupId` | `GroupResponseData` | `avatar.type` hiện là số thô |
-| `getCatalogIdAsync` | Cần đọc `catalogId` | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.catalogId` |
-| `getCustomDataAsync` | Cần đọc custom data | `groupId`, `customDataKeys?` | `GroupResponseData` | Có thể filter theo key |
-| `getDisplayNameAsync` | Cần đọc display name | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.displayName` |
-| `getGroupCurrencyAsync` | Cần đọc group currencies | `groupId`, `groupCurrencyKeys?` | `GroupResponseData` | Có thể filter theo key |
-| `getGroupDataAsync` | Cần đọc group data | `groupId`, `groupDataKeys?` | `GroupResponseData` | Có thể filter theo key |
-| `getGroupInformationAsync` | Cần lấy nhiều field group trong một lần gọi | `groupId`, `infoRequestParam` | `GroupResponseData` | Flow đọc tổng hợp quan trọng nhất |
-| `getGroupInventoryAsync` | Cần đọc inventory của group | `groupId`, `itemCatalogIds?` | `GroupResponseData` | Không dùng `infoRequestParam` |
-| `getGroupStatisticsAsync` | Cần đọc group statistics theo key | `groupId`, `statisticsKeys?` | `GroupResponseData` | Không dùng `groupStatisticsKeys` ở đây |
-| `getMembersAsync` | Cần đọc danh sách member | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.members` |
-| `getRemoveStatusAsync` | Cần đọc trạng thái remove | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.removeStatus` |
-| `getSegmentAsync` | Cần đọc segment của group | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.segments` |
-| `getTagAsync` | Cần đọc tag theo key | `groupId`, `tagKeys` | `GroupResponseData` | Không query theo value |
-| `getTsCreateAsync` | Cần đọc thời điểm tạo group | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.tsCreate` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getAvatarAsync` | Cần đọc avatar group | `groupId` | `GroupResponseData` | `avatar.type` hiện là số thô | `Ok`, `GroupNotFound` |
+| `getCatalogIdAsync` | Cần đọc `catalogId` | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.catalogId` | `Ok`, `GroupNotFound` |
+| `getCustomDataAsync` | Cần đọc custom data | `groupId`, `customDataKeys?` | `GroupResponseData` | Có thể filter theo key | `Ok`, `GroupNotFound` |
+| `getDisplayNameAsync` | Cần đọc display name | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.displayName` | `Ok`, `GroupNotFound` |
+| `getGroupCurrencyAsync` | Cần đọc group currencies | `groupId`, `groupCurrencyKeys?` | `GroupResponseData` | Có thể filter theo key | `Ok`, `GroupNotFound` |
+| `getGroupDataAsync` | Cần đọc group data | `groupId`, `groupDataKeys?` | `GroupResponseData` | Có thể filter theo key | `Ok`, `GroupNotFound` |
+| `getGroupInformationAsync` | Cần lấy nhiều field group trong một lần gọi | `groupId`, `infoRequestParam` | `GroupResponseData` | Flow đọc tổng hợp quan trọng nhất | `Ok`, `GroupNotFound` |
+| `getGroupInventoryAsync` | Cần đọc inventory của group | `groupId`, `itemCatalogIds?` | `GroupResponseData` | Không dùng `infoRequestParam` | `Ok`, `GroupNotFound` |
+| `getGroupStatisticsAsync` | Cần đọc group statistics theo key | `groupId`, `statisticsKeys?` | `GroupResponseData` | Không dùng `groupStatisticsKeys` ở đây | `Ok`, `GroupNotFound` |
+| `getMembersAsync` | Cần đọc danh sách member | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.members` | `Ok`, `GroupNotFound` |
+| `getRemoveStatusAsync` | Cần đọc trạng thái remove | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.removeStatus` | `Ok`, `GroupNotFound` |
+| `getSegmentAsync` | Cần đọc segment của group | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.segments` | `Ok`, `GroupNotFound` |
+| `getTagAsync` | Cần đọc tag theo key | `groupId`, `tagKeys` | `GroupResponseData` | Không query theo value | `Ok`, `GroupNotFound` |
+| `getTsCreateAsync` | Cần đọc thời điểm tạo group | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.tsCreate` | `Ok`, `GroupNotFound` |
 
 ### Query danh sách, leaderboard, log và message history
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getGroupsWithDisplayNameAsync` | Tìm group theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | `keyword` tối thiểu 2 ký tự |
-| `getGroupsWithSegmentAsync` | Tìm group theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | Query theo exact segment value |
-| `getGroupsWithTagAsync` | Tìm group theo tag | `key`, `value`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | Query theo cặp `key/value` |
-| `getStatisticsLeaderboardAroundGroupAsync` | Cần bảng xếp hạng quanh một group cụ thể | `groupId`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `catalogId?` | `GetStatisticsLeaderboardResponseData` | Leaderboard theo statistics key |
-| `getStatisticsLeaderboardAsync` | Cần bảng xếp hạng statistics toàn cục theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `version?`, `catalogId?` | `GetStatisticsLeaderboardResponseData` | `version` chỉ có ở method này |
-| `getCurrencyLeaderboardAsync` | Cần bảng xếp hạng currency theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `catalogId?` | `GetCurrencyLeaderboardResponseData` | Không có `version` |
-| `getCreateLeaderboardAsync` | Cần bảng xếp hạng theo thời điểm tạo group | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCreateLeaderboardResponseData` | Không cần key |
-| `getStatisticsLogAsync` | Cần audit statistics log | `keys?`, `groupId?`, `limit?`, `token?` | `GetStatisticsLogResponseData` | Phân trang bằng `token` |
-| `getCurrencyLogAsync` | Cần audit currency log | `keys?`, `groupId?`, `limit?`, `token?` | `GetCurrencyLogResponseData` | Phân trang bằng `token` |
-| `getGroupMessageAsync` | Cần đọc lịch sử message | `groupId`, `skip?`, `limit?` | `GroupMessagesResponseData` | Phân trang bằng `skip/limit`, không phải `token` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getGroupsWithDisplayNameAsync` | Tìm group theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | `keyword` tối thiểu 2 ký tự | `Ok` |
+| `getGroupsWithSegmentAsync` | Tìm group theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | Query theo exact segment value | `Ok` |
+| `getGroupsWithTagAsync` | Tìm group theo tag | `key`, `value`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | Query theo cặp `key/value` | `Ok`, `KeyNotFound` |
+| `getStatisticsLeaderboardAroundGroupAsync` | Cần bảng xếp hạng quanh một group cụ thể | `groupId`, `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `catalogId?` | `GetStatisticsLeaderboardResponseData` | Leaderboard theo statistics key | `Ok`, `KeyNotFound` |
+| `getStatisticsLeaderboardAsync` | Cần bảng xếp hạng statistics toàn cục theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `version?`, `catalogId?` | `GetStatisticsLeaderboardResponseData` | `version` chỉ có ở method này | `Ok`, `KeyNotFound`, `VersionInvalid` |
+| `getCurrencyLeaderboardAsync` | Cần bảng xếp hạng currency theo key | `key`, `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?`, `catalogId?` | `GetCurrencyLeaderboardResponseData` | Không có `version` | `Ok`, `KeyNotFound` |
+| `getCreateLeaderboardAsync` | Cần bảng xếp hạng theo thời điểm tạo group | `infoRequestParam`, `skip?`, `limit?`, `loadFromCache?` | `GetCreateLeaderboardResponseData` | Không cần key | `Ok` |
+| `getStatisticsLogAsync` | Cần audit statistics log | `keys?`, `groupId?`, `limit?`, `token?` | `GetStatisticsLogResponseData` | Phân trang bằng `token` | `Ok` |
+| `getCurrencyLogAsync` | Cần audit currency log | `keys?`, `groupId?`, `limit?`, `token?` | `GetCurrencyLogResponseData` | Phân trang bằng `token` | `Ok` |
+| `getGroupMessageAsync` | Cần đọc lịch sử message | `groupId`, `skip?`, `limit?` | `GroupMessagesResponseData` | Phân trang bằng `skip/limit`, không phải `token` | `Ok`, `GroupNotFound`, `PlayerNotMember` |
 
 ### Mutation
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `addMemberAsync` | Thêm một user vào group | `userId`, `groupId` | `EmptyResponseData` | Chỉ thêm 1 member mỗi lần |
-| `removeMemberAsync` | Gỡ một user khỏi group | `userId`, `groupId` | `EmptyResponseData` | Không phải bulk remove |
-| `addSegmentAsync` | Gắn thêm segment cho group | `groupId`, `value` | `EmptyResponseData` | Thêm một segment value |
-| `removeSegmentAsync` | Gỡ một segment khỏi group | `groupId`, `value` | `EmptyResponseData` | Xóa theo exact value |
-| `setTagAsync` | Set hoặc upsert một tag | `groupId`, `key`, `value` | `EmptyResponseData` | Thao tác theo một cặp key/value |
-| `removeTagAsync` | Xóa tag theo key | `groupId`, `key` | `EmptyResponseData` | Không truyền `value` |
-| `setAvatarAsync` | Set avatar của group | `groupId`, `type`, `value` | `EmptyResponseData` | `type` chưa có enum public |
-| `setCustomDataAsync` | Set custom data của group | `groupId`, `customDatas[]` | `GroupResponseData` | Mỗi phần tử là `key/value` |
-| `setDisplayNameAsync` | Set display name | `groupId`, `displayName` | `EmptyResponseData` | Display name có min length 5 |
-| `setGroupDataAsync` | Set group data của group | `groupId`, `groupDatas[]` | `GroupResponseData` | Mỗi phần tử là `key/value` |
-| `changeGroupCurrencyAsync` | Cộng/trừ currency | `groupId`, `groupCurrencies[]`, `log?` | `GroupResponseData` | Đây là delta change |
-| `changeGroupStatisticsAsync` | Cộng/trừ statistics | `groupId`, `groupStatistics[]`, `log?` | `GroupResponseData` | Đây là delta change |
-| `setRemoveStatusAsync` | Đánh dấu group bị remove | `groupId`, `reason?` | `EmptyResponseData` | Không phải hard delete |
-| `createGroupItemAsync` | Tạo inventory item thuộc group | `groupId`, `catalogId`, `classId`, `displayName?`, `amount?` | `GroupResponseData` | `amount` mặc định `1` |
-| `removeGroupItemAsync` | Xóa item khỏi group theo `itemId` | `groupId`, `itemId` | `EmptyResponseData` | Dùng khi đã có `itemId` cụ thể |
-| `sendGroupMessageAsync` | Gửi message vào group | `senderId`, `groupId`, `message` | `GroupMessagesResponseData` | Operation là HTTP, không phải socket send |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `addMemberAsync` | Thêm một user vào group | `userId`, `groupId` | `EmptyResponseData` | Chỉ thêm 1 member mỗi lần | `Ok`, `GroupNotFound`, `MemberNotFound` |
+| `removeMemberAsync` | Gỡ một user khỏi group | `userId`, `groupId` | `EmptyResponseData` | Không phải bulk remove | `Ok`, `GroupNotFound`, `MemberNotFound` |
+| `addSegmentAsync` | Gắn thêm segment cho group | `groupId`, `value` | `EmptyResponseData` | Thêm một segment value | `Ok`, `GroupNotFound` |
+| `removeSegmentAsync` | Gỡ một segment khỏi group | `groupId`, `value` | `EmptyResponseData` | Xóa theo exact value | `Ok`, `GroupNotFound` |
+| `setTagAsync` | Set hoặc upsert một tag | `groupId`, `key`, `value` | `EmptyResponseData` | Thao tác theo một cặp key/value | `Ok`, `KeyNotFound`, `GroupNotFound` |
+| `removeTagAsync` | Xóa tag theo key | `groupId`, `key` | `EmptyResponseData` | Không truyền `value` | `Ok`, `GroupNotFound` |
+| `setAvatarAsync` | Set avatar của group | `groupId`, `type`, `value` | `EmptyResponseData` | `type` chưa có enum public | `Ok`, `GroupNotFound` |
+| `setCustomDataAsync` | Set custom data của group | `groupId`, `customDatas[]` | `GroupResponseData` | Mỗi phần tử là `key/value` | `Ok`, `KeyNotFound`, `GroupNotFound` |
+| `setDisplayNameAsync` | Set display name | `groupId`, `displayName` | `EmptyResponseData` | Display name có min length 5 | `Ok`, `GroupNotFound` |
+| `setGroupDataAsync` | Set group data của group | `groupId`, `groupDatas[]` | `GroupResponseData` | Mỗi phần tử là `key/value` | `Ok`, `KeyNotFound`, `GroupNotFound` |
+| `changeGroupCurrencyAsync` | Cộng/trừ currency | `groupId`, `groupCurrencies[]`, `log?` | `GroupResponseData` | Đây là delta change | `Ok`, `NotEnoughCurrency`, `KeyNotFound`, `GroupNotFound` |
+| `changeGroupStatisticsAsync` | Cộng/trừ statistics | `groupId`, `groupStatistics[]`, `log?` | `GroupResponseData` | Đây là delta change | `Ok`, `KeyNotFound`, `GroupNotFound` |
+| `setRemoveStatusAsync` | Đánh dấu group bị remove | `groupId`, `reason?` | `EmptyResponseData` | Không phải hard delete | `Ok`, `GroupNotFound` |
+| `createGroupItemAsync` | Tạo inventory item thuộc group | `groupId`, `catalogId`, `classId`, `displayName?`, `amount?` | `GroupResponseData` | `amount` mặc định `1` | `Ok`, `CatalogIdNotFound`, `GroupNotFound`, `ClassIdNotFound` |
+| `removeGroupItemAsync` | Xóa item khỏi group theo `itemId` | `groupId`, `itemId` | `EmptyResponseData` | Dùng khi đã có `itemId` cụ thể | `Ok`, `ItemNotFound`, `GroupNotFound` |
+| `sendGroupMessageAsync` | Gửi message vào group | `senderId`, `groupId`, `message` | `GroupMessagesResponseData` | Operation là HTTP, không phải socket send | `Ok`, `GroupNotFound`, `PlayerNotMember` |
 
 ## 6. Reference
 

@@ -54,15 +54,15 @@ Rule nhanh:
 
 ## 4. Chọn Method
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getContentDataAsync` | Đọc content config theo key hoặc label | `keys?`, `label?` | `GetContentDataResponseData` | Dùng cho config/content data, không phải file binary |
-| `setContentDataAsync` | Tạo hoặc cập nhật content config | `configs`, `label?` | `EmptyResponseData` | Mỗi config cần `key` và `data` |
-| `createNewFileUploadInfoAsync` | Xin cấp `fileId` cho một file sẽ upload | `fileName` | `FileIdUploadResponseData` | Không upload byte ở bước này |
-| `getFileUploadInfoListAsync` | Liệt kê metadata file upload | `skip?`, `limit?` | `GetFileUploadInfoListResponseData` | Phân trang mềm |
-| `getFileUploadInfoAsync` | Xem chi tiết metadata của một file | `fileId` | `GetFileUploadInfoResponseData` | Trả cả `removeStatus`, `tsUploadExpire`, `fileUpload?` |
-| `removeFileUploadInfoAsync` | Gỡ metadata hoặc đánh dấu remove cho file | `fileId`, `reason?` | `EmptyResponseData` | Không phải API upload delete byte trực tiếp |
-| `requestDownloadFileUploadInfoAsync` | Xin download token cho file | `fileId` | `RequestDownloadFileUploadInfoResponseData` | Dùng tiếp với `GNNetwork.getDownloadFileUrl(...)` |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `getContentDataAsync` | Đọc content config theo key hoặc label | `keys?`, `label?` | `GetContentDataResponseData` | Dùng cho config/content data, không phải file binary | `Ok`, `GameNotFound` |
+| `setContentDataAsync` | Tạo hoặc cập nhật content config | `configs`, `label?` | `EmptyResponseData` | Mỗi config cần `key` và `data` | `Ok`, `GameNotFound` |
+| `createNewFileUploadInfoAsync` | Xin cấp `fileId` cho một file sẽ upload | `fileName` | `FileIdUploadResponseData` | Không upload byte ở bước này | `Ok` |
+| `getFileUploadInfoListAsync` | Liệt kê metadata file upload | `skip?`, `limit?` | `GetFileUploadInfoListResponseData` | Phân trang mềm | `Ok` |
+| `getFileUploadInfoAsync` | Xem chi tiết metadata của một file | `fileId` | `GetFileUploadInfoResponseData` | Trả cả `removeStatus`, `tsUploadExpire`, `fileUpload?` | `Ok`, `FileNotFound` |
+| `removeFileUploadInfoAsync` | Gỡ metadata hoặc đánh dấu remove cho file | `fileId`, `reason?` | `EmptyResponseData` | Không phải API upload delete byte trực tiếp | `Ok`, `FileNotFound` |
+| `requestDownloadFileUploadInfoAsync` | Xin download token cho file | `fileId` | `RequestDownloadFileUploadInfoResponseData` | Dùng tiếp với `GNNetwork.getDownloadFileUrl(...)` | `Ok`, `FileNotFound`, `FileNotUpload` |
 
 ## 5. Decision Rules
 

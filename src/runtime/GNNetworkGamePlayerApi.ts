@@ -7,9 +7,73 @@ import { GamePlayerRequestModels } from "./entity/models/GamePlayerRequestModels
 import { GamePlayerResponseModels } from "./entity/models/GamePlayerResponseModels";
 
 /**
- * Exposes client-scoped game-player operations through `GNNetwork.gamePlayer`.
+ * Public client-scoped namespace for the GamePlayer domain.
  *
- * Use this namespace from player-facing code when working with the authenticated user's gameplay profile over HTTP.
+ * Reachable through {@link GNNetwork.gamePlayer} after
+ * {@link GNNetwork.init}. Manages the **account-level** player
+ * record — the per-game profile that sits between the master
+ * player ({@link GNNetwork.masterPlayer}) and any
+ * per-character profile ({@link GNNetwork.characterPlayer}).
+ *
+ * The methods on this class are organised into the following
+ * functional groups (matching the {@link OperationCode}
+ * grouping):
+ *
+ * 1. **Identity & profile** — `getDisplayName`, `setDisplayName`,
+ *    `getAvatar`, `setAvatar`, `getCountryCode`,
+ *    `getIpAddressCreate`, `getTsCreate`, `getTsLastLogin`,
+ *    `getOnlineStatus`, `getPlayerInformation`,
+ *    `getPlayerBan`, `getPlayersWithDisplayName`.
+ * 2. **Custom data / tags / segments** — `getCustomData`,
+ *    `setCustomData`, `getTag`, `setTag`, `getSegment`,
+ *    `addSegment`, `removeSegment`, `getPlayersWithSegment`,
+ *    `getPlayersWithTag`, `getPlayerData`, `setPlayerData`.
+ * 3. **Currencies** — `getPlayerCurrency`,
+ *    `setPlayerCurrency`, `addPlayerCurrency`,
+ *    `subtractPlayerCurrency`.
+ * 4. **Statistics & leaderboards** — `getPlayerStatistics`,
+ *    `setPlayerStatistics`, `addPlayerStatistics`,
+ *    `getStatisticsLeaderboard`,
+ *    `getStatisticsLeaderboardAroundPlayer`,
+ *    `getFriendStatisticsLeaderboard`,
+ *    `getFriendStatisticsLeaderboardAroundPlayer`.
+ * 5. **Friends (account-level social graph)** —
+ *    `getPlayerFriend`, `addPlayerFriend`,
+ *    `acceptPlayerFriend`, `rejectPlayerFriend`,
+ *    `removePlayerFriend`,
+ *    `removePlayerFriendRequestSent`, `getOtherPlayerFriend`.
+ *    Real-time updates arrive through
+ *    {@link OnGamePlayerFriendUpdateEventHandler}.
+ * 6. **Groups (account-level group membership)** —
+ *    `getPlayerGroup`, `createGroup`, `acceptGroupMember`,
+ *    `rejectGroupMember`, `removeGroupMember`, `leaveGroup`,
+ *    `addGroupMember` (invitation), `removeGroupMember`,
+ *    `cancelInviteGroupMember`. Real-time updates arrive
+ *    through {@link OnGamePlayerGroupUpdateEventHandler}.
+ * 7. **Inventory & characters (lookups)** —
+ *    `getPlayerInventory`, `getPlayerCharacter`. Mutations live
+ *    on `GNNetwork.inventory` and
+ *    `GNNetwork.characterPlayer` respectively.
+ * 8. **Push-notification registration** — methods that bind a
+ *    device push token (FCM / APNS) to the master player record.
+ *
+ * Common contract for every method on this class:
+ * - Routes through HTTP using {@link RequestType.GamePlayer} and
+ *   {@link RequestRole.Client}. Each method's operation code
+ *   matches the same name in {@link OperationCode}.
+ * - The standard parameter set
+ *   (`overrideAuthToken`, `overrideSecretKey`, `customTags`,
+ *   `timeout`) is documented on {@link GNNetwork.sendViaHttp}.
+ * - Both callback (`name(...)`) and Promise (`nameAsync(...)`)
+ *   variants are exposed; both resolve / always-resolve, and
+ *   transport / domain failures surface through
+ *   `response.hasReturnCodeError()` and `response.errorCode`.
+ *
+ * The companion {@link ServerGamePlayerApi} and
+ * {@link AdminGamePlayerApi} sub-namespaces expose the same
+ * operations but with `Server*` / `Admin*` request DTO variants
+ * — those accept additional `userId` parameters so a trusted
+ * backend or dashboard can act on behalf of any player.
  */
 export class GamePlayerApi {
 	/** Server-scoped game-player operations for trusted backend callers. */
@@ -749,12 +813,18 @@ export class GamePlayerApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerGamePlayerApi.
- */
-/**
- * Exposes server-scoped game-player operations through `GNNetwork.gamePlayer.server`.
+ * Server-scoped GamePlayer namespace, reachable through
+ * `GNNetwork.gamePlayer.server`.
  *
- * Use this namespace from trusted backend code with `secretKey` or `overrideSecretKey`.
+ * Mirrors every method on {@link GamePlayerApi} but uses the
+ * `Server*RequestData` DTO variants. The server flavour accepts
+ * additional `userId` (and sometimes `gameId`) parameters so a
+ * trusted backend can act on behalf of any player without
+ * holding their auth token.
+ *
+ * Always pass a valid server-side `secretKey` (typically through
+ * {@link GNServerSettings.setSecretKey} or `overrideSecretKey`)
+ * so the backend can authorise the request.
  */
 export class ServerGamePlayerApi {
 	/**
@@ -1488,12 +1558,16 @@ export class ServerGamePlayerApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminGamePlayerApi.
- */
-/**
- * Exposes admin-scoped game-player operations through `GNNetwork.gamePlayer.admin`.
+ * Admin-scoped GamePlayer namespace, reachable through
+ * `GNNetwork.gamePlayer.admin`.
  *
- * Use this namespace from dashboard, GM, or backoffice code with `secretKey` or `overrideSecretKey`.
+ * Mirrors the same method set as {@link ServerGamePlayerApi}
+ * but routed through {@link RequestRole.Admin}. The backend
+ * uses the caller's admin auth token to authorise privileged
+ * operations such as touching another tenant's player records,
+ * granting / revoking bans, force-resetting profile fields, etc.
+ * Most application code never needs this namespace — dashboard
+ * / GM / backoffice tools are the primary consumers.
  */
 export class AdminGamePlayerApi {
 	/**

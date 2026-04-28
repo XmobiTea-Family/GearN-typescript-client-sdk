@@ -2,7 +2,28 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
 /**
- * Groups reusable embedded data contracts shared by multiple API domains.
+ * Cross-domain DTOs shared by every API namespace in the SDK.
+ *
+ * The classes in this namespace are deliberately agnostic of
+ * any single domain — they describe small, reusable building
+ * blocks (avatar entries, key-value pairs, currency entries,
+ * statistics entries, friend / group / member references,
+ * inventory references, ban entries, ...) that appear inside
+ * the larger request / response DTOs of the per-domain models.
+ *
+ * The lookup helpers on {@link GNUtils} consume the array
+ * forms directly:
+ * - `toFriendDictionary(friends)` → `Map<string, FriendItem>`
+ * - `toGroupDictionary(groups)` → `Map<string, GroupItem>`
+ * - `toCurrenciesDictionary(currencies)` →
+ *   `Map<string, CurrencyItem>`
+ * - `toStatisticsDictionary(stats)` →
+ *   `Map<string, StatisticsItem>`
+ * - and similar for tags / data items / inventory items.
+ *
+ * All field decorators here use canonical wire keys from
+ * {@link ParameterCode} so the same shape decodes consistently
+ * across every domain that embeds these items.
  */
 export namespace GenericModels {
 	/**
