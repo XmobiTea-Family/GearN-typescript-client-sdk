@@ -19,3 +19,4 @@ tsconfig-build.min.udm.json
 webpack.config.min.udm.mjs
 syncCode.js
 internal-docs/
+scripts/validate-ai-docs.mjs
