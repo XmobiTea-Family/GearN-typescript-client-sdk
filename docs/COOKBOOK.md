@@ -2,7 +2,7 @@
 
 16 scenario end-to-end phổ biến. Mỗi scenario có: problem, prerequisites, APIs used, code snippet, return path handling, pitfall.
 
-> Tất cả snippet dùng import từ package name `@xmobitea/gn-typescript-client`. Ví dụ dùng dạng `async/await` (form `*Async()`). Thay phần comment `// TODO: …` bằng logic ứng dụng của bạn.
+> Tất cả snippet dùng import từ package name `@xmobitea/gn-typescript-client`. Ví dụ dùng dạng `async/await` (form `*Async()`). Các comment trong snippet là điểm nối vào logic ứng dụng của bạn.
 
 ## Index
 
@@ -38,12 +38,12 @@ Code mẫu đầy đủ (có comment từng field): [README § 4](../README.MD#4
 ### Return paths
 
 - `init()` là void và **idempotent** — gọi lần thứ 2 chỉ log warning rồi return.
-- Không có network call ở bước này; lỗi duy nhất có thể là `new GNServerSettings({})` thiếu field required → throw ngay.
+- Không có network call ở bước này; lỗi cấu hình thường gặp là gọi `settings.config({...})` thiếu field required trong `GNServerSettingsOptions`.
 
 ### Pitfalls
 
-- `logType: LogType.All` trong production làm console spam. Dùng `LogType.Error` hoặc `LogType.None`.
-- Đổi `settings` sau `init()` không có hiệu lực (idempotent). Phải restart process.
+- `logType: LogType.All` trong production làm console spam. Dùng `LogType.Error` hoặc `LogType.Off`.
+- Gọi lại `GNNetwork.init()` để đổi settings không có hiệu lực. Setter trên cùng `settings` object sau init chỉ ảnh hưởng một số request mới và không tự reconnect socket.
 - Full anti-patterns: [RULES § 10](RULES.md#10-anti-patterns--pitfalls). Full field schema: [reference/CONFIG.md](reference/CONFIG.md).
 
 ---
@@ -64,7 +64,6 @@ import {
   ReturnCode,
   ErrorCode,
   AuthenticateModels,
-  AuthenticateStatus,
 } from "@xmobitea/gn-typescript-client";
 
 async function loginWithAccount(username: string, password: string) {
@@ -74,11 +73,12 @@ async function loginWithAccount(username: string, password: string) {
   infoRequestParam.playerCurrencies = true;
   infoRequestParam.tsCreate = true;
 
-  const res = await GNNetwork.authenticate.loginByAccountAsync({
-    username,
-    password,
-    infoRequestParam,
-  } as AuthenticateModels.LoginByAccountRequestData);
+  const request = new AuthenticateModels.LoginByAccountRequestData();
+  request.username = username;
+  request.password = password;
+  request.infoRequestParam = infoRequestParam;
+
+  const res = await GNNetwork.authenticate.loginByAccountAsync(request);
 
   if (res.returnCode !== ReturnCode.Ok) {
     console.error("transport error", res.returnCode, res.debugMessage);
@@ -89,30 +89,23 @@ async function loginWithAccount(username: string, password: string) {
     return null;
   }
 
-  const data = res.responseData; // AuthenticateResponseData
-
-  // Persist auth — every future API call auto-attaches the cached token
-  const status = new AuthenticateStatus();
-  status.setAuthToken(data.authToken);
-  status.setUserId(data.userId);
-  GNNetwork.setNewAuthenticateStatus(status);
-
-  return data;
+  // AuthenticateApi success auto-caches authToken + userId into AuthenticateStatus/StorageService.
+  return res.responseData; // AuthenticateResponseData
 }
 ```
 
 ### Return paths
 
-- Happy: `ReturnCode.Ok` + `ErrorCode.Ok` → `data.authToken` + `data.userId` + profile fields enabled trong `InfoRequestParam`.
-- `ReturnCode.OperationTimedOut` (-1) → retry sau.
-- `ErrorCode.AccountNotFound` (2) hoặc `ErrorCode.PasswordIncorrect` → báo user.
-- `ErrorCode.InvalidOperationParameter` với `invalidMembers` → có field request sai format (ví dụ username < 6 chars).
+- Happy: `ReturnCode.Ok` + `ErrorCode.Ok` → SDK cache `authToken` + `userId`; response có profile fields enabled trong `InfoRequestParam`.
+- `ReturnCode.OperationTimeout` (-1) → retry sau nếu idempotent.
+- `ErrorCode.AccountNotFound` (2) hoặc `ErrorCode.AccountPasswordWrong` → báo user.
+- `ReturnCode.InvalidRequestParameters` với `invalidMembers` → có field request sai format (ví dụ username < 6 chars).
 
 ### Pitfalls
 
-- Quên gọi `setNewAuthenticateStatus()` → lần gọi API sau không có auth token, sẽ trả `ReturnCode.AuthenticateFailed`.
+- Đọc `responseData` trước khi check đủ 2 tầng → có thể dùng payload chưa đáng tin.
 - Set `infoRequestParam.customDatas = true` nhưng không set `customDataKeys` → backend có thể trả TẤT CẢ custom data, tốn bandwidth.
-- `username`/`password` < 6 ký tự → backend reject với `InvalidOperationParameter` trước khi query DB.
+- `username`/`password` < 6 ký tự → backend reject với `ReturnCode.InvalidRequestParameters` trước khi query DB.
 
 ---
 
@@ -127,20 +120,17 @@ async function loginWithAccount(username: string, password: string) {
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode, AuthenticateStatus } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, AuthenticateModels } from "@xmobitea/gn-typescript-client";
 
 async function ensureValidToken() {
   // refreshAuthToken uses cached auth context — không cần truyền field nào
-  const res = await GNNetwork.authenticate.refreshAuthTokenAsync({} as any);
+  const res = await GNNetwork.authenticate.refreshAuthTokenAsync(
+    new AuthenticateModels.RefreshAuthTokenRequestData(),
+  );
 
   if (res.returnCode !== ReturnCode.Ok) return false;
   if (res.errorCode !== ErrorCode.Ok) return false;
 
-  const status = new AuthenticateStatus();
-  status.setAuthToken(res.responseData.authToken);
-  // userId không đổi — reuse từ status hiện tại
-  status.setUserId(GNNetwork.getAuthenticateStatus().getUserId());
-  GNNetwork.setNewAuthenticateStatus(status);
   return true;
 }
 
@@ -152,14 +142,14 @@ if (!(await ensureValidToken())) {
 
 ### Return paths
 
-- Happy → `authToken` mới được lưu, session tiếp tục.
-- `ReturnCode.AuthenticateFailed` → token cũ invalid/expired; cần login lại.
+- Happy → `authToken` mới được SDK cache, session tiếp tục.
+- `ReturnCode.OperationNotAuthorized` hoặc `ErrorCode.VerifyTokenError` → token cũ invalid/expired; cần login lại.
 - `ErrorCode.PlayerBan` → user bị ban; xem `res.responseData.playerBan` (BanItem với tsExpire + reason).
 
 ### Pitfalls
 
 - Không có `authToken` cache → request gửi đi thiếu auth, reject.
-- Refresh thành công nhưng quên `setNewAuthenticateStatus()` → token mới không được cache, lần sau vẫn dùng token cũ (sẽ fail).
+- Refresh thành công nhưng app vẫn dùng token tự lưu bên ngoài SDK → đồng bộ lại storage riêng của app từ `GNNetwork.getAuthenticateStatus()` nếu có.
 
 ---
 
@@ -180,7 +170,6 @@ import {
   ErrorCode,
   AuthenticateModels,
   GoogleLoginType,
-  AuthenticateStatus,
 } from "@xmobitea/gn-typescript-client";
 
 async function loginWithGoogle(idToken: string) {
@@ -188,36 +177,32 @@ async function loginWithGoogle(idToken: string) {
   infoRequestParam.displayName = true;
   infoRequestParam.avatar = true;
 
-  const res = await GNNetwork.authenticate.loginByGoogleAsync({
-    token: idToken,
-    googleLoginType: GoogleLoginType.IdToken,
-    createPlayerIfNotExists: true,
-    infoRequestParam,
-  } as AuthenticateModels.LoginByGoogleRequestData);
+  const request = new AuthenticateModels.LoginByGoogleRequestData();
+  request.token = idToken;
+  request.type = GoogleLoginType.IdToken;
+  request.createPlayerIfNotExists = true;
+  request.infoRequestParam = infoRequestParam;
+
+  const res = await GNNetwork.authenticate.loginByGoogleAsync(request);
 
   if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return null;
 
-  const data = res.responseData;
-  const status = new AuthenticateStatus();
-  status.setAuthToken(data.authToken);
-  status.setUserId(data.userId);
-  GNNetwork.setNewAuthenticateStatus(status);
-
-  if (data.newlyCreated) console.log("new player created");
-  return data;
+  // AuthenticateApi success auto-caches authToken + userId.
+  if (res.responseData.newlyCreated) console.log("new player created");
+  return res.responseData;
 }
 ```
 
 ### Return paths
 
 - Happy → `authToken` + `newlyCreated` flag cho biết user mới hay đã tồn tại.
-- `ErrorCode.TokenVerifyFailed` → ID token social invalid/expired.
-- `ErrorCode.AccountAlreadyLinked` → social id đã liên kết account khác.
+- `ErrorCode.VerifyTokenError` hoặc `ErrorCode.VerifyFailed` → ID token social invalid/expired.
+- `ErrorCode.ExternalLinkedOtherAccount` hoặc `ErrorCode.ExternalLinkedOtherValue` → social id đã liên kết account khác.
 
 ### Pitfalls
 
 - `createPlayerIfNotExists: false` với social id chưa từng login → `ErrorCode.AccountNotFound`. Set `true` cho flow "login hoặc register" tự động.
-- Apple ID token có lifetime rất ngắn (~10 phút) — lấy xong phải call ngay.
+- Apple ID token có lifetime rất ngắn; lấy xong phải call ngay.
 
 ---
 
@@ -236,8 +221,8 @@ import { GNNetwork } from "@xmobitea/gn-typescript-client";
 
 GNNetwork.subscriberOnConnectHandler(() => {
   console.log("socket connected, sid=", GNNetwork.getSocketSId());
-  // Push cached auth token into the socket channel
-  GNNetwork.sendRequestAuthSocket();
+  // SDK auto-auths the socket if an auth token is already cached.
+  // Call GNNetwork.sendRequestAuthSocket() manually only when login/token refresh happens after this connect.
 });
 
 GNNetwork.subscriberOnDisconnectHandler(() => {
@@ -256,7 +241,7 @@ GNNetwork.connectSocket(() => {
 
 ### Pitfalls
 
-- Quên `sendRequestAuthSocket()` sau connect → event handler không bind userId → server không push event riêng của user đến.
+- Nếu socket connect trước khi login/token refresh, cần gọi `sendRequestAuthSocket()` sau khi token có trong cache để re-auth thủ công.
 - `subscriberOnConnectHandler` gắn MULTIPLE callback, mỗi lần reconnect đều fire tất cả. Dùng `unscriberOnConnectHandler` khi cleanup.
 - `connectSocket()` gọi trước `init()` → crash.
 
@@ -276,19 +261,20 @@ GNNetwork.connectSocket(() => {
 import { OnGamePlayerFriendUpdateEventHandler, FriendStatus } from "@xmobitea/gn-typescript-client";
 
 OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
-  // payload.friends: Array<GamePlayerFriendUpdateItem>
-  for (const f of payload.friends ?? []) {
-    switch (f.friendStatus) {
-      case FriendStatus.Accepted: {
+  // payload.playerFriends: Array<GenericModels.FriendItem>
+  for (const f of payload.playerFriends ?? []) {
+    switch (f.status) {
+      case FriendStatus.Friend: {
         upsertFriendInUI(f);
         break;
       }
-      case FriendStatus.Pending: {
+      case FriendStatus.WaitingAccept:
+      case FriendStatus.SentRequestAndWaitingAccept: {
         showFriendRequest(f);
         break;
       }
-      case FriendStatus.Removed: {
-        removeFriendFromUI(f.gamePlayerId);
+      case FriendStatus.NotFriend: {
+        removeFriendFromUI(f.friendId);
         break;
       }
     }
@@ -297,7 +283,7 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 
 // Cleanup khi user logout hoặc navigate đi
 function unsubscribe() {
-  OnGamePlayerFriendUpdateEventHandler.onUpdate = null as any;
+  OnGamePlayerFriendUpdateEventHandler.onUpdate = () => {};
 }
 ```
 
@@ -319,7 +305,7 @@ function unsubscribe() {
 
 **Prerequisites:** đã login + connect socket + là member của `groupId`.
 
-**APIs used:** [`OnGroupMessageUpdateEventHandler`](reference/EVENTS.md#ongroupmessageupdateeventhandler), [`GNNetwork.group.addGroupMessageAsync`](reference/API_GROUP.md).
+**APIs used:** [`OnGroupMessageUpdateEventHandler`](reference/EVENTS.md#ongroupmessageupdateeventhandler), [`GNNetwork.group.sendGroupMessageAsync`](reference/API_GROUP.md).
 
 ### Code
 
@@ -329,6 +315,7 @@ import {
   OnGroupMessageUpdateEventHandler,
   ReturnCode,
   ErrorCode,
+  GroupModels,
 } from "@xmobitea/gn-typescript-client";
 
 // 1. Subscribe incoming messages
@@ -341,10 +328,12 @@ OnGroupMessageUpdateEventHandler.onUpdate = (payload) => {
 
 // 2. Send a new message
 async function sendGroupChat(groupId: string, text: string) {
-  const res = await GNNetwork.group.addGroupMessageAsync({
-    groupId,
-    content: text,
-  } as any);
+  const request = new GroupModels.SendGroupMessageRequestData();
+  request.senderId = GNNetwork.getAuthenticateStatus().getUserId();
+  request.groupId = groupId;
+  request.message = text;
+
+  const res = await GNNetwork.group.sendGroupMessageAsync(request);
 
   if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) {
     console.warn("send failed", res.errorCode, res.debugMessage);
@@ -356,8 +345,8 @@ async function sendGroupChat(groupId: string, text: string) {
 
 ### Return paths
 
-- Response `addGroupMessageAsync` trả về nhanh khi server đã nhận — event `OnGroupMessageUpdate` sẽ fire cho TẤT CẢ member trong group (bao gồm sender).
-- `ErrorCode.PermissionDenied` → user không phải member hoặc group không cho post.
+- Response `sendGroupMessageAsync` trả về nhanh khi server đã nhận — event `OnGroupMessageUpdate` sẽ fire cho TẤT CẢ member trong group (bao gồm sender).
+- `ErrorCode.PlayerNotMember` hoặc `ReturnCode.OperationNotAllow` → user không phải member hoặc secret thiếu permission gửi message.
 - `ErrorCode.GroupNotFound` → `groupId` sai.
 
 ### Pitfalls
@@ -373,7 +362,7 @@ async function sendGroupChat(groupId: string, text: string) {
 
 **Prerequisites:** đã login + connect socket.
 
-**APIs used:** `GNNetwork.group.joinGroupAsync`, `GNNetwork.group.leaveGroupAsync`, `GNNetwork.group.server.removeMemberAsync`, [`OnGroupMemberUpdateEventHandler`](reference/EVENTS.md#ongroupmemberupdateeventhandler).
+**APIs used:** `GNNetwork.gamePlayer.joinGroupAsync`, `GNNetwork.gamePlayer.leaveGroupAsync`, `GNNetwork.group.server.removeMemberAsync`, [`OnGroupMemberUpdateEventHandler`](reference/EVENTS.md#ongroupmemberupdateeventhandler).
 
 ### Code
 
@@ -381,44 +370,43 @@ async function sendGroupChat(groupId: string, text: string) {
 import {
   GNNetwork,
   OnGroupMemberUpdateEventHandler,
-  GroupStatus,
   ReturnCode,
   ErrorCode,
+  GamePlayerModels,
 } from "@xmobitea/gn-typescript-client";
 
 OnGroupMemberUpdateEventHandler.onUpdate = (payload) => {
   if (payload.groupId !== currentGroupId) return;
   for (const m of payload.members ?? []) {
-    switch (m.groupStatus) {
-      case GroupStatus.Joined:
-        roster.upsert(m);
-        break;
-      case GroupStatus.Left:
-      case GroupStatus.Kicked:
-        roster.remove(m.userId);
-        break;
-    }
+    // MemberItem.status is backend-defined; update idempotently and resync roster after reconnect.
+    roster.upsert(m);
   }
 };
 
 async function join(groupId: string) {
-  const res = await GNNetwork.group.joinGroupAsync({ groupId } as any);
+  const request = new GamePlayerModels.JoinGroupRequestData();
+  request.groupId = groupId;
+
+  const res = await GNNetwork.gamePlayer.joinGroupAsync(request);
   if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) {
-    if (res.errorCode === ErrorCode.GroupFull) return "full";
+    if (res.errorCode === ErrorCode.GroupNotFound) return "group_not_found";
     return "error";
   }
   return "ok";
 }
 
 async function leave(groupId: string) {
-  await GNNetwork.group.leaveGroupAsync({ groupId } as any);
+  const request = new GamePlayerModels.LeaveGroupRequestData();
+  request.groupId = groupId;
+
+  await GNNetwork.gamePlayer.leaveGroupAsync(request);
 }
 ```
 
 ### Return paths
 
 - Join OK → event `OnGroupMemberUpdate` fire với status `Joined`.
-- `ErrorCode.GroupFull` / `ErrorCode.AlreadyJoined` / `ErrorCode.GroupClosed` → tùy backend config.
+- `ErrorCode.GroupNotFound`, `ErrorCode.GamePlayerNotFound`, `ErrorCode.PlayerBan`, hoặc `ReturnCode.OperationNotAllow` → xử lý theo context.
 
 ### Pitfalls
 
@@ -441,14 +429,18 @@ import {
   GNNetwork,
   ReturnCode,
   ErrorCode,
+  GNHashtable,
+  MultiplayerModels,
   MatchmakingTicketStatus,
 } from "@xmobitea/gn-typescript-client";
 
 async function findMatch(queueName: string) {
-  const createRes = await GNNetwork.multiplayer.createMatchmakingTicketAsync({
-    queueName,
-    playerAttributes: {},
-  } as any);
+  const createRequest = new MultiplayerModels.CreateMatchmakingTicketRequestData();
+  createRequest.queueName = queueName;
+  createRequest.giveUpAfterSeconds = 60;
+  createRequest.attribute = GNHashtable.builder().build();
+
+  const createRes = await GNNetwork.multiplayer.createMatchmakingTicketAsync(createRequest);
   if (createRes.returnCode !== ReturnCode.Ok || createRes.errorCode !== ErrorCode.Ok) {
     return null;
   }
@@ -457,20 +449,28 @@ async function findMatch(queueName: string) {
   // Poll mỗi 2s cho tới khi matched hoặc timeout
   for (let i = 0; i < 30; i++) {
     await new Promise((r) => setTimeout(r, 2000));
-    const poll = await GNNetwork.multiplayer.getMatchmakingTicketAsync({ ticketId } as any);
+    const pollRequest = new MultiplayerModels.GetMatchmakingTicketRequestData();
+    pollRequest.ticketId = ticketId;
+    pollRequest.returnMember = true;
+
+    const poll = await GNNetwork.multiplayer.getMatchmakingTicketAsync(pollRequest);
     if (poll.returnCode !== ReturnCode.Ok || poll.errorCode !== ErrorCode.Ok) continue;
 
-    const status = poll.responseData.ticketStatus;
+    const ticket = poll.responseData.matchmakingTicket;
+    const status = ticket.status;
     if (status === MatchmakingTicketStatus.Matched) {
-      return poll.responseData.matchId;
+      return ticket.matchId;
     }
-    if (status === MatchmakingTicketStatus.Cancelled || status === MatchmakingTicketStatus.Failed) {
+    if (status === MatchmakingTicketStatus.Canceled) {
       return null;
     }
   }
 
   // Timeout: cancel ticket để queue không giữ slot
-  await GNNetwork.multiplayer.cancelMatchmakingTicketAsync({ ticketId } as any);
+  const cancelRequest = new MultiplayerModels.CancelMatchmakingTicketRequestData();
+  cancelRequest.ticketId = ticketId;
+
+  await GNNetwork.multiplayer.cancelMatchmakingTicketAsync(cancelRequest);
   return null;
 }
 ```
@@ -478,8 +478,8 @@ async function findMatch(queueName: string) {
 ### Return paths
 
 - `MatchmakingTicketStatus.Matched` → có `matchId`, chuyển sang scene game.
-- `Queued` → tiếp tục poll.
-- `Cancelled`/`Failed` → abort.
+- `WaitingForMembers`, `WaitingForMatch`, `WaitingForServer` → tiếp tục poll.
+- `Canceled` → abort.
 
 ### Pitfalls
 
@@ -494,37 +494,41 @@ async function findMatch(queueName: string) {
 
 **Prerequisites:** client login; `secretKey` có `permission rules` là `admin` hoặc `server` cấu hình ở backend/CloudScript.
 
-**APIs used:** [`GNNetwork.inventory.getInventoryItemListAsync`](reference/API_INVENTORY.md) (client), `GNNetwork.inventory.server.addInventoryItemAsync` (server).
+**APIs used:** [`GNNetwork.gamePlayer.getPlayerInventoryAsync`](reference/API_GAME_PLAYER.md) (client), `GNNetwork.gamePlayer.server.createPlayerItemAsync` (server).
 
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, GamePlayerModels } from "@xmobitea/gn-typescript-client";
 
 // Client: xem inventory của chính mình
 async function loadMyInventory() {
-  const res = await GNNetwork.inventory.getInventoryItemListAsync({
-    ownerId: GNNetwork.getAuthenticateStatus().getUserId(),
-  } as any);
+  const request = new GamePlayerModels.GetPlayerInventoryRequestData();
+  request.itemCatalogIds = ["weapon"];
+
+  const res = await GNNetwork.gamePlayer.getPlayerInventoryAsync(request);
   if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return [];
-  return res.responseData.items ?? [];
+  return res.responseData.infoResponseParameters?.playerInventories ?? [];
 }
 
-// Server: grant 1 sword cho player targetUserId
+// Server: create/grant 1 sword cho player targetUserId
 async function grantSword(targetUserId: string) {
-  const res = await GNNetwork.inventory.server.addInventoryItemAsync({
-    ownerId: targetUserId,
-    itemId: "sword_001",
-    amount: 1,
-  } as any);
+  const request = new GamePlayerModels.ServerCreatePlayerItemRequestData();
+  request.userId = targetUserId;
+  request.catalogId = "weapon";
+  request.classId = "sword_001";
+  request.displayName = "Starter Sword";
+  request.amount = 1;
+
+  const res = await GNNetwork.gamePlayer.server.createPlayerItemAsync(request);
   return res.returnCode === ReturnCode.Ok && res.errorCode === ErrorCode.Ok;
 }
 ```
 
 ### Return paths
 
-- Client query → chỉ thấy inventory của chính mình (backend enforce ownerId = authToken.userId).
-- Server grant → nếu `secretKey` sai → `ReturnCode.OperationNotAllow`.
+- Client query → không truyền `userId` nên backend resolve inventory của game player đang authenticate.
+- Server grant → nếu `secretKey` sai/thiếu → `ReturnCode.SecretInvalid`; nếu secret hợp lệ nhưng thiếu flag → `ReturnCode.OperationNotAllow`.
 
 ### Pitfalls
 
@@ -532,30 +536,44 @@ async function grantSword(targetUserId: string) {
 
 ---
 
-## Scenario 11: Store — list catalog → purchase → validate receipt
+## Scenario 11: Store list catalog → purchase → validate receipt
 
 **Problem:** User mở shop → chọn item → mua → xác nhận nhận hàng.
 
 **Prerequisites:** đã login.
 
-**APIs used:** [`GNNetwork.storeInventory.getStoreItemListAsync`](reference/API_STORE_INVENTORY.md), `buyStoreItemAsync`, `server.validateReceiptAsync`.
+**APIs used:** [`GNNetwork.storeInventory.getStoreItemsWithTagAsync`](reference/API_STORE_INVENTORY.md), `buyStoreItemAsync`, `server.validateGooglePlayStoreReceiptAsync` / `server.validateAppleAppStoreReceiptAsync`.
 
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, OwnerType, StoreInventoryModels } from "@xmobitea/gn-typescript-client";
 
 async function listCatalog() {
-  const res = await GNNetwork.storeInventory.getStoreItemListAsync({} as any);
+  const infoRequestParam = new StoreInventoryModels.InfoRequestParam();
+  infoRequestParam.displayName = true;
+  infoRequestParam.tags = true;
+
+  const request = new StoreInventoryModels.GetStoreItemsWithTagRequestData();
+  request.key = "visible";
+  request.value = "true";
+  request.infoRequestParam = infoRequestParam;
+  request.skip = 0;
+  request.limit = 50;
+
+  const res = await GNNetwork.storeInventory.getStoreItemsWithTagAsync(request);
   if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return [];
-  return res.responseData.items ?? [];
+  return res.responseData.results ?? [];
 }
 
 async function buyItem(storeItemId: string) {
-  const res = await GNNetwork.storeInventory.buyStoreItemAsync({
-    storeItemId,
-    amount: 1,
-  } as any);
+  const request = new StoreInventoryModels.BuyStoreItemRequestData();
+  request.storeId = storeItemId;
+  request.id = GNNetwork.getAuthenticateStatus().getUserId();
+  request.type = OwnerType.GamePlayer;
+  request.log = "shop_purchase";
+
+  const res = await GNNetwork.storeInventory.buyStoreItemAsync(request);
 
   if (res.returnCode !== ReturnCode.Ok) return "transport_error";
   switch (res.errorCode) {
@@ -563,10 +581,11 @@ async function buyItem(storeItemId: string) {
       return "ok";
     case ErrorCode.NotEnoughCurrency:
       return "not_enough_currency";
-    case ErrorCode.StoreItemOutOfStock:
-      return "out_of_stock";
+    case ErrorCode.StoreItemRemoved:
+    case ErrorCode.CanNotBuyThisStoreItem:
+      return "not_buyable";
     default:
-      return "unknown_" + res.errorCode;
+      return "unhandled_" + res.errorCode;
   }
 }
 ```
@@ -575,15 +594,15 @@ async function buyItem(storeItemId: string) {
 
 - `ErrorCode.Ok` → item đã grant vào inventory player; currency đã trừ.
 - `ErrorCode.NotEnoughCurrency` (8) → cần topup.
-- `ErrorCode.StoreItemOutOfStock` → item limited edition đã hết.
+- `ErrorCode.StoreItemRemoved` hoặc `ErrorCode.CanNotBuyThisStoreItem` → item không còn mua được ở state hiện tại.
 
 ### Pitfalls
 
-- In-app purchase (IAP) có receipt native — bắt buộc gửi qua `server.validateReceiptAsync` (CloudScript) trước khi grant item. Không grant trực tiếp từ client.
+- In-app purchase (IAP) có receipt native — validate qua method cụ thể theo store, ví dụ `storeInventory.server.validateGooglePlayStoreReceiptAsync` hoặc `validateAppleAppStoreReceiptAsync`, trước khi tin kết quả grant.
 
 ---
 
-## Scenario 12: CloudScript execute + customTags
+## Scenario 12: CloudScript execute function + customTags
 
 **Problem:** Trigger function server-side custom (ví dụ "claim daily reward") từ client.
 
@@ -594,17 +613,18 @@ async function buyItem(storeItemId: string) {
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode, ExecuteResponseStatus } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, CloudScriptModels, ExecuteResponseStatus, GNHashtable } from "@xmobitea/gn-typescript-client";
 
 async function claimDailyReward() {
+  const request = new CloudScriptModels.ExecuteFunctionRequestData();
+  request.functionName = "claimDailyReward";
+  request.functionParameters = { date: new Date().toISOString().slice(0, 10) };
+
   const res = await GNNetwork.cloudScript.executeFunctionAsync(
-    {
-      functionName: "claimDailyReward",
-      functionParameter: { date: new Date().toISOString().slice(0, 10) },
-    } as any,
+    request,
     undefined,        // overrideAuthToken
     undefined,        // overrideSecretKey
-    { source: "daily_popup" } as any, // customTags — backend log/route bằng tag này
+    GNHashtable.builder().add("source", "daily_popup").build(), // customTags
     30,               // timeout (seconds)
   );
 
@@ -612,22 +632,22 @@ async function claimDailyReward() {
 
   const exec = res.responseData;
   if (exec.status !== ExecuteResponseStatus.Ok) {
-    console.warn("function threw", exec.error);
+    console.warn("function failed", exec.errorMessage);
     return null;
   }
-  return exec.result; // raw payload từ function
+  return exec.functionResult; // raw payload từ function
 }
 ```
 
 ### Return paths
 
-- `ExecuteResponseStatus.Ok` → function chạy xong, `result` là value function trả về.
-- `ExecuteResponseStatus.Error` → function throw; `exec.error` chứa message.
-- `ReturnCode.CloudScriptFunctionNotFound` → function chưa publish hoặc sai tên.
+- `ExecuteResponseStatus.Ok` → function chạy xong, `functionResult` là value function trả về.
+- `ExecuteResponseStatus.Exception` → function throw; `exec.errorMessage` chứa message.
+- `ExecuteResponseStatus.FunctionNameNotFound` → function chưa publish/export hoặc sai tên.
 
 ### Pitfalls
 
-- `customTags` là `GNHashtable` — trong TS dùng object literal `{ key: value }`. Giá trị primitive hoặc string; không nhét object lồng.
+- `customTags` là `GNHashtable`; dùng `GNHashtable.builder()` để giữ đúng public type. Giá trị nên là primitive hoặc string; không nhét object lồng.
 - Timeout function mặc định 20s — function nặng (query DB lớn) nên tăng timeout param.
 
 ---
@@ -636,17 +656,25 @@ async function claimDailyReward() {
 
 **Problem:** Đang ở role admin/server, cần gọi API như một player cụ thể (impersonate) hoặc override secret key của request cụ thể.
 
-**APIs used:** mọi method — param `overrideAuthToken`, `overrideSecretKey` là param thứ 3-4.
+**APIs used:** mọi method — async form nhận `overrideAuthToken`, `overrideSecretKey` là param thứ 2-3; callback form là param thứ 3-4 vì có `onResponse`.
 
 ### Code
 
 ```typescript
-import { GNNetwork } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ContentModels, MasterPlayerModels } from "@xmobitea/gn-typescript-client";
 
 // Impersonate player để query profile của họ
 async function fetchProfileAs(playerAuthToken: string, playerId: string) {
-  const res = await GNNetwork.masterPlayer.getMasterPlayerAsync(
-    { masterPlayerId: playerId } as any,
+  const infoRequestParam = new MasterPlayerModels.InfoRequestParam();
+  infoRequestParam.displayName = true;
+  infoRequestParam.avatar = true;
+
+  const request = new MasterPlayerModels.GetPlayerInformationRequestData();
+  request.userId = playerId;
+  request.infoRequestParam = infoRequestParam;
+
+  const res = await GNNetwork.masterPlayer.getPlayerInformationAsync(
+    request,
     playerAuthToken,   // overrideAuthToken — thay token cache
     undefined,         // overrideSecretKey — giữ secret key mặc định của role
     undefined,         // customTags
@@ -657,8 +685,11 @@ async function fetchProfileAs(playerAuthToken: string, playerId: string) {
 
 // Dùng secret key khác (ví dụ một game khác cùng backend)
 async function callOtherGame(gameSecret: string) {
+  const request = new ContentModels.GetContentDataRequestData();
+  request.keys = ["config"];
+
   return GNNetwork.content.getContentDataAsync(
-    { key: "config" } as any,
+    request,
     undefined,
     gameSecret,
   );
@@ -673,7 +704,7 @@ async function callOtherGame(gameSecret: string) {
 ### Pitfalls
 
 - Override không persist — mỗi request phải truyền lại.
-- Truyền `overrideAuthToken = ""` (rỗng) → request đi KHÔNG CÓ auth header, fail với `AuthenticateFailed`. Muốn skip auth hẳn (ví dụ public endpoint) thì truyền `null`/`undefined`.
+- Truyền `overrideAuthToken = ""` (rỗng) → request đi KHÔNG CÓ auth header, thường fail với `ReturnCode.OperationNotAuthorized`. Muốn dùng auth cache hiện tại thì truyền `null`/`undefined`.
 
 ---
 
@@ -690,32 +721,30 @@ async function callOtherGame(gameSecret: string) {
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode, AuthenticateStatus } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, DashboardModels } from "@xmobitea/gn-typescript-client";
 
 async function adminLogin(username: string, password: string) {
-  const res = await GNNetwork.dashboard.loginByAdminAccountAsync({
-    username,
-    password,
-  } as any);
+  const request = new DashboardModels.LoginByAdminAccountRequestData();
+  request.username = username;
+  request.password = password;
+
+  const res = await GNNetwork.dashboard.loginByAdminAccountAsync(request);
   if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return false;
 
-  const status = new AuthenticateStatus();
-  status.setAuthToken(res.responseData.authToken);
-  status.setUserId(res.responseData.adminAccountId);
-  GNNetwork.setNewAuthenticateStatus(status);
+  // Dashboard response carries authToken; SDK caches it for later dashboard calls.
   return true;
 }
 
 async function listGames() {
-  const res = await GNNetwork.dashboard.getGameListAsync({} as any);
+  const res = await GNNetwork.dashboard.getGameListAsync(new DashboardModels.GetGameListRequestData());
   return res.responseData?.games ?? [];
 }
 ```
 
 ### Return paths
 
-- Happy → admin token cached; mọi dashboard method sau đó dùng token này.
-- `ErrorCode.AccountNotFound` / `ErrorCode.PasswordIncorrect` → giống player login.
+- Happy → admin token được SDK cache; mọi dashboard method sau đó dùng token này.
+- `ErrorCode.AccountNotFound` / `ErrorCode.AccountPasswordWrong` → giống player login.
 
 ### Pitfalls
 
@@ -735,12 +764,13 @@ import { GNNetwork, AuthenticateStatus, OnGroupMessageUpdateEventHandler, OnGrou
 
 function logoutAndCleanup() {
   // 1. Clear all event handler callbacks (chúng là static, không tự gc)
-  OnGroupMessageUpdateEventHandler.onUpdate = null as any;
-  OnGroupMemberUpdateEventHandler.onUpdate = null as any;
-  OnGamePlayerFriendUpdateEventHandler.onUpdate = null as any;
-  OnGamePlayerGroupUpdateEventHandler.onUpdate = null as any;
-  OnCharacterPlayerFriendUpdateEventHandler.onUpdate = null as any;
-  OnCharacterPlayerGroupUpdateEventHandler.onUpdate = null as any;
+  const noop = () => {};
+  OnGroupMessageUpdateEventHandler.onUpdate = noop;
+  OnGroupMemberUpdateEventHandler.onUpdate = noop;
+  OnGamePlayerFriendUpdateEventHandler.onUpdate = noop;
+  OnGamePlayerGroupUpdateEventHandler.onUpdate = noop;
+  OnCharacterPlayerFriendUpdateEventHandler.onUpdate = noop;
+  OnCharacterPlayerGroupUpdateEventHandler.onUpdate = noop;
 
   // 2. Close socket
   GNNetwork.disconnectSocket(() => {
@@ -799,12 +829,12 @@ Gặp returnCode === OperationNotAllow
 │
 ├─ Bước 4: Check secret active có flag đó cho operation đang gọi không?
 │    → xem dashboard GearN Server hoặc hỏi backend admin
-│    → danh sách operation: https://docs.gearn.net/permissionRules
+│    → danh sách operation: reference/PERMISSION_RULES.md + API_<GROUP>.md
 │
 └─ Bước 5: Nếu không có flag, chọn 1 trong 3 action:
      (a) Dùng secret khác qua GNServerSettings.secretKey (cần restart process)
      (b) Override per-request: truyền overrideSecretKey vào method
-     (c) Yêu cầu backend admin bật flag tương ứng cho secret hiện tại
+     (c) Yêu cầu backend admin bật flag trong GearN Dashboard tương ứng cho secret hiện tại
 ```
 
 ### Code
@@ -850,7 +880,7 @@ async function grantItem(userId: string, itemId: string, amount: number) {
 ### Return paths
 
 - `OperationNotAllow` → **không retry cùng secret**, đó là config fix.
-- Sau fallback `overrideSecretKey` vẫn `OperationNotAllow` → secret admin cũng thiếu flag, phải liên hệ backend admin.
+- Sau fallback `overrideSecretKey` vẫn `OperationNotAllow` → secret admin cũng thiếu flag, phải liên hệ backend admin thêm flag trong GearN Dashboard.
 - Nếu chuyển sang `SecretInvalid` sau fallback → override secret sai format / không khớp game context (khác lỗi, xem [RULES § 5](RULES.md#5-phân-biệt-3-returncode-dễ-nhầm)).
 
 ### Pitfalls
@@ -866,7 +896,7 @@ async function grantItem(userId: string, itemId: string, amount: number) {
 - Mapping rule đầy đủ: [RULES § 6.1](RULES.md#61-mapping-route-target--required-flag)
 - Scenario điển hình (5 case): [RULES § 6.3](RULES.md#63-scenario-điển-hình-trigger-operationnotallow)
 - Checklist nhanh: [RULES § 6.4](RULES.md#64-checklist-nhanh-khi-gặp-returncodeoperationnotallow)
-- Danh sách operation per-domain: [docs.gearn.net/permissionRules](https://docs.gearn.net/permissionRules)
+- Danh sách operation per-domain: [reference/PERMISSION_RULES.md](reference/PERMISSION_RULES.md)
 
 ---
 
@@ -875,8 +905,8 @@ async function grantItem(userId: string, itemId: string, amount: number) {
 | Pattern | Khi nào | Tham khảo |
 |---------|---------|-----------|
 | Check `returnCode` → `errorCode` → đọc `responseData` | Mọi `*Async()` | [ERROR_HANDLING.md](reference/ERROR_HANDLING.md) |
-| `setNewAuthenticateStatus` sau login/refresh | Bất kỳ flow tạo token mới | Scenario 2, 3, 4, 14 |
-| `connectSocket` → `sendRequestAuthSocket` → subscribe event handler | Realtime | Scenario 5, 6, 7, 8 |
+| SDK auto-cache `authToken` / `userId` sau authenticate success | Login/refresh player; dashboard login cache `authToken` | Scenario 2, 3, 4, 14 |
+| Subscribe event handler trước `connectSocket`; chỉ gọi `sendRequestAuthSocket` khi cần re-auth thủ công | Realtime | Scenario 5, 6, 7, 8 |
 | `.server` / `.admin` chỉ ở backend, không bao giờ ở frontend | Mọi cross-role call | Scenario 10, 13 |
 | `customTags` để backend log/route | Khi cần phân loại source | Scenario 12 |
-| Clear event handler + disconnectSocket khi logout | Unload/logout | Scenario 15 |
+| Clear event handler + `disconnectSocket` + `setNewAuthenticateStatus(empty)` khi logout | Unload/logout | Scenario 15 |

@@ -2,7 +2,7 @@
 
 Inventory item metadata, ownership, amount, statistics, activity log.
 
-Domain guide: [guides/INVENTORY.md](../guides/INVENTORY.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#inventory).
+Domain guide: [guides/INVENTORY.md](../guides/INVENTORY.md). DTO shapes: [dto/INVENTORY.md](dto/INVENTORY.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -161,7 +161,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.inventory.addSegmentAsync({ /* InventoryModels.AddSegmentRequestData */ } as any);
+// requestData: InventoryModels.AddSegmentRequestData đã build theo dto/INVENTORY.md
+const res = await GNNetwork.inventory.addSegmentAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

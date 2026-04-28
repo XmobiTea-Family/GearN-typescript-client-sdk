@@ -2,7 +2,7 @@
 
 Player login (account, social, device id), register, refresh auth token.
 
-Domain guide: [guides/AUTHENTICATE.md](../guides/AUTHENTICATE.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#authenticate).
+Domain guide: [guides/AUTHENTICATE.md](../guides/AUTHENTICATE.md). DTO shapes: [dto/AUTHENTICATE.md](dto/AUTHENTICATE.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -67,7 +67,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.authenticate.loginByAccountAsync({ /* AuthenticateModels.LoginByAccountRequestData */ } as any);
+// requestData: AuthenticateModels.LoginByAccountRequestData đã build theo dto/AUTHENTICATE.md
+const res = await GNNetwork.authenticate.loginByAccountAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

@@ -9,8 +9,8 @@ File này là canonical source cho mọi rule cross-cutting: route/permission, s
 ## 1. Init
 
 - Public entrypoint duy nhất là static class `GNNetwork` (import từ `@xmobitea/gn-typescript-client`).
-- Bắt buộc gọi `GNNetwork.init(new GNServerSettings({...}))` **1 lần** ở bootstrap của mỗi app session.
-- `init()` idempotent — lần thứ 2 bị ignore. Muốn đổi config phải restart process.
+- Bắt buộc tạo `GNServerSettings`, gọi `settings.config({...})`, rồi `GNNetwork.init(settings)` **1 lần** ở bootstrap của mỗi app session.
+- `init()` idempotent — lần thứ 2 bị ignore. Muốn đổi snapshot config toàn cục nên restart process. Mutate cùng `settings` object sau init chỉ ảnh hưởng một số request mới và không tự reconnect socket.
 - Gọi API trước khi init → namespace `undefined` / `TypeError`.
 - Config field: xem [reference/CONFIG.md](reference/CONFIG.md).
 
@@ -73,9 +73,9 @@ Rule cứng:
 
 ---
 
-## 4. `self` vs `other self` (chỉ áp dụng trên route `client`)
+## 4. `self` vs `other-self` (chỉ áp dụng trên route `client`)
 
-Backend suy ra thêm target context `self / other self` cho route `client`:
+Backend suy ra thêm target context `self / other-self` cho route `client`:
 
 | Domain | `self` = |
 |---|---|
@@ -85,12 +85,12 @@ Backend suy ra thêm target context `self / other self` cho route `client`:
 
 Rule cứng:
 
-- `self / other self` **không** phải `server / admin`. `server / admin` là route đặc quyền riêng.
+- `self / other-self` **không** phải `server / admin`. `server / admin` là route đặc quyền riêng.
 - Không vì muốn thao tác lên data user khác mà tự động chuyển sang `.server` / `.admin`.
 - Ví dụ đúng:
   - App player gọi `masterPlayer.getPlayerInformationAsync()` cho user đang login → `client + self`.
-  - App player gọi `masterPlayer.getPlayerInformationAsync(otherUserId)` → `client + other self`.
-  - Game server gọi `gamePlayer.server.changePlayerCurrencyAsync(...)` → `server` (không phải `client + other self`).
+  - App player gọi `masterPlayer.getPlayerInformationAsync(otherUserId)` → `client + other-self`.
+  - Game server gọi `gamePlayer.server.changePlayerCurrencyAsync(...)` → `server` (không phải `client + other-self`).
   - GM tool gọi `inventory.admin.setRemoveStatusAsync(...)` → `admin`.
 
 ---
@@ -118,20 +118,20 @@ GearN Server map quyền theo từng domain + operation (ví dụ `masterPlayer.
 | `serverSelfEnable` | Cho phép thực thi qua route `server` |
 | `adminSelfEnable` | Cho phép thực thi qua route `admin` |
 
-Danh sách operation đầy đủ theo domain: **https://docs.gearn.net/permissionRules** (authoritative source, backend admin config qua dashboard).
+Danh sách operation/flag offline: [reference/PERMISSION_RULES.md](reference/PERMISSION_RULES.md) + `docs/reference/API_<GROUP>.md`. Backend GearN Server / dashboard vẫn là runtime source-of-truth cho secret key nào đang có flag nào.
 
 ### 6.1 Mapping (route, target) → required flag
 
-Đây là quy tắc **uniform** cho mọi operation. Kết hợp với [§ 4 self / other self](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client) để xác định target.
+Đây là quy tắc **uniform** cho mọi operation. Kết hợp với [§ 4 self / other-self](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client) để xác định target.
 
 | Caller gọi | Target | Flag cần trên secret key |
 |---|---|---|
 | `GNNetwork.<group>.<method>()` — bỏ userId hoặc userId trùng auth | Self | `selfEnable` của operation |
-| `GNNetwork.<group>.<method>(otherUserId)` | Other self | `otherSelfEnable` của operation |
+| `GNNetwork.<group>.<method>(otherUserId)` | Other-self | `otherSelfEnable` của operation |
 | `GNNetwork.<group>.server.<method>(...)` | Bất kỳ | `serverSelfEnable` của operation |
 | `GNNetwork.<group>.admin.<method>(...)` | Bất kỳ | `adminSelfEnable` của operation |
 
-Ngoại lệ: domain không có ownership (`ContentApi`, `StoreInventoryApi`, `MultiplayerApi`, `CloudScriptApi`) — `self` / `other self` không áp dụng trên route `client`; backend áp rule theo contract operation.
+Ngoại lệ: domain không có ownership (`ContentApi`, `StoreInventoryApi`, `MultiplayerApi`, `CloudScriptApi`) — `self` / `other-self` không áp dụng trên route `client`; backend áp rule theo contract operation.
 
 ### 6.2 Ai config flag, client có đổi được không?
 
@@ -140,24 +140,24 @@ Ngoại lệ: domain không có ownership (`ContentApi`, `StoreInventoryApi`, `M
   1. Dùng `secretKey` khác trong `GNServerSettings` (cấu hình từ bootstrap).
   2. Truyền `overrideSecretKey` per-request.
   3. Yêu cầu backend admin bật flag cho secret hiện tại.
-- Danh sách operation theo domain (authoritative): [docs.gearn.net/permissionRules](https://docs.gearn.net/permissionRules).
+- Danh sách operation theo domain: ưu tiên [reference/PERMISSION_RULES.md](reference/PERMISSION_RULES.md) và `docs/reference/API_<GROUP>.md` trong repo; chỉ dùng external permission mirror khi cần đối chiếu online.
 
 ### 6.3 Scenario điển hình trigger `OperationNotAllow`
 
 | # | Code thực tế | Root cause | Fix |
 |---|---|---|---|
-| 1 | App player: `masterPlayer.getPlayerInformationAsync(otherUserId)` | Secret client không có `otherSelfEnable` cho `masterPlayer.getPlayerInformation` | Backend admin bật `otherSelfEnable`, hoặc chuyển flow sang server-side |
+| 1 | App player: `masterPlayer.getPlayerInformationAsync(otherUserId)` | Secret client không có `otherSelfEnable` cho `masterPlayer.getPlayerInformation` | Backend admin bật `otherSelfEnable` trong GearN Dashboard, hoặc chuyển flow sang server-side |
 | 2 | Script dev: `inventory.admin.setAmountAsync(...)` với secret client thường | Secret không có `adminSelfEnable` cho `inventory.setAmount` | Dùng secret admin qua `overrideSecretKey`, hoặc cấu hình `GNServerSettings.secretKey` = secret admin |
-| 3 | Game server: `GNNetwork.group.joinGroupAsync(...)` (route client) | Secret server không có `selfEnable` cho `group.joinGroup` | Chuyển sang `GNNetwork.group.server.joinGroupAsync(...)` — dùng `serverSelfEnable` |
+| 3 | Game server: `GNNetwork.gamePlayer.joinGroupAsync(...)` (route client) | Secret server không có `selfEnable` cho `gamePlayer.joinGroup` | Chuyển sang `GNNetwork.gamePlayer.server.joinGroupAsync(...)` — dùng `serverSelfEnable` |
 | 4 | Backend worker: `gamePlayer.server.changePlayerCurrencyAsync(...)` bỏ `userId` | Route `server`/`admin` yêu cầu `userId` rõ ràng (xem [§ 4](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)) | Truyền `userId` target |
-| 5 | Admin tool: `masterPlayer.admin.setPlayerBanAsync(...)` | Secret admin bị backend giới hạn operation đó | Hỏi backend admin bật `adminSelfEnable` cho `masterPlayer.setPlayerBan` |
+| 5 | Admin tool: `masterPlayer.admin.setPlayerBanAsync(...)` | Secret admin bị backend giới hạn operation đó | Hỏi backend admin bật `adminSelfEnable` cho `masterPlayer.setPlayerBan` trong GearN Dashboard |
 
 ### 6.4 Checklist nhanh khi gặp `ReturnCode.OperationNotAllow`
 
 Theo đúng thứ tự:
 
 1. Xác định route đang gọi (`client` / `.server` / `.admin`).
-2. Xác định target là `self` hay `other self` (xem [§ 4](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)).
+2. Xác định target là `self` hay `other-self` (xem [§ 4](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)).
 3. Tra bảng § 6.1 → ra flag cần (ví dụ `otherSelfEnable`).
 4. Check secret key active có flag đó cho operation đang gọi không? → xem backend dashboard hoặc hỏi admin.
 5. Nếu không → 3 option ở § 6.2.
@@ -209,6 +209,13 @@ GNNetwork.<group>.<method>(requestData, onResponse?, overrideAuthToken?, overrid
 // Async (preferred)
 const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
 ```
+
+### 8.1 Build request DTO trong code copy-paste
+
+- Code tích hợp cuối cùng nên tạo instance DTO public: `const request = new <Group>Models.<Method>RequestData();`.
+- Set field trên instance đó rồi truyền vào `*Async(request)`.
+- Không dùng object literal rồi cast sang `RequestData`; pattern đó bỏ qua constructor/decorator và dễ làm AI sinh payload thiếu shape.
+- API reference có thể dùng tên biến `requestData` để rút gọn bảng method, nhưng guide/cookbook copy-paste phải dùng DTO instance cụ thể.
 
 | Param | Khi nào cần |
 |---|---|
@@ -266,6 +273,12 @@ Bảng hợp nhất — cột "Triệu chứng" mô tả lỗi runtime thường
 
 ## 11. Canonical sources (thứ tự ưu tiên)
 
+Khi có conflict, tách theo loại thông tin:
+
+- Rule cross-cutting (route, permission, socket, error): **RULES.md thắng**.
+- Method signature, DTO, enum: **API reference / DTO reference / ENUMS.md thắng**, fallback cuối là `dist/*.d.ts`.
+- Bundle generated như `llms-full.txt` không bao giờ thắng source docs.
+
 Khi sinh code:
 
 1. **API reference theo domain** (`docs/reference/API_<GROUP>.md`) — method signature, request DTO, async form, response class.
@@ -285,7 +298,7 @@ Chỉ đọc `src/` khi:
 ## Liên kết
 
 - [AI_CHEATSHEET.md](AI_CHEATSHEET.md) — one-page reference
-- [COOKBOOK.md](COOKBOOK.md) — 15 scenario end-to-end
+- [COOKBOOK.md](COOKBOOK.md) — 16 scenario end-to-end
 - [reference/API_INDEX.md](reference/API_INDEX.md) — bảng method mọi group
 - [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md) — full return/error code table
 - [reference/EVENTS.md](reference/EVENTS.md) — realtime event handler

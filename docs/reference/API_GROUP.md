@@ -2,7 +2,7 @@
 
 Group metadata, member roster, message stream, group-level currency/inventory/statistics.
 
-Domain guide: [guides/GROUP.md](../guides/GROUP.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#group).
+Domain guide: [guides/GROUP.md](../guides/GROUP.md). DTO shapes: [dto/GROUP.md](dto/GROUP.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -179,7 +179,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.group.addMemberAsync({ /* GroupModels.AddMemberRequestData */ } as any);
+// requestData: GroupModels.AddMemberRequestData đã build theo dto/GROUP.md
+const res = await GNNetwork.group.addMemberAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

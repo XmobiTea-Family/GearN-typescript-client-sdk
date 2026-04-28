@@ -2,7 +2,7 @@
 
 Matchmaking ticket lifecycle, queue statistics, match query.
 
-Domain guide: [guides/MULTIPLAYER.md](../guides/MULTIPLAYER.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#multiplayer).
+Domain guide: [guides/MULTIPLAYER.md](../guides/MULTIPLAYER.md). DTO shapes: [dto/MULTIPLAYER.md](dto/MULTIPLAYER.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -89,7 +89,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.multiplayer.cancelAllMatchmakingTicketAsync({ /* MultiplayerModels.CancelAllMatchmakingTicketRequestData */ } as any);
+// requestData: MultiplayerModels.CancelAllMatchmakingTicketRequestData đã build theo dto/MULTIPLAYER.md
+const res = await GNNetwork.multiplayer.cancelAllMatchmakingTicketAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

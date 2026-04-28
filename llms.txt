@@ -13,17 +13,18 @@ Rule canonical: [docs/RULES.md](docs/RULES.md). Đọc trước khi sinh code.
 
 ## Reference
 
-- [docs/reference/API_INDEX.md](docs/reference/API_INDEX.md): 11 API group, ~900+ method (bảng method → DTO → response class)
+- [docs/reference/API_INDEX.md](docs/reference/API_INDEX.md): 11 API group, 945 public async methods (bảng method → DTO → response class)
 - [docs/reference/DTO_INDEX.md](docs/reference/DTO_INDEX.md): 2506 DTO, grep target (đừng load full)
 - [docs/reference/dto/](docs/reference/dto/): DTO field-level theo từng domain
 - [docs/reference/ENUMS.md](docs/reference/ENUMS.md): giá trị numeric của mọi enum
 - [docs/reference/CONFIG.md](docs/reference/CONFIG.md): schema `GNServerSettings`
+- [docs/reference/PERMISSION_RULES.md](docs/reference/PERMISSION_RULES.md): permission route/target/flag offline
 - [docs/reference/EVENTS.md](docs/reference/EVENTS.md): 6 realtime event handler
 - [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md): pattern check `ReturnCode` + `ErrorCode`
 
 ## Cookbook
 
-- [docs/COOKBOOK.md](docs/COOKBOOK.md): 15 scenario end-to-end (init, login, socket, matchmaking, store, cloudscript, cleanup)
+- [docs/COOKBOOK.md](docs/COOKBOOK.md): 16 scenario end-to-end (init, login, socket, matchmaking, store, cloudscript, cleanup, diagnose permission)
 
 ## Guides (per domain)
 
@@ -43,4 +44,4 @@ Rule canonical: [docs/RULES.md](docs/RULES.md). Đọc trước khi sinh code.
 ## Optional
 
 - [README.MD](README.MD): full package README
-- [docs/llms-full.txt](docs/llms-full.txt): concatenated bundle (load nếu cần full context, ~270KB)
+- [docs/llms-full.txt](docs/llms-full.txt): optional generated-bundle placeholder; source docs above always win

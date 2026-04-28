@@ -2,7 +2,7 @@
 
 Admin login, game/admin account/secret management, analytics, server log, maintenance tools. Uses `RequestRole.Client` transport; admin context resolved from auth token.
 
-Domain guide: [guides/DASHBOARD.md](../guides/DASHBOARD.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#dashboard).
+Domain guide: [guides/DASHBOARD.md](../guides/DASHBOARD.md). DTO shapes: [dto/DASHBOARD.md](dto/DASHBOARD.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -74,7 +74,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.dashboard.changePasswordAdminAccountAsync({ /* DashboardModels.ChangePasswordAdminAccountRequestData */ } as any);
+// requestData: DashboardModels.ChangePasswordAdminAccountRequestData đã build theo dto/DASHBOARD.md
+const res = await GNNetwork.dashboard.changePasswordAdminAccountAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

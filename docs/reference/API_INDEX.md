@@ -8,7 +8,7 @@ Các khái niệm chung (áp dụng cho mọi group):
 - Mỗi method có 2 form: callback (`method(data, onResponse?, ...)`) và Promise (`methodAsync(data, ...)`). Ưu tiên `*Async()`.
 - Param chung của mọi method: `(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?)` — xem chi tiết trong từng file.
 - Response class expose field PUBLIC: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Check 2 tầng (`ReturnCode` → `ErrorCode`); xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
-- Enum value cụ thể: [ENUMS.md](ENUMS.md). Config SDK: [CONFIG.md](CONFIG.md). Realtime event: [EVENTS.md](EVENTS.md).
+- Enum value cụ thể: [ENUMS.md](ENUMS.md). Config SDK: [CONFIG.md](CONFIG.md). Permission flags: [PERMISSION_RULES.md](PERMISSION_RULES.md). Realtime event: [EVENTS.md](EVENTS.md).
 
 ## API groups
 
@@ -45,12 +45,13 @@ DTO shape (field-by-field) không inline trong API reference — xem [DTO_INDEX.
 - `.admin` (role `Admin`) — admin tool / dashboard script mutate state bất kỳ player.
 - Không có `.server` / `.admin` namespace nghĩa là group đó chỉ expose cho client (hoặc admin flow đã wrap trong namespace riêng, ví dụ `dashboard`).
 
-Xem [AGENTS.md](../../AGENTS.md) §"Chọn Đúng API Group" + [CONFIG.md](CONFIG.md) cho secret key config.
+Xem [AI_CHEATSHEET.md](../AI_CHEATSHEET.md#2-decision-tree-tôi-cần-làm-gì) để chọn đúng API group + [CONFIG.md](CONFIG.md) cho secret key config.
 
 ## Liên kết nhanh
 
 - Error / return code → [ERROR_HANDLING.md](ERROR_HANDLING.md)
 - Enum value cụ thể → [ENUMS.md](ENUMS.md)
+- Permission route/flag → [PERMISSION_RULES.md](PERMISSION_RULES.md)
 - Config `GNServerSettings` → [CONFIG.md](CONFIG.md)
 - Realtime event handler → [EVENTS.md](EVENTS.md)
 - Kịch bản end-to-end → [../COOKBOOK.md](../COOKBOOK.md)

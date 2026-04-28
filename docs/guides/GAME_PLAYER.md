@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - Với hầu hết flow thao tác trên một player cụ thể:
   - `client` cho phép `userId?`
   - `server/admin` bắt buộc `userId`
@@ -66,10 +66,7 @@ Rule cứng:
 - Nếu cần realtime friend/group update: dùng socket event handler riêng.
 - Không được giả định gọi `addPlayerFriendAsync`, `removePlayerFriendAsync`, `joinGroupAsync` hoặc `leaveGroupAsync` là đủ để UI tự nhận realtime nếu chưa auth socket.
 
-Event handler public hiện có:
-
-- [../dist/runtime/networking/handler/OnGamePlayerFriendUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnGamePlayerFriendUpdateEventHandler.d.ts)
-- [../dist/runtime/networking/handler/OnGamePlayerGroupUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnGamePlayerGroupUpdateEventHandler.d.ts)
+Event handler public: xem [reference/EVENTS.md](../reference/EVENTS.md#ongameplayerfriendupdateeventhandler) và [reference/EVENTS.md](../reference/EVENTS.md#ongameplayergroupupdateeventhandler).
 
 Realtime rule:
 
@@ -174,17 +171,10 @@ Rule nhanh:
 
 ## 6. Enum Và Reference
 
-- Schema publish để AI tham chiếu:
-  - [../dist/runtime/entity/models/GamePlayerModels.d.ts](../dist/runtime/entity/models/GamePlayerModels.d.ts)
-  - [../dist/runtime/entity/models/GamePlayerRequestModels.d.ts](../dist/runtime/entity/models/GamePlayerRequestModels.d.ts)
-  - [../dist/runtime/entity/models/GamePlayerResponseModels.d.ts](../dist/runtime/entity/models/GamePlayerResponseModels.d.ts)
-  - [../dist/runtime/entity/models/GenericModels.d.ts](../dist/runtime/entity/models/GenericModels.d.ts)
-- Event publish để AI tham chiếu:
-  - [../dist/runtime/networking/handler/OnGamePlayerFriendUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnGamePlayerFriendUpdateEventHandler.d.ts)
-  - [../dist/runtime/networking/handler/OnGamePlayerGroupUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnGamePlayerGroupUpdateEventHandler.d.ts)
-- Enum publish nên dùng:
-  - [../dist/runtime/constant/enumType/FriendStatus.d.ts](../dist/runtime/constant/enumType/FriendStatus.d.ts)
-  - [../dist/runtime/constant/enumType/GroupStatus.d.ts](../dist/runtime/constant/enumType/GroupStatus.d.ts)
+- DTO fields: [reference/dto/GAME_PLAYER.md](../reference/dto/GAME_PLAYER.md). Method table: [reference/API_GAME_PLAYER.md](../reference/API_GAME_PLAYER.md).
+- Events: [reference/EVENTS.md](../reference/EVENTS.md#ongameplayerfriendupdateeventhandler).
+- Enums: [FriendStatus](../reference/ENUMS.md#friendstatus), [GroupStatus](../reference/ENUMS.md#groupstatus).
+- Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/GamePlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `GenericModels.FriendItem.status` nên map bằng `FriendStatus`.
 - `GenericModels.GroupItem.status` nên map bằng `GroupStatus`.
 - `avatar.type` hiện chưa có enum public tương ứng.

@@ -77,14 +77,9 @@ Rule nhanh:
 
 ## 5. Enum và Reference
 
-- Schema publish để AI tham chiếu:
-  - [../dist/runtime/entity/models/StoreInventoryModels.d.ts](../dist/runtime/entity/models/StoreInventoryModels.d.ts)
-  - [../dist/runtime/entity/models/StoreInventoryRequestModels.d.ts](../dist/runtime/entity/models/StoreInventoryRequestModels.d.ts)
-  - [../dist/runtime/entity/models/StoreInventoryResponseModels.d.ts](../dist/runtime/entity/models/StoreInventoryResponseModels.d.ts)
-- Enum publish nên dùng:
-  - [../dist/runtime/constant/enumType/StoreItemType.d.ts](../dist/runtime/constant/enumType/StoreItemType.d.ts)
-  - [../dist/runtime/constant/enumType/StoreReceiveType.d.ts](../dist/runtime/constant/enumType/StoreReceiveType.d.ts)
-  - [../dist/runtime/constant/enumType/OwnerType.d.ts](../dist/runtime/constant/enumType/OwnerType.d.ts)
+- DTO fields: [reference/dto/STORE_INVENTORY.md](../reference/dto/STORE_INVENTORY.md). Method table: [reference/API_STORE_INVENTORY.md](../reference/API_STORE_INVENTORY.md).
+- Enums: [StoreItemType](../reference/ENUMS.md#storeitemtype), [StoreReceiveType](../reference/ENUMS.md#storereceivetype), [OwnerType](../reference/ENUMS.md#ownertype).
+- Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/StoreInventory*.d.ts`.
 - `SetStoreItemInformationRequestData.storeItemType` có range `1..2`, nên map bằng `StoreItemType`.
 - `GetStoreLogRequestData.storeReceiveTypes` nên map bằng `StoreReceiveType`.
 - `BuyStoreItemRequestData.type`, `PresentStoreItemRequestData.type` và các request validate receipt, là OwnerType; theo model/response hiện tại map bằng `OwnerType`.

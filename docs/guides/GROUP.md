@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - `GroupApi` thao tác trên group đã tồn tại. Không có public operation `createGroup`, `joinGroup`, `leaveGroup`, `removeGroup` trong nhóm này.
 - Realtime update của group là luồng riêng qua socket event, không phải transport của các method `GroupApi`.
 
@@ -49,10 +49,7 @@ Rule cứng:
 - Không được giả định gọi `sendGroupMessageAsync` là đủ để nhận push message realtime.
 - Không được giả định socket event có đầy đủ dữ liệu như HTTP response.
 
-Event handler public hiện có:
-
-- [../dist/runtime/networking/handler/OnGroupMessageUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnGroupMessageUpdateEventHandler.d.ts)
-- [../dist/runtime/networking/handler/OnGroupMemberUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnGroupMemberUpdateEventHandler.d.ts)
+Event handler public: xem [reference/EVENTS.md](../reference/EVENTS.md#ongroupmessageupdateeventhandler) và [reference/EVENTS.md](../reference/EVENTS.md#ongroupmemberupdateeventhandler).
 
 Realtime rule:
 
@@ -61,8 +58,8 @@ Realtime rule:
   - có `groupMessages`
   - có thể có `characterId` nếu người gửi là CharacterPlayer
 - `OnGroupMemberUpdateEventHandler.onUpdate`:
-  - payload chỉ có `members`
-  - theo public d.ts hiện tại không có `groupId`
+  - payload có `groupId`
+  - payload có `members`
 
 ## 4. Chọn Namespace
 
@@ -137,16 +134,10 @@ Rule nhanh:
 
 ## 6. Reference
 
-- Schema publish để AI tham chiếu:
-  - [../dist/runtime/entity/models/GroupModels.d.ts](../dist/runtime/entity/models/GroupModels.d.ts)
-  - [../dist/runtime/entity/models/GroupRequestModels.d.ts](../dist/runtime/entity/models/GroupRequestModels.d.ts)
-  - [../dist/runtime/entity/models/GroupResponseModels.d.ts](../dist/runtime/entity/models/GroupResponseModels.d.ts)
-  - [../dist/runtime/entity/models/GenericModels.d.ts](../dist/runtime/entity/models/GenericModels.d.ts)
-- Event publish để AI tham chiếu:
-  - [../dist/runtime/networking/handler/OnGroupMemberUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnGroupMemberUpdateEventHandler.d.ts)
-  - [../dist/runtime/networking/handler/OnGroupMessageUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnGroupMessageUpdateEventHandler.d.ts)
-- Enum publish có thể hữu ích:
-  - [../dist/runtime/constant/enumType/GroupStatus.d.ts](../dist/runtime/constant/enumType/GroupStatus.d.ts)
+- DTO fields: [reference/dto/GROUP.md](../reference/dto/GROUP.md). Method table: [reference/API_GROUP.md](../reference/API_GROUP.md).
+- Events: [reference/EVENTS.md](../reference/EVENTS.md#ongroupmemberupdateeventhandler).
+- Enums: [GroupStatus](../reference/ENUMS.md#groupstatus).
+- Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Group*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - Lưu ý:
   - `GroupStatus` là enum publish có thật, nhưng `MemberItem.status` trong `GroupApi` không được ràng buộc bằng enum public riêng.
   - `senderType`, `avatar.type` và `MemberItem.status` hiện vẫn là số thô trong public surface.

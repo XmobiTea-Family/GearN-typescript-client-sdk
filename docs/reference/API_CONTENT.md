@@ -2,7 +2,7 @@
 
 Content data key-value, file upload info, download token.
 
-Domain guide: [guides/CONTENT.md](../guides/CONTENT.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#content).
+Domain guide: [guides/CONTENT.md](../guides/CONTENT.md). DTO shapes: [dto/CONTENT.md](dto/CONTENT.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -80,7 +80,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.content.createNewFileUploadInfoAsync({ /* ContentModels.CreateNewFileUploadInfoRequestData */ } as any);
+// requestData: ContentModels.CreateNewFileUploadInfoRequestData đã build theo dto/CONTENT.md
+const res = await GNNetwork.content.createNewFileUploadInfoAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

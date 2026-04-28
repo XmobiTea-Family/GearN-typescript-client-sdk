@@ -55,6 +55,7 @@ GNNetwork.init(settings);
 | `pingInterval` | `number` | yes | `20000` | ms | Ping interval socket client |
 | `pingTimeout` | `number` | yes | `20000` | ms | Timeout phát hiện socket stale |
 | `secretKey` | `string` | yes | — | — | Auto gắn cho mọi route nếu không dùng overrideSecretKey |
+| `gameId` | `string` | yes | — | — | Game/application id khớp với `secretKey`; dùng để chọn đúng game context trên GearN Server |
 | `logType` | `LogType` | yes | `LogType.All` | enum | Verbosity `GNDebug` |
 
 Default column phản ánh giá trị khởi tạo trong class `GNServerSettings` trước khi gọi `config()`. `config()` yêu cầu cung cấp đầy đủ mọi field (strict replace).
@@ -76,14 +77,14 @@ Set `serverPort: -1` hoặc `serverSocketPort: -1` khi proxy (nginx, ALB, Cloudf
 
 ## Setter runtime (khi cần đổi sau init)
 
-`GNServerSettings` expose setter cho mọi field. Sau `init`, nếu cần đổi ở runtime (ít khi nên làm):
+`GNServerSettings` expose setter cho mọi field. Sau `init`, SDK vẫn giữ reference tới cùng `settings` object, nên một số request mới có thể thấy giá trị setter mới. Đây không phải cách đổi toàn bộ app config an toàn; route/socket đang mở không tự reset.
 
 ```ts
 settings.setServerAddress("prod-api.example.com");
 settings.setLogType(LogType.Error);
 ```
 
-Lưu ý: đổi host/port sau khi socket đã connect **không** tự reconnect; phải `disconnectSocket()` rồi `connectSocket()` lại.
+Lưu ý: gọi lại `GNNetwork.init()` để đổi config sẽ bị ignore. Đổi host/port sau khi socket đã connect **không** tự reconnect; phải `disconnectSocket()` rồi `connectSocket()` lại.
 
 ---
 

@@ -11,7 +11,8 @@ One-page reference cho AI agent / code assistant. Đọc file này trước, đ�
 ```ts
 import { GNNetwork, GNServerSettings, ReturnCode, ErrorCode, MessageType, LogType } from "@xmobitea/gn-typescript-client";
 
-const settings: GNServerSettings = {
+const settings = new GNServerSettings();
+settings.config({
   serverAddress: "api.example.com",
   serverPort: 443,
   serverSocketPort: 443,
@@ -27,7 +28,7 @@ const settings: GNServerSettings = {
   secretKey: "<secret-key>",
   gameId: "<game-id>",
   logType: LogType.Error,
-}
+});
 
 // Bootstrap — gọi 1 lần, idempotent
 GNNetwork.init(settings);
@@ -48,9 +49,9 @@ useResult(res.responseData);
 | Tôi muốn... | Mở file |
 |---|---|
 | Login / register / refresh token | [guides/AUTHENTICATE.md](guides/AUTHENTICATE.md) · [reference/API_AUTHENTICATE.md](reference/API_AUTHENTICATE.md) |
-| MasterPlayer profile (master account dùng chung trong các game), statistics, statistics leaderboard, statistics leaderboard around player, statistics logs, currencies, currencies leaderboard, currencies log, player data, custom data, external link, external unlink, display name, get player with display name (lấy danh sách những MasterPlayer có display name theo regex), avatar, ts create, create leaderboard (xem những MasterPlayer mới được tạo), segment, tag, ban status, ip address create, country code, email, send email, ts last login, push notification, send push notification | [guides/MASTER_PLAYER.md](guides/MASTER_PLAYER.md) · [reference/API_MASTER_PLAYER.md](reference/API_MASTER_PLAYER.md) |
-| GamePlayer profile (game account dùng cho riêng cho từng enviroment game, có thể tạo thêm enviroment từ GearN Dashboard, mặc định có `dev` và `live`, GamePlayer được bổ sung thêm friend, group, inventory, online status), statistics, statistics leaderboard, statistics leaderboard around player, statistics logs, currencies, currencies leaderboard, currencies log, player data, custom data, display name, get players with display name (lấy danh sách những GamePlayer có display name theo regex), avatar, ts create, create leaderboard (xem những GamePlayer mới được tạo), segment, get players with segment, tag, get players with tag, ban status, ip address create, country code, ts last login, add friend, remove friend, create CharacterPlayer, remove CharacterPlayer, create Group, join Group, leave Group, create Item (inventory), remove Item, friend statistics leaderboard, friend statistics leaderboard around player | [guides/GAME_PLAYER.md](guides/GAME_PLAYER.md) · [reference/API_GAME_PLAYER.md](reference/API_GAME_PLAYER.md) |
-| CharacterPlayer profile (khi game cần nhiều dạng nhân vật nhỏ, mỗi nhân vật đều có một đặc tính riêng biệt, những nhân vật này thuộc sở hữu của GamePlayer, chẳng hạn như các pokemon là những CharacterPlayer thuộc về quyền sở hữu của huấn luyện viên (GamePlayer), hoặc Game có đặc thù được tạo thêm nhiều nhân vật phụ để có thể chơi thì sử dụng CharacterPlayer), statistics, statistics leaderboard, statistics leaderboard around player, statistics logs, currencies, currencies leaderboard, currencies log, player data, custom data, display name, get players with display name (lấy danh sách những CharacterPlayer có display name theo regex), avatar, ts create, create leaderboard (xem những CharacterPlayer mới được tạo), segment, get players with segment, tag, get players with tag, ban status, ip address create, country code, ts last login, add friend, remove friend, create CharacterPlayer, remove CharacterPlayer, create Group, join Group, leave Group, create Item (inventory), remove Item, friend statistics leaderboard, friend statistics leaderboard around player | [guides/CHARACTER_PLAYER.md](guides/CHARACTER_PLAYER.md) · [reference/API_CHARACTER_PLAYER.md](reference/API_CHARACTER_PLAYER.md) |
+| MasterPlayer account chung nhiều game: identity, external link/unlink, profile, statistics, currencies, player data, email/push, segment/tag/ban | [guides/MASTER_PLAYER.md](guides/MASTER_PLAYER.md) · [reference/API_MASTER_PLAYER.md](reference/API_MASTER_PLAYER.md) |
+| GamePlayer account theo game environment (`dev`/`live` hoặc custom): profile, friends, groups, inventory owner, online status, statistics/currencies/data | [guides/GAME_PLAYER.md](guides/GAME_PLAYER.md) · [reference/API_GAME_PLAYER.md](reference/API_GAME_PLAYER.md) |
+| CharacterPlayer nhân vật thuộc GamePlayer: profile riêng, statistics/currencies/data, friends/groups/inventory owner theo character | [guides/CHARACTER_PLAYER.md](guides/CHARACTER_PLAYER.md) · [reference/API_CHARACTER_PLAYER.md](reference/API_CHARACTER_PLAYER.md) |
 | Inventory item: query, owner, amount, statistics | [guides/INVENTORY.md](guides/INVENTORY.md) · [reference/API_INVENTORY.md](reference/API_INVENTORY.md) |
 | Group metadata, member, message, group inventory | [guides/GROUP.md](guides/GROUP.md) · [reference/API_GROUP.md](reference/API_GROUP.md) |
 | Store catalog, buy, present, validate receipt | [guides/STORE_INVENTORY.md](guides/STORE_INVENTORY.md) · [reference/API_STORE_INVENTORY.md](reference/API_STORE_INVENTORY.md) |
@@ -62,10 +63,23 @@ useResult(res.responseData);
 | Tra DTO field theo class | [reference/DTO_INDEX.md](reference/DTO_INDEX.md) (grep) hoặc [reference/dto/](reference/dto/) |
 | Enum value numeric | [reference/ENUMS.md](reference/ENUMS.md) |
 | Config field của `GNServerSettings` | [reference/CONFIG.md](reference/CONFIG.md) |
+| Permission flag / `OperationNotAllow` | [reference/PERMISSION_RULES.md](reference/PERMISSION_RULES.md) · [RULES.md § 6](RULES.md#6-permission-flags) |
 | Cách check error / retry / debug | [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md) |
-| Scenario end-to-end (15 case) | [COOKBOOK.md](COOKBOOK.md) |
+| Scenario end-to-end (16 case) | [COOKBOOK.md](COOKBOOK.md) |
 | Rule chung (route, permission, self/other-self, socket) | [RULES.md](RULES.md) |
 | Machine-readable manifest cho tooling | [ai-manifest.json](ai-manifest.json) |
+
+---
+
+## Glossary bắt buộc
+
+| Thuật ngữ | Nghĩa |
+|---|---|
+| `route` | Trust boundary của caller: client, server, hoặc admin. |
+| `self` | Target thuộc user đang authenticate. |
+| `other-self` | Target không thuộc user đang authenticate nhưng vẫn gọi qua route client. |
+| `otherSelfEnable` | Tên permission flag trong backend config. Dùng spelling này trong code/docs. |
+| `secretKey` | Key cấu hình permission per operation. Sai/thiếu secret trả `SecretInvalid`; secret đúng nhưng thiếu flag trả `OperationNotAllow`. |
 
 ---
 
@@ -83,7 +97,7 @@ Code chạy ở đâu?
 Ngoại lệ: DashboardApi public wrapper vẫn đi RequestRole.Client; backend resolve admin từ authToken sau loginByAdminAccountAsync.
 ```
 
-`self / other self` chỉ áp dụng trên route `client`:
+`self / other-self` chỉ áp dụng trên route `client`:
 - `MasterPlayer` / `GamePlayer`: `self` = `userId` trong request trùng `userId` đã authenticate (hoặc bỏ trống).
 - `CharacterPlayer` / `Inventory` / `Group`: `self` = entity thuộc ownership của user đang authenticate.
 - `Content` / `StoreInventory` / `Multiplayer` / `CloudScript`: không có ownership rõ ràng — không ép self/other-self.
@@ -107,6 +121,16 @@ const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken
 | `customTags` | Trace id, build version, A/B tag — backend có thể log/route |
 | `timeout` | Override default per-request (giây) |
 
+Trong code copy-paste, build `requestData` bằng DTO class public:
+
+```ts
+const request = new <Group>Models.<Method>RequestData();
+request.someField = value;
+const res = await GNNetwork.<group>.<method>Async(request);
+```
+
+Không dùng object literal rồi cast sang `RequestData`. Chi tiết: [RULES.md § 8.1](RULES.md#81-build-request-dto-trong-code-copy-paste).
+
 Response field public (KHÔNG phải getter): `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`.
 
 ---
@@ -127,8 +151,9 @@ GNNetwork.subscriberOnConnectHandler(() => { /* socket up */ });
 GNNetwork.subscriberOnDisconnectHandler(() => { /* socket down */ });
 GNNetwork.setOnEventHandler((event) => { /* raw event */ });
 
-// Realtime handler — gán static field, gán null để unsubscribe
+// Realtime handler — gán static field; cleanup bằng no-op hoặc wrapper dispatcher
 OnGroupMessageUpdateEventHandler.onUpdate = (payload) => { ... };
+OnGroupMessageUpdateEventHandler.onUpdate = () => {};
 ```
 
 Realtime KHÔNG tự chạy chỉ vì đã gọi HTTP (friend/group/...). Phải subscribe handler liệt kê trong [reference/EVENTS.md](reference/EVENTS.md).
@@ -173,7 +198,7 @@ Gặp `OperationNotAllow` — decision tree + code fallback: [COOKBOOK Scenario 
 
 - Đang sửa chính SDK
 - Verify behavior nội bộ chưa được docs cover
-- Tích hợp package: **chỉ** dùng `README + docs + dist/*.d.ts`. Không bám `src/` cho integration code.
+- Tích hợp package: **chỉ** dùng `AGENTS.md + docs + dist/*.d.ts`. Không bám `src/` cho integration code.
 
 ---
 
@@ -182,5 +207,5 @@ Gặp `OperationNotAllow` — decision tree + code fallback: [COOKBOOK Scenario 
 - Single-source-of-truth rules: [RULES.md](RULES.md)
 - AI entry guide chi tiết: [../AGENTS.md](../AGENTS.md)
 - Machine manifest: [ai-manifest.json](ai-manifest.json)
-- Concatenated bundle (full): [llms-full.txt](llms-full.txt)
+- Concatenated bundle (optional, generated artifact): [llms-full.txt](llms-full.txt). Không dùng file này làm nguồn thắng khi nó mâu thuẫn với source docs.
 - llmstxt.org index: [../llms.txt](../llms.txt)

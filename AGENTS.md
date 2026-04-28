@@ -18,7 +18,7 @@ Mục tiêu:
 6. DTO field qua [docs/reference/dto/](docs/reference/dto/) hoặc grep [docs/reference/DTO_INDEX.md](docs/reference/DTO_INDEX.md).
 7. Public type trong `dist/**/*.d.ts` — fallback khi docs chưa cover.
 
-Bảng chọn API group theo yêu cầu: xem [docs/AI_CHEATSHEET.md § 2](docs/AI_CHEATSHEET.md#2-decision-tree-tôi-cần-làm-gì). Rule router/permission/socket: xem [docs/RULES.md](docs/RULES.md).
+Bảng chọn API group theo yêu cầu: xem [docs/AI_CHEATSHEET.md § 2](docs/AI_CHEATSHEET.md#2-decision-tree-tôi-cần-làm-gì). Rule router/permission/socket: xem [docs/RULES.md](docs/RULES.md); permission operation/flag offline: [docs/reference/PERMISSION_RULES.md](docs/reference/PERMISSION_RULES.md).
 
 ## 2. Khi nào được đọc `src/`
 
@@ -34,4 +34,4 @@ Nếu `docs` + `dist` vẫn chưa đủ kết luận, hỏi lại con người h
 
 ## 3. Scenario end-to-end
 
-15 scenario end-to-end (init, login, socket, realtime event, matchmaking, store, cloudscript, cleanup, ...): [docs/COOKBOOK.md](docs/COOKBOOK.md).
+16 scenario end-to-end (init, login, socket, realtime event, matchmaking, store, cloudscript, cleanup, diagnose permission, ...): [docs/COOKBOOK.md](docs/COOKBOOK.md).

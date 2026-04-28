@@ -6,7 +6,7 @@ SDK cung cấp 6 server event handler đẩy realtime update từ backend qua so
 
 - Event chỉ đến khi **socket đã connect + đã authenticate**. Xem [RULES.md § 7](../RULES.md#7-auth--socket-flow).
 - Callback là **static field** dùng chung toàn app session. Gán lần cuối ghi đè lần trước; không có mechanism multi-subscriber built-in. Nếu cần fan-out, tự wrap dispatcher.
-- Unsubscribe = gán `null`. Không có event nào “drain” callback khi socket disconnect.
+- Cleanup copy-safe = gán callback no-op hoặc remove listener trong wrapper dispatcher của app. Không có event nào “drain” callback khi socket disconnect.
 - Callback nhận đã-deserialized payload. Không thao tác với `OperationEvent` raw trừ khi viết handler custom.
 - Không giả định realtime tự chạy chỉ vì đã gọi method HTTP (friend, group, …). Chỉ các event liệt kê dưới đây được SDK lắng nghe mặc định.
 
@@ -56,8 +56,8 @@ OnGroupMessageUpdateEventHandler.onUpdate = (payload) => {
 	}
 };
 
-// Unsubscribe
-// OnGroupMessageUpdateEventHandler.onUpdate = null;
+// Cleanup copy-safe
+OnGroupMessageUpdateEventHandler.onUpdate = () => {};
 ```
 
 ---
@@ -78,8 +78,9 @@ OnGroupMessageUpdateEventHandler.onUpdate = (payload) => {
 **Ví dụ:**
 ```ts
 OnGroupMemberUpdateEventHandler.onUpdate = (payload) => {
+	const groupId = payload.groupId;
 	for (const m of payload.members) {
-		// update roster cache
+		// update member cache
 	}
 };
 ```

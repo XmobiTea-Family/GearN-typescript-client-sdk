@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - Khác với `GamePlayerApi`, public contract hiện tại gần như luôn yêu cầu `characterId` rõ ràng cho các flow target một character cụ thể.
 - `client`, `server`, `admin` hiện dùng cùng shape request; khác biệt chính là trust boundary và secret key mặc định.
 - `CharacterPlayerApi` là nhóm metadata/lifecycle ở cấp character:
@@ -64,10 +64,7 @@ Rule cứng:
 - Nếu cần realtime friend/group update: dùng socket event handler riêng.
 - Không được giả định gọi `addPlayerFriendAsync`, `removePlayerFriendAsync`, `joinGroupAsync` hoặc `leaveGroupAsync` là đủ để UI tự nhận realtime nếu chưa auth socket.
 
-Event handler public hiện có:
-
-- [../dist/runtime/networking/handler/OnCharacterPlayerFriendUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnCharacterPlayerFriendUpdateEventHandler.d.ts)
-- [../dist/runtime/networking/handler/OnCharacterPlayerGroupUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnCharacterPlayerGroupUpdateEventHandler.d.ts)
+Event handler public: xem [reference/EVENTS.md](../reference/EVENTS.md#oncharacterplayerfriendupdateeventhandler) và [reference/EVENTS.md](../reference/EVENTS.md#oncharacterplayergroupupdateeventhandler).
 
 Realtime rule:
 
@@ -166,18 +163,10 @@ Rule nhanh:
 
 ## 6. Enum Và Reference
 
-- Schema publish để AI tham chiếu:
-  - [../dist/runtime/entity/models/CharacterPlayerModels.d.ts](../dist/runtime/entity/models/CharacterPlayerModels.d.ts)
-  - [../dist/runtime/entity/models/CharacterPlayerRequestModels.d.ts](../dist/runtime/entity/models/CharacterPlayerRequestModels.d.ts)
-  - [../dist/runtime/entity/models/CharacterPlayerResponseModels.d.ts](../dist/runtime/entity/models/CharacterPlayerResponseModels.d.ts)
-  - [../dist/runtime/entity/models/GenericModels.d.ts](../dist/runtime/entity/models/GenericModels.d.ts)
-- Event publish để AI tham chiếu:
-  - [../dist/runtime/networking/handler/OnCharacterPlayerFriendUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnCharacterPlayerFriendUpdateEventHandler.d.ts)
-  - [../dist/runtime/networking/handler/OnCharacterPlayerGroupUpdateEventHandler.d.ts](../dist/runtime/networking/handler/OnCharacterPlayerGroupUpdateEventHandler.d.ts)
-- Enum publish nên dùng:
-  - [../dist/runtime/constant/enumType/FriendStatus.d.ts](../dist/runtime/constant/enumType/FriendStatus.d.ts)
-  - [../dist/runtime/constant/enumType/GroupStatus.d.ts](../dist/runtime/constant/enumType/GroupStatus.d.ts)
-  - [../dist/runtime/constant/enumType/OwnerType.d.ts](../dist/runtime/constant/enumType/OwnerType.d.ts)
+- DTO fields: [reference/dto/CHARACTER_PLAYER.md](../reference/dto/CHARACTER_PLAYER.md). Method table: [reference/API_CHARACTER_PLAYER.md](../reference/API_CHARACTER_PLAYER.md).
+- Events: [reference/EVENTS.md](../reference/EVENTS.md#oncharacterplayerfriendupdateeventhandler).
+- Enums: [FriendStatus](../reference/ENUMS.md#friendstatus), [GroupStatus](../reference/ENUMS.md#groupstatus), [OwnerType](../reference/ENUMS.md#ownertype).
+- Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/CharacterPlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `GenericModels.FriendItem.status` nên map bằng `FriendStatus`.
 - `GenericModels.GroupItem.status` nên map bằng `GroupStatus`.
 - `infoResponseParameters.owner.type` nên map bằng `OwnerType`.

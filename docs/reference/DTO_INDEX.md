@@ -3,7 +3,7 @@
 Tổng cộng **2506** DTO class trên **12** domain.
 
 > **Cách dùng hiệu quả (đặc biệt cho AI consumer):**
-> - File này chứa bảng flat ~2506 dòng (~438KB) — **đừng load nguyên file**.
+> - File này chứa bảng flat 2506 dòng (about 438KB) — **đừng load nguyên file**.
 > - Dùng `grep` / ripgrep tìm class name cần: `rg "ClassName" docs/reference/DTO_INDEX.md`.
 > - Hoặc mở trực tiếp file domain tương ứng trong `docs/reference/dto/` (xem bảng "Theo domain" dưới).
 

@@ -2,7 +2,7 @@
 
 Master-player account: identity linking, profile, contact info, external providers.
 
-Domain guide: [guides/MASTER_PLAYER.md](../guides/MASTER_PLAYER.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#master-player).
+Domain guide: [guides/MASTER_PLAYER.md](../guides/MASTER_PLAYER.md). DTO shapes: [dto/MASTER_PLAYER.md](dto/MASTER_PLAYER.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -315,7 +315,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.masterPlayer.addSegmentAsync({ /* MasterPlayerModels.AddSegmentRequestData */ } as any);
+// requestData: MasterPlayerModels.AddSegmentRequestData đã build theo dto/MASTER_PLAYER.md
+const res = await GNNetwork.masterPlayer.addSegmentAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

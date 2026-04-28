@@ -2,7 +2,7 @@
 
 Game-player profile, friend/group relation, currency, statistics, segment, tag, social identity.
 
-Domain guide: [guides/GAME_PLAYER.md](../guides/GAME_PLAYER.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#game-player).
+Domain guide: [guides/GAME_PLAYER.md](../guides/GAME_PLAYER.md). DTO shapes: [dto/GAME_PLAYER.md](dto/GAME_PLAYER.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -215,7 +215,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.gamePlayer.addPlayerFriendAsync({ /* GamePlayerModels.AddPlayerFriendRequestData */ } as any);
+// requestData: GamePlayerModels.AddPlayerFriendRequestData đã build theo dto/GAME_PLAYER.md
+const res = await GNNetwork.gamePlayer.addPlayerFriendAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

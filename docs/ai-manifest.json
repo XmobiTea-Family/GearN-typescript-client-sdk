@@ -17,8 +17,7 @@
       "docs/reference/CONFIG.md",
       "docs/reference/EVENTS.md",
       "docs/reference/ENUMS.md",
-      "docs/COOKBOOK.md",
-      "docs/llms-full.txt"
+      "docs/COOKBOOK.md"
     ],
     "entryPoints": {
       "cheatsheet": "docs/AI_CHEATSHEET.md",
@@ -34,7 +33,8 @@
       "enums": "docs/reference/ENUMS.md",
       "config": "docs/reference/CONFIG.md",
       "events": "docs/reference/EVENTS.md",
-      "errorHandling": "docs/reference/ERROR_HANDLING.md"
+      "errorHandling": "docs/reference/ERROR_HANDLING.md",
+      "permissionRules": "docs/reference/PERMISSION_RULES.md"
     },
     "cookbook": "docs/COOKBOOK.md",
     "guidesDirectory": "docs/guides",
@@ -42,10 +42,11 @@
       "đọc docs/AI_CHEATSHEET.md trước (one-page) để biết file nào cần mở tiếp",
       "đọc docs/RULES.md cho rule cross-cutting (route, permission, self/other-self, socket, error)",
       "tra method signature qua docs/reference/API_<GROUP>.md",
-      "tra DTO field qua docs/reference/dto/<DOMAIN>.md hoặc grep DTO_INDEX.md (~2506 rows, đừng load full)",
+      "tra DTO field qua docs/reference/dto/<DOMAIN>.md hoặc grep DTO_INDEX.md (2506 rows, đừng load full)",
       "tra enum value numeric qua docs/reference/ENUMS.md",
-      "scenario end-to-end xem docs/COOKBOOK.md (15 scenarios)",
-      "chỉ fall back đọc dist/*.d.ts khi câu hỏi nằm ngoài scope docs"
+      "scenario end-to-end xem docs/COOKBOOK.md (16 scenarios)",
+      "chỉ fall back đọc dist/*.d.ts khi câu hỏi nằm ngoài scope docs",
+      "docs/llms-full.txt là generated bundle optional; không dùng làm source thắng khi mâu thuẫn với source docs"
     ]
   },
   "globalRules": {
@@ -91,8 +92,9 @@
     ]
   },
   "permissionRules": {
-    "authoritativeDoc": "https://docs.gearn.net/permissionRules",
-    "note": "Backend GearN Server là source-of-truth per-operation. SDK docs chỉ cung cấp mapping rule uniform.",
+    "authoritativeDoc": "docs/reference/PERMISSION_RULES.md",
+    "externalReference": "https://docs.gearn.net/permissionRules",
+    "note": "Backend GearN Server/dashboard là runtime source-of-truth per-operation. Trong repo, dùng docs/reference/PERMISSION_RULES.md và docs/reference/API_<GROUP>.md để lấy operation name và mapping flag; externalReference chỉ là mirror khi cần đối chiếu online.",
     "selfOtherSelfOnlyApplyOnClientRoute": true,
     "flags": {
       "selfEnable": "cho phép thực thi trên chính tài nguyên thuộc user đã authenticate",
@@ -113,7 +115,7 @@
       "recommendedActionOnOperationNotAllow": [
         "dùng secretKey khác qua GNServerSettings.secretKey",
         "truyền overrideSecretKey per-request",
-        "yêu cầu backend admin bật flag cho secret hiện tại"
+        "yêu cầu backend admin bật flag cho secret hiện tại trong GearN Dashboard"
       ]
     },
     "selfSemantics": {
@@ -131,7 +133,7 @@
       "xác định target self hay other-self theo self-semantics của domain",
       "tra routeToFlagMapping ra flag cần",
       "check secretKey active có flag đó cho operation này không (xem backend dashboard hoặc hỏi admin)",
-      "nếu không có: dùng secret khác, overrideSecretKey, hoặc yêu cầu backend admin bật flag",
+      "nếu không có: dùng secret khác, overrideSecretKey, hoặc yêu cầu backend admin bật flag trong GearN Dashboard",
       "KHÔNG retry - đây là config fix"
     ],
     "diagnoseWorkflow": "docs/COOKBOOK.md#scenario-16-diagnose-operationnotallow"
@@ -166,6 +168,7 @@
       { "name": "RequestRole", "anchor": "requestrole" },
       { "name": "RequestType", "anchor": "requesttype" },
       { "name": "MessageType", "anchor": "messagetype" },
+      { "name": "PostType", "anchor": "posttype" },
       { "name": "LogType", "anchor": "logtype" },
       { "name": "FriendStatus", "anchor": "friendstatus" },
       { "name": "GroupStatus", "anchor": "groupstatus" },
@@ -176,16 +179,18 @@
       { "name": "PushPlatformType", "anchor": "pushplatformtype" },
       { "name": "MatchmakingMemberStatus", "anchor": "matchmakingmemberstatus" },
       { "name": "MatchmakingTicketStatus", "anchor": "matchmakingticketstatus" },
+      { "name": "MatchStatus", "anchor": "matchstatus" },
       { "name": "ExecuteResponseStatus", "anchor": "executeresponsestatus" },
       { "name": "StoreItemType", "anchor": "storeitemtype" },
       { "name": "StoreReceiveType", "anchor": "storereceivetype" },
-      { "name": "PermissionDataItem", "anchor": "permissiondataitem" }
+      { "name": "PermissionDataItem", "anchor": "permissiondataitem" },
+      { "name": "FieldDataType", "anchor": "fielddatatype" }
     ]
   },
   "events": {
     "docPath": "docs/reference/EVENTS.md",
     "subscribePattern": "<Handler>.onUpdate = (payload) => { … }",
-    "unsubscribePattern": "<Handler>.onUpdate = null",
+    "unsubscribePattern": "<Handler>.onUpdate = () => {}",
     "prerequisite": "socket connected + authenticated",
     "subscribeOrder": "subscribe trước khi gọi GNNetwork.connectSocket() để không bỏ lỡ event ngay sau handshake",
     "list": [
@@ -236,7 +241,7 @@
   "configSchema": {
     "docPath": "docs/reference/CONFIG.md",
     "class": "GNServerSettingsOptions",
-    "ctorUsage": "new GNServerSettings({ serverAddress, serverPort, ... })",
+    "ctorUsage": "const settings = new GNServerSettings(); settings.config({ serverAddress, serverPort, gameId, secretKey, ... }); GNNetwork.init(settings)",
     "fields": [
       { "name": "serverAddress", "type": "string", "default": "127.0.0.1" },
       { "name": "serverPort", "type": "number", "default": 2202, "unit": "port" },
@@ -244,7 +249,6 @@
       { "name": "useSsl", "type": "boolean", "default": false },
       { "name": "useSocket", "type": "boolean", "default": true },
       { "name": "useHttp", "type": "boolean", "default": true },
-      { "name": "useReverseProxy", "type": "boolean", "default": false },
       { "name": "defaultTimeoutInSeconds", "type": "number", "default": 20, "unit": "seconds" },
       { "name": "messageType", "type": "MessageType", "default": "MsgPack" },
       { "name": "sendRate", "type": "number", "default": 20, "unit": "messages_per_second" },
@@ -254,6 +258,9 @@
       { "name": "secretKey", "type": "string" },
       { "name": "gameId", "type": "string" },
       { "name": "logType", "type": "LogType", "default": "All" }
+    ],
+    "runtimeOnlySetters": [
+      { "name": "useReverseProxy", "setter": "settings.setUseReverseProxy(true)", "default": false }
     ]
   },
   "errorHandling": {
@@ -277,15 +284,16 @@
       { "id": 4, "title": "Login by social (Google/Apple/Facebook)", "anchor": "scenario-4-login-by-social-googleapplefacebook", "apis": ["GNNetwork.authenticate.loginByGoogleAsync", "GNNetwork.authenticate.loginByAppleAsync", "GNNetwork.authenticate.loginByFacebookAsync"] },
       { "id": 5, "title": "Connect socket + handle reconnect", "anchor": "scenario-5-connect-socket--handle-reconnect", "apis": ["GNNetwork.connectSocket", "GNNetwork.subscriberOnConnectHandler"] },
       { "id": 6, "title": "Subscribe friend updates", "anchor": "scenario-6-subscribe-friend-updates", "events": ["OnGamePlayerFriendUpdateEventHandler"] },
-      { "id": 7, "title": "Subscribe + send group message", "anchor": "scenario-7-subscribe--send-group-message", "events": ["OnGroupMessageUpdateEventHandler"], "apis": ["GNNetwork.group.addGroupMessageAsync"] },
-      { "id": 8, "title": "Group member lifecycle + realtime update", "anchor": "scenario-8-group-member-lifecycle-join--leave--kick--realtime-update", "events": ["OnGroupMemberUpdateEventHandler"], "apis": ["GNNetwork.group.joinGroupAsync", "GNNetwork.group.leaveGroupAsync"] },
+      { "id": 7, "title": "Subscribe + send group message", "anchor": "scenario-7-subscribe--send-group-message", "events": ["OnGroupMessageUpdateEventHandler"], "apis": ["GNNetwork.group.sendGroupMessageAsync"] },
+      { "id": 8, "title": "Group member lifecycle + realtime update", "anchor": "scenario-8-group-member-lifecycle-join--leave--kick--realtime-update", "events": ["OnGroupMemberUpdateEventHandler"], "apis": ["GNNetwork.gamePlayer.joinGroupAsync", "GNNetwork.gamePlayer.leaveGroupAsync", "GNNetwork.group.server.removeMemberAsync"] },
       { "id": 9, "title": "Matchmaking ticket flow", "anchor": "scenario-9-matchmaking-ticket-flow", "apis": ["GNNetwork.multiplayer.createMatchmakingTicketAsync", "GNNetwork.multiplayer.getMatchmakingTicketAsync", "GNNetwork.multiplayer.cancelMatchmakingTicketAsync"] },
-      { "id": 10, "title": "Inventory query + grant item (server role)", "anchor": "scenario-10-inventory-query--grant-item-server-role", "apis": ["GNNetwork.inventory.getInventoryItemListAsync", "GNNetwork.inventory.server.addInventoryItemAsync"] },
-      { "id": 11, "title": "Store list → purchase → validate receipt", "anchor": "scenario-11-store-list-catalog--purchase--validate-receipt", "apis": ["GNNetwork.storeInventory.getStoreItemListAsync", "GNNetwork.storeInventory.buyStoreItemAsync"] },
+      { "id": 10, "title": "Inventory query + grant item (server role)", "anchor": "scenario-10-inventory-query--grant-item-server-role", "apis": ["GNNetwork.gamePlayer.getPlayerInventoryAsync", "GNNetwork.gamePlayer.server.createPlayerItemAsync"] },
+      { "id": 11, "title": "Store list → purchase → validate receipt", "anchor": "scenario-11-store-list-catalog--purchase--validate-receipt", "apis": ["GNNetwork.storeInventory.getStoreItemsWithTagAsync", "GNNetwork.storeInventory.buyStoreItemAsync", "GNNetwork.storeInventory.server.validateGooglePlayStoreReceiptAsync"] },
       { "id": 12, "title": "CloudScript execute + customTags", "anchor": "scenario-12-cloudscript-execute-function--customtags", "apis": ["GNNetwork.cloudScript.executeFunctionAsync"] },
       { "id": 13, "title": "Override authToken / secret", "anchor": "scenario-13-override-authtoken--secret-impersonate-cross-role" },
       { "id": 14, "title": "Admin login qua DashboardApi", "anchor": "scenario-14-admin-login-qua-dashboardapi", "apis": ["GNNetwork.dashboard.loginByAdminAccountAsync"] },
-      { "id": 15, "title": "Cleanup & shutdown flow", "anchor": "scenario-15-cleanup--shutdown-flow", "apis": ["GNNetwork.disconnectSocket"] }
+      { "id": 15, "title": "Cleanup & shutdown flow", "anchor": "scenario-15-cleanup--shutdown-flow", "apis": ["GNNetwork.disconnectSocket"] },
+      { "id": 16, "title": "Diagnose OperationNotAllow", "anchor": "scenario-16-diagnose-operationnotallow", "apis": ["GNNetwork.inventory.admin.setAmountAsync"] }
     ]
   },
   "apiGroups": [
@@ -313,7 +321,7 @@
         "GNNetwork.authenticate.server",
         "GNNetwork.authenticate.admin"
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#authenticate",
+      "permissionRuleDoc": "docs/reference/API_AUTHENTICATE.md",
       "recommendedSecretPermissions": {
         "client": "otherSelfEnable cho các method login/register (login luôn là acting-on-unauth-user)",
         "server": "serverSelfEnable nếu backend cần issue token cho user cụ thể",
@@ -345,7 +353,7 @@
         "GNNetwork.dashboard.server",
         "GNNetwork.dashboard.admin"
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#dashboard",
+      "permissionRuleDoc": "docs/reference/API_DASHBOARD.md",
       "recommendedSecretPermissions": {
         "client": "secretKey bootstrap chỉ cần cho phép loginByAdminAccount; sau login backend tự resolve quyền admin từ authToken"
       }
@@ -380,7 +388,7 @@
           "useWhen": "dashboard hoặc backoffice quản trị content hoặc file metadata"
         }
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#content",
+      "permissionRuleDoc": "docs/reference/API_CONTENT.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho các method app-level query; otherSelfEnable nếu cần đọc content của user khác",
         "server": "serverSelfEnable cho trusted backend upload/download metadata",
@@ -421,7 +429,7 @@
         "không dùng socket để tạo hoặc join hoặc cancel hoặc query matchmaking ticket",
         "flow chuẩn là create hoặc join ticket rồi poll getMatchmakingTicket rồi mới getMatch"
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#multiplayer",
+      "permissionRuleDoc": "docs/reference/API_MULTIPLAYER.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho create/cancel ticket của chính user; otherSelfEnable nếu cần query ticket user khác",
         "server": "serverSelfEnable cho trusted backend điều phối match",
@@ -458,7 +466,7 @@
           "useWhen": "dashboard hoặc ops quản trị catalog hoặc log"
         }
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#storeInventory",
+      "permissionRuleDoc": "docs/reference/API_STORE_INVENTORY.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho buy/present/validate receipt của chính user",
         "server": "serverSelfEnable cho backend fulfillment, webhook validate receipt",
@@ -495,7 +503,7 @@
           "useWhen": "GM tool hoặc dashboard vận hành dữ liệu inventory"
         }
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#inventory",
+      "permissionRuleDoc": "docs/reference/API_INVENTORY.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho query/statistics item của chính user; otherSelfEnable nếu xem item user khác",
         "server": "serverSelfEnable cho grant/transfer/remove item từ trusted backend",
@@ -536,7 +544,7 @@
         "dist/runtime/networking/handler/OnGroupMessageUpdateEventHandler.d.ts",
         "dist/runtime/networking/handler/OnGroupMemberUpdateEventHandler.d.ts"
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#group",
+      "permissionRuleDoc": "docs/reference/API_GROUP.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho member của group đã join; otherSelfEnable cho query group khác",
         "server": "serverSelfEnable cho backend manage lifecycle, currency, message",
@@ -576,7 +584,7 @@
           "userIdBehavior": "các flow self-target phải truyền userId rõ ràng"
         }
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#masterPlayer",
+      "permissionRuleDoc": "docs/reference/API_MASTER_PLAYER.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho profile/identity/currency của chính user; otherSelfEnable cho search/leaderboard/xem user khác",
         "server": "serverSelfEnable cho backend provisioning, link/unlink identity, change currency",
@@ -620,7 +628,7 @@
         "dist/runtime/networking/handler/OnGamePlayerFriendUpdateEventHandler.d.ts",
         "dist/runtime/networking/handler/OnGamePlayerGroupUpdateEventHandler.d.ts"
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#gamePlayer",
+      "permissionRuleDoc": "docs/reference/API_GAME_PLAYER.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho gameplay profile/relation của chính user; otherSelfEnable cho friend/group query sang user khác",
         "server": "serverSelfEnable cho backend create character, change currency, manage friend/group",
@@ -664,7 +672,7 @@
         "dist/runtime/networking/handler/OnCharacterPlayerFriendUpdateEventHandler.d.ts",
         "dist/runtime/networking/handler/OnCharacterPlayerGroupUpdateEventHandler.d.ts"
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#characterPlayer",
+      "permissionRuleDoc": "docs/reference/API_CHARACTER_PLAYER.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho character thuộc ownership user; otherSelfEnable cho view character khác",
         "server": "serverSelfEnable cho backend create/remove character, manage friend/group ở cấp character",
@@ -706,7 +714,7 @@
         "muốn đổi source code phải addFunctionAsync để tạo version mới",
         "không có public delete function hoặc hard delete version"
       ],
-      "permissionRuleUrl": "https://docs.gearn.net/permissionRules#cloudScript",
+      "permissionRuleDoc": "docs/reference/API_CLOUDSCRIPT.md",
       "recommendedSecretPermissions": {
         "client": "selfEnable cho executeFunction nếu backend cho phép app public execute",
         "server": "serverSelfEnable cho backend execute/publish theo workflow trusted",

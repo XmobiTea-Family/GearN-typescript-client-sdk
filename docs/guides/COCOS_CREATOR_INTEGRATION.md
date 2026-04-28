@@ -113,10 +113,6 @@ GNNetwork.connectSocket(); // Call this after a successful HTTP login or refresh
 
 Nếu socket đã connect trước khi token xuất hiện, hoặc token vừa đổi và bạn không muốn reconnect, gọi `GNNetwork.sendRequestAuthSocket()` để re-auth.
 
-## Example Component
-
-Xem file mẫu cập nhật tại: [examples/cocos-creator/GearNExample.ts.txt](../examples/cocos-creator/GearNExample.ts.txt)
-
 ## Platform Detection
 
 SDK tự động phát hiện Cocos Creator environment:

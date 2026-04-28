@@ -1,8 +1,8 @@
-﻿# GearN TypeScript Client SDK
+# GearN TypeScript Client SDK
 
 SDK TypeScript client cho GearN Server.
 
-`GNNetwork` là entrypoint duy nhất ở tầng public API. Sau `init()`, toàn bộ thao tác đi qua các nhóm API tĩnh, gồm: `GNNetwork.authenticate`, `GNNetwork.masterPlayer`, `GNNetwork.gamePlayer`, `GNNetwork.characterPlayer`, `GNNetwork.dashboard`, `GNNetwork.group`, `GNNetwork.inventory`, `GNNetwork.storeInventory`, `GNNetwork.content`, `GNNetwork.multiplayer`, `GNNetwork.cloudScript`, `GNNetwork.dashboard`.
+`GNNetwork` là entrypoint duy nhất ở tầng public API. Sau `init()`, toàn bộ thao tác đi qua các nhóm API tĩnh, gồm: `GNNetwork.authenticate`, `GNNetwork.masterPlayer`, `GNNetwork.gamePlayer`, `GNNetwork.characterPlayer`, `GNNetwork.group`, `GNNetwork.inventory`, `GNNetwork.storeInventory`, `GNNetwork.content`, `GNNetwork.multiplayer`, `GNNetwork.cloudScript`, `GNNetwork.dashboard`.
 
 > **AI / code assistant:** đọc [docs/AI_CHEATSHEET.md](docs/AI_CHEATSHEET.md) trước (one-page), rồi [docs/RULES.md](docs/RULES.md) cho rule chi tiết (route, permission, self/other-self, socket, error). Machine-readable manifest: [docs/ai-manifest.json](docs/ai-manifest.json).
 
@@ -59,14 +59,16 @@ GNNetwork.init(settings);
 ```
 3. Gọi API qua `GNNetwork.*`.
 ```ts
-const loginByCustomIdResponse = await GNNetwork.authenticate.loginByCustomIdAsync({
-    customId: "a custom id, store this custom id and use it to login next time",
-    createPlayerIfNotExists: true,
-    infoRequestParam: {
-        countryCode: true,
-        displayName: true,
-    }
-});
+const infoRequestParam = new AuthenticateModels.InfoRequestParam();
+infoRequestParam.countryCode = true;
+infoRequestParam.displayName = true;
+
+const loginRequest = new AuthenticateModels.LoginByCustomIdRequestData();
+loginRequest.customId = "a custom id, store this custom id and use it to login next time";
+loginRequest.createPlayerIfNotExists = true;
+loginRequest.infoRequestParam = infoRequestParam;
+
+const loginByCustomIdResponse = await GNNetwork.authenticate.loginByCustomIdAsync(loginRequest);
 
 if (loginByCustomIdResponse.returnCode != ReturnCode.Ok || loginByCustomIdResponse.errorCode != ErrorCode.Ok) {
   console.log("login by custom id failed because the returnCode is " + loginByCustomIdResponse.returnCode + ", errorCode is " + loginByCustomIdResponse.errorCode);
@@ -87,7 +89,8 @@ console.log("Your displayName: " + loginByCustomIdResponse.responseData.infoResp
 - `GNNetwork.gamePlayer` — game player gameplay/profile/friend/group/character. [Guide](docs/guides/GAME_PLAYER.md).
 - `GNNetwork.characterPlayer` — character-level (trong trường hợp 1 game player có nhiều nhân vật nhỏ) gameplay/social. [Guide](docs/guides/CHARACTER_PLAYER.md).
 - `GNNetwork.group` — group metadata/member/message/currency. [Guide](docs/guides/GROUP.md).
-- `GNNetwork.inventory` — inventory item metadata, statistics, log. [Guide](docs/guides/INVENTORY.md).- `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](docs/guides/STORE_INVENTORY.md).
+- `GNNetwork.inventory` — inventory item metadata, statistics, log. [Guide](docs/guides/INVENTORY.md).
+- `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](docs/guides/STORE_INVENTORY.md).
 - `GNNetwork.content` — content config, file upload/download metadata, small game asset, avatar asset. [Guide](docs/guides/CONTENT.md).
 - `GNNetwork.multiplayer` — matchmaking ticket, handle matchmaking trận đấu (HTTP, không socket). [Guide](docs/guides/MULTIPLAYER.md).
 - `GNNetwork.cloudScript` — CloudScript publish/version/execute, khi cần phải phối hợp các function lại với nhau, hoặc cần để server validate, cần phải viết cloudScript code từ `GearN Dashboard`. [Guide](docs/guides/CLOUDSCRIPT.md).
@@ -118,7 +121,7 @@ settings.config({
   pingInterval: 20000,                 // khi sử dụng socket, pingInterval socket io
   pingTimeout: 20000,                  // khi sử dụng socket, pingTimeout socket io
   secretKey: "secret-key",             // secretKey để có thể dùng client này, lấy từ GearN Dashboard tab Settings/SecretInfo, lựa chọn secretKey với các Permission Rules phù hợp
-  gameId: "game-id",                   // game id giành cho secretKey trong settings này hoặc override lại để chọn đúng game enviroment phù hợp, lấy từ GearN Dashboard từ tab Settings/SecretInfo
+  gameId: "game-id",                   // game id dành cho secretKey trong settings này hoặc override lại để chọn đúng game environment phù hợp, lấy từ GearN Dashboard từ tab Settings/SecretInfo
   logType: LogType.All,                // console log ra tất cả vấn đề thuộc loại nào
 });
 
@@ -260,7 +263,7 @@ Typed response có 5 public field (không getter): `returnCode`, `errorCode`, `i
 GNNetwork.getAuthenticateStatus().getAuthToken();
 GNNetwork.getAuthenticateStatus().getUserId();
 
-// trong trường hợp secret key có thể dùng cho game id nào cũng được, trường hợp muốn đùng riêng cho game id xác định thì sử dụng hàm này
+// trong trường hợp secret key có thể dùng cho game id nào cũng được, trường hợp muốn dùng riêng cho game id xác định thì sử dụng hàm này
 GNNetwork.getGNServerSettings().setGameId("your-game-id");
 
 // Health check
@@ -407,7 +410,6 @@ Full checklist + anti-patterns: [docs/RULES.md § 10](docs/RULES.md#10-anti-patt
 - Entry public API: `src/runtime/GNNetwork.ts`
 - Export surface: `src/index.ts`
 - Local debug: `index.js`
-- Cocos example: `examples/cocos-creator/GearNExample.ts.txt`
 
 ## 18. TL;DR
 

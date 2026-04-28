@@ -76,10 +76,8 @@ Rule nhanh:
 
 ## 6. Request Rules và Reference
 
-- Schema publish để AI tham chiếu:
-  - [../dist/runtime/entity/models/ContentModels.d.ts](../dist/runtime/entity/models/ContentModels.d.ts)
-  - [../dist/runtime/entity/models/ContentRequestModels.d.ts](../dist/runtime/entity/models/ContentRequestModels.d.ts)
-  - [../dist/runtime/entity/models/ContentResponseModels.d.ts](../dist/runtime/entity/models/ContentResponseModels.d.ts)
+- DTO fields: [reference/dto/CONTENT.md](../reference/dto/CONTENT.md). Method table: [reference/API_CONTENT.md](../reference/API_CONTENT.md).
+- Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Content*.d.ts`.
 - `GetContentDataRequestData.keys` là optional.
   - Suy luận từ model: nếu bỏ `keys`, backend có thể trả tập content rộng hơn theo `label` hoặc default scope.
   - Nếu backend spec không chốt rõ hành vi này, AI không được tự mặc định lấy toàn bộ content.

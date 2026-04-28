@@ -62,7 +62,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Không bật tất cả field một cách mù quáng.
 - Chỉ request những field thật sự cần cho màn hình hoặc flow hiện tại.
 - Nếu chỉ cần một phần dữ liệu theo key, dùng các mảng filter như `playerDataKeys`, `playerCurrencyKeys`, `playerStatisticsKeys`, `customDataKeys`, `tagKeys`.
-- Repo hiện không có file riêng `infoRequestParam.d.ts`. Schema publish để AI tham chiếu nằm tại [../dist/runtime/entity/models/AuthenticateModels.d.ts](../dist/runtime/entity/models/AuthenticateModels.d.ts).
+- Schema `InfoRequestParam` nằm trong [reference/dto/AUTHENTICATE.md](../reference/dto/AUTHENTICATE.md#inforequestparam); chỉ fallback sang [dist/runtime/entity/models/AuthenticateModels.d.ts](../../dist/runtime/entity/models/AuthenticateModels.d.ts) nếu reference chưa đủ.
 
 ### Ví dụ tối thiểu
 
@@ -90,7 +90,7 @@ infoRequestParam.playerStatisticsKeys = ["level", "exp"];
 ### Rule riêng cho Google
 
 - `loginByGoogleAsync` bắt buộc có `request.type`.
-- Giá trị `type` nên lấy từ [../dist/runtime/constant/enumType/GoogleLoginType.d.ts](../dist/runtime/constant/enumType/GoogleLoginType.d.ts).
+- Giá trị `type` nên lấy từ [reference/ENUMS.md](../reference/ENUMS.md#googlelogintype) hoặc fallback sang [dist/runtime/constant/enumType/GoogleLoginType.d.ts](../../dist/runtime/constant/enumType/GoogleLoginType.d.ts).
 
 Ví dụ:
 

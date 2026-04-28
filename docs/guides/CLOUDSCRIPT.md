@@ -94,10 +94,9 @@ Rule nhanh:
 
 ## 6. Request Rules Và Reference
 
-- Schema publish để AI tham chiếu:
-  - [../dist/runtime/entity/models/CloudScriptModels.d.ts](../dist/runtime/entity/models/CloudScriptModels.d.ts)
-  - [../dist/runtime/entity/models/CloudScriptRequestModels.d.ts](../dist/runtime/entity/models/CloudScriptRequestModels.d.ts)
-  - [../dist/runtime/entity/models/CloudScriptResponseModels.d.ts](../dist/runtime/entity/models/CloudScriptResponseModels.d.ts)
+- DTO fields: [reference/dto/CLOUDSCRIPT.md](../reference/dto/CLOUDSCRIPT.md). Method table: [reference/API_CLOUDSCRIPT.md](../reference/API_CLOUDSCRIPT.md).
+- Enums: [ExecuteResponseStatus](../reference/ENUMS.md#executeresponsestatus).
+- Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/CloudScript*.d.ts`.
 - `AddFunctionRequestData.script` là bắt buộc.
 - `AddFunctionRequestData.canExecute` và `AddFunctionRequestData.isLive` nên luôn set explicit, không dựa vào default ngầm.
 - `EditFunctionRequestData.version` là bắt buộc, đúng `7` ký tự.

@@ -2,7 +2,7 @@
 
 Character-level gameplay: profile, inventory relation, friend/group relation, statistics, currency, segments, tags.
 
-Domain guide: [guides/CHARACTER_PLAYER.md](../guides/CHARACTER_PLAYER.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#character-player).
+Domain guide: [guides/CHARACTER_PLAYER.md](../guides/CHARACTER_PLAYER.md). DTO shapes: [dto/CHARACTER_PLAYER.md](dto/CHARACTER_PLAYER.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -218,7 +218,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.characterPlayer.addPlayerFriendAsync({ /* CharacterPlayerModels.AddPlayerFriendRequestData */ } as any);
+// requestData: CharacterPlayerModels.AddPlayerFriendRequestData đã build theo dto/CHARACTER_PLAYER.md
+const res = await GNNetwork.characterPlayer.addPlayerFriendAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

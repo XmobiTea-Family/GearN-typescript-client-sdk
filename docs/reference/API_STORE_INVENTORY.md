@@ -2,7 +2,7 @@
 
 Store catalog, buy/present, receipt validation, store log.
 
-Domain guide: [guides/STORE_INVENTORY.md](../guides/STORE_INVENTORY.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#store-inventory).
+Domain guide: [guides/STORE_INVENTORY.md](../guides/STORE_INVENTORY.md). DTO shapes: [dto/STORE_INVENTORY.md](dto/STORE_INVENTORY.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -101,7 +101,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.storeInventory.buyStoreItemAsync({ /* StoreInventoryModels.BuyStoreItemRequestData */ } as any);
+// requestData: StoreInventoryModels.BuyStoreItemRequestData đã build theo dto/STORE_INVENTORY.md
+const res = await GNNetwork.storeInventory.buyStoreItemAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload

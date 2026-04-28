@@ -5,7 +5,14 @@ Mọi response từ GearN backend đi qua 2 tầng kiểm tra. AI consumer phả
 ## Pattern bắt buộc
 
 ```ts
-const res = await GNNetwork.authenticate.loginByAccountAsync({ username, password });
+import { AuthenticateModels, ErrorCode, GNNetwork, ReturnCode } from "@xmobitea/gn-typescript-client";
+
+const request = new AuthenticateModels.LoginByAccountRequestData();
+request.username = username;
+request.password = password;
+request.infoRequestParam = new AuthenticateModels.InfoRequestParam();
+
+const res = await GNNetwork.authenticate.loginByAccountAsync(request);
 
 // 1. Kiểm tra returnCode (transport/gateway)
 if (res.returnCode !== ReturnCode.Ok) {
@@ -149,4 +156,4 @@ Mặc định ưu tiên `*Async`.
 
 - Enum đầy đủ: [ENUMS.md](ENUMS.md)
 - Route / permission: [RULES.md § 3](../RULES.md#3-route--trust-boundary-của-caller)
-- Self / other self: [RULES.md § 4](../RULES.md#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)
+- Self / other-self: [RULES.md § 4](../RULES.md#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)

@@ -93,10 +93,9 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 5. Request Rules và Reference
 
-- Schema publish để AI tham chiếu:
-  - [../dist/runtime/entity/models/DashboardModels.d.ts](../dist/runtime/entity/models/DashboardModels.d.ts)
-  - [../dist/runtime/entity/models/DashboardRequestModels.d.ts](../dist/runtime/entity/models/DashboardRequestModels.d.ts)
-  - [../dist/runtime/entity/models/DashboardResponseModels.d.ts](../dist/runtime/entity/models/DashboardResponseModels.d.ts)
+- DTO fields: [reference/dto/DASHBOARD.md](../reference/dto/DASHBOARD.md). Method table: [reference/API_DASHBOARD.md](../reference/API_DASHBOARD.md).
+- Enums: [OwnerType](../reference/ENUMS.md#ownertype).
+- Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Dashboard*.d.ts`.
 - `DashboardApi` hiện `type` phải lấy từ `OwnerType` trong `resetStatisticsLeaderboard` hoặc `deleteInDatabase`.
 - Nếu codebase hiện tại không có constant nghiệp vụ cho các numeric field đó, AI không được tự bịa giá trị.
 - `GetServerLogRequestData` có phân trang mềm bằng `skip` và `limit`; không request log vô hạn.

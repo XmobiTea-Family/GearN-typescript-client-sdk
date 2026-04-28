@@ -15,6 +15,7 @@ Toàn bộ enum public export từ `@xmobitea/gn-typescript-client`. Mỗi bản
 - [RequestRole](#requestrole)
 - [RequestType](#requesttype)
 - [MessageType](#messagetype)
+- [PostType](#posttype)
 - [LogType](#logtype)
 - [FriendStatus](#friendstatus)
 - [GroupStatus](#groupstatus)
@@ -25,10 +26,12 @@ Toàn bộ enum public export từ `@xmobitea/gn-typescript-client`. Mỗi bản
 - [PushPlatformType](#pushplatformtype)
 - [MatchmakingMemberStatus](#matchmakingmemberstatus)
 - [MatchmakingTicketStatus](#matchmakingticketstatus)
+- [MatchStatus](#matchstatus)
 - [ExecuteResponseStatus](#executeresponsestatus)
 - [StoreItemType](#storeitemtype)
 - [StoreReceiveType](#storereceivetype)
 - [PermissionDataItem](#permissiondataitem)
+- [FieldDataType](#fielddatatype)
 
 ---
 
@@ -196,6 +199,17 @@ export enum MessageType {
 
 ---
 
+## PostType
+
+Low-level HTTP body encoding dùng bởi `HttpPeer`. App tích hợp thông thường không cần truyền trực tiếp enum này.
+
+| Name | Value | Notes |
+|------|-------|-------|
+| `Json` | 0 | UTF-8 JSON request/response body |
+| `MsgPack` | 1 | Binary MessagePack request/response body |
+
+---
+
 ## LogType
 
 Verbosity cho `GNDebug`.
@@ -344,6 +358,18 @@ Lifecycle state của matchmaking ticket.
 
 ---
 
+## MatchStatus
+
+Lifecycle state của match record sau khi matchmaking tạo match.
+
+| Name | Value | Meaning |
+|------|-------|---------|
+| `WaitingForServer` | 1 | Match đã tạo nhưng server allocation chưa sẵn sàng |
+| `Matched` | 2 | Server đã sẵn sàng; app có thể tiếp tục flow connect theo backend contract |
+| `Canceled` | 3 | Match bị hủy trước khi hoàn tất |
+
+---
+
 ## ExecuteResponseStatus
 
 Status CloudScript execute function.
@@ -391,3 +417,17 @@ Cách config 1 data item có thể ghi lại sau khi tạo.
 |------|-------|---------|
 | `ReadOnly` | 1 | Read được nhưng write flow thường không ghi đè |
 | `CanOverride` | 2 | Write được, ghi đè giá trị cũ |
+
+---
+
+## FieldDataType
+
+Runtime metadata type ghi nhận bởi decorator `DataMember`. App tích hợp SDK bình thường hiếm khi cần đọc trực tiếp enum này.
+
+| Name | Value | Meaning |
+|------|-------|---------|
+| `Boolean` | 0 | Field boolean |
+| `Number` | 1 | Field number |
+| `String` | 2 | Field string |
+| `Array` | 3 | Field array |
+| `Object` | 4 | Field class/object |

@@ -16,6 +16,7 @@
     "dev": "rm -rf ./dist && npm run build:node && npm run debug",
     "debug": "node index.js",
     "test": "mocha -r ts-node/register ./test/**/*.test.ts",
+    "docs:validate": "node scripts/validate-ai-docs.mjs",
     "smoke:consumer": "powershell -ExecutionPolicy Bypass -File ./scripts/run-consumer-smoke.ps1",
     "build:node": "webpack --config webpack.config.mjs --mode production --stats-modules",
     "build:udm": "webpack --config webpack.config.udm.mjs --mode production --stats-modules",

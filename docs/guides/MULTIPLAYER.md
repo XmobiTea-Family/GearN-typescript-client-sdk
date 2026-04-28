@@ -89,13 +89,9 @@ Rule cứng:
 
 ## 6. Request Rules và Reference
 
-- Schema publish để AI tham chiếu:
-  - [../dist/runtime/entity/models/MultiplayerModels.d.ts](../dist/runtime/entity/models/MultiplayerModels.d.ts)
-  - [../dist/runtime/entity/models/MultiplayerRequestModels.d.ts](../dist/runtime/entity/models/MultiplayerRequestModels.d.ts)
-  - [../dist/runtime/entity/models/MultiplayerResponseModels.d.ts](../dist/runtime/entity/models/MultiplayerResponseModels.d.ts)
-- Enum publish nên dùng:
-  - [../dist/runtime/constant/enumType/MatchmakingTicketStatus.d.ts](../dist/runtime/constant/enumType/MatchmakingTicketStatus.d.ts)
-  - [../dist/runtime/constant/enumType/MatchmakingMemberStatus.d.ts](../dist/runtime/constant/enumType/MatchmakingMemberStatus.d.ts)
+- DTO fields: [reference/dto/MULTIPLAYER.md](../reference/dto/MULTIPLAYER.md). Method table: [reference/API_MULTIPLAYER.md](../reference/API_MULTIPLAYER.md).
+- Enums: [MatchmakingTicketStatus](../reference/ENUMS.md#matchmakingticketstatus), [MatchmakingMemberStatus](../reference/ENUMS.md#matchmakingmemberstatus).
+- Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Multiplayer*.d.ts`.
 - `CreateMatchmakingTicketRequestData.giveUpAfterSeconds` có min `20`.
 - `GetQueueStatisticsRequestData.timeInSeconds` có min `20`.
 - `queueName` có min `6`, max `32`.

@@ -2,7 +2,7 @@
 
 CloudScript function add/edit/execute + version/listing.
 
-Domain guide: [guides/CLOUDSCRIPT.md](../guides/CLOUDSCRIPT.md). DTO shapes: [DTO_INDEX.md](DTO_INDEX.md#cloudscript).
+Domain guide: [guides/CLOUDSCRIPT.md](../guides/CLOUDSCRIPT.md). DTO shapes: [dto/CLOUDSCRIPT.md](dto/CLOUDSCRIPT.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
 
 ## Namespaces
 
@@ -74,7 +74,8 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ```ts
 import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
 
-const res = await GNNetwork.cloudScript.addFunctionAsync({ /* CloudScriptModels.AddFunctionRequestData */ } as any);
+// requestData: CloudScriptModels.AddFunctionRequestData đã build theo dto/CLOUDSCRIPT.md
+const res = await GNNetwork.cloudScript.addFunctionAsync(requestData);
 if (res.returnCode !== ReturnCode.Ok) return;
 if (res.errorCode !== ErrorCode.Ok) return;
 // res.responseData có typed payload
