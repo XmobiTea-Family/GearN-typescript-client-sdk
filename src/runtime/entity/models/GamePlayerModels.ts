@@ -1676,6 +1676,18 @@ export namespace GamePlayerModels {
 	}
 
 	/**
+	 * Reports the latest known login timestamp and active socket identity for a player.
+	 */
+	export class OnlineStatusItem {
+		@NumberDataMember({ code: ParameterCode.TsLastLogin })
+		public tsLastLogin: number;
+
+		@StringDataMember({ code: ParameterCode.SocketId })
+		public socketId: string;
+
+	}
+
+	/**
 	 * Contains the optional fields requested through `InfoRequestParam`.
 	 */
 	export class InfoResponseParameters {
@@ -1852,18 +1864,6 @@ export namespace GamePlayerModels {
 	export class GamePlayersWithUserIdResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: GamePlayerWithUserIdResponseData })
 		public results: Array<GamePlayerWithUserIdResponseData>;
-
-	}
-
-	/**
-	 * Reports the latest known login timestamp and active socket identity for a player.
-	 */
-	export class OnlineStatusItem {
-		@NumberDataMember({ code: ParameterCode.TsLastLogin })
-		public tsLastLogin: number;
-
-		@StringDataMember({ code: ParameterCode.SocketId })
-		public socketId: string;
 
 	}
 
