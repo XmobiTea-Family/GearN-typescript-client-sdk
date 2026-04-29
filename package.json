@@ -1,13 +1,22 @@
 {
   "name": "@xmobitea/gn-typescript-client",
-  "version": "2.6.13",
+  "version": "2.6.15",
   "description": "GearN Typescript Client SDK by XmobiTea (Pro)",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "docs",
+    "README.MD",
+    "LICENSE",
+    "AGENTS.md",
+    "llms.txt"
+  ],
   "scripts": {
     "dev": "rm -rf ./dist && npm run build:node && npm run debug",
     "debug": "node index.js",
     "test": "mocha -r ts-node/register ./test/**/*.test.ts",
+    "docs:validate": "node scripts/validate-ai-docs.mjs",
     "build:node": "webpack --config webpack.config.mjs --mode production --stats-modules",
     "build:udm": "webpack --config webpack.config.udm.mjs --mode production --stats-modules",
     "build:minudm": "webpack --config webpack.config.min.udm.mjs --mode production --stats-modules",
@@ -22,22 +31,26 @@
     "@types/mocha": "^10.0.10",
     "@types/node": "^22.15.17",
     "@types/store": "^2.0.5",
-    "mocha": "^11.0.1",
-    "terser-webpack-plugin": "^5.3.10",
-    "ts-loader": "^9.5.1",
+    "mocha": "^11.7.5",
+    "terser-webpack-plugin": "^5.5.0",
+    "ts-loader": "^9.5.7",
     "ts-node": "^10.9.2",
     "tslib": "^2.8.1",
     "typescript": "^5.7.2",
-    "webpack": "^5.97.1",
+    "webpack": "^5.106.2",
     "webpack-cli": "^5.1.4",
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
     "@msgpack/msgpack": "^3.1.3",
-    "axios": "^1.13.2",
+    "axios": "^1.15.2",
     "reflect-metadata": "^0.2.2",
     "socket.io-client": "^4.8.3",
     "store": "^2.0.12"
+  },
+  "overrides": {
+    "diff": "^8.0.3",
+    "serialize-javascript": "^7.0.5"
   },
   "directories": {
     "test": "test"

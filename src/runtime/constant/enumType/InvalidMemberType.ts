@@ -1,79 +1,106 @@
 /**
- * Enumerates validation failure categories reported for invalid request members.
+ * Validation failure categories used by the GearN backend when it
+ * rejects a malformed request.
+ *
+ * Each entry describes **why** a specific request parameter failed
+ * validation. The backend ships a list of `[code, type]` pairs in
+ * the `invalidRequestParameters` array of a response with
+ * `ReturnCode.InvalidRequestParameters`; the SDK decodes those
+ * pairs into typed {@link InvalidMember} entries accessible via
+ * {@link OperationResponse.getInvalidMembers}.
+ *
+ * The categories cover the validation rules declared by the
+ * `@*DataMember` decorator family:
+ * - `*Null` — `mustNonNull = true` was violated.
+ * - `*MinLength` / `*MaxLength` — string / hashtable / array
+ *   length bounds.
+ * - `Number*` — numeric range / integer constraints.
+ * - `DataRequired` — the parameter was missing entirely.
+ * - `TypeInvalid` — the value was present but had the wrong
+ *   runtime type.
+ * - `UnknownError` — backend-side rejection that does not map to
+ *   any of the above.
  */
 export enum InvalidMemberType {
 	/**
-	 * The backend rejected the member but did not map it to a more specific validation category.
+	 * Catch-all category for backend-side validation rejections
+	 * that do not fit any of the structured cases below.
 	 */
 	UnknownError = 1,
 
 	/**
-	 * The member is required but missing.
+	 * The parameter is required but the request did not include
+	 * it (the wire payload had no entry for the matching `code`).
 	 */
 	DataRequired = 2,
 
 	/**
-	 * The member type does not match the expected runtime type.
+	 * The parameter was present but had a runtime type the backend
+	 * did not expect (e.g. a number where a string was declared).
 	 */
 	TypeInvalid = 3,
 
 	/**
-	 * A required string member is null or empty when null is not allowed.
+	 * `@StringDataMember({ mustNonNull: true })` was violated — the
+	 * value was `null`.
 	 */
 	StringNull = 4,
 
 	/**
-	 * A string member is shorter than the configured minimum length.
+	 * String length is below the configured `minLength`.
 	 */
 	StringMinLength = 5,
 
 	/**
-	 * A string member is longer than the configured maximum length.
+	 * String length is above the configured `maxLength`.
 	 */
 	StringMaxLength = 6,
 
 	/**
-	 * A numeric member is lower than the configured minimum value.
+	 * Numeric value is below the configured `minValue`.
 	 */
 	NumberMinValue = 7,
 
 	/**
-	 * A numeric member is higher than the configured maximum value.
+	 * Numeric value is above the configured `maxValue`.
 	 */
 	NumberMaxValue = 8,
 
 	/**
-	 * A numeric member must be an integer but received a non-integer value.
+	 * `@NumberDataMember({ mustInt: true })` was violated — the
+	 * value was a fractional number.
 	 */
 	NumberMustInt = 9,
 
 	/**
-	 * A required `GNHashtable` member is null.
+	 * `@GNHashtableDataMember({ mustNonNull: true })` was violated.
 	 */
 	GNHashtableNull = 10,
 
 	/**
-	 * A `GNHashtable` member contains fewer entries than allowed.
+	 * `GNHashtable` member key count is below the configured
+	 * `minLength`.
 	 */
 	GNHashtableMinLength = 11,
 
 	/**
-	 * A `GNHashtable` member contains more entries than allowed.
+	 * `GNHashtable` member key count is above the configured
+	 * `maxLength`.
 	 */
 	GNHashtableMaxLength = 12,
 
 	/**
-	 * A required `GNArray` member is null.
+	 * `@GNArrayDataMember({ mustNonNull: true })` was violated.
 	 */
 	GNArrayNull = 13,
 
 	/**
-	 * A `GNArray` member contains fewer items than allowed.
+	 * `GNArray` element count is below the configured `minLength`.
 	 */
 	GNArrayMinLength = 14,
 
 	/**
-	 * A `GNArray` member contains more items than allowed.
+	 * `GNArray` element count is above the configured `maxLength`.
 	 */
 	GNArrayMaxLength = 15,
 

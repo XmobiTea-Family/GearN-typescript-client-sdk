@@ -3,7 +3,28 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups shared data contracts for StoreInventory.
+ * Reusable request and response DTOs for the StoreInventory
+ * domain.
+ *
+ * Store operations target a **logical owner** identified by
+ * `(ownerId, ownerType)` (see {@link OwnerType}) and operate
+ * against a concrete `storeId`. The store catalog is configured
+ * server-side; clients only read it.
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.storeInventory`,
+ *   the owner is implicitly the authenticated player.
+ * - **`Server*`**: used by `GNNetwork.storeInventory.server`,
+ *   accepts explicit owner parameters so a backend can issue
+ *   purchases / gifts on behalf of any player.
+ * - **`Admin*`**: used by `GNNetwork.storeInventory.admin`,
+ *   plus catalog-edit and refund operations.
+ *
+ * Receipt-validation flows ship the platform receipt blob plus
+ * optional metadata; the backend records the
+ * {@link StoreReceiveType} on the audit log entry so analytics
+ * can distinguish in-game-currency purchases from platform-IAP
+ * grants.
  */
 export namespace StoreInventoryModels {
 	/**
@@ -49,7 +70,8 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the reusable parameter block InfoRequestParam.
+	 * Selects which optional store fields should be returned in `infoResponseParameters`.
+	 * Boolean flags default to `false`.
 	 */
 	export class InfoRequestParam {
 		@BooleanDataMember({ code: ParameterCode.StoreItems, isOptional: true, defaultValue: false })
@@ -187,15 +209,21 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for BuyStoreItem.
+	 * Purchases one store item for a target owner.
 	 */
 	export class BuyStoreItemRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
+		/**
+		 * Target owner identifier.
+		 */
 		@StringDataMember({ code: ParameterCode.Id, minLength: 10, maxLength: 11, mustNonNull: true })
 		public id: string;
 
+		/**
+		 * Target owner type mapped by the public `OwnerType` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
 
@@ -217,7 +245,7 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for PresentStoreItem.
+	 * Grants one store item to a target owner without the normal purchase flow.
 	 */
 	export class PresentStoreItemRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
@@ -247,12 +275,15 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for GetStoreLog.
+	 * Reads store logs using token-based pagination.
 	 */
 	export class GetStoreLogRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true, isOptional: true })
 		public storeId?: string;
 
+		/**
+		 * Filters by store receive types mapped by the public `StoreReceiveType` enum.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.StoreReceiveTypes, minLength: 1, maxLength: 10, mustNonNull: true, elementCls: Number, isOptional: true })
 		public storeReceiveTypes?: Array<number>;
 
@@ -262,6 +293,9 @@ export namespace StoreInventoryModels {
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
+		/**
+		 * Continuation token returned by the previous page.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
@@ -430,12 +464,15 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for SetStoreItemInformation.
+	 * Updates mutable store metadata for one store entry.
 	 */
 	export class SetStoreItemInformationRequestData {
 		@StringDataMember({ code: ParameterCode.StoreId, minLength: 10, maxLength: 32, mustNonNull: true })
 		public storeId: string;
 
+		/**
+		 * Store item type mapped by the public `StoreItemType` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.StoreItemType, minValue: 1, maxValue: 2, mustInt: true, isOptional: true })
 		public storeItemType?: number;
 
@@ -598,7 +635,7 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Represents InfoResponseParameters.
+	 * Contains the optional fields requested through `InfoRequestParam`.
 	 */
 	export class InfoResponseParameters {
 		@GNArrayDataMember({ code: ParameterCode.StoreItems, isOptional: true, elementCls: StoreInventoryItem })
@@ -637,9 +674,12 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for StoreInventory.
+	 * Base store-inventory response envelope.
 	 */
 	export class StoreInventoryResponseData {
+		/**
+		 * Optional field bag controlled by the corresponding `InfoRequestParam`.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
@@ -682,7 +722,7 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Represents OwnerInfoResponseParameters.
+	 * Describes the affected owner snapshot returned by buy/present flows.
 	 */
 	export class OwnerInfoResponseParameters {
 		@GNArrayDataMember({ code: ParameterCode.Currencies, isOptional: true, elementCls: PriceCurrencyItem })
@@ -694,7 +734,7 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for BuyStoreInventory.
+	 * Describes the result of a store purchase workflow.
 	 */
 	export class BuyStoreInventoryResponseData {
 		@GNArrayDataMember({ code: ParameterCode.StoreCurrencies, isOptional: true, elementCls: StoreInventoryItem })
@@ -712,7 +752,7 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for PresentStoreInventory.
+	 * Describes the result of a store present workflow.
 	 */
 	export class PresentStoreInventoryResponseData {
 		@GNArrayDataMember({ code: ParameterCode.StoreCurrencies, isOptional: true, elementCls: StoreInventoryItem })
@@ -757,7 +797,7 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for StoreLog.
+	 * Describes one store transaction log entry.
 	 */
 	export class StoreLogResponseData {
 		@StringDataMember({ code: ParameterCode.StoreId })
@@ -766,12 +806,18 @@ export namespace StoreInventoryModels {
 		@StringDataMember({ code: ParameterCode.OwnerId })
 		public id: string;
 
+		/**
+		 * Owner type mapped by the public `OwnerType` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.OwnerType })
 		public type: number;
 
 		@StringDataMember({ code: ParameterCode.TransactionId, isOptional: true })
 		public transactionId?: string;
 
+		/**
+		 * Receive type mapped by the public `StoreReceiveType` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.StoreReceiveType })
 		public storeReceiveType: number;
 
@@ -828,12 +874,15 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for GetStoreLog.
+	 * Returns one page of store logs.
 	 */
 	export class GetStoreLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: StoreLogResponseData })
 		public results: Array<StoreLogResponseData>;
 
+		/**
+		 * Continuation token for the next page, or `undefined` when pagination is exhausted.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
@@ -849,7 +898,7 @@ export namespace StoreInventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

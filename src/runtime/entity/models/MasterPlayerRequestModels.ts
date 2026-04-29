@@ -5,7 +5,22 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { MasterPlayerModels } from "./MasterPlayerModels";
 
 /**
- * Groups typed request contracts for MasterPlayer.
+ * Typed request wrappers for the MasterPlayer domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from
+ * {@link MasterPlayerModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.MasterPlayer} domain;
+ * - the appropriate {@link RequestRole} based on the wrapper
+ *   name prefix.
+ *
+ * The MasterPlayer domain owns the largest set of operations in
+ * the SDK because it covers (a) every identity link / unlink
+ * operation for all supported providers and (b) every account-
+ * level resource (currencies, statistics, custom data, push
+ * notifications). See {@link MasterPlayerApi} for the
+ * functional grouping.
  */
 export namespace MasterPlayerRequestModels {
 	/**
@@ -2705,49 +2720,49 @@ export namespace MasterPlayerRequestModels {
 	}
 
 	/**
-	 * Maps the SetTsLastLogin operation to a typed request wrapper.
+	 * Maps the UpdateTsLastLogin operation to a typed request wrapper.
 	 */
-	export class SetTsLastLoginOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.SetTsLastLoginRequestData> {
-		protected override operationCode: string = OperationCode.SetTsLastLogin;
+	export class UpdateTsLastLoginOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.UpdateTsLastLoginRequestData> {
+		protected override operationCode: string = OperationCode.UpdateTsLastLogin;
 		protected override requestType: RequestType = RequestType.MasterPlayer;
 		protected override role: RequestRole = RequestRole.Client;
 
 		/**
-		 * Creates a new SetTsLastLoginOperationRequest instance.
+		 * Creates a new UpdateTsLastLoginOperationRequest instance.
 		 */
-		constructor(requestData: MasterPlayerModels.SetTsLastLoginRequestData, timeout: number) {
+		constructor(requestData: MasterPlayerModels.UpdateTsLastLoginRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = MasterPlayerModels.SetTsLastLoginRequestData;
+			this.requestDataCls = MasterPlayerModels.UpdateTsLastLoginRequestData;
 		}
 	}
 
 	/**
-	 * Maps the ServerSetTsLastLogin operation to a typed request wrapper.
+	 * Maps the ServerUpdateTsLastLogin operation to a typed request wrapper.
 	 */
-	export class ServerSetTsLastLoginOperationRequest extends SetTsLastLoginOperationRequest {
+	export class ServerUpdateTsLastLoginOperationRequest extends UpdateTsLastLoginOperationRequest {
 		protected override role: RequestRole = RequestRole.Server;
 
 		/**
-		 * Creates a new ServerSetTsLastLoginOperationRequest instance.
+		 * Creates a new ServerUpdateTsLastLoginOperationRequest instance.
 		 */
-		constructor(requestData: MasterPlayerModels.ServerSetTsLastLoginRequestData, timeout: number) {
+		constructor(requestData: MasterPlayerModels.ServerUpdateTsLastLoginRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = MasterPlayerModels.ServerSetTsLastLoginRequestData;
+			this.requestDataCls = MasterPlayerModels.ServerUpdateTsLastLoginRequestData;
 		}
 	}
 
 	/**
-	 * Maps the AdminSetTsLastLogin operation to a typed request wrapper.
+	 * Maps the AdminUpdateTsLastLogin operation to a typed request wrapper.
 	 */
-	export class AdminSetTsLastLoginOperationRequest extends SetTsLastLoginOperationRequest {
+	export class AdminUpdateTsLastLoginOperationRequest extends UpdateTsLastLoginOperationRequest {
 		protected override role: RequestRole = RequestRole.Admin;
 
 		/**
-		 * Creates a new AdminSetTsLastLoginOperationRequest instance.
+		 * Creates a new AdminUpdateTsLastLoginOperationRequest instance.
 		 */
-		constructor(requestData: MasterPlayerModels.AdminSetTsLastLoginRequestData, timeout: number) {
+		constructor(requestData: MasterPlayerModels.AdminUpdateTsLastLoginRequestData, timeout: number) {
 			super(requestData, timeout);
-			this.requestDataCls = MasterPlayerModels.AdminSetTsLastLoginRequestData;
+			this.requestDataCls = MasterPlayerModels.AdminUpdateTsLastLoginRequestData;
 		}
 	}
 

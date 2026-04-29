@@ -2,7 +2,19 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { MasterPlayerModels } from "./MasterPlayerModels";
 
 /**
- * Groups typed response contracts for MasterPlayer.
+ * Typed response wrappers for the MasterPlayer domain.
+ *
+ * Each class extends {@link CustomOperationResponseAbstract}
+ * and binds a response DTO from {@link MasterPlayerModels}.
+ * The same wrapper is reused across the
+ * client / server / admin role variants because the response
+ * shape is identical regardless of which role issued the
+ * request.
+ *
+ * Many read operations resolve to a profile-style envelope
+ * (`MasterPlayerResponseData` or a derived shape) whose
+ * `infoResponseParameters` field is gated by the matching
+ * request DTO's `infoRequestParam` flags.
  */
 export namespace MasterPlayerResponseModels {
 	/**
@@ -818,12 +830,12 @@ export namespace MasterPlayerResponseModels {
 	}
 
 	/**
-	 * Maps the SetTsLastLogin operation to a typed response wrapper.
+	 * Maps the UpdateTsLastLogin operation to a typed response wrapper.
 	 */
-	export class SetTsLastLoginOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
+	export class UpdateTsLastLoginOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.EmptyResponseData> {
 
 		/**
-		 * Creates a new SetTsLastLoginOperationResponse instance.
+		 * Creates a new UpdateTsLastLoginOperationResponse instance.
 		 */
 		constructor() {
 			super();

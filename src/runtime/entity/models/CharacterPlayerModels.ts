@@ -3,19 +3,52 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups shared data contracts for CharacterPlayer.
+ * Reusable request and response DTOs for the CharacterPlayer
+ * domain.
+ *
+ * CharacterPlayer operations target a **single in-game
+ * character** rather than the account-level player record.
+ * Because a single GearN account can own multiple characters,
+ * every public route — including the client-flavoured
+ * variants — requires an explicit `characterId` rather than
+ * inferring the target from the authenticated user.
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.characterPlayer`,
+ *   targets a character owned by the authenticated user. The
+ *   backend cross-checks ownership.
+ * - **`Server*`**: used by `GNNetwork.characterPlayer.server`,
+ *   targets any character. Requires server `secretKey`.
+ * - **`Admin*`**: used by `GNNetwork.characterPlayer.admin`,
+ *   targets any character with admin privileges and
+ *   bypass-validation knobs.
+ *
+ * Validation rules declared on each `@*DataMember` decorator
+ * are enforced server-side; failures surface as
+ * {@link InvalidMember} entries with the matching
+ * {@link InvalidMemberType} code.
  */
 export namespace CharacterPlayerModels {
 	/**
-	 * Defines the reusable parameter block InfoRequestParam.
+	 * Selects which optional character-player fields and lightweight relations should be returned.
+	 * Boolean flags default to `false`; key arrays narrow list-style fields to specific keys only.
 	 */
 	export class InfoRequestParam {
+		/**
+		 * Includes the character catalog ID.
+		 */
 		@BooleanDataMember({ code: ParameterCode.CatalogId, isOptional: true, defaultValue: false })
 		public catalogId?: boolean;
 
+		/**
+		 * Includes the current owner descriptor.
+		 */
 		@BooleanDataMember({ code: ParameterCode.Owner, isOptional: true, defaultValue: false })
 		public owner?: boolean;
 
+		/**
+		 * Includes the remove-state descriptor.
+		 */
 		@BooleanDataMember({ code: ParameterCode.RemoveStatus, isOptional: true, defaultValue: false })
 		public removeStatus?: boolean;
 
@@ -58,12 +91,21 @@ export namespace CharacterPlayerModels {
 		@BooleanDataMember({ code: ParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
 		public tsLastLogin?: boolean;
 
+		/**
+		 * Includes relation items for inventory owned by the character, optionally filtered by `itemCatalogIds`.
+		 */
 		@BooleanDataMember({ code: ParameterCode.PlayerInventories, isOptional: true, defaultValue: false })
 		public playerInventories?: boolean;
 
+		/**
+		 * Includes relation items for groups joined or owned by the character, optionally filtered by `groupCatalogIds`.
+		 */
 		@BooleanDataMember({ code: ParameterCode.PlayerGroups, isOptional: true, defaultValue: false })
 		public playerGroups?: boolean;
 
+		/**
+		 * Includes relation items for friends attached to the character, optionally filtered by `friendCatalogIds`.
+		 */
 		@BooleanDataMember({ code: ParameterCode.PlayerFriends, isOptional: true, defaultValue: false })
 		public playerFriends?: boolean;
 
@@ -85,12 +127,21 @@ export namespace CharacterPlayerModels {
 		@GNArrayDataMember({ code: ParameterCode.CharacterCatalogIds, isOptional: true, elementCls: String })
 		public characterCatalogIds?: Array<string>;
 
+		/**
+		 * Restricts `playerInventories` to relation items whose catalog IDs match this list.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
 		public itemCatalogIds?: Array<string>;
 
+		/**
+		 * Restricts `playerGroups` to relation items whose catalog IDs match this list.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.GroupCatalogIds, isOptional: true, elementCls: String })
 		public groupCatalogIds?: Array<string>;
 
+		/**
+		 * Restricts `playerFriends` to relation items whose catalog IDs match this list.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.FriendCatalogIds, isOptional: true, elementCls: String })
 		public friendCatalogIds?: Array<string>;
 
@@ -145,11 +196,11 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Defines the reusable parameter block GroupMemberParam.
+	 * Describes one game-player member included when creating a group from a character context.
 	 */
 	export class GroupMemberParam {
-		@StringDataMember({ code: ParameterCode.UserId, minLength: 11, maxLength: 11, mustNonNull: true })
-		public userId: string;
+		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
+		public characterId: string;
 
 	}
 
@@ -544,12 +595,18 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetPlayerInformation.
+	 * Reads one specific character-player profile using the requested projection.
 	 */
 	export class GetPlayerInformationRequestData {
+		/**
+		 * Character entity to inspect.
+		 */
 		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
+		/**
+		 * Required field projection that controls which optional data is returned.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
@@ -991,7 +1048,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for CreateGroup.
+	 * Creates a group from a character-player context.
 	 */
 	export class CreateGroupRequestData {
 		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
@@ -1000,6 +1057,9 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public catalogId: string;
 
+		/**
+		 * Additional group members expressed as game-player user IDs, not character IDs.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.GroupMembers, isOptional: true, elementCls: GroupMemberParam })
 		public groupMembers?: Array<GroupMemberParam>;
 
@@ -1036,7 +1096,7 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: ParameterCode.DisplayName, defaultValue: "", isOptional: true })
 		public displayName?: string;
 
-		@NumberDataMember({ code: ParameterCode.Amount, defaultValue: 1, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Amount, defaultValue: 1, mustInt: true, minValue: 1, maxValue: 256, isOptional: true })
 		public amount?: number;
 
 	}
@@ -1300,7 +1360,8 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for SetOwner.
+	 * Transfers ownership of the character to another game player.
+	 * The public contract currently exposes only the new owner ID, not an owner-type override.
 	 */
 	export class SetOwnerRequestData {
 		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
@@ -1480,7 +1541,8 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetCurrencyLog.
+	 * Reads currency change logs for one character player.
+	 * Pagination is token-based rather than skip-based.
 	 */
 	export class GetCurrencyLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
@@ -1492,6 +1554,9 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
+		/**
+		 * Continuation token returned by the previous page.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
@@ -1510,7 +1575,8 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetStatisticsLog.
+	 * Reads statistic change logs for one character player.
+	 * Pagination is token-based rather than skip-based.
 	 */
 	export class GetStatisticsLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
@@ -1522,6 +1588,9 @@ export namespace CharacterPlayerModels {
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
+		/**
+		 * Continuation token returned by the previous page.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
@@ -1540,7 +1609,7 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Represents InfoResponseParameters.
+	 * Contains the optional fields requested through `InfoRequestParam`.
 	 */
 	export class InfoResponseParameters {
 		@StringDataMember({ code: ParameterCode.CatalogId, isOptional: true })
@@ -1582,12 +1651,21 @@ export namespace CharacterPlayerModels {
 		@GNArrayDataMember({ code: ParameterCode.PlayerStatistics, isOptional: true, elementCls: GenericModels.StatisticsItem })
 		public playerStatistics?: Array<GenericModels.StatisticsItem>;
 
+		/**
+		 * Lightweight relation items for inventory owned by the character.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.PlayerInventories, isOptional: true, elementCls: GenericModels.InventoryItem })
 		public playerInventories?: Array<GenericModels.InventoryItem>;
 
+		/**
+		 * Lightweight relation items for groups attached to the character.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.PlayerGroups, isOptional: true, elementCls: GenericModels.GroupItem })
 		public playerGroups?: Array<GenericModels.GroupItem>;
 
+		/**
+		 * Lightweight relation items for friends attached to the character.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.PlayerFriends, isOptional: true, elementCls: GenericModels.FriendItem })
 		public playerFriends?: Array<GenericModels.FriendItem>;
 
@@ -1603,16 +1681,19 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Defines the response payload for CharacterPlayer.
+	 * Base character-player response envelope.
 	 */
 	export class CharacterPlayerResponseData {
+		/**
+		 * Optional field bag controlled by the corresponding `InfoRequestParam`.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
 	/**
-	 * Defines the response payload for CharacterPlayerWithCharacterId.
+	 * Character-player envelope that also exposes the resolved character ID.
 	 */
 	export class CharacterPlayerWithCharacterIdResponseData extends CharacterPlayerResponseData {
 		@StringDataMember({ code: ParameterCode.CharacterId })
@@ -1708,31 +1789,37 @@ export namespace CharacterPlayerModels {
 	}
 
 	/**
-	 * Defines the response payload for GetStatisticsLog.
+	 * Returns one page of statistics logs.
 	 */
 	export class GetStatisticsLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerLogResponseData })
 		public results: Array<CharacterPlayerLogResponseData>;
 
+		/**
+		 * Continuation token for the next page, or `undefined` when pagination is exhausted.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for GetCurrencyLog.
+	 * Returns one page of currency logs.
 	 */
 	export class GetCurrencyLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: CharacterPlayerLogResponseData })
 		public results: Array<CharacterPlayerLogResponseData>;
 
+		/**
+		 * Continuation token for the next page, or `undefined` when pagination is exhausted.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

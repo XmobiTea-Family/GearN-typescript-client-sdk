@@ -40,5 +40,6 @@
         "./webpack.config.udm.mjs",
         "./webpack.config.cocos.mjs",
         "./syncCode.js",
+        "./scripts/validate-ai-docs.mjs",
     ]
 }

@@ -7,11 +7,59 @@ import { MasterPlayerRequestModels } from "./entity/models/MasterPlayerRequestMo
 import { MasterPlayerResponseModels } from "./entity/models/MasterPlayerResponseModels";
 
 /**
- * Exposes MasterPlayer operations through GNNetwork.
+ * Public client-scoped namespace for the MasterPlayer domain.
+ *
+ * Reachable through {@link GNNetwork.masterPlayer} after
+ * {@link GNNetwork.init}. Manages the **account-level** record
+ * — the top-level user identity that owns one or more
+ * game-player records ({@link GNNetwork.gamePlayer}) which in
+ * turn own per-character records
+ * ({@link GNNetwork.characterPlayer}).
+ *
+ * Functional groupings:
+ *
+ * 1. **Account & password** — `changePasswordAccount`,
+ *    `setPassword`, `getMasterPlayerInformation`,
+ *    `getMasterPlayer`, `getMasterPlayerBan`.
+ * 2. **Identity link / unlink** (one method per identity
+ *    provider) — `linkAccount`, `linkAndroidDeviceId`,
+ *    `linkApple`, `linkCustomDeviceId`, `linkCustomId`,
+ *    `linkEditorDeviceId`, `linkFacebook`,
+ *    `linkGenericService`, `linkGoogle`,
+ *    `linkGooglePlayGameService`, `linkGameCenter`,
+ *    `linkiOSDeviceId`, `linkLinuxDeviceId`,
+ *    `linkMacOSDeviceId`, `linkWindowsDeviceId`,
+ *    `linkWindowsPhoneDeviceId`. Each has a matching
+ *    `unlink*` method. Pair with the corresponding
+ *    `loginBy*` flows on {@link AuthenticateApi}.
+ * 3. **Profile fields** — `getDisplayName`, `setDisplayName`,
+ *    `getAvatar`, `setAvatar`, `getCountryCode`,
+ *    `getIpAddressCreate`, `getOnlineStatus`, `getEmail`,
+ *    `setEmail`, `getTsCreate`, `getTsLastLogin`.
+ * 4. **Custom data / tags / segments** — `getCustomData`,
+ *    `setCustomData`, `getTag`, `setTag`, `getSegment`,
+ *    `addSegment`, `removeSegment`, etc.
+ * 5. **Account currencies & statistics** —
+ *    `getAccountCurrency`, `setAccountCurrency`,
+ *    `addAccountCurrency`, `subtractAccountCurrency`,
+ *    `getAccountStatistics`, `setAccountStatistics`,
+ *    `addAccountStatistics`.
+ * 6. **Push notifications** —
+ *    `registerPushNotification`,
+ *    `unregisterPushNotification`,
+ *    `getPushNotifications`. The `platformType` field uses
+ *    {@link PushPlatformType}.
+ *
+ * Common contract: same as {@link GamePlayerApi} (HTTP /
+ * `RequestType.MasterPlayer` / `RequestRole.Client`,
+ * callback + Promise variants, `.server` / `.admin`
+ * sub-namespaces).
  */
 export class MasterPlayerApi {
+	/** Server-scoped master-player operations for trusted backend callers. */
 	public server: ServerMasterPlayerApi = new ServerMasterPlayerApi();
 
+	/** Admin-scoped master-player operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminMasterPlayerApi = new AdminMasterPlayerApi();
 
 	/**
@@ -827,17 +875,17 @@ export class MasterPlayerApi {
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and returns the typed response via callback.
+	 * Sends the updateTsLastLogin operation and returns the typed response via callback.
 	 */
-	public setTsLastLogin(requestData: MasterPlayerModels.SetTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.SetTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public updateTsLastLogin(requestData: MasterPlayerModels.UpdateTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.UpdateTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and resolves with the typed response.
+	 * Sends the updateTsLastLogin operation and resolves with the typed response.
 	 */
-	public async setTsLastLoginAsync(requestData: MasterPlayerModels.SetTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SetTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public async updateTsLastLoginAsync(requestData: MasterPlayerModels.UpdateTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.UpdateTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
@@ -1221,7 +1269,14 @@ export class MasterPlayerApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerMasterPlayerApi.
+ * Server-scoped MasterPlayer namespace, reachable through
+ * `GNNetwork.masterPlayer.server`.
+ *
+ * Mirrors every method on {@link MasterPlayerApi} but uses the
+ * `Server*RequestData` DTO variants. The server flavour
+ * accepts an explicit `userId` so a trusted backend can act on
+ * behalf of any account without holding the player's auth
+ * token. Always pass a valid server-side `secretKey`.
  */
 export class ServerMasterPlayerApi {
 	/**
@@ -2023,17 +2078,17 @@ export class ServerMasterPlayerApi {
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and returns the typed response via callback.
+	 * Sends the updateTsLastLogin operation and returns the typed response via callback.
 	 */
-	public setTsLastLogin(requestData: MasterPlayerModels.ServerSetTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerSetTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public updateTsLastLogin(requestData: MasterPlayerModels.ServerUpdateTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerUpdateTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and resolves with the typed response.
+	 * Sends the updateTsLastLogin operation and resolves with the typed response.
 	 */
-	public async setTsLastLoginAsync(requestData: MasterPlayerModels.ServerSetTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSetTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public async updateTsLastLoginAsync(requestData: MasterPlayerModels.ServerUpdateTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerUpdateTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
@@ -2417,7 +2472,15 @@ export class ServerMasterPlayerApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminMasterPlayerApi.
+ * Admin-scoped MasterPlayer namespace, reachable through
+ * `GNNetwork.masterPlayer.admin`.
+ *
+ * Mirrors {@link ServerMasterPlayerApi} but routed through
+ * {@link RequestRole.Admin}. The backend uses the caller's
+ * admin auth token to authorise privileged operations such as
+ * touching another tenant's accounts, force-resetting
+ * credentials, granting / revoking bans, etc. Reserved for
+ * dashboard / GM / backoffice tools.
  */
 export class AdminMasterPlayerApi {
 	/**
@@ -3219,17 +3282,17 @@ export class AdminMasterPlayerApi {
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and returns the typed response via callback.
+	 * Sends the updateTsLastLogin operation and returns the typed response via callback.
 	 */
-	public setTsLastLogin(requestData: MasterPlayerModels.AdminSetTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminSetTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public updateTsLastLogin(requestData: MasterPlayerModels.AdminUpdateTsLastLoginRequestData, onResponse: Action1<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+		GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminUpdateTsLastLoginOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**
-	 * Sends the setTsLastLogin operation and resolves with the typed response.
+	 * Sends the updateTsLastLogin operation and resolves with the typed response.
 	 */
-	public async setTsLastLoginAsync(requestData: MasterPlayerModels.AdminSetTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SetTsLastLoginOperationResponse> {
-		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSetTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SetTsLastLoginOperationResponse);
+	public async updateTsLastLoginAsync(requestData: MasterPlayerModels.AdminUpdateTsLastLoginRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse> {
+		return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminUpdateTsLastLoginOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.UpdateTsLastLoginOperationResponse);
 	}
 
 	/**

@@ -5,7 +5,27 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { GamePlayerModels } from "./GamePlayerModels";
 
 /**
- * Groups typed request contracts for GamePlayer.
+ * Typed request wrappers for the GamePlayer domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from
+ * {@link GamePlayerModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.GamePlayer} domain;
+ * - the appropriate {@link RequestRole} (Client / Server /
+ *   Admin) based on the wrapper name prefix.
+ *
+ * Wrapper naming convention:
+ * - `XxxOperationRequest` — Client role, used by
+ *   `GNNetwork.gamePlayer.*`.
+ * - `ServerXxxOperationRequest` — Server role, used by
+ *   `GNNetwork.gamePlayer.server.*`.
+ * - `AdminXxxOperationRequest` — Admin role, used by
+ *   `GNNetwork.gamePlayer.admin.*`.
+ *
+ * Application code rarely instantiates these directly — the
+ * `GNNetwork.gamePlayer.*` helpers in {@link GamePlayerApi}
+ * build them under the hood.
  */
 export namespace GamePlayerRequestModels {
 	/**

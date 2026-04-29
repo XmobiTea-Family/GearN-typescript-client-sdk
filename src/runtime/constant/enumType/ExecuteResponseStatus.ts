@@ -1,29 +1,42 @@
 /**
- * Enumerates CloudScript execution result states returned in execute-function responses.
+ * Result discriminator returned by `executeFunction*` operations on
+ * `GNNetwork.cloudScript`.
+ *
+ * CloudScript runs server-side scripts on demand — this enum
+ * distinguishes the four well-known failure modes from a clean
+ * success so the application can show the right error message.
+ *
+ * Surfaced on
+ * `CloudScriptModels.ExecuteFunctionResponseData.executeResponseStatus`.
  */
 export enum ExecuteResponseStatus {
 	/**
-	 * The function executed successfully.
+	 * Function ran to completion and returned a result. Inspect
+	 * `executeResult` for the script's output.
 	 */
 	Ok = 1,
 
 	/**
-	 * The function executed but threw an exception.
+	 * Function ran but threw an exception. Inspect
+	 * `executeException` / `debugMessage` for the captured error.
 	 */
 	Exception = 2,
 
 	/**
-	 * The requested function name was not found inside the selected script version.
+	 * The script version exists but does not export a function
+	 * with the requested name.
 	 */
 	FunctionNameNotFound = 3,
 
 	/**
-	 * The requested script version is invalid, missing, or not executable.
+	 * The selected script version is invalid, missing, or has
+	 * been retired.
 	 */
 	VersionInvalid = 4,
 
 	/**
-	 * The function exceeded the allowed execution time.
+	 * The function exceeded the configured execution-time limit
+	 * and was aborted.
 	 */
 	Timeout = 5,
 

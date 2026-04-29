@@ -7,11 +7,43 @@ import { MultiplayerRequestModels } from "./entity/models/MultiplayerRequestMode
 import { MultiplayerResponseModels } from "./entity/models/MultiplayerResponseModels";
 
 /**
- * Exposes Multiplayer operations through GNNetwork.
+ * Public client-scoped namespace for the Multiplayer domain.
+ *
+ * Reachable through {@link GNNetwork.multiplayer} after
+ * {@link GNNetwork.init}. Manages matchmaking tickets, queue
+ * statistics, and historical match queries.
+ *
+ * Note: this namespace is **not** the raw realtime socket
+ * transport — it is the HTTP-based matchmaking control plane.
+ * Once a ticket succeeds and produces a {@link MatchStatus}
+ * `Matched` record, the application connects to the
+ * dedicated game server using the connection details on the
+ * match record (out-of-band relative to the GearN SDK).
+ *
+ * Functional groupings:
+ *
+ * 1. **Ticket lifecycle** — `createMatchmakingTicket`,
+ *    `getMatchmakingTicket`, `cancelMatchmakingTicket`,
+ *    `cancelAllMatchmakingTicket`. Tickets progress through
+ *    {@link MatchmakingTicketStatus} states; per-member
+ *    state is described by
+ *    {@link MatchmakingMemberStatus}.
+ * 2. **Match queries** — `getMatch`, `getMatches`,
+ *    `getMatchHistory`. Match records carry
+ *    {@link MatchStatus}.
+ * 3. **Queue analytics** — `getMatchmakingQueueStatistics`
+ *    and related read helpers for diagnostics dashboards.
+ *
+ * Common contract: same as {@link GamePlayerApi} (HTTP /
+ * `RequestType.Multiplayer` / `RequestRole.Client`,
+ * callback + Promise variants, `.server` / `.admin`
+ * sub-namespaces).
  */
 export class MultiplayerApi {
+	/** Server-scoped multiplayer operations for trusted backend callers. */
 	public server: ServerMultiplayerApi = new ServerMultiplayerApi();
 
+	/** Admin-scoped multiplayer operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminMultiplayerApi = new AdminMultiplayerApi();
 
 	/**
@@ -157,7 +189,14 @@ export class MultiplayerApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerMultiplayerApi.
+ * Server-scoped Multiplayer namespace, reachable through
+ * `GNNetwork.multiplayer.server`.
+ *
+ * Mirrors every method on {@link MultiplayerApi} but uses the
+ * `Server*RequestData` DTO variants. Used by trusted backends
+ * (e.g. dedicated game servers reporting match completion,
+ * matchmaking adjuncts canceling stale tickets). Always pass
+ * a valid server-side `secretKey`.
  */
 export class ServerMultiplayerApi {
 	/**
@@ -303,7 +342,13 @@ export class ServerMultiplayerApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminMultiplayerApi.
+ * Admin-scoped Multiplayer namespace, reachable through
+ * `GNNetwork.multiplayer.admin`.
+ *
+ * Mirrors {@link ServerMultiplayerApi} but routed through
+ * {@link RequestRole.Admin}. Used by dashboard / monitoring
+ * tools that need to inspect or force-cancel any ticket /
+ * match across the system.
  */
 export class AdminMultiplayerApi {
 	/**

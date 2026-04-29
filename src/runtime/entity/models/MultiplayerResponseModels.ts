@@ -2,7 +2,18 @@ import { CustomOperationResponseAbstract } from "./../response/CustomOperationRe
 import { MultiplayerModels } from "./MultiplayerModels";
 
 /**
- * Groups typed response contracts for Multiplayer.
+ * Typed response wrappers for the Multiplayer domain.
+ *
+ * Each class extends {@link CustomOperationResponseAbstract}
+ * and binds a response DTO from {@link MultiplayerModels}.
+ *
+ * Ticket and match polling flows consume these wrappers
+ * sequentially: the application keeps calling
+ * `getMatchmakingTicketAsync` until
+ * {@link MatchmakingTicketStatus.Matched} appears, then calls
+ * `getMatchAsync` to retrieve the connection details. The same
+ * wrapper class is reused across the
+ * client / server / admin role variants.
  */
 export namespace MultiplayerResponseModels {
 	/**

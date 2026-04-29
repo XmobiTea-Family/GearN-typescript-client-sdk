@@ -4,7 +4,38 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups shared data contracts for Content.
+ * Reusable request and response DTOs for the Content domain.
+ *
+ * The Content domain manages two distinct kinds of content:
+ *
+ * 1. **`contentData` blobs** — small structured values keyed by
+ *    a content key (`ContentDataParam.key`, `minLength: 2,
+ *    maxLength: 32, mustNonNull: true`). Useful for game-wide
+ *    config, MOTD strings, remote config flags. Manipulated via
+ *    `getContentData` / `setContentData`.
+ *
+ * 2. **File uploads** — binary blobs identified by a `fileId`.
+ *    The typed operations only manage the **metadata** slot;
+ *    the actual byte transfer happens through
+ *    {@link GNNetwork.uploadFile} (push) and
+ *    {@link GNNetwork.getDownloadFileUrl} (pull). The standard
+ *    workflow is:
+ *
+ *    ```
+ *    create upload info  → returns fileId + upload token
+ *      ↓
+ *    GNNetwork.uploadFile (out of band, multipart POST)
+ *      ↓
+ *    request download info → returns short-lived download token
+ *      ↓
+ *    GNNetwork.getDownloadFileUrl (out of band, plain GET)
+ *    ```
+ *
+ * Each request DTO has three role variants
+ * (`Client*`, `Server*`, `Admin*`) corresponding to the matching
+ * sub-namespace on `GNNetwork.content`. Server / Admin variants
+ * usually accept additional `userId` / `ownerId` parameters so
+ * trusted callers can act on behalf of any player.
  */
 export namespace ContentModels {
 	/**
@@ -20,7 +51,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the request payload for CreateNewFileUploadInfo.
+	 * Allocates a new upload slot before the binary payload is uploaded through the separate upload helper.
 	 */
 	export class CreateNewFileUploadInfoRequestData {
 		@StringDataMember({ code: ParameterCode.FileName, mustNonNull: true, minLength: 5, maxLength: 50 })
@@ -42,7 +73,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the request payload for GetContentData.
+	 * Reads content configuration blobs, optionally filtered by key list and label.
 	 */
 	export class GetContentDataRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, elementCls: String, isOptional: true })
@@ -135,7 +166,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the request payload for RequestDownloadFileUploadInfo.
+	 * Requests a short-lived download token for an existing uploaded file.
 	 */
 	export class RequestDownloadFileUploadInfoRequestData {
 		@StringDataMember({ code: ParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
@@ -180,7 +211,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the response payload for FileIdUpload.
+	 * Returns the backend-generated file ID for follow-up upload or download workflows.
 	 */
 	export class FileIdUploadResponseData {
 		@StringDataMember({ code: ParameterCode.FileId })
@@ -207,7 +238,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Represents FileUploadItem.
+	 * Describes upload metadata stored for one file entry.
 	 */
 	export class FileUploadItem {
 		@StringDataMember({ code: ParameterCode.MimeType })
@@ -222,7 +253,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the response payload for GetFileUploadInfo.
+	 * Returns metadata for one uploaded file entry.
 	 */
 	export class GetFileUploadInfoResponseData extends FileIdUploadResponseData {
 		@StringDataMember({ code: ParameterCode.FileName })
@@ -234,6 +265,9 @@ export namespace ContentModels {
 		@GNHashtableDataMember({ code: ParameterCode.RemoveStatus })
 		public removeStatus: GenericModels.RemoveStatusItem;
 
+		/**
+		 * Upload-expiration timestamp for unfinished uploads when present.
+		 */
 		@NumberDataMember({ code: ParameterCode.TsUploadExpire, isOptional: true })
 		public tsUploadExpire?: number;
 
@@ -243,7 +277,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the response payload for RequestDownloadFileUploadInfo.
+	 * Returns the download token consumed by the SDK download helper.
 	 */
 	export class RequestDownloadFileUploadInfoResponseData {
 		@StringDataMember({ code: ParameterCode.DownloadToken })
@@ -252,7 +286,7 @@ export namespace ContentModels {
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

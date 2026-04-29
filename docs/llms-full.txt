@@ -1,0 +1,43 @@
+llms-full.txt — optional generated bundle placeholder
+
+Status: deprecated-safe stub.
+
+This repository no longer treats this file as a primary AI reading source because
+stale concatenated bundles can preserve outdated examples and broken relative
+links. Use the source documents below instead; they are the canonical inputs.
+
+Canonical reading order:
+
+1. ../AGENTS.md
+2. AI_CHEATSHEET.md
+3. RULES.md
+4. ai-manifest.json
+5. reference/API_INDEX.md
+6. guides/<DOMAIN>.md for the target domain
+7. reference/dto/<DOMAIN>.md or grep reference/DTO_INDEX.md for DTO fields
+8. dist/**/*.d.ts only when docs do not cover the public contract
+
+Conflict rule:
+
+- Cross-cutting route, permission, auth/socket, override, and error rules:
+  RULES.md wins.
+- Method signatures, DTO fields, and enum names:
+  reference/API_<GROUP>.md, reference/dto/<DOMAIN>.md, reference/ENUMS.md, then
+  dist/**/*.d.ts win.
+- This bundle placeholder never wins over source docs.
+
+Important direct links:
+
+- AI cheatsheet: AI_CHEATSHEET.md
+- Cross-cutting rules: RULES.md
+- Machine manifest: ai-manifest.json
+- API index: reference/API_INDEX.md
+- DTO index: reference/DTO_INDEX.md
+- Enums: reference/ENUMS.md
+- Config: reference/CONFIG.md
+- Events: reference/EVENTS.md
+- Error handling: reference/ERROR_HANDLING.md
+- Cookbook: COOKBOOK.md
+
+If a release needs a true full concatenated bundle again, regenerate it from the
+current source docs and include a generation timestamp plus source commit hash.

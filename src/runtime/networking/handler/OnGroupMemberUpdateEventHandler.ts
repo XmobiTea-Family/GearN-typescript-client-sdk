@@ -1,36 +1,73 @@
 import { Action1 } from "./../../common/Action1";
 import { EventCode } from "./../../constant/EventCode";
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
-import { GNArrayDataMember } from "./../../entity/DataMember";
+import { GNArrayDataMember, StringDataMember } from "./../../entity/DataMember";
 import { OperationEvent } from "./../../entity/OperationEvent";
 import { GenericModels } from "./../../entity/models/GenericModels";
 import { ConverterService } from "./../../helper/ConverterService";
 import { IServerEventHandler } from "./IServerEventHandler";
 
 /**
- * Defines the payload emitted by the corresponding server event.
+ * Decoded payload of the `OnGroupMemberUpdate` server event.
+ *
+ * Pushed by the backend whenever the member roster of a group
+ * changes — join, leave, role change, kick. Every device currently
+ * subscribed to that group receives the same payload so all clients
+ * converge on the same view of the roster.
+ *
+ * Pair with the operations on `GNNetwork.group` (`acceptGroupMember`,
+ * `removeGroupMember`, `setGroupMemberRole`, ...): after one client
+ * issues such an operation the server fans the resulting roster out
+ * through this event.
  */
 export class GroupMemberUpdate {
-	@GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.FriendItem })
+	/**
+	 * Authoritative member roster after the change. Each
+	 * {@link GenericModels.MemberItem} carries the user id, role,
+	 * join timestamp and optional profile metadata. Treat the
+	 * array as a complete replacement.
+	 */
+	@GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.MemberItem })
 	public members: Array<GenericModels.MemberItem>;
+
+	/**
+	 * Identifier of the group whose member roster changed. Use
+	 * this to route the update to the correct group view when the
+	 * application has multiple groups loaded.
+	 */
+	@StringDataMember({ code: ParameterCode.GroupId })
+	public groupId: string;
 }
 
 /**
- * Handles the event flow implemented by OnGroupMemberUpdateEventHandler.
+ * Auto-registered event handler for the `OnGroupMemberUpdate`
+ * server event.
+ *
+ * Application setup:
+ * ```ts
+ * OnGroupMemberUpdateEventHandler.onUpdate = update => {
+ *     refreshGroupMembersUi(update.groupId, update.members);
+ * };
+ * ```
  */
 @IServerEventHandler.registerEvent
 export class OnGroupMemberUpdateEventHandler implements IServerEventHandler {
+	/**
+	 * Static callback the application registers. Leave `null` to
+	 * silently drop the event.
+	 */
 	public static onUpdate: Action1<GroupMemberUpdate>;
 
 	/**
-	 * Returns the event code handled by this implementation.
+	 * Returns {@link EventCode.OnGroupMemberUpdate}.
 	 */
 	public getEventCode(): string {
 		return EventCode.OnGroupMemberUpdate;
 	}
 
 	/**
-	 * Deserializes the event payload and forwards it to the registered static callback.
+	 * Deserialises the parameters into a {@link GroupMemberUpdate}
+	 * and forwards to {@link onUpdate}.
 	 */
 	public handle(operationEvent: OperationEvent): void {
 		if (OnGroupMemberUpdateEventHandler.onUpdate != null)

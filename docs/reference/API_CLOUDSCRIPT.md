@@ -1,0 +1,82 @@
+# API Reference: CloudScriptApi
+
+CloudScript function add/edit/execute + version/listing.
+
+Domain guide: [guides/CLOUDSCRIPT.md](../guides/CLOUDSCRIPT.md). DTO shapes: [dto/CLOUDSCRIPT.md](dto/CLOUDSCRIPT.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
+
+## Namespaces
+
+- `GNNetwork.cloudScript` — `RequestRole.Client`
+- `GNNetwork.cloudScript.server` — `RequestRole.Server`
+- `GNNetwork.cloudScript.admin` — `RequestRole.Admin`
+
+## Convention
+
+Mỗi method dưới đây có 2 form — callback và `*Async()` Promise. Ưu tiên `*Async()`.
+
+```ts
+// Callback
+GNNetwork.cloudScript.<method>(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+
+// Async
+const res = await GNNetwork.cloudScript.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+```
+
+Param chung:
+
+| Param | Type | Optional | Notes |
+|-------|------|----------|-------|
+| `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
+| `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
+| `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
+| `overrideSecretKey` | `string` | yes | Override secret key mặc định của route |
+| `customTags` | `GNHashtable` | yes | Tags gắn vào request, backend có thể log/route |
+| `timeout` | `number` | yes | Timeout giây; default = `OperationRequest.defaultTimeOut` |
+
+Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
+
+
+## Client methods (`GNNetwork.cloudScript.*`)
+
+| Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi dùng userId |
+|--------|-------------|------------|----------------|--------------------------|----------------------------------|
+| `addFunction` | `CloudScriptModels.AddFunctionRequestData` | `addFunctionAsync(...)` | `CloudScriptResponseModels.AddFunctionOperationResponse` | `cloudScript.addFunction.otherSelfEnable` | |
+| `editFunction` | `CloudScriptModels.EditFunctionRequestData` | `editFunctionAsync(...)` | `CloudScriptResponseModels.EditFunctionOperationResponse` | `cloudScript.editFunction.otherSelfEnable` | |
+| `executeFunction` | `CloudScriptModels.ExecuteFunctionRequestData` | `executeFunctionAsync(...)` | `CloudScriptResponseModels.ExecuteFunctionOperationResponse` | `cloudScript.executeFunction.selfEnable` | `cloudScript.executeFunction.otherSelfEnable` |
+| `getFunction` | `CloudScriptModels.GetFunctionRequestData` | `getFunctionAsync(...)` | `CloudScriptResponseModels.GetFunctionOperationResponse` | `cloudScript.getFunction.otherSelfEnable` | |
+| `getFunctions` | `CloudScriptModels.GetFunctionsRequestData` | `getFunctionsAsync(...)` | `CloudScriptResponseModels.GetFunctionsOperationResponse` | `cloudScript.getFunctions.otherSelfEnable` | |
+
+
+## Server methods (`GNNetwork.cloudScript.server.*`)
+
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `addFunction` | `CloudScriptModels.ServerAddFunctionRequestData` | `addFunctionAsync(...)` | `CloudScriptResponseModels.AddFunctionOperationResponse` | `cloudScript.addFunction.serverSelfEnable` |
+| `editFunction` | `CloudScriptModels.ServerEditFunctionRequestData` | `editFunctionAsync(...)` | `CloudScriptResponseModels.EditFunctionOperationResponse` | `cloudScript.editFunction.serverSelfEnable` |
+| `executeFunction` | `CloudScriptModels.ServerExecuteFunctionRequestData` | `executeFunctionAsync(...)` | `CloudScriptResponseModels.ExecuteFunctionOperationResponse` | `cloudScript.executeFunction.serverSelfEnable` |
+| `getFunction` | `CloudScriptModels.ServerGetFunctionRequestData` | `getFunctionAsync(...)` | `CloudScriptResponseModels.GetFunctionOperationResponse` | `cloudScript.getFunction.serverSelfEnable` |
+| `getFunctions` | `CloudScriptModels.ServerGetFunctionsRequestData` | `getFunctionsAsync(...)` | `CloudScriptResponseModels.GetFunctionsOperationResponse` | `cloudScript.getFunctions.serverSelfEnable` |
+
+
+## Admin methods (`GNNetwork.cloudScript.admin.*`)
+
+| Method | Request DTO | Async form | Response class | Default Permission Rules |
+|--------|-------------|------------|----------------|--------------------------|
+| `addFunction` | `CloudScriptModels.AdminAddFunctionRequestData` | `addFunctionAsync(...)` | `CloudScriptResponseModels.AddFunctionOperationResponse` | `cloudScript.addFunction.adminSelfEnable` |
+| `editFunction` | `CloudScriptModels.AdminEditFunctionRequestData` | `editFunctionAsync(...)` | `CloudScriptResponseModels.EditFunctionOperationResponse` | `cloudScript.editFunction.adminSelfEnable` |
+| `executeFunction` | `CloudScriptModels.AdminExecuteFunctionRequestData` | `executeFunctionAsync(...)` | `CloudScriptResponseModels.ExecuteFunctionOperationResponse` | `cloudScript.executeFunction.adminSelfEnable` |
+| `getFunction` | `CloudScriptModels.AdminGetFunctionRequestData` | `getFunctionAsync(...)` | `CloudScriptResponseModels.GetFunctionOperationResponse` | `cloudScript.getFunction.adminSelfEnable` |
+| `getFunctions` | `CloudScriptModels.AdminGetFunctionsRequestData` | `getFunctionsAsync(...)` | `CloudScriptResponseModels.GetFunctionsOperationResponse` | `cloudScript.getFunctions.adminSelfEnable` |
+
+
+## Ví dụ tối thiểu
+
+```ts
+import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
+
+// requestData: CloudScriptModels.AddFunctionRequestData đã build theo dto/CLOUDSCRIPT.md
+const res = await GNNetwork.cloudScript.addFunctionAsync(requestData);
+if (res.returnCode !== ReturnCode.Ok) return;
+if (res.errorCode !== ErrorCode.Ok) return;
+// res.responseData có typed payload
+```

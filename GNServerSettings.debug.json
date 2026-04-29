@@ -14,8 +14,7 @@
         "pingInterval": 20000,
         "pingTimeout": 20000,
         "logType": 4,
-        "adminSecretKey": "",
-        "serverSecretKey": "",
-        "clientSecretKey": ""
+        "secretKey": "",
+        "gameId": ""
     }
 }

@@ -7,41 +7,41 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Chỉ áp dụng cho `GNNetwork.authenticate`.
 - Không áp dụng cho `GNNetwork.authenticate.server` và `GNNetwork.authenticate.admin` vì hiện tại 2 namespace này rỗng, không có method public.
 - Nếu cần login admin dashboard, dùng API khác. Không dùng `AuthenticateApi`.
-- Nếu cần gọi server-side operation, dùng API group tương ứng với `serverSecretKey`. Không dùng `AuthenticateApi.server`.
+- Nếu cần gọi server-side operation, dùng API group tương ứng với `secretKey` có `permission rules` `server` hợp lệ. Không dùng `AuthenticateApi.server`.
 
 ## 2. Hard Rules
 
 - Luôn ưu tiên `async/await`. Mặc định dùng `GNNetwork.authenticate.*Async()`.
 - Tất cả method của `AuthenticateApi` hiện gửi qua HTTP, không login qua socket.
 - Trước khi gọi `AuthenticateApi`, bắt buộc đã `GNNetwork.init(settings)`.
-- `GNServerSettings` phải có `clientSecretKey` hợp lệ. Không dựa vào `adminSecretKey` hay `serverSecretKey` cho `AuthenticateApi`.
+- `GNServerSettings` phải có `secretKey` hợp lệ.
 - Mọi method trừ `refreshAuthToken` đều phải truyền `infoRequestParam` khác `null`.
 - Không dùng `GNNetwork.authenticate.server.*` hoặc `GNNetwork.authenticate.admin.*` vì hiện chưa có method nào để gọi.
 - Sau khi login hoặc refresh token thành công, nếu backend trả `authToken` và `userId`, SDK sẽ tự cache vào `GNNetwork.getAuthenticateStatus()` và `StorageService`.
-- Nếu cần dùng socket sau login, flow đúng là: login HTTP thành công -> `GNNetwork.connectSocket()` -> khi socket connect xong gọi `GNNetwork.sendRequestAuthSocket()`.
+- Nếu cần dùng socket sau login, tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow). Flow khuyến nghị là login HTTP thành công -> `GNNetwork.connectSocket()`, SDK sẽ auto-auth nếu `authToken` đã có trong cache.
 
 ## 3. Chọn Method
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `loginByAccountAsync` | Đã có tài khoản username/password trong hệ thống | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng để tạo tài khoản mới |
-| `registerAccountAsync` | Muốn tạo tài khoản username/password mới | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng lặp lại ở mỗi lần mở app |
-| `refreshAuthTokenAsync` | Đã có auth token hợp lệ hoặc gần hết hạn và muốn refresh phiên | `new AuthenticateModels.RefreshAuthTokenRequestData()` | `RefreshAuthTokenResponseData` | Request data rỗng, token hiện tại lấy từ SDK cache hoặc `overrideAuthToken` |
-| `loginByCustomDeviceIdAsync` | Muốn login theo định danh thiết bị hoặc cài đặt app do client tự quản lý | `customDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Phù hợp guest/anonymous hoặc định danh cục bộ |
-| `loginByCustomIdAsync` | App đã có user id nghiệp vụ riêng, không phải username/password | `customId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng khi id thuộc business domain của app, không buộc phải là device id |
-| `loginByEditorDeviceIdAsync` | Chạy local/dev tool trong editor | `editorDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Chỉ nên dùng cho môi trường phát triển |
-| `loginByAndroidDeviceIdAsync` | Có Android device id và muốn login theo device | `androidDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Chỉ dùng khi nguồn identity thực sự là Android device id |
-| `loginByiOSDeviceIdAsync` | Có iOS device id và muốn login theo device | `iOSDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không thay bằng method khác nếu identity source là iOS |
-| `loginByLinuxDeviceIdAsync` | Có Linux device id và muốn login theo device | `linuxDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity |
-| `loginByMacOSDeviceIdAsync` | Có macOS device id và muốn login theo device | `macOSDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity |
-| `loginByWindowsDeviceIdAsync` | Có Windows device id và muốn login theo device | `windowsDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity |
-| `loginByWindowsPhoneDeviceIdAsync` | Có Windows Phone device id | `windowsPhoneDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Legacy platform flow |
-| `loginByGoogleAsync` | Có token Google từ SDK/provider flow chuẩn | `token`, `type`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | `type` phải lấy từ `GoogleLoginType` |
-| `loginByGooglePlayGameServiceAsync` | Có credential từ Google Play Game Services | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không thay bằng `loginByGoogleAsync` nếu nguồn identity là GPGS |
-| `loginByFacebookAsync` | Có token Facebook hợp lệ | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không truyền `facebookId` thô vào method này |
-| `loginByAppleAsync` | Có token Apple hợp lệ | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không truyền `appleId` thô vào method này |
-| `loginByGameCenterAsync` | Có payload xác thực từ Game Center | `playerId`, `name`, `publicKeyUrl`, `signature`, `salt`, `timestamp`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Cần đủ payload xác thực của Game Center |
-| `loginByGenericServiceAsync` | Tích hợp provider tùy biến do backend hỗ trợ | `serviceName`, `serviceData`, `createPlayerIfNotExists?`, `infoRequestParam` | `GenericServiceAuthenticateResponseData` | Dùng khi source identity không khớp các method có sẵn |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| --- | --- | --- | --- | --- | --- |
+| `loginByAccountAsync` | Đã có tài khoản username/password trong hệ thống | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng để tạo tài khoản mới | `Ok`, `AccountNotFound`, `AccountPasswordWrong` |
+| `registerAccountAsync` | Muốn tạo tài khoản username/password mới | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng lặp lại ở mỗi lần mở app | `Ok`, `AccountUsernameExists` |
+| `refreshAuthTokenAsync` | Đã có auth token hợp lệ hoặc gần hết hạn và muốn refresh phiên | `new AuthenticateModels.RefreshAuthTokenRequestData()` | `RefreshAuthTokenResponseData` | Request data rỗng, token hiện tại lấy từ SDK cache hoặc `overrideAuthToken` | `Ok`, `AccountNotFound`, `PlayerBan` |
+| `loginByCustomDeviceIdAsync` | Muốn login theo định danh thiết bị hoặc cài đặt app do client tự quản lý | `customDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Phù hợp guest/anonymous hoặc định danh cục bộ | `Ok`, `AccountNotFound` |
+| `loginByCustomIdAsync` | App đã có user id nghiệp vụ riêng, không phải username/password | `customId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng khi id thuộc business domain của app, không buộc phải là device id | `Ok`, `AccountNotFound` |
+| `loginByEditorDeviceIdAsync` | Chạy local/dev tool trong editor | `editorDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Chỉ nên dùng cho môi trường phát triển | `Ok`, `AccountNotFound` |
+| `loginByAndroidDeviceIdAsync` | Có Android device id và muốn login theo device | `androidDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Chỉ dùng khi nguồn identity thực sự là Android device id | `Ok`, `AccountNotFound` |
+| `loginByiOSDeviceIdAsync` | Có iOS device id và muốn login theo device | `iOSDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không thay bằng method khác nếu identity source là iOS | `Ok`, `AccountNotFound` |
+| `loginByLinuxDeviceIdAsync` | Có Linux device id và muốn login theo device | `linuxDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity | `Ok`, `AccountNotFound` |
+| `loginByMacOSDeviceIdAsync` | Có macOS device id và muốn login theo device | `macOSDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity | `Ok`, `AccountNotFound` |
+| `loginByWindowsDeviceIdAsync` | Có Windows device id và muốn login theo device | `windowsDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Dùng đúng theo platform identity | `Ok`, `AccountNotFound` |
+| `loginByWindowsPhoneDeviceIdAsync` | Có Windows Phone device id | `windowsPhoneDeviceId`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Legacy platform flow | `Ok`, `AccountNotFound` |
+| `loginByGoogleAsync` | Có token Google từ SDK/provider flow chuẩn | `token`, `type`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | `type` phải lấy từ `GoogleLoginType` | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByGooglePlayGameServiceAsync` | Có credential từ Google Play Game Services | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không thay bằng `loginByGoogleAsync` nếu nguồn identity là GPGS | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByFacebookAsync` | Có token Facebook hợp lệ | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không truyền `facebookId` thô vào method này | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByAppleAsync` | Có token Apple hợp lệ | `token`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Không truyền `appleId` thô vào method này | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByGameCenterAsync` | Có payload xác thực từ Game Center | `playerId`, `name`, `publicKeyUrl`, `signature`, `salt`, `timestamp`, `createPlayerIfNotExists?`, `infoRequestParam` | `AuthenticateResponseData` | Cần đủ payload xác thực của Game Center | `Ok`, `AccountNotFound`, `VerifyTokenError` |
+| `loginByGenericServiceAsync` | Tích hợp provider tùy biến do backend hỗ trợ | `serviceName`, `serviceData`, `createPlayerIfNotExists?`, `infoRequestParam` | `GenericServiceAuthenticateResponseData` | Dùng khi source identity không khớp các method có sẵn | `Ok`, `AccountNotFound`, `VerifyFailed` |
 
 ## 4. Decision Rules
 
@@ -62,7 +62,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Không bật tất cả field một cách mù quáng.
 - Chỉ request những field thật sự cần cho màn hình hoặc flow hiện tại.
 - Nếu chỉ cần một phần dữ liệu theo key, dùng các mảng filter như `playerDataKeys`, `playerCurrencyKeys`, `playerStatisticsKeys`, `customDataKeys`, `tagKeys`.
-- Repo hiện không có file riêng `infoRequestParam.d.ts`. Schema publish để AI tham chiếu nằm tại [../dist/runtime/entity/models/AuthenticateModels.d.ts](../dist/runtime/entity/models/AuthenticateModels.d.ts).
+- Schema `InfoRequestParam` nằm trong [reference/dto/AUTHENTICATE.md](../reference/dto/AUTHENTICATE.md#inforequestparam); chỉ fallback sang [dist/runtime/entity/models/AuthenticateModels.d.ts](../../dist/runtime/entity/models/AuthenticateModels.d.ts) nếu reference chưa đủ.
 
 ### Ví dụ tối thiểu
 
@@ -90,7 +90,7 @@ infoRequestParam.playerStatisticsKeys = ["level", "exp"];
 ### Rule riêng cho Google
 
 - `loginByGoogleAsync` bắt buộc có `request.type`.
-- Giá trị `type` nên lấy từ [../dist/runtime/constant/enumType/GoogleLoginType.d.ts](../dist/runtime/constant/enumType/GoogleLoginType.d.ts).
+- Giá trị `type` nên lấy từ [reference/ENUMS.md](../reference/ENUMS.md#googlelogintype) hoặc fallback sang [dist/runtime/constant/enumType/GoogleLoginType.d.ts](../../dist/runtime/constant/enumType/GoogleLoginType.d.ts).
 
 Ví dụ:
 
@@ -214,16 +214,16 @@ if (response.errorCode !== ErrorCode.Ok) {
 }
 ```
 
-### Auth socket sau khi đã có token
+### Kết nối socket sau khi đã có token
 
 ```ts
 import { GNNetwork } from "@xmobitea/gn-typescript-client";
 
 GNNetwork.subscriberOnConnectHandler(() => {
-    GNNetwork.sendRequestAuthSocket();
+    console.log("socket connected", GNNetwork.getSocketSId());
 });
 
-GNNetwork.connectSocket();
+GNNetwork.connectSocket(); // Follow README socket rule. SDK auto-auths if authToken is already cached.
 ```
 
 ## 9. Anti-Patterns
@@ -238,9 +238,9 @@ GNNetwork.connectSocket();
 ## 10. AI Checklist
 
 - Đã `GNNetwork.init(settings)` chưa.
-- `clientSecretKey` đã có chưa.
+- `secretKey` đã có chưa.
 - Method được chọn có đúng với nguồn identity không.
 - Có `infoRequestParam` chưa.
 - Có dùng `*Async()` không.
 - Có check `hasReturnCodeError()` trước `errorCode` không.
-- Nếu cần socket event sau login, đã gọi `connectSocket()` rồi `sendRequestAuthSocket()` chưa.
+- Nếu cần socket event sau login, đã tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow) chưa.

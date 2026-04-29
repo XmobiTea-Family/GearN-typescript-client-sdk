@@ -7,11 +7,49 @@ import { GroupRequestModels } from "./entity/models/GroupRequestModels";
 import { GroupResponseModels } from "./entity/models/GroupResponseModels";
 
 /**
- * Exposes Group operations through GNNetwork.
+ * Public client-scoped namespace for the Group domain.
+ *
+ * Reachable through {@link GNNetwork.group} after
+ * {@link GNNetwork.init}. Manages every aspect of group / guild
+ * / clan entities.
+ *
+ * Functional groupings:
+ *
+ * 1. **Group metadata** — `getGroupInformation`,
+ *    `setGroupInformation`, `setGroupAvatar`,
+ *    `setGroupDisplayName`, `getGroupsWithDisplayName`,
+ *    `getGroupsWithTag`, `getGroupsWithSegment`.
+ * 2. **Members & roles** — `addMember` (invite),
+ *    `acceptMember`, `rejectMember`, `removeMember`,
+ *    `getMember`, `getMembers`, `setMemberRole`,
+ *    `cancelInviteMember`. Real-time updates arrive through
+ *    {@link OnGroupMemberUpdateEventHandler}.
+ * 3. **Group messages / wall** — `sendGroupMessage`,
+ *    `getGroupMessages`, `getGroupMessage`,
+ *    `removeGroupMessage`. Real-time updates arrive through
+ *    {@link OnGroupMessageUpdateEventHandler}.
+ * 4. **Group custom data / tags / segments** — `getCustomData`,
+ *    `setCustomData`, `getTag`, `setTag`, `getSegment`,
+ *    `addSegment`, `removeSegment`.
+ * 5. **Group currencies / statistics** —
+ *    `getGroupCurrency`, `setGroupCurrency`,
+ *    `addGroupCurrency`, `subtractGroupCurrency`,
+ *    `getGroupStatistics`, `setGroupStatistics`,
+ *    `addGroupStatistics`, `getStatisticsLeaderboard`.
+ * 6. **Group inventory (lookup)** — `getGroupInventory`.
+ *    Mutations live on `GNNetwork.inventory` with
+ *    `OwnerType.Group`.
+ *
+ * Common contract: same as {@link GamePlayerApi} (HTTP /
+ * `RequestType.Group` / `RequestRole.Client`, callback +
+ * Promise variants per method, sub-namespaces `.server` and
+ * `.admin` for elevated callers).
  */
 export class GroupApi {
+	/** Server-scoped group operations for trusted backend callers. */
 	public server: ServerGroupApi = new ServerGroupApi();
 
+	/** Admin-scoped group operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminGroupApi = new AdminGroupApi();
 
 	/**
@@ -577,7 +615,15 @@ export class GroupApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerGroupApi.
+ * Server-scoped Group namespace, reachable through
+ * `GNNetwork.group.server`.
+ *
+ * Mirrors every method on {@link GroupApi} but uses the
+ * `Server*RequestData` DTO variants. The server flavour accepts
+ * an explicit `groupId` and acting `userId` so a trusted
+ * backend can act on any group / member without holding the
+ * acting player's auth token. Always pass a valid server-side
+ * `secretKey`.
  */
 export class ServerGroupApi {
 	/**
@@ -1143,7 +1189,15 @@ export class ServerGroupApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminGroupApi.
+ * Admin-scoped Group namespace, reachable through
+ * `GNNetwork.group.admin`.
+ *
+ * Mirrors {@link ServerGroupApi} but routed through
+ * {@link RequestRole.Admin}. The backend uses the caller's
+ * admin auth token to authorise privileged operations
+ * (force-add / force-remove members, override role rules,
+ * disband group). Reserved for dashboard / GM / backoffice
+ * tools.
  */
 export class AdminGroupApi {
 	/**

@@ -1,15 +1,17 @@
-﻿# GearN TypeScript Client SDK
+# GearN TypeScript Client SDK
 
 SDK TypeScript client cho GearN Server.
 
-`GNNetwork` là entrypoint duy nhất ở tầng public API. Sau khi `init()`, toàn bộ thao tác đều đi qua các nhóm API tĩnh như `GNNetwork.authenticate`, `GNNetwork.dashboard`, `GNNetwork.inventory`, `GNNetwork.group`, ...
+`GNNetwork` là entrypoint duy nhất ở tầng public API. Sau `init()`, toàn bộ thao tác đi qua các nhóm API tĩnh, gồm: `GNNetwork.authenticate`, `GNNetwork.masterPlayer`, `GNNetwork.gamePlayer`, `GNNetwork.characterPlayer`, `GNNetwork.group`, `GNNetwork.inventory`, `GNNetwork.storeInventory`, `GNNetwork.content`, `GNNetwork.multiplayer`, `GNNetwork.cloudScript`, `GNNetwork.dashboard`.
+
+> **AI / code assistant:** đọc [docs/AI_CHEATSHEET.md](docs/AI_CHEATSHEET.md) trước (one-page), rồi [docs/RULES.md](docs/RULES.md) cho rule chi tiết (route, permission, self/other-self, socket, error). Machine-readable manifest: [docs/ai-manifest.json](docs/ai-manifest.json).
+
+Package publish: `@xmobitea/gn-typescript-client`. Rule canonical: [docs/RULES.md](docs/RULES.md).
 
 ## 1. Yêu cầu
 
-- Node.js `>= 20`
-- Nếu bạn tự tạo request/response model bằng decorator: bật `experimentalDecorators` và `emitDecoratorMetadata`
-
-Ví dụ `tsconfig.json` khi bạn dùng custom DTO:
+- Node.js ≥ 20.
+- Custom DTO có decorator: bật `experimentalDecorators` + `emitDecoratorMetadata` trong `tsconfig.json`.
 
 ```json
 {
@@ -30,83 +32,112 @@ npm install @xmobitea/gn-typescript-client
 
 Flow chuẩn:
 
-1. Tạo `GNServerSettings`
-2. Gọi `GNNetwork.init(settings)` đúng 1 lần
-3. Dùng các API qua `GNNetwork.*`
-4. Nếu dùng socket: tự gọi `GNNetwork.connectSocket()`
-5. Sau khi socket connect: tự gọi `GNNetwork.sendRequestAuthSocket()` để auth socket
+1. Tạo `GNServerSettings`.
+```ts
+const settings = new GNServerSettings();
+settings.config({
+  serverAddress: "api.example.com",
+  serverPort: 443,
+  serverSocketPort: 443,
+  useSsl: true,
+  useSocket: true,
+  useHttp: true,
+  defaultTimeoutInSeconds: 20,
+  messageType: MessageType.MsgPack,
+  sendRate: 20,
+  reconnectDelay: 5000,
+  pingInterval: 20000,
+  pingTimeout: 20000,
+  logType: LogType.Error,
+  secretKey: "<secret-key>",
+  gameId: "<game-id>",
+});
+```
+2. Gọi `GNNetwork.init(settings)` đúng 1 lần khi app chạy lần đầu tiên.
+```ts
+GNNetwork.init(settings);
+```
+3. Gọi API qua `GNNetwork.*`.
+```ts
+const infoRequestParam = new AuthenticateModels.InfoRequestParam();
+infoRequestParam.countryCode = true;
+infoRequestParam.displayName = true;
 
-Những nhóm API public hiện có:
+const loginRequest = new AuthenticateModels.LoginByCustomIdRequestData();
+loginRequest.customId = "a custom id, store this custom id and use it to login next time";
+loginRequest.createPlayerIfNotExists = true;
+loginRequest.infoRequestParam = infoRequestParam;
 
-- `GNNetwork.authenticate`
-- `GNNetwork.characterPlayer`
-- `GNNetwork.content`
-- `GNNetwork.dashboard`
-- `GNNetwork.gamePlayer`
-- `GNNetwork.group`
-- `GNNetwork.inventory`
-- `GNNetwork.masterPlayer`
-- `GNNetwork.storeInventory`
-- `GNNetwork.multiplayer`
-- `GNNetwork.cloudScript`
+const loginByCustomIdResponse = await GNNetwork.authenticate.loginByCustomIdAsync(loginRequest);
 
-### AuthenticateApi
+if (loginByCustomIdResponse.returnCode != ReturnCode.Ok || loginByCustomIdResponse.errorCode != ErrorCode.Ok) {
+  console.log("login by custom id failed because the returnCode is " + loginByCustomIdResponse.returnCode + ", errorCode is " + loginByCustomIdResponse.errorCode);
+  return;
+}
 
-`GNNetwork.authenticate` là nhóm API xác thực player qua HTTP cho các flow `login`, `registerAccount` và `refreshAuthToken`, dùng `RequestType.Authenticate` với `RequestRole.Client`, đồng thời tự cập nhật auth state cache của SDK khi thành công; `GNNetwork.authenticate.server` và `GNNetwork.authenticate.admin` hiện không có operation public để gọi. Xem rule chi tiết dành cho AI code assistant tại [docs/AUTHENTICATE_API_README.md](docs/AUTHENTICATE_API_README.md).
+console.log("Your userId: " + loginByCustomIdResponse.responseData.userId);
+console.log("Your countryCode: " + loginByCustomIdResponse.responseData.infoResponseParameters.countryCode);
+console.log("Your displayName: " + loginByCustomIdResponse.responseData.infoResponseParameters.displayName);
+```
+4. Nếu app cần realtime, sau khi đã có `authToken` → `GNNetwork.connectSocket()`, đồng thời `GearN Server` phải settings options.socketAppSettings.enable = true.
+5. Socket auto-auth nếu token đã cache; chỉ `GNNetwork.sendRequestAuthSocket()` thủ công khi cần re-auth.
+
+11 API group public:
+
+- `GNNetwork.authenticate` — player login/register/refresh. [Guide](docs/guides/AUTHENTICATE.md).
+- `GNNetwork.masterPlayer` — master player account/profile/identity. [Guide](docs/guides/MASTER_PLAYER.md).
+- `GNNetwork.gamePlayer` — game player gameplay/profile/friend/group/character. [Guide](docs/guides/GAME_PLAYER.md).
+- `GNNetwork.characterPlayer` — character-level (trong trường hợp 1 game player có nhiều nhân vật nhỏ) gameplay/social. [Guide](docs/guides/CHARACTER_PLAYER.md).
+- `GNNetwork.group` — group metadata/member/message/currency. [Guide](docs/guides/GROUP.md).
+- `GNNetwork.inventory` — inventory item metadata, statistics, log. [Guide](docs/guides/INVENTORY.md).
+- `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](docs/guides/STORE_INVENTORY.md).
+- `GNNetwork.content` — content config, file upload/download metadata, small game asset, avatar asset. [Guide](docs/guides/CONTENT.md).
+- `GNNetwork.multiplayer` — matchmaking ticket, handle matchmaking trận đấu (HTTP, không socket). [Guide](docs/guides/MULTIPLAYER.md).
+- `GNNetwork.cloudScript` — CloudScript publish/version/execute, khi cần phải phối hợp các function lại với nhau, hoặc cần để server validate, cần phải viết cloudScript code từ `GearN Dashboard`. [Guide](docs/guides/CLOUDSCRIPT.md).
+- `GNNetwork.dashboard` — admin login + quản trị game/secret/analytics, không nên sử dụng nếu code game client. [Guide](docs/guides/DASHBOARD.md).
 
 ## 4. Khởi tạo cơ bản
 
 ```ts
 import {
- GNNetwork,
- GNServerSettings,
- LogType,
- MessageType,
+  GNNetwork,
+  GNServerSettings,
+  LogType,
+  MessageType,
 } from "@xmobitea/gn-typescript-client";
 
 const settings = new GNServerSettings();
 settings.config({
- serverAddress: "127.0.0.1",
- serverPort: 2202,
- serverSocketPort: 2901,
- useSsl: false,
- useSocket: true,
- useHttp: true,
- defaultTimeoutInSeconds: 20,
- messageType: MessageType.MsgPack,
- sendRate: 20,
- reconnectDelay: 5000,
- pingInterval: 20000,
- pingTimeout: 20000,
- adminSecretKey: "",
- serverSecretKey: "",
- clientSecretKey: "your-client-secret",
- logType: LogType.All,
+  serverAddress: "127.0.0.1",          // GearN Server host / IP
+  serverPort: 2202,                    // HTTP port, dựa vào options.applicationSettings.port và options.httpAppSettings.enable của GearN Server
+  serverSocketPort: 2901,              // Socket port, dựa vào options.applicationSettings.socketPort của GearN Server
+  useSsl: false,                       // true khi public endpoint dùng HTTPS, nếu useSsl thì setup serverPort và serverSocketPort thành -1, đồng thời serverAddress là url hợp lệ
+  useSocket: true,                     // client muốn sử dụng socket để nhận các gói tin chủ động từ phía GearN Server, dựa vào options.socketAppSettings.enable của GearN Server
+  useHttp: true,                       // luôn luôn là true, dựa vào options.httpAppSettings.enable của GearN Server
+  defaultTimeoutInSeconds: 20,         // default timeout tính bằng giây, thời gian để timeout tính từ lúc bắt đầu gửi OperationRequest và chờ OperationResponse từ phía server, nếu vượt quá thời gian này, 1 mã lỗi ReturnCode.OperationTimeout sẽ được trả về
+  messageType: MessageType.MsgPack,    // browser client sẽ tự fallback JSON cho HTTP, sử dụng msgPack giúp gói tin nhỏ nhẹ hơn nếu là client hoặc server, tăng tỉ lệ gửi thành công và tránh mất nhiều bandwidth, băng thông, dựa vào options.httpAppSettings.enablePostViaMsgPack và options.httpAppSettings.enablePostViaJson của GearN Server
+  sendRate: 20,                        // tỉ lệ gửi OperationRequest mỗi giây, 20 có nghĩa là gửi 20 OperationRequest mỗi giây
+  reconnectDelay: 5000,                // khi sử dụng socket, reconnectDelay socket io
+  pingInterval: 20000,                 // khi sử dụng socket, pingInterval socket io
+  pingTimeout: 20000,                  // khi sử dụng socket, pingTimeout socket io
+  secretKey: "secret-key",             // secretKey để có thể dùng client này, lấy từ GearN Dashboard tab Settings/SecretInfo, lựa chọn secretKey với các Permission Rules phù hợp
+  gameId: "game-id",                   // game id dành cho secretKey trong settings này hoặc override lại để chọn đúng game environment phù hợp, lấy từ GearN Dashboard từ tab Settings/SecretInfo
+  logType: LogType.All,                // console log ra tất cả vấn đề thuộc loại nào
 });
 
 GNNetwork.init(settings);
 ```
 
-Ghi chú:
+Full field schema: [docs/reference/CONFIG.md](docs/reference/CONFIG.md). Rule route / permission / self / other-self: [docs/RULES.md](docs/RULES.md).
 
-- `GNNetwork.init()` là singleton-style. Gọi lại lần 2 sẽ bị bỏ qua.
-- `clientSecretKey`, `serverSecretKey`, `adminSecretKey` được tự chọn theo `RequestRole` của từng operation.
-- Nếu bạn chạy sau reverse proxy, gọi thêm:
-
-```ts
-settings.setUseReverseProxy(true);
-```
-
-## 5. Quick Start: login bằng custom device id
-
-Ví dụ này là flow client dễ dùng nhất vì request ngắn và không cần username/password.
+## 5. Quick start: login bằng custom device id
 
 ```ts
 import {
- GNNetwork,
- AuthenticateModels,
- ReturnCode,
- ErrorCode,
+  GNNetwork,
+  AuthenticateModels,
+  ReturnCode,
+  ErrorCode,
 } from "@xmobitea/gn-typescript-client";
 
 const infoRequest = new AuthenticateModels.InfoRequestParam();
@@ -119,35 +150,26 @@ request.customDeviceId = "device-000001";
 request.createPlayerIfNotExists = true;
 request.infoRequestParam = infoRequest;
 
-const response = await GNNetwork.authenticate.loginByCustomDeviceIdAsync(request);
+const res = await GNNetwork.authenticate.loginByCustomDeviceIdAsync(request);
 
-if (response.hasReturnCodeError()) {
- throw new Error(`ReturnCode failed: ${response.returnCode} - ${response.debugMessage}`);
-}
+if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
+if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
 
-if (response.errorCode !== ErrorCode.Ok) {
- throw new Error(`Business error: ${response.errorCode}`);
-}
-
-console.log("userId", GNNetwork.getAuthenticateStatus().getUserId());
+console.log("userId",    res.responseData.userId);
+console.log("userId",    GNNetwork.getAuthenticateStatus().getUserId());
+console.log("authToken", res.responseData.authToken);
 console.log("authToken", GNNetwork.getAuthenticateStatus().getAuthToken());
-console.log("player", response.responseData);
+console.log("player",    res.responseData);
 ```
-
-Lưu ý rất quan trọng:
-
-- `ReturnCode.Ok === 1`
-- `ErrorCode.Ok === 1`
-- Không kiểm tra success bằng `0`
 
 ## 6. Login bằng account
 
 ```ts
 import {
- GNNetwork,
- AuthenticateModels,
- ReturnCode,
- ErrorCode,
+  GNNetwork,
+  AuthenticateModels,
+  ReturnCode,
+  ErrorCode,
 } from "@xmobitea/gn-typescript-client";
 
 const infoRequest = new AuthenticateModels.InfoRequestParam();
@@ -159,357 +181,240 @@ request.username = "player001";
 request.password = "12345678";
 request.infoRequestParam = infoRequest;
 
-const response = await GNNetwork.authenticate.loginByAccountAsync(request);
-
-if (response.returnCode !== ReturnCode.Ok) {
- throw new Error(response.debugMessage);
-}
-
-if (response.errorCode !== ErrorCode.Ok) {
- throw new Error(`Business error: ${response.errorCode}`);
-}
+const res = await GNNetwork.authenticate.loginByAccountAsync(request);
+if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
+if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
 ```
 
-## 7. Socket usage đúng cách
-
-Socket không tự auth sau khi connect. Bạn phải làm đủ 2 bước:
-
-1. `GNNetwork.connectSocket()`
-2. Khi connect xong, gọi `GNNetwork.sendRequestAuthSocket()`
-
-Ví dụ:
+## 7. Socket
 
 ```ts
 import { GNNetwork } from "@xmobitea/gn-typescript-client";
 
+// Subscribe TRƯỚC connect để không miss event ngay sau handshake
 GNNetwork.subscriberOnConnectHandler(() => {
- console.log("socket connected", GNNetwork.getSocketSId());
- GNNetwork.sendRequestAuthSocket();
+  console.log("socket connected", GNNetwork.getSocketSId());
 });
 
 GNNetwork.subscriberOnDisconnectHandler(() => {
- console.log("socket disconnected");
+  console.log("socket disconnected");
 });
 
 GNNetwork.setOnEventHandler((event) => {
- console.log("eventCode", event.getEventCode());
- console.log("parameters", event.getParameters()?.toData());
+  console.log("eventCode", event.getEventCode());
+  console.log("parameters", event.getParameters()?.toData());
 });
 
+// Gọi sau khi đã login HTTP thành công
 GNNetwork.connectSocket();
 ```
 
-Thông tin hữu ích:
+Re-auth thủ công (nếu socket connect trước token hoặc token vừa đổi):
 
-- `GNNetwork.isSocketConnected()` chỉ kiểm tra dựa trên socket session id hiện tại
-- `GNNetwork.getPing()` trả về ping trung bình từ transport đang active
-- `GNNetwork.syncTs()` đồng bộ local estimate của server timestamp
+```ts
+if (GNNetwork.isSocketConnected() && GNNetwork.getAuthenticateStatus().getAuthToken()) {
+  GNNetwork.sendRequestAuthSocket();
+}
+```
 
-## 8. Dashboard / admin flow
+Helper:
 
-Nếu bạn dùng dashboard API, hãy cấu hình `adminSecretKey` trong `GNServerSettings`.
+- `GNNetwork.isSocketConnected()` — trạng thái socket session id.
+- `GNNetwork.getPing()` — ping trung bình từ active transport.
+- `GNNetwork.syncTs()` — sync local estimate server timestamp.
 
-Ví dụ login admin:
+Realtime event handler (6 handler, subscribe bằng gán `static onUpdate`): [docs/reference/EVENTS.md](docs/reference/EVENTS.md).
+
+## 8. Dashboard / admin login
+
+`DashboardApi` public wrapper đi `RequestRole.Client`. Sau `loginByAdminAccountAsync`, backend resolve admin context từ `authToken`.
 
 ```ts
 import {
- GNNetwork,
- DashboardModels,
- ReturnCode,
- ErrorCode,
+  GNNetwork,
+  DashboardModels,
+  ReturnCode,
+  ErrorCode,
 } from "@xmobitea/gn-typescript-client";
 
 const request = new DashboardModels.LoginByAdminAccountRequestData();
 request.username = "gnadmin";
 request.password = "123456";
 
-const response = await GNNetwork.dashboard.loginByAdminAccountAsync(request);
-
-if (response.returnCode !== ReturnCode.Ok) {
- throw new Error(response.debugMessage);
-}
-
-if (response.errorCode !== ErrorCode.Ok) {
- throw new Error(`Business error: ${response.errorCode}`);
-}
-
-console.log("admin auth token", GNNetwork.getAuthenticateStatus().getAuthToken());
+const res = await GNNetwork.dashboard.loginByAdminAccountAsync(request);
+if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
+if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
 ```
 
-## 9. Cấu trúc method của các API
+Rule chi tiết DashboardApi: [docs/guides/DASHBOARD.md](docs/guides/DASHBOARD.md).
 
-Đa số method public có 2 biến thể:
+## 9. Method signature
 
-- callback style
-- async/await style
+Signature đầy đủ + bảng override param (`overrideAuthToken`, `overrideSecretKey`, `customTags`, `timeout`): [docs/RULES.md § 8](docs/RULES.md#8-method-signature--override-params).
 
-Pattern chung:
+## 10. Response model
 
-```ts
-method(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?)
-methodAsync(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?)
-```
+Typed response có 5 public field (không getter): `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Pattern check 2 tầng + full table ReturnCode/ErrorCode: [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md).
 
-Ý nghĩa các tham số phụ:
-
-- `overrideAuthToken`: ép dùng auth token khác token hiện đang cache
-- `overrideSecretKey`: ép dùng secret key khác secret key trong `GNServerSettings`
-- `customTags`: gắn metadata phụ vào request
-- `timeout`: override timeout cho riêng request đó
-
-Ví dụ `customTags`:
+## 11. Auth state, gameId, health check, upload
 
 ```ts
-import { GNHashtable } from "@xmobitea/gn-typescript-client";
+// Auth state
+GNNetwork.getAuthenticateStatus().getAuthToken();
+GNNetwork.getAuthenticateStatus().getUserId();
 
-const customTags = GNHashtable.builder()
- .add("traceId", "trace-001")
- .add("build", "qa")
- .build();
-```
+// trong trường hợp secret key có thể dùng cho game id nào cũng được, trường hợp muốn dùng riêng cho game id xác định thì sử dụng hàm này
+GNNetwork.getGNServerSettings().setGameId("your-game-id");
 
-## 10. Response model cần hiểu đúng
+// Health check
+await GNNetwork.healthCheckAsync();
 
-Các method typed trả về class kế thừa từ `CustomOperationResponseAbstract<T>`.
+// Auth info
+await GNNetwork.getAuthInfoAsync("some-auth-token");
 
-Bạn sẽ gặp các field chính:
-
-- `returnCode`: trạng thái transport/protocol
-- `debugMessage`: message lỗi low-level
-- `invalidMembers`: danh sách field invalid nếu request sai
-- `errorCode`: business error từ backend
-- `responseData`: payload typed sau khi deserialize
-
-Thứ tự kiểm tra nên là:
-
-```ts
-if (response.hasReturnCodeError()) {
- throw new Error(response.debugMessage);
-}
-
-if (response.errorCode !== ErrorCode.Ok) {
- throw new Error(`Business error: ${response.errorCode}`);
-}
-```
-
-## 11. Game id và auth state
-
-SDK tự persist các giá trị sau qua `StorageService`:
-
-- auth token
-- user id
-- game id
-
-Bạn có thể set `gameId` thủ công:
-
-```ts
-GNNetwork.setGameId("your-game-id");
-```
-
-Đọc lại trạng thái hiện tại:
-
-```ts
-const authToken = GNNetwork.getAuthenticateStatus().getAuthToken();
-const userId = GNNetwork.getAuthenticateStatus().getUserId();
-const gameId = GNNetwork.getGameId();
-```
-
-## 12. Health check, auth info, upload file
-
-### Health check
-
-```ts
-const response = await GNNetwork.healthCheckAsync();
-console.log(response);
-```
-
-### Lấy auth info
-
-```ts
-const authInfo = await GNNetwork.getAuthInfoAsync("some-auth-token");
-console.log(authInfo);
-```
-
-### Upload file
-
-Upload file yêu cầu đã có auth token hợp lệ.
-
-```ts
+// Upload file (cần authToken hợp lệ)
 const bytes = new Uint8Array([1, 2, 3, 4]);
+await GNNetwork.uploadFileAsync("file-001", bytes, "demo.bin", "application/octet-stream");
 
-const uploadResponse = await GNNetwork.uploadFileAsync(
- "file-001",
- bytes,
- "demo.bin",
- "application/octet-stream",
-);
-
-console.log(uploadResponse);
+// Download URL từ download token
+GNNetwork.getDownloadFileUrl("download-token-from-server");
 ```
 
-Tạo URL download từ download token:
+## 12. Advanced: ConverterService cho custom DTO
 
-```ts
-const url = GNNetwork.getDownloadFileUrl("download-token-from-server");
-console.log(url);
-```
+`ConverterService` là helper public để convert object typed có decorator ↔ `GNHashtable` / `GNArray`. Flow SDK bình thường không cần gọi tay (vì `GNNetwork.init()` đã tự init converter).
 
-## 13. Advanced: tự định nghĩa custom operation
-
-SDK có sẵn low-level API để bạn tự bọc operation nếu backend có endpoint mới mà package chưa expose.
-
-Ví dụ typed request/response custom:
+Chỉ dùng khi tự define DTO có decorator:
 
 ```ts
 import {
- GNNetwork,
- CustomOperationRequestAbstract,
- CustomOperationResponseAbstract,
- RequestRole,
- RequestType,
- OperationCode,
- ParameterCode,
- StringDataMember,
+  ConverterService,
+  StringDataMember,
+  NumberDataMember,
+  BooleanDataMember,
+  GNArrayDataMember,
+  GNHashtableDataMember,
+  DataMember,
+  GNHashtable,
+} from "@xmobitea/gn-typescript-client";
+
+class ProfileStats {
+  @NumberDataMember({ code: "level", defaultValue: 1, mustInt: true }) level: number;
+  @NumberDataMember({ code: "power", defaultValue: 0 }) power: number;
+}
+
+class CustomProfile {
+  @StringDataMember({ code: "displayName", mustNonNull: true }) displayName: string;
+  @NumberDataMember({ code: "age", isOptional: true, minValue: 0, mustInt: true }) age?: number;
+  @BooleanDataMember({ code: "isVip", defaultValue: false }) isVip: boolean;
+  @GNHashtableDataMember({ code: "stats" }) stats: ProfileStats;
+  @DataMember({ code: "metadata", isOptional: true }) metadata?: any;
+}
+
+const source = GNHashtable.builder()
+  .add("displayName", "Player 01")
+  .add("age", 20)
+  .add("isVip", true)
+  .add("stats", GNHashtable.builder().add("level", 12).add("power", 3456).build())
+  .build();
+
+const profile = ConverterService.deserializeObject(source, CustomProfile) as CustomProfile;
+const serialized = ConverterService.serializeObject(profile, CustomProfile);
+```
+
+Rule:
+
+- Dùng `GNNetwork.*` bình thường: không cần `ConverterService`.
+- Tự build custom DTO: dùng `deserializeObject / serializeObject / deserializeArray / serializeArray`.
+- `GNArrayDataMember` với element typed: luôn truyền `elementCls`.
+- `DataMember` generic cho payload động: data có thể là raw `GNHashtable` / `GNArray`, gọi `.toData()` để lấy plain object.
+- Không gọi `ConverterService.init()` tay nếu đã `GNNetwork.init()`.
+
+## 13. Custom operation
+
+Low-level API để bọc operation chưa expose:
+
+```ts
+import {
+  GNNetwork,
+  CustomOperationRequestAbstract,
+  CustomOperationResponseAbstract,
+  RequestRole,
+  RequestType,
+  OperationCode,
+  ParameterCode,
+  StringDataMember,
 } from "@xmobitea/gn-typescript-client";
 
 class ExampleRequestData {
- @StringDataMember({ code: ParameterCode.Key, mustNonNull: true })
- public key: string;
+  @StringDataMember({ code: ParameterCode.Key, mustNonNull: true }) public key: string;
 }
 
 class ExampleResponseData {
- @StringDataMember({ code: ParameterCode.Value, isOptional: true })
- public value?: string;
+  @StringDataMember({ code: ParameterCode.Value, isOptional: true }) public value?: string;
 }
 
 class ExampleRequest extends CustomOperationRequestAbstract<ExampleRequestData> {
- protected override operationCode: string = OperationCode.GetCustomData;
- protected override requestType: RequestType = RequestType.CharacterPlayer;
- protected override role: RequestRole = RequestRole.Client;
+  protected override operationCode: string = OperationCode.GetCustomData;
+  protected override requestType: RequestType = RequestType.CharacterPlayer;
+  protected override role: RequestRole = RequestRole.Client;
 
- constructor(requestData: ExampleRequestData, timeout: number) {
-  super(requestData, timeout);
-  this.requestDataCls = ExampleRequestData;
- }
+  constructor(requestData: ExampleRequestData, timeout: number) {
+    super(requestData, timeout);
+    this.requestDataCls = ExampleRequestData;
+  }
 }
 
 class ExampleResponse extends CustomOperationResponseAbstract<ExampleResponseData> {
- constructor() {
-  super();
-  this.responseDataCls = ExampleResponseData;
- }
+  constructor() {
+    super();
+    this.responseDataCls = ExampleResponseData;
+  }
 }
 
 const requestData = new ExampleRequestData();
 requestData.key = "tutorial";
 
-const response = await GNNetwork.sendViaHttpTRequestTResponseAsync(
- new ExampleRequest(requestData, 20),
- null,
- null,
- null,
- ExampleResponse,
+const res = await GNNetwork.sendViaHttpTRequestTResponseAsync(
+  new ExampleRequest(requestData, 20),
+  null,
+  null,
+  null,
+  ExampleResponse,
 );
 ```
 
-Ghi chú:
-
-- Khi tự tạo DTO, bạn phải dùng decorator như `StringDataMember`, `NumberDataMember`, `GNHashtableDataMember`, ...
-- Khi tự tạo request class, phải gán đủ `operationCode`, `requestType`, `role`, `requestDataCls`
-- Khi tự tạo response class, phải gán `responseDataCls`
-
 ## 14. Browser / Node / Cocos
 
-SDK có logic detect platform qua `GNSupport`.
+- Detect platform: `GNSupport.getPlatformType()`.
+- Browser + HTTP + MsgPack → SDK auto-fallback JSON.
+- Cocos Creator: giữ 2 flag TS decorator nếu có custom DTO. [Integration guide](docs/guides/COCOS_CREATOR_INTEGRATION.md).
 
-```ts
-import { GNSupport } from "@xmobitea/gn-typescript-client";
-
-console.log(GNSupport.getPlatformType());
-```
-
-Lưu ý thực tế:
-
-- HTTP + `MessageType.MsgPack` trên browser có fallback sang JSON
-- Nếu bạn dùng Cocos Creator, nên giữ `experimentalDecorators` và `emitDecoratorMetadata` bật khi có custom DTO
-
-## 15. Build và publish
-
-Các script hiện có trong repo:
+## 15. Build & publish
 
 ```bash
 npm run test
-npm run build:node
-npm run build:udm
-npm run build:minudm
-npm run build:cocos
-npm run build
+npm run build:node       # CommonJS cho Node
+npm run build:udm        # UMD
+npm run build:minudm     # UMD minified
+npm run build:cocos      # Cocos
+npm run build            # tất cả output chính
 ```
 
-Ý nghĩa nhanh:
+## 16. Lỗi hay gặp
 
-- `build:node`: build bản CommonJS cho Node
-- `build:udm`: build bản UMD
-- `build:minudm`: build bản UMD minified
-- `build:cocos`: build bản dùng cho Cocos
-- `build`: build tất cả output chính
-
-## 16. Các lỗi hay gặp
-
-### 1. Gọi API trước khi `GNNetwork.init()`
-
-Triệu chứng:
-
-- null settings
-- null peer
-- socket/http không hoạt động
-
-Cách xử lý:
-
-- luôn init một lần ở bootstrap của app
-
-### 2. Login thành công transport nhưng fail business
-
-Triệu chứng:
-
-- `returnCode === ReturnCode.Ok`
-- nhưng `errorCode !== ErrorCode.Ok`
-
-Cách xử lý:
-
-- kiểm tra cả `returnCode` lẫn `errorCode`
-
-### 3. Socket connect rồi nhưng không nhận luồng user auth
-
-Nguyên nhân:
-
-- bạn connect socket nhưng không gọi `GNNetwork.sendRequestAuthSocket()`
-
-### 4. Request không đi đúng role/secret key
-
-Nguyên nhân:
-
-- `GNServerSettings` thiếu secret key tương ứng với role của operation
-
-### 5. Tưởng success code là `0`
-
-Sai hoàn toàn với SDK này.
-
-- `ReturnCode.Ok === 1`
-- `ErrorCode.Ok === 1`
+Full checklist + anti-patterns: [docs/RULES.md § 10](docs/RULES.md#10-anti-patterns--pitfalls). Return/error code table: [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md).
 
 ## 17. File tham khảo trong repo
 
 - Entry public API: `src/runtime/GNNetwork.ts`
 - Export surface: `src/index.ts`
-- Ví dụ local debug: `index.js`
-- Ví dụ Cocos: `examples/cocos-creator/GearNExample.ts.txt`
+- Local debug: `index.js`
 
-## 18. Kết luận
+## 18. TL;DR
 
-Nếu bạn chỉ cần dùng SDK theo cách chuẩn, hãy nhớ đúng 4 ý này:
-
-1. `GNNetwork.init(settings)` đúng 1 lần
-2. Mọi call đi qua `GNNetwork.*`
-3. Kiểm tra `returnCode` trước, rồi kiểm tra `errorCode`
-4. Dùng socket thì tự `connectSocket()` và tự `sendRequestAuthSocket()`
+1. `GNNetwork.init(settings)` 1 lần.
+2. Mọi call qua `GNNetwork.*`.
+3. Check `returnCode` trước, `errorCode` sau.
+4. Socket: login HTTP → `connectSocket()`; chỉ `sendRequestAuthSocket()` khi cần re-auth thủ công.
+5. Rule chi tiết → [docs/RULES.md](docs/RULES.md).

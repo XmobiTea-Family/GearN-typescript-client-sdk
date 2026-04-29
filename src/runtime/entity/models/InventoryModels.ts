@@ -3,7 +3,28 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups shared data contracts for Inventory.
+ * Reusable request and response DTOs for the Inventory domain.
+ *
+ * Inventory operations target a **specific item entity** by
+ * `itemId` (the per-owner ledger row, distinct from the
+ * catalog's `classId`). On client variants the backend
+ * cross-checks that the authenticated player owns the item
+ * (or has permission via group membership when `ownerType ==
+ * Group`).
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.inventory`,
+ *   scoped to items the caller owns.
+ * - **`Server*`**: used by `GNNetwork.inventory.server`, can
+ *   target any owner with a valid server `secretKey`.
+ * - **`Admin*`**: used by `GNNetwork.inventory.admin`, full
+ *   privileged access including catalog edits.
+ *
+ * Stackability rules ({@link ItemType}) determine which
+ * mutation operations make sense for a given catalog row:
+ * `setItemAmount` / `addItemAmount` / `subtractItemAmount` only
+ * apply to `Stackable` items; `NonStackable` items always have
+ * an implicit amount of `1`.
  */
 export namespace InventoryModels {
 
@@ -20,21 +41,37 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the reusable parameter block InfoRequestParam.
+	 * Selects which optional inventory fields should be returned in `infoResponseParameters`.
+	 * Boolean flags default to `false`; key arrays narrow list-style fields to specific keys only.
 	 */
 	export class InfoRequestParam {
+		/**
+		 * Includes the catalog ID from which this inventory item was created.
+		 */
 		@BooleanDataMember({ code: ParameterCode.CatalogId, isOptional: true, defaultValue: false })
 		public catalogId?: boolean;
 
+		/**
+		 * Includes the class ID of the inventory item.
+		 */
 		@BooleanDataMember({ code: ParameterCode.ClassId, isOptional: true, defaultValue: false })
 		public classId?: boolean;
 
+		/**
+		 * Includes the item type mapped by the public `ItemType` enum.
+		 */
 		@BooleanDataMember({ code: ParameterCode.ItemType, isOptional: true, defaultValue: false })
 		public itemType?: boolean;
 
+		/**
+		 * Includes the current item amount.
+		 */
 		@BooleanDataMember({ code: ParameterCode.Amount, isOptional: true, defaultValue: false })
 		public amount?: boolean;
 
+		/**
+		 * Includes the current owner descriptor.
+		 */
 		@BooleanDataMember({ code: ParameterCode.Owner, isOptional: true, defaultValue: false })
 		public owner?: boolean;
 
@@ -65,9 +102,15 @@ export namespace InventoryModels {
 		@BooleanDataMember({ code: ParameterCode.ItemDatas, isOptional: true, defaultValue: false })
 		public itemDatas?: boolean;
 
+		/**
+		 * Restricts `itemDatas` to the specified keys when that field is requested.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.ItemDataKeys, isOptional: true, elementCls: String })
 		public itemDataKeys?: Array<string>;
 
+		/**
+		 * Restricts `itemStatistics` to the specified statistic keys when that field is requested.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.ItemStatisticsKeys, isOptional: true, elementCls: String })
 		public itemStatisticsKeys?: Array<string>;
 
@@ -305,7 +348,8 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for GetItemStatistics.
+	 * Reads statistics for one inventory item.
+	 * Note that this request uses `statisticsKeys`, while `InfoRequestParam` uses `itemStatisticsKeys`.
 	 */
 	export class GetItemStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
@@ -707,7 +751,8 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for SetAmount.
+	 * Replaces the stored amount with an absolute value.
+	 * Use `ChangeItemStatistics` for statistics deltas; this contract is not a delta operation.
 	 */
 	export class SetAmountRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
@@ -830,7 +875,7 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for ChangeItemStatistics.
+	 * Applies delta updates to one or more item statistics.
 	 */
 	export class ChangeItemStatisticsRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
@@ -857,15 +902,21 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for SetOwner.
+	 * Transfers ownership of the inventory item to a different owner.
 	 */
 	export class SetOwnerRequestData {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public itemId: string;
 
+		/**
+		 * New owner identifier matching the selected `newOwnerType`.
+		 */
 		@StringDataMember({ code: ParameterCode.NewOwnerId, minLength: 10, maxLength: 12, mustNonNull: true })
 		public newOwnerId: string;
 
+		/**
+		 * New owner type mapped by the public `OwnerType` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.NewOwnerType, mustInt: true })
 		public newOwnerType: number;
 
@@ -935,7 +986,8 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the request payload for GetStatisticsLog.
+	 * Reads statistic change logs for one inventory item.
+	 * Pagination is token-based rather than skip-based.
 	 */
 	export class GetStatisticsLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
@@ -947,6 +999,9 @@ export namespace InventoryModels {
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
+		/**
+		 * Continuation token returned by the previous page.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
@@ -965,7 +1020,7 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Represents InfoResponseParameters.
+	 * Contains the optional fields requested through `InfoRequestParam`.
 	 */
 	export class InfoResponseParameters {
 		@StringDataMember({ code: ParameterCode.CatalogId, isOptional: true })
@@ -980,6 +1035,9 @@ export namespace InventoryModels {
 		@NumberDataMember({ code: ParameterCode.Amount, isOptional: true })
 		public amount?: number;
 
+		/**
+		 * Owner descriptor mapped by the public `OwnerType` enum.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.Owner, isOptional: true })
 		public owner?: GenericModels.OwnerItem;
 
@@ -1013,16 +1071,19 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for Inventory.
+	 * Base inventory response envelope.
 	 */
 	export class InventoryResponseData {
+		/**
+		 * Optional field bag controlled by the corresponding `InfoRequestParam`.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
 	/**
-	 * Defines the response payload for InventoryWithItemId.
+	 * Inventory envelope that also exposes the resolved item ID.
 	 */
 	export class InventoryWithItemIdResponseData extends InventoryResponseData {
 		@StringDataMember({ code: ParameterCode.ItemId })
@@ -1043,7 +1104,7 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for InventoryLog.
+	 * Describes one inventory-statistics change log entry.
 	 */
 	export class InventoryLogResponseData {
 		@StringDataMember({ code: ParameterCode.ItemId })
@@ -1100,19 +1161,22 @@ export namespace InventoryModels {
 	}
 
 	/**
-	 * Defines the response payload for GetStatisticsLog.
+	 * Returns one page of inventory statistics logs.
 	 */
 	export class GetStatisticsLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: InventoryLogResponseData })
 		public results: Array<InventoryLogResponseData>;
 
+		/**
+		 * Continuation token for the next page, or `undefined` when pagination is exhausted.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

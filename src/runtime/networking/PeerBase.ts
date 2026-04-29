@@ -1,4 +1,4 @@
-﻿import { RequestRole } from "./../constant/enumType/RequestRole";
+import { RequestRole } from "./../constant/enumType/RequestRole";
 import { RequestType } from "./../constant/enumType/RequestType";
 import { Action1 } from "./../common/Action1";
 import { GNArray, GNHashtable } from "./../common/GNData";
@@ -15,41 +15,138 @@ import { OperationPending } from "./OperationPending";
 import { StorageService } from "./../helper/StorageService";
 
 /**
- * Implements the shared request queue, timeout handling, and response parsing used by both transports.
+ * Shared scaffolding for both transports — owns the request queue,
+ * tracks in-flight operations, sweeps timeouts and parses raw response
+ * payloads into typed {@link OperationResponse} instances.
+ *
+ * Subclasses ({@link HttpPeer}, {@link SocketPeer}) only need to:
+ * - Implement {@link initGNSocketObject} so they can build their
+ *   transport-specific low-level client (Axios / socket.io).
+ * - Implement {@link onEnqueue} to react when a request is queued
+ *   (typically a debug log line; the socket peer also wakes itself
+ *   up from idle).
+ * - Override {@link send} to dispatch the actual frame, then chain
+ *   into `super.send(...)` so the in-flight tracking logic still
+ *   runs.
+ *
+ * Driver loop: {@link service} is called from {@link ServiceUpdate}
+ * on a fixed interval. Each tick:
+ * 1. Every 0.1 s sweeps the in-flight map and synthesises a
+ *    `ReturnCode.OperationTimeout` response for every pending entry
+ *    whose absolute deadline has elapsed.
+ * 2. Drains at most one queued request per tick when the
+ *    rate-limiter (`perMsgTimer`) permits, so the SDK never floods
+ *    the backend even when the application bursts dozens of
+ *    requests at once.
+ *
+ * Auth token / user id mirror: {@link onResponseHandler} silently
+ * forwards any `authToken`, `userId` or `ts` parameter found inside a
+ * successful response into both {@link AuthenticateStatus} and
+ * {@link StorageService}, so a process restart can resume the prior
+ * session without an explicit re-login.
  */
 export abstract class PeerBase implements IPeer {
+	/**
+	 * FIFO queue of requests waiting to be sent. Drained one entry
+	 * per `service()` tick when the rate limiter allows.
+	 */
 	private operationPendingQueue: Array<OperationPending>;
 
+	/**
+	 * In-flight set keyed by the request id assigned at enqueue time.
+	 * Only requests that registered a callback go in here — callbacks
+	 * are mandatory for response correlation, so fire-and-forget
+	 * entries are not tracked.
+	 */
 	private operationWaitingResponseDict: Map<number, OperationPending>;
 
+	/**
+	 * Monotonic counter used to assign unique request ids to outgoing
+	 * operations. Static so HTTP and socket peers share the same id
+	 * space, which makes log lines easier to correlate when the SDK
+	 * runs both transports concurrently.
+	 */
 	private static requestId: number = 0;
 
+	/**
+	 * Effective time between sends, derived from the configured
+	 * `sendRate` via `1 / sendRate / 1000`. Note the unusual unit:
+	 * the value is **seconds-per-message divided by 1000**, which
+	 * matches the rest of the seconds-based comparisons in
+	 * {@link service}.
+	 */
 	private perMsgTimer: number = 0;
+	/**
+	 * Earliest time the next queued request may be sent. Updated each
+	 * time a request leaves the queue.
+	 */
 	private nextSendMsgTimer: number = 0;
+	/**
+	 * Earliest time the next timeout sweep may run. The sweep cadence
+	 * is fixed at 100 ms regardless of the configured `sendRate`.
+	 */
 	private checkTimeoutOperationPending: number = 0;
 
 	/**
-	 * Returns the configured send rate in messages per second.
+	 * Returns the configured send rate as a messages-per-second value.
+	 *
+	 * The internal storage uses an unusual unit; this helper restores
+	 * the human-readable rate so any external diagnostics can display
+	 * the value the application configured.
 	 */
 	protected getSendRate(): number {
 		return (1000 / this.perMsgTimer);
 	}
 
 	/**
-	 * Converts a send rate in messages per second into the internal service interval.
+	 * Translates a messages-per-second rate into the internal
+	 * per-message tick used by {@link service}.
+	 *
+	 * Called once during {@link initSendRate}; mutating it after that
+	 * has no effect on already-running peers because the value is
+	 * captured during init.
+	 *
+	 * @param sendRate Messages per second from
+	 *                 {@link GNServerSettings.getSendRate}.
 	 */
 	protected setSendRate(sendRate: number) {
 		this.perMsgTimer = 1000 / sendRate / 1000;
 	}
 
+	/**
+	 * Most recent average latency in milliseconds. Computed from the
+	 * sliding window in {@link addPing} as half of the round-trip
+	 * (one-way), and surfaced through {@link NetworkingPeer.getPing}
+	 * / {@link GNNetwork.getPing}.
+	 *
+	 * Stays `undefined` until at least one successful response has
+	 * been observed; readers should treat that case as "no data".
+	 */
 	ping: number;
+	/**
+	 * Sliding window of the last 10 measured one-way latencies (in
+	 * milliseconds). Older entries are dropped from the head as new
+	 * measurements arrive.
+	 */
 	private pingLst: number[];
 
+	/**
+	 * Reflects the matching `useHttp` / `useSocket` flag from
+	 * {@link GNServerSettings}. Set during {@link initGNSocketObject}
+	 * and re-checked at every {@link enqueue} / {@link service} call
+	 * so a transport disabled by configuration drops new requests
+	 * with a clear error log.
+	 */
 	protected isUse: boolean;
 
 	/**
-	 * Initializes shared queue state, ping tracking, send rate configuration,
-	 * and then lets the concrete transport build its low-level client.
+	 * One-shot bootstrap called from
+	 * {@link NetworkingPeer.initPeer}.
+	 *
+	 * Allocates the queue and in-flight map (idempotent — repeats are
+	 * no-ops because the existing references are reused), reads the
+	 * configured send rate and finally lets the concrete subclass
+	 * build its low-level transport via {@link initGNSocketObject}.
 	 */
 	public initPeer() {
 		if (this.operationWaitingResponseDict == null)
@@ -66,7 +163,13 @@ export abstract class PeerBase implements IPeer {
 	}
 
 	/**
-	 * Loads the send rate from the shared server settings.
+	 * Reads the send rate from the shared
+	 * {@link GNServerSettings} and translates it into the internal
+	 * tick value through {@link setSendRate}.
+	 *
+	 * @throws Error when the SDK is used before
+	 *         {@link GNNetwork.init} has populated the settings
+	 *         singleton.
 	 */
 	private initSendRate(): void {
 		let gnServerSettings = GNNetwork.getGNServerSettings();
@@ -77,12 +180,41 @@ export abstract class PeerBase implements IPeer {
 	}
 
 	/**
-	 * Lets the concrete transport allocate and configure its low-level client.
+	 * Subclass hook for transport-specific client setup.
+	 *
+	 * Implementations build the underlying socket.io / Axios client,
+	 * read the matching `useHttp` / `useSocket` switch, register the
+	 * transport-specific event/response listeners, and finally set
+	 * {@link isUse} to control whether the queue accepts requests.
 	 */
 	protected abstract initGNSocketObject(): void;
 
 	/**
-	 * Queues a request so service() can send it at the configured rate.
+	 * Wraps a request in an {@link OperationPending} entry and pushes
+	 * it onto the FIFO queue.
+	 *
+	 * The peer assigns a fresh request id by incrementing the static
+	 * counter only when the request was created with the non-default
+	 * id (the constant `-1` opts out so the request becomes
+	 * fire-and-forget on the wire). Disabled transports
+	 * (`isUse === false`) drop the call with an error log so the
+	 * application can spot the misconfiguration during development.
+	 *
+	 * @param requestType         Logical request category.
+	 * @param role                Permission scope to evaluate against
+	 *                            the auth token.
+	 * @param operationRequest    Pre-built request to enqueue.
+	 * @param onOperationResponse Optional response callback.
+	 * @param authToken           Auth token to attach to this
+	 *                            request. Caller code normally lets
+	 *                            {@link NetworkingPeer.sendViaSocket}
+	 *                            / `sendViaHttp` substitute the
+	 *                            cached value when the override is
+	 *                            `null`.
+	 * @param secretKey           Shared secret for the
+	 *                            `Secret-Key` header.
+	 * @param customTags          Optional routing tags.
+	 * @param gameId              Game id for the `Game-Id` header.
 	 */
 	public enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
 		if (!this.isUse) {
@@ -99,19 +231,36 @@ export abstract class PeerBase implements IPeer {
 	}
 
 	/**
-	 * Gives the concrete transport a hook to react immediately after enqueueing.
+	 * Subclass hook fired immediately after a new pending entry lands
+	 * in the queue.
+	 *
+	 * Used by both transports for diagnostic log lines; the socket
+	 * peer additionally relies on this to nudge any sleeping send
+	 * scheduler awake.
 	 */
 	protected abstract onEnqueue(operationPending: OperationPending): void;
 
 	/**
-	 * Returns whether the concrete transport is enabled by configuration.
+	 * Returns whether the transport is currently enabled.
 	 */
 	public isUsing(): boolean {
 		return this.isUse;
 	}
 
 	/**
-	 * Processes timeout checks and sends queued requests at the configured send rate.
+	 * Drives one tick of the request pipeline.
+	 *
+	 * Steps performed every tick:
+	 * - Every 100 ms, synthesise a `ReturnCode.OperationTimeout`
+	 *   response for any in-flight operation whose absolute timeout
+	 *   has elapsed. The synthesised response carries `null`
+	 *   parameters and the original `requestId` so
+	 *   {@link onResponseHandler} routes it to the right callback.
+	 * - When the rate-limit timer permits, pop the head of the queue
+	 *   and dispatch it through {@link send}.
+	 *
+	 * Disabled transports short-circuit immediately — no timeout
+	 * sweep, no send.
 	 */
 	service() {
 		if (!this.isUse)
@@ -156,8 +305,28 @@ export abstract class PeerBase implements IPeer {
 	}
 
 	/**
-	 * Converts a raw transport payload into `OperationResponse`, refreshes cached auth or timing state
-	 * on success, and resolves the pending callback.
+	 * Decodes a raw response payload, builds the typed
+	 * {@link OperationResponse}, mirrors any newly issued auth token
+	 * / user id / server timestamp into the cache and persistent
+	 * storage, and finally invokes the registered callback.
+	 *
+	 * Mirror behaviour:
+	 * - `ParameterCode.AuthToken` →
+	 *   {@link AuthenticateStatus.setAuthToken} +
+	 *   `StorageService.setString(GNNetwork.AUTH_TOKEN_KEY, ...)`.
+	 * - `ParameterCode.UserId` →
+	 *   {@link AuthenticateStatus.setUserId} +
+	 *   `StorageService.setString(GNNetwork.USER_ID_KEY, ...)`.
+	 * - `ParameterCode.Ts` →
+	 *   {@link NetworkingPeer.setServerTimeMilliseconds}.
+	 *
+	 * The mirror only runs for responses where `hasError()` returns
+	 * `false`, so an authentication failure does not poison the cache.
+	 *
+	 * @param obj Raw response container as decoded by the transport
+	 *            layer. Carries `ResponseId`, `ReturnCode`,
+	 *            `Parameters`, `DebugMessage` and the optional
+	 *            `InvalidRequestParameters` array.
 	 */
 	protected onResponseHandler(obj: GNHashtable): void {
 		let responseId = obj.getNumber(ParameterCode.ResponseId);
@@ -215,7 +384,7 @@ export abstract class PeerBase implements IPeer {
 					}
 
 					if (parameters.containsKey(ParameterCode.Ts)) {
-						GNNetwork.peer.setServerTimeMilliseconds(parameters.getNumber(ParameterCode.Ts, new Date().getUTCMilliseconds()));
+						GNNetwork.peer.setServerTimeMilliseconds(parameters.getNumber(ParameterCode.Ts, Date.now()));
 					}
 				}
 			}
@@ -231,8 +400,15 @@ export abstract class PeerBase implements IPeer {
 	}
 
 	/**
-	 * Marks a pending request as sent and tracks it for correlation
-	 * when a response callback has been provided.
+	 * Records that a queued request has been handed to the transport
+	 * and starts tracking it for response correlation.
+	 *
+	 * Subclasses override this to perform the actual transport-level
+	 * dispatch, then call back into `super.send(...)` so the in-flight
+	 * map stays accurate. Fire-and-forget requests
+	 * (`requestId === -1`) and entries with no callback are not
+	 * inserted into the map because there is nothing to resolve them
+	 * to.
 	 */
 	send(operationPending: OperationPending): void {
 		operationPending.onSend();
@@ -247,8 +423,20 @@ export abstract class PeerBase implements IPeer {
 	}
 
 	/**
-	 * Updates the rolling latency average from the last successful round trip.
-	 * The SDK stores half of the measured round-trip time as transport latency.
+	 * Folds a fresh round-trip measurement into the rolling latency
+	 * average.
+	 *
+	 * The SDK reports half of the measured round-trip as transport
+	 * latency on the assumption that downstream and upstream legs
+	 * have similar duration. The window keeps the most recent 10
+	 * samples (older entries are dropped from the head). The averaged
+	 * value is multiplied by 1000 because consumers expose it in
+	 * milliseconds even though the per-sample input is already in
+	 * milliseconds — the multiplication compensates for the half
+	 * inside the loop.
+	 *
+	 * @param value Round-trip duration in milliseconds, as reported
+	 *              by {@link OperationPending.getExecuteTimerInMs}.
 	 */
 	addPing(value: number): void {
 		if (this.pingLst.length > 10)

@@ -5,7 +5,21 @@ import { CustomOperationRequestAbstract } from "./../request/CustomOperationRequ
 import { InventoryModels } from "./InventoryModels";
 
 /**
- * Groups typed request contracts for Inventory.
+ * Typed request wrappers for the Inventory domain.
+ *
+ * Each class extends {@link CustomOperationRequestAbstract} and
+ * binds a typed `*RequestData` DTO from
+ * {@link InventoryModels} to:
+ * - the matching {@link OperationCode};
+ * - the {@link RequestType.Inventory} domain;
+ * - the appropriate {@link RequestRole} based on the wrapper
+ *   name prefix.
+ *
+ * All wrappers carry an explicit `itemId` (or `classId` for
+ * catalog operations); the backend cross-checks the caller's
+ * permission against the resource's `ownerType` /
+ * `ownerId` (Client) or trusts the server / admin token
+ * (Server / Admin).
  */
 export namespace InventoryRequestModels {
 	/**

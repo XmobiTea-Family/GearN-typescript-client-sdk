@@ -3,17 +3,43 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups shared data contracts for Group.
+ * Reusable request and response DTOs for the Group domain.
+ *
+ * Group operations target a **specific group entity** by
+ * `groupId`. On the client variants the backend additionally
+ * cross-checks that the authenticated player is currently a
+ * member with the right role (e.g. `Officer` to invite,
+ * `Owner` to disband).
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): used by `GNNetwork.group`, scoped
+ *   to groups the caller has permission to act on.
+ * - **`Server*`**: used by `GNNetwork.group.server`, can act on
+ *   any group with a valid server `secretKey`.
+ * - **`Admin*`**: used by `GNNetwork.group.admin`, full
+ *   privileged access for backoffice tooling.
+ *
+ * Group state changes propagate to every connected member
+ * device through the realtime events
+ * {@link OnGroupMemberUpdateEventHandler} (member roster) and
+ * {@link OnGroupMessageUpdateEventHandler} (chat / wall).
  */
 export namespace GroupModels {
 
 	/**
-	 * Defines the reusable parameter block InfoRequestParam.
+	 * Selects which optional group fields and lightweight relations should be returned.
+	 * Boolean flags default to `false`; key arrays narrow list-style fields to specific keys only.
 	 */
 	export class InfoRequestParam {
+		/**
+		 * Includes the group catalog ID.
+		 */
 		@BooleanDataMember({ code: ParameterCode.CatalogId, isOptional: true, defaultValue: false })
 		public catalogId?: boolean;
 
+		/**
+		 * Includes lightweight member items for the group.
+		 */
 		@BooleanDataMember({ code: ParameterCode.Members, isOptional: true, defaultValue: false })
 		public members?: boolean;
 
@@ -47,6 +73,9 @@ export namespace GroupModels {
 		@BooleanDataMember({ code: ParameterCode.GroupDatas, isOptional: true, defaultValue: false })
 		public groupDatas?: boolean;
 
+		/**
+		 * Includes lightweight inventory relation items for the group, optionally filtered by `itemCatalogIds`.
+		 */
 		@BooleanDataMember({ code: ParameterCode.GroupInventories, isOptional: true, defaultValue: false })
 		public groupInventories?: boolean;
 
@@ -65,6 +94,9 @@ export namespace GroupModels {
 		@GNArrayDataMember({ code: ParameterCode.TagKeys, isOptional: true, elementCls: String })
 		public tagKeys?: Array<string>;
 
+		/**
+		 * Restricts `groupInventories` to relation items whose catalog IDs match this list.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.ItemCatalogIds, isOptional: true, elementCls: String })
 		public itemCatalogIds?: Array<string>;
 
@@ -107,7 +139,7 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the reusable parameter block GroupMemberParam.
+	 * Describes one game-player member referenced by a group workflow.
 	 */
 	export class GroupMemberParam {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
@@ -131,8 +163,8 @@ export namespace GroupModels {
 	 * Defines the request payload for AddMember.
 	 */
 	export class AddMemberRequestData {
-		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
-		public userId: string;
+		@StringDataMember({ code: ParameterCode.MemberId, minLength: 10, maxLength: 11, mustNonNull: true })
+		public memberId: string;
 
 		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
@@ -359,7 +391,7 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the request payload for GetGroupMessage.
+	 * Reads persisted group messages using skip/limit pagination.
 	 */
 	export class GetGroupMessageRequestData {
 		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
@@ -734,7 +766,7 @@ export namespace GroupModels {
 		@StringDataMember({ code: ParameterCode.DisplayName, defaultValue: "", isOptional: true })
 		public displayName?: string;
 
-		@NumberDataMember({ code: ParameterCode.Amount, defaultValue: 1, mustInt: true, isOptional: true })
+		@NumberDataMember({ code: ParameterCode.Amount, defaultValue: 1, mustInt: true, minValue: 1, maxValue: 256, isOptional: true })
 		public amount?: number;
 
 	}
@@ -779,8 +811,8 @@ export namespace GroupModels {
 	 * Defines the request payload for RemoveMember.
 	 */
 	export class RemoveMemberRequestData {
-		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 11, mustNonNull: true })
-		public userId: string;
+		@StringDataMember({ code: ParameterCode.MemberId, minLength: 10, maxLength: 11, mustNonNull: true })
+		public memberId: string;
 
 		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
@@ -848,7 +880,8 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the request payload for SendGroupMessage.
+	 * Sends a group message through the HTTP group workflow.
+	 * `senderId` is always required and must identify the logical sender explicitly.
 	 */
 	export class SendGroupMessageRequestData {
 		@StringDataMember({ code: ParameterCode.SenderId, minLength: 10, maxLength: 11, mustNonNull: true })
@@ -1079,7 +1112,8 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the request payload for GetCurrencyLog.
+	 * Reads currency change logs for one group.
+	 * Pagination is token-based rather than skip-based.
 	 */
 	export class GetCurrencyLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
@@ -1091,6 +1125,9 @@ export namespace GroupModels {
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
+		/**
+		 * Continuation token returned by the previous page.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
@@ -1109,7 +1146,8 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the request payload for GetStatisticsLog.
+	 * Reads statistic change logs for one group.
+	 * Pagination is token-based rather than skip-based.
 	 */
 	export class GetStatisticsLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
@@ -1121,6 +1159,9 @@ export namespace GroupModels {
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
+		/**
+		 * Continuation token returned by the previous page.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
@@ -1139,12 +1180,15 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Represents InfoResponseParameters.
+	 * Contains the optional fields requested through `InfoRequestParam`.
 	 */
 	export class InfoResponseParameters {
 		@StringDataMember({ code: ParameterCode.CatalogId, isOptional: true })
 		public catalogId?: string;
 
+		/**
+		 * Lightweight member items for the group, not full player snapshots.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.Members, isOptional: true, elementCls: GenericModels.MemberItem })
 		public members?: Array<GenericModels.MemberItem>;
 
@@ -1178,22 +1222,28 @@ export namespace GroupModels {
 		@GNArrayDataMember({ code: ParameterCode.GroupStatistics, isOptional: true, elementCls: GenericModels.StatisticsItem })
 		public groupStatistics?: Array<GenericModels.StatisticsItem>;
 
+		/**
+		 * Lightweight inventory relation items owned by the group.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.GroupInventories, isOptional: true, elementCls: GenericModels.InventoryItem })
 		public groupInventories?: Array<GenericModels.InventoryItem>;
 
 	}
 
 	/**
-	 * Defines the response payload for Group.
+	 * Base group response envelope.
 	 */
 	export class GroupResponseData {
+		/**
+		 * Optional field bag controlled by the corresponding `InfoRequestParam`.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
 	/**
-	 * Defines the response payload for GroupWithGroupId.
+	 * Group envelope that also exposes the resolved group ID.
 	 */
 	export class GroupWithGroupIdResponseData extends GroupResponseData {
 		@StringDataMember({ code: ParameterCode.GroupId })
@@ -1214,7 +1264,7 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the response payload for GroupLog.
+	 * Describes one group statistics or currency change log entry.
 	 */
 	export class GroupLogResponseData {
 		@StringDataMember({ code: ParameterCode.GroupId })
@@ -1262,7 +1312,7 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the response payload for GroupMessage.
+	 * Describes one persisted group-message entry.
 	 */
 	export class GroupMessageResponseData {
 		@StringDataMember({ code: ParameterCode.Message })
@@ -1271,6 +1321,9 @@ export namespace GroupModels {
 		@StringDataMember({ code: ParameterCode.SenderId })
 		public senderId: string;
 
+		/**
+		 * Sender type value defined by backend message semantics.
+		 */
 		@NumberDataMember({ code: ParameterCode.SenderType })
 		public senderType: number;
 
@@ -1280,7 +1333,7 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the response payload for GroupMessages.
+	 * Returns one page of persisted group messages.
 	 */
 	export class GroupMessagesResponseData {
 		@GNArrayDataMember({ code: ParameterCode.GroupMessages, elementCls: GroupMessageResponseData })
@@ -1343,31 +1396,37 @@ export namespace GroupModels {
 	}
 
 	/**
-	 * Defines the response payload for GetStatisticsLog.
+	 * Returns one page of statistics logs.
 	 */
 	export class GetStatisticsLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: GroupLogResponseData })
 		public results: Array<GroupLogResponseData>;
 
+		/**
+		 * Continuation token for the next page, or `undefined` when pagination is exhausted.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for GetCurrencyLog.
+	 * Returns one page of currency logs.
 	 */
 	export class GetCurrencyLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: GroupLogResponseData })
 		public results: Array<GroupLogResponseData>;
 
+		/**
+		 * Continuation token for the next page, or `undefined` when pagination is exhausted.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

@@ -1,8 +1,34 @@
 /**
- * Enumerates domain-level error codes returned inside successful GearN responses.
+ * Domain-level error codes carried **inside successful responses**.
  *
- * These codes are business errors carried inside the response payload after
- * `returnCode === ReturnCode.Ok`. They do not replace low-level return codes.
+ * These are **not** transport errors — for transport-level
+ * failures see {@link ReturnCode}. The two-tier model:
+ * - {@link ReturnCode} describes "did the request reach the server,
+ *   pass validation, and produce a response?".
+ * - `ErrorCode` describes "given that the request was processed,
+ *   what did the business logic return?".
+ *
+ * The SDK reads this value out of `ParameterCode.ErrorCode` on
+ * the response parameter bag inside
+ * {@link CustomOperationResponse.setupOperationResponse} and
+ * exposes it as `responseObject.errorCode`. Application code
+ * checks both layers in order:
+ *
+ * ```ts
+ * if (response.hasReturnCodeError()) return showTransportError(response);
+ * if (response.errorCode !== ErrorCode.Ok) return showDomainError(response);
+ * // success path: read response.responseData
+ * ```
+ *
+ * The error catalogue is intentionally large because the GearN
+ * backend uses fine-grained codes so the application can pick the
+ * right localised user message. Most codes are self-explanatory
+ * but the per-entry comments below capture any non-obvious
+ * scenarios (rate-limit triggers, prerequisite chains, ...).
+ *
+ * Wire-protocol contract: the numeric values are persisted in
+ * server logs and analytics so reordering them is a
+ * coordinated-change operation.
  */
 export class ErrorCode {
 	/**
@@ -118,7 +144,7 @@ export class ErrorCode {
 	/**
 	 * The game already exists and cannot be created again with the same identity.
 	 */
-	public static readonly GameIsExists: number = 23;
+	public static readonly GameExists: number = 23;
 
 	/**
 	 * The requested secret-info record does not exist.
@@ -128,7 +154,7 @@ export class ErrorCode {
 	/**
 	 * The secret-info record already exists.
 	 */
-	public static readonly SecretInfoIsExists: number = 25;
+	public static readonly SecretInfoExists: number = 25;
 
 	/**
 	 * The requested external identity is not linked to the current account.
@@ -183,12 +209,12 @@ export class ErrorCode {
 	/**
 	 * The target store item was removed and can no longer be used for purchase flows.
 	 */
-	public static readonly StoreItemHadBeenRemove: number = 36;
+	public static readonly StoreItemRemoved: number = 36;
 
 	/**
 	 * The requested display name is already in use.
 	 */
-	public static readonly DisplayNameHasUse: number = 37;
+	public static readonly DisplayNameUsed: number = 37;
 
 	/**
 	 * The target player is currently banned.
@@ -208,7 +234,7 @@ export class ErrorCode {
 	/**
 	 * The player is not a member of the referenced matchmaking ticket.
 	 */
-	public static readonly MatchmakingPlayerHasNotJoinedTicket: number = 41;
+	public static readonly MatchmakingPlayerNotJoinedTicket: number = 41;
 
 	/**
 	 * The requested match does not exist.
@@ -218,7 +244,7 @@ export class ErrorCode {
 	/**
 	 * The player already joined a different matchmaking ticket that conflicts with this request.
 	 */
-	public static readonly MatchmakingPlayerHasJoinedOtherTicket: number = 43;
+	public static readonly MatchmakingPlayerJoinedOtherTicket: number = 43;
 
 	/**
 	 * The referenced matchmaking queue does not exist.
@@ -248,11 +274,11 @@ export class ErrorCode {
 	/**
 	 * The buyer already owns this non-consumable store item.
 	 */
-	public static readonly StoreItemHadPurchaseAndNonConsumable: number = 49;
+	public static readonly StoreItemPurchasedAndNonConsumable: number = 49;
 
 	/**
 	 * The store item already exists and cannot be created again with the same identity.
 	 */
-	public static readonly StoreItemHadExists: number = 50;
+	public static readonly StoreItemExists: number = 50;
 
 }

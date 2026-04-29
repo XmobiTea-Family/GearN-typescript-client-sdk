@@ -4,7 +4,35 @@ import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember,
 import { GenericModels } from "./GenericModels";
 
 /**
- * Groups shared data contracts for MasterPlayer.
+ * Reusable request and response DTOs for the MasterPlayer
+ * domain.
+ *
+ * MasterPlayer operations target the **account-level** record
+ * — the top-level user identity. Client variants imply the
+ * authenticated user (`userId` omitted); Server / Admin
+ * variants require an explicit `userId`.
+ *
+ * Three role variants per operation:
+ * - **Client** (no prefix): routed through
+ *   `GNNetwork.masterPlayer`, `userId` is implicit.
+ * - **`Server*`**: routed through
+ *   `GNNetwork.masterPlayer.server`, requires explicit
+ *   `userId` and a server `secretKey`.
+ * - **`Admin*`**: routed through
+ *   `GNNetwork.masterPlayer.admin`, plus admin-only knobs
+ *   (force overrides, bypass-validation flags).
+ *
+ * Identity link / unlink DTOs follow the convention
+ * `Link<Provider>RequestData` / `Unlink<Provider>RequestData`
+ * — there is one pair per supported provider (Apple, Google,
+ * Facebook, Game Center, ten device-id flavours, custom-id,
+ * generic-service). Each maps onto the matching `loginBy*`
+ * flow on {@link AuthenticateApi}.
+ *
+ * Validation rules declared on each `@*DataMember` decorator
+ * are enforced server-side; failures surface as
+ * {@link InvalidMember} entries with the matching
+ * {@link InvalidMemberType} code.
  */
 export namespace MasterPlayerModels {
 	/**
@@ -20,69 +48,133 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the reusable parameter block InfoRequestParam.
+	 * Selects which optional master-player fields should be returned in `infoResponseParameters`.
+	 * Boolean flags default to `false`; key arrays narrow list-style fields to specific keys only.
 	 */
 	export class InfoRequestParam {
+		/**
+		 * Includes linked external identities such as account, device, Google, Facebook, or Apple.
+		 */
 		@BooleanDataMember({ code: ParameterCode.External, isOptional: true, defaultValue: false })
 		public external?: boolean;
 
+		/**
+		 * Includes the segment names currently attached to the player.
+		 */
 		@BooleanDataMember({ code: ParameterCode.Segments, isOptional: true, defaultValue: false })
 		public segments?: boolean;
 
+		/**
+		 * Includes custom data entries.
+		 */
 		@BooleanDataMember({ code: ParameterCode.CustomDatas, isOptional: true, defaultValue: false })
 		public customDatas?: boolean;
 
+		/**
+		 * Includes the player's display name.
+		 */
 		@BooleanDataMember({ code: ParameterCode.DisplayName, isOptional: true, defaultValue: false })
 		public displayName?: boolean;
 
+		/**
+		 * Includes the avatar descriptor.
+		 */
 		@BooleanDataMember({ code: ParameterCode.Avatar, isOptional: true, defaultValue: false })
 		public avatar?: boolean;
 
+		/**
+		 * Includes the creation timestamp.
+		 */
 		@BooleanDataMember({ code: ParameterCode.TsCreate, isOptional: true, defaultValue: false })
 		public tsCreate?: boolean;
 
+		/**
+		 * Includes tag entries.
+		 */
 		@BooleanDataMember({ code: ParameterCode.Tags, isOptional: true, defaultValue: false })
 		public tags?: boolean;
 
+		/**
+		 * Includes the active ban state when present.
+		 */
 		@BooleanDataMember({ code: ParameterCode.PlayerBan, isOptional: true, defaultValue: false })
 		public playerBan?: boolean;
 
+		/**
+		 * Includes player currency entries.
+		 */
 		@BooleanDataMember({ code: ParameterCode.PlayerCurrencies, isOptional: true, defaultValue: false })
 		public playerCurrencies?: boolean;
 
+		/**
+		 * Includes player statistics entries.
+		 */
 		@BooleanDataMember({ code: ParameterCode.PlayerStatistics, isOptional: true, defaultValue: false })
 		public playerStatistics?: boolean;
 
+		/**
+		 * Includes player data entries.
+		 */
 		@BooleanDataMember({ code: ParameterCode.PlayerDatas, isOptional: true, defaultValue: false })
 		public playerDatas?: boolean;
 
+		/**
+		 * Includes the creation IP address.
+		 */
 		@BooleanDataMember({ code: ParameterCode.IpAddressCreate, isOptional: true, defaultValue: false })
 		public ipAddressCreate?: boolean;
 
+		/**
+		 * Includes the country code currently stored for the player.
+		 */
 		@BooleanDataMember({ code: ParameterCode.CountryCode, isOptional: true, defaultValue: false })
 		public countryCode?: boolean;
 
+		/**
+		 * Includes the email currently stored for the player.
+		 */
 		@BooleanDataMember({ code: ParameterCode.Email, isOptional: true, defaultValue: false })
 		public email?: boolean;
 
+		/**
+		 * Includes the last-login timestamp.
+		 */
 		@BooleanDataMember({ code: ParameterCode.TsLastLogin, isOptional: true, defaultValue: false })
 		public tsLastLogin?: boolean;
 
+		/**
+		 * Includes registered push-notification endpoints.
+		 */
 		@BooleanDataMember({ code: ParameterCode.PushNotifications, isOptional: true, defaultValue: false })
 		public pushNotifications?: boolean;
 
+		/**
+		 * Restricts `playerDatas` to the specified keys when that field is requested.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
 		public playerDataKeys?: Array<string>;
 
+		/**
+		 * Restricts `playerCurrencies` to the specified currency keys when that field is requested.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.PlayerCurrencyKeys, isOptional: true, elementCls: String })
 		public playerCurrencyKeys?: Array<string>;
 
+		/**
+		 * Restricts `playerStatistics` to the specified statistic keys when that field is requested.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.PlayerStatisticsKeys, isOptional: true, elementCls: String })
 		public playerStatisticsKeys?: Array<string>;
 
+		/**
+		 * Restricts `customDatas` to the specified keys when that field is requested.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.CustomDataKeys, isOptional: true, elementCls: String })
 		public customDataKeys?: Array<string>;
 
+		/**
+		 * Restricts `tags` to the specified tag keys when that field is requested.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.TagKeys, isOptional: true, elementCls: String })
 		public tagKeys?: Array<string>;
 
@@ -257,7 +349,7 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Represents ExternalItem.
+	 * Groups all external identities that may be linked to one master player.
 	 */
 	export class ExternalItem {
 		@GNHashtableDataMember({ code: ParameterCode.Device, isOptional: true })
@@ -581,19 +673,26 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetPlayerInformation.
+	 * Reads the current or target master-player profile using the requested projection.
+	 * On the client route, omit `userId` to target the authenticated player itself.
 	 */
 	export class GetPlayerInformationRequestData {
+		/**
+		 * Optional self-target shortcut on the client route.
+		 */
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
+		/**
+		 * Required field projection that controls which optional data is returned.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.InfoRequestParam, mustNonNull: true })
 		public infoRequestParam: InfoRequestParam;
 
 	}
 
 	/**
-	 * Defines the request payload for ServerGetPlayerInformation.
+	 * Reads a specific target master player on a trusted route.
 	 */
 	export class ServerGetPlayerInformationRequestData extends GetPlayerInformationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
@@ -1982,18 +2081,25 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetCurrencyLog.
+	 * Reads currency change logs for the current or target master player.
+	 * Pagination is token-based rather than skip-based.
 	 */
 	export class GetCurrencyLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
 
+		/**
+		 * Optional self-target shortcut on the client route.
+		 */
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
 		public userId?: string;
 
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
+		/**
+		 * Continuation token returned by the previous page.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
@@ -2012,18 +2118,25 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetStatisticsLog.
+	 * Reads statistic change logs for the current or target master player.
+	 * Pagination is token-based rather than skip-based.
 	 */
 	export class GetStatisticsLogRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, minLength: 1, maxLength: 32, mustNonNull: true, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
 
+		/**
+		 * Optional self-target shortcut on the client route.
+		 */
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true, isOptional: true })
 		public userId?: string;
 
 		@NumberDataMember({ code: ParameterCode.Limit, defaultValue: 10, minValue: 1, maxValue: 100, mustInt: true, isOptional: true })
 		public limit?: number;
 
+		/**
+		 * Continuation token returned by the previous page.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 24, maxLength: 24, mustNonNull: true, isOptional: true })
 		public token?: string;
 
@@ -2042,27 +2155,27 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for SetTsLastLogin.
+	 * Defines the request payload for UpdateTsLastLogin.
 	 */
-	export class SetTsLastLoginRequestData {
+	export class UpdateTsLastLoginRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
 	}
 
 	/**
-	 * Defines the request payload for ServerSetTsLastLogin.
+	 * Defines the request payload for ServerUpdateTsLastLogin.
 	 */
-	export class ServerSetTsLastLoginRequestData extends SetTsLastLoginRequestData {
+	export class ServerUpdateTsLastLoginRequestData extends UpdateTsLastLoginRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public declare userId: string;
 
 	}
 
 	/**
-	 * Defines the request payload for AdminSetTsLastLogin.
+	 * Defines the request payload for AdminUpdateTsLastLogin.
 	 */
-	export class AdminSetTsLastLoginRequestData extends ServerSetTsLastLoginRequestData {
+	export class AdminUpdateTsLastLoginRequestData extends ServerUpdateTsLastLoginRequestData {
 	}
 
 	/**
@@ -2501,15 +2614,25 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for SendSocketOperationEvent.
+	 * Sends a backend-routed socket event to the current or target player's active socket session.
+	 * This is still an HTTP MasterPlayer operation, not a raw socket transport call.
 	 */
 	export class SendSocketOperationEventRequestData {
+		/**
+		 * Optional self-target shortcut on the client route.
+		 */
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
+		/**
+		 * Backend-defined event code forwarded to socket listeners.
+		 */
 		@StringDataMember({ code: ParameterCode.EventCode, minLength: 1, maxLength: 64 })
 		public eventCode: string;
 
+		/**
+		 * Optional raw event payload delivered with the socket event.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.EventParameters, mustNonNull: true, minLength: 0, maxLength: 128, isOptional: true })
 		public eventParameters?: GNHashtable;
 
@@ -2561,15 +2684,21 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for AddPushNotification.
+	 * Registers a push-notification endpoint for the current or target master player.
 	 */
 	export class AddPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
+		/**
+		 * Device push token issued by the push provider.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, minLength: 10, maxLength: 256, mustNonNull: true })
 		public token: string;
 
+		/**
+		 * Push platform mapped by the public `PushPlatformType` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.PlatformType, minValue: 1, mustInt: true })
 		public platformType: number;
 
@@ -2591,7 +2720,7 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for GetPushNotification.
+	 * Reads registered push-notification endpoints for the current or target master player.
 	 */
 	export class GetPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
@@ -2642,7 +2771,7 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the request payload for SendPushNotification.
+	 * Triggers a push-notification send workflow for the current or target master player.
 	 */
 	export class SendPushNotificationRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
@@ -2663,6 +2792,9 @@ export namespace MasterPlayerModels {
 		@StringDataMember({ code: ParameterCode.Icon, isOptional: true })
 		public icon?: string;
 
+		/**
+		 * Platform-specific custom payload forwarded to the push provider.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.Data, isOptional: true })
 		public data?: GNHashtable;
 
@@ -2684,7 +2816,7 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Represents PushNotificationItem.
+	 * Describes one registered push endpoint stored for a player.
 	 */
 	export class PushNotificationItem {
 		@StringDataMember({ code: ParameterCode.Token })
@@ -2693,15 +2825,21 @@ export namespace MasterPlayerModels {
 		@StringDataMember({ code: ParameterCode.PushId })
 		public pushId: string;
 
+		/**
+		 * Push platform mapped by the public `PushPlatformType` enum.
+		 */
 		@NumberDataMember({ code: ParameterCode.PlatformType })
 		public platformType: number;
 
 	}
 
 	/**
-	 * Represents InfoResponseParameters.
+	 * Contains the optional fields requested through `InfoRequestParam`.
 	 */
 	export class InfoResponseParameters {
+		/**
+		 * Linked external identity snapshot.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.External, isOptional: true })
 		public external?: ExternalItem;
 
@@ -2747,31 +2885,40 @@ export namespace MasterPlayerModels {
 		@StringDataMember({ code: ParameterCode.Email, isOptional: true })
 		public email?: string;
 
+		/**
+		 * Registered push endpoints when `pushNotifications` was requested.
+		 */
 		@GNArrayDataMember({ code: ParameterCode.PushNotifications, isOptional: true, elementCls: MasterPlayerModels.PushNotificationItem })
 		public pushNotifications?: Array<MasterPlayerModels.PushNotificationItem>;
 
 	}
 
 	/**
-	 * Defines the response payload for MasterPlayer.
+	 * Base master-player response envelope.
 	 */
 	export class MasterPlayerResponseData {
+		/**
+		 * Optional field bag controlled by the corresponding `InfoRequestParam`.
+		 */
 		@GNHashtableDataMember({ code: ParameterCode.InfoResponseParameters })
 		public infoResponseParameters: InfoResponseParameters;
 
 	}
 
 	/**
-	 * Defines the response payload for GenericServiceMasterPlayer.
+	 * Master-player envelope for generic-service link or lookup flows.
 	 */
 	export class GenericServiceMasterPlayerResponseData extends MasterPlayerResponseData {
+		/**
+		 * Provider-specific error text returned by the backend when available.
+		 */
 		@StringDataMember({ code: ParameterCode.ErrorMessage, isOptional: true })
 		public errorMessage?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for MasterPlayerWithUserId.
+	 * Master-player envelope that also exposes the resolved master-player user ID.
 	 */
 	export class MasterPlayerWithUserIdResponseData extends MasterPlayerResponseData {
 		@StringDataMember({ code: ParameterCode.UserId })
@@ -2888,19 +3035,25 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the response payload for MasterPlayerLeaderboard.
+	 * One leaderboard row for master-player ranking endpoints.
 	 */
 	export class MasterPlayerLeaderboardResponseData extends MasterPlayerWithUserIdResponseData {
+		/**
+		 * Ranking position returned by the backend leaderboard implementation.
+		 */
 		@NumberDataMember({ code: ParameterCode.Position })
 		public position: number;
 
+		/**
+		 * Optional archived score value from the last leaderboard backup.
+		 */
 		@NumberDataMember({ code: ParameterCode.BackupValue, isOptional: true })
 		public backupValue?: number;
 
 	}
 
 	/**
-	 * Defines the response payload for MasterPlayerLog.
+	 * Describes one statistics or currency change log entry.
 	 */
 	export class MasterPlayerLogResponseData {
 		@StringDataMember({ code: ParameterCode.UserId })
@@ -2927,12 +3080,15 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the response payload for GetStatisticsLeaderboard.
+	 * Returns a statistics leaderboard page plus its optional snapshot timestamp.
 	 */
 	export class GetStatisticsLeaderboardResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLeaderboardResponseData })
 		public results: Array<MasterPlayerLeaderboardResponseData>;
 
+		/**
+		 * Snapshot timestamp used for this leaderboard page when returned by the backend.
+		 */
 		@NumberDataMember({ code: ParameterCode.TsCreate, isOptional: true })
 		public tsCreate: number;
 
@@ -2999,31 +3155,37 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the response payload for GetStatisticsLog.
+	 * Returns one page of statistics logs.
 	 */
 	export class GetStatisticsLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLogResponseData })
 		public results: Array<MasterPlayerLogResponseData>;
 
+		/**
+		 * Continuation token for the next page, or `undefined` when pagination is exhausted.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for GetCurrencyLog.
+	 * Returns one page of currency logs.
 	 */
 	export class GetCurrencyLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: MasterPlayerLogResponseData })
 		public results: Array<MasterPlayerLogResponseData>;
 
+		/**
+		 * Continuation token for the next page, or `undefined` when pagination is exhausted.
+		 */
 		@StringDataMember({ code: ParameterCode.Token, isOptional: true })
 		public token?: string;
 
 	}
 
 	/**
-	 * Defines the response payload for AddPushNotification.
+	 * Returns the backend-generated push endpoint ID.
 	 */
 	export class AddPushNotificationResponseData {
 		@StringDataMember({ code: ParameterCode.PushId })
@@ -3032,7 +3194,7 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the response payload for SendPushNotification.
+	 * Returns the backend send status message for push-dispatch workflows.
 	 */
 	export class SendPushNotificationResponseData {
 		@StringDataMember({ code: ParameterCode.Message })
@@ -3041,7 +3203,7 @@ export namespace MasterPlayerModels {
 	}
 
 	/**
-	 * Defines the response payload for Empty.
+	 * Defines an intentionally empty response payload.
 	 */
 	export class EmptyResponseData {
 	}

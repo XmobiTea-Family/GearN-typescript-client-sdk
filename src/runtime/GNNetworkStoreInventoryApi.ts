@@ -7,11 +7,44 @@ import { StoreInventoryRequestModels } from "./entity/models/StoreInventoryReque
 import { StoreInventoryResponseModels } from "./entity/models/StoreInventoryResponseModels";
 
 /**
- * Exposes StoreInventory operations through GNNetwork.
+ * Public client-scoped namespace for the StoreInventory domain.
+ *
+ * Reachable through {@link GNNetwork.storeInventory} after
+ * {@link GNNetwork.init}. Manages storefront catalog reads,
+ * purchases, gifting and platform-receipt validation.
+ *
+ * Functional groupings:
+ *
+ * 1. **Catalog reads** — `getStoreItem`, `getStoreItems`,
+ *    `getStoreItemsWithSegment`,
+ *    `getStoreItemsWithTag`. Catalog rows carry
+ *    {@link StoreItemType} (`Consumable` /
+ *    `NonConsumable`).
+ * 2. **Purchase / gift** — `buyStoreItem` (paid with
+ *    in-game currency), `presentStoreItem` (gift to another
+ *    player), `redeemStoreItem` (apply a previously gifted
+ *    item).
+ * 3. **Platform receipt validation** —
+ *    `validateAppleAppStoreReceipt`,
+ *    `validateGooglePlayStoreReceipt`,
+ *    `validateFacebookStoreReceipt`. Each validates a
+ *    platform-specific receipt and grants the matching item
+ *    on success. The audit log captures the
+ *    {@link StoreReceiveType} for each grant.
+ * 4. **Audit log** — `getPurchaseLog`, `getReceiveLog`.
+ *    Read-only history of every item the player acquired
+ *    through the store.
+ *
+ * Common contract: same as {@link GamePlayerApi} (HTTP /
+ * `RequestType.StoreInventory` / `RequestRole.Client`,
+ * callback + Promise variants, `.server` / `.admin`
+ * sub-namespaces).
  */
 export class StoreInventoryApi {
+	/** Server-scoped store operations for trusted backend callers. */
 	public server: ServerStoreInventoryApi = new ServerStoreInventoryApi();
 
+	/** Admin-scoped store operations for dashboard, GM, or backoffice callers. */
 	public admin: AdminStoreInventoryApi = new AdminStoreInventoryApi();
 
 	/**
@@ -213,7 +246,14 @@ export class StoreInventoryApi {
 }
 
 /**
- * Groups server-scoped operations exposed by ServerStoreInventoryApi.
+ * Server-scoped StoreInventory namespace, reachable through
+ * `GNNetwork.storeInventory.server`.
+ *
+ * Mirrors every method on {@link StoreInventoryApi} but uses
+ * the `Server*RequestData` DTO variants. The server flavour
+ * accepts an explicit `userId` so a trusted backend can
+ * issue purchases / gifts on behalf of any player. Always pass
+ * a valid server-side `secretKey`.
  */
 export class ServerStoreInventoryApi {
 	/**
@@ -415,7 +455,15 @@ export class ServerStoreInventoryApi {
 }
 
 /**
- * Groups admin-scoped operations exposed by AdminStoreInventoryApi.
+ * Admin-scoped StoreInventory namespace, reachable through
+ * `GNNetwork.storeInventory.admin`.
+ *
+ * Mirrors {@link ServerStoreInventoryApi} but routed through
+ * {@link RequestRole.Admin}. The backend uses the caller's
+ * admin auth token to authorise privileged operations such as
+ * editing the storefront catalog, force-granting items,
+ * issuing refunds. Reserved for dashboard / backoffice
+ * tools.
  */
 export class AdminStoreInventoryApi {
 	/**
