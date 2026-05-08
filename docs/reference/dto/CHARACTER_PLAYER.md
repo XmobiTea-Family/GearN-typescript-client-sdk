@@ -1244,7 +1244,7 @@ Defines the request payload for GetTag.
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
-| `tagKeys` | `Array<string>` | yes | _elementCls=String_ |
+| `tagKeys` | `Array<string>` | no | _elementCls=String_ |
 
 ### ServerGetTagRequestData
 

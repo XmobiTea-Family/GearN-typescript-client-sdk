@@ -93,7 +93,7 @@ console.log("Your displayName: " + loginByCustomIdResponse.responseData.infoResp
 - `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](docs/guides/STORE_INVENTORY.md).
 - `GNNetwork.content` — content config, file upload/download metadata, small game asset, avatar asset. [Guide](docs/guides/CONTENT.md).
 - `GNNetwork.multiplayer` — matchmaking ticket, handle matchmaking trận đấu (HTTP, không socket). [Guide](docs/guides/MULTIPLAYER.md).
-- `GNNetwork.cloudScript` — CloudScript publish/version/execute, khi cần phải phối hợp các function lại với nhau, hoặc cần để server validate, cần phải viết cloudScript code từ `GearN Dashboard`. [Guide](docs/guides/CLOUDSCRIPT.md).
+- `GNNetwork.cloudScript` — CloudScript publish/version/execute, khi cần phải phối hợp các function lại với nhau, hoặc cần để server validate, cần phải viết cloudScript code từ `GearN Dashboard`. [API guide](docs/guides/CLOUDSCRIPT.md), [script authoring guide](docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md).
 - `GNNetwork.dashboard` — admin login + quản trị game/secret/analytics, không nên sử dụng nếu code game client. [Guide](docs/guides/DASHBOARD.md).
 
 ## 4. Khởi tạo cơ bản

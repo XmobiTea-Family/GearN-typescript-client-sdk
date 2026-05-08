@@ -59,7 +59,7 @@ Rule nhanh:
 
 ### Đọc 1 item
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAmountAsync` | Cần đọc số lượng item | `itemId` | `InventoryResponseData` | Giá trị nằm trong `infoResponseParameters.amount` | `Ok`, `ItemNotFound` |
 | `getAvatarAsync` | Cần đọc avatar item | `itemId` | `InventoryResponseData` | `avatar.type` hiện là số thô | `Ok`, `ItemNotFound` |
@@ -79,7 +79,7 @@ Rule nhanh:
 
 ### Query danh sách, leaderboard và log
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getItemsWithDisplayNameAsync` | Tìm item theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `InventoriesWithItemIdResponseData` | `keyword` tối thiểu 2 ký tự | `Ok` |
 | `getItemsWithSegmentAsync` | Tìm item theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `InventoriesWithItemIdResponseData` | Query theo exact segment value | `Ok` |
@@ -91,7 +91,7 @@ Rule nhanh:
 
 ### Mutation
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addSegmentAsync` | Gắn thêm segment cho item | `itemId`, `value` | `EmptyResponseData` | Thêm một segment value | `Ok`, `ItemNotFound` |
 | `removeSegmentAsync` | Gỡ một segment khỏi item | `itemId`, `value` | `EmptyResponseData` | Xóa theo exact value | `Ok`, `ItemNotFound` |

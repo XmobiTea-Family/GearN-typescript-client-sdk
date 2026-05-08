@@ -1,4 +1,4 @@
-# AuthenticateApi
+﻿# AuthenticateApi
 
 Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiêu là chọn đúng method của `GNNetwork.authenticate`, truyền đúng input, kiểm tra đúng response và không sinh code sai role.
 
@@ -22,7 +22,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Method
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `loginByAccountAsync` | Đã có tài khoản username/password trong hệ thống | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng để tạo tài khoản mới | `Ok`, `AccountNotFound`, `AccountPasswordWrong` |
 | `registerAccountAsync` | Muốn tạo tài khoản username/password mới | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng lặp lại ở mỗi lần mở app | `Ok`, `AccountUsernameExists` |

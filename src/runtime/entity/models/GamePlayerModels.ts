@@ -978,8 +978,8 @@ export namespace GamePlayerModels {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
 		public userId?: string;
 
-		@GNArrayDataMember({ code: ParameterCode.TagKeys, elementCls: String })
-		public tagKeys: Array<string>;
+		@GNArrayDataMember({ code: ParameterCode.TagKeys, isOptional: true, elementCls: String })
+		public tagKeys?: Array<string>;
 
 	}
 

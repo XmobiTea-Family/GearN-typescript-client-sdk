@@ -30,7 +30,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Auth và quản trị admin account
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `loginByAdminAccountAsync` | Login dashboard/admin tool | `username`, `password` | `LoginByAdminAccountResponseData` | Response chỉ có `authToken` | `Ok`, `AccountNotFound` |
 | `changePasswordAdminAccountAsync` | Admin hiện tại tự đổi mật khẩu của chính mình | `currentPassword`, `password` | `EmptyResponseData` | Nên dùng sau khi đã login | `Ok`, `AccountNotFound` |
@@ -43,7 +43,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Quản lý game và cấu hình
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getGameListAsync` | Liệt kê game id hiện có | request rỗng | `GetGameListResponseData` | Dùng trước khi chọn `gameId` | `Ok` |
 | `createGameAsync` | Tạo game mới | `gameId` | `GameWithGameIdResponseData` | Chỉ tạo identity cơ bản của game | `Ok`, `GameExists` |
@@ -55,7 +55,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Secret key và permission
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getSecretInfoListAsync` | Liệt kê secret key theo role | request rỗng | `GetSecretInfoListResponseData` | Trả `secretKeys` | `Ok` |
 | `getSecretInfoInformationAsync` | Xem chi tiết một secret key | `secretKey` | `GetSecretInfoInformationResponseData` | Trả `gameId`, `permissionParam`, `tsExpire`, `remove` | `Ok`, `SecretInfoNotFound` |
@@ -64,7 +64,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Analytics, logs và callback
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAnalyticsAsync` | Lấy analytics tổng hợp | các boolean flag cần lấy, `timestamp?` | `GetAnalyticsResponseData` | Không bật tất cả flag một cách mù quáng | `Ok`, `ItemNotFound` |
 | `getServerLogAsync` | Lấy log server dạng phân trang | `skip?`, `limit?` | `GetServerLogResponseData` | Model mặc định `skip = 0`, `limit = 50` | `Ok` |
@@ -74,7 +74,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Maintenance và thao tác phá hủy
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `resetStatisticsLeaderboardAsync` | Reset một version leaderboard | `type`, `key`, `version`, `gameId`, `log?`, `catalogId?` | `EmptyResponseData` | Destructive; chỉ dùng khi operator đã chốt loại leaderboard | `Ok`, `KeyNotFound`, `OwnerTypeNotSupport`, `VersionInvalid` |
 | `deleteInDatabaseAsync` | Xóa dữ liệu trực tiếp theo loại và id | `type`, `id`, `gameId`, `log?` | `EmptyResponseData` | `type` phải lấy từ `OwnerType` | `Ok`, `ItemNotFound` |

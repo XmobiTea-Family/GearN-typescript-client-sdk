@@ -988,8 +988,8 @@ export namespace CharacterPlayerModels {
 		@StringDataMember({ code: ParameterCode.CharacterId, minLength: 11, maxLength: 11, mustNonNull: true })
 		public characterId: string;
 
-		@GNArrayDataMember({ code: ParameterCode.TagKeys, elementCls: String })
-		public tagKeys: Array<string>;
+		@GNArrayDataMember({ code: ParameterCode.TagKeys, isOptional: true, elementCls: String })
+		public tagKeys?: Array<string>;
 
 	}
 

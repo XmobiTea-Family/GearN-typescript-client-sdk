@@ -91,7 +91,7 @@ Rule nhanh:
 
 ### Search player, leaderboard và log
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getPlayersWithAppleAsync` | Tìm player theo `appleId` | `appleIds[]`, `infoRequestParam` | `GetPlayersWithAppleResponseData` | Mỗi phần tử trả `appleId`, `userId`, `infoResponseParameters` | `Ok` |
 | `getPlayersWithFacebookAsync` | Tìm player theo `facebookId` | `facebookIds[]`, `infoRequestParam` | `GetPlayersWithFacebookResponseData` | Không dùng cho Google | `Ok` |
@@ -112,7 +112,7 @@ Rule nhanh:
 
 ### Link và unlink identity
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `linkAccountAsync` | Link account/password truyền thống | `userId?`, `username`, `password`, `forceLink?` | `MasterPlayerResponseData` | Dùng khi muốn gắn username/password vào player hiện tại | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
 | `linkCustomIdAsync` | Link custom id của hệ thống riêng | `userId?`, `customId`, `forceLink?` | `MasterPlayerResponseData` | Không phải device id | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
@@ -149,7 +149,7 @@ Rule nhanh:
 
 ### Mutation hồ sơ, account và outbound operation
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addSegmentAsync` | Gắn thêm segment | `userId?`, `value` | `EmptyResponseData` | Thêm một segment value | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
 | `removeSegmentAsync` | Gỡ segment | `userId?`, `value` | `EmptyResponseData` | Xóa theo exact value | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |

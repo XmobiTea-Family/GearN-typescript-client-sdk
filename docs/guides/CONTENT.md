@@ -54,7 +54,7 @@ Rule nhanh:
 
 ## 4. Chọn Method
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getContentDataAsync` | Đọc content config theo key hoặc label | `keys?`, `label?` | `GetContentDataResponseData` | Dùng cho config/content data, không phải file binary | `Ok`, `GameNotFound` |
 | `setContentDataAsync` | Tạo hoặc cập nhật content config | `configs`, `label?` | `EmptyResponseData` | Mỗi config cần `key` và `data` | `Ok`, `GameNotFound` |

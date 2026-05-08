@@ -48,7 +48,7 @@ Rule nhanh:
 
 ## 4. Chọn Method
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `createMatchmakingTicketAsync` | Tạo ticket mới để bắt đầu matchmaking | `giveUpAfterSeconds`, `queueName`, `attribute?`, `members?` | `CreateMatchmakingTicketResponseData` | Trả `ticketId`; với `server/admin` cần thêm `userId` | `Ok`, `MatchmakingPlayerJoinedOtherTicket`, `MatchmakingQueueNotFound`, `TicketSizeError` |
 | `joinMatchmakingTicketAsync` | Thêm user vào ticket đã tồn tại | `ticketId`, `attribute?` | `EmptyResponseData` | Với `server/admin` cần thêm `userId` | `Ok`, `MatchmakingTicketNotFound`, `MatchmakingTicketAlreadyCompleted`, `MatchmakingPlayerJoinedOtherTicket`, `MatchmakingQueueNotFound` |

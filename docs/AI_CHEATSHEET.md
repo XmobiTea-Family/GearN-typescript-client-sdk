@@ -57,7 +57,7 @@ useResult(res.responseData);
 | Store catalog, buy, present, validate receipt | [guides/STORE_INVENTORY.md](guides/STORE_INVENTORY.md) · [reference/API_STORE_INVENTORY.md](reference/API_STORE_INVENTORY.md) |
 | Matchmaking ticket / queue / match query | [guides/MULTIPLAYER.md](guides/MULTIPLAYER.md) · [reference/API_MULTIPLAYER.md](reference/API_MULTIPLAYER.md) |
 | Content config + upload/download file metadata | [guides/CONTENT.md](guides/CONTENT.md) · [reference/API_CONTENT.md](reference/API_CONTENT.md) |
-| CloudScript: publish version, execute function | [guides/CLOUDSCRIPT.md](guides/CLOUDSCRIPT.md) · [reference/API_CLOUDSCRIPT.md](reference/API_CLOUDSCRIPT.md) |
+| CloudScript: viết script, publish version, execute function | [guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md](guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md) · [guides/CLOUDSCRIPT.md](guides/CLOUDSCRIPT.md) · [reference/API_CLOUDSCRIPT.md](reference/API_CLOUDSCRIPT.md) |
 | Admin login, secret/maintenance/analytics | [guides/DASHBOARD.md](guides/DASHBOARD.md) · [reference/API_DASHBOARD.md](reference/API_DASHBOARD.md) |
 | Realtime event (friend, group, message) | [reference/EVENTS.md](reference/EVENTS.md) |
 | Tra DTO field theo class | [reference/DTO_INDEX.md](reference/DTO_INDEX.md) (grep) hoặc [reference/dto/](reference/dto/) |

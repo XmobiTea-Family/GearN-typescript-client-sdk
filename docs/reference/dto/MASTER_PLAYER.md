@@ -1532,7 +1532,7 @@ Defines the request payload for GetTag.
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `tagKeys` | `Array<string>` | yes | _elementCls=String_ |
+| `tagKeys` | `Array<string>` | no | _elementCls=String_ |
 
 ### ServerGetTagRequestData
 

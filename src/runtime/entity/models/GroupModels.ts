@@ -712,8 +712,8 @@ export namespace GroupModels {
 		@StringDataMember({ code: ParameterCode.GroupId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public groupId: string;
 
-		@GNArrayDataMember({ code: ParameterCode.TagKeys, elementCls: String })
-		public tagKeys: Array<string>;
+		@GNArrayDataMember({ code: ParameterCode.TagKeys, isOptional: true, elementCls: String })
+		public tagKeys?: Array<string>;
 
 	}
 

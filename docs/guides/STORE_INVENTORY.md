@@ -48,7 +48,7 @@ Rule nhanh:
 
 ### Catalog và discovery
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `createStoreItemAsync` | Tạo store item mới | `storeId?`, `displayName?` | `CreateStoreItemResponseData` | Nếu bỏ `storeId`, backend có thể sinh id | `Ok`, `StoreItemExists` |
 | `setStoreItemInformationAsync` | Cập nhật catalog, giá, IAP mapping, metadata | `storeId` và field cần đổi | `StoreInventoryResponseData` | `storeItemType` nên map bằng enum | `Ok`, `StoreItemNotFound`, `StoreInvalid` |
@@ -59,7 +59,7 @@ Rule nhanh:
 
 ### Purchase, gift và receipt
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `buyStoreItemAsync` | Mua store item bằng flow nội bộ | `storeId`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` | `Ok`, `NotEnoughCurrency`, `StoreItemNotFound`, `BuyerNotFound`, `CanNotBuyThisStoreItem`, `StoreItemRemoved`, `StoreItemPurchasedAndNonConsumable` |
 | `presentStoreItemAsync` | Tặng/phát store item | `storeId`, `id`, `type`, `log?` | `PresentStoreInventoryResponseData` | `type` nên map bằng `OwnerType` | `Ok`, `StoreItemNotFound`, `BuyerNotFound`, `StoreItemRemoved`, `StoreItemPurchasedAndNonConsumable` |

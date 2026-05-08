@@ -664,8 +664,8 @@ export namespace InventoryModels {
 		@StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
 		public itemId: string;
 
-		@GNArrayDataMember({ code: ParameterCode.TagKeys, elementCls: String })
-		public tagKeys: Array<string>;
+		@GNArrayDataMember({ code: ParameterCode.TagKeys, isOptional: true, elementCls: String })
+		public tagKeys?: Array<string>;
 
 	}
 

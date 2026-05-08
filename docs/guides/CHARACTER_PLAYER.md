@@ -95,7 +95,7 @@ Rule nhanh:
 
 ### Đọc 1 character hoặc 1 phần metadata
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar | `characterId` | `CharacterPlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `CharacterPlayerNotFound` |
 | `getCatalogIdAsync` | Cần đọc `catalogId` của character | `characterId` | `CharacterPlayerResponseData` | Kết quả ở `infoResponseParameters.catalogId` | `Ok`, `CharacterPlayerNotFound` |
@@ -120,7 +120,7 @@ Rule nhanh:
 
 ### Search, leaderboard và log
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getPlayersWithDisplayNameAsync` | Tìm character theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | Kết quả trả `characterId` | `Ok` |
 | `getPlayersWithSegmentAsync` | Tìm character theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | | `Ok` |
@@ -137,7 +137,7 @@ Rule nhanh:
 
 ### Friend, group, item lifecycle và mutation
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addPlayerFriendAsync` | Thêm một quan hệ friend ở cấp character | `characterId`, `friendId`, `catalogId` | `EmptyResponseData` | `friendId` là id ở cấp character | `Ok`, `CharacterPlayerNotFound`, `CatalogIdNotFound`, `PlayerBan` |
 | `removePlayerFriendAsync` | Gỡ một quan hệ friend | `characterId`, `friendId` | `EmptyResponseData` | | `Ok`, `CharacterPlayerNotFound`, `PlayerBan` |

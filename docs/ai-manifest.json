@@ -13,6 +13,7 @@
       "docs/RULES.md",
       "docs/ai-manifest.json",
       "docs/reference/API_INDEX.md",
+      "docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md",
       "docs/reference/ERROR_HANDLING.md",
       "docs/reference/CONFIG.md",
       "docs/reference/EVENTS.md",
@@ -22,6 +23,7 @@
     "entryPoints": {
       "cheatsheet": "docs/AI_CHEATSHEET.md",
       "rules": "docs/RULES.md",
+      "cloudScriptScriptAuthoring": "docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md",
       "agentGuide": "AGENTS.md",
       "llmstxtIndex": "llms.txt",
       "fullBundle": "docs/llms-full.txt"
@@ -41,6 +43,7 @@
     "guidanceForAiConsumer": [
       "đọc docs/AI_CHEATSHEET.md trước (one-page) để biết file nào cần mở tiếp",
       "đọc docs/RULES.md cho rule cross-cutting (route, permission, self/other-self, socket, error)",
+      "khi viết source CloudScript gửi lên addFunction, đọc docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md",
       "tra method signature qua docs/reference/API_<GROUP>.md",
       "tra DTO field qua docs/reference/dto/<DOMAIN>.md hoặc grep DTO_INDEX.md (2506 rows, đừng load full)",
       "tra enum value numeric qua docs/reference/ENUMS.md",
@@ -682,6 +685,8 @@
     {
       "name": "CloudScriptApi",
       "guideDoc": "docs/guides/CLOUDSCRIPT.md",
+      "scriptAuthoringDoc": "docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md",
+      "scriptAuthoringDocIsSelfContained": true,
       "referenceDoc": "docs/reference/API_CLOUDSCRIPT.md",
       "dtoDoc": "docs/reference/dto/CLOUDSCRIPT.md",
       "apiDts": "dist/runtime/GNNetworkCloudScriptApi.d.ts",
@@ -710,6 +715,9 @@
         }
       ],
       "hardRules": [
+        "script gửi lên addFunction không phải file TypeScript hoàn chỉnh; phải đăng ký handlers[functionName]",
+        "không link hoặc yêu cầu đọc đường dẫn local ngoài npm package khi hướng dẫn viết CloudScript",
+        "không dùng literal GNNetwork, import, require, process, fetch hoặc top-level side effect trong submitted script",
         "editFunctionAsync không sửa source code, chỉ flag enabled hoặc live của version",
         "muốn đổi source code phải addFunctionAsync để tạo version mới",
         "không có public delete function hoặc hard delete version"

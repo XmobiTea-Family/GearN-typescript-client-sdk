@@ -63,7 +63,11 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
 
 Creates a new CloudScript version from raw script source.
 
-_Không có field public (payload rỗng)._ 
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `script` | `string` | yes | Submitted CloudScript source. It must register at least one `handlers["functionName"] = ...` handler. |
+| `canExecute` | `boolean` | yes | Whether this version may be executed. |
+| `isLive` | `boolean` | yes | Whether this version is promoted as live. |
 
 ### ServerAddFunctionRequestData
 
@@ -71,7 +75,7 @@ Extends: `AddFunctionRequestData`
 
 Defines the request payload for ServerAddFunction.
 
-_Không có field public (payload rỗng)._ 
+Inherits `script`, `canExecute`, and `isLive` from `AddFunctionRequestData`.
 
 ### AdminAddFunctionRequestData
 
@@ -79,13 +83,17 @@ Extends: `ServerAddFunctionRequestData`
 
 Defines the request payload for AdminAddFunction.
 
-_Không có field public (payload rỗng)._ 
+Inherits `script`, `canExecute`, and `isLive` from `AddFunctionRequestData`.
 
 ### EditFunctionRequestData
 
 Updates execution flags for an existing CloudScript version without changing its source code.
 
-_Không có field public (payload rỗng)._ 
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `version` | `string` | yes | CloudScript version to edit. — _minLength=7, maxLength=7_ |
+| `canExecute` | `boolean` | yes | Whether this version may be executed. |
+| `isLive` | `boolean` | yes | Whether this version is promoted as live. |
 
 ### ServerEditFunctionRequestData
 
@@ -93,7 +101,7 @@ Extends: `EditFunctionRequestData`
 
 Defines the request payload for ServerEditFunction.
 
-_Không có field public (payload rỗng)._ 
+Inherits `version`, `canExecute`, and `isLive` from `EditFunctionRequestData`.
 
 ### AdminEditFunctionRequestData
 
@@ -101,7 +109,7 @@ Extends: `ServerEditFunctionRequestData`
 
 Defines the request payload for AdminEditFunction.
 
-_Không có field public (payload rỗng)._ 
+Inherits `version`, `canExecute`, and `isLive` from `EditFunctionRequestData`.
 
 ### ExecuteFunctionRequestData
 
@@ -120,7 +128,7 @@ Extends: `ExecuteFunctionRequestData`
 
 Defines the request payload for ServerExecuteFunction.
 
-_Không có field public (payload rỗng)._ 
+Same fields as `ExecuteFunctionRequestData`, but `userId` is required on the server route.
 
 ### AdminExecuteFunctionRequestData
 
@@ -128,13 +136,15 @@ Extends: `ServerExecuteFunctionRequestData`
 
 Defines the request payload for AdminExecuteFunction.
 
-_Không có field public (payload rỗng)._ 
+Same fields as `ServerExecuteFunctionRequestData`; `userId` is required on the admin route.
 
 ### GetFunctionRequestData
 
 Defines the request payload for GetFunction.
 
-_Không có field public (payload rỗng)._ 
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `version` | `string` | yes | CloudScript version to inspect. — _minLength=7, maxLength=7_ |
 
 ### ServerGetFunctionRequestData
 
@@ -142,7 +152,7 @@ Extends: `GetFunctionRequestData`
 
 Defines the request payload for ServerGetFunction.
 
-_Không có field public (payload rỗng)._ 
+Inherits `version` from `GetFunctionRequestData`.
 
 ### AdminGetFunctionRequestData
 
@@ -150,7 +160,7 @@ Extends: `ServerGetFunctionRequestData`
 
 Defines the request payload for AdminGetFunction.
 
-_Không có field public (payload rỗng)._ 
+Inherits `version` from `GetFunctionRequestData`.
 
 ### GetFunctionsRequestData
 

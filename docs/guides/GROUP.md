@@ -79,7 +79,7 @@ Rule nhanh:
 
 ### Đọc 1 group hoặc 1 phần dữ liệu group
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar group | `groupId` | `GroupResponseData` | `avatar.type` hiện là số thô | `Ok`, `GroupNotFound` |
 | `getCatalogIdAsync` | Cần đọc `catalogId` | `groupId` | `GroupResponseData` | Kết quả ở `infoResponseParameters.catalogId` | `Ok`, `GroupNotFound` |
@@ -98,7 +98,7 @@ Rule nhanh:
 
 ### Query danh sách, leaderboard, log và message history
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getGroupsWithDisplayNameAsync` | Tìm group theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | `keyword` tối thiểu 2 ký tự | `Ok` |
 | `getGroupsWithSegmentAsync` | Tìm group theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | Query theo exact segment value | `Ok` |
@@ -113,7 +113,7 @@ Rule nhanh:
 
 ### Mutation
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addMemberAsync` | Thêm một user vào group | `userId`, `groupId` | `EmptyResponseData` | Chỉ thêm 1 member mỗi lần | `Ok`, `GroupNotFound`, `MemberNotFound` |
 | `removeMemberAsync` | Gỡ một user khỏi group | `userId`, `groupId` | `EmptyResponseData` | Không phải bulk remove | `Ok`, `GroupNotFound`, `MemberNotFound` |

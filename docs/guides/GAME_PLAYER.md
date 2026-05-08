@@ -99,7 +99,7 @@ Rule nhanh:
 
 ### Đọc 1 game player hoặc 1 phần hồ sơ
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar | `userId?` | `GamePlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `GamePlayerNotFound` |
 | `getCountryCodeAsync` | Cần đọc quốc gia | `userId?` | `GamePlayerResponseData` | Kết quả ở `infoResponseParameters.countryCode` | `Ok`, `GamePlayerNotFound` |
@@ -123,7 +123,7 @@ Rule nhanh:
 
 ### Search, leaderboard và log
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getPlayersWithDisplayNameAsync` | Tìm player theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `GamePlayersWithUserIdResponseData` | Phân trang bằng `skip/limit` | `Ok` |
 | `getPlayersWithSegmentAsync` | Tìm player theo segment | `value`, `infoRequestParam`, `skip?`, `limit?` | `GamePlayersWithUserIdResponseData` | Query theo exact segment value | `Ok` |
@@ -140,7 +140,7 @@ Rule nhanh:
 
 ### Friend, group, character và item lifecycle
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addPlayerFriendAsync` | Thêm một quan hệ friend | `userId?`, `friendId`, `catalogId` | `EmptyResponseData` | Không được quên `catalogId` | `Ok`, `CatalogIdNotFound`, `GamePlayerNotFound`, `PlayerBan` |
 | `removePlayerFriendAsync` | Gỡ một quan hệ friend | `userId?`, `friendId` | `EmptyResponseData` | Không cần `catalogId` ở flow remove | `Ok`, `GamePlayerNotFound`, `PlayerBan` |
@@ -154,7 +154,7 @@ Rule nhanh:
 
 ### Mutation profile
 
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addSegmentAsync` | Gắn thêm segment | `userId?`, `value` | `EmptyResponseData` | Thêm một segment value | `Ok`, `GamePlayerNotFound`, `PlayerBan` |
 | `removeSegmentAsync` | Gỡ segment | `userId?`, `value` | `EmptyResponseData` | Xóa theo exact value | `Ok`, `GamePlayerNotFound`, `PlayerBan` |

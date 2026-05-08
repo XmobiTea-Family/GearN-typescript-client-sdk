@@ -839,7 +839,7 @@ Defines the request payload for GetTag.
 | Field | Type | Required | Notes |
 |-------|------|----------|-------|
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `tagKeys` | `Array<string>` | yes | _elementCls=String_ |
+| `tagKeys` | `Array<string>` | no | _elementCls=String_ |
 
 ### ServerGetTagRequestData
 
