@@ -40,8 +40,8 @@ Ngoài ra còn có:
 
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
-| `send(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): void` | `admin.send(requestType, role, request, onResponse, overrideSecretKey, customTags)` |
-| `sendAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse>` | `admin.sendAsync(requestType, role, request, overrideSecretKey, customTags)` |
+| `send(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): void` | `admin.send(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, customTags)` |
+| `sendAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse>` | `admin.sendAsync(requestType, role, request, overrideAuthToken, overrideSecretKey, customTags)` |
 
 ## 3. Khi nào dùng `admin`
 

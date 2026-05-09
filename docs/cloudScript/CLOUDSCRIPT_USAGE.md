@@ -185,7 +185,7 @@ Template inject sẵn các symbol này:
 - `GNArrayBuilder`
 - `ExecuteResponseStatus`
 - các enum/constants từ package `@xmobitea/gearn-typescript-client-sdk` như sau:
-###
+### Các enum/constant từ package `@xmobitea/gearn-typescript-client-sdk`:
 - `Action0`
 - `Action1`
 - `Action2`

@@ -72,9 +72,9 @@ Dùng khi bạn cần tạo collection hoặc tạo index.
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `createCollection<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string, options?: mongodb.CreateCollectionOptions): Promise<mongodb.Collection<TSchema>>` | `database.createCollection(collectionName, options?)` |
-| `createIndex<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string, index: { [k: string]: any }, options?: { [k: string]: any })` | `database.createIndex(fullCollectionName)` |
+| `createIndex<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string, index: { [k: string]: any }, options?: { [k: string]: any })` | `database.createIndex(collectionName, index, options?)` |
 | `logCreateCollection<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string, options?: mongodb.CreateCollectionOptions): Promise<mongodb.Collection<TSchema>>` | `database.logCreateCollection(collectionName, options?)` |
-| `logCreateIndex<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string, index: { [k: string]: any }, options?: { [k: string]: any })` | `database.logCreateIndex(fullCollectionName)` |
+| `logCreateIndex<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string, index: { [k: string]: any }, options?: { [k: string]: any })` | `database.logCreateIndex(collectionName, index, options?)` |
 
 ### for MasterPlayer
 
@@ -274,7 +274,7 @@ Ví dụ:
 
 ## 5. Lưu ý thực tế
 
-- Nếu cần audit/business log bền vững, dùng `database.insert...LogAsync(...)` hoặc collection log phù hợp, không dựa vào `functionLogs`.
+- Nếu cần audit/business log bền vững, dùng `database...insert...LogAsync(...)` hoặc collection log phù hợp, không dựa vào `functionLogs`.
 
 ## 6. Raw collection dùng khi nào
 
@@ -335,25 +335,12 @@ handlers["dbNamespaceOverview"] = async (args: any, context, log) => {
     const collectionName = typeof args?.collectionName === "string" && args.collectionName.length > 0 ? args.collectionName : "CloudScript.NamespaceDemo";
 
     const runtimeCollectionName = "Runtime." + collectionName;
-    const metaCollectionName = "Meta." + collectionName;
     const systemCollectionName = "System." + collectionName;
     const runtimeGameCollectionName = "Runtime." + gameId + ".CloudScript.NamespaceDemo";
-    const metaGameCollectionName = "Meta." + gameId + ".CloudScript.NamespaceDemo";
     const systemGameCollectionName = "System." + gameId + ".CloudScript.NamespaceDemo";
 
     await database.runtimeCollection(collectionName).updateOne(
         { key: "runtime" },
-        {
-            $set: {
-                updatedByUserId: context.userId,
-                tsUpdate: Date.now()
-            }
-        },
-        { upsert: true }
-    );
-
-    await database.metaCollection(collectionName).updateOne(
-        { key: "meta" },
         {
             $set: {
                 updatedByUserId: context.userId,
@@ -409,10 +396,8 @@ handlers["dbNamespaceOverview"] = async (args: any, context, log) => {
 
     return {
         runtimeCollectionName: runtimeCollectionName,
-        metaCollectionName: metaCollectionName,
         systemCollectionName: systemCollectionName,
         runtimeGameCollectionName: runtimeGameCollectionName,
-        metaGameCollectionName: metaGameCollectionName,
         systemGameCollectionName: systemGameCollectionName
     };
 };
@@ -535,8 +520,8 @@ handlers["dbInsertGamePlayerLog"] = async (args: any, context, log) => {
         userId, key, amount, startValue, finalValue, log: logMessage, tsCreate: Date.now()
     }], gameId);
 
-    const statisticLogCursor = await database.loadGamePlayerStatisticsLogAsync({ userId: userId, key: key }, gameId, 5);
-    const currencyLogCursor = await database.loadGamePlayerCurrencyLogAsync({ userId: userId, key: key }, gameId, 5);
+    const statisticLogCursor = await database.gamePlayerRepository.loadGamePlayerStatisticsLogAsync({ userId: userId, key: key }, gameId, 5);
+    const currencyLogCursor = await database.gamePlayerRepository.loadGamePlayerCurrencyLogAsync({ userId: userId, key: key }, gameId, 5);
     const statisticLogs = await statisticLogCursor.toArray();
     const currencyLogs = await currencyLogCursor.toArray();
 
@@ -570,7 +555,7 @@ handlers["dbStoreInventoryUsageDemo"] = async (args: any, context, log) => {
     const ownerId = typeof args?.ownerId === "string" && args.ownerId.length > 0 ? args.ownerId : context.userId;
     const ownerType = typeof args?.ownerType === "number" ? args.ownerType : OwnerType.GamePlayer;
 
-    await database.insertStoreInventoryUsedAsync(storeId, gameId, ownerId, ownerType);
+    await database.storeInventoryRepository.insertStoreInventoryUsedAsync(storeId, gameId, ownerId, ownerType);
 
     const count = await database.storeInventoryRepository.getCountStoreInventoryUsedAsync(storeId, gameId, ownerId);
     const used = await database.storeInventoryRepository.getStoreInventoryUsedAsync(storeId, gameId);
