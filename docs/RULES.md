@@ -8,7 +8,7 @@ File này là canonical source cho mọi rule cross-cutting: route/permission, s
 
 ## 1. Init
 
-- Public entrypoint duy nhất là static class `GNNetwork` (import từ `@xmobitea/gn-typescript-client`).
+- Public entrypoint duy nhất là static class `GNNetwork` (import từ `@xmobitea/gearn-typescript-client-sdk`).
 - Bắt buộc tạo `GNServerSettings`, gọi `settings.config({...})`, rồi `GNNetwork.init(settings)` **1 lần** ở bootstrap của mỗi app session.
 - `init()` idempotent — lần thứ 2 bị ignore. Muốn đổi snapshot config toàn cục nên restart process. Mutate cùng `settings` object sau init chỉ ảnh hưởng một số request mới và không tự reconnect socket.
 - Gọi API trước khi init → namespace `undefined` / `TypeError`.

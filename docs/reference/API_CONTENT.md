@@ -78,7 +78,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ## Ví dụ tối thiểu
 
 ```ts
-import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 // requestData: ContentModels.CreateNewFileUploadInfoRequestData đã build theo dto/CONTENT.md
 const res = await GNNetwork.content.createNewFileUploadInfoAsync(requestData);

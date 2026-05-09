@@ -12,12 +12,12 @@
  *
  * 1. **Named imports** — preferred for tree-shaking:
  *    ```ts
- *    import { GNNetwork, GNServerSettings, MessageType } from "@xmobitea/gn-typescript-client";
+ *    import { GNNetwork, GNServerSettings, MessageType } from "@xmobitea/gearn-typescript-client-sdk";
  *    ```
  *
  * 2. **Namespace import** — useful for live debugging:
  *    ```ts
- *    import * as GearN from "@xmobitea/gn-typescript-client";
+ *    import * as GearN from "@xmobitea/gearn-typescript-client-sdk";
  *    GearN.GNNetwork.init(settings);
  *    ```
  *

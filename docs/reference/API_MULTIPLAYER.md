@@ -87,7 +87,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ## Ví dụ tối thiểu
 
 ```ts
-import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 // requestData: MultiplayerModels.CancelAllMatchmakingTicketRequestData đã build theo dto/MULTIPLAYER.md
 const res = await GNNetwork.multiplayer.cancelAllMatchmakingTicketAsync(requestData);

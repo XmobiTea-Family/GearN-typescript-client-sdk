@@ -1,6 +1,6 @@
 # GearN TypeScript Client SDK
 
-> TypeScript SDK cho GearN backend: authenticate, realtime socket, player/inventory/group/multiplayer/cloudscript APIs. Package: `@xmobitea/gn-typescript-client`. Entrypoint: static class `GNNetwork`. Cài: `npm install @xmobitea/gn-typescript-client`.
+> TypeScript SDK cho GearN backend: authenticate, realtime socket, player/inventory/group/multiplayer/cloudscript APIs. Package: `@xmobitea/gearn-typescript-client-sdk`. Entrypoint: static class `GNNetwork`. Cài: `npm install @xmobitea/gearn-typescript-client-sdk`.
 
 Rule canonical: [docs/RULES.md](/docs/RULES.md). Đọc trước khi sinh code.
 

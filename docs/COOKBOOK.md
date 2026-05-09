@@ -2,7 +2,7 @@
 
 16 scenario end-to-end phổ biến. Mỗi scenario có: problem, prerequisites, APIs used, code snippet, return path handling, pitfall.
 
-> Tất cả snippet dùng import từ package name `@xmobitea/gn-typescript-client`. Ví dụ dùng dạng `async/await` (form `*Async()`). Các comment trong snippet là điểm nối vào logic ứng dụng của bạn.
+> Tất cả snippet dùng import từ package name `@xmobitea/gearn-typescript-client-sdk`. Ví dụ dùng dạng `async/await` (form `*Async()`). Các comment trong snippet là điểm nối vào logic ứng dụng của bạn.
 
 ## Index
 
@@ -64,7 +64,7 @@ import {
   ReturnCode,
   ErrorCode,
   AuthenticateModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 async function loginWithAccount(username: string, password: string) {
   const infoRequestParam = new AuthenticateModels.InfoRequestParam();
@@ -120,7 +120,7 @@ async function loginWithAccount(username: string, password: string) {
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode, AuthenticateModels } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, AuthenticateModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function ensureValidToken() {
   // refreshAuthToken uses cached auth context — không cần truyền field nào
@@ -170,7 +170,7 @@ import {
   ErrorCode,
   AuthenticateModels,
   GoogleLoginType,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 async function loginWithGoogle(idToken: string) {
   const infoRequestParam = new AuthenticateModels.InfoRequestParam();
@@ -217,7 +217,7 @@ async function loginWithGoogle(idToken: string) {
 ### Code
 
 ```typescript
-import { GNNetwork } from "@xmobitea/gn-typescript-client";
+import { GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 GNNetwork.subscriberOnConnectHandler(() => {
   console.log("socket connected, sid=", GNNetwork.getSocketSId());
@@ -258,7 +258,7 @@ GNNetwork.connectSocket(() => {
 ### Code
 
 ```typescript
-import { OnGamePlayerFriendUpdateEventHandler, FriendStatus } from "@xmobitea/gn-typescript-client";
+import { OnGamePlayerFriendUpdateEventHandler, FriendStatus } from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
   // payload.playerFriends: Array<GenericModels.FriendItem>
@@ -316,7 +316,7 @@ import {
   ReturnCode,
   ErrorCode,
   GroupModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 // 1. Subscribe incoming messages
 OnGroupMessageUpdateEventHandler.onUpdate = (payload) => {
@@ -373,7 +373,7 @@ import {
   ReturnCode,
   ErrorCode,
   GamePlayerModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGroupMemberUpdateEventHandler.onUpdate = (payload) => {
   if (payload.groupId !== currentGroupId) return;
@@ -432,7 +432,7 @@ import {
   GNHashtable,
   MultiplayerModels,
   MatchmakingTicketStatus,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 async function findMatch(queueName: string) {
   const createRequest = new MultiplayerModels.CreateMatchmakingTicketRequestData();
@@ -499,7 +499,7 @@ async function findMatch(queueName: string) {
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode, GamePlayerModels } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, GamePlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 // Client: xem inventory của chính mình
 async function loadMyInventory() {
@@ -547,7 +547,7 @@ async function grantSword(targetUserId: string) {
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode, OwnerType, StoreInventoryModels } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, OwnerType, StoreInventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function listCatalog() {
   const infoRequestParam = new StoreInventoryModels.InfoRequestParam();
@@ -613,7 +613,7 @@ async function buyItem(storeItemId: string) {
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode, CloudScriptModels, ExecuteResponseStatus, GNHashtable } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, CloudScriptModels, ExecuteResponseStatus, GNHashtable } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function claimDailyReward() {
   const request = new CloudScriptModels.ExecuteFunctionRequestData();
@@ -661,7 +661,7 @@ async function claimDailyReward() {
 ### Code
 
 ```typescript
-import { GNNetwork, ContentModels, MasterPlayerModels } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ContentModels, MasterPlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 // Impersonate player để query profile của họ
 async function fetchProfileAs(playerAuthToken: string, playerId: string) {
@@ -721,7 +721,7 @@ async function callOtherGame(gameSecret: string) {
 ### Code
 
 ```typescript
-import { GNNetwork, ReturnCode, ErrorCode, DashboardModels } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode, DashboardModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function adminLogin(username: string, password: string) {
   const request = new DashboardModels.LoginByAdminAccountRequestData();
@@ -760,7 +760,7 @@ async function listGames() {
 ### Code
 
 ```typescript
-import { GNNetwork, AuthenticateStatus, OnGroupMessageUpdateEventHandler, OnGroupMemberUpdateEventHandler, OnGamePlayerFriendUpdateEventHandler, OnGamePlayerGroupUpdateEventHandler, OnCharacterPlayerFriendUpdateEventHandler, OnCharacterPlayerGroupUpdateEventHandler } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, AuthenticateStatus, OnGroupMessageUpdateEventHandler, OnGroupMemberUpdateEventHandler, OnGamePlayerFriendUpdateEventHandler, OnGamePlayerGroupUpdateEventHandler, OnCharacterPlayerFriendUpdateEventHandler, OnCharacterPlayerGroupUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 
 function logoutAndCleanup() {
   // 1. Clear all event handler callbacks (chúng là static, không tự gc)
@@ -844,7 +844,7 @@ import {
   GNNetwork,
   ReturnCode,
   InventoryModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 async function grantItem(userId: string, itemId: string, amount: number) {
   const req = new InventoryModels.SetAmountRequestData();

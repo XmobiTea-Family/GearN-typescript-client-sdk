@@ -72,7 +72,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ## Ví dụ tối thiểu
 
 ```ts
-import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 // requestData: CloudScriptModels.AddFunctionRequestData đã build theo dto/CLOUDSCRIPT.md
 const res = await GNNetwork.cloudScript.addFunctionAsync(requestData);

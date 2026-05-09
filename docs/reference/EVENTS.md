@@ -32,7 +32,7 @@ SDK cung cấp 6 server event handler đẩy realtime update từ backend qua so
 
 **Import:**
 ```ts
-import { OnGroupMessageUpdateEventHandler } from "@xmobitea/gn-typescript-client";
+import { OnGroupMessageUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 ```
 
 **Subscribe shape:** `static onUpdate: Action1<GroupMessageUpdate>`
@@ -47,7 +47,7 @@ import { OnGroupMessageUpdateEventHandler } from "@xmobitea/gn-typescript-client
 
 **Ví dụ:**
 ```ts
-import { OnGroupMessageUpdateEventHandler } from "@xmobitea/gn-typescript-client";
+import { OnGroupMessageUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGroupMessageUpdateEventHandler.onUpdate = (payload) => {
 	console.log(`group ${payload.groupId} received ${payload.groupMessages.length} messages`);
@@ -64,7 +64,7 @@ OnGroupMessageUpdateEventHandler.onUpdate = () => {};
 
 ## `OnGroupMemberUpdateEventHandler`
 
-**Import:** `import { OnGroupMemberUpdateEventHandler } from "@xmobitea/gn-typescript-client";`
+**Import:** `import { OnGroupMemberUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";`
 
 **Subscribe:** `static onUpdate: Action1<GroupMemberUpdate>`
 
@@ -89,7 +89,7 @@ OnGroupMemberUpdateEventHandler.onUpdate = (payload) => {
 
 ## `OnGamePlayerFriendUpdateEventHandler`
 
-**Import:** `import { OnGamePlayerFriendUpdateEventHandler } from "@xmobitea/gn-typescript-client";`
+**Import:** `import { OnGamePlayerFriendUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";`
 
 **Subscribe:** `static onUpdate: Action1<GamePlayerFriendUpdate>`
 
@@ -113,7 +113,7 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 
 ## `OnGamePlayerGroupUpdateEventHandler`
 
-**Import:** `import { OnGamePlayerGroupUpdateEventHandler } from "@xmobitea/gn-typescript-client";`
+**Import:** `import { OnGamePlayerGroupUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";`
 
 **Subscribe:** `static onUpdate: Action1<GamePlayerGroupUpdate>`
 
@@ -128,7 +128,7 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 
 ## `OnCharacterPlayerFriendUpdateEventHandler`
 
-**Import:** `import { OnCharacterPlayerFriendUpdateEventHandler } from "@xmobitea/gn-typescript-client";`
+**Import:** `import { OnCharacterPlayerFriendUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";`
 
 **Subscribe:** `static onUpdate: Action1<CharacterPlayerFriendUpdate>`
 
@@ -143,7 +143,7 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 
 ## `OnCharacterPlayerGroupUpdateEventHandler`
 
-**Import:** `import { OnCharacterPlayerGroupUpdateEventHandler } from "@xmobitea/gn-typescript-client";`
+**Import:** `import { OnCharacterPlayerGroupUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";`
 
 **Subscribe:** `static onUpdate: Action1<CharacterPlayerGroupUpdate>`
 

@@ -159,7 +159,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ## Ví dụ tối thiểu
 
 ```ts
-import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 // requestData: InventoryModels.AddSegmentRequestData đã build theo dto/INVENTORY.md
 const res = await GNNetwork.inventory.addSegmentAsync(requestData);

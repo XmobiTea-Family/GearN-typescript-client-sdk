@@ -319,7 +319,7 @@ import {
     ErrorCode,
     GNNetwork,
     MasterPlayerModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new MasterPlayerModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -351,7 +351,7 @@ import {
     GNNetwork,
     GoogleLoginType,
     MasterPlayerModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new MasterPlayerModels.LinkGoogleRequestData();
 request.token = "google-id-token";
@@ -378,7 +378,7 @@ import {
     ErrorCode,
     GNNetwork,
     MasterPlayerModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new MasterPlayerModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -410,7 +410,7 @@ import {
     GNNetwork,
     MasterPlayerModels,
     PushPlatformType,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new MasterPlayerModels.AddPushNotificationRequestData();
 request.token = "device-push-token";

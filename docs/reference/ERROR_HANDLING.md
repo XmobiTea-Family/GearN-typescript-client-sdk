@@ -5,7 +5,7 @@ Mọi response từ GearN backend đi qua 2 tầng kiểm tra. AI consumer phả
 ## Pattern bắt buộc
 
 ```ts
-import { AuthenticateModels, ErrorCode, GNNetwork, ReturnCode } from "@xmobitea/gn-typescript-client";
+import { AuthenticateModels, ErrorCode, GNNetwork, ReturnCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new AuthenticateModels.LoginByAccountRequestData();
 request.username = username;

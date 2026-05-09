@@ -1,9 +1,9 @@
 {
   "schemaVersion": 3,
   "package": {
-    "name": "@xmobitea/gn-typescript-client",
+    "name": "@xmobitea/gearn-typescript-client-sdk",
     "entryPoint": "GNNetwork",
-    "installCommand": "npm install @xmobitea/gn-typescript-client",
+    "installCommand": "npm install @xmobitea/gearn-typescript-client-sdk",
     "typesEntry": "dist/index.d.ts",
     "runtimeEntry": "dist/index.js"
   },

@@ -180,7 +180,7 @@ import {
     CloudScriptModels,
     ErrorCode,
     GNNetwork,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new CloudScriptModels.AdminAddFunctionRequestData();
 request.script = `
@@ -219,7 +219,7 @@ import {
     CloudScriptModels,
     ErrorCode,
     GNNetwork,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new CloudScriptModels.AdminEditFunctionRequestData();
 request.version = "ABC1234";
@@ -248,7 +248,7 @@ import {
     CloudScriptModels,
     ErrorCode,
     GNNetwork,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new CloudScriptModels.ServerExecuteFunctionRequestData();
 request.userId = "USER000001";
@@ -285,7 +285,7 @@ import {
     CloudScriptModels,
     ErrorCode,
     GNNetwork,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const listRequest = new CloudScriptModels.GetFunctionsRequestData();
 const listResponse = await GNNetwork.cloudScript.getFunctionsAsync(listRequest);

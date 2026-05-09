@@ -6,7 +6,7 @@ SDK TypeScript client cho GearN Server.
 
 > **AI / code assistant:** đọc [docs/AI_CHEATSHEET.md](/docs/AI_CHEATSHEET.md) trước (one-page), rồi [docs/RULES.md](/docs/RULES.md) cho rule chi tiết (route, permission, self/other-self, socket, error). Machine-readable manifest: [docs/ai-manifest.json](/docs/ai-manifest.json).
 
-Package publish: `@xmobitea/gn-typescript-client`. Rule canonical: [docs/RULES.md](/docs/RULES.md).
+Package publish: `@xmobitea/gearn-typescript-client-sdk`. Rule canonical: [docs/RULES.md](/docs/RULES.md).
 
 ## 1. Yêu cầu
 
@@ -25,7 +25,7 @@ Package publish: `@xmobitea/gn-typescript-client`. Rule canonical: [docs/RULES.m
 ## 2. Cài đặt
 
 ```bash
-npm install @xmobitea/gn-typescript-client
+npm install @xmobitea/gearn-typescript-client-sdk
 ```
 
 ## 3. Cách SDK hoạt động
@@ -104,7 +104,7 @@ import {
   GNServerSettings,
   LogType,
   MessageType,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const settings = new GNServerSettings();
 settings.config({
@@ -138,7 +138,7 @@ import {
   AuthenticateModels,
   ReturnCode,
   ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequest = new AuthenticateModels.InfoRequestParam();
 infoRequest.displayName = true;
@@ -170,7 +170,7 @@ import {
   AuthenticateModels,
   ReturnCode,
   ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequest = new AuthenticateModels.InfoRequestParam();
 infoRequest.displayName = true;
@@ -189,7 +189,7 @@ if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.err
 ## 7. Socket
 
 ```ts
-import { GNNetwork } from "@xmobitea/gn-typescript-client";
+import { GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 // Subscribe TRƯỚC connect để không miss event ngay sau handshake
 GNNetwork.subscriberOnConnectHandler(() => {
@@ -235,7 +235,7 @@ import {
   DashboardModels,
   ReturnCode,
   ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new DashboardModels.LoginByAdminAccountRequestData();
 request.username = "gnadmin";
@@ -296,7 +296,7 @@ import {
   GNHashtableDataMember,
   DataMember,
   GNHashtable,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 class ProfileStats {
   @NumberDataMember({ code: "level", defaultValue: 1, mustInt: true }) level: number;
@@ -344,7 +344,7 @@ import {
   OperationCode,
   ParameterCode,
   StringDataMember,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 class ExampleRequestData {
   @StringDataMember({ code: ParameterCode.Key, mustNonNull: true }) public key: string;

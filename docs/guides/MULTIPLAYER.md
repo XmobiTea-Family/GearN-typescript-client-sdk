@@ -176,7 +176,7 @@ import {
     GNNetwork,
     MultiplayerModels,
     MatchmakingTicketStatus,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new MultiplayerModels.CreateMatchmakingTicketRequestData();
 createRequest.giveUpAfterSeconds = 60;
@@ -233,7 +233,7 @@ import {
     ErrorCode,
     GNNetwork,
     MultiplayerModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new MultiplayerModels.ServerCreateMatchmakingTicketRequestData();
 request.userId = "1234567890";
@@ -261,7 +261,7 @@ import {
     GNNetwork,
     MultiplayerModels,
     MatchmakingTicketStatus,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new MultiplayerModels.AdminGetAllMatchmakingTicketRequestData();
 request.status = MatchmakingTicketStatus.WaitingForMatch;

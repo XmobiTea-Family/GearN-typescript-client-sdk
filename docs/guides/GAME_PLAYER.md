@@ -316,7 +316,7 @@ import {
     ErrorCode,
     GNNetwork,
     GamePlayerModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new GamePlayerModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -348,7 +348,7 @@ import {
     ErrorCode,
     GNNetwork,
     GamePlayerModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new GamePlayerModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -381,7 +381,7 @@ import {
     GNNetwork,
     GamePlayerModels,
     OnGamePlayerFriendUpdateEventHandler,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGamePlayerFriendUpdateEventHandler.onUpdate = (update) => {
     const friendItems = update.playerFriends;
@@ -412,7 +412,7 @@ import {
     ErrorCode,
     GNNetwork,
     GamePlayerModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new GamePlayerModels.CreatePlayerItemRequestData();
 createRequest.catalogId = "weapon";

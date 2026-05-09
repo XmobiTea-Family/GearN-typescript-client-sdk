@@ -3,7 +3,7 @@
 Schema đầy đủ của object truyền vào `GNNetwork.init(settings)`.
 
 ```ts
-import { GNNetwork, GNServerSettings, GNServerSettingsOptions, MessageType, LogType } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, GNServerSettings, GNServerSettingsOptions, MessageType, LogType } from "@xmobitea/gearn-typescript-client-sdk";
 
 const settings = new GNServerSettings();
 settings.config({

@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
  * 
  * Usage in Cocos Creator:
  * 1. npm install this package
- * 2. Import: import * as GearN from "@xmobitea/gn-typescript-client";
+ * 2. Import: import * as GearN from "@xmobitea/gearn-typescript-client-sdk";
  */
 export default {
   entry: "./src/index.ts",

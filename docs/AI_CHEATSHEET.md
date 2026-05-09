@@ -2,14 +2,14 @@
 
 One-page reference cho AI agent / code assistant. Đọc file này trước, đào sâu khi cần.
 
-> Package: `@xmobitea/gn-typescript-client` · Entry point: `GNNetwork` (static class) · Stack: HTTP + WebSocket realtime.
+> Package: `@xmobitea/gearn-typescript-client-sdk` · Entry point: `GNNetwork` (static class) · Stack: HTTP + WebSocket realtime.
 
 ---
 
 ## 1. Mandatory pattern (sao chép & dùng)
 
 ```ts
-import { GNNetwork, GNServerSettings, ReturnCode, ErrorCode, MessageType, LogType } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, GNServerSettings, ReturnCode, ErrorCode, MessageType, LogType } from "@xmobitea/gearn-typescript-client-sdk";
 
 const settings = new GNServerSettings();
 settings.config({

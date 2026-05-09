@@ -159,7 +159,7 @@ import {
     GNNetwork,
     DashboardModels,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new DashboardModels.LoginByAdminAccountRequestData();
 request.username = "gnadmin";
@@ -185,7 +185,7 @@ import {
     GNNetwork,
     DashboardModels,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new DashboardModels.CreateGameRequestData();
 createRequest.gameId = "demo-game";
@@ -224,7 +224,7 @@ import {
     DashboardModels,
     RequestRole,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new DashboardModels.CreateSecretInfoRequestData();
 request.gameId = "demo-game";

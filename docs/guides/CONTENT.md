@@ -157,7 +157,7 @@ import {
     GNNetwork,
     ContentModels,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new ContentModels.GetContentDataRequestData();
 request.keys = ["homepage", "shop"];
@@ -184,7 +184,7 @@ import {
     GNNetwork,
     ContentModels,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const config = new ContentModels.ContentDataParam();
 config.key = "maintenance";
@@ -215,7 +215,7 @@ import {
     GNNetwork,
     ContentModels,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new ContentModels.CreateNewFileUploadInfoRequestData();
 createRequest.fileName = "banner.png";
@@ -252,7 +252,7 @@ import {
     GNNetwork,
     ContentModels,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new ContentModels.RequestDownloadFileUploadInfoRequestData();
 request.fileId = "123456789012345";

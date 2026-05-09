@@ -231,7 +231,7 @@ import {
     InventoryModels,
     ItemType,
     OwnerType,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new InventoryModels.InfoRequestParam();
 infoRequestParam.itemType = true;
@@ -265,7 +265,7 @@ import {
     ErrorCode,
     GNNetwork,
     InventoryModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const statisticsParam = new InventoryModels.ItemStatisticsParam();
 statisticsParam.key = "killCount";
@@ -294,7 +294,7 @@ import {
     ErrorCode,
     GNNetwork,
     InventoryModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new InventoryModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -329,7 +329,7 @@ import {
     ErrorCode,
     GNNetwork,
     InventoryModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new InventoryModels.GetStatisticsLogRequestData();
 request.itemId = "ABCDEFGHIJKL";

@@ -306,7 +306,7 @@ import {
     CharacterPlayerModels,
     ErrorCode,
     GNNetwork,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new CharacterPlayerModels.InfoRequestParam();
 infoRequestParam.catalogId = true;
@@ -340,7 +340,7 @@ import {
     ErrorCode,
     GNNetwork,
     OnCharacterPlayerFriendUpdateEventHandler,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 OnCharacterPlayerFriendUpdateEventHandler.onUpdate = (update) => {
     if (update.characterId !== "CHAR0000001") {
@@ -376,7 +376,7 @@ import {
     CharacterPlayerModels,
     ErrorCode,
     GNNetwork,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new CharacterPlayerModels.CreatePlayerItemRequestData();
 createRequest.characterId = "CHAR0000001";

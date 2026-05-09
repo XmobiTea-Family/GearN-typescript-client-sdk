@@ -263,7 +263,7 @@ import {
     ErrorCode,
     GNNetwork,
     GroupModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new GroupModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -296,7 +296,7 @@ import {
     GNNetwork,
     GroupModels,
     OnGroupMessageUpdateEventHandler,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGroupMessageUpdateEventHandler.onUpdate = (update) => {
     if (update.groupId !== "GROUP00001") {
@@ -334,7 +334,7 @@ import {
     ErrorCode,
     GNNetwork,
     GroupModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new GroupModels.CreateGroupItemRequestData();
 request.groupId = "GROUP00001";
@@ -363,7 +363,7 @@ import {
     ErrorCode,
     GNNetwork,
     GroupModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new GroupModels.GetCurrencyLogRequestData();
 request.groupId = "GROUP00001";

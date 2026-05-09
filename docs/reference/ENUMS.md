@@ -1,6 +1,6 @@
 # Reference: Enums
 
-Toàn bộ enum public export từ `@xmobitea/gn-typescript-client`. Mỗi bảng liệt kê tên, giá trị numeric thật, và ý nghĩa business.
+Toàn bộ enum public export từ `@xmobitea/gearn-typescript-client-sdk`. Mỗi bảng liệt kê tên, giá trị numeric thật, và ý nghĩa business.
 
 **Rule cứng cho AI consumer:**
 
@@ -39,7 +39,7 @@ Toàn bộ enum public export từ `@xmobitea/gn-typescript-client`. Mỗi bản
 
 Transport/gateway return code trả trong `OperationResponse.getReturnCode()`. **Luôn kiểm tra trước `errorCode`.**
 
-Class import: `import { ReturnCode } from "@xmobitea/gn-typescript-client"` — các member là static readonly numbers.
+Class import: `import { ReturnCode } from "@xmobitea/gearn-typescript-client-sdk"` — các member là static readonly numbers.
 
 | Name | Value | Meaning |
 |------|-------|---------|
@@ -64,7 +64,7 @@ Xem thêm: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 Business domain error code, nằm trong response payload khi `returnCode === ReturnCode.Ok`. Chỉ trust khi đã pass tầng `ReturnCode`.
 
-Class import: `import { ErrorCode } from "@xmobitea/gn-typescript-client"` — các member là static readonly numbers.
+Class import: `import { ErrorCode } from "@xmobitea/gearn-typescript-client-sdk"` — các member là static readonly numbers.
 
 | Name | Value | Meaning | Typical context |
 |------|-------|---------|-----------------|

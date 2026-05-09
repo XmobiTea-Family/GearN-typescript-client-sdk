@@ -65,7 +65,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ## Ví dụ tối thiểu
 
 ```ts
-import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, ReturnCode, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 // requestData: AuthenticateModels.LoginByAccountRequestData đã build theo dto/AUTHENTICATE.md
 const res = await GNNetwork.authenticate.loginByAccountAsync(requestData);

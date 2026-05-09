@@ -182,7 +182,7 @@ import {
     ErrorCode,
     GNNetwork,
     StoreInventoryModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new StoreInventoryModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -214,7 +214,7 @@ import {
     GNNetwork,
     OwnerType,
     StoreInventoryModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new StoreInventoryModels.BuyStoreItemRequestData();
 request.storeId = "store-item-001";
@@ -243,7 +243,7 @@ import {
     GNNetwork,
     OwnerType,
     StoreInventoryModels,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new StoreInventoryModels.ValidateGooglePlayStoreReceiptRequestData();
 request.receipt = googleReceiptPayload;
@@ -270,7 +270,7 @@ import {
     GNNetwork,
     StoreInventoryModels,
     StoreReceiveType,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new StoreInventoryModels.GetStoreLogRequestData();
 request.storeId = "store-item-001";

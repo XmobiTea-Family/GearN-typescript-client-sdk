@@ -67,7 +67,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ### Ví dụ tối thiểu
 
 ```ts
-import { AuthenticateModels } from "@xmobitea/gn-typescript-client";
+import { AuthenticateModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new AuthenticateModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -77,7 +77,7 @@ infoRequestParam.avatar = true;
 ### Ví dụ có filter theo key
 
 ```ts
-import { AuthenticateModels } from "@xmobitea/gn-typescript-client";
+import { AuthenticateModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new AuthenticateModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -95,7 +95,7 @@ infoRequestParam.playerStatisticsKeys = ["level", "exp"];
 Ví dụ:
 
 ```ts
-import { AuthenticateModels, GoogleLoginType } from "@xmobitea/gn-typescript-client";
+import { AuthenticateModels, GoogleLoginType } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new AuthenticateModels.LoginByGoogleRequestData();
 request.token = googleToken;
@@ -168,7 +168,7 @@ import {
     GNNetwork,
     AuthenticateModels,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new AuthenticateModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -200,7 +200,7 @@ import {
     GNNetwork,
     AuthenticateModels,
     ErrorCode,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new AuthenticateModels.RefreshAuthTokenRequestData();
 const response = await GNNetwork.authenticate.refreshAuthTokenAsync(request);
@@ -217,7 +217,7 @@ if (response.errorCode !== ErrorCode.Ok) {
 ### Kết nối socket sau khi đã có token
 
 ```ts
-import { GNNetwork } from "@xmobitea/gn-typescript-client";
+import { GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 GNNetwork.subscriberOnConnectHandler(() => {
     console.log("socket connected", GNNetwork.getSocketSId());

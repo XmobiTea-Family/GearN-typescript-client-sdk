@@ -11,7 +11,7 @@ GearN TypeScript SDK dùng được với Cocos Creator 3.x thông qua npm packa
 Trong thư mục project Cocos Creator của bạn:
 
 ```bash
-npm install @xmobitea/gn-typescript-client
+npm install @xmobitea/gearn-typescript-client-sdk
 ```
 
 ### 2. TypeScript Configuration
@@ -33,7 +33,7 @@ npm install @xmobitea/gn-typescript-client
 ### Initialize SDK
 
 ```ts
-import { GNNetwork, GNServerSettings, LogType, MessageType } from "@xmobitea/gn-typescript-client";
+import { GNNetwork, GNServerSettings, LogType, MessageType } from "@xmobitea/gearn-typescript-client-sdk";
 
 const settings = new GNServerSettings();
 settings.config({
@@ -69,7 +69,7 @@ import {
     AuthenticateModels,
     ErrorCode,
     GNNetwork,
-} from "@xmobitea/gn-typescript-client";
+} from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new AuthenticateModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -98,7 +98,7 @@ console.log("User ID:", GNNetwork.getAuthenticateStatus().getUserId());
 Tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
 
 ```ts
-import { GNNetwork } from "@xmobitea/gn-typescript-client";
+import { GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 GNNetwork.subscriberOnConnectHandler(() => {
     console.log("Connected!", GNNetwork.getSocketSId());
@@ -118,7 +118,7 @@ Nếu socket đã connect trước khi token xuất hiện, hoặc token vừa �
 SDK tự động phát hiện Cocos Creator environment:
 
 ```ts
-import { GNSupport } from "@xmobitea/gn-typescript-client";
+import { GNSupport } from "@xmobitea/gearn-typescript-client-sdk";
 
 if (GNSupport.isCocosCreator()) {
     console.log("Running in Cocos Creator");
