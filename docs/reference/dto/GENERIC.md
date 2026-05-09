@@ -1,0 +1,151 @@
+# DTO Reference: Generic
+
+Reusable embedded contracts shared by multiple domains (avatar, tag, currency, filter, pagination, …).
+
+Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+
+## Danh sách
+
+- **GenericModels** (from `GenericModels.ts`)
+  - [AvatarItem](#avataritem)
+  - [TagItem](#tagitem)
+  - [BanItem](#banitem)
+  - [DataItem](#dataitem)
+  - [CurrencyItem](#currencyitem)
+  - [StatisticsItem](#statisticsitem)
+  - [CharacterItem](#characteritem)
+  - [OwnerItem](#owneritem)
+  - [RemoveStatusItem](#removestatusitem)
+  - [InventoryItem](#inventoryitem)
+  - [GroupItem](#groupitem)
+  - [FriendItem](#frienditem)
+  - [MemberItem](#memberitem)
+
+---
+
+## Namespace `GenericModels`
+
+### AvatarItem
+
+Represents a generic avatar payload.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `type` | `number` | yes | Backend-defined avatar type identifier. The public SDK currently does not export a dedicated avatar enum. |
+| `value` | `string` | yes | Avatar value, typically a URL, file id, or provider-specific string. |
+
+### TagItem
+
+Represents a key-value tag entry.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `key` | `string` | yes | Tag key used to identify the metadata entry. |
+| `value` | `string` | yes | Tag value associated with `key`. |
+
+### BanItem
+
+Represents a ban state entry returned by player-auth or player-profile flows.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `tsExpire` | `number` | yes | Expiration timestamp of the current ban state. |
+| `reason` | `string` | yes | Human-readable ban reason when provided by the backend. |
+
+### DataItem
+
+Represents an arbitrary key-value data entry.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `key` | `string` | yes | Data entry key used to identify the payload. |
+| `value` | `any` | yes | Raw value returned by the backend. This may be a primitive, `GNHashtable`, `GNArray`, or plain object-like data. |
+
+### CurrencyItem
+
+Represents one currency entry.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `key` | `string` | yes | Currency key such as the configured currency code or logical name. |
+| `value` | `number` | yes | Numeric balance of the currency identified by `key`. |
+
+### StatisticsItem
+
+Represents one statistics entry.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `key` | `string` | yes | Statistic key such as the configured metric name. |
+| `value` | `number` | yes | Numeric value of the statistic identified by `key`. |
+
+### CharacterItem
+
+Represents a lightweight relation item pointing to a character.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `characterId` | `string` | yes | Character identifier of the related character entity. |
+| `catalogId` | `string` | yes | Catalog identifier associated with the related character. |
+
+### OwnerItem
+
+Represents the current owner of an entity such as an inventory item.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `type` | `number` | yes | Owner type. Map this value with the public `OwnerType` enum. |
+| `id` | `string` | yes | Owner id paired with `type`. |
+
+### RemoveStatusItem
+
+Represents soft-remove metadata for an entity.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `tsRemove` | `number` | yes | Removal timestamp when the entity was soft-removed. |
+| `reason` | `string` | no | Removal reason when the backend provides one. |
+
+### InventoryItem
+
+Represents a lightweight relation item pointing to an inventory item.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `itemId` | `string` | yes | Inventory item identifier of the related item entity. |
+| `catalogId` | `string` | yes | Catalog identifier associated with the related inventory item. |
+| `classId` | `string` | yes | Class identifier associated with the related inventory item. |
+
+### GroupItem
+
+Represents a lightweight relation item pointing to a group.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `groupId` | `string` | yes | Group identifier of the related group entity. |
+| `catalogId` | `string` | yes | Catalog identifier associated with the related group. |
+| `status` | `number` | yes | Group relation status. Map this value with the public `GroupStatus` enum. |
+| `tsLastStatusUpdate` | `number` | yes | Timestamp of the last group status change. |
+
+### FriendItem
+
+Represents a lightweight relation item pointing to a friend relation.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `friendId` | `string` | yes | Friend identifier of the related friend entity. |
+| `catalogId` | `string` | yes | Catalog identifier associated with the related friend entity. |
+| `status` | `number` | yes | Friend relation status. Map this value with the public `FriendStatus` enum. |
+| `tsLastStatusUpdate` | `number` | yes | Timestamp of the last friend status change. |
+
+### MemberItem
+
+Represents a lightweight relation item pointing to a group member.
+
+| Field | Type | Required | Notes |
+|-------|------|----------|-------|
+| `memberId` | `string` | yes | Member identifier of the related group member. |
+| `status` | `number` | yes | Member relation status. Map this value with the public member-status enum when available. |
+

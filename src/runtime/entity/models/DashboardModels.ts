@@ -1,22 +1,55 @@
 import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 
+/**
+ * Reusable request and response DTOs for the Dashboard
+ * domain.
+ *
+ * Dashboard operations cover game / account / secret
+ * management, server analytics, server logs, leaderboard
+ * maintenance and CloudScript event-callback wiring. They are
+ * sent over HTTP with {@link RequestType.Dashboard} and
+ * {@link RequestRole.Client} — the backend resolves admin
+ * privilege from the auth token (`loginByAdminAccount`)
+ * rather than from the wire role.
+ *
+ * Most DTOs accept an explicit `gameId` so multi-game
+ * dashboards can switch between games on the same admin
+ * session. Some destructive maintenance DTOs
+ * (`DeleteInDatabaseRequestData`,
+ * `RemoveAdminAccountRequestData`,
+ * `ResetStatisticsLeaderboardRequestData`) require additional
+ * confirmation fields server-side; consult the backend
+ * documentation before use.
+ */
 export namespace DashboardModels {
+	/**
+	 * Defines the reusable permission-rule block used by secret-info and master settings payloads.
+	 *
+	 * These flags map directly to the GearN Server permission checks described in the public docs.
+	 */
 	export class PermissionRulesParam {
+		/** Allows the operation on resources that belong to the authenticated user context. */
 		@BooleanDataMember({ code: ParameterCode.SelfEnable, isOptional: true })
 		public selfEnable?: boolean;
 
+		/** Allows the operation on resources that do not belong to the authenticated user context. */
 		@BooleanDataMember({ code: ParameterCode.OtherSelfEnable, isOptional: true })
 		public otherSelfEnable?: boolean;
 
+		/** Allows the operation through admin-scoped execution context. */
 		@BooleanDataMember({ code: ParameterCode.AdminSelfEnable, isOptional: true })
 		public adminSelfEnable?: boolean;
 
+		/** Allows the operation through server-scoped execution context. */
 		@BooleanDataMember({ code: ParameterCode.ServerSelfEnable, isOptional: true })
 		public serverSelfEnable?: boolean;
 
 	}
 
+	/**
+	 * Defines the reusable parameter block FriendCatalogSettingsParam.
+	 */
 	export class FriendCatalogSettingsParam {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
@@ -29,6 +62,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ItemClassSettingsParam.
+	 */
 	export class ItemClassSettingsParam {
 		@StringDataMember({ code: ParameterCode.ClassId, minLength: 2, maxLength: 32 })
 		public classId: string;
@@ -38,6 +74,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ItemCatalogSettingsParam.
+	 */
 	export class ItemCatalogSettingsParam {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
@@ -50,6 +89,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block GroupCatalogSettingsParam.
+	 */
 	export class GroupCatalogSettingsParam {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
@@ -62,6 +104,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block TagSettingsParam.
+	 */
 	export class TagSettingsParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32 })
 		public key: string;
@@ -74,6 +119,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block DataSettingsParam.
+	 */
 	export class DataSettingsParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32 })
 		public key: string;
@@ -86,6 +134,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block StatisticsSettingsParam.
+	 */
 	export class StatisticsSettingsParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32 })
 		public key: string;
@@ -110,6 +161,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block CurrencySettingsParam.
+	 */
 	export class CurrencySettingsParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32 })
 		public key: string;
@@ -125,6 +179,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block CharacterCatalogSettingsParam.
+	 */
 	export class CharacterCatalogSettingsParam {
 		@StringDataMember({ code: ParameterCode.CatalogId, minLength: 2, maxLength: 32 })
 		public catalogId: string;
@@ -134,6 +191,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block CharacterPlayerPermissionRulesParam.
+	 */
 	export class CharacterPlayerPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.AddSegment, isOptional: true })
 		public addSegment?: PermissionRulesParam;
@@ -296,6 +356,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block CharacterPlayerSettingsParam.
+	 */
 	export class CharacterPlayerSettingsParam {
 		@GNArrayDataMember({ code: ParameterCode.PlayerCurrenciesSettings, elementCls: CurrencySettingsParam, isOptional: true })
 		public playerCurrenciesSettings?: Array<CurrencySettingsParam>;
@@ -323,6 +386,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ContentPermissionRulesParam.
+	 */
 	export class ContentPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.GetContentData, isOptional: true })
 		public getContentData?: PermissionRulesParam;
@@ -347,6 +413,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ThirtPartyAppleSettingsParam.
+	 */
 	export class ThirtPartyAppleSettingsParam {
 		@StringDataMember({ code: ParameterCode.AppleClientId })
 		public appleClientId: string;
@@ -365,6 +434,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ThirtPartyFacebookSettingsParam.
+	 */
 	export class ThirtPartyFacebookSettingsParam {
 		@StringDataMember({ code: ParameterCode.FacebookAppId })
 		public facebookAppId: string;
@@ -377,6 +449,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ThirtPartyGoogleSettingsParam.
+	 */
 	export class ThirtPartyGoogleSettingsParam {
 		@StringDataMember({ code: ParameterCode.GoogleClientId })
 		public googleClientId: string;
@@ -389,12 +464,18 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ThirtPartyGameCenterSettingsParam.
+	 */
 	export class ThirtPartyGameCenterSettingsParam {
 		@StringDataMember({ code: ParameterCode.PackageId })
 		public packageId: string;
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ThirtPartyGooglePlayGameSettingsParam.
+	 */
 	export class ThirtPartyGooglePlayGameSettingsParam {
 		@StringDataMember({ code: ParameterCode.RedirectUri })
 		public redirectUri: string;
@@ -410,6 +491,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ThirtPartyParam.
+	 */
 	export class ThirtPartyParam {
 		@GNHashtableDataMember({ code: ParameterCode.GoogleSettings, isOptional: true })
 		public googleSettings?: ThirtPartyGoogleSettingsParam;
@@ -428,6 +512,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block EmailSettingsParam.
+	 */
 	export class EmailSettingsParam {
 		@StringDataMember({ code: ParameterCode.SendFrom })
 		public sendFrom: string;
@@ -449,6 +536,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block PushNotificationSettingsParam.
+	 */
 	export class PushNotificationSettingsParam {
 		@StringDataMember({ code: ParameterCode.ProjectId })
 		public projectId: string;
@@ -461,6 +551,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block GamePlayerPermissionRulesParam.
+	 */
 	export class GamePlayerPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.AddSegment, isOptional: true })
 		public addSegment?: PermissionRulesParam;
@@ -620,6 +713,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block GamePlayerSettingsParam.
+	 */
 	export class GamePlayerSettingsParam {
 		@GNArrayDataMember({ code: ParameterCode.PlayerCurrenciesSettings, elementCls: CurrencySettingsParam, isOptional: true })
 		public playerCurrenciesSettings?: Array<CurrencySettingsParam>;
@@ -650,6 +746,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block GroupSettingsParam.
+	 */
 	export class GroupSettingsParam {
 		@GNArrayDataMember({ code: ParameterCode.GroupCurrenciesSettings, elementCls: CurrencySettingsParam, isOptional: true })
 		public groupCurrenciesSettings?: Array<CurrencySettingsParam>;
@@ -671,6 +770,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block InventorySettingsParam.
+	 */
 	export class InventorySettingsParam {
 		@GNArrayDataMember({ code: ParameterCode.ItemStatisticsSettings, elementCls: StatisticsSettingsParam, isOptional: true })
 		public itemStatisticsSettings?: Array<StatisticsSettingsParam>;
@@ -686,6 +788,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block GameSettingsParam.
+	 */
 	export class GameSettingsParam {
 		@GNHashtableDataMember({ code: ParameterCode.GamePlayerSettings, isOptional: true })
 		public gamePlayerSettings?: GamePlayerSettingsParam;
@@ -701,12 +806,18 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block GenericServiceSettingsParam.
+	 */
 	export class GenericServiceSettingsParam {
 		@StringDataMember({ code: ParameterCode.ServiceName, minLength: 2, maxLength: 32 })
 		public serviceName: string;
 
 	}
 
+	/**
+	 * Defines the reusable parameter block GroupPermissionRulesParam.
+	 */
 	export class GroupPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.AddSegment, isOptional: true })
 		public addSegment?: PermissionRulesParam;
@@ -830,6 +941,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block InventoryPermissionRulesParam.
+	 */
 	export class InventoryPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.AddSegment, isOptional: true })
 		public addSegment?: PermissionRulesParam;
@@ -935,7 +1049,10 @@ export namespace DashboardModels {
 
 	}
 
-	export class MasterAdminPermissionRulesParam {
+	/**
+	 * Defines the reusable parameter block DashboardPermissionRulesParam.
+	 */
+	export class DashboardPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.SetMasterGameSettings, isOptional: true })
 		public setMasterGameSettings?: PermissionRulesParam;
 
@@ -1013,6 +1130,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block MultiplayerPermissionRulesParam.
+	 */
 	export class MultiplayerPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.CancelAllMatchmakingTicket, isOptional: true })
 		public cancelAllMatchmakingTicket?: PermissionRulesParam;
@@ -1046,6 +1166,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block MasterPlayerPermissionRulesParam.
+	 */
 	export class MasterPlayerPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.LinkAccount, isOptional: true })
 		public linkAccount?: PermissionRulesParam;
@@ -1173,8 +1296,8 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.GetIpAddressCreate, isOptional: true })
 		public getIpAddressCreate?: PermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.SetTsLastLogin, isOptional: true })
-		public setTsLastLogin?: PermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.UpdateTsLastLogin, isOptional: true })
+		public updateTsLastLogin?: PermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.GetTsLastLogin, isOptional: true })
 		public getTsLastLogin?: PermissionRulesParam;
@@ -1307,6 +1430,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block MasterPlayerSettingsParam.
+	 */
 	export class MasterPlayerSettingsParam {
 		@GNArrayDataMember({ code: ParameterCode.GenericServiceSettings, elementCls: GenericServiceSettingsParam, isOptional: true })
 		public genericServiceSettings?: Array<GenericServiceSettingsParam>;
@@ -1330,6 +1456,9 @@ export namespace DashboardModels {
 
 
 
+	/**
+	 * Defines the reusable parameter block SizeParam.
+	 */
 	export class SizeParam {
 		@NumberDataMember({ code: ParameterCode.Min, minValue: 1, mustInt: true })
 		public min: number;
@@ -1339,6 +1468,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block TeamParam.
+	 */
 	export class TeamParam {
 		@StringDataMember({ code: ParameterCode.TeamId, minLength: 1, maxLength: 32 })
 		public teamId: string;
@@ -1348,6 +1480,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block LinearExpansionsParam.
+	 */
 	export class LinearExpansionsParam {
 		@NumberDataMember({ code: ParameterCode.SecondsBetweenExpansions, minValue: 1 })
 		public secondsBetweenExpansions: number;
@@ -1360,6 +1495,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block CustomExpansionsParam.
+	 */
 	export class CustomExpansionsParam {
 		@NumberDataMember({ code: ParameterCode.SecondsBetweenExpansions, minValue: 1 })
 		public secondsBetweenExpansions: number;
@@ -1375,6 +1513,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block AdvancedSettingsParam.
+	 */
 	export class AdvancedSettingsParam {
 		@NumberDataMember({ code: ParameterCode.SecondsUntilOptional, minValue: 1 })
 		public secondsUntilOptional: number;
@@ -1390,6 +1531,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block RuleParam.
+	 */
 	export class RuleParam {
 		@StringDataMember({ code: ParameterCode.Name, minLength: 1, maxLength: 32 })
 		public name: string;
@@ -1423,12 +1567,18 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block ServerAllocationParam.
+	 */
 	export class ServerAllocationParam {
 		@BooleanDataMember({ code: ParameterCode.Enable })
 		public enable: boolean;
 
 	}
 
+	/**
+	 * Defines the reusable parameter block MatchmakingQueueSettingsParam.
+	 */
 	export class MatchmakingQueueSettingsParam {
 		@StringDataMember({ code: ParameterCode.QueueName, minLength: 6, maxLength: 32 })
 		public queueName: string;
@@ -1453,6 +1603,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block AuthenticatePermissionRulesParam.
+	 */
 	export class AuthenticatePermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.LoginByAccount, isOptional: true })
 		public loginByAccount?: PermissionRulesParam;
@@ -1510,6 +1663,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block StoreInventoryPermissionRulesParam.
+	 */
 	export class StoreInventoryPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.BuyStoreItem, isOptional: true })
 		public buyStoreItem?: PermissionRulesParam;
@@ -1555,6 +1711,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the reusable parameter block CloudScriptPermissionRulesParam.
+	 */
 	export class CloudScriptPermissionRulesParam {
 		@GNHashtableDataMember({ code: ParameterCode.ExecuteFunction, isOptional: true })
 		public executeFunction?: PermissionRulesParam;
@@ -1573,6 +1732,11 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the top-level permission tree assigned to one secret info entry.
+	 *
+	 * Each optional property groups permission rules by API domain.
+	 */
 	export class PermissionParam {
 		@GNHashtableDataMember({ code: ParameterCode.Authenticate, isOptional: true })
 		public authenticate?: AuthenticatePermissionRulesParam;
@@ -1598,8 +1762,8 @@ export namespace DashboardModels {
 		@GNHashtableDataMember({ code: ParameterCode.StoreInventory, isOptional: true })
 		public storeInventory?: StoreInventoryPermissionRulesParam;
 
-		@GNHashtableDataMember({ code: ParameterCode.MasterAdmin, isOptional: true })
-		public masterAdmin?: MasterAdminPermissionRulesParam;
+		@GNHashtableDataMember({ code: ParameterCode.Dashboard, isOptional: true })
+		public dashboard?: DashboardPermissionRulesParam;
 
 		@GNHashtableDataMember({ code: ParameterCode.Multiplayer, isOptional: true })
 		public multiplayer?: MultiplayerPermissionRulesParam;
@@ -1609,6 +1773,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ChangePasswordAdminAccount.
+	 */
 	export class ChangePasswordAdminAccountRequestData {
 		@StringDataMember({ code: ParameterCode.CurrentPassword, minLength: 6, maxLength: 64, mustNonNull: true })
 		public currentPassword: string;
@@ -1618,30 +1785,51 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for GetAdminAccountList.
+	 */
 	export class GetAdminAccountListRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetGameInformation.
+	 */
 	export class GetGameInformationRequestData {
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public gameId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for GetGameList.
+	 */
 	export class GetGameListRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetMasterGameSettings.
+	 */
 	export class GetMasterGameSettingsRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetSecretInfoInformation.
+	 */
 	export class GetSecretInfoInformationRequestData {
 		@StringDataMember({ code: ParameterCode.SecretKey, minLength: 6, maxLength: 64, mustNonNull: true })
 		public secretKey: string;
 
 	}
 
+	/**
+	 * Defines the request payload for GetSecretInfoList.
+	 */
 	export class GetSecretInfoListRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetServerLog.
+	 */
 	export class GetServerLogRequestData {
 		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		skip?: number;
@@ -1651,6 +1839,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for CreateAdminAccount.
+	 */
 	export class CreateAdminAccountRequestData {
 		@StringDataMember({ code: ParameterCode.Username, minLength: 6, maxLength: 32, mustNonNull: true })
 		public username: string;
@@ -1663,27 +1854,41 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for CreateGame.
+	 */
 	export class CreateGameRequestData {
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public gameId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for `createSecretInfo`.
+	 *
+	 * `permissionParam` is the authoritative permission tree that controls which operations
+	 * the created secret key may execute on the GearN Server.
+	 */
 	export class CreateSecretInfoRequestData {
+		/** Optional custom secret key. If omitted, the backend may generate one. */
 		@StringDataMember({ code: ParameterCode.SecretKey, minLength: 6, maxLength: 64, mustNonNull: true, isOptional: true })
 		public secretKey?: string;
 
+		/** Optional target game id when creating a secret for a specific game. */
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true, isOptional: true })
 		public gameId?: string;
 
-		@NumberDataMember({ code: ParameterCode.Role, mustInt: true, minValue: 1, maxValue: 3 })
-		public role: number;
-
+		/** Optional permission tree granted to the new secret key. */
 		@GNHashtableDataMember({ code: ParameterCode.PermissionParam, isOptional: true })
 		public permissionParam?: PermissionParam;
 
 	}
 
+	/**
+	 * Defines the request payload for `loginByAdminAccount`.
+	 *
+	 * A successful response returns an auth token that later dashboard calls reuse so backend middleware can resolve admin context.
+	 */
 	export class LoginByAdminAccountRequestData {
 		@StringDataMember({ code: ParameterCode.Username, minLength: 4, maxLength: 32, mustNonNull: true })
 		public username: string;
@@ -1693,12 +1898,18 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for RemoveAdminAccount.
+	 */
 	export class RemoveAdminAccountRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for SetGameInformation.
+	 */
 	export class SetGameInformationRequestData {
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public gameId: string;
@@ -1720,6 +1931,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for SetMasterGameSettings.
+	 */
 	export class SetMasterGameSettingsRequestData {
 		@GNHashtableDataMember({ code: ParameterCode.ThirtPartySettings, isOptional: true })
 		public thirtPartySettings?: ThirtPartyParam;
@@ -1735,6 +1949,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for SetPasswordAdminAccount.
+	 */
 	export class SetPasswordAdminAccountRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public userId: string;
@@ -1744,6 +1961,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for SetSecretInfoInformation.
+	 */
 	export class SetSecretInfoInformationRequestData {
 		@StringDataMember({ code: ParameterCode.SecretKey, minLength: 6, maxLength: 64, mustNonNull: true })
 		public secretKey: string;
@@ -1762,6 +1982,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for SetSecretKeyAdminAccount.
+	 */
 	export class SetSecretKeyAdminAccountRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public userId: string;
@@ -1771,6 +1994,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for GetAnalytics.
+	 */
 	export class GetAnalyticsRequestData {
 		@NumberDataMember({ code: ParameterCode.Timestamp, minValue: 0, isOptional: true })
 		public timestamp?: number;
@@ -1801,16 +2027,25 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for GetUsernameAdminAccount.
+	 */
 	export class GetUsernameAdminAccountRequestData {
 		@StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
 		public userId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for GetEventCallbackCloudScript.
+	 */
 	export class GetEventCallbackCloudScriptRequestData {
 
 	}
 
+	/**
+	 * Defines the request payload for SetEventCallbackCloudScript.
+	 */
 	export class SetEventCallbackCloudScriptRequestData {
 		@StringDataMember({ code: ParameterCode.EventName, minLength: 6, maxLength: 128, mustNonNull: true })
 		public eventName: string;
@@ -1820,6 +2055,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ResetStatisticsLeaderboard.
+	 */
 	export class ResetStatisticsLeaderboardRequestData {
 		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
@@ -1841,6 +2079,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for DeleteInDatabase.
+	 */
 	export class DeleteInDatabaseRequestData {
 		@NumberDataMember({ code: ParameterCode.Type, mustInt: true })
 		public type: number;
@@ -1856,6 +2097,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the request payload for GetBackupStatisticsLeaderboardVersion.
+	 */
 	export class GetBackupStatisticsLeaderboardVersionRequestData {
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public gameId: string;
@@ -1867,6 +2111,9 @@ export namespace DashboardModels {
 		public key: string;
 	}
 
+	/**
+	 * Defines the request payload for GetServerGameData.
+	 */
 	export class GetServerGameDataRequestData {
 		@StringDataMember({ code: ParameterCode.GameId, minLength: 2, maxLength: 32, mustNonNull: true })
 		public gameId: string;
@@ -1897,6 +2144,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for AdminAccount.
+	 */
 	export class AdminAccountResponseData {
 		@StringDataMember({ code: ParameterCode.UserId })
 		public userId: string;
@@ -1909,12 +2159,18 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetAdminAccountList.
+	 */
 	export class GetAdminAccountListResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: AdminAccountResponseData })
 		public results: Array<AdminAccountResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for GetGameInformation.
+	 */
 	export class GetGameInformationResponseData {
 		@StringDataMember({ code: ParameterCode.GameId })
 		public gameId: string;
@@ -1942,18 +2198,29 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GameWithGameId.
+	 */
 	export class GameWithGameIdResponseData {
 		@StringDataMember({ code: ParameterCode.GameId })
 		public gameId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for GetGameList.
+	 */
 	export class GetGameListResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: GameWithGameIdResponseData })
 		public results: Array<GameWithGameIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for `getMasterGameSettings`.
+	 *
+	 * This payload contains the full top-level dashboard configuration snapshot used to provision a game.
+	 */
 	export class GetMasterGameSettingsResponseData {
 		@GNHashtableDataMember({ code: ParameterCode.ThirtPartySettings })
 		public thirtPartySettings: ThirtPartyParam;
@@ -1969,15 +2236,18 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for `getSecretInfoInformation`.
+	 *
+	 * This is the detailed secret-info record, including role, lifecycle flags, and permission tree.
+	 */
 	export class GetSecretInfoInformationResponseData {
+		/** Secret key whose detailed configuration was requested. */
 		@StringDataMember({ code: ParameterCode.SecretKey })
 		public secretKey: string;
 
 		@StringDataMember({ code: ParameterCode.GameId })
 		public gameId: string;
-
-		@NumberDataMember({ code: ParameterCode.Role })
-		public role: number;
 
 		@NumberDataMember({ code: ParameterCode.TsCreate })
 		public tsCreate: number;
@@ -1994,53 +2264,75 @@ export namespace DashboardModels {
 		@StringDataMember({ code: ParameterCode.Description })
 		public description: string;
 
+		/** Permission tree granted to this secret key. */
 		@GNHashtableDataMember({ code: ParameterCode.PermissionParam })
 		public permissionParam: PermissionParam;
 
 	}
 
+	/**
+	 * Defines a lightweight secret-info item returned by secret-list queries.
+	 */
 	export class SecretInfoWithSecretKeyResponseData {
 		@StringDataMember({ code: ParameterCode.SecretKey })
 		public secretKey: string;
 
 	}
 
+	/**
+	 * Defines the response payload for `getSecretInfoList`.
+	 *
+	 * Results are grouped by secret role instead of being returned as one flat array.
+	 */
 	export class GetSecretInfoListResponseData {
-		@GNArrayDataMember({ code: ParameterCode.AdminSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
-		public adminSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
-
-		@GNArrayDataMember({ code: ParameterCode.ServerSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
-		public serverSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
-
-		@GNArrayDataMember({ code: ParameterCode.PlayerSecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
-		public playerSecretKeys: Array<SecretInfoWithSecretKeyResponseData>;
+		/** Secret keys whose role is admin. */
+		@GNArrayDataMember({ code: ParameterCode.SecretKeys, elementCls: SecretInfoWithSecretKeyResponseData })
+		public secretKeys: Array<SecretInfoWithSecretKeyResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for AdminAccountWithUserId.
+	 */
 	export class AdminAccountWithUserIdResponseData {
 		@StringDataMember({ code: ParameterCode.UserId })
 		public userId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for CreateAdminAccount.
+	 */
 	export class CreateAdminAccountResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: AdminAccountWithUserIdResponseData })
 		public results: Array<AdminAccountWithUserIdResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for `loginByAdminAccount`.
+	 *
+	 * The returned auth token should be cached and reused for subsequent dashboard requests.
+	 */
 	export class LoginByAdminAccountResponseData {
+		/** Auth token representing the authenticated admin account. */
 		@StringDataMember({ code: ParameterCode.AuthToken })
 		public authToken: string;
 
 	}
 
+	/**
+	 * Defines the response payload for GetServerLog.
+	 */
 	export class GetServerLogResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: String })
 		public results: Array<string>;
 
 	}
 
+	/**
+	 * Defines the response payload for CountryRegion.
+	 */
 	export class CountryRegionResponseData {
 		@StringDataMember({ code: ParameterCode.RegionCode })
 		public regionCode: string;
@@ -2059,6 +2351,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for Country.
+	 */
 	export class CountryResponseData {
 		@StringDataMember({ code: ParameterCode.CountryCode })
 		public countryCode: string;
@@ -2068,6 +2363,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for AnalyticsItem.
+	 */
 	export class AnalyticsItemResponseData {
 		@NumberDataMember({ code: ParameterCode.CCU })
 		public ccu: number;
@@ -2113,6 +2411,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for MemoryUsage.
+	 */
 	export class MemoryUsageResponseData {
 		@NumberDataMember({ code: ParameterCode.FreeMemoryInBytes })
 		public freeMemoryInBytes: number;
@@ -2122,6 +2423,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for StorageUsage.
+	 */
 	export class StorageUsageResponseData {
 		@StringDataMember({ code: ParameterCode.Name })
 		public name: string;
@@ -2134,6 +2438,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for DatabaseSystem.
+	 */
 	export class DatabaseSystemResponseData {
 		@NumberDataMember({ code: ParameterCode.FsTotalSizeInBytes })
 		public fsTotalSizeInBytes: number;
@@ -2155,6 +2462,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for OperationSystem.
+	 */
 	export class OperationSystemResponseData {
 		@NumberDataMember({ code: ParameterCode.CpuUsage })
 		public cpuUsage: number;
@@ -2167,6 +2477,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for RequestCompleteErrorCode.
+	 */
 	export class RequestCompleteErrorCodeResponseData {
 		@NumberDataMember({ code: ParameterCode.ErrorCode })
 		public errorCode: number;
@@ -2176,6 +2489,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for RequestComplete.
+	 */
 	export class RequestCompleteResponseData {
 		@StringDataMember({ code: ParameterCode.EventName })
 		public eventName: string;
@@ -2185,6 +2501,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for Cost.
+	 */
 	export class CostResponseData {
 		@NumberDataMember({ code: ParameterCode.RequestCount })
 		public requestCount: number;
@@ -2203,6 +2522,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetAnalytics.
+	 */
 	export class GetAnalyticsResponseData {
 		@GNHashtableDataMember({ code: ParameterCode.AnalyticsItem, isOptional: true })
 		public analyticsItem?: AnalyticsItemResponseData;
@@ -2230,12 +2552,18 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetUsernameAdminAccount.
+	 */
 	export class GetUsernameAdminAccountResponseData {
 		@StringDataMember({ code: ParameterCode.Username })
 		public username: string;
 
 	}
 
+	/**
+	 * Defines the response payload for ChildScript.
+	 */
 	export class ChildScriptResponseData {
 		@StringDataMember({ code: ParameterCode.EventName })
 		public eventName: string;
@@ -2248,6 +2576,9 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for EventCallbackCloudScript.
+	 */
 	export class EventCallbackCloudScriptResponseData {
 		@StringDataMember({ code: ParameterCode.Type })
 		public type: string;
@@ -2263,17 +2594,28 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for `getEventCallbackCloudScript`.
+	 *
+	 * Each result links one event callback registration to a CloudScript target.
+	 */
 	export class GetEventCallbackCloudScriptResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: EventCallbackCloudScriptResponseData })
 		public results: Array<EventCallbackCloudScriptResponseData>;
 	}
 
+	/**
+	 * Defines the response payload for SetEventCallbackCloudScript.
+	 */
 	export class SetEventCallbackCloudScriptResponseData {
 		@StringDataMember({ code: ParameterCode.ErrorMessage })
 		public errorMessage: string;
 
 	}
 
+	/**
+	 * Defines the response payload for BackupStatisticsLeaderboardVersion.
+	 */
 	export class BackupStatisticsLeaderboardVersionResponseData {
 		@StringDataMember({ code: ParameterCode.Version })
 		public version: string;
@@ -2286,12 +2628,20 @@ export namespace DashboardModels {
 
 	}
 
+	/**
+	 * Defines the response payload for GetBackupStatisticsLeaderboardVersion.
+	 */
 	export class GetBackupStatisticsLeaderboardVersionResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: BackupStatisticsLeaderboardVersionResponseData })
 		public results: Array<BackupStatisticsLeaderboardVersionResponseData>;
 
 	}
 
+	/**
+	 * Defines the response payload for `getServerGameData`.
+	 *
+	 * This is a high-level telemetry snapshot of entity counts, country breakdown, and server version data.
+	 */
 	export class GetServerGameDataResponseData {
 		@NumberDataMember({ code: ParameterCode.MasterPlayerCount, isOptional: true })
 		public masterPlayerCount?: number;
@@ -2311,14 +2661,19 @@ export namespace DashboardModels {
 		@NumberDataMember({ code: ParameterCode.GroupCount, isOptional: true })
 		public groupCount?: number;
 
+		/** Optional country-level breakdown returned by the backend. */
 		@GNArrayDataMember({ code: ParameterCode.Country, elementCls: CountryResponseData, isOptional: true })
 		public country?: Array<CountryResponseData>;
 
+		/** Optional server or game-data version string reported by the backend. */
 		@StringDataMember({ code: ParameterCode.Version, isOptional: true })
 		public version?: string;
 
 	}
 
+	/**
+	 * Defines an intentionally empty response payload.
+	 */
 	export class EmptyResponseData {
 	}
 

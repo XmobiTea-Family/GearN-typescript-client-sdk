@@ -3,7 +3,44 @@ import { ParameterCode } from "./../../constant/parameterCode/ParameterCode";
 import { GNHashtableDataMember, StringDataMember, BooleanDataMember, DataMember, GNArrayDataMember, NumberDataMember } from "./../DataMember";
 import { GenericModels } from "./GenericModels";
 
+/**
+ * Reusable request and response DTOs for the Content domain.
+ *
+ * The Content domain manages two distinct kinds of content:
+ *
+ * 1. **`contentData` blobs** — small structured values keyed by
+ *    a content key (`ContentDataParam.key`, `minLength: 2,
+ *    maxLength: 32, mustNonNull: true`). Useful for game-wide
+ *    config, MOTD strings, remote config flags. Manipulated via
+ *    `getContentData` / `setContentData`.
+ *
+ * 2. **File uploads** — binary blobs identified by a `fileId`.
+ *    The typed operations only manage the **metadata** slot;
+ *    the actual byte transfer happens through
+ *    {@link GNNetwork.uploadFile} (push) and
+ *    {@link GNNetwork.getDownloadFileUrl} (pull). The standard
+ *    workflow is:
+ *
+ *    ```
+ *    create upload info  → returns fileId + upload token
+ *      ↓
+ *    GNNetwork.uploadFile (out of band, multipart POST)
+ *      ↓
+ *    request download info → returns short-lived download token
+ *      ↓
+ *    GNNetwork.getDownloadFileUrl (out of band, plain GET)
+ *    ```
+ *
+ * Each request DTO has three role variants
+ * (`Client*`, `Server*`, `Admin*`) corresponding to the matching
+ * sub-namespace on `GNNetwork.content`. Server / Admin variants
+ * usually accept additional `userId` / `ownerId` parameters so
+ * trusted callers can act on behalf of any player.
+ */
 export namespace ContentModels {
+	/**
+	 * Defines the reusable parameter block ContentDataParam.
+	 */
 	export class ContentDataParam {
 		@StringDataMember({ code: ParameterCode.Key, minLength: 2, maxLength: 32, mustNonNull: true })
 		public key: string;
@@ -13,19 +50,31 @@ export namespace ContentModels {
 
 	}
 
+	/**
+	 * Allocates a new upload slot before the binary payload is uploaded through the separate upload helper.
+	 */
 	export class CreateNewFileUploadInfoRequestData {
 		@StringDataMember({ code: ParameterCode.FileName, mustNonNull: true, minLength: 5, maxLength: 50 })
 		public fileName: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerCreateNewFileUploadInfo.
+	 */
 	export class ServerCreateNewFileUploadInfoRequestData extends CreateNewFileUploadInfoRequestData {
 
 	}
 
+	/**
+	 * Defines the request payload for AdminCreateNewFileUploadInfo.
+	 */
 	export class AdminCreateNewFileUploadInfoRequestData extends ServerCreateNewFileUploadInfoRequestData {
 	}
 
+	/**
+	 * Reads content configuration blobs, optionally filtered by key list and label.
+	 */
 	export class GetContentDataRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Keys, elementCls: String, isOptional: true })
 		public keys?: Array<string>;
@@ -35,12 +84,21 @@ export namespace ContentModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetContentData.
+	 */
 	export class ServerGetContentDataRequestData extends GetContentDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetContentData.
+	 */
 	export class AdminGetContentDataRequestData extends ServerGetContentDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetFileUploadInfoList.
+	 */
 	export class GetFileUploadInfoListRequestData {
 		@NumberDataMember({ code: ParameterCode.Skip, defaultValue: 0, minValue: 0, mustInt: true, isOptional: true })
 		public skip?: number;
@@ -50,24 +108,42 @@ export namespace ContentModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetFileUploadInfoList.
+	 */
 	export class ServerGetFileUploadInfoListRequestData extends GetFileUploadInfoListRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetFileUploadInfoList.
+	 */
 	export class AdminGetFileUploadInfoListRequestData extends ServerGetFileUploadInfoListRequestData {
 	}
 
+	/**
+	 * Defines the request payload for GetFileUploadInfo.
+	 */
 	export class GetFileUploadInfoRequestData {
 		@StringDataMember({ code: ParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
 		public fileId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerGetFileUploadInfo.
+	 */
 	export class ServerGetFileUploadInfoRequestData extends GetFileUploadInfoRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminGetFileUploadInfo.
+	 */
 	export class AdminGetFileUploadInfoRequestData extends ServerGetFileUploadInfoRequestData {
 	}
 
+	/**
+	 * Defines the request payload for RemoveFileUploadInfo.
+	 */
 	export class RemoveFileUploadInfoRequestData {
 		@StringDataMember({ code: ParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
 		public fileId: string;
@@ -77,24 +153,42 @@ export namespace ContentModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerRemoveFileUploadInfo.
+	 */
 	export class ServerRemoveFileUploadInfoRequestData extends RemoveFileUploadInfoRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminRemoveFileUploadInfo.
+	 */
 	export class AdminRemoveFileUploadInfoRequestData extends ServerRemoveFileUploadInfoRequestData {
 	}
 
+	/**
+	 * Requests a short-lived download token for an existing uploaded file.
+	 */
 	export class RequestDownloadFileUploadInfoRequestData {
 		@StringDataMember({ code: ParameterCode.FileId, mustNonNull: true, minLength: 15, maxLength: 15 })
 		public fileId: string;
 
 	}
 
+	/**
+	 * Defines the request payload for ServerRequestDownloadFileUploadInfo.
+	 */
 	export class ServerRequestDownloadFileUploadInfoRequestData extends RequestDownloadFileUploadInfoRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminRequestDownloadFileUploadInfo.
+	 */
 	export class AdminRequestDownloadFileUploadInfoRequestData extends ServerRequestDownloadFileUploadInfoRequestData {
 	}
 
+	/**
+	 * Defines the request payload for SetContentData.
+	 */
 	export class SetContentDataRequestData {
 		@GNArrayDataMember({ code: ParameterCode.Configs, elementCls: ContentDataParam, mustNonNull: true })
 		public configs: Array<ContentDataParam>;
@@ -104,30 +198,48 @@ export namespace ContentModels {
 
 	}
 
+	/**
+	 * Defines the request payload for ServerSetContentData.
+	 */
 	export class ServerSetContentDataRequestData extends SetContentDataRequestData {
 	}
 
+	/**
+	 * Defines the request payload for AdminSetContentData.
+	 */
 	export class AdminSetContentDataRequestData extends ServerSetContentDataRequestData {
 	}
 
+	/**
+	 * Returns the backend-generated file ID for follow-up upload or download workflows.
+	 */
 	export class FileIdUploadResponseData {
 		@StringDataMember({ code: ParameterCode.FileId })
 		public fileId: string;
 
 	}
 
+	/**
+	 * Defines the response payload for GetContentData.
+	 */
 	export class GetContentDataResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Configs, elementCls: ContentDataParam, mustNonNull: true })
 		public configs: Array<ContentDataParam>;
 
 	}
 
+	/**
+	 * Defines the response payload for GetFileUploadInfoList.
+	 */
 	export class GetFileUploadInfoListResponseData {
 		@GNArrayDataMember({ code: ParameterCode.Results, elementCls: FileIdUploadResponseData })
 		public results: Array<FileIdUploadResponseData>;
 
 	}
 
+	/**
+	 * Describes upload metadata stored for one file entry.
+	 */
 	export class FileUploadItem {
 		@StringDataMember({ code: ParameterCode.MimeType })
 		public mimeType: string;
@@ -140,6 +252,9 @@ export namespace ContentModels {
 
 	}
 
+	/**
+	 * Returns metadata for one uploaded file entry.
+	 */
 	export class GetFileUploadInfoResponseData extends FileIdUploadResponseData {
 		@StringDataMember({ code: ParameterCode.FileName })
 		public fileName: string;
@@ -150,6 +265,9 @@ export namespace ContentModels {
 		@GNHashtableDataMember({ code: ParameterCode.RemoveStatus })
 		public removeStatus: GenericModels.RemoveStatusItem;
 
+		/**
+		 * Upload-expiration timestamp for unfinished uploads when present.
+		 */
 		@NumberDataMember({ code: ParameterCode.TsUploadExpire, isOptional: true })
 		public tsUploadExpire?: number;
 
@@ -158,12 +276,18 @@ export namespace ContentModels {
 
 	}
 
+	/**
+	 * Returns the download token consumed by the SDK download helper.
+	 */
 	export class RequestDownloadFileUploadInfoResponseData {
 		@StringDataMember({ code: ParameterCode.DownloadToken })
 		public downloadToken: string;
 
 	}
 
+	/**
+	 * Defines an intentionally empty response payload.
+	 */
 	export class EmptyResponseData {
 	}
 
