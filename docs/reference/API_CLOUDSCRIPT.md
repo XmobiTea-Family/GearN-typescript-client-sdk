@@ -2,7 +2,7 @@
 
 CloudScript function add/edit/execute + version/listing.
 
-Domain guide: [guides/CLOUDSCRIPT.md](../guides/CLOUDSCRIPT.md). DTO shapes: [dto/CLOUDSCRIPT.md](dto/CLOUDSCRIPT.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
+Domain guide: [guides/CLOUDSCRIPT.md](/docs/guides/CLOUDSCRIPT.md). DTO shapes: [dto/CLOUDSCRIPT.md](/docs/reference/dto/CLOUDSCRIPT.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
 
 ## Namespaces
 
@@ -33,7 +33,7 @@ Param chung:
 | `customTags` | `GNHashtable` | yes | Tags gắn vào request, backend có thể log/route |
 | `timeout` | `number` | yes | Timeout giây; default = `OperationRequest.defaultTimeOut` |
 
-Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
+Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 
 ## Client methods (`GNNetwork.cloudScript.*`)

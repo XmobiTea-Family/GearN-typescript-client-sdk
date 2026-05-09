@@ -4,9 +4,9 @@ SDK TypeScript client cho GearN Server.
 
 `GNNetwork` là entrypoint duy nhất ở tầng public API. Sau `init()`, toàn bộ thao tác đi qua các nhóm API tĩnh, gồm: `GNNetwork.authenticate`, `GNNetwork.masterPlayer`, `GNNetwork.gamePlayer`, `GNNetwork.characterPlayer`, `GNNetwork.group`, `GNNetwork.inventory`, `GNNetwork.storeInventory`, `GNNetwork.content`, `GNNetwork.multiplayer`, `GNNetwork.cloudScript`, `GNNetwork.dashboard`.
 
-> **AI / code assistant:** đọc [docs/AI_CHEATSHEET.md](docs/AI_CHEATSHEET.md) trước (one-page), rồi [docs/RULES.md](docs/RULES.md) cho rule chi tiết (route, permission, self/other-self, socket, error). Machine-readable manifest: [docs/ai-manifest.json](docs/ai-manifest.json).
+> **AI / code assistant:** đọc [docs/AI_CHEATSHEET.md](/docs/AI_CHEATSHEET.md) trước (one-page), rồi [docs/RULES.md](/docs/RULES.md) cho rule chi tiết (route, permission, self/other-self, socket, error). Machine-readable manifest: [docs/ai-manifest.json](/docs/ai-manifest.json).
 
-Package publish: `@xmobitea/gn-typescript-client`. Rule canonical: [docs/RULES.md](docs/RULES.md).
+Package publish: `@xmobitea/gn-typescript-client`. Rule canonical: [docs/RULES.md](/docs/RULES.md).
 
 ## 1. Yêu cầu
 
@@ -79,22 +79,22 @@ console.log("Your userId: " + loginByCustomIdResponse.responseData.userId);
 console.log("Your countryCode: " + loginByCustomIdResponse.responseData.infoResponseParameters.countryCode);
 console.log("Your displayName: " + loginByCustomIdResponse.responseData.infoResponseParameters.displayName);
 ```
-4. Nếu app cần realtime, sau khi đã có `authToken` → `GNNetwork.connectSocket()`, đồng thời `GearN Server` phải settings options.socketAppSettings.enable = true.
-5. Socket auto-auth nếu token đã cache; chỉ `GNNetwork.sendRequestAuthSocket()` thủ công khi cần re-auth.
+4. Nếu app cần realtime, subscribe event handler **trước** rồi mới gọi `GNNetwork.connectSocket()` (subscribe sau sẽ miss event ngay sau handshake), đồng thời `GearN Server` phải settings options.socketAppSettings.enable = true.
+5. Socket auto-auth nếu token đã cache. Chỉ gọi `GNNetwork.sendRequestAuthSocket()` thủ công khi: (a) socket connect **trước** khi có `authToken` (login xảy ra sau socket up), hoặc (b) token vừa đổi và muốn re-auth ngay mà không reconnect socket.
 
 11 API group public:
 
-- `GNNetwork.authenticate` — player login/register/refresh. [Guide](docs/guides/AUTHENTICATE.md).
-- `GNNetwork.masterPlayer` — master player account/profile/identity. [Guide](docs/guides/MASTER_PLAYER.md).
-- `GNNetwork.gamePlayer` — game player gameplay/profile/friend/group/character. [Guide](docs/guides/GAME_PLAYER.md).
-- `GNNetwork.characterPlayer` — character-level (trong trường hợp 1 game player có nhiều nhân vật nhỏ) gameplay/social. [Guide](docs/guides/CHARACTER_PLAYER.md).
-- `GNNetwork.group` — group metadata/member/message/currency. [Guide](docs/guides/GROUP.md).
-- `GNNetwork.inventory` — inventory item metadata, statistics, log. [Guide](docs/guides/INVENTORY.md).
-- `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](docs/guides/STORE_INVENTORY.md).
-- `GNNetwork.content` — content config, file upload/download metadata, small game asset, avatar asset. [Guide](docs/guides/CONTENT.md).
-- `GNNetwork.multiplayer` — matchmaking ticket, handle matchmaking trận đấu (HTTP, không socket). [Guide](docs/guides/MULTIPLAYER.md).
-- `GNNetwork.cloudScript` — CloudScript publish/version/execute, khi cần phải phối hợp các function lại với nhau, hoặc cần để server validate, cần phải viết cloudScript code từ `GearN Dashboard`. [API guide](docs/guides/CLOUDSCRIPT.md), [script authoring guide](docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md).
-- `GNNetwork.dashboard` — admin login + quản trị game/secret/analytics, không nên sử dụng nếu code game client. [Guide](docs/guides/DASHBOARD.md).
+- `GNNetwork.authenticate` — player login/register/refresh. [Guide](/docs/guides/AUTHENTICATE.md).
+- `GNNetwork.masterPlayer` — master player account/profile/identity. [Guide](/docs/guides/MASTER_PLAYER.md).
+- `GNNetwork.gamePlayer` — game player gameplay/profile/friend/group/character. [Guide](/docs/guides/GAME_PLAYER.md).
+- `GNNetwork.characterPlayer` — character-level (trong trường hợp 1 game player có nhiều nhân vật nhỏ) gameplay/social. [Guide](/docs/guides/CHARACTER_PLAYER.md).
+- `GNNetwork.group` — group metadata/member/message/currency. [Guide](/docs/guides/GROUP.md).
+- `GNNetwork.inventory` — inventory item metadata, statistics, log. [Guide](/docs/guides/INVENTORY.md).
+- `GNNetwork.storeInventory` — store catalog, buy/present, receipt validation. [Guide](/docs/guides/STORE_INVENTORY.md).
+- `GNNetwork.content` — content config, file upload/download metadata, small game asset, avatar asset. [Guide](/docs/guides/CONTENT.md).
+- `GNNetwork.multiplayer` — matchmaking ticket, handle matchmaking trận đấu (HTTP, không socket). [Guide](/docs/guides/MULTIPLAYER.md).
+- `GNNetwork.cloudScript` — CloudScript publish/version/execute, khi cần phải phối hợp các function lại với nhau, hoặc cần để server validate, cần phải viết cloudScript code từ `GearN Dashboard`. [API guide](/docs/guides/CLOUDSCRIPT.md), [script authoring guide](/docs/cloudScript/CLOUDSCRIPT_USAGE.md).
+- `GNNetwork.dashboard` — admin login + quản trị game/secret/analytics, không nên sử dụng nếu code game client. [Guide](/docs/guides/DASHBOARD.md).
 
 ## 4. Khởi tạo cơ bản
 
@@ -111,7 +111,7 @@ settings.config({
   serverAddress: "127.0.0.1",          // GearN Server host / IP
   serverPort: 2202,                    // HTTP port, dựa vào options.applicationSettings.port và options.httpAppSettings.enable của GearN Server
   serverSocketPort: 2901,              // Socket port, dựa vào options.applicationSettings.socketPort của GearN Server
-  useSsl: false,                       // true khi public endpoint dùng HTTPS, nếu useSsl thì setup serverPort và serverSocketPort thành -1, đồng thời serverAddress là url hợp lệ
+  useSsl: false,                       // true để build HTTPS/WSS URL. Khi proxy expose default port (80/443) trực tiếp thì set serverPort/serverSocketPort = -1; nếu dùng port tường minh (vd: 443) thì truyền đúng số đó. serverAddress phải là hostname hợp lệ (không có scheme)
   useSocket: true,                     // client muốn sử dụng socket để nhận các gói tin chủ động từ phía GearN Server, dựa vào options.socketAppSettings.enable của GearN Server
   useHttp: true,                       // luôn luôn là true, dựa vào options.httpAppSettings.enable của GearN Server
   defaultTimeoutInSeconds: 20,         // default timeout tính bằng giây, thời gian để timeout tính từ lúc bắt đầu gửi OperationRequest và chờ OperationResponse từ phía server, nếu vượt quá thời gian này, 1 mã lỗi ReturnCode.OperationTimeout sẽ được trả về
@@ -128,7 +128,7 @@ settings.config({
 GNNetwork.init(settings);
 ```
 
-Full field schema: [docs/reference/CONFIG.md](docs/reference/CONFIG.md). Rule route / permission / self / other-self: [docs/RULES.md](docs/RULES.md).
+Full field schema: [docs/reference/CONFIG.md](/docs/reference/CONFIG.md). Rule route / permission / self / other-self: [docs/RULES.md](/docs/RULES.md).
 
 ## 5. Quick start: login bằng custom device id
 
@@ -223,7 +223,7 @@ Helper:
 - `GNNetwork.getPing()` — ping trung bình từ active transport.
 - `GNNetwork.syncTs()` — sync local estimate server timestamp.
 
-Realtime event handler (6 handler, subscribe bằng gán `static onUpdate`): [docs/reference/EVENTS.md](docs/reference/EVENTS.md).
+Realtime event handler (6 handler, subscribe bằng gán `static onUpdate`): [docs/reference/EVENTS.md](/docs/reference/EVENTS.md).
 
 ## 8. Dashboard / admin login
 
@@ -246,15 +246,15 @@ if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
 if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
 ```
 
-Rule chi tiết DashboardApi: [docs/guides/DASHBOARD.md](docs/guides/DASHBOARD.md).
+Rule chi tiết DashboardApi: [docs/guides/DASHBOARD.md](/docs/guides/DASHBOARD.md).
 
 ## 9. Method signature
 
-Signature đầy đủ + bảng override param (`overrideAuthToken`, `overrideSecretKey`, `customTags`, `timeout`): [docs/RULES.md § 8](docs/RULES.md#8-method-signature--override-params).
+Signature đầy đủ + bảng override param (`overrideAuthToken`, `overrideSecretKey`, `customTags`, `timeout`): [docs/RULES.md § 8](/docs/RULES.md#8-method-signature--override-params).
 
 ## 10. Response model
 
-Typed response có 5 public field (không getter): `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Pattern check 2 tầng + full table ReturnCode/ErrorCode: [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md).
+Typed response có 5 public field (không getter): `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Pattern check 2 tầng + full table ReturnCode/ErrorCode: [docs/reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 ## 11. Auth state, gameId, health check, upload
 
@@ -276,7 +276,7 @@ await GNNetwork.getAuthInfoAsync("some-auth-token");
 const bytes = new Uint8Array([1, 2, 3, 4]);
 await GNNetwork.uploadFileAsync("file-001", bytes, "demo.bin", "application/octet-stream");
 
-// Download URL từ download token
+// Download URL từ download token (token lấy từ response của các API trả về file metadata, ví dụ content.getFileUploadInfoAsync)
 GNNetwork.getDownloadFileUrl("download-token-from-server");
 ```
 
@@ -388,7 +388,7 @@ const res = await GNNetwork.sendViaHttpTRequestTResponseAsync(
 
 - Detect platform: `GNSupport.getPlatformType()`.
 - Browser + HTTP + MsgPack → SDK auto-fallback JSON.
-- Cocos Creator: giữ 2 flag TS decorator nếu có custom DTO. [Integration guide](docs/guides/COCOS_CREATOR_INTEGRATION.md).
+- Cocos Creator: giữ 2 flag TS decorator nếu có custom DTO. [Integration guide](/docs/guides/COCOS_CREATOR_INTEGRATION.md).
 
 ## 15. Build & publish
 
@@ -397,13 +397,13 @@ npm run test
 npm run build:node       # CommonJS cho Node
 npm run build:udm        # UMD
 npm run build:minudm     # UMD minified
-npm run build:cocos      # Cocos
-npm run build            # tất cả output chính
+npm run build:cocos      # Cocos (riêng biệt, không có trong build)
+npm run build            # node + udm + minudm (không bao gồm Cocos)
 ```
 
 ## 16. Lỗi hay gặp
 
-Full checklist + anti-patterns: [docs/RULES.md § 10](docs/RULES.md#10-anti-patterns--pitfalls). Return/error code table: [docs/reference/ERROR_HANDLING.md](docs/reference/ERROR_HANDLING.md).
+Full checklist + anti-patterns: [docs/RULES.md § 10](/docs/RULES.md#10-anti-patterns--pitfalls). Return/error code table: [docs/reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 ## 17. File tham khảo trong repo
 
@@ -417,4 +417,4 @@ Full checklist + anti-patterns: [docs/RULES.md § 10](docs/RULES.md#10-anti-patt
 2. Mọi call qua `GNNetwork.*`.
 3. Check `returnCode` trước, `errorCode` sau.
 4. Socket: login HTTP → `connectSocket()`; chỉ `sendRequestAuthSocket()` khi cần re-auth thủ công.
-5. Rule chi tiết → [docs/RULES.md](docs/RULES.md).
+5. Rule chi tiết → [docs/RULES.md](/docs/RULES.md).

@@ -2,7 +2,7 @@
 
 Matchmaking ticket lifecycle, queue statistics, match query.
 
-Related API reference: [API_MULTIPLAYER.md](../API_MULTIPLAYER.md).
+Related API reference: [API_MULTIPLAYER.md](/docs/reference/API_MULTIPLAYER.md).
 
 Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
 

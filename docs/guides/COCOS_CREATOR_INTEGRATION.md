@@ -95,7 +95,7 @@ console.log("User ID:", GNNetwork.getAuthenticateStatus().getUserId());
 
 ### Socket Connection
 
-Tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow).
+Tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
 
 ```ts
 import { GNNetwork } from "@xmobitea/gn-typescript-client";

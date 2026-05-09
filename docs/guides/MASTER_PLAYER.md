@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - Với hầu hết flow thao tác trên một player cụ thể:
   - `client` cho phép `userId?`
   - `server/admin` bắt buộc `userId`
@@ -175,8 +175,8 @@ Rule nhanh:
 
 ## 5. Enum Và Reference
 
-- DTO fields: [reference/dto/MASTER_PLAYER.md](../reference/dto/MASTER_PLAYER.md). Method table: [reference/API_MASTER_PLAYER.md](../reference/API_MASTER_PLAYER.md).
-- Enums: [GoogleLoginType](../reference/ENUMS.md#googlelogintype), [PushPlatformType](../reference/ENUMS.md#pushplatformtype).
+- DTO fields: [reference/dto/MASTER_PLAYER.md](/docs/reference/dto/MASTER_PLAYER.md). Method table: [reference/API_MASTER_PLAYER.md](/docs/reference/API_MASTER_PLAYER.md).
+- Enums: [GoogleLoginType](/docs/reference/ENUMS.md#googlelogintype), [PushPlatformType](/docs/reference/ENUMS.md#pushplatformtype).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/MasterPlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `LinkGoogleRequestData.type` nên map bằng `GoogleLoginType`.
 - `AddPushNotificationRequestData.platformType` và `PushNotificationItem.platformType` nên map bằng `PushPlatformType`.

@@ -56,7 +56,7 @@ Class import: `import { ReturnCode } from "@xmobitea/gn-typescript-client"` — 
 | `UnknownError` | 0 | Request fail, không có mapped return code cụ thể |
 | `Ok` | 1 | Protocol-level thành công; vẫn phải check `errorCode` trong response |
 
-Xem thêm: [ERROR_HANDLING.md](ERROR_HANDLING.md).
+Xem thêm: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 ---
 
@@ -119,7 +119,7 @@ Class import: `import { ErrorCode } from "@xmobitea/gn-typescript-client"` — c
 | `StoreItemPurchasedAndNonConsumable` | 49 | Buyer đã own non-consumable này rồi | store buy |
 | `StoreItemExists` | 50 | Store item đã tồn tại (không tạo lại được) | dashboard store mgmt |
 
-Xem thêm: [ERROR_HANDLING.md](ERROR_HANDLING.md).
+Xem thêm: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 ---
 

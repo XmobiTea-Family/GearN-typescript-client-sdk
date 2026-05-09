@@ -49,14 +49,14 @@ Typed response (trả từ mọi `*Async()` và callback path) expose field `pub
 
 ## Tầng 1: `ReturnCode`
 
-Kiểm tra bằng `res.returnCode`. So sánh bằng enum symbol. Giá trị numeric: [ENUMS.md § ReturnCode](ENUMS.md#returncode).
+Kiểm tra bằng `res.returnCode`. So sánh bằng enum symbol. Giá trị numeric: [ENUMS.md § ReturnCode](/docs/reference/ENUMS.md#returncode).
 
 | ReturnCode | Khi nào gặp | Recommended action |
 |------------|-------------|--------------------|
 | `Ok` | Happy path | Sang tầng 2 check `errorCode` |
 | `UnknownError` | Backend fail nhưng không map code cụ thể | Log + show lỗi chung; không retry tự động |
 | `OperationTimeout` | Request timeout (SDK hoặc backend) | Retry với backoff nếu operation idempotent; báo user nếu không |
-| `OperationNotAllow` | Permission rule của secret key không cho chạy operation ở target context | Sai route (`client/server/admin`) hoặc secret thiếu `selfEnable`/`otherSelfEnable`/`serverSelfEnable`/`adminSelfEnable`. Không retry — fix config. Checklist chi tiết: [RULES.md § 6](../RULES.md#6-permission-flags) |
+| `OperationNotAllow` | Permission rule của secret key không cho chạy operation ở target context | Sai route (`client/server/admin`) hoặc secret thiếu `selfEnable`/`otherSelfEnable`/`serverSelfEnable`/`adminSelfEnable`. Không retry — fix config. Checklist chi tiết: [RULES.md § 6](/docs/RULES.md#6-permission-flags) |
 | `InternalServerError` | Backend crash internal | Log + show lỗi chung; có thể retry 1 lần rồi escalate |
 | `OperationInvalid` | Operation code không tồn tại / sai với request type + role | Sai namespace: kiểm tra đang gọi đúng `GNNetwork.<domain>.<method>`. Không retry |
 | `InvalidRequestParameters` | Request shape / field invalid | Đọc `res.invalidMembers`; fix field rồi gửi lại |
@@ -77,7 +77,7 @@ interface InvalidMember {
 }
 ```
 
-`InvalidMemberType` xem [ENUMS.md § InvalidMemberType](ENUMS.md#invalidmembertype). Ví dụ parse:
+`InvalidMemberType` xem [ENUMS.md § InvalidMemberType](/docs/reference/ENUMS.md#invalidmembertype). Ví dụ parse:
 
 ```ts
 if (res.returnCode === ReturnCode.InvalidRequestParameters) {
@@ -93,7 +93,7 @@ if (res.returnCode === ReturnCode.InvalidRequestParameters) {
 
 Chỉ check sau khi `returnCode === ReturnCode.Ok`. Lấy qua `response.errorCode` (field public trên typed response class).
 
-Bảng đầy đủ 50 giá trị xem [ENUMS.md § ErrorCode](ENUMS.md#errorcode). Pattern xử lý chung:
+Bảng đầy đủ 50 giá trị xem [ENUMS.md § ErrorCode](/docs/reference/ENUMS.md#errorcode). Pattern xử lý chung:
 
 | ErrorCode family | Pattern |
 |------------------|---------|
@@ -154,6 +154,6 @@ Mặc định ưu tiên `*Async`.
 
 ## Liên kết
 
-- Enum đầy đủ: [ENUMS.md](ENUMS.md)
-- Route / permission: [RULES.md § 3](../RULES.md#3-route--trust-boundary-của-caller)
-- Self / other-self: [RULES.md § 4](../RULES.md#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)
+- Enum đầy đủ: [ENUMS.md](/docs/reference/ENUMS.md)
+- Route / permission: [RULES.md § 3](/docs/RULES.md#3-route--trust-boundary-của-caller)
+- Self / other-self: [RULES.md § 4](/docs/RULES.md#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)

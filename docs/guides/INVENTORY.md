@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - Payload shape hiện tại giữa `client`, `server`, `admin` là giống nhau; khác biệt chính là trust boundary và secret key mặc định.
 - `InventoryApi` không có flow tạo inventory item mới trong public surface hiện tại. Không được tự suy diễn `createInventoryItem`.
 
@@ -108,8 +108,8 @@ Rule nhanh:
 
 ## 5. Enum và Reference
 
-- DTO fields: [reference/dto/INVENTORY.md](../reference/dto/INVENTORY.md). Method table: [reference/API_INVENTORY.md](../reference/API_INVENTORY.md).
-- Enums: [ItemType](../reference/ENUMS.md#itemtype), [OwnerType](../reference/ENUMS.md#ownertype).
+- DTO fields: [reference/dto/INVENTORY.md](/docs/reference/dto/INVENTORY.md). Method table: [reference/API_INVENTORY.md](/docs/reference/API_INVENTORY.md).
+- Enums: [ItemType](/docs/reference/ENUMS.md#itemtype), [OwnerType](/docs/reference/ENUMS.md#ownertype).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Inventory*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `InfoResponseParameters.itemType` nên map bằng `ItemType`.
 - `InfoResponseParameters.owner.type` và `SetOwnerRequestData.newOwnerType` nên map bằng `OwnerType`.

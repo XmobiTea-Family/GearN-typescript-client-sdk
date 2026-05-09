@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - Khác với `GamePlayerApi`, public contract hiện tại gần như luôn yêu cầu `characterId` rõ ràng cho các flow target một character cụ thể.
 - `client`, `server`, `admin` hiện dùng cùng shape request; khác biệt chính là trust boundary và secret key mặc định.
 - `CharacterPlayerApi` là nhóm metadata/lifecycle ở cấp character:
@@ -64,11 +64,11 @@ Rule cứng:
 - Nếu cần realtime friend/group update: dùng socket event handler riêng.
 - Không được giả định gọi `addPlayerFriendAsync`, `removePlayerFriendAsync`, `joinGroupAsync` hoặc `leaveGroupAsync` là đủ để UI tự nhận realtime nếu chưa auth socket.
 
-Event handler public: xem [reference/EVENTS.md](../reference/EVENTS.md#oncharacterplayerfriendupdateeventhandler) và [reference/EVENTS.md](../reference/EVENTS.md#oncharacterplayergroupupdateeventhandler).
+Event handler public: xem [reference/EVENTS.md](/docs/reference/EVENTS.md#oncharacterplayerfriendupdateeventhandler) và [reference/EVENTS.md](/docs/reference/EVENTS.md#oncharacterplayergroupupdateeventhandler).
 
 Realtime rule:
 
-- Muốn nhận event realtime, tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow).
+- Muốn nhận event realtime, tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
 - `OnCharacterPlayerFriendUpdateEventHandler.onUpdate`:
   - payload có `characterId`
   - có `playerFriends`
@@ -163,9 +163,9 @@ Rule nhanh:
 
 ## 6. Enum Và Reference
 
-- DTO fields: [reference/dto/CHARACTER_PLAYER.md](../reference/dto/CHARACTER_PLAYER.md). Method table: [reference/API_CHARACTER_PLAYER.md](../reference/API_CHARACTER_PLAYER.md).
-- Events: [reference/EVENTS.md](../reference/EVENTS.md#oncharacterplayerfriendupdateeventhandler).
-- Enums: [FriendStatus](../reference/ENUMS.md#friendstatus), [GroupStatus](../reference/ENUMS.md#groupstatus), [OwnerType](../reference/ENUMS.md#ownertype).
+- DTO fields: [reference/dto/CHARACTER_PLAYER.md](/docs/reference/dto/CHARACTER_PLAYER.md). Method table: [reference/API_CHARACTER_PLAYER.md](/docs/reference/API_CHARACTER_PLAYER.md).
+- Events: [reference/EVENTS.md](/docs/reference/EVENTS.md#oncharacterplayerfriendupdateeventhandler).
+- Enums: [FriendStatus](/docs/reference/ENUMS.md#friendstatus), [GroupStatus](/docs/reference/ENUMS.md#groupstatus), [OwnerType](/docs/reference/ENUMS.md#ownertype).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/CharacterPlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `GenericModels.FriendItem.status` nên map bằng `FriendStatus`.
 - `GenericModels.GroupItem.status` nên map bằng `GroupStatus`.
@@ -433,7 +433,7 @@ const inventoryRelations = inventoryResponse.responseData.infoResponseParameters
 - Nếu flow là create character, có đang dùng nhầm `CharacterPlayerApi` không.
 - Nếu method yêu cầu `infoRequestParam`, đã truyền object này chưa.
 - Nếu đang đọc relation nhẹ, có cần API chuyên biệt để lấy full metadata không.
-- Nếu đang làm friend/group realtime, đã tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow) chưa.
+- Nếu đang làm friend/group realtime, đã tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow) chưa.
 - Nếu đang dùng `setOwnerAsync`, có tránh tự thêm `newOwnerType` không.
 - Nếu đang tạo item hoặc group và cần id mới, đã chuẩn bị bước re-query chưa.
 - Có kiểm tra `hasReturnCodeError()` trước `errorCode` chưa.

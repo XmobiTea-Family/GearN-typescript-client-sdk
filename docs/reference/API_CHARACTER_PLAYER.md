@@ -2,7 +2,7 @@
 
 Character-level gameplay: profile, inventory relation, friend/group relation, statistics, currency, segments, tags.
 
-Domain guide: [guides/CHARACTER_PLAYER.md](../guides/CHARACTER_PLAYER.md). DTO shapes: [dto/CHARACTER_PLAYER.md](dto/CHARACTER_PLAYER.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
+Domain guide: [guides/CHARACTER_PLAYER.md](/docs/guides/CHARACTER_PLAYER.md). DTO shapes: [dto/CHARACTER_PLAYER.md](/docs/reference/dto/CHARACTER_PLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
 
 ## Namespaces
 
@@ -33,7 +33,7 @@ Param chung:
 | `customTags` | `GNHashtable` | yes | Tags gắn vào request, backend có thể log/route |
 | `timeout` | `number` | yes | Timeout giây; default = `OperationRequest.defaultTimeOut` |
 
-Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
+Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 
 ## Client methods (`GNNetwork.characterPlayer.*`)

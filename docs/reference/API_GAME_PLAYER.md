@@ -2,7 +2,7 @@
 
 Game-player profile, friend/group relation, currency, statistics, segment, tag, social identity.
 
-Domain guide: [guides/GAME_PLAYER.md](../guides/GAME_PLAYER.md). DTO shapes: [dto/GAME_PLAYER.md](dto/GAME_PLAYER.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
+Domain guide: [guides/GAME_PLAYER.md](/docs/guides/GAME_PLAYER.md). DTO shapes: [dto/GAME_PLAYER.md](/docs/reference/dto/GAME_PLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
 
 ## Namespaces
 

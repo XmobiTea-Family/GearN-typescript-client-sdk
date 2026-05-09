@@ -2,7 +2,7 @@
 
 Matchmaking ticket lifecycle, queue statistics, match query.
 
-Domain guide: [guides/MULTIPLAYER.md](../guides/MULTIPLAYER.md). DTO shapes: [dto/MULTIPLAYER.md](dto/MULTIPLAYER.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
+Domain guide: [guides/MULTIPLAYER.md](/docs/guides/MULTIPLAYER.md). DTO shapes: [dto/MULTIPLAYER.md](/docs/reference/dto/MULTIPLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
 
 ## Namespaces
 
@@ -33,7 +33,7 @@ Param chung:
 | `customTags` | `GNHashtable` | yes | Tags gắn vào request, backend có thể log/route |
 | `timeout` | `number` | yes | Timeout giây; default = `OperationRequest.defaultTimeOut` |
 
-Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
+Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 
 ## Client methods (`GNNetwork.multiplayer.*`)

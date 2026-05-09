@@ -2,7 +2,7 @@
 
 Player login (account, social, device id), register, refresh auth token.
 
-Domain guide: [guides/AUTHENTICATE.md](../guides/AUTHENTICATE.md). DTO shapes: [dto/AUTHENTICATE.md](dto/AUTHENTICATE.md) hoặc grep [DTO_INDEX.md](DTO_INDEX.md).
+Domain guide: [guides/AUTHENTICATE.md](/docs/guides/AUTHENTICATE.md). DTO shapes: [dto/AUTHENTICATE.md](/docs/reference/dto/AUTHENTICATE.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
 
 ## Namespaces
 
@@ -31,7 +31,7 @@ Param chung:
 | `customTags` | `GNHashtable` | yes | Tags gắn vào request, backend có thể log/route |
 | `timeout` | `number` | yes | Timeout giây; default = `OperationRequest.defaultTimeOut` |
 
-Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
+Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 
 > `server` / `admin` namespace hiện tại không có method public — giữ để đối xứng API.

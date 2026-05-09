@@ -4,7 +4,7 @@ Local offline reference cho permission flags. AI Agent không cần duyệt web 
 
 ## Source Priority
 
-1. [RULES.md § 6](../RULES.md#6-permission-flags) định nghĩa semantics chung: route, target, và flag.
+1. [RULES.md § 6](/docs/RULES.md#6-permission-flags) định nghĩa semantics chung: route, target, và flag.
 2. `API_<GROUP>.md` liệt kê operation theo từng domain; dùng tên method bỏ hậu tố `Async` làm operation name.
 3. GearN Server dashboard là runtime source-of-truth cho secret key nào đang có flag nào.
 4. `https://docs.gearn.net/permissionRules` chỉ là external mirror khi cần đối chiếu online.
@@ -26,17 +26,17 @@ Nếu docs và dashboard khác nhau, dashboard thắng ở runtime; docs cần �
 
 | Group | Operation list | Notes |
 |---|---|---|
-| Authenticate | [API_AUTHENTICATE.md](API_AUTHENTICATE.md) | Chỉ có namespace client. Login/register thường là acting-on-unauth-user; xem rule trong dashboard. |
-| Dashboard | [API_DASHBOARD.md](API_DASHBOARD.md) | Chỉ có namespace client wrapper; admin context resolve từ admin auth token. |
-| Content | [API_CONTENT.md](API_CONTENT.md) | Có client/server/admin; ownership không rõ như player entity. |
-| Multiplayer | [API_MULTIPLAYER.md](API_MULTIPLAYER.md) | Có client/server/admin; dùng HTTP, không dùng socket cho ticket lifecycle. |
-| StoreInventory | [API_STORE_INVENTORY.md](API_STORE_INVENTORY.md) | Có client/server/admin; purchase/receipt flow cần secret đúng trust boundary. |
-| Inventory | [API_INVENTORY.md](API_INVENTORY.md) | Có client/server/admin; owner có thể là master/game/character/group tùy DTO. |
-| Group | [API_GROUP.md](API_GROUP.md) | Có client/server/admin; group lifecycle một số flow nằm ở GamePlayer/CharacterPlayer. |
-| MasterPlayer | [API_MASTER_PLAYER.md](API_MASTER_PLAYER.md) | Có client/server/admin; client có thể bỏ `userId` để target current user. |
-| GamePlayer | [API_GAME_PLAYER.md](API_GAME_PLAYER.md) | Có client/server/admin; scoped theo game environment. |
-| CharacterPlayer | [API_CHARACTER_PLAYER.md](API_CHARACTER_PLAYER.md) | Có client/server/admin; thường phải truyền `characterId`. |
-| CloudScript | [API_CLOUDSCRIPT.md](API_CLOUDSCRIPT.md) | Có client/server/admin; execute/publish phải theo trust boundary. |
+| Authenticate | [API_AUTHENTICATE.md](/docs/reference/API_AUTHENTICATE.md) | Chỉ có namespace client. Login/register thường là acting-on-unauth-user; xem rule trong dashboard. |
+| Dashboard | [API_DASHBOARD.md](/docs/reference/API_DASHBOARD.md) | Chỉ có namespace client wrapper; admin context resolve từ admin auth token. |
+| Content | [API_CONTENT.md](/docs/reference/API_CONTENT.md) | Có client/server/admin; ownership không rõ như player entity. |
+| Multiplayer | [API_MULTIPLAYER.md](/docs/reference/API_MULTIPLAYER.md) | Có client/server/admin; dùng HTTP, không dùng socket cho ticket lifecycle. |
+| StoreInventory | [API_STORE_INVENTORY.md](/docs/reference/API_STORE_INVENTORY.md) | Có client/server/admin; purchase/receipt flow cần secret đúng trust boundary. |
+| Inventory | [API_INVENTORY.md](/docs/reference/API_INVENTORY.md) | Có client/server/admin; owner có thể là master/game/character/group tùy DTO. |
+| Group | [API_GROUP.md](/docs/reference/API_GROUP.md) | Có client/server/admin; group lifecycle một số flow nằm ở GamePlayer/CharacterPlayer. |
+| MasterPlayer | [API_MASTER_PLAYER.md](/docs/reference/API_MASTER_PLAYER.md) | Có client/server/admin; client có thể bỏ `userId` để target current user. |
+| GamePlayer | [API_GAME_PLAYER.md](/docs/reference/API_GAME_PLAYER.md) | Có client/server/admin; scoped theo game environment. |
+| CharacterPlayer | [API_CHARACTER_PLAYER.md](/docs/reference/API_CHARACTER_PLAYER.md) | Có client/server/admin; thường phải truyền `characterId`. |
+| CloudScript | [API_CLOUDSCRIPT.md](/docs/reference/API_CLOUDSCRIPT.md) | Có client/server/admin; execute/publish phải theo trust boundary. |
 
 ## Diagnose `OperationNotAllow`
 
@@ -52,4 +52,4 @@ Không retry cùng secret khi gặp `ReturnCode.OperationNotAllow`; đây là l�
 - Truyền `overrideSecretKey` cho request cụ thể.
 - Yêu cầu backend admin bật flag còn thiếu trong GearN Dashboard cho secret hiện tại.
 
-Xem checklist đầy đủ trong [RULES.md § 6.4](../RULES.md#64-checklist-nhanh-khi-gặp-returncodeoperationnotallow) và scenario chẩn đoán trong [COOKBOOK.md](../COOKBOOK.md#scenario-16-diagnose-operationnotallow).
+Xem checklist đầy đủ trong [RULES.md § 6.4](/docs/RULES.md#64-checklist-nhanh-khi-gặp-returncodeoperationnotallow) và scenario chẩn đoán trong [COOKBOOK.md](/docs/COOKBOOK.md#scenario-16-diagnose-operationnotallow).

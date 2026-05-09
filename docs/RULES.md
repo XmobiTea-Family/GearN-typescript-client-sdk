@@ -12,7 +12,7 @@ File này là canonical source cho mọi rule cross-cutting: route/permission, s
 - Bắt buộc tạo `GNServerSettings`, gọi `settings.config({...})`, rồi `GNNetwork.init(settings)` **1 lần** ở bootstrap của mỗi app session.
 - `init()` idempotent — lần thứ 2 bị ignore. Muốn đổi snapshot config toàn cục nên restart process. Mutate cùng `settings` object sau init chỉ ảnh hưởng một số request mới và không tự reconnect socket.
 - Gọi API trước khi init → namespace `undefined` / `TypeError`.
-- Config field: xem [reference/CONFIG.md](reference/CONFIG.md).
+- Config field: xem [reference/CONFIG.md](/docs/reference/CONFIG.md).
 
 ---
 
@@ -44,7 +44,7 @@ Rule cứng:
 - `*Async()` **không throw** business/transport error — reject Promise chỉ khi transport layer thật sự fail (network exception, serialization fail).
 - Low-level raw `OperationResponse` (không dùng typed wrapper) có getter `getReturnCode()` etc. — chỉ dùng khi tự viết custom op.
 
-Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md). Phân biệt `SecretInvalid` / `OperationInvalid` / `OperationNotAllow` → § 5.
+Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md). Phân biệt `SecretInvalid` / `OperationInvalid` / `OperationNotAllow` → § 5.
 
 ---
 
@@ -118,7 +118,7 @@ GearN Server map quyền theo từng domain + operation (ví dụ `masterPlayer.
 | `serverSelfEnable` | Cho phép thực thi qua route `server` |
 | `adminSelfEnable` | Cho phép thực thi qua route `admin` |
 
-Danh sách operation/flag offline: [reference/PERMISSION_RULES.md](reference/PERMISSION_RULES.md) + `docs/reference/API_<GROUP>.md`. Backend GearN Server / dashboard vẫn là runtime source-of-truth cho secret key nào đang có flag nào.
+Danh sách operation/flag offline: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md) + `docs/reference/API_<GROUP>.md`. Backend GearN Server / dashboard vẫn là runtime source-of-truth cho secret key nào đang có flag nào.
 
 ### 6.1 Mapping (route, target) → required flag
 
@@ -140,7 +140,7 @@ Ngoại lệ: domain không có ownership (`ContentApi`, `StoreInventoryApi`, `M
   1. Dùng `secretKey` khác trong `GNServerSettings` (cấu hình từ bootstrap).
   2. Truyền `overrideSecretKey` per-request.
   3. Yêu cầu backend admin bật flag cho secret hiện tại.
-- Danh sách operation theo domain: ưu tiên [reference/PERMISSION_RULES.md](reference/PERMISSION_RULES.md) và `docs/reference/API_<GROUP>.md` trong repo; chỉ dùng external permission mirror khi cần đối chiếu online.
+- Danh sách operation theo domain: ưu tiên [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md) và `docs/reference/API_<GROUP>.md` trong repo; chỉ dùng external permission mirror khi cần đối chiếu online.
 
 ### 6.3 Scenario điển hình trigger `OperationNotAllow`
 
@@ -164,7 +164,7 @@ Theo đúng thứ tự:
 
 **Không retry** — đây là config fix, không phải transient error.
 
-Diagnose end-to-end với code: [COOKBOOK Scenario 16](COOKBOOK.md#scenario-16-diagnose-operationnotallow).
+Diagnose end-to-end với code: [COOKBOOK Scenario 16](/docs/COOKBOOK.md#scenario-16-diagnose-operationnotallow).
 
 ---
 
@@ -186,7 +186,7 @@ Rule cứng:
 - Gọi `sendRequestAuthSocket()` chỉ khi:
   - Socket connect **trước** khi có `authToken` (login xảy ra sau socket up).
   - Token vừa đổi và muốn re-auth ngay mà không reconnect socket.
-- Không giả định realtime event tự chạy chỉ vì đã gọi method HTTP friend/group. Phải subscribe handler trong [reference/EVENTS.md](reference/EVENTS.md).
+- Không giả định realtime event tự chạy chỉ vì đã gọi method HTTP friend/group. Phải subscribe handler trong [reference/EVENTS.md](/docs/reference/EVENTS.md).
 - Subscribe event handler **trước** `connectSocket()` để không miss event ngay sau handshake.
 
 Helper state:
@@ -265,7 +265,7 @@ Bảng hợp nhất — cột "Triệu chứng" mô tả lỗi runtime thường
 | 13 | Browser + `MessageType.MsgPack` → override toàn SDK sang JSON | Over-engineering | HTTP transport auto-fallback JSON; giữ MsgPack là ok. |
 | 14 | `OperationNotAllow` = thiếu secret | Fix sai hướng, thay secret vô nghĩa | Xem § 5: secret hợp lệ nhưng permission rule cấm. |
 | 15 | Bịa method / field không có trong `dist/*.d.ts` | Compile fail hoặc runtime `undefined` | Tra `API_<GROUP>.md` / `dto/<DOMAIN>.md` / `dist/*.d.ts`. Không suy diễn. |
-| 16 | Giả định realtime tự chạy sau HTTP call | Không nhận event | Phải subscribe handler trong [reference/EVENTS.md](reference/EVENTS.md). |
+| 16 | Giả định realtime tự chạy sau HTTP call | Không nhận event | Phải subscribe handler trong [reference/EVENTS.md](/docs/reference/EVENTS.md). |
 | 17 | Bỏ qua `overrideAuthToken` / `overrideSecretKey` / `customTags` / `timeout` khi cần | Impersonate fail, timeout mặc định không đủ | Xem § 8. |
 | 18 | Dùng `src/` làm nguồn public contract | Phụ thuộc internal, rot nhanh | `src/` chỉ khi sửa SDK / debug nội bộ. |
 
@@ -283,7 +283,7 @@ Khi sinh code:
 
 1. **API reference theo domain** (`docs/reference/API_<GROUP>.md`) — method signature, request DTO, async form, response class.
 2. **Guide theo domain** (`docs/guides/<GROUP>.md`) — decision rules, gotchas domain-specific.
-3. **RULES.md** (file này) + [ai-manifest.json](ai-manifest.json) — rule cross-cutting.
+3. **RULES.md** (file này) + [ai-manifest.json](/docs/ai-manifest.json) — rule cross-cutting.
 4. **DTO field table** (`docs/reference/dto/<DOMAIN>.md` hoặc grep `DTO_INDEX.md`) — field-level schema.
 5. **ENUMS.md** — giá trị numeric.
 6. **`dist/*.d.ts`** — fallback nếu docs chưa cover.
@@ -297,11 +297,11 @@ Chỉ đọc `src/` khi:
 
 ## Liên kết
 
-- [AI_CHEATSHEET.md](AI_CHEATSHEET.md) — one-page reference
-- [COOKBOOK.md](COOKBOOK.md) — 16 scenario end-to-end
-- [reference/API_INDEX.md](reference/API_INDEX.md) — bảng method mọi group
-- [reference/ERROR_HANDLING.md](reference/ERROR_HANDLING.md) — full return/error code table
-- [reference/EVENTS.md](reference/EVENTS.md) — realtime event handler
-- [reference/CONFIG.md](reference/CONFIG.md) — `GNServerSettings` schema
-- [reference/ENUMS.md](reference/ENUMS.md) — enum numeric value
-- [ai-manifest.json](ai-manifest.json) — machine-readable manifest
+- [AI_CHEATSHEET.md](/docs/AI_CHEATSHEET.md) — one-page reference
+- [COOKBOOK.md](/docs/COOKBOOK.md) — 16 scenario end-to-end
+- [reference/API_INDEX.md](/docs/reference/API_INDEX.md) — bảng method mọi group
+- [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md) — full return/error code table
+- [reference/EVENTS.md](/docs/reference/EVENTS.md) — realtime event handler
+- [reference/CONFIG.md](/docs/reference/CONFIG.md) — `GNServerSettings` schema
+- [reference/ENUMS.md](/docs/reference/ENUMS.md) — enum numeric value
+- [ai-manifest.json](/docs/ai-manifest.json) — machine-readable manifest

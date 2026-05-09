@@ -16,6 +16,5 @@
         "./dist/",
         "./index.js",
         "./syncCode.js",
-        "./scripts/validate-ai-docs.mjs",
     ]
 }

@@ -10,15 +10,15 @@ Mục tiêu:
 
 ## 1. Reading order
 
-1. [docs/AI_CHEATSHEET.md](docs/AI_CHEATSHEET.md) — one-page reference, decision tree, mandatory pattern.
-2. [docs/RULES.md](docs/RULES.md) — **canonical** cho mọi rule cross-cutting.
-3. [docs/ai-manifest.json](docs/ai-manifest.json) — machine-readable manifest (schemaVersion=3).
-4. [docs/reference/API_INDEX.md](docs/reference/API_INDEX.md) — bảng method theo 11 API group.
-5. Guide đúng domain trong [docs/guides/](docs/guides/).
-6. DTO field qua [docs/reference/dto/](docs/reference/dto/) hoặc grep [docs/reference/DTO_INDEX.md](docs/reference/DTO_INDEX.md).
+1. [docs/AI_CHEATSHEET.md](/docs/AI_CHEATSHEET.md) — one-page reference, decision tree, mandatory pattern.
+2. [docs/RULES.md](/docs/RULES.md) — **canonical** cho mọi rule cross-cutting.
+3. [docs/ai-manifest.json](/docs/ai-manifest.json) — machine-readable manifest (schemaVersion=3).
+4. [docs/reference/API_INDEX.md](/docs/reference/API_INDEX.md) — bảng method theo 11 API group.
+5. Guide đúng domain trong [docs/guides/](/docs/guides/).
+6. DTO field qua [docs/reference/dto/](/docs/reference/dto/) hoặc grep [docs/reference/DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
 7. Public type trong `dist/**/*.d.ts` — fallback khi docs chưa cover.
 
-Bảng chọn API group theo yêu cầu: xem [docs/AI_CHEATSHEET.md § 2](docs/AI_CHEATSHEET.md#2-decision-tree-tôi-cần-làm-gì). Rule router/permission/socket: xem [docs/RULES.md](docs/RULES.md); permission operation/flag offline: [docs/reference/PERMISSION_RULES.md](docs/reference/PERMISSION_RULES.md).
+Bảng chọn API group theo yêu cầu: xem [docs/AI_CHEATSHEET.md § 2](/docs/AI_CHEATSHEET.md#2-decision-tree-tôi-cần-làm-gì). Rule router/permission/socket: xem [docs/RULES.md](/docs/RULES.md); permission operation/flag offline: [docs/reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 
 ## 2. Khi nào được đọc `src/`
 
@@ -34,4 +34,4 @@ Nếu `docs` + `dist` vẫn chưa đủ kết luận, hỏi lại con người h
 
 ## 3. Scenario end-to-end
 
-16 scenario end-to-end (init, login, socket, realtime event, matchmaking, store, cloudscript, cleanup, diagnose permission, ...): [docs/COOKBOOK.md](docs/COOKBOOK.md).
+16 scenario end-to-end (init, login, socket, realtime event, matchmaking, store, cloudscript, cleanup, diagnose permission, ...): [docs/COOKBOOK.md](/docs/COOKBOOK.md).

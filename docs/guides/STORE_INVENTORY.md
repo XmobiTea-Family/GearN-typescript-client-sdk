@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
 - Khác với `MultiplayerApi`, namespace `server/admin` ở đây không thêm field `userId`; payload shape giữa 3 role hiện gần như giống nhau.
 
 ## 2. Hard Rules
@@ -77,8 +77,8 @@ Rule nhanh:
 
 ## 5. Enum và Reference
 
-- DTO fields: [reference/dto/STORE_INVENTORY.md](../reference/dto/STORE_INVENTORY.md). Method table: [reference/API_STORE_INVENTORY.md](../reference/API_STORE_INVENTORY.md).
-- Enums: [StoreItemType](../reference/ENUMS.md#storeitemtype), [StoreReceiveType](../reference/ENUMS.md#storereceivetype), [OwnerType](../reference/ENUMS.md#ownertype).
+- DTO fields: [reference/dto/STORE_INVENTORY.md](/docs/reference/dto/STORE_INVENTORY.md). Method table: [reference/API_STORE_INVENTORY.md](/docs/reference/API_STORE_INVENTORY.md).
+- Enums: [StoreItemType](/docs/reference/ENUMS.md#storeitemtype), [StoreReceiveType](/docs/reference/ENUMS.md#storereceivetype), [OwnerType](/docs/reference/ENUMS.md#ownertype).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/StoreInventory*.d.ts`.
 - `SetStoreItemInformationRequestData.storeItemType` có range `1..2`, nên map bằng `StoreItemType`.
 - `GetStoreLogRequestData.storeReceiveTypes` nên map bằng `StoreReceiveType`.

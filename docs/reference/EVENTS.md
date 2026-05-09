@@ -4,7 +4,7 @@ SDK cung cấp 6 server event handler đẩy realtime update từ backend qua so
 
 ## Rule cứng
 
-- Event chỉ đến khi **socket đã connect + đã authenticate**. Xem [RULES.md § 7](../RULES.md#7-auth--socket-flow).
+- Event chỉ đến khi **socket đã connect + đã authenticate**. Xem [RULES.md § 7](/docs/RULES.md#7-auth--socket-flow).
 - Callback là **static field** dùng chung toàn app session. Gán lần cuối ghi đè lần trước; không có mechanism multi-subscriber built-in. Nếu cần fan-out, tự wrap dispatcher.
 - Cleanup copy-safe = gán callback no-op hoặc remove listener trong wrapper dispatcher của app. Không có event nào “drain” callback khi socket disconnect.
 - Callback nhận đã-deserialized payload. Không thao tác với `OperationEvent` raw trừ khi viết handler custom.
@@ -183,6 +183,6 @@ export function subscribeGroupMessage(l: Listener<GroupMessageUpdate>) {
 
 ## Liên kết
 
-- Socket auth flow: [RULES.md § 7](../RULES.md#7-auth--socket-flow)
-- `FriendStatus` / `GroupStatus` giá trị numeric: [ENUMS.md](ENUMS.md)
-- API gây event: [API group guides](../guides/)
+- Socket auth flow: [RULES.md § 7](/docs/RULES.md#7-auth--socket-flow)
+- `FriendStatus` / `GroupStatus` giá trị numeric: [ENUMS.md](/docs/reference/ENUMS.md)
+- API gây event: [API group guides](/docs/guides/)

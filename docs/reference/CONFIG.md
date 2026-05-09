@@ -102,6 +102,6 @@ Khi bật, low-level HTTP helper có thể bỏ qua việc tự thêm request pa
 
 ## Liên kết
 
-- Secret key và route permission: xem [RULES.md § 3](../RULES.md#3-route--trust-boundary-của-caller)
-- Socket auth flow: xem [RULES.md § 7](../RULES.md#7-auth--socket-flow) và [EVENTS.md](EVENTS.md)
-- `MessageType` / `LogType` enum: [ENUMS.md](ENUMS.md#messagetype)
+- Secret key và route permission: xem [RULES.md § 3](/docs/RULES.md#3-route--trust-boundary-của-caller)
+- Socket auth flow: xem [RULES.md § 7](/docs/RULES.md#7-auth--socket-flow) và [EVENTS.md](/docs/reference/EVENTS.md)
+- `MessageType` / `LogType` enum: [ENUMS.md](/docs/reference/ENUMS.md#messagetype)

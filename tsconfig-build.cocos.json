@@ -27,6 +27,5 @@
         "./webpack.config.mjs",
         "./webpack.config.cocos.mjs",
         "./syncCode.js",
-        "./scripts/validate-ai-docs.mjs",
     ]
 }

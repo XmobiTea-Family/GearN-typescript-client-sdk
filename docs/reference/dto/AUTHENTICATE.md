@@ -2,7 +2,7 @@
 
 Player login (account, social, device id), register, refresh auth token.
 
-Related API reference: [API_AUTHENTICATE.md](../API_AUTHENTICATE.md).
+Related API reference: [API_AUTHENTICATE.md](/docs/reference/API_AUTHENTICATE.md).
 
 Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
 

@@ -2,7 +2,7 @@
 
 Admin login, game/admin account/secret management, analytics, server log, maintenance tools.
 
-Related API reference: [API_DASHBOARD.md](../API_DASHBOARD.md).
+Related API reference: [API_DASHBOARD.md](/docs/reference/API_DASHBOARD.md).
 
 Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
 

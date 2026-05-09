@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - `GroupApi` thao tác trên group đã tồn tại. Không có public operation `createGroup`, `joinGroup`, `leaveGroup`, `removeGroup` trong nhóm này.
 - Realtime update của group là luồng riêng qua socket event, không phải transport của các method `GroupApi`.
 
@@ -30,7 +30,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
   - dashboard/ops/tooling -> `GNNetwork.group.admin`
 - Không được gọi `GroupApi` để tạo group hoặc join/leave group. Các flow đó nằm ở API player khác.
 - Toàn bộ operation trong `GroupApi` hiện đi qua HTTP, kể cả `sendGroupMessageAsync`.
-- Realtime update group tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow).
+- Realtime update group tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
 - `getGroupInformationAsync`, `getGroupsWithDisplayNameAsync`, `getGroupsWithSegmentAsync`, `getGroupsWithTagAsync`, `getStatisticsLeaderboardAroundGroupAsync`, `getStatisticsLeaderboardAsync`, `getCurrencyLeaderboardAsync` và `getCreateLeaderboardAsync` đều bắt buộc có `infoRequestParam`.
 - `getGroupStatisticsAsync` dùng `statisticsKeys`, còn `infoRequestParam` dùng `groupStatisticsKeys`. Không được dùng lẫn hai field này.
 - `getGroupDataAsync` dùng `groupDataKeys`, `getGroupCurrencyAsync` dùng `groupCurrencyKeys`, `getGroupInventoryAsync` dùng `itemCatalogIds`.
@@ -49,7 +49,7 @@ Rule cứng:
 - Không được giả định gọi `sendGroupMessageAsync` là đủ để nhận push message realtime.
 - Không được giả định socket event có đầy đủ dữ liệu như HTTP response.
 
-Event handler public: xem [reference/EVENTS.md](../reference/EVENTS.md#ongroupmessageupdateeventhandler) và [reference/EVENTS.md](../reference/EVENTS.md#ongroupmemberupdateeventhandler).
+Event handler public: xem [reference/EVENTS.md](/docs/reference/EVENTS.md#ongroupmessageupdateeventhandler) và [reference/EVENTS.md](/docs/reference/EVENTS.md#ongroupmemberupdateeventhandler).
 
 Realtime rule:
 
@@ -134,9 +134,9 @@ Rule nhanh:
 
 ## 6. Reference
 
-- DTO fields: [reference/dto/GROUP.md](../reference/dto/GROUP.md). Method table: [reference/API_GROUP.md](../reference/API_GROUP.md).
-- Events: [reference/EVENTS.md](../reference/EVENTS.md#ongroupmemberupdateeventhandler).
-- Enums: [GroupStatus](../reference/ENUMS.md#groupstatus).
+- DTO fields: [reference/dto/GROUP.md](/docs/reference/dto/GROUP.md). Method table: [reference/API_GROUP.md](/docs/reference/API_GROUP.md).
+- Events: [reference/EVENTS.md](/docs/reference/EVENTS.md#ongroupmemberupdateeventhandler).
+- Enums: [GroupStatus](/docs/reference/ENUMS.md#groupstatus).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Group*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - Lưu ý:
   - `GroupStatus` là enum publish có thật, nhưng `MemberItem.status` trong `GroupApi` không được ràng buộc bằng enum public riêng.
@@ -403,7 +403,7 @@ const nextToken = response.responseData.token;
 - Đã `GNNetwork.init(settings)` chưa.
 - Có chọn đúng namespace `group` / `group.server` / `group.admin` chưa.
 - Có nhớ rằng operation của `GroupApi` hiện đi qua HTTP không.
-- Nếu flow cần realtime, đã tuân theo [rule socket chuẩn trong RULES](../RULES.md#7-auth--socket-flow) chưa.
+- Nếu flow cần realtime, đã tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow) chưa.
 - Nếu đang gọi method có `infoRequestParam`, đã truyền object này chưa.
 - Nếu đang đọc statistics bằng getter chuyên biệt, có dùng đúng `statisticsKeys` chưa.
 - Nếu đang đọc history message, có dùng `skip/limit` chưa.

@@ -2,7 +2,7 @@
 
 Content data key-value, file upload info, download token.
 
-Related API reference: [API_CONTENT.md](../API_CONTENT.md).
+Related API reference: [API_CONTENT.md](/docs/reference/API_CONTENT.md).
 
 Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
 

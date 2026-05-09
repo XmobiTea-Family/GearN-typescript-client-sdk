@@ -33,7 +33,7 @@
 
 **APIs used:** `GNNetwork.init()`, `GNServerSettings`.
 
-Code mẫu đầy đủ (có comment từng field): [README § 4](../README.MD#4-khởi-tạo-cơ-bản). Minimal pattern: [AI_CHEATSHEET § 1](AI_CHEATSHEET.md#1-mandatory-pattern-sao-chép--dùng).
+Code mẫu đầy đủ (có comment từng field): [README § 4](/README.MD#4-khởi-tạo-cơ-bản). Minimal pattern: [AI_CHEATSHEET § 1](/docs/AI_CHEATSHEET.md#1-mandatory-pattern-sao-chép--dùng).
 
 ### Return paths
 
@@ -44,7 +44,7 @@ Code mẫu đầy đủ (có comment từng field): [README § 4](../README.MD#4
 
 - `logType: LogType.All` trong production làm console spam. Dùng `LogType.Error` hoặc `LogType.Off`.
 - Gọi lại `GNNetwork.init()` để đổi settings không có hiệu lực. Setter trên cùng `settings` object sau init chỉ ảnh hưởng một số request mới và không tự reconnect socket.
-- Full anti-patterns: [RULES § 10](RULES.md#10-anti-patterns--pitfalls). Full field schema: [reference/CONFIG.md](reference/CONFIG.md).
+- Full anti-patterns: [RULES § 10](/docs/RULES.md#10-anti-patterns--pitfalls). Full field schema: [reference/CONFIG.md](/docs/reference/CONFIG.md).
 
 ---
 
@@ -54,7 +54,7 @@ Code mẫu đầy đủ (có comment từng field): [README § 4](../README.MD#4
 
 **Prerequisites:** đã `init()`.
 
-**APIs used:** [`GNNetwork.authenticate.loginByAccountAsync`](reference/API_AUTHENTICATE.md), [`AuthenticateModels.LoginByAccountRequestData`](reference/dto/AUTHENTICATE.md#loginbyaccountrequestdata), [`AuthenticateModels.InfoRequestParam`](reference/dto/AUTHENTICATE.md#inforequestparam).
+**APIs used:** [`GNNetwork.authenticate.loginByAccountAsync`](/docs/reference/API_AUTHENTICATE.md), [`AuthenticateModels.LoginByAccountRequestData`](/docs/reference/dto/AUTHENTICATE.md#loginbyaccountrequestdata), [`AuthenticateModels.InfoRequestParam`](/docs/reference/dto/AUTHENTICATE.md#inforequestparam).
 
 ### Code
 
@@ -115,7 +115,7 @@ async function loginWithAccount(username: string, password: string) {
 
 **Prerequisites:** đã có `authToken` cache từ lần login trước (stored ở `StorageService`).
 
-**APIs used:** [`GNNetwork.authenticate.refreshAuthTokenAsync`](reference/API_AUTHENTICATE.md).
+**APIs used:** [`GNNetwork.authenticate.refreshAuthTokenAsync`](/docs/reference/API_AUTHENTICATE.md).
 
 ### Code
 
@@ -159,7 +159,7 @@ if (!(await ensureValidToken())) {
 
 **Prerequisites:** đã init; đã có ID token từ social SDK native.
 
-**APIs used:** `loginByGoogleAsync`, `loginByAppleAsync`, `loginByFacebookAsync`, `loginByGameCenterAsync`, `loginByGooglePlayGameServiceAsync` — cùng pattern. Xem [API_AUTHENTICATE.md](reference/API_AUTHENTICATE.md).
+**APIs used:** `loginByGoogleAsync`, `loginByAppleAsync`, `loginByFacebookAsync`, `loginByGameCenterAsync`, `loginByGooglePlayGameServiceAsync` — cùng pattern. Xem [API_AUTHENTICATE.md](/docs/reference/API_AUTHENTICATE.md).
 
 ### Code
 
@@ -253,7 +253,7 @@ GNNetwork.connectSocket(() => {
 
 **Prerequisites:** socket đã connected + authenticated (scenario 5).
 
-**APIs used:** [`OnGamePlayerFriendUpdateEventHandler`](reference/EVENTS.md#ongameplayerfriendupdateeventhandler).
+**APIs used:** [`OnGamePlayerFriendUpdateEventHandler`](/docs/reference/EVENTS.md#ongameplayerfriendupdateeventhandler).
 
 ### Code
 
@@ -294,7 +294,7 @@ function unsubscribe() {
 
 ### Pitfalls
 
-- `onUpdate` là field `static` — gán nhiều component sẽ **ghi đè lẫn nhau**, chỉ handler cuối cùng fire. Dùng wrapper pattern (xem [EVENTS.md](reference/EVENTS.md)) nếu cần fan-out.
+- `onUpdate` là field `static` — gán nhiều component sẽ **ghi đè lẫn nhau**, chỉ handler cuối cùng fire. Dùng wrapper pattern (xem [EVENTS.md](/docs/reference/EVENTS.md)) nếu cần fan-out.
 - Khi socket tạm mất kết nối → event trong interval đó KHÔNG được replay. App nên resync bằng `GNNetwork.gamePlayer.getFriendList*` sau reconnect.
 
 ---
@@ -305,7 +305,7 @@ function unsubscribe() {
 
 **Prerequisites:** đã login + connect socket + là member của `groupId`.
 
-**APIs used:** [`OnGroupMessageUpdateEventHandler`](reference/EVENTS.md#ongroupmessageupdateeventhandler), [`GNNetwork.group.sendGroupMessageAsync`](reference/API_GROUP.md).
+**APIs used:** [`OnGroupMessageUpdateEventHandler`](/docs/reference/EVENTS.md#ongroupmessageupdateeventhandler), [`GNNetwork.group.sendGroupMessageAsync`](/docs/reference/API_GROUP.md).
 
 ### Code
 
@@ -362,7 +362,7 @@ async function sendGroupChat(groupId: string, text: string) {
 
 **Prerequisites:** đã login + connect socket.
 
-**APIs used:** `GNNetwork.gamePlayer.joinGroupAsync`, `GNNetwork.gamePlayer.leaveGroupAsync`, `GNNetwork.group.server.removeMemberAsync`, [`OnGroupMemberUpdateEventHandler`](reference/EVENTS.md#ongroupmemberupdateeventhandler).
+**APIs used:** `GNNetwork.gamePlayer.joinGroupAsync`, `GNNetwork.gamePlayer.leaveGroupAsync`, `GNNetwork.group.server.removeMemberAsync`, [`OnGroupMemberUpdateEventHandler`](/docs/reference/EVENTS.md#ongroupmemberupdateeventhandler).
 
 ### Code
 
@@ -420,7 +420,7 @@ async function leave(groupId: string) {
 
 **Prerequisites:** đã login + connect socket.
 
-**APIs used:** `GNNetwork.multiplayer.createMatchmakingTicketAsync`, `getMatchmakingTicketAsync`, `cancelMatchmakingTicketAsync`. Xem [API_MULTIPLAYER.md](reference/API_MULTIPLAYER.md).
+**APIs used:** `GNNetwork.multiplayer.createMatchmakingTicketAsync`, `getMatchmakingTicketAsync`, `cancelMatchmakingTicketAsync`. Xem [API_MULTIPLAYER.md](/docs/reference/API_MULTIPLAYER.md).
 
 ### Code
 
@@ -494,7 +494,7 @@ async function findMatch(queueName: string) {
 
 **Prerequisites:** client login; `secretKey` có `permission rules` là `admin` hoặc `server` cấu hình ở backend/CloudScript.
 
-**APIs used:** [`GNNetwork.gamePlayer.getPlayerInventoryAsync`](reference/API_GAME_PLAYER.md) (client), `GNNetwork.gamePlayer.server.createPlayerItemAsync` (server).
+**APIs used:** [`GNNetwork.gamePlayer.getPlayerInventoryAsync`](/docs/reference/API_GAME_PLAYER.md) (client), `GNNetwork.gamePlayer.server.createPlayerItemAsync` (server).
 
 ### Code
 
@@ -542,7 +542,7 @@ async function grantSword(targetUserId: string) {
 
 **Prerequisites:** đã login.
 
-**APIs used:** [`GNNetwork.storeInventory.getStoreItemsWithTagAsync`](reference/API_STORE_INVENTORY.md), `buyStoreItemAsync`, `server.validateGooglePlayStoreReceiptAsync` / `server.validateAppleAppStoreReceiptAsync`.
+**APIs used:** [`GNNetwork.storeInventory.getStoreItemsWithTagAsync`](/docs/reference/API_STORE_INVENTORY.md), `buyStoreItemAsync`, `server.validateGooglePlayStoreReceiptAsync` / `server.validateAppleAppStoreReceiptAsync`.
 
 ### Code
 
@@ -608,7 +608,7 @@ async function buyItem(storeItemId: string) {
 
 **Prerequisites:** đã login; CloudScript function đã publish ở backend.
 
-**APIs used:** [`GNNetwork.cloudScript.executeFunctionAsync`](reference/API_CLOUDSCRIPT.md).
+**APIs used:** [`GNNetwork.cloudScript.executeFunctionAsync`](/docs/reference/API_CLOUDSCRIPT.md).
 
 ### Code
 
@@ -714,7 +714,7 @@ async function callOtherGame(gameSecret: string) {
 
 **Prerequisites:** đã init; biết admin username/password backend cấp.
 
-**APIs used:** [`GNNetwork.dashboard.loginByAdminAccountAsync`](reference/API_DASHBOARD.md), `getGameListAsync`, `getAnalyticsAsync`, …
+**APIs used:** [`GNNetwork.dashboard.loginByAdminAccountAsync`](/docs/reference/API_DASHBOARD.md), `getGameListAsync`, `getAnalyticsAsync`, …
 
 > **Lưu ý thiết kế:** Dashboard API CHỈ có namespace client (`GNNetwork.dashboard`, không có `.server` / `.admin`). Transport dùng `RequestRole.Client`. Admin context backend resolve TỪ auth token trả về sau `loginByAdminAccount` — token này khác token của player thường.
 
@@ -803,7 +803,7 @@ function logoutAndCleanup() {
 
 **Prerequisites:** biết method đang gọi, namespace (`client` / `.server` / `.admin`), target user (nếu có), secret key đang dùng.
 
-**Key insight:** `OperationNotAllow` **không** phải thiếu secret hoặc operation không tồn tại (đó là `SecretInvalid` và `OperationInvalid`). Đây là: secret hợp lệ, operation tồn tại, nhưng **permission rule** của secret không cho phép operation trong target context. Xem [RULES § 5](RULES.md#5-phân-biệt-3-returncode-dễ-nhầm).
+**Key insight:** `OperationNotAllow` **không** phải thiếu secret hoặc operation không tồn tại (đó là `SecretInvalid` và `OperationInvalid`). Đây là: secret hợp lệ, operation tồn tại, nhưng **permission rule** của secret không cho phép operation trong target context. Xem [RULES § 5](/docs/RULES.md#5-phân-biệt-3-returncode-dễ-nhầm).
 
 ### Decision tree
 
@@ -881,22 +881,22 @@ async function grantItem(userId: string, itemId: string, amount: number) {
 
 - `OperationNotAllow` → **không retry cùng secret**, đó là config fix.
 - Sau fallback `overrideSecretKey` vẫn `OperationNotAllow` → secret admin cũng thiếu flag, phải liên hệ backend admin thêm flag trong GearN Dashboard.
-- Nếu chuyển sang `SecretInvalid` sau fallback → override secret sai format / không khớp game context (khác lỗi, xem [RULES § 5](RULES.md#5-phân-biệt-3-returncode-dễ-nhầm)).
+- Nếu chuyển sang `SecretInvalid` sau fallback → override secret sai format / không khớp game context (khác lỗi, xem [RULES § 5](/docs/RULES.md#5-phân-biệt-3-returncode-dễ-nhầm)).
 
 ### Pitfalls
 
 - **Nhầm `OperationNotAllow` với `SecretInvalid`** → sửa sai hướng, đổi secret vô nghĩa khi rule chưa được bật.
-- **Dùng `.server` / `.admin` từ frontend app để vượt permission** → trust boundary leak, secret bị expose. Route phải match caller thực tế (xem [RULES § 3](RULES.md#3-route--trust-boundary-của-caller)).
+- **Dùng `.server` / `.admin` từ frontend app để vượt permission** → trust boundary leak, secret bị expose. Route phải match caller thực tế (xem [RULES § 3](/docs/RULES.md#3-route--trust-boundary-của-caller)).
 - **Retry tự động khi gặp `OperationNotAllow`** → không bao giờ giải quyết được, chỉ tốn request budget.
 - **Giả định rule `selfEnable` tự bật** → backend admin config per-operation, không default bật tất cả.
 - **Không check self vs other-self khi ở route `client`** → ví dụ gọi `masterPlayer.getPlayerInformationAsync(otherId)` mà nghĩ vẫn là self → sai flag → debug lâu.
 
 ### Liên kết
 
-- Mapping rule đầy đủ: [RULES § 6.1](RULES.md#61-mapping-route-target--required-flag)
-- Scenario điển hình (5 case): [RULES § 6.3](RULES.md#63-scenario-điển-hình-trigger-operationnotallow)
-- Checklist nhanh: [RULES § 6.4](RULES.md#64-checklist-nhanh-khi-gặp-returncodeoperationnotallow)
-- Danh sách operation per-domain: [reference/PERMISSION_RULES.md](reference/PERMISSION_RULES.md)
+- Mapping rule đầy đủ: [RULES § 6.1](/docs/RULES.md#61-mapping-route-target--required-flag)
+- Scenario điển hình (5 case): [RULES § 6.3](/docs/RULES.md#63-scenario-điển-hình-trigger-operationnotallow)
+- Checklist nhanh: [RULES § 6.4](/docs/RULES.md#64-checklist-nhanh-khi-gặp-returncodeoperationnotallow)
+- Danh sách operation per-domain: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ---
 
@@ -904,7 +904,7 @@ async function grantItem(userId: string, itemId: string, amount: number) {
 
 | Pattern | Khi nào | Tham khảo |
 |---------|---------|-----------|
-| Check `returnCode` → `errorCode` → đọc `responseData` | Mọi `*Async()` | [ERROR_HANDLING.md](reference/ERROR_HANDLING.md) |
+| Check `returnCode` → `errorCode` → đọc `responseData` | Mọi `*Async()` | [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md) |
 | SDK auto-cache `authToken` / `userId` sau authenticate success | Login/refresh player; dashboard login cache `authToken` | Scenario 2, 3, 4, 14 |
 | Subscribe event handler trước `connectSocket`; chỉ gọi `sendRequestAuthSocket` khi cần re-auth thủ công | Realtime | Scenario 5, 6, 7, 8 |
 | `.server` / `.admin` chỉ ở backend, không bao giờ ở frontend | Mọi cross-role call | Scenario 10, 13 |

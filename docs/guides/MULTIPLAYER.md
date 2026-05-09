@@ -16,7 +16,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
 - `MultiplayerApi` xử lý matchmaking ticket, queue statistics và dữ liệu match. Nó không thay thế socket transport của SDK.
 
 ## 2. Hard Rules
@@ -89,8 +89,8 @@ Rule cứng:
 
 ## 6. Request Rules và Reference
 
-- DTO fields: [reference/dto/MULTIPLAYER.md](../reference/dto/MULTIPLAYER.md). Method table: [reference/API_MULTIPLAYER.md](../reference/API_MULTIPLAYER.md).
-- Enums: [MatchmakingTicketStatus](../reference/ENUMS.md#matchmakingticketstatus), [MatchmakingMemberStatus](../reference/ENUMS.md#matchmakingmemberstatus).
+- DTO fields: [reference/dto/MULTIPLAYER.md](/docs/reference/dto/MULTIPLAYER.md). Method table: [reference/API_MULTIPLAYER.md](/docs/reference/API_MULTIPLAYER.md).
+- Enums: [MatchmakingTicketStatus](/docs/reference/ENUMS.md#matchmakingticketstatus), [MatchmakingMemberStatus](/docs/reference/ENUMS.md#matchmakingmemberstatus).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Multiplayer*.d.ts`.
 - `CreateMatchmakingTicketRequestData.giveUpAfterSeconds` có min `20`.
 - `GetQueueStatisticsRequestData.timeInSeconds` có min `20`.

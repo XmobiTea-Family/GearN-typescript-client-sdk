@@ -13,7 +13,7 @@
       "docs/RULES.md",
       "docs/ai-manifest.json",
       "docs/reference/API_INDEX.md",
-      "docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md",
+      "docs/cloudScript/CLOUDSCRIPT_USAGE.md",
       "docs/reference/ERROR_HANDLING.md",
       "docs/reference/CONFIG.md",
       "docs/reference/EVENTS.md",
@@ -23,7 +23,7 @@
     "entryPoints": {
       "cheatsheet": "docs/AI_CHEATSHEET.md",
       "rules": "docs/RULES.md",
-      "cloudScriptScriptAuthoring": "docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md",
+      "cloudScriptScriptAuthoring": "docs/cloudScript/CLOUDSCRIPT_USAGE.md",
       "agentGuide": "AGENTS.md",
       "llmstxtIndex": "llms.txt",
       "fullBundle": "docs/llms-full.txt"
@@ -43,7 +43,7 @@
     "guidanceForAiConsumer": [
       "đọc docs/AI_CHEATSHEET.md trước (one-page) để biết file nào cần mở tiếp",
       "đọc docs/RULES.md cho rule cross-cutting (route, permission, self/other-self, socket, error)",
-      "khi viết source CloudScript gửi lên addFunction, đọc docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md",
+      "khi viết source CloudScript gửi lên addFunction, đọc docs/cloudScript/CLOUDSCRIPT_USAGE.md",
       "tra method signature qua docs/reference/API_<GROUP>.md",
       "tra DTO field qua docs/reference/dto/<DOMAIN>.md hoặc grep DTO_INDEX.md (2506 rows, đừng load full)",
       "tra enum value numeric qua docs/reference/ENUMS.md",
@@ -685,7 +685,7 @@
     {
       "name": "CloudScriptApi",
       "guideDoc": "docs/guides/CLOUDSCRIPT.md",
-      "scriptAuthoringDoc": "docs/guides/CLOUDSCRIPT_SCRIPT_AUTHORING.md",
+      "scriptAuthoringDoc": "docs/cloudScript/CLOUDSCRIPT_USAGE.md",
       "scriptAuthoringDocIsSelfContained": true,
       "referenceDoc": "docs/reference/API_CLOUDSCRIPT.md",
       "dtoDoc": "docs/reference/dto/CLOUDSCRIPT.md",

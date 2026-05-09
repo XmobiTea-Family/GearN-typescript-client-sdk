@@ -2,7 +2,7 @@
 
 Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiêu là chọn đúng namespace `client/server/admin`, phân biệt đúng publish version với execute function, và không sinh sai request ở các field `version`, `functionName`, `userId`, `script`.
 
-Nếu mục tiêu là viết phần source chạy trong CloudScript runtime, đọc thêm [CLOUDSCRIPT_SCRIPT_AUTHORING.md](CLOUDSCRIPT_SCRIPT_AUTHORING.md). File này chỉ mô tả public API để publish, execute, inspect và promote version.
+Nếu mục tiêu là viết phần source chạy trong CloudScript runtime, đọc thêm [cloudScript/CLOUDSCRIPT_USAGE.md](/docs/cloudScript/CLOUDSCRIPT_USAGE.md). File này chỉ mô tả public API để publish, execute, inspect và promote version.
 
 ## 1. Scope
 
@@ -18,7 +18,7 @@ Nếu mục tiêu là viết phần source chạy trong CloudScript runtime, đ�
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
-- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](../RULES.md#3-route--trust-boundary-của-caller). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
+- Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
 - Public surface hiện chỉ có 5 operation trên mỗi namespace:
   - `addFunctionAsync`
   - `editFunctionAsync`
@@ -38,7 +38,7 @@ Nếu mục tiêu là viết phần source chạy trong CloudScript runtime, đ�
 - Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
 - Không dùng socket cho `CloudScriptApi`.
 - Không dùng literal `GNNetwork` trong `AddFunctionRequestData.script`; GearN Server reject script trước compile.
-- Không dùng `import`, `export`, `require`, `process`, `fetch`, timer primitive hoặc top-level side effect trong submitted script; xem [CLOUDSCRIPT_SCRIPT_AUTHORING.md](CLOUDSCRIPT_SCRIPT_AUTHORING.md).
+- Không dùng `import`, `export`, `require`, `process`, `fetch`, timer primitive hoặc top-level side effect trong submitted script; xem [cloudScript/CLOUDSCRIPT_USAGE.md](/docs/cloudScript/CLOUDSCRIPT_USAGE.md).
 - Chọn namespace theo trust boundary:
   - app/player execute function -> `GNNetwork.cloudScript`
   - trusted backend/service -> `GNNetwork.cloudScript.server`
@@ -100,8 +100,8 @@ Rule nhanh:
 
 ## 6. Request Rules Và Reference
 
-- DTO fields: [reference/dto/CLOUDSCRIPT.md](../reference/dto/CLOUDSCRIPT.md). Method table: [reference/API_CLOUDSCRIPT.md](../reference/API_CLOUDSCRIPT.md).
-- Enums: [ExecuteResponseStatus](../reference/ENUMS.md#executeresponsestatus).
+- DTO fields: [reference/dto/CLOUDSCRIPT.md](/docs/reference/dto/CLOUDSCRIPT.md). Method table: [reference/API_CLOUDSCRIPT.md](/docs/reference/API_CLOUDSCRIPT.md).
+- Enums: [ExecuteResponseStatus](/docs/reference/ENUMS.md#executeresponsestatus).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/CloudScript*.d.ts`.
 - `AddFunctionRequestData.script` là bắt buộc.
 - `AddFunctionRequestData.canExecute` và `AddFunctionRequestData.isLive` nên luôn set explicit, không dựa vào default ngầm.
@@ -162,7 +162,7 @@ Rule bổ sung theo từng operation:
 ## 8. Best Practices
 
 - Ưu tiên `client` cho execute, ưu tiên `server/admin` cho publish và quản trị version.
-- Khi viết source script, dùng [CLOUDSCRIPT_SCRIPT_AUTHORING.md](CLOUDSCRIPT_SCRIPT_AUTHORING.md) làm checklist trước publish.
+- Khi viết source script, dùng [cloudScript/CLOUDSCRIPT_USAGE.md](/docs/cloudScript/CLOUDSCRIPT_USAGE.md) làm checklist trước publish.
 - Sau `addFunctionAsync`, luôn lưu lại `responseData.version`.
 - Nếu cần promote live version, nên `getFunctionsAsync` trước để xác nhận `latestVersion` và `liveLatestVersion`.
 - Với `executeFunctionAsync`, giữ `functionParameters` ở dạng JSON đơn giản; tránh class instance, method, circular reference.
@@ -333,7 +333,7 @@ const script = getResponse.responseData.script;
 ## 11. AI Checklist
 
 - Đã `GNNetwork.init(settings)` chưa.
-- Nếu đang viết source script, đã đọc [CLOUDSCRIPT_SCRIPT_AUTHORING.md](CLOUDSCRIPT_SCRIPT_AUTHORING.md) chưa.
+- Nếu đang viết source script, đã đọc [cloudScript/CLOUDSCRIPT_USAGE.md](/docs/cloudScript/CLOUDSCRIPT_USAGE.md) chưa.
 - Đã chọn đúng namespace `cloudScript` / `cloudScript.server` / `cloudScript.admin` chưa.
 - Nếu đang execute ở `server/admin`, đã truyền `userId` chưa.
 - Nếu đang update source code, có đang dùng sai `editFunctionAsync` thay vì `addFunctionAsync` không.

@@ -2,7 +2,7 @@
 
 Game-player profile, friend/group relation, currency, statistics, segment, tag, social identity.
 
-Related API reference: [API_GAME_PLAYER.md](../API_GAME_PLAYER.md).
+Related API reference: [API_GAME_PLAYER.md](/docs/reference/API_GAME_PLAYER.md).
 
 Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
 

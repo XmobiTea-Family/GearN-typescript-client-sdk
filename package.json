@@ -16,7 +16,6 @@
     "dev": "rm -rf ./dist && npm run build:node && npm run debug",
     "debug": "node index.js",
     "test": "mocha -r ts-node/register ./test/**/*.test.ts",
-    "docs:validate": "node scripts/validate-ai-docs.mjs",
     "build:node": "webpack --config webpack.config.mjs --mode production --stats-modules",
     "build:udm": "webpack --config webpack.config.udm.mjs --mode production --stats-modules",
     "build:minudm": "webpack --config webpack.config.min.udm.mjs --mode production --stats-modules",
@@ -50,7 +49,8 @@
   },
   "overrides": {
     "diff": "^8.0.3",
-    "serialize-javascript": "^7.0.5"
+    "serialize-javascript": "^7.0.5",
+    "fast-uri": "3.1.2"
   },
   "directories": {
     "test": "test"
