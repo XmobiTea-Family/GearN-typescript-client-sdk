@@ -19,7 +19,7 @@
  * @template T  Instance type produced by the constructor.
  */
 export type Constructor<T> = {
-	new(...args: any[]): T;
+    new(...args: any[]): T;
 };
 
 /**
@@ -39,7 +39,7 @@ export type Constructor<T> = {
  * @template T  Instance type that the prototype represents.
  */
 export type AbstractConstructor<T> = Function & {
-	prototype: T;
+    prototype: T;
 };
 
 /**
@@ -57,16 +57,16 @@ export type AbstractConstructor<T> = Function & {
  * because every cached metadata blob references them by value.
  */
 export enum FieldDataType {
-	/** Field is declared as `boolean` / `Boolean`. */
-	Boolean = 0,
-	/** Field is declared as `number` / `Number`. */
-	Number = 1,
-	/** Field is declared as `string` / `String`. */
-	String = 2,
-	/** Field is declared as `Array<...>` (or `T[]`). */
-	Array = 3,
-	/** Field is declared as a class instance — anything that is not one of the primitives above. */
-	Object = 4,
+    /** Field is declared as `boolean` / `Boolean`. */
+    Boolean = 0,
+    /** Field is declared as `number` / `Number`. */
+    Number = 1,
+    /** Field is declared as `string` / `String`. */
+    String = 2,
+    /** Field is declared as `Array<...>` (or `T[]`). */
+    Array = 3,
+    /** Field is declared as a class instance — anything that is not one of the primitives above. */
+    Object = 4,
 
 };
 
@@ -81,25 +81,25 @@ export enum FieldDataType {
  * {@link GNEnhancedObjectFieldMetadata}.
  */
 export interface GNObjectFieldMetadata {
-	/**
-	 * Property key on the model prototype (e.g. `"username"` or
-	 * `"infoRequestParam"`). Used by the (de)serialiser to read /
-	 * write values via `obj[name]`.
-	 */
-	name: string;
-	/**
-	 * Coarse type bucket inferred from the TypeScript `design:type`
-	 * metadata. See {@link FieldDataType} for the enum members.
-	 */
-	fieldType: FieldDataType;
-	/**
-	 * Concrete element / value class declared on the field. For
-	 * primitives this is the corresponding wrapper constructor
-	 * (`String`, `Number`, `Boolean`); for object fields it is the
-	 * declared class; for arrays it is the element class supplied via
-	 * `GNArrayDataMember({ elementCls })`.
-	 */
-	cls: new (...args: any[]) => any;
+    /**
+     * Property key on the model prototype (e.g. `"username"` or
+     * `"infoRequestParam"`). Used by the (de)serialiser to read /
+     * write values via `obj[name]`.
+     */
+    name: string;
+    /**
+     * Coarse type bucket inferred from the TypeScript `design:type`
+     * metadata. See {@link FieldDataType} for the enum members.
+     */
+    fieldType: FieldDataType;
+    /**
+     * Concrete element / value class declared on the field. For
+     * primitives this is the corresponding wrapper constructor
+     * (`String`, `Number`, `Boolean`); for object fields it is the
+     * declared class; for arrays it is the element class supplied via
+     * `GNArrayDataMember({ elementCls })`.
+     */
+    cls: new (...args: any[]) => any;
 };
 
 /**
@@ -113,17 +113,17 @@ export interface GNObjectFieldMetadata {
  * serialiser never reads it.
  */
 export interface GNObjectMetadata {
-	/**
-	 * Lowercase class name. Filled by {@link initGNObjectMetadata}
-	 * using `model.name.toLowerCase()` and used for diagnostic
-	 * purposes only — the serializer does not read it.
-	 */
-	id: string;
-	/**
-	 * Ordered list of decorated field metadata entries. The order
-	 * matches the declaration order of the `@*DataMember` decorators
-	 * on the class plus any inherited entries from parent classes.
-	 */
-	fields: GNObjectFieldMetadata[];
+    /**
+     * Lowercase class name. Filled by {@link initGNObjectMetadata}
+     * using `model.name.toLowerCase()` and used for diagnostic
+     * purposes only — the serializer does not read it.
+     */
+    id: string;
+    /**
+     * Ordered list of decorated field metadata entries. The order
+     * matches the declaration order of the `@*DataMember` decorators
+     * on the class plus any inherited entries from parent classes.
+     */
+    fields: GNObjectFieldMetadata[];
 
 };

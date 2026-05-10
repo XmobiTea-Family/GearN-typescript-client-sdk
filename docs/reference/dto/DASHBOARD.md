@@ -11,164 +11,164 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
 ## Danh sách
 
 - **DashboardModels** (from `DashboardModels.ts`)
-  - [PermissionRulesParam](#permissionrulesparam)
-  - [FriendCatalogSettingsParam](#friendcatalogsettingsparam)
-  - [ItemClassSettingsParam](#itemclasssettingsparam)
-  - [ItemCatalogSettingsParam](#itemcatalogsettingsparam)
-  - [GroupCatalogSettingsParam](#groupcatalogsettingsparam)
-  - [TagSettingsParam](#tagsettingsparam)
-  - [DataSettingsParam](#datasettingsparam)
-  - [StatisticsSettingsParam](#statisticssettingsparam)
-  - [CurrencySettingsParam](#currencysettingsparam)
-  - [CharacterCatalogSettingsParam](#charactercatalogsettingsparam)
-  - [CharacterPlayerPermissionRulesParam](#characterplayerpermissionrulesparam)
-  - [CharacterPlayerSettingsParam](#characterplayersettingsparam)
-  - [ContentPermissionRulesParam](#contentpermissionrulesparam)
-  - [ThirtPartyAppleSettingsParam](#thirtpartyapplesettingsparam)
-  - [ThirtPartyFacebookSettingsParam](#thirtpartyfacebooksettingsparam)
-  - [ThirtPartyGoogleSettingsParam](#thirtpartygooglesettingsparam)
-  - [ThirtPartyGameCenterSettingsParam](#thirtpartygamecentersettingsparam)
-  - [ThirtPartyGooglePlayGameSettingsParam](#thirtpartygoogleplaygamesettingsparam)
-  - [ThirtPartyParam](#thirtpartyparam)
-  - [EmailSettingsParam](#emailsettingsparam)
-  - [PushNotificationSettingsParam](#pushnotificationsettingsparam)
-  - [GamePlayerPermissionRulesParam](#gameplayerpermissionrulesparam)
-  - [GamePlayerSettingsParam](#gameplayersettingsparam)
-  - [GroupSettingsParam](#groupsettingsparam)
-  - [InventorySettingsParam](#inventorysettingsparam)
-  - [GameSettingsParam](#gamesettingsparam)
-  - [GenericServiceSettingsParam](#genericservicesettingsparam)
-  - [GroupPermissionRulesParam](#grouppermissionrulesparam)
-  - [InventoryPermissionRulesParam](#inventorypermissionrulesparam)
-  - [DashboardPermissionRulesParam](#dashboardpermissionrulesparam)
-  - [MultiplayerPermissionRulesParam](#multiplayerpermissionrulesparam)
-  - [MasterPlayerPermissionRulesParam](#masterplayerpermissionrulesparam)
-  - [MasterPlayerSettingsParam](#masterplayersettingsparam)
-  - [SizeParam](#sizeparam)
-  - [TeamParam](#teamparam)
-  - [LinearExpansionsParam](#linearexpansionsparam)
-  - [CustomExpansionsParam](#customexpansionsparam)
-  - [AdvancedSettingsParam](#advancedsettingsparam)
-  - [RuleParam](#ruleparam)
-  - [ServerAllocationParam](#serverallocationparam)
-  - [MatchmakingQueueSettingsParam](#matchmakingqueuesettingsparam)
-  - [AuthenticatePermissionRulesParam](#authenticatepermissionrulesparam)
-  - [StoreInventoryPermissionRulesParam](#storeinventorypermissionrulesparam)
-  - [CloudScriptPermissionRulesParam](#cloudscriptpermissionrulesparam)
-  - [PermissionParam](#permissionparam)
-  - [ChangePasswordAdminAccountRequestData](#changepasswordadminaccountrequestdata)
-  - [GetAdminAccountListRequestData](#getadminaccountlistrequestdata)
-  - [GetGameInformationRequestData](#getgameinformationrequestdata)
-  - [GetGameListRequestData](#getgamelistrequestdata)
-  - [GetMasterGameSettingsRequestData](#getmastergamesettingsrequestdata)
-  - [GetSecretInfoInformationRequestData](#getsecretinfoinformationrequestdata)
-  - [GetSecretInfoListRequestData](#getsecretinfolistrequestdata)
-  - [GetServerLogRequestData](#getserverlogrequestdata)
-  - [CreateAdminAccountRequestData](#createadminaccountrequestdata)
-  - [CreateGameRequestData](#creategamerequestdata)
-  - [CreateSecretInfoRequestData](#createsecretinforequestdata)
-  - [LoginByAdminAccountRequestData](#loginbyadminaccountrequestdata)
-  - [RemoveAdminAccountRequestData](#removeadminaccountrequestdata)
-  - [SetGameInformationRequestData](#setgameinformationrequestdata)
-  - [SetMasterGameSettingsRequestData](#setmastergamesettingsrequestdata)
-  - [SetPasswordAdminAccountRequestData](#setpasswordadminaccountrequestdata)
-  - [SetSecretInfoInformationRequestData](#setsecretinfoinformationrequestdata)
-  - [SetSecretKeyAdminAccountRequestData](#setsecretkeyadminaccountrequestdata)
-  - [GetAnalyticsRequestData](#getanalyticsrequestdata)
-  - [GetUsernameAdminAccountRequestData](#getusernameadminaccountrequestdata)
-  - [GetEventCallbackCloudScriptRequestData](#geteventcallbackcloudscriptrequestdata)
-  - [SetEventCallbackCloudScriptRequestData](#seteventcallbackcloudscriptrequestdata)
-  - [ResetStatisticsLeaderboardRequestData](#resetstatisticsleaderboardrequestdata)
-  - [DeleteInDatabaseRequestData](#deleteindatabaserequestdata)
-  - [GetBackupStatisticsLeaderboardVersionRequestData](#getbackupstatisticsleaderboardversionrequestdata)
-  - [GetServerGameDataRequestData](#getservergamedatarequestdata)
-  - [AdminAccountResponseData](#adminaccountresponsedata)
-  - [GetAdminAccountListResponseData](#getadminaccountlistresponsedata)
-  - [GetGameInformationResponseData](#getgameinformationresponsedata)
-  - [GameWithGameIdResponseData](#gamewithgameidresponsedata)
-  - [GetGameListResponseData](#getgamelistresponsedata)
-  - [GetMasterGameSettingsResponseData](#getmastergamesettingsresponsedata)
-  - [GetSecretInfoInformationResponseData](#getsecretinfoinformationresponsedata)
-  - [SecretInfoWithSecretKeyResponseData](#secretinfowithsecretkeyresponsedata)
-  - [GetSecretInfoListResponseData](#getsecretinfolistresponsedata)
-  - [AdminAccountWithUserIdResponseData](#adminaccountwithuseridresponsedata)
-  - [CreateAdminAccountResponseData](#createadminaccountresponsedata)
-  - [LoginByAdminAccountResponseData](#loginbyadminaccountresponsedata)
-  - [GetServerLogResponseData](#getserverlogresponsedata)
-  - [CountryRegionResponseData](#countryregionresponsedata)
-  - [CountryResponseData](#countryresponsedata)
-  - [AnalyticsItemResponseData](#analyticsitemresponsedata)
-  - [MemoryUsageResponseData](#memoryusageresponsedata)
-  - [StorageUsageResponseData](#storageusageresponsedata)
-  - [DatabaseSystemResponseData](#databasesystemresponsedata)
-  - [OperationSystemResponseData](#operationsystemresponsedata)
-  - [RequestCompleteErrorCodeResponseData](#requestcompleteerrorcoderesponsedata)
-  - [RequestCompleteResponseData](#requestcompleteresponsedata)
-  - [CostResponseData](#costresponsedata)
-  - [GetAnalyticsResponseData](#getanalyticsresponsedata)
-  - [GetUsernameAdminAccountResponseData](#getusernameadminaccountresponsedata)
-  - [ChildScriptResponseData](#childscriptresponsedata)
-  - [EventCallbackCloudScriptResponseData](#eventcallbackcloudscriptresponsedata)
-  - [GetEventCallbackCloudScriptResponseData](#geteventcallbackcloudscriptresponsedata)
-  - [SetEventCallbackCloudScriptResponseData](#seteventcallbackcloudscriptresponsedata)
-  - [BackupStatisticsLeaderboardVersionResponseData](#backupstatisticsleaderboardversionresponsedata)
-  - [GetBackupStatisticsLeaderboardVersionResponseData](#getbackupstatisticsleaderboardversionresponsedata)
-  - [GetServerGameDataResponseData](#getservergamedataresponsedata)
-  - [EmptyResponseData](#emptyresponsedata)
+    - [PermissionRulesParam](#permissionrulesparam)
+    - [FriendCatalogSettingsParam](#friendcatalogsettingsparam)
+    - [ItemClassSettingsParam](#itemclasssettingsparam)
+    - [ItemCatalogSettingsParam](#itemcatalogsettingsparam)
+    - [GroupCatalogSettingsParam](#groupcatalogsettingsparam)
+    - [TagSettingsParam](#tagsettingsparam)
+    - [DataSettingsParam](#datasettingsparam)
+    - [StatisticsSettingsParam](#statisticssettingsparam)
+    - [CurrencySettingsParam](#currencysettingsparam)
+    - [CharacterCatalogSettingsParam](#charactercatalogsettingsparam)
+    - [CharacterPlayerPermissionRulesParam](#characterplayerpermissionrulesparam)
+    - [CharacterPlayerSettingsParam](#characterplayersettingsparam)
+    - [ContentPermissionRulesParam](#contentpermissionrulesparam)
+    - [ThirtPartyAppleSettingsParam](#thirtpartyapplesettingsparam)
+    - [ThirtPartyFacebookSettingsParam](#thirtpartyfacebooksettingsparam)
+    - [ThirtPartyGoogleSettingsParam](#thirtpartygooglesettingsparam)
+    - [ThirtPartyGameCenterSettingsParam](#thirtpartygamecentersettingsparam)
+    - [ThirtPartyGooglePlayGameSettingsParam](#thirtpartygoogleplaygamesettingsparam)
+    - [ThirtPartyParam](#thirtpartyparam)
+    - [EmailSettingsParam](#emailsettingsparam)
+    - [PushNotificationSettingsParam](#pushnotificationsettingsparam)
+    - [GamePlayerPermissionRulesParam](#gameplayerpermissionrulesparam)
+    - [GamePlayerSettingsParam](#gameplayersettingsparam)
+    - [GroupSettingsParam](#groupsettingsparam)
+    - [InventorySettingsParam](#inventorysettingsparam)
+    - [GameSettingsParam](#gamesettingsparam)
+    - [GenericServiceSettingsParam](#genericservicesettingsparam)
+    - [GroupPermissionRulesParam](#grouppermissionrulesparam)
+    - [InventoryPermissionRulesParam](#inventorypermissionrulesparam)
+    - [DashboardPermissionRulesParam](#dashboardpermissionrulesparam)
+    - [MultiplayerPermissionRulesParam](#multiplayerpermissionrulesparam)
+    - [MasterPlayerPermissionRulesParam](#masterplayerpermissionrulesparam)
+    - [MasterPlayerSettingsParam](#masterplayersettingsparam)
+    - [SizeParam](#sizeparam)
+    - [TeamParam](#teamparam)
+    - [LinearExpansionsParam](#linearexpansionsparam)
+    - [CustomExpansionsParam](#customexpansionsparam)
+    - [AdvancedSettingsParam](#advancedsettingsparam)
+    - [RuleParam](#ruleparam)
+    - [ServerAllocationParam](#serverallocationparam)
+    - [MatchmakingQueueSettingsParam](#matchmakingqueuesettingsparam)
+    - [AuthenticatePermissionRulesParam](#authenticatepermissionrulesparam)
+    - [StoreInventoryPermissionRulesParam](#storeinventorypermissionrulesparam)
+    - [CloudScriptPermissionRulesParam](#cloudscriptpermissionrulesparam)
+    - [PermissionParam](#permissionparam)
+    - [ChangePasswordAdminAccountRequestData](#changepasswordadminaccountrequestdata)
+    - [GetAdminAccountListRequestData](#getadminaccountlistrequestdata)
+    - [GetGameInformationRequestData](#getgameinformationrequestdata)
+    - [GetGameListRequestData](#getgamelistrequestdata)
+    - [GetMasterGameSettingsRequestData](#getmastergamesettingsrequestdata)
+    - [GetSecretInfoInformationRequestData](#getsecretinfoinformationrequestdata)
+    - [GetSecretInfoListRequestData](#getsecretinfolistrequestdata)
+    - [GetServerLogRequestData](#getserverlogrequestdata)
+    - [CreateAdminAccountRequestData](#createadminaccountrequestdata)
+    - [CreateGameRequestData](#creategamerequestdata)
+    - [CreateSecretInfoRequestData](#createsecretinforequestdata)
+    - [LoginByAdminAccountRequestData](#loginbyadminaccountrequestdata)
+    - [RemoveAdminAccountRequestData](#removeadminaccountrequestdata)
+    - [SetGameInformationRequestData](#setgameinformationrequestdata)
+    - [SetMasterGameSettingsRequestData](#setmastergamesettingsrequestdata)
+    - [SetPasswordAdminAccountRequestData](#setpasswordadminaccountrequestdata)
+    - [SetSecretInfoInformationRequestData](#setsecretinfoinformationrequestdata)
+    - [SetSecretKeyAdminAccountRequestData](#setsecretkeyadminaccountrequestdata)
+    - [GetAnalyticsRequestData](#getanalyticsrequestdata)
+    - [GetUsernameAdminAccountRequestData](#getusernameadminaccountrequestdata)
+    - [GetEventCallbackCloudScriptRequestData](#geteventcallbackcloudscriptrequestdata)
+    - [SetEventCallbackCloudScriptRequestData](#seteventcallbackcloudscriptrequestdata)
+    - [ResetStatisticsLeaderboardRequestData](#resetstatisticsleaderboardrequestdata)
+    - [DeleteInDatabaseRequestData](#deleteindatabaserequestdata)
+    - [GetBackupStatisticsLeaderboardVersionRequestData](#getbackupstatisticsleaderboardversionrequestdata)
+    - [GetServerGameDataRequestData](#getservergamedatarequestdata)
+    - [AdminAccountResponseData](#adminaccountresponsedata)
+    - [GetAdminAccountListResponseData](#getadminaccountlistresponsedata)
+    - [GetGameInformationResponseData](#getgameinformationresponsedata)
+    - [GameWithGameIdResponseData](#gamewithgameidresponsedata)
+    - [GetGameListResponseData](#getgamelistresponsedata)
+    - [GetMasterGameSettingsResponseData](#getmastergamesettingsresponsedata)
+    - [GetSecretInfoInformationResponseData](#getsecretinfoinformationresponsedata)
+    - [SecretInfoWithSecretKeyResponseData](#secretinfowithsecretkeyresponsedata)
+    - [GetSecretInfoListResponseData](#getsecretinfolistresponsedata)
+    - [AdminAccountWithUserIdResponseData](#adminaccountwithuseridresponsedata)
+    - [CreateAdminAccountResponseData](#createadminaccountresponsedata)
+    - [LoginByAdminAccountResponseData](#loginbyadminaccountresponsedata)
+    - [GetServerLogResponseData](#getserverlogresponsedata)
+    - [CountryRegionResponseData](#countryregionresponsedata)
+    - [CountryResponseData](#countryresponsedata)
+    - [AnalyticsItemResponseData](#analyticsitemresponsedata)
+    - [MemoryUsageResponseData](#memoryusageresponsedata)
+    - [StorageUsageResponseData](#storageusageresponsedata)
+    - [DatabaseSystemResponseData](#databasesystemresponsedata)
+    - [OperationSystemResponseData](#operationsystemresponsedata)
+    - [RequestCompleteErrorCodeResponseData](#requestcompleteerrorcoderesponsedata)
+    - [RequestCompleteResponseData](#requestcompleteresponsedata)
+    - [CostResponseData](#costresponsedata)
+    - [GetAnalyticsResponseData](#getanalyticsresponsedata)
+    - [GetUsernameAdminAccountResponseData](#getusernameadminaccountresponsedata)
+    - [ChildScriptResponseData](#childscriptresponsedata)
+    - [EventCallbackCloudScriptResponseData](#eventcallbackcloudscriptresponsedata)
+    - [GetEventCallbackCloudScriptResponseData](#geteventcallbackcloudscriptresponsedata)
+    - [SetEventCallbackCloudScriptResponseData](#seteventcallbackcloudscriptresponsedata)
+    - [BackupStatisticsLeaderboardVersionResponseData](#backupstatisticsleaderboardversionresponsedata)
+    - [GetBackupStatisticsLeaderboardVersionResponseData](#getbackupstatisticsleaderboardversionresponsedata)
+    - [GetServerGameDataResponseData](#getservergamedataresponsedata)
+    - [EmptyResponseData](#emptyresponsedata)
 - **DashboardRequestModels** (from `DashboardRequestModels.ts`)
-  - [ChangePasswordAdminAccountOperationRequest](#changepasswordadminaccountoperationrequest)
-  - [GetAdminAccountListOperationRequest](#getadminaccountlistoperationrequest)
-  - [GetGameInformationOperationRequest](#getgameinformationoperationrequest)
-  - [GetGameListOperationRequest](#getgamelistoperationrequest)
-  - [GetMasterGameSettingsOperationRequest](#getmastergamesettingsoperationrequest)
-  - [GetSecretInfoInformationOperationRequest](#getsecretinfoinformationoperationrequest)
-  - [GetSecretInfoListOperationRequest](#getsecretinfolistoperationrequest)
-  - [GetServerLogOperationRequest](#getserverlogoperationrequest)
-  - [CreateAdminAccountOperationRequest](#createadminaccountoperationrequest)
-  - [CreateGameOperationRequest](#creategameoperationrequest)
-  - [CreateSecretInfoOperationRequest](#createsecretinfooperationrequest)
-  - [LoginByAdminAccountOperationRequest](#loginbyadminaccountoperationrequest)
-  - [RemoveAdminAccountOperationRequest](#removeadminaccountoperationrequest)
-  - [SetGameInformationOperationRequest](#setgameinformationoperationrequest)
-  - [SetMasterGameSettingsOperationRequest](#setmastergamesettingsoperationrequest)
-  - [SetPasswordAdminAccountOperationRequest](#setpasswordadminaccountoperationrequest)
-  - [SetSecretInfoInformationOperationRequest](#setsecretinfoinformationoperationrequest)
-  - [SetSecretKeyAdminAccountOperationRequest](#setsecretkeyadminaccountoperationrequest)
-  - [GetUsernameAdminAccountOperationRequest](#getusernameadminaccountoperationrequest)
-  - [GetAnalyticsOperationRequest](#getanalyticsoperationrequest)
-  - [GetEventCallbackCloudScriptOperationRequest](#geteventcallbackcloudscriptoperationrequest)
-  - [SetEventCallbackCloudScriptOperationRequest](#seteventcallbackcloudscriptoperationrequest)
-  - [ResetStatisticsLeaderboardOperationRequest](#resetstatisticsleaderboardoperationrequest)
-  - [GetBackupStatisticsLeaderboardVersionOperationRequest](#getbackupstatisticsleaderboardversionoperationrequest)
-  - [GetServerGameDataOperationRequest](#getservergamedataoperationrequest)
-  - [DeleteInDatabaseOperationRequest](#deleteindatabaseoperationrequest)
+    - [ChangePasswordAdminAccountOperationRequest](#changepasswordadminaccountoperationrequest)
+    - [GetAdminAccountListOperationRequest](#getadminaccountlistoperationrequest)
+    - [GetGameInformationOperationRequest](#getgameinformationoperationrequest)
+    - [GetGameListOperationRequest](#getgamelistoperationrequest)
+    - [GetMasterGameSettingsOperationRequest](#getmastergamesettingsoperationrequest)
+    - [GetSecretInfoInformationOperationRequest](#getsecretinfoinformationoperationrequest)
+    - [GetSecretInfoListOperationRequest](#getsecretinfolistoperationrequest)
+    - [GetServerLogOperationRequest](#getserverlogoperationrequest)
+    - [CreateAdminAccountOperationRequest](#createadminaccountoperationrequest)
+    - [CreateGameOperationRequest](#creategameoperationrequest)
+    - [CreateSecretInfoOperationRequest](#createsecretinfooperationrequest)
+    - [LoginByAdminAccountOperationRequest](#loginbyadminaccountoperationrequest)
+    - [RemoveAdminAccountOperationRequest](#removeadminaccountoperationrequest)
+    - [SetGameInformationOperationRequest](#setgameinformationoperationrequest)
+    - [SetMasterGameSettingsOperationRequest](#setmastergamesettingsoperationrequest)
+    - [SetPasswordAdminAccountOperationRequest](#setpasswordadminaccountoperationrequest)
+    - [SetSecretInfoInformationOperationRequest](#setsecretinfoinformationoperationrequest)
+    - [SetSecretKeyAdminAccountOperationRequest](#setsecretkeyadminaccountoperationrequest)
+    - [GetUsernameAdminAccountOperationRequest](#getusernameadminaccountoperationrequest)
+    - [GetAnalyticsOperationRequest](#getanalyticsoperationrequest)
+    - [GetEventCallbackCloudScriptOperationRequest](#geteventcallbackcloudscriptoperationrequest)
+    - [SetEventCallbackCloudScriptOperationRequest](#seteventcallbackcloudscriptoperationrequest)
+    - [ResetStatisticsLeaderboardOperationRequest](#resetstatisticsleaderboardoperationrequest)
+    - [GetBackupStatisticsLeaderboardVersionOperationRequest](#getbackupstatisticsleaderboardversionoperationrequest)
+    - [GetServerGameDataOperationRequest](#getservergamedataoperationrequest)
+    - [DeleteInDatabaseOperationRequest](#deleteindatabaseoperationrequest)
 - **DashboardResponseModels** (from `DashboardResponseModels.ts`)
-  - [ChangePasswordAdminAccountOperationResponse](#changepasswordadminaccountoperationresponse)
-  - [GetAdminAccountListOperationResponse](#getadminaccountlistoperationresponse)
-  - [GetGameInformationOperationResponse](#getgameinformationoperationresponse)
-  - [GetGameListOperationResponse](#getgamelistoperationresponse)
-  - [GetMasterGameSettingsOperationResponse](#getmastergamesettingsoperationresponse)
-  - [GetSecretInfoInformationOperationResponse](#getsecretinfoinformationoperationresponse)
-  - [GetSecretInfoListOperationResponse](#getsecretinfolistoperationresponse)
-  - [GetServerLogOperationResponse](#getserverlogoperationresponse)
-  - [CreateAdminAccountOperationResponse](#createadminaccountoperationresponse)
-  - [CreateGameOperationResponse](#creategameoperationresponse)
-  - [CreateSecretInfoOperationResponse](#createsecretinfooperationresponse)
-  - [LoginByAdminAccountOperationResponse](#loginbyadminaccountoperationresponse)
-  - [RemoveAdminAccountOperationResponse](#removeadminaccountoperationresponse)
-  - [SetGameInformationOperationResponse](#setgameinformationoperationresponse)
-  - [SetMasterGameSettingsOperationResponse](#setmastergamesettingsoperationresponse)
-  - [SetPasswordAdminAccountOperationResponse](#setpasswordadminaccountoperationresponse)
-  - [SetSecretInfoInformationOperationResponse](#setsecretinfoinformationoperationresponse)
-  - [SetSecretKeyAdminAccountOperationResponse](#setsecretkeyadminaccountoperationresponse)
-  - [GetUsernameAdminAccountOperationResponse](#getusernameadminaccountoperationresponse)
-  - [GetAnalyticsOperationResponse](#getanalyticsoperationresponse)
-  - [GetEventCallbackCloudScriptOperationResponse](#geteventcallbackcloudscriptoperationresponse)
-  - [SetEventCallbackCloudScriptOperationResponse](#seteventcallbackcloudscriptoperationresponse)
-  - [ResetStatisticsLeaderboardOperationResponse](#resetstatisticsleaderboardoperationresponse)
-  - [GetBackupStatisticsLeaderboardVersionOperationResponse](#getbackupstatisticsleaderboardversionoperationresponse)
-  - [GetServerGameDataOperationResponse](#getservergamedataoperationresponse)
-  - [DeleteInDatabaseOperationResponse](#deleteindatabaseoperationresponse)
+    - [ChangePasswordAdminAccountOperationResponse](#changepasswordadminaccountoperationresponse)
+    - [GetAdminAccountListOperationResponse](#getadminaccountlistoperationresponse)
+    - [GetGameInformationOperationResponse](#getgameinformationoperationresponse)
+    - [GetGameListOperationResponse](#getgamelistoperationresponse)
+    - [GetMasterGameSettingsOperationResponse](#getmastergamesettingsoperationresponse)
+    - [GetSecretInfoInformationOperationResponse](#getsecretinfoinformationoperationresponse)
+    - [GetSecretInfoListOperationResponse](#getsecretinfolistoperationresponse)
+    - [GetServerLogOperationResponse](#getserverlogoperationresponse)
+    - [CreateAdminAccountOperationResponse](#createadminaccountoperationresponse)
+    - [CreateGameOperationResponse](#creategameoperationresponse)
+    - [CreateSecretInfoOperationResponse](#createsecretinfooperationresponse)
+    - [LoginByAdminAccountOperationResponse](#loginbyadminaccountoperationresponse)
+    - [RemoveAdminAccountOperationResponse](#removeadminaccountoperationresponse)
+    - [SetGameInformationOperationResponse](#setgameinformationoperationresponse)
+    - [SetMasterGameSettingsOperationResponse](#setmastergamesettingsoperationresponse)
+    - [SetPasswordAdminAccountOperationResponse](#setpasswordadminaccountoperationresponse)
+    - [SetSecretInfoInformationOperationResponse](#setsecretinfoinformationoperationresponse)
+    - [SetSecretKeyAdminAccountOperationResponse](#setsecretkeyadminaccountoperationresponse)
+    - [GetUsernameAdminAccountOperationResponse](#getusernameadminaccountoperationresponse)
+    - [GetAnalyticsOperationResponse](#getanalyticsoperationresponse)
+    - [GetEventCallbackCloudScriptOperationResponse](#geteventcallbackcloudscriptoperationresponse)
+    - [SetEventCallbackCloudScriptOperationResponse](#seteventcallbackcloudscriptoperationresponse)
+    - [ResetStatisticsLeaderboardOperationResponse](#resetstatisticsleaderboardoperationresponse)
+    - [GetBackupStatisticsLeaderboardVersionOperationResponse](#getbackupstatisticsleaderboardversionoperationresponse)
+    - [GetServerGameDataOperationResponse](#getservergamedataoperationresponse)
+    - [DeleteInDatabaseOperationResponse](#deleteindatabaseoperationresponse)
 
 ---
 
@@ -178,8 +178,9 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
 
 Defines the reusable permission-rule block used by secret-info and master settings payloads. These flags map directly to the GearN Server permission checks described in the public docs.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `selfEnable` | `boolean` | no | Allows the operation on resources that belong to the authenticated user context. |
 | `otherSelfEnable` | `boolean` | no | Allows the operation on resources that do not belong to the authenticated user context. |
 | `adminSelfEnable` | `boolean` | no | Allows the operation through admin-scoped execution context. |
@@ -189,8 +190,9 @@ Defines the reusable permission-rule block used by secret-info and master settin
 
 Defines the reusable parameter block FriendCatalogSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `description` | `string` | yes | — |
 | `forceAcceptFriend` | `boolean` | yes | — |
@@ -199,8 +201,9 @@ Defines the reusable parameter block FriendCatalogSettingsParam.
 
 Defines the reusable parameter block ItemClassSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `classId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `description` | `string` | yes | — |
 
@@ -208,8 +211,9 @@ Defines the reusable parameter block ItemClassSettingsParam.
 
 Defines the reusable parameter block ItemCatalogSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `itemType` | `number` | yes | — |
 | `itemClassSettings` | `Array<ItemClassSettingsParam>` | yes | _elementCls=ItemClassSettingsParam_ |
@@ -218,8 +222,9 @@ Defines the reusable parameter block ItemCatalogSettingsParam.
 
 Defines the reusable parameter block GroupCatalogSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `description` | `string` | yes | — |
 | `forceAcceptMember` | `boolean` | yes | — |
@@ -228,8 +233,9 @@ Defines the reusable parameter block GroupCatalogSettingsParam.
 
 Defines the reusable parameter block TagSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `description` | `string` | yes | — |
 | `index` | `boolean` | yes | — |
@@ -238,8 +244,9 @@ Defines the reusable parameter block TagSettingsParam.
 
 Defines the reusable parameter block DataSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `description` | `string` | yes | — |
 | `permission` | `number` | yes | — |
@@ -248,8 +255,9 @@ Defines the reusable parameter block DataSettingsParam.
 
 Defines the reusable parameter block StatisticsSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `statisticsAggregationMethod` | `number` | yes | — |
 | `maximumValue` | `number` | no | _default=0_ |
@@ -262,8 +270,9 @@ Defines the reusable parameter block StatisticsSettingsParam.
 
 Defines the reusable parameter block CurrencySettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `initialValue` | `number` | yes | — |
 | `description` | `string` | yes | — |
@@ -273,8 +282,9 @@ Defines the reusable parameter block CurrencySettingsParam.
 
 Defines the reusable parameter block CharacterCatalogSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `description` | `string` | yes | — |
 
@@ -282,8 +292,9 @@ Defines the reusable parameter block CharacterCatalogSettingsParam.
 
 Defines the reusable parameter block CharacterPlayerPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `addSegment` | `PermissionRulesParam` | no | — |
 | `removeSegment` | `PermissionRulesParam` | no | — |
 | `getSegment` | `PermissionRulesParam` | no | — |
@@ -342,8 +353,9 @@ Defines the reusable parameter block CharacterPlayerPermissionRulesParam.
 
 Defines the reusable parameter block CharacterPlayerSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `playerCurrenciesSettings` | `Array<CurrencySettingsParam>` | no | _elementCls=CurrencySettingsParam_ |
 | `playerStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
 | `playerDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
@@ -357,8 +369,9 @@ Defines the reusable parameter block CharacterPlayerSettingsParam.
 
 Defines the reusable parameter block ContentPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `getContentData` | `PermissionRulesParam` | no | — |
 | `setContentData` | `PermissionRulesParam` | no | — |
 | `createNewFileUploadInfo` | `PermissionRulesParam` | no | — |
@@ -371,8 +384,9 @@ Defines the reusable parameter block ContentPermissionRulesParam.
 
 Defines the reusable parameter block ThirtPartyAppleSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `appleClientId` | `string` | yes | — |
 | `sandboxEnable` | `boolean` | yes | — |
 | `issuerId` | `string` | yes | — |
@@ -383,8 +397,9 @@ Defines the reusable parameter block ThirtPartyAppleSettingsParam.
 
 Defines the reusable parameter block ThirtPartyFacebookSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `facebookAppId` | `string` | yes | — |
 | `facebookAppToken` | `string` | yes | — |
 | `facebookInappSecret` | `string` | yes | — |
@@ -393,8 +408,9 @@ Defines the reusable parameter block ThirtPartyFacebookSettingsParam.
 
 Defines the reusable parameter block ThirtPartyGoogleSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `googleClientId` | `string` | yes | — |
 | `packageId` | `string` | yes | — |
 | `publicRSAKey` | `string` | yes | — |
@@ -403,16 +419,18 @@ Defines the reusable parameter block ThirtPartyGoogleSettingsParam.
 
 Defines the reusable parameter block ThirtPartyGameCenterSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `packageId` | `string` | yes | — |
 
 ### ThirtPartyGooglePlayGameSettingsParam
 
 Defines the reusable parameter block ThirtPartyGooglePlayGameSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `redirectUri` | `string` | yes | — |
 | `clientId` | `string` | yes | — |
 | `clientSecret` | `string` | yes | — |
@@ -422,8 +440,9 @@ Defines the reusable parameter block ThirtPartyGooglePlayGameSettingsParam.
 
 Defines the reusable parameter block ThirtPartyParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `googleSettings` | `ThirtPartyGoogleSettingsParam` | no | — |
 | `facebookSettings` | `ThirtPartyFacebookSettingsParam` | no | — |
 | `appleSettings` | `ThirtPartyAppleSettingsParam` | no | — |
@@ -434,8 +453,9 @@ Defines the reusable parameter block ThirtPartyParam.
 
 Defines the reusable parameter block EmailSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `sendFrom` | `string` | yes | — |
 | `secure` | `boolean` | yes | — |
 | `host` | `string` | yes | — |
@@ -447,8 +467,9 @@ Defines the reusable parameter block EmailSettingsParam.
 
 Defines the reusable parameter block PushNotificationSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `projectId` | `string` | yes | — |
 | `clientEmail` | `string` | yes | — |
 | `privateKey` | `string` | yes | — |
@@ -457,8 +478,9 @@ Defines the reusable parameter block PushNotificationSettingsParam.
 
 Defines the reusable parameter block GamePlayerPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `addSegment` | `PermissionRulesParam` | no | — |
 | `removeSegment` | `PermissionRulesParam` | no | — |
 | `getSegment` | `PermissionRulesParam` | no | — |
@@ -516,8 +538,9 @@ Defines the reusable parameter block GamePlayerPermissionRulesParam.
 
 Defines the reusable parameter block GamePlayerSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `playerCurrenciesSettings` | `Array<CurrencySettingsParam>` | no | _elementCls=CurrencySettingsParam_ |
 | `playerStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
 | `playerDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
@@ -532,8 +555,9 @@ Defines the reusable parameter block GamePlayerSettingsParam.
 
 Defines the reusable parameter block GroupSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `groupCurrenciesSettings` | `Array<CurrencySettingsParam>` | no | _elementCls=CurrencySettingsParam_ |
 | `groupStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
 | `groupDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
@@ -545,8 +569,9 @@ Defines the reusable parameter block GroupSettingsParam.
 
 Defines the reusable parameter block InventorySettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `itemStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
 | `itemDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
 | `customDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
@@ -556,8 +581,9 @@ Defines the reusable parameter block InventorySettingsParam.
 
 Defines the reusable parameter block GameSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `gamePlayerSettings` | `GamePlayerSettingsParam` | no | — |
 | `characterPlayerSettings` | `CharacterPlayerSettingsParam` | no | — |
 | `groupSettings` | `GroupSettingsParam` | no | — |
@@ -567,16 +593,18 @@ Defines the reusable parameter block GameSettingsParam.
 
 Defines the reusable parameter block GenericServiceSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `serviceName` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### GroupPermissionRulesParam
 
 Defines the reusable parameter block GroupPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `addSegment` | `PermissionRulesParam` | no | — |
 | `removeSegment` | `PermissionRulesParam` | no | — |
 | `getSegment` | `PermissionRulesParam` | no | — |
@@ -622,8 +650,9 @@ Defines the reusable parameter block GroupPermissionRulesParam.
 
 Defines the reusable parameter block InventoryPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `addSegment` | `PermissionRulesParam` | no | — |
 | `removeSegment` | `PermissionRulesParam` | no | — |
 | `getSegment` | `PermissionRulesParam` | no | — |
@@ -663,8 +692,9 @@ Defines the reusable parameter block InventoryPermissionRulesParam.
 
 Defines the reusable parameter block DashboardPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `setMasterGameSettings` | `PermissionRulesParam` | no | — |
 | `createAdminAccount` | `PermissionRulesParam` | no | — |
 | `removeAdminAccount` | `PermissionRulesParam` | no | — |
@@ -695,8 +725,9 @@ Defines the reusable parameter block DashboardPermissionRulesParam.
 
 Defines the reusable parameter block MultiplayerPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `cancelAllMatchmakingTicket` | `PermissionRulesParam` | no | — |
 | `cancelMatchmakingTicket` | `PermissionRulesParam` | no | — |
 | `createMatchmakingTicket` | `PermissionRulesParam` | no | — |
@@ -712,8 +743,9 @@ Defines the reusable parameter block MultiplayerPermissionRulesParam.
 
 Defines the reusable parameter block MasterPlayerPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `linkAccount` | `PermissionRulesParam` | no | — |
 | `linkAndroidDeviceId` | `PermissionRulesParam` | no | — |
 | `linkApple` | `PermissionRulesParam` | no | — |
@@ -805,8 +837,9 @@ Defines the reusable parameter block MasterPlayerPermissionRulesParam.
 
 Defines the reusable parameter block MasterPlayerSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `genericServiceSettings` | `Array<GenericServiceSettingsParam>` | no | _elementCls=GenericServiceSettingsParam_ |
 | `playerCurrenciesSettings` | `Array<CurrencySettingsParam>` | no | _elementCls=CurrencySettingsParam_ |
 | `playerStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
@@ -818,8 +851,9 @@ Defines the reusable parameter block MasterPlayerSettingsParam.
 
 Defines the reusable parameter block SizeParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `min` | `number` | yes | _min=1_ |
 | `max` | `number` | yes | _min=1_ |
 
@@ -827,8 +861,9 @@ Defines the reusable parameter block SizeParam.
 
 Defines the reusable parameter block TeamParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `teamId` | `string` | yes | _minLength=1, maxLength=32_ |
 | `teamSize` | `SizeParam` | yes | — |
 
@@ -836,8 +871,9 @@ Defines the reusable parameter block TeamParam.
 
 Defines the reusable parameter block LinearExpansionsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secondsBetweenExpansions` | `number` | yes | _min=1_ |
 | `delta` | `number` | no | — |
 | `limit` | `number` | no | — |
@@ -846,8 +882,9 @@ Defines the reusable parameter block LinearExpansionsParam.
 
 Defines the reusable parameter block CustomExpansionsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secondsBetweenExpansions` | `number` | yes | _min=1_ |
 | `overrideValue` | `Array<any>` | no | _elementCls=Object_ |
 | `overrideMin` | `Array<any>` | no | _elementCls=Object_ |
@@ -857,8 +894,9 @@ Defines the reusable parameter block CustomExpansionsParam.
 
 Defines the reusable parameter block AdvancedSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secondsUntilOptional` | `number` | yes | _min=1_ |
 | `expansionType` | `number` | no | _min=1, max=3_ |
 | `linearExpansions` | `LinearExpansionsParam` | no | — |
@@ -868,8 +906,9 @@ Defines the reusable parameter block AdvancedSettingsParam.
 
 Defines the reusable parameter block RuleParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `name` | `string` | yes | _minLength=1, maxLength=32_ |
 | `type` | `number` | yes | _min=1, max=8_ |
 | `attributeSource` | `number` | no | _min=1, max=2_ |
@@ -885,16 +924,18 @@ Defines the reusable parameter block RuleParam.
 
 Defines the reusable parameter block ServerAllocationParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `enable` | `boolean` | yes | — |
 
 ### MatchmakingQueueSettingsParam
 
 Defines the reusable parameter block MatchmakingQueueSettingsParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `queueName` | `string` | yes | _minLength=6, maxLength=32_ |
 | `matchSize` | `SizeParam` | yes | — |
 | `ticketSize` | `SizeParam` | yes | — |
@@ -907,8 +948,9 @@ Defines the reusable parameter block MatchmakingQueueSettingsParam.
 
 Defines the reusable parameter block AuthenticatePermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `loginByAccount` | `PermissionRulesParam` | no | — |
 | `loginByAndroidDeviceId` | `PermissionRulesParam` | no | — |
 | `loginByApple` | `PermissionRulesParam` | no | — |
@@ -932,8 +974,9 @@ Defines the reusable parameter block AuthenticatePermissionRulesParam.
 
 Defines the reusable parameter block StoreInventoryPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `buyStoreItem` | `PermissionRulesParam` | no | — |
 | `getStoreItemInformation` | `PermissionRulesParam` | no | — |
 | `getStoreItemsWithTag` | `PermissionRulesParam` | no | — |
@@ -953,8 +996,9 @@ Defines the reusable parameter block StoreInventoryPermissionRulesParam.
 
 Defines the reusable parameter block CloudScriptPermissionRulesParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `executeFunction` | `PermissionRulesParam` | no | — |
 | `addFunction` | `PermissionRulesParam` | no | — |
 | `getFunctions` | `PermissionRulesParam` | no | — |
@@ -965,8 +1009,9 @@ Defines the reusable parameter block CloudScriptPermissionRulesParam.
 
 Defines the top-level permission tree assigned to one secret info entry. Each optional property groups `permission rules` by API domain.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `authenticate` | `AuthenticatePermissionRulesParam` | no | — |
 | `masterPlayer` | `MasterPlayerPermissionRulesParam` | no | — |
 | `gamePlayer` | `GamePlayerPermissionRulesParam` | no | — |
@@ -983,8 +1028,9 @@ Defines the top-level permission tree assigned to one secret info entry. Each op
 
 Defines the request payload for ChangePasswordAdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `currentPassword` | `string` | yes | _minLength=6, maxLength=64_ |
 | `password` | `string` | yes | _minLength=6, maxLength=64_ |
 
@@ -992,54 +1038,57 @@ Defines the request payload for ChangePasswordAdminAccount.
 
 Defines the request payload for GetAdminAccountList.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetGameInformationRequestData
 
 Defines the request payload for GetGameInformation.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### GetGameListRequestData
 
 Defines the request payload for GetGameList.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetMasterGameSettingsRequestData
 
 Defines the request payload for GetMasterGameSettings.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetSecretInfoInformationRequestData
 
 Defines the request payload for GetSecretInfoInformation.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secretKey` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### GetSecretInfoListRequestData
 
 Defines the request payload for GetSecretInfoList.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetServerLogRequestData
 
 Defines the request payload for GetServerLog.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateAdminAccountRequestData
 
 Defines the request payload for CreateAdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `username` | `string` | yes | _minLength=6, maxLength=32_ |
 | `password` | `string` | yes | _minLength=6, maxLength=64_ |
 | `secretKey` | `string` | yes | _minLength=6, maxLength=64_ |
@@ -1048,16 +1097,18 @@ Defines the request payload for CreateAdminAccount.
 
 Defines the request payload for CreateGame.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### CreateSecretInfoRequestData
 
 Defines the request payload for `createSecretInfo`. `permissionParam` is the authoritative permission tree that controls which operations the created secret key may execute on the GearN Server.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secretKey` | `string` | yes | Optional custom secret key. If omitted, the backend may generate one. — _minLength=6, maxLength=64_ |
 | `gameId` | `string` | yes | Optional target game id when creating a secret for a specific game. — _minLength=2, maxLength=32_ |
 | `permissionParam` | `PermissionParam` | no | Optional permission tree granted to the new secret key. |
@@ -1066,8 +1117,9 @@ Defines the request payload for `createSecretInfo`. `permissionParam` is the aut
 
 Defines the request payload for `loginByAdminAccount`. A successful response returns an auth token that later dashboard calls reuse so backend middleware can resolve admin context.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `username` | `string` | yes | _minLength=4, maxLength=32_ |
 | `password` | `string` | yes | _minLength=6, maxLength=64_ |
 
@@ -1075,16 +1127,18 @@ Defines the request payload for `loginByAdminAccount`. A successful response ret
 
 Defines the request payload for RemoveAdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `userId` | `string` | yes | _minLength=10, maxLength=10_ |
 
 ### SetGameInformationRequestData
 
 Defines the request payload for SetGameInformation.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `gameName` | `string` | no | — |
 | `gameDescription` | `string` | no | — |
@@ -1096,8 +1150,9 @@ Defines the request payload for SetGameInformation.
 
 Defines the request payload for SetMasterGameSettings.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `thirtPartySettings` | `ThirtPartyParam` | no | — |
 | `masterPlayerSettings` | `MasterPlayerSettingsParam` | no | — |
 | `emailSettings` | `EmailSettingsParam` | no | — |
@@ -1107,8 +1162,9 @@ Defines the request payload for SetMasterGameSettings.
 
 Defines the request payload for SetPasswordAdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `userId` | `string` | yes | _minLength=10, maxLength=10_ |
 | `password` | `string` | yes | _minLength=6, maxLength=64_ |
 
@@ -1116,8 +1172,9 @@ Defines the request payload for SetPasswordAdminAccount.
 
 Defines the request payload for SetSecretInfoInformation.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secretKey` | `string` | yes | _minLength=6, maxLength=64_ |
 | `remove` | `boolean` | no | — |
 | `tsExpire` | `number` | no | — |
@@ -1128,8 +1185,9 @@ Defines the request payload for SetSecretInfoInformation.
 
 Defines the request payload for SetSecretKeyAdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `userId` | `string` | yes | _minLength=10, maxLength=10_ |
 | `secretKey` | `string` | yes | _minLength=6, maxLength=64_ |
 
@@ -1137,8 +1195,9 @@ Defines the request payload for SetSecretKeyAdminAccount.
 
 Defines the request payload for GetAnalytics.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `timestamp` | `number` | no | _min=0_ |
 | `analyticsItem` | `boolean` | no | — |
 | `country` | `boolean` | no | — |
@@ -1153,22 +1212,24 @@ Defines the request payload for GetAnalytics.
 
 Defines the request payload for GetUsernameAdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `userId` | `string` | yes | _minLength=10, maxLength=10_ |
 
 ### GetEventCallbackCloudScriptRequestData
 
 Defines the request payload for GetEventCallbackCloudScript.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetEventCallbackCloudScriptRequestData
 
 Defines the request payload for SetEventCallbackCloudScript.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `eventName` | `string` | yes | _minLength=6, maxLength=128_ |
 | `script` | `string` | yes | _minLength=6, maxLength=Number.MAX_SAFE_INTEGER_ |
 
@@ -1176,8 +1237,9 @@ Defines the request payload for SetEventCallbackCloudScript.
 
 Defines the request payload for ResetStatisticsLeaderboard.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `type` | `number` | yes | — |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `version` | `string` | yes | _minLength=2, maxLength=32_ |
@@ -1189,8 +1251,9 @@ Defines the request payload for ResetStatisticsLeaderboard.
 
 Defines the request payload for DeleteInDatabase.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `type` | `number` | yes | — |
 | `id` | `string` | yes | _minLength=2, maxLength=32_ |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
@@ -1200,8 +1263,9 @@ Defines the request payload for DeleteInDatabase.
 
 Defines the request payload for GetBackupStatisticsLeaderboardVersion.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `type` | `number` | yes | — |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
@@ -1210,8 +1274,9 @@ Defines the request payload for GetBackupStatisticsLeaderboardVersion.
 
 Defines the request payload for GetServerGameData.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `masterPlayerCount` | `boolean` | no | — |
 | `gamePlayerCount` | `boolean` | no | — |
@@ -1226,8 +1291,9 @@ Defines the request payload for GetServerGameData.
 
 Defines the response payload for AdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `userId` | `string` | yes | — |
 | `username` | `string` | yes | — |
 | `secretKey` | `string` | yes | — |
@@ -1236,16 +1302,18 @@ Defines the response payload for AdminAccount.
 
 Defines the response payload for GetAdminAccountList.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<AdminAccountResponseData>` | yes | _elementCls=AdminAccountResponseData_ |
 
 ### GetGameInformationResponseData
 
 Defines the response payload for GetGameInformation.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `gameId` | `string` | yes | — |
 | `tsCreate` | `number` | yes | — |
 | `gameName` | `string` | yes | — |
@@ -1259,24 +1327,27 @@ Defines the response payload for GetGameInformation.
 
 Defines the response payload for GameWithGameId.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `gameId` | `string` | yes | — |
 
 ### GetGameListResponseData
 
 Defines the response payload for GetGameList.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<GameWithGameIdResponseData>` | yes | _elementCls=GameWithGameIdResponseData_ |
 
 ### GetMasterGameSettingsResponseData
 
 Defines the response payload for `getMasterGameSettings`. This payload contains the full top-level dashboard configuration snapshot used to provision a game.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `thirtPartySettings` | `ThirtPartyParam` | yes | — |
 | `masterPlayerSettings` | `MasterPlayerSettingsParam` | yes | — |
 | `emailSettings` | `EmailSettingsParam` | yes | — |
@@ -1286,8 +1357,9 @@ Defines the response payload for `getMasterGameSettings`. This payload contains 
 
 Defines the response payload for `getSecretInfoInformation`. This is the detailed secret-info record, including role, lifecycle flags, and permission tree.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secretKey` | `string` | yes | Secret key whose detailed configuration was requested. |
 | `gameId` | `string` | yes | — |
 | `tsCreate` | `number` | yes | — |
@@ -1301,56 +1373,63 @@ Defines the response payload for `getSecretInfoInformation`. This is the detaile
 
 Defines a lightweight secret-info item returned by secret-list queries.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secretKey` | `string` | yes | — |
 
 ### GetSecretInfoListResponseData
 
 Defines the response payload for `getSecretInfoList`. Results are grouped by secret role instead of being returned as one flat array.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `secretKeys` | `Array<SecretInfoWithSecretKeyResponseData>` | yes | Secret keys. — _elementCls=SecretInfoWithSecretKeyResponseData_ |
 
 ### AdminAccountWithUserIdResponseData
 
 Defines the response payload for AdminAccountWithUserId.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `userId` | `string` | yes | — |
 
 ### CreateAdminAccountResponseData
 
 Defines the response payload for CreateAdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<AdminAccountWithUserIdResponseData>` | yes | _elementCls=AdminAccountWithUserIdResponseData_ |
 
 ### LoginByAdminAccountResponseData
 
 Defines the response payload for `loginByAdminAccount`. The returned auth token should be cached and reused for subsequent dashboard requests.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `authToken` | `string` | yes | Auth token representing the authenticated admin account. |
 
 ### GetServerLogResponseData
 
 Defines the response payload for GetServerLog.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<string>` | yes | _elementCls=String_ |
 
 ### CountryRegionResponseData
 
 Defines the response payload for CountryRegion.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `regionCode` | `string` | yes | — |
 | `regionName` | `string` | yes | — |
 | `ccu` | `number` | yes | — |
@@ -1361,8 +1440,9 @@ Defines the response payload for CountryRegion.
 
 Defines the response payload for Country.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `countryCode` | `string` | yes | — |
 | `regions` | `Array<CountryRegionResponseData>` | yes | _elementCls=CountryRegionResponseData_ |
 
@@ -1370,8 +1450,9 @@ Defines the response payload for Country.
 
 Defines the response payload for AnalyticsItem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `ccu` | `number` | yes | — |
 | `dau` | `number` | yes | — |
 | `dauSince0h` | `number` | yes | — |
@@ -1391,8 +1472,9 @@ Defines the response payload for AnalyticsItem.
 
 Defines the response payload for MemoryUsage.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `freeMemoryInBytes` | `number` | yes | — |
 | `totalMemoryInBytes` | `number` | yes | — |
 
@@ -1400,8 +1482,9 @@ Defines the response payload for MemoryUsage.
 
 Defines the response payload for StorageUsage.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `name` | `string` | yes | — |
 | `fsTotalSizeInBytes` | `number` | yes | — |
 | `fsUsedSizeInBytes` | `number` | yes | — |
@@ -1410,8 +1493,9 @@ Defines the response payload for StorageUsage.
 
 Defines the response payload for DatabaseSystem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `fsTotalSizeInBytes` | `number` | yes | — |
 | `fsUsedSizeInBytes` | `number` | yes | — |
 | `totalSizeInBytes` | `number` | yes | — |
@@ -1423,8 +1507,9 @@ Defines the response payload for DatabaseSystem.
 
 Defines the response payload for OperationSystem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `cpuUsage` | `number` | yes | — |
 | `memoryUsage` | `MemoryUsageResponseData` | yes | — |
 | `storageUsage` | `Array<StorageUsageResponseData>` | yes | _elementCls=StorageUsageResponseData_ |
@@ -1433,8 +1518,9 @@ Defines the response payload for OperationSystem.
 
 Defines the response payload for RequestCompleteErrorCode.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `errorCode` | `number` | yes | — |
 | `count` | `number` | yes | — |
 
@@ -1442,8 +1528,9 @@ Defines the response payload for RequestCompleteErrorCode.
 
 Defines the response payload for RequestComplete.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `eventName` | `string` | yes | — |
 | `results` | `Array<RequestCompleteErrorCodeResponseData>` | yes | _elementCls=RequestCompleteErrorCodeResponseData_ |
 
@@ -1451,8 +1538,9 @@ Defines the response payload for RequestComplete.
 
 Defines the response payload for Cost.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestCount` | `number` | yes | — |
 | `matchmakingRequestCount` | `number` | yes | — |
 | `cloudScriptGBs` | `number` | yes | — |
@@ -1463,8 +1551,9 @@ Defines the response payload for Cost.
 
 Defines the response payload for GetAnalytics.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `analyticsItem` | `AnalyticsItemResponseData` | no | — |
 | `country` | `Array<CountryResponseData>` | no | _elementCls=CountryResponseData_ |
 | `operationSystem` | `OperationSystemResponseData` | no | — |
@@ -1478,16 +1567,18 @@ Defines the response payload for GetAnalytics.
 
 Defines the response payload for GetUsernameAdminAccount.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `username` | `string` | yes | — |
 
 ### ChildScriptResponseData
 
 Defines the response payload for ChildScript.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `eventName` | `string` | yes | — |
 | `script` | `string` | yes | — |
 | `hasEdit` | `boolean` | yes | — |
@@ -1496,8 +1587,9 @@ Defines the response payload for ChildScript.
 
 Defines the response payload for EventCallbackCloudScript.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `type` | `string` | yes | — |
 | `tsCreate` | `number` | yes | — |
 | `version` | `string` | yes | — |
@@ -1507,24 +1599,27 @@ Defines the response payload for EventCallbackCloudScript.
 
 Defines the response payload for `getEventCallbackCloudScript`. Each result links one event callback registration to a CloudScript target.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<EventCallbackCloudScriptResponseData>` | yes | _elementCls=EventCallbackCloudScriptResponseData_ |
 
 ### SetEventCallbackCloudScriptResponseData
 
 Defines the response payload for SetEventCallbackCloudScript.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `errorMessage` | `string` | yes | — |
 
 ### BackupStatisticsLeaderboardVersionResponseData
 
 Defines the response payload for BackupStatisticsLeaderboardVersion.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `version` | `string` | yes | — |
 | `log` | `string` | yes | — |
 | `tsCreate` | `number` | yes | — |
@@ -1533,16 +1628,18 @@ Defines the response payload for BackupStatisticsLeaderboardVersion.
 
 Defines the response payload for GetBackupStatisticsLeaderboardVersion.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<BackupStatisticsLeaderboardVersionResponseData>` | yes | _elementCls=BackupStatisticsLeaderboardVersionResponseData_ |
 
 ### GetServerGameDataResponseData
 
 Defines the response payload for `getServerGameData`. This is a high-level telemetry snapshot of entity counts, country breakdown, and server version data.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `masterPlayerCount` | `number` | no | — |
 | `gamePlayerCount` | `number` | no | — |
 | `characterPlayerCount` | `number` | no | — |
@@ -1556,7 +1653,7 @@ Defines the response payload for `getServerGameData`. This is a high-level telem
 
 Defines an intentionally empty response payload.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ## Namespace `DashboardRequestModels`
 
@@ -1566,7 +1663,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.ChangePasswordAdminAcco
 
 Maps the ChangePasswordAdminAccount operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetAdminAccountListOperationRequest
 
@@ -1574,7 +1671,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetAdminAccountListRequ
 
 Maps the GetAdminAccountList operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetGameInformationOperationRequest
 
@@ -1582,7 +1679,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetGameInformationReque
 
 Maps the GetGameInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetGameListOperationRequest
 
@@ -1590,7 +1687,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetGameListRequestData>
 
 Maps the GetGameList operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetMasterGameSettingsOperationRequest
 
@@ -1598,7 +1695,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetMasterGameSettingsRe
 
 Maps the GetMasterGameSettings operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetSecretInfoInformationOperationRequest
 
@@ -1606,7 +1703,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetSecretInfoInformatio
 
 Maps the GetSecretInfoInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetSecretInfoListOperationRequest
 
@@ -1614,7 +1711,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetSecretInfoListReques
 
 Maps the GetSecretInfoList operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetServerLogOperationRequest
 
@@ -1622,7 +1719,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetServerLogRequestData
 
 Maps the GetServerLog operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateAdminAccountOperationRequest
 
@@ -1630,7 +1727,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.CreateAdminAccountReque
 
 Maps the CreateAdminAccount operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateGameOperationRequest
 
@@ -1638,7 +1735,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.CreateGameRequestData>`
 
 Maps the CreateGame operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateSecretInfoOperationRequest
 
@@ -1646,7 +1743,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.CreateSecretInfoRequest
 
 Maps the CreateSecretInfo operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### LoginByAdminAccountOperationRequest
 
@@ -1654,7 +1751,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.LoginByAdminAccountRequ
 
 Maps the LoginByAdminAccount operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### RemoveAdminAccountOperationRequest
 
@@ -1662,7 +1759,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.RemoveAdminAccountReque
 
 Maps the RemoveAdminAccount operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetGameInformationOperationRequest
 
@@ -1670,7 +1767,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.SetGameInformationReque
 
 Maps the SetGameInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetMasterGameSettingsOperationRequest
 
@@ -1678,7 +1775,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.SetMasterGameSettingsRe
 
 Maps the SetMasterGameSettings operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetPasswordAdminAccountOperationRequest
 
@@ -1686,7 +1783,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.SetPasswordAdminAccount
 
 Maps the SetPasswordAdminAccount operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetSecretInfoInformationOperationRequest
 
@@ -1694,7 +1791,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.SetSecretInfoInformatio
 
 Maps the SetSecretInfoInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetSecretKeyAdminAccountOperationRequest
 
@@ -1702,7 +1799,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.SetSecretKeyAdminAccoun
 
 Maps the SetSecretKeyAdminAccount operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetUsernameAdminAccountOperationRequest
 
@@ -1710,7 +1807,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetUsernameAdminAccount
 
 Maps the GetUsernameAdminAccount operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetAnalyticsOperationRequest
 
@@ -1718,7 +1815,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetAnalyticsRequestData
 
 Maps the GetAnalytics operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetEventCallbackCloudScriptOperationRequest
 
@@ -1726,7 +1823,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetEventCallbackCloudSc
 
 Maps the GetEventCallbackCloudScript operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetEventCallbackCloudScriptOperationRequest
 
@@ -1734,7 +1831,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.SetEventCallbackCloudSc
 
 Maps the SetEventCallbackCloudScript operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ResetStatisticsLeaderboardOperationRequest
 
@@ -1742,7 +1839,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.ResetStatisticsLeaderbo
 
 Maps the ResetStatisticsLeaderboard operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetBackupStatisticsLeaderboardVersionOperationRequest
 
@@ -1750,7 +1847,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetBackupStatisticsLead
 
 Maps the GetBackupStatisticsLeaderboardVersion operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetServerGameDataOperationRequest
 
@@ -1758,7 +1855,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.GetServerGameDataReques
 
 Maps the GetServerGameData operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### DeleteInDatabaseOperationRequest
 
@@ -1766,7 +1863,7 @@ Extends: `CustomOperationRequestAbstract<DashboardModels.DeleteInDatabaseRequest
 
 Maps the DeleteInDatabase operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ## Namespace `DashboardResponseModels`
 
@@ -1776,7 +1873,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the ChangePasswordAdminAccount operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetAdminAccountListOperationResponse
 
@@ -1784,7 +1881,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetAdminAccountListRes
 
 Maps the GetAdminAccountList operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetGameInformationOperationResponse
 
@@ -1792,7 +1889,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetGameInformationResp
 
 Maps the GetGameInformation operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetGameListOperationResponse
 
@@ -1800,7 +1897,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetGameListResponseDat
 
 Maps the GetGameList operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetMasterGameSettingsOperationResponse
 
@@ -1808,7 +1905,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetMasterGameSettingsR
 
 Maps the GetMasterGameSettings operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetSecretInfoInformationOperationResponse
 
@@ -1816,7 +1913,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetSecretInfoInformati
 
 Maps the GetSecretInfoInformation operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetSecretInfoListOperationResponse
 
@@ -1824,7 +1921,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetSecretInfoListRespo
 
 Maps the GetSecretInfoList operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetServerLogOperationResponse
 
@@ -1832,7 +1929,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetServerLogResponseDa
 
 Maps the GetServerLog operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateAdminAccountOperationResponse
 
@@ -1840,7 +1937,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.CreateAdminAccountResp
 
 Maps the CreateAdminAccount operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateGameOperationResponse
 
@@ -1848,7 +1945,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GameWithGameIdResponse
 
 Maps the CreateGame operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateSecretInfoOperationResponse
 
@@ -1856,7 +1953,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.SecretInfoWithSecretKe
 
 Maps the CreateSecretInfo operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### LoginByAdminAccountOperationResponse
 
@@ -1864,7 +1961,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.LoginByAdminAccountRes
 
 Maps the LoginByAdminAccount operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### RemoveAdminAccountOperationResponse
 
@@ -1872,7 +1969,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the RemoveAdminAccount operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetGameInformationOperationResponse
 
@@ -1880,7 +1977,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the SetGameInformation operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetMasterGameSettingsOperationResponse
 
@@ -1888,7 +1985,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the SetMasterGameSettings operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetPasswordAdminAccountOperationResponse
 
@@ -1896,7 +1993,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the SetPasswordAdminAccount operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetSecretInfoInformationOperationResponse
 
@@ -1904,7 +2001,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the SetSecretInfoInformation operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetSecretKeyAdminAccountOperationResponse
 
@@ -1912,7 +2009,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the SetSecretKeyAdminAccount operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetUsernameAdminAccountOperationResponse
 
@@ -1920,7 +2017,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetUsernameAdminAccoun
 
 Maps the GetUsernameAdminAccount operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetAnalyticsOperationResponse
 
@@ -1928,7 +2025,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetAnalyticsResponseDa
 
 Maps the GetAnalytics operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetEventCallbackCloudScriptOperationResponse
 
@@ -1936,7 +2033,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetEventCallbackCloudS
 
 Maps the GetEventCallbackCloudScript operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetEventCallbackCloudScriptOperationResponse
 
@@ -1944,7 +2041,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.SetEventCallbackCloudS
 
 Maps the SetEventCallbackCloudScript operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ResetStatisticsLeaderboardOperationResponse
 
@@ -1952,7 +2049,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the ResetStatisticsLeaderboard operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetBackupStatisticsLeaderboardVersionOperationResponse
 
@@ -1960,7 +2057,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetBackupStatisticsLea
 
 Maps the GetBackupStatisticsLeaderboardVersion operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetServerGameDataOperationResponse
 
@@ -1968,7 +2065,7 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.GetServerGameDataRespo
 
 Maps the GetServerGameData operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### DeleteInDatabaseOperationResponse
 
@@ -1976,5 +2073,4 @@ Extends: `CustomOperationResponseAbstract<DashboardModels.EmptyResponseData>`
 
 Maps the DeleteInDatabase operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
-
+_Không có field public (payload rỗng)._

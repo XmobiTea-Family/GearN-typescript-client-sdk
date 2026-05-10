@@ -17,20 +17,12 @@ import { IServerEventHandler } from "./IServerEventHandler";
  * lobby / account-level group UI without polling.
  */
 export class GamePlayerGroupUpdate {
-	/**
-	 * Optional character id when the backend scopes the update to
-	 * a specific character context. Absent for purely
-	 * account-scoped group changes.
-	 */
-	@StringDataMember({ code: ParameterCode.CharacterId, isOptional: true })
-	public characterId?: string;
-
-	/**
-	 * Authoritative group membership list after the change. Treat
-	 * as a complete replacement.
-	 */
-	@GNArrayDataMember({ code: ParameterCode.PlayerGroups, elementCls: GenericModels.GroupItem })
-	public playerGroups: Array<GenericModels.GroupItem>;
+    /**
+     * Authoritative group membership list after the change. Treat
+     * as a complete replacement.
+     */
+    @GNArrayDataMember({ code: ParameterCode.PlayerGroups, elementCls: GenericModels.GroupItem })
+    public playerGroups: Array<GenericModels.GroupItem>;
 }
 
 /**
@@ -46,27 +38,27 @@ export class GamePlayerGroupUpdate {
  */
 @IServerEventHandler.registerEvent
 export class OnGamePlayerGroupUpdateEventHandler implements IServerEventHandler {
-	/**
-	 * Static callback the application registers. Leave `null` to
-	 * silently drop the event.
-	 */
-	public static onUpdate: Action1<GamePlayerGroupUpdate>;
+    /**
+     * Static callback the application registers. Leave `null` to
+     * silently drop the event.
+     */
+    public static onUpdate: Action1<GamePlayerGroupUpdate>;
 
-	/**
-	 * Returns {@link EventCode.OnGamePlayerGroupUpdate}.
-	 */
-	public getEventCode(): string {
-		return EventCode.OnGamePlayerGroupUpdate;
-	}
+    /**
+     * Returns {@link EventCode.OnGamePlayerGroupUpdate}.
+     */
+    public getEventCode(): string {
+        return EventCode.OnGamePlayerGroupUpdate;
+    }
 
-	/**
-	 * Deserialises the parameters into a
-	 * {@link GamePlayerGroupUpdate} and forwards to
-	 * {@link onUpdate}.
-	 */
-	public handle(operationEvent: OperationEvent): void {
-		if (OnGamePlayerGroupUpdateEventHandler.onUpdate != null)
-			OnGamePlayerGroupUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GamePlayerGroupUpdate));
-	}
+    /**
+     * Deserialises the parameters into a
+     * {@link GamePlayerGroupUpdate} and forwards to
+     * {@link onUpdate}.
+     */
+    public handle(operationEvent: OperationEvent): void {
+        if (OnGamePlayerGroupUpdateEventHandler.onUpdate != null)
+            OnGamePlayerGroupUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GamePlayerGroupUpdate));
+    }
 
 }

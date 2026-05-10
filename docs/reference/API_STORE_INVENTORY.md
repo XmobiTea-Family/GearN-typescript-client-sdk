@@ -24,8 +24,9 @@ const res = await GNNetwork.storeInventory.<method>Async(requestData, overrideAu
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,11 +36,11 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.storeInventory.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `id` khác với những `entity` liên quan mà `gamePlayer` đang được authenticated không phải owner nếu `type` là `OwnerType.CharacterPlayer` hoặc không phải member nếu là `type` `OwnerType.Group` |
-|--------|-------------|------------|----------------|--------------------------|---------------------------------------------------------------------------------------------------------|
+| --- | --- | --- | --- | --- | --- |
 | `buyStoreItem` | `StoreInventoryModels.BuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` | `storeInventory.buyStoreItem.selfEnable` | `storeInventory.buyStoreItem.otherSelfEnable` |
 | `getStoreItemInformation` | `StoreInventoryModels.GetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` | `storeInventory.getStoreItemInformation.otherSelfEnable` | |
 | `getStoreItemsWithTag` | `StoreInventoryModels.GetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` | `storeInventory.getStoreItemsWithTag.otherSelfEnable` | |
@@ -55,11 +56,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStoreUsed` | `StoreInventoryModels.GetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` | `storeInventory.getStoreUsed.otherSelfEnable` | |
 | `removeStoreUsed` | `StoreInventoryModels.RemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` | `storeInventory.removeStoreUsed.otherSelfEnable` | |
 
-
 ## Server methods (`GNNetwork.storeInventory.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `buyStoreItem` | `StoreInventoryModels.ServerBuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` | `storeInventory.buyStoreItem.serverSelfEnable` |
 | `getStoreItemInformation` | `StoreInventoryModels.ServerGetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` | `storeInventory.getStoreItemInformation.serverSelfEnable` |
 | `getStoreItemsWithTag` | `StoreInventoryModels.ServerGetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` | `storeInventory.getStoreItemsWithTag.serverSelfEnable` |
@@ -75,11 +76,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStoreUsed` | `StoreInventoryModels.ServerGetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` | `storeInventory.getStoreUsed.serverSelfEnable` |
 | `removeStoreUsed` | `StoreInventoryModels.ServerRemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` | `storeInventory.removeStoreUsed.serverSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.storeInventory.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `buyStoreItem` | `StoreInventoryModels.AdminBuyStoreItemRequestData` | `buyStoreItemAsync(...)` | `StoreInventoryResponseModels.BuyStoreItemOperationResponse` | `storeInventory.buyStoreItem.adminSelfEnable` |
 | `getStoreItemInformation` | `StoreInventoryModels.AdminGetStoreItemInformationRequestData` | `getStoreItemInformationAsync(...)` | `StoreInventoryResponseModels.GetStoreItemInformationOperationResponse` | `storeInventory.getStoreItemInformation.adminSelfEnable` |
 | `getStoreItemsWithTag` | `StoreInventoryModels.AdminGetStoreItemsWithTagRequestData` | `getStoreItemsWithTagAsync(...)` | `StoreInventoryResponseModels.GetStoreItemsWithTagOperationResponse` | `storeInventory.getStoreItemsWithTag.adminSelfEnable` |
@@ -94,7 +95,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStoreLog` | `StoreInventoryModels.AdminGetStoreLogRequestData` | `getStoreLogAsync(...)` | `StoreInventoryResponseModels.GetStoreLogOperationResponse` | `storeInventory.getStoreLog.adminSelfEnable` |
 | `getStoreUsed` | `StoreInventoryModels.AdminGetStoreUsedRequestData` | `getStoreUsedAsync(...)` | `StoreInventoryResponseModels.GetStoreUsedOperationResponse` | `storeInventory.getStoreUsed.adminSelfEnable` |
 | `removeStoreUsed` | `StoreInventoryModels.AdminRemoveStoreUsedRequestData` | `removeStoreUsedAsync(...)` | `StoreInventoryResponseModels.RemoveStoreUsedOperationResponse` | `storeInventory.removeStoreUsed.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

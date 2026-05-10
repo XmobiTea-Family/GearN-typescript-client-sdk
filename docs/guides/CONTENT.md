@@ -5,14 +5,14 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.content`
-  - `GNNetwork.content.server`
-  - `GNNetwork.content.admin`
+    - `GNNetwork.content`
+    - `GNNetwork.content.server`
+    - `GNNetwork.content.admin`
 - Toàn bộ method hiện tại của `ContentApi` đều gửi qua HTTP.
 - `ContentApi` có đủ 3 role thật:
-  - `GNNetwork.content` -> `RequestRole.Client`
-  - `GNNetwork.content.server` -> `RequestRole.Server`
-  - `GNNetwork.content.admin` -> `RequestRole.Admin`
+    - `GNNetwork.content` -> `RequestRole.Client`
+    - `GNNetwork.content.server` -> `RequestRole.Server`
+    - `GNNetwork.content.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
@@ -27,18 +27,19 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Không dùng socket cho `ContentApi`.
 - Chọn namespace theo đúng role của actor hiện tại. Không gọi nhầm `client` khi bạn đang sinh code cho server job hoặc admin tool.
 - Flow upload file đúng là:
-  1. `createNewFileUploadInfoAsync(...)`
-  2. lấy `fileId` từ response
-  3. `GNNetwork.uploadFileAsync(fileId, bytes, filename, mimetype)`
+    1. `createNewFileUploadInfoAsync(...)`
+    2. lấy `fileId` từ response
+    3. `GNNetwork.uploadFileAsync(fileId, bytes, filename, mimetype)`
 - Flow download file đúng là:
-  1. `requestDownloadFileUploadInfoAsync(...)`
-  2. lấy `downloadToken` từ response
-  3. `GNNetwork.getDownloadFileUrl(downloadToken)`
+    1. `requestDownloadFileUploadInfoAsync(...)`
+    2. lấy `downloadToken` từ response
+    3. `GNNetwork.getDownloadFileUrl(downloadToken)`
 - `setContentDataAsync(...)` bắt buộc có `configs`.
 - `removeFileUploadInfoAsync(...)` là thao tác mutate/xóa metadata file. Chỉ gọi khi có chủ đích rõ ràng.
 
 ## 3. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | Dùng khi nào |
 | --- | --- | --- |
 | `GNNetwork.content` | `Client` | | flow từ client/player app |
@@ -54,6 +55,7 @@ Rule nhanh:
 
 ## 4. Chọn Method
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getContentDataAsync` | Đọc content config theo key hoặc label | `keys?`, `label?` | `GetContentDataResponseData` | Dùng cho config/content data, không phải file binary | `Ok`, `GameNotFound` |
@@ -79,8 +81,8 @@ Rule nhanh:
 - DTO fields: [reference/dto/CONTENT.md](/docs/reference/dto/CONTENT.md). Method table: [reference/API_CONTENT.md](/docs/reference/API_CONTENT.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Content*.d.ts`.
 - `GetContentDataRequestData.keys` là optional.
-  - Suy luận từ model: nếu bỏ `keys`, backend có thể trả tập content rộng hơn theo `label` hoặc default scope.
-  - Nếu backend spec không chốt rõ hành vi này, AI không được tự mặc định lấy toàn bộ content.
+    - Suy luận từ model: nếu bỏ `keys`, backend có thể trả tập content rộng hơn theo `label` hoặc default scope.
+    - Nếu backend spec không chốt rõ hành vi này, AI không được tự mặc định lấy toàn bộ content.
 - `GetContentDataRequestData.label` là optional và có `defaultValue: ""`.
 - `SetContentDataRequestData.configs` là mảng bắt buộc.
 - `ContentDataParam.key` là bắt buộc.
@@ -153,11 +155,7 @@ Những response chính AI cần nhớ:
 ### Client đọc content theo key
 
 ```ts
-import {
-    GNNetwork,
-    ContentModels,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, ContentModels, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new ContentModels.GetContentDataRequestData();
 request.keys = ["homepage", "shop"];
@@ -179,19 +177,11 @@ const configs = response.responseData.configs;
 ### Server set content data
 
 ```ts
-import {
-    GNHashtable,
-    GNNetwork,
-    ContentModels,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNHashtable, GNNetwork, ContentModels, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const config = new ContentModels.ContentDataParam();
 config.key = "maintenance";
-config.data = GNHashtable.builder()
-    .add("enabled", true)
-    .add("message", "Server maintenance at 22:00")
-    .build();
+config.data = GNHashtable.builder().add("enabled", true).add("message", "Server maintenance at 22:00").build();
 
 const request = new ContentModels.ServerSetContentDataRequestData();
 request.configs = [config];
@@ -211,11 +201,7 @@ if (response.errorCode !== ErrorCode.Ok) {
 ### Upload file đúng sequence
 
 ```ts
-import {
-    GNNetwork,
-    ContentModels,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, ContentModels, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new ContentModels.CreateNewFileUploadInfoRequestData();
 createRequest.fileName = "banner.png";
@@ -233,12 +219,7 @@ if (createResponse.errorCode !== ErrorCode.Ok) {
 const fileId = createResponse.responseData.fileId;
 const bytes = new Uint8Array([1, 2, 3]);
 
-const uploadResponse = await GNNetwork.uploadFileAsync(
-    fileId,
-    bytes,
-    "banner.png",
-    "image/png",
-);
+const uploadResponse = await GNNetwork.uploadFileAsync(fileId, bytes, "banner.png", "image/png");
 
 if (uploadResponse.error) {
     throw new Error(uploadResponse.error);
@@ -248,11 +229,7 @@ if (uploadResponse.error) {
 ### Xin download URL từ fileId
 
 ```ts
-import {
-    GNNetwork,
-    ContentModels,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, ContentModels, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new ContentModels.RequestDownloadFileUploadInfoRequestData();
 request.fileId = "123456789012345";

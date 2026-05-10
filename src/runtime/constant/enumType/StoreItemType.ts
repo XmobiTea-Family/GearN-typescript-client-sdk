@@ -10,18 +10,18 @@
  * `StoreInventoryModels.StoreItemCatalog.storeItemType`.
  */
 export enum StoreItemType {
-	/**
-	 * One-time purchase — the storefront refuses subsequent buy
-	 * attempts. Use for permanent unlocks (no-ads, premium pass,
-	 * cosmetic packs).
-	 */
-	NonConsumable = 1,
+    /**
+     * One-time purchase — the storefront refuses subsequent buy
+     * attempts. Use for permanent unlocks (no-ads, premium pass,
+     * cosmetic packs).
+     */
+    NonConsumable = 1,
 
-	/**
-	 * Re-purchasable — players may buy and consume the item
-	 * repeatedly. Use for currency packs, energy refills,
-	 * single-use boosters.
-	 */
-	Consumable = 2,
+    /**
+     * Re-purchasable — players may buy and consume the item
+     * repeatedly. Use for currency packs, energy refills,
+     * single-use boosters.
+     */
+    Consumable = 2,
 
 }

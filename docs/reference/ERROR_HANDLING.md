@@ -16,14 +16,14 @@ const res = await GNNetwork.authenticate.loginByAccountAsync(request);
 
 // 1. Kiểm tra returnCode (transport/gateway)
 if (res.returnCode !== ReturnCode.Ok) {
-	handleTransportFailure(res);
-	return;
+    handleTransportFailure(res);
+    return;
 }
 
 // 2. Kiểm tra errorCode (business domain)
 if (res.errorCode !== ErrorCode.Ok) {
-	handleDomainFailure(res);
-	return;
+    handleDomainFailure(res);
+    return;
 }
 
 // 3. Happy path: trust typed payload
@@ -51,8 +51,9 @@ Typed response (trả từ mọi `*Async()` và callback path) expose field `pub
 
 Kiểm tra bằng `res.returnCode`. So sánh bằng enum symbol. Giá trị numeric: [ENUMS.md § ReturnCode](/docs/reference/ENUMS.md#returncode).
 
+<!-- prettier-ignore -->
 | ReturnCode | Khi nào gặp | Recommended action |
-|------------|-------------|--------------------|
+| --- | --- | --- |
 | `Ok` | Happy path | Sang tầng 2 check `errorCode` |
 | `UnknownError` | Backend fail nhưng không map code cụ thể | Log + show lỗi chung; không retry tự động |
 | `OperationTimeout` | Request timeout (SDK hoặc backend) | Retry với backoff nếu operation idempotent; báo user nếu không |
@@ -72,8 +73,8 @@ Response expose thêm `res.invalidMembers: InvalidMember[]`:
 
 ```ts
 interface InvalidMember {
-	code: string;                   // tên field (ParameterCode)
-	invalidMemberType: InvalidMemberType;
+    code: string; // tên field (ParameterCode)
+    invalidMemberType: InvalidMemberType;
 }
 ```
 
@@ -81,9 +82,9 @@ interface InvalidMember {
 
 ```ts
 if (res.returnCode === ReturnCode.InvalidRequestParameters) {
-	for (const im of res.invalidMembers ?? []) {
-		console.warn(`field ${im.code} invalid: type=${im.invalidMemberType}`);
-	}
+    for (const im of res.invalidMembers ?? []) {
+        console.warn(`field ${im.code} invalid: type=${im.invalidMemberType}`);
+    }
 }
 ```
 
@@ -95,8 +96,9 @@ Chỉ check sau khi `returnCode === ReturnCode.Ok`. Lấy qua `response.errorCod
 
 Bảng đầy đủ 50 giá trị xem [ENUMS.md § ErrorCode](/docs/reference/ENUMS.md#errorcode). Pattern xử lý chung:
 
+<!-- prettier-ignore -->
 | ErrorCode family | Pattern |
-|------------------|---------|
+| --- | --- |
 | `Ok` | Dùng data trong response |
 | `*NotFound` (2, 7, 9–19, 22, 24, 29, 30, 31, 39, 42, 44) | Entity không tồn tại — thường hiện message user-friendly, không retry |
 | `*Exists` / `*HadBeen*` (4, 23, 25, 36, 49, 50) | Conflict trạng thái — hiện UX "đã tồn tại" / "đã mua", không retry |
@@ -111,8 +113,9 @@ Bảng đầy đủ 50 giá trị xem [ENUMS.md § ErrorCode](/docs/reference/EN
 
 ## `Return` vs `Error` — quyết định nhanh
 
+<!-- prettier-ignore -->
 | Tình huống | Layer | Xử lý |
-|------------|-------|-------|
+| --- | --- | --- |
 | User offline, request không đến server | — (reject Promise / transport exception) | Retry với backoff |
 | SSL/cert fail | — (reject Promise) | Báo ops; không retry tự động |
 | Timeout | `ReturnCode.OperationTimeout` | Retry nếu idempotent |
@@ -132,19 +135,19 @@ Cả 2 pattern **không throw** trên business/transport error:
 ```ts
 // Callback
 GNNetwork.authenticate.loginByAccount(data, (res) => {
-	if (res.returnCode !== ReturnCode.Ok) return;
-	if (res.errorCode !== ErrorCode.Ok) return;
-	useResult(res.responseData);
+    if (res.returnCode !== ReturnCode.Ok) return;
+    if (res.errorCode !== ErrorCode.Ok) return;
+    useResult(res.responseData);
 });
 
 // Async
 try {
-	const res = await GNNetwork.authenticate.loginByAccountAsync(data);
-	if (res.returnCode !== ReturnCode.Ok) return;
-	if (res.errorCode !== ErrorCode.Ok) return;
-	useResult(res.responseData);
+    const res = await GNNetwork.authenticate.loginByAccountAsync(data);
+    if (res.returnCode !== ReturnCode.Ok) return;
+    if (res.errorCode !== ErrorCode.Ok) return;
+    useResult(res.responseData);
 } catch (e) {
-	// chỉ đến đây khi transport layer throw (network exception, serialization fail)
+    // chỉ đến đây khi transport layer throw (network exception, serialization fail)
 }
 ```
 

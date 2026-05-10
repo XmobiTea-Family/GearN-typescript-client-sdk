@@ -59,38 +59,33 @@ Code mẫu đầy đủ (có comment từng field): [README § 4](/README.MD#4-k
 ### Code
 
 ```typescript
-import {
-  GNNetwork,
-  ReturnCode,
-  ErrorCode,
-  AuthenticateModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, ReturnCode, ErrorCode, AuthenticateModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function loginWithAccount(username: string, password: string) {
-  const infoRequestParam = new AuthenticateModels.InfoRequestParam();
-  infoRequestParam.displayName = true;
-  infoRequestParam.avatar = true;
-  infoRequestParam.playerCurrencies = true;
-  infoRequestParam.tsCreate = true;
+    const infoRequestParam = new AuthenticateModels.InfoRequestParam();
+    infoRequestParam.displayName = true;
+    infoRequestParam.avatar = true;
+    infoRequestParam.playerCurrencies = true;
+    infoRequestParam.tsCreate = true;
 
-  const request = new AuthenticateModels.LoginByAccountRequestData();
-  request.username = username;
-  request.password = password;
-  request.infoRequestParam = infoRequestParam;
+    const request = new AuthenticateModels.LoginByAccountRequestData();
+    request.username = username;
+    request.password = password;
+    request.infoRequestParam = infoRequestParam;
 
-  const res = await GNNetwork.authenticate.loginByAccountAsync(request);
+    const res = await GNNetwork.authenticate.loginByAccountAsync(request);
 
-  if (res.returnCode !== ReturnCode.Ok) {
-    console.error("transport error", res.returnCode, res.debugMessage);
-    return null;
-  }
-  if (res.errorCode !== ErrorCode.Ok) {
-    console.warn("business error", res.errorCode, res.invalidMembers);
-    return null;
-  }
+    if (res.returnCode !== ReturnCode.Ok) {
+        console.error("transport error", res.returnCode, res.debugMessage);
+        return null;
+    }
+    if (res.errorCode !== ErrorCode.Ok) {
+        console.warn("business error", res.errorCode, res.invalidMembers);
+        return null;
+    }
 
-  // AuthenticateApi success auto-caches authToken + userId into AuthenticateStatus/StorageService.
-  return res.responseData; // AuthenticateResponseData
+    // AuthenticateApi success auto-caches authToken + userId into AuthenticateStatus/StorageService.
+    return res.responseData; // AuthenticateResponseData
 }
 ```
 
@@ -123,20 +118,18 @@ async function loginWithAccount(username: string, password: string) {
 import { GNNetwork, ReturnCode, ErrorCode, AuthenticateModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function ensureValidToken() {
-  // refreshAuthToken uses cached auth context — không cần truyền field nào
-  const res = await GNNetwork.authenticate.refreshAuthTokenAsync(
-    new AuthenticateModels.RefreshAuthTokenRequestData(),
-  );
+    // refreshAuthToken uses cached auth context — không cần truyền field nào
+    const res = await GNNetwork.authenticate.refreshAuthTokenAsync(new AuthenticateModels.RefreshAuthTokenRequestData());
 
-  if (res.returnCode !== ReturnCode.Ok) return false;
-  if (res.errorCode !== ErrorCode.Ok) return false;
+    if (res.returnCode !== ReturnCode.Ok) return false;
+    if (res.errorCode !== ErrorCode.Ok) return false;
 
-  return true;
+    return true;
 }
 
 // On app start:
 if (!(await ensureValidToken())) {
-  // redirect về login screen
+    // redirect về login screen
 }
 ```
 
@@ -164,32 +157,26 @@ if (!(await ensureValidToken())) {
 ### Code
 
 ```typescript
-import {
-  GNNetwork,
-  ReturnCode,
-  ErrorCode,
-  AuthenticateModels,
-  GoogleLoginType,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, ReturnCode, ErrorCode, AuthenticateModels, GoogleLoginType } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function loginWithGoogle(idToken: string) {
-  const infoRequestParam = new AuthenticateModels.InfoRequestParam();
-  infoRequestParam.displayName = true;
-  infoRequestParam.avatar = true;
+    const infoRequestParam = new AuthenticateModels.InfoRequestParam();
+    infoRequestParam.displayName = true;
+    infoRequestParam.avatar = true;
 
-  const request = new AuthenticateModels.LoginByGoogleRequestData();
-  request.token = idToken;
-  request.type = GoogleLoginType.IdToken;
-  request.createPlayerIfNotExists = true;
-  request.infoRequestParam = infoRequestParam;
+    const request = new AuthenticateModels.LoginByGoogleRequestData();
+    request.token = idToken;
+    request.type = GoogleLoginType.IdToken;
+    request.createPlayerIfNotExists = true;
+    request.infoRequestParam = infoRequestParam;
 
-  const res = await GNNetwork.authenticate.loginByGoogleAsync(request);
+    const res = await GNNetwork.authenticate.loginByGoogleAsync(request);
 
-  if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return null;
+    if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return null;
 
-  // AuthenticateApi success auto-caches authToken + userId.
-  if (res.responseData.newlyCreated) console.log("new player created");
-  return res.responseData;
+    // AuthenticateApi success auto-caches authToken + userId.
+    if (res.responseData.newlyCreated) console.log("new player created");
+    return res.responseData;
 }
 ```
 
@@ -220,17 +207,17 @@ async function loginWithGoogle(idToken: string) {
 import { GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 GNNetwork.subscriberOnConnectHandler(() => {
-  console.log("socket connected, sid=", GNNetwork.getSocketSId());
-  // SDK auto-auths the socket if an auth token is already cached.
-  // Call GNNetwork.sendRequestAuthSocket() manually only when login/token refresh happens after this connect.
+    console.log("socket connected, sid=", GNNetwork.getSocketSId());
+    // SDK auto-auths the socket if an auth token is already cached.
+    // Call GNNetwork.sendRequestAuthSocket() manually only when login/token refresh happens after this connect.
 });
 
 GNNetwork.subscriberOnDisconnectHandler(() => {
-  console.warn("socket disconnected — SDK will auto-reconnect after reconnectDelay ms");
+    console.warn("socket disconnected — SDK will auto-reconnect after reconnectDelay ms");
 });
 
 GNNetwork.connectSocket(() => {
-  // optional one-shot callback on first connect
+    // optional one-shot callback on first connect
 });
 ```
 
@@ -261,29 +248,29 @@ GNNetwork.connectSocket(() => {
 import { OnGamePlayerFriendUpdateEventHandler, FriendStatus } from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
-  // payload.playerFriends: Array<GenericModels.FriendItem>
-  for (const f of payload.playerFriends ?? []) {
-    switch (f.status) {
-      case FriendStatus.Friend: {
-        upsertFriendInUI(f);
-        break;
-      }
-      case FriendStatus.WaitingAccept:
-      case FriendStatus.SentRequestAndWaitingAccept: {
-        showFriendRequest(f);
-        break;
-      }
-      case FriendStatus.NotFriend: {
-        removeFriendFromUI(f.friendId);
-        break;
-      }
+    // payload.playerFriends: Array<GenericModels.FriendItem>
+    for (const f of payload.playerFriends ?? []) {
+        switch (f.status) {
+            case FriendStatus.Friend: {
+                upsertFriendInUI(f);
+                break;
+            }
+            case FriendStatus.WaitingAccept:
+            case FriendStatus.SentRequestAndWaitingAccept: {
+                showFriendRequest(f);
+                break;
+            }
+            case FriendStatus.NotFriend: {
+                removeFriendFromUI(f.friendId);
+                break;
+            }
+        }
     }
-  }
 };
 
 // Cleanup khi user logout hoặc navigate đi
 function unsubscribe() {
-  OnGamePlayerFriendUpdateEventHandler.onUpdate = () => {};
+    OnGamePlayerFriendUpdateEventHandler.onUpdate = () => {};
 }
 ```
 
@@ -310,36 +297,30 @@ function unsubscribe() {
 ### Code
 
 ```typescript
-import {
-  GNNetwork,
-  OnGroupMessageUpdateEventHandler,
-  ReturnCode,
-  ErrorCode,
-  GroupModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, OnGroupMessageUpdateEventHandler, ReturnCode, ErrorCode, GroupModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 // 1. Subscribe incoming messages
 OnGroupMessageUpdateEventHandler.onUpdate = (payload) => {
-  if (payload.groupId !== currentGroupId) return;
-  for (const msg of payload.groupMessages ?? []) {
-    appendMessageToUI(msg);
-  }
+    if (payload.groupId !== currentGroupId) return;
+    for (const msg of payload.groupMessages ?? []) {
+        appendMessageToUI(msg);
+    }
 };
 
 // 2. Send a new message
 async function sendGroupChat(groupId: string, text: string) {
-  const request = new GroupModels.SendGroupMessageRequestData();
-  request.senderId = GNNetwork.getAuthenticateStatus().getUserId();
-  request.groupId = groupId;
-  request.message = text;
+    const request = new GroupModels.SendGroupMessageRequestData();
+    request.senderId = GNNetwork.getAuthenticateStatus().getUserId();
+    request.groupId = groupId;
+    request.message = text;
 
-  const res = await GNNetwork.group.sendGroupMessageAsync(request);
+    const res = await GNNetwork.group.sendGroupMessageAsync(request);
 
-  if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) {
-    console.warn("send failed", res.errorCode, res.debugMessage);
-    return false;
-  }
-  return true;
+    if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) {
+        console.warn("send failed", res.errorCode, res.debugMessage);
+        return false;
+    }
+    return true;
 }
 ```
 
@@ -367,39 +348,33 @@ async function sendGroupChat(groupId: string, text: string) {
 ### Code
 
 ```typescript
-import {
-  GNNetwork,
-  OnGroupMemberUpdateEventHandler,
-  ReturnCode,
-  ErrorCode,
-  GamePlayerModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, OnGroupMemberUpdateEventHandler, ReturnCode, ErrorCode, GamePlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGroupMemberUpdateEventHandler.onUpdate = (payload) => {
-  if (payload.groupId !== currentGroupId) return;
-  for (const m of payload.members ?? []) {
-    // MemberItem.status is backend-defined; update idempotently and resync roster after reconnect.
-    roster.upsert(m);
-  }
+    if (payload.groupId !== currentGroupId) return;
+    for (const m of payload.members ?? []) {
+        // MemberItem.status is backend-defined; update idempotently and resync roster after reconnect.
+        roster.upsert(m);
+    }
 };
 
 async function join(groupId: string) {
-  const request = new GamePlayerModels.JoinGroupRequestData();
-  request.groupId = groupId;
+    const request = new GamePlayerModels.JoinGroupRequestData();
+    request.groupId = groupId;
 
-  const res = await GNNetwork.gamePlayer.joinGroupAsync(request);
-  if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) {
-    if (res.errorCode === ErrorCode.GroupNotFound) return "group_not_found";
-    return "error";
-  }
-  return "ok";
+    const res = await GNNetwork.gamePlayer.joinGroupAsync(request);
+    if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) {
+        if (res.errorCode === ErrorCode.GroupNotFound) return "group_not_found";
+        return "error";
+    }
+    return "ok";
 }
 
 async function leave(groupId: string) {
-  const request = new GamePlayerModels.LeaveGroupRequestData();
-  request.groupId = groupId;
+    const request = new GamePlayerModels.LeaveGroupRequestData();
+    request.groupId = groupId;
 
-  await GNNetwork.gamePlayer.leaveGroupAsync(request);
+    await GNNetwork.gamePlayer.leaveGroupAsync(request);
 }
 ```
 
@@ -425,53 +400,46 @@ async function leave(groupId: string) {
 ### Code
 
 ```typescript
-import {
-  GNNetwork,
-  ReturnCode,
-  ErrorCode,
-  GNHashtable,
-  MultiplayerModels,
-  MatchmakingTicketStatus,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, ReturnCode, ErrorCode, GNHashtable, MultiplayerModels, MatchmakingTicketStatus } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function findMatch(queueName: string) {
-  const createRequest = new MultiplayerModels.CreateMatchmakingTicketRequestData();
-  createRequest.queueName = queueName;
-  createRequest.giveUpAfterSeconds = 60;
-  createRequest.attribute = GNHashtable.builder().build();
+    const createRequest = new MultiplayerModels.CreateMatchmakingTicketRequestData();
+    createRequest.queueName = queueName;
+    createRequest.giveUpAfterSeconds = 60;
+    createRequest.attribute = GNHashtable.builder().build();
 
-  const createRes = await GNNetwork.multiplayer.createMatchmakingTicketAsync(createRequest);
-  if (createRes.returnCode !== ReturnCode.Ok || createRes.errorCode !== ErrorCode.Ok) {
+    const createRes = await GNNetwork.multiplayer.createMatchmakingTicketAsync(createRequest);
+    if (createRes.returnCode !== ReturnCode.Ok || createRes.errorCode !== ErrorCode.Ok) {
+        return null;
+    }
+    const ticketId = createRes.responseData.ticketId;
+
+    // Poll mỗi 2s cho tới khi matched hoặc timeout
+    for (let i = 0; i < 30; i++) {
+        await new Promise((r) => setTimeout(r, 2000));
+        const pollRequest = new MultiplayerModels.GetMatchmakingTicketRequestData();
+        pollRequest.ticketId = ticketId;
+        pollRequest.returnMember = true;
+
+        const poll = await GNNetwork.multiplayer.getMatchmakingTicketAsync(pollRequest);
+        if (poll.returnCode !== ReturnCode.Ok || poll.errorCode !== ErrorCode.Ok) continue;
+
+        const ticket = poll.responseData.matchmakingTicket;
+        const status = ticket.status;
+        if (status === MatchmakingTicketStatus.Matched) {
+            return ticket.matchId;
+        }
+        if (status === MatchmakingTicketStatus.Canceled) {
+            return null;
+        }
+    }
+
+    // Timeout: cancel ticket để queue không giữ slot
+    const cancelRequest = new MultiplayerModels.CancelMatchmakingTicketRequestData();
+    cancelRequest.ticketId = ticketId;
+
+    await GNNetwork.multiplayer.cancelMatchmakingTicketAsync(cancelRequest);
     return null;
-  }
-  const ticketId = createRes.responseData.ticketId;
-
-  // Poll mỗi 2s cho tới khi matched hoặc timeout
-  for (let i = 0; i < 30; i++) {
-    await new Promise((r) => setTimeout(r, 2000));
-    const pollRequest = new MultiplayerModels.GetMatchmakingTicketRequestData();
-    pollRequest.ticketId = ticketId;
-    pollRequest.returnMember = true;
-
-    const poll = await GNNetwork.multiplayer.getMatchmakingTicketAsync(pollRequest);
-    if (poll.returnCode !== ReturnCode.Ok || poll.errorCode !== ErrorCode.Ok) continue;
-
-    const ticket = poll.responseData.matchmakingTicket;
-    const status = ticket.status;
-    if (status === MatchmakingTicketStatus.Matched) {
-      return ticket.matchId;
-    }
-    if (status === MatchmakingTicketStatus.Canceled) {
-      return null;
-    }
-  }
-
-  // Timeout: cancel ticket để queue không giữ slot
-  const cancelRequest = new MultiplayerModels.CancelMatchmakingTicketRequestData();
-  cancelRequest.ticketId = ticketId;
-
-  await GNNetwork.multiplayer.cancelMatchmakingTicketAsync(cancelRequest);
-  return null;
 }
 ```
 
@@ -503,25 +471,25 @@ import { GNNetwork, ReturnCode, ErrorCode, GamePlayerModels } from "@xmobitea/ge
 
 // Client: xem inventory của chính mình
 async function loadMyInventory() {
-  const request = new GamePlayerModels.GetPlayerInventoryRequestData();
-  request.itemCatalogIds = ["weapon"];
+    const request = new GamePlayerModels.GetPlayerInventoryRequestData();
+    request.itemCatalogIds = ["weapon"];
 
-  const res = await GNNetwork.gamePlayer.getPlayerInventoryAsync(request);
-  if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return [];
-  return res.responseData.infoResponseParameters?.playerInventories ?? [];
+    const res = await GNNetwork.gamePlayer.getPlayerInventoryAsync(request);
+    if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return [];
+    return res.responseData.infoResponseParameters?.playerInventories ?? [];
 }
 
 // Server: create/grant 1 sword cho player targetUserId
 async function grantSword(targetUserId: string) {
-  const request = new GamePlayerModels.ServerCreatePlayerItemRequestData();
-  request.userId = targetUserId;
-  request.catalogId = "weapon";
-  request.classId = "sword_001";
-  request.displayName = "Starter Sword";
-  request.amount = 1;
+    const request = new GamePlayerModels.ServerCreatePlayerItemRequestData();
+    request.userId = targetUserId;
+    request.catalogId = "weapon";
+    request.classId = "sword_001";
+    request.displayName = "Starter Sword";
+    request.amount = 1;
 
-  const res = await GNNetwork.gamePlayer.server.createPlayerItemAsync(request);
-  return res.returnCode === ReturnCode.Ok && res.errorCode === ErrorCode.Ok;
+    const res = await GNNetwork.gamePlayer.server.createPlayerItemAsync(request);
+    return res.returnCode === ReturnCode.Ok && res.errorCode === ErrorCode.Ok;
 }
 ```
 
@@ -550,43 +518,43 @@ async function grantSword(targetUserId: string) {
 import { GNNetwork, ReturnCode, ErrorCode, OwnerType, StoreInventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function listCatalog() {
-  const infoRequestParam = new StoreInventoryModels.InfoRequestParam();
-  infoRequestParam.displayName = true;
-  infoRequestParam.tags = true;
+    const infoRequestParam = new StoreInventoryModels.InfoRequestParam();
+    infoRequestParam.displayName = true;
+    infoRequestParam.tags = true;
 
-  const request = new StoreInventoryModels.GetStoreItemsWithTagRequestData();
-  request.key = "visible";
-  request.value = "true";
-  request.infoRequestParam = infoRequestParam;
-  request.skip = 0;
-  request.limit = 50;
+    const request = new StoreInventoryModels.GetStoreItemsWithTagRequestData();
+    request.key = "visible";
+    request.value = "true";
+    request.infoRequestParam = infoRequestParam;
+    request.skip = 0;
+    request.limit = 50;
 
-  const res = await GNNetwork.storeInventory.getStoreItemsWithTagAsync(request);
-  if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return [];
-  return res.responseData.results ?? [];
+    const res = await GNNetwork.storeInventory.getStoreItemsWithTagAsync(request);
+    if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return [];
+    return res.responseData.results ?? [];
 }
 
 async function buyItem(storeItemId: string) {
-  const request = new StoreInventoryModels.BuyStoreItemRequestData();
-  request.storeId = storeItemId;
-  request.id = GNNetwork.getAuthenticateStatus().getUserId();
-  request.type = OwnerType.GamePlayer;
-  request.log = "shop_purchase";
+    const request = new StoreInventoryModels.BuyStoreItemRequestData();
+    request.storeId = storeItemId;
+    request.id = GNNetwork.getAuthenticateStatus().getUserId();
+    request.type = OwnerType.GamePlayer;
+    request.log = "shop_purchase";
 
-  const res = await GNNetwork.storeInventory.buyStoreItemAsync(request);
+    const res = await GNNetwork.storeInventory.buyStoreItemAsync(request);
 
-  if (res.returnCode !== ReturnCode.Ok) return "transport_error";
-  switch (res.errorCode) {
-    case ErrorCode.Ok:
-      return "ok";
-    case ErrorCode.NotEnoughCurrency:
-      return "not_enough_currency";
-    case ErrorCode.StoreItemRemoved:
-    case ErrorCode.CanNotBuyThisStoreItem:
-      return "not_buyable";
-    default:
-      return "unhandled_" + res.errorCode;
-  }
+    if (res.returnCode !== ReturnCode.Ok) return "transport_error";
+    switch (res.errorCode) {
+        case ErrorCode.Ok:
+            return "ok";
+        case ErrorCode.NotEnoughCurrency:
+            return "not_enough_currency";
+        case ErrorCode.StoreItemRemoved:
+        case ErrorCode.CanNotBuyThisStoreItem:
+            return "not_buyable";
+        default:
+            return "unhandled_" + res.errorCode;
+    }
 }
 ```
 
@@ -616,26 +584,26 @@ async function buyItem(storeItemId: string) {
 import { GNNetwork, ReturnCode, ErrorCode, CloudScriptModels, ExecuteResponseStatus, GNHashtable } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function claimDailyReward() {
-  const request = new CloudScriptModels.ExecuteFunctionRequestData();
-  request.functionName = "claimDailyReward";
-  request.functionParameters = { date: new Date().toISOString().slice(0, 10) };
+    const request = new CloudScriptModels.ExecuteFunctionRequestData();
+    request.functionName = "claimDailyReward";
+    request.functionParameters = { date: new Date().toISOString().slice(0, 10) };
 
-  const res = await GNNetwork.cloudScript.executeFunctionAsync(
-    request,
-    undefined,        // overrideAuthToken
-    undefined,        // overrideSecretKey
-    GNHashtable.builder().add("source", "daily_popup").build(), // customTags
-    30,               // timeout (seconds)
-  );
+    const res = await GNNetwork.cloudScript.executeFunctionAsync(
+        request,
+        undefined, // overrideAuthToken
+        undefined, // overrideSecretKey
+        GNHashtable.builder().add("source", "daily_popup").build(), // customTags
+        30, // timeout (seconds)
+    );
 
-  if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return null;
+    if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return null;
 
-  const exec = res.responseData;
-  if (exec.status !== ExecuteResponseStatus.Ok) {
-    console.warn("function failed", exec.errorMessage);
-    return null;
-  }
-  return exec.functionResult; // raw payload từ function
+    const exec = res.responseData;
+    if (exec.status !== ExecuteResponseStatus.Ok) {
+        console.warn("function failed", exec.errorMessage);
+        return null;
+    }
+    return exec.functionResult; // raw payload từ function
 }
 ```
 
@@ -665,34 +633,30 @@ import { GNNetwork, ContentModels, MasterPlayerModels } from "@xmobitea/gearn-ty
 
 // Impersonate player để query profile của họ
 async function fetchProfileAs(playerAuthToken: string, playerId: string) {
-  const infoRequestParam = new MasterPlayerModels.InfoRequestParam();
-  infoRequestParam.displayName = true;
-  infoRequestParam.avatar = true;
+    const infoRequestParam = new MasterPlayerModels.InfoRequestParam();
+    infoRequestParam.displayName = true;
+    infoRequestParam.avatar = true;
 
-  const request = new MasterPlayerModels.GetPlayerInformationRequestData();
-  request.userId = playerId;
-  request.infoRequestParam = infoRequestParam;
+    const request = new MasterPlayerModels.GetPlayerInformationRequestData();
+    request.userId = playerId;
+    request.infoRequestParam = infoRequestParam;
 
-  const res = await GNNetwork.masterPlayer.getPlayerInformationAsync(
-    request,
-    playerAuthToken,   // overrideAuthToken — thay token cache
-    undefined,         // overrideSecretKey — giữ secret key mặc định của role
-    undefined,         // customTags
-    undefined,         // timeout
-  );
-  return res.responseData;
+    const res = await GNNetwork.masterPlayer.getPlayerInformationAsync(
+        request,
+        playerAuthToken, // overrideAuthToken — thay token cache
+        undefined, // overrideSecretKey — giữ secret key mặc định của role
+        undefined, // customTags
+        undefined, // timeout
+    );
+    return res.responseData;
 }
 
 // Dùng secret key khác (ví dụ một game khác cùng backend)
 async function callOtherGame(gameSecret: string) {
-  const request = new ContentModels.GetContentDataRequestData();
-  request.keys = ["config"];
+    const request = new ContentModels.GetContentDataRequestData();
+    request.keys = ["config"];
 
-  return GNNetwork.content.getContentDataAsync(
-    request,
-    undefined,
-    gameSecret,
-  );
+    return GNNetwork.content.getContentDataAsync(request, undefined, gameSecret);
 }
 ```
 
@@ -724,20 +688,20 @@ async function callOtherGame(gameSecret: string) {
 import { GNNetwork, ReturnCode, ErrorCode, DashboardModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function adminLogin(username: string, password: string) {
-  const request = new DashboardModels.LoginByAdminAccountRequestData();
-  request.username = username;
-  request.password = password;
+    const request = new DashboardModels.LoginByAdminAccountRequestData();
+    request.username = username;
+    request.password = password;
 
-  const res = await GNNetwork.dashboard.loginByAdminAccountAsync(request);
-  if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return false;
+    const res = await GNNetwork.dashboard.loginByAdminAccountAsync(request);
+    if (res.returnCode !== ReturnCode.Ok || res.errorCode !== ErrorCode.Ok) return false;
 
-  // Dashboard response carries authToken; SDK caches it for later dashboard calls.
-  return true;
+    // Dashboard response carries authToken; SDK caches it for later dashboard calls.
+    return true;
 }
 
 async function listGames() {
-  const res = await GNNetwork.dashboard.getGameListAsync(new DashboardModels.GetGameListRequestData());
-  return res.responseData?.games ?? [];
+    const res = await GNNetwork.dashboard.getGameListAsync(new DashboardModels.GetGameListRequestData());
+    return res.responseData?.games ?? [];
 }
 ```
 
@@ -763,25 +727,25 @@ async function listGames() {
 import { GNNetwork, AuthenticateStatus, OnGroupMessageUpdateEventHandler, OnGroupMemberUpdateEventHandler, OnGamePlayerFriendUpdateEventHandler, OnGamePlayerGroupUpdateEventHandler, OnCharacterPlayerFriendUpdateEventHandler, OnCharacterPlayerGroupUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 
 function logoutAndCleanup() {
-  // 1. Clear all event handler callbacks (chúng là static, không tự gc)
-  const noop = () => {};
-  OnGroupMessageUpdateEventHandler.onUpdate = noop;
-  OnGroupMemberUpdateEventHandler.onUpdate = noop;
-  OnGamePlayerFriendUpdateEventHandler.onUpdate = noop;
-  OnGamePlayerGroupUpdateEventHandler.onUpdate = noop;
-  OnCharacterPlayerFriendUpdateEventHandler.onUpdate = noop;
-  OnCharacterPlayerGroupUpdateEventHandler.onUpdate = noop;
+    // 1. Clear all event handler callbacks (chúng là static, không tự gc)
+    const noop = () => {};
+    OnGroupMessageUpdateEventHandler.onUpdate = noop;
+    OnGroupMemberUpdateEventHandler.onUpdate = noop;
+    OnGamePlayerFriendUpdateEventHandler.onUpdate = noop;
+    OnGamePlayerGroupUpdateEventHandler.onUpdate = noop;
+    OnCharacterPlayerFriendUpdateEventHandler.onUpdate = noop;
+    OnCharacterPlayerGroupUpdateEventHandler.onUpdate = noop;
 
-  // 2. Close socket
-  GNNetwork.disconnectSocket(() => {
-    console.log("socket closed");
-  });
+    // 2. Close socket
+    GNNetwork.disconnectSocket(() => {
+        console.log("socket closed");
+    });
 
-  // 3. Clear auth state
-  const empty = new AuthenticateStatus();
-  empty.setAuthToken("");
-  empty.setUserId("");
-  GNNetwork.setNewAuthenticateStatus(empty);
+    // 3. Clear auth state
+    const empty = new AuthenticateStatus();
+    empty.setAuthToken("");
+    empty.setUserId("");
+    GNNetwork.setNewAuthenticateStatus(empty);
 }
 ```
 
@@ -840,40 +804,36 @@ Gặp returnCode === OperationNotAllow
 ### Code
 
 ```ts
-import {
-  GNNetwork,
-  ReturnCode,
-  InventoryModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, ReturnCode, InventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function grantItem(userId: string, itemId: string, amount: number) {
-  const req = new InventoryModels.SetAmountRequestData();
-  req.itemId = itemId;
-  req.amount = amount;
+    const req = new InventoryModels.SetAmountRequestData();
+    req.itemId = itemId;
+    req.amount = amount;
 
-  // Attempt 1: route admin với secret mặc định của app
-  let res = await GNNetwork.inventory.admin.setAmountAsync(req);
+    // Attempt 1: route admin với secret mặc định của app
+    let res = await GNNetwork.inventory.admin.setAmountAsync(req);
 
-  if (res.returnCode === ReturnCode.OperationNotAllow) {
-    console.warn("OperationNotAllow on admin route — secret thiếu adminSelfEnable cho inventory.setAmount");
-    console.warn("debugMessage:", res.debugMessage);
+    if (res.returnCode === ReturnCode.OperationNotAllow) {
+        console.warn("OperationNotAllow on admin route — secret thiếu adminSelfEnable cho inventory.setAmount");
+        console.warn("debugMessage:", res.debugMessage);
 
-    // Attempt 2: fallback override secret admin cho 1 request
-    const ADMIN_SECRET = process.env.GEARN_ADMIN_SECRET; // KHÔNG hardcode
-    if (ADMIN_SECRET) {
-      res = await GNNetwork.inventory.admin.setAmountAsync(
-        req,
-        undefined,      // overrideAuthToken
-        ADMIN_SECRET,   // overrideSecretKey
-      );
+        // Attempt 2: fallback override secret admin cho 1 request
+        const ADMIN_SECRET = process.env.GEARN_ADMIN_SECRET; // KHÔNG hardcode
+        if (ADMIN_SECRET) {
+            res = await GNNetwork.inventory.admin.setAmountAsync(
+                req,
+                undefined, // overrideAuthToken
+                ADMIN_SECRET, // overrideSecretKey
+            );
+        }
     }
-  }
 
-  if (res.returnCode !== ReturnCode.Ok) {
-    // Vẫn fail sau fallback → báo ops, KHÔNG retry
-    throw new Error(`grant failed: returnCode=${res.returnCode}, debug=${res.debugMessage}`);
-  }
-  return res.responseData;
+    if (res.returnCode !== ReturnCode.Ok) {
+        // Vẫn fail sau fallback → báo ops, KHÔNG retry
+        throw new Error(`grant failed: returnCode=${res.returnCode}, debug=${res.debugMessage}`);
+    }
+    return res.responseData;
 }
 ```
 
@@ -902,8 +862,9 @@ async function grantItem(userId: string, itemId: string, amount: number) {
 
 ## Pattern chung xuyên scenarios
 
+<!-- prettier-ignore -->
 | Pattern | Khi nào | Tham khảo |
-|---------|---------|-----------|
+| --- | --- | --- |
 | Check `returnCode` → `errorCode` → đọc `responseData` | Mọi `*Async()` | [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md) |
 | SDK auto-cache `authToken` / `userId` sau authenticate success | Login/refresh player; dashboard login cache `authToken` | Scenario 2, 3, 4, 14 |
 | Subscribe event handler trước `connectSocket`; chỉ gọi `sendRequestAuthSocket` khi cần re-auth thủ công | Realtime | Scenario 5, 6, 7, 8 |

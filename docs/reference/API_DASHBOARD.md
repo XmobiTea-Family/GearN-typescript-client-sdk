@@ -22,8 +22,9 @@ const res = await GNNetwork.dashboard.<method>Async(requestData, overrideAuthTok
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -33,13 +34,13 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 > `server` / `admin` namespace hiện tại không có method public — giữ để đối xứng API.
 
 ## Client methods (`GNNetwork.dashboard.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `changePasswordAdminAccount` | `DashboardModels.ChangePasswordAdminAccountRequestData` | `changePasswordAdminAccountAsync(...)` | `DashboardResponseModels.ChangePasswordAdminAccountOperationResponse` | `dashboard.changePasswordAdminAccount.selfEnable` |
 | `getAdminAccountList` | `DashboardModels.GetAdminAccountListRequestData` | `getAdminAccountListAsync(...)` | `DashboardResponseModels.GetAdminAccountListOperationResponse` | `dashboard.getAdminAccountList.selfEnable` |
 | `getGameInformation` | `DashboardModels.GetGameInformationRequestData` | `getGameInformationAsync(...)` | `DashboardResponseModels.GetGameInformationOperationResponse` | `dashboard.getGameInformation.selfEnable` |
@@ -66,8 +67,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getBackupStatisticsLeaderboardVersion` | `DashboardModels.GetBackupStatisticsLeaderboardVersionRequestData` | `getBackupStatisticsLeaderboardVersionAsync(...)` | `DashboardResponseModels.GetBackupStatisticsLeaderboardVersionOperationResponse` | `dashboard.getBackupStatisticsLeaderboardVersion.selfEnable` |
 | `getServerGameData` | `DashboardModels.GetServerGameDataRequestData` | `getServerGameDataAsync(...)` | `DashboardResponseModels.GetServerGameDataOperationResponse` | `dashboard.getServerGameData.selfEnable` |
 | `deleteInDatabase` | `DashboardModels.DeleteInDatabaseRequestData` | `deleteInDatabaseAsync(...)` | `DashboardResponseModels.DeleteInDatabaseOperationResponse` | `dashboard.deleteInDatabase.selfEnable` |
-
-
 
 ## Ví dụ tối thiểu
 

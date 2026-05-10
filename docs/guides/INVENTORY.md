@@ -5,14 +5,14 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.inventory`
-  - `GNNetwork.inventory.server`
-  - `GNNetwork.inventory.admin`
+    - `GNNetwork.inventory`
+    - `GNNetwork.inventory.server`
+    - `GNNetwork.inventory.admin`
 - Toàn bộ method hiện tại của `InventoryApi` đều gửi qua HTTP.
 - `InventoryApi` có đủ 3 role thật:
-  - `GNNetwork.inventory` -> `RequestRole.Client`
-  - `GNNetwork.inventory.server` -> `RequestRole.Server`
-  - `GNNetwork.inventory.admin` -> `RequestRole.Admin`
+    - `GNNetwork.inventory` -> `RequestRole.Client`
+    - `GNNetwork.inventory.server` -> `RequestRole.Server`
+    - `GNNetwork.inventory.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
@@ -26,9 +26,9 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
 - Không dùng socket cho `InventoryApi`.
 - Chọn namespace theo trust boundary, không theo cảm tính:
-  - app/player -> `GNNetwork.inventory`
-  - trusted backend/service -> `GNNetwork.inventory.server`
-  - dashboard/ops/tooling -> `GNNetwork.inventory.admin`
+    - app/player -> `GNNetwork.inventory`
+    - trusted backend/service -> `GNNetwork.inventory.server`
+    - dashboard/ops/tooling -> `GNNetwork.inventory.admin`
 - `getItemInformationAsync`, `getItemsWithDisplayNameAsync`, `getItemsWithSegmentAsync`, `getItemsWithTagAsync`, `getStatisticsLeaderboardAroundItemAsync`, `getStatisticsLeaderboardAsync` và `getCreateLeaderboardAsync` đều bắt buộc có `infoRequestParam`.
 - `getItemStatisticsAsync` dùng `statisticsKeys`, còn `infoRequestParam` dùng `itemStatisticsKeys`. Không được dùng lẫn hai field này.
 - `getStatisticsLogAsync` phân trang bằng `token`, không dùng `skip`.
@@ -37,12 +37,13 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - `setRemoveStatusAsync` là đánh dấu remove với `reason?`; trong `InventoryApi` hiện không có public method riêng để undo thao tác này.
 - `removeTagAsync` xóa theo `key`, không theo cặp `key/value`.
 - Dùng enum publish khi package đã có:
-  - `itemType` -> `ItemType`
-  - `owner.type`, `newOwnerType` -> `OwnerType`
+    - `itemType` -> `ItemType`
+    - `owner.type`, `newOwnerType` -> `OwnerType`
 - `setAvatarAsync` có field `type: number`, nhưng package hiện không publish enum avatar riêng. Không được tự bịa enum nếu backend spec chưa chốt.
 
 ## 3. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | Dùng khi nào |
 | --- | --- | --- |
 | `GNNetwork.inventory` | `Client` | player app thao tác trên item thuộc session hiện tại |
@@ -59,6 +60,7 @@ Rule nhanh:
 
 ### Đọc 1 item
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAmountAsync` | Cần đọc số lượng item | `itemId` | `InventoryResponseData` | Giá trị nằm trong `infoResponseParameters.amount` | `Ok`, `ItemNotFound` |
@@ -79,6 +81,7 @@ Rule nhanh:
 
 ### Query danh sách, leaderboard và log
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getItemsWithDisplayNameAsync` | Tìm item theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `InventoriesWithItemIdResponseData` | `keyword` tối thiểu 2 ký tự | `Ok` |
@@ -91,6 +94,7 @@ Rule nhanh:
 
 ### Mutation
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addSegmentAsync` | Gắn thêm segment cho item | `itemId`, `value` | `EmptyResponseData` | Thêm một segment value | `Ok`, `ItemNotFound` |
@@ -133,10 +137,10 @@ Rule cứng:
 - Không bật toàn bộ field một cách mù quáng.
 - Chỉ bật field mà màn hình hoặc flow hiện tại thật sự cần.
 - Nếu cần filter dữ liệu con, dùng các field key-filter tương ứng:
-  - `itemDataKeys`
-  - `itemStatisticsKeys`
-  - `customDataKeys`
-  - `tagKeys`
+    - `itemDataKeys`
+    - `itemStatisticsKeys`
+    - `customDataKeys`
+    - `tagKeys`
 - Nếu chỉ cần 1 field đơn lẻ như amount hoặc owner, ưu tiên getter chuyên biệt như `getAmountAsync` hoặc `getOwnerAsync` thay vì `getItemInformationAsync`.
 
 Các field thường dùng:
@@ -225,13 +229,7 @@ Những response chính AI cần nhớ:
 ### Đọc item information với `infoRequestParam` tối giản
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    InventoryModels,
-    ItemType,
-    OwnerType,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, InventoryModels, ItemType, OwnerType } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new InventoryModels.InfoRequestParam();
 infoRequestParam.itemType = true;
@@ -261,11 +259,7 @@ const ownerType = itemInfo.owner?.type as OwnerType | undefined;
 ### Cộng statistics có audit log
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    InventoryModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, InventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const statisticsParam = new InventoryModels.ItemStatisticsParam();
 statisticsParam.key = "killCount";
@@ -290,11 +284,7 @@ if (response.errorCode !== ErrorCode.Ok) {
 ### Đọc leaderboard quanh một item
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    InventoryModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, InventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new InventoryModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -325,11 +315,7 @@ const results = response.responseData.results;
 ### Đọc statistics log với cursor
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    InventoryModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, InventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new InventoryModels.GetStatisticsLogRequestData();
 request.itemId = "ABCDEFGHIJKL";

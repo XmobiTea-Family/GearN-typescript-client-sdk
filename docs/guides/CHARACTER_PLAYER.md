@@ -5,14 +5,14 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.characterPlayer`
-  - `GNNetwork.characterPlayer.server`
-  - `GNNetwork.characterPlayer.admin`
+    - `GNNetwork.characterPlayer`
+    - `GNNetwork.characterPlayer.server`
+    - `GNNetwork.characterPlayer.admin`
 - Toàn bộ method hiện tại của `CharacterPlayerApi` đều gửi qua HTTP.
 - `CharacterPlayerApi` có đủ 3 role thật:
-  - `GNNetwork.characterPlayer` -> `RequestRole.Client`
-  - `GNNetwork.characterPlayer.server` -> `RequestRole.Server`
-  - `GNNetwork.characterPlayer.admin` -> `RequestRole.Admin`
+    - `GNNetwork.characterPlayer` -> `RequestRole.Client`
+    - `GNNetwork.characterPlayer.server` -> `RequestRole.Server`
+    - `GNNetwork.characterPlayer.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
@@ -20,14 +20,14 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Khác với `GamePlayerApi`, public contract hiện tại gần như luôn yêu cầu `characterId` rõ ràng cho các flow target một character cụ thể.
 - `client`, `server`, `admin` hiện dùng cùng shape request; khác biệt chính là trust boundary và secret key mặc định.
 - `CharacterPlayerApi` là nhóm metadata/lifecycle ở cấp character:
-  - đọc metadata và owner/remove status của character
-  - đọc relation nhẹ tới inventory, group, friend
-  - search character
-  - leaderboard toàn cục hoặc leaderboard trong mạng bạn bè
-  - create group từ góc nhìn character
-  - create item cho character
-  - add/remove friend
-  - join/leave group
+    - đọc metadata và owner/remove status của character
+    - đọc relation nhẹ tới inventory, group, friend
+    - search character
+    - leaderboard toàn cục hoặc leaderboard trong mạng bạn bè
+    - create group từ góc nhìn character
+    - create item cho character
+    - add/remove friend
+    - join/leave group
 - `CharacterPlayerApi` không có public method tạo character mới. Nếu cần tạo character, phải dùng `GamePlayerApi.createPlayerCharacterAsync`.
 - Realtime update friend/group là luồng riêng qua socket event handler, không phải transport của các method `CharacterPlayerApi`.
 
@@ -37,9 +37,9 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
 - Không dùng socket transport cho các method của `CharacterPlayerApi`.
 - Chọn namespace theo trust boundary:
-  - app/player -> `GNNetwork.characterPlayer`
-  - trusted backend/service -> `GNNetwork.characterPlayer.server`
-  - dashboard/ops/tooling -> `GNNetwork.characterPlayer.admin`
+    - app/player -> `GNNetwork.characterPlayer`
+    - trusted backend/service -> `GNNetwork.characterPlayer.server`
+    - dashboard/ops/tooling -> `GNNetwork.characterPlayer.admin`
 - Khi method target một character cụ thể, luôn phải truyền `characterId`. Không có cơ chế public auto-select current character.
 - `getPlayerInformationAsync`, `getFriendStatisticsLeaderboardAroundPlayerAsync`, `getFriendStatisticsLeaderboardAsync`, `getPlayersWithDisplayNameAsync`, `getPlayersWithSegmentAsync`, `getPlayersWithTagAsync`, `getStatisticsLeaderboardAroundPlayerAsync`, `getStatisticsLeaderboardAsync`, `getCurrencyLeaderboardAsync`, `getCreateLeaderboardAsync` và `getLastLoginLeaderboardAsync` đều bắt buộc có `infoRequestParam`.
 - `getPlayerStatisticsAsync` dùng `statisticsKeys`, còn `infoRequestParam` dùng `playerStatisticsKeys`. Không được dùng lẫn hai field này.
@@ -70,14 +70,15 @@ Realtime rule:
 
 - Muốn nhận event realtime, tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
 - `OnCharacterPlayerFriendUpdateEventHandler.onUpdate`:
-  - payload có `characterId`
-  - có `playerFriends`
+    - payload có `characterId`
+    - có `playerFriends`
 - `OnCharacterPlayerGroupUpdateEventHandler.onUpdate`:
-  - payload có `characterId`
-  - có `playerGroups`
+    - payload có `characterId`
+    - có `playerGroups`
 
 ## 4. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | Dùng khi nào |
 | --- | --- | --- |
 | `GNNetwork.characterPlayer` | `Client` | player app thao tác trên character cụ thể mà client đang giữ `characterId` |
@@ -95,6 +96,7 @@ Rule nhanh:
 
 ### Đọc 1 character hoặc 1 phần metadata
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar | `characterId` | `CharacterPlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `CharacterPlayerNotFound` |
@@ -120,6 +122,7 @@ Rule nhanh:
 
 ### Search, leaderboard và log
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getPlayersWithDisplayNameAsync` | Tìm character theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `CharacterPlayersWithCharacterIdResponseData` | Kết quả trả `characterId` | `Ok` |
@@ -137,6 +140,7 @@ Rule nhanh:
 
 ### Friend, group, item lifecycle và mutation
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addPlayerFriendAsync` | Thêm một quan hệ friend ở cấp character | `characterId`, `friendId`, `catalogId` | `EmptyResponseData` | `friendId` là id ở cấp character | `Ok`, `CharacterPlayerNotFound`, `CatalogIdNotFound`, `PlayerBan` |
@@ -194,14 +198,14 @@ Rule cứng:
 - Không bật toàn bộ field một cách mù quáng.
 - Chỉ bật field mà flow hiện tại thật sự cần.
 - Nếu cần filter dữ liệu con, dùng đúng field filter:
-  - `playerDataKeys`
-  - `playerCurrencyKeys`
-  - `playerStatisticsKeys`
-  - `customDataKeys`
-  - `tagKeys`
-  - `itemCatalogIds`
-  - `groupCatalogIds`
-  - `friendCatalogIds`
+    - `playerDataKeys`
+    - `playerCurrencyKeys`
+    - `playerStatisticsKeys`
+    - `customDataKeys`
+    - `tagKeys`
+    - `itemCatalogIds`
+    - `groupCatalogIds`
+    - `friendCatalogIds`
 - Nếu chỉ cần một mảng relation nhẹ hoặc một field nhỏ, ưu tiên getter chuyên biệt.
 
 Các field thường dùng:
@@ -302,11 +306,7 @@ Những response chính AI cần nhớ:
 ### Đọc thông tin character với `infoRequestParam` tối giản
 
 ```ts
-import {
-    CharacterPlayerModels,
-    ErrorCode,
-    GNNetwork,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { CharacterPlayerModels, ErrorCode, GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new CharacterPlayerModels.InfoRequestParam();
 infoRequestParam.catalogId = true;
@@ -335,12 +335,7 @@ const characterInfo = response.responseData.infoResponseParameters;
 ### Add friend rồi đồng bộ UI bằng realtime event
 
 ```ts
-import {
-    CharacterPlayerModels,
-    ErrorCode,
-    GNNetwork,
-    OnCharacterPlayerFriendUpdateEventHandler,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { CharacterPlayerModels, ErrorCode, GNNetwork, OnCharacterPlayerFriendUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 
 OnCharacterPlayerFriendUpdateEventHandler.onUpdate = (update) => {
     if (update.characterId !== "CHAR0000001") {
@@ -372,11 +367,7 @@ if (response.errorCode !== ErrorCode.Ok) {
 ### Tạo item cho character rồi re-query relation item
 
 ```ts
-import {
-    CharacterPlayerModels,
-    ErrorCode,
-    GNNetwork,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { CharacterPlayerModels, ErrorCode, GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new CharacterPlayerModels.CreatePlayerItemRequestData();
 createRequest.characterId = "CHAR0000001";

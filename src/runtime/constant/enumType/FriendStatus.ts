@@ -20,30 +20,30 @@
  * - Any state → `NotFriend` after a `removeFriend` call.
  */
 export enum FriendStatus {
-	/**
-	 * Both sides have accepted; the relationship is active.
-	 */
-	Friend = 1,
+    /**
+     * Both sides have accepted; the relationship is active.
+     */
+    Friend = 1,
 
-	/**
-	 * The viewing player received an invite and has not acted on
-	 * it yet. Use this state to show "Accept / Decline" UI.
-	 */
-	WaitingAccept = 2,
+    /**
+     * The viewing player received an invite and has not acted on
+     * it yet. Use this state to show "Accept / Decline" UI.
+     */
+    WaitingAccept = 2,
 
-	/**
-	 * The viewing player sent an invite and is waiting for the
-	 * other side to accept. Use this state to show
-	 * "Cancel request" UI.
-	 */
-	SentRequestAndWaitingAccept = 3,
+    /**
+     * The viewing player sent an invite and is waiting for the
+     * other side to accept. Use this state to show
+     * "Cancel request" UI.
+     */
+    SentRequestAndWaitingAccept = 3,
 
-	/**
-	 * No friendship relation. This is the implicit value when the
-	 * backend has no row at all — the SDK still includes it
-	 * explicitly so list queries can express "all known players,
-	 * none friended yet".
-	 */
-	NotFriend = 4,
+    /**
+     * No friendship relation. This is the implicit value when the
+     * backend has no row at all — the SDK still includes it
+     * explicitly so list queries can express "all known players,
+     * none friended yet".
+     */
+    NotFriend = 4,
 
 }

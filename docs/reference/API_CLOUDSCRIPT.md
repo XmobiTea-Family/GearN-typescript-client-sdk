@@ -24,8 +24,9 @@ const res = await GNNetwork.cloudScript.<method>Async(requestData, overrideAuthT
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,39 +36,38 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.cloudScript.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi dùng userId |
-|--------|-------------|------------|----------------|--------------------------|----------------------------------|
+| --- | --- | --- | --- | --- | --- |
 | `addFunction` | `CloudScriptModels.AddFunctionRequestData` | `addFunctionAsync(...)` | `CloudScriptResponseModels.AddFunctionOperationResponse` | `cloudScript.addFunction.otherSelfEnable` | |
 | `editFunction` | `CloudScriptModels.EditFunctionRequestData` | `editFunctionAsync(...)` | `CloudScriptResponseModels.EditFunctionOperationResponse` | `cloudScript.editFunction.otherSelfEnable` | |
 | `executeFunction` | `CloudScriptModels.ExecuteFunctionRequestData` | `executeFunctionAsync(...)` | `CloudScriptResponseModels.ExecuteFunctionOperationResponse` | `cloudScript.executeFunction.selfEnable` | `cloudScript.executeFunction.otherSelfEnable` |
 | `getFunction` | `CloudScriptModels.GetFunctionRequestData` | `getFunctionAsync(...)` | `CloudScriptResponseModels.GetFunctionOperationResponse` | `cloudScript.getFunction.otherSelfEnable` | |
 | `getFunctions` | `CloudScriptModels.GetFunctionsRequestData` | `getFunctionsAsync(...)` | `CloudScriptResponseModels.GetFunctionsOperationResponse` | `cloudScript.getFunctions.otherSelfEnable` | |
 
-
 ## Server methods (`GNNetwork.cloudScript.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addFunction` | `CloudScriptModels.ServerAddFunctionRequestData` | `addFunctionAsync(...)` | `CloudScriptResponseModels.AddFunctionOperationResponse` | `cloudScript.addFunction.serverSelfEnable` |
 | `editFunction` | `CloudScriptModels.ServerEditFunctionRequestData` | `editFunctionAsync(...)` | `CloudScriptResponseModels.EditFunctionOperationResponse` | `cloudScript.editFunction.serverSelfEnable` |
 | `executeFunction` | `CloudScriptModels.ServerExecuteFunctionRequestData` | `executeFunctionAsync(...)` | `CloudScriptResponseModels.ExecuteFunctionOperationResponse` | `cloudScript.executeFunction.serverSelfEnable` |
 | `getFunction` | `CloudScriptModels.ServerGetFunctionRequestData` | `getFunctionAsync(...)` | `CloudScriptResponseModels.GetFunctionOperationResponse` | `cloudScript.getFunction.serverSelfEnable` |
 | `getFunctions` | `CloudScriptModels.ServerGetFunctionsRequestData` | `getFunctionsAsync(...)` | `CloudScriptResponseModels.GetFunctionsOperationResponse` | `cloudScript.getFunctions.serverSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.cloudScript.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addFunction` | `CloudScriptModels.AdminAddFunctionRequestData` | `addFunctionAsync(...)` | `CloudScriptResponseModels.AddFunctionOperationResponse` | `cloudScript.addFunction.adminSelfEnable` |
 | `editFunction` | `CloudScriptModels.AdminEditFunctionRequestData` | `editFunctionAsync(...)` | `CloudScriptResponseModels.EditFunctionOperationResponse` | `cloudScript.editFunction.adminSelfEnable` |
 | `executeFunction` | `CloudScriptModels.AdminExecuteFunctionRequestData` | `executeFunctionAsync(...)` | `CloudScriptResponseModels.ExecuteFunctionOperationResponse` | `cloudScript.executeFunction.adminSelfEnable` |
 | `getFunction` | `CloudScriptModels.AdminGetFunctionRequestData` | `getFunctionAsync(...)` | `CloudScriptResponseModels.GetFunctionOperationResponse` | `cloudScript.getFunction.adminSelfEnable` |
 | `getFunctions` | `CloudScriptModels.AdminGetFunctionsRequestData` | `getFunctionsAsync(...)` | `CloudScriptResponseModels.GetFunctionsOperationResponse` | `cloudScript.getFunctions.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

@@ -17,22 +17,22 @@ import { IServerEventHandler } from "./IServerEventHandler";
  * without polling.
  */
 export class CharacterPlayerGroupUpdate {
-	/**
-	 * Identifier of the character whose group membership changed.
-	 * Mirrors the `characterId` selected by the local SDK so a
-	 * multi-character host can route the update to the right view.
-	 */
-	@StringDataMember({ code: ParameterCode.CharacterId })
-	public characterId: string;
+    /**
+     * Identifier of the character whose group membership changed.
+     * Mirrors the `characterId` selected by the local SDK so a
+     * multi-character host can route the update to the right view.
+     */
+    @StringDataMember({ code: ParameterCode.CharacterId })
+    public characterId: string;
 
-	/**
-	 * Authoritative group membership list after the change. Each
-	 * {@link GenericModels.GroupItem} carries the group id, the
-	 * member's role, and any embedded summary fields the backend
-	 * chose to include. Treat the array as a complete replacement.
-	 */
-	@GNArrayDataMember({ code: ParameterCode.PlayerGroups, elementCls: GenericModels.GroupItem })
-	public playerGroups: Array<GenericModels.GroupItem>;
+    /**
+     * Authoritative group membership list after the change. Each
+     * {@link GenericModels.GroupItem} carries the group id, the
+     * member's role, and any embedded summary fields the backend
+     * chose to include. Treat the array as a complete replacement.
+     */
+    @GNArrayDataMember({ code: ParameterCode.PlayerGroups, elementCls: GenericModels.GroupItem })
+    public playerGroups: Array<GenericModels.GroupItem>;
 }
 
 /**
@@ -54,27 +54,27 @@ export class CharacterPlayerGroupUpdate {
  */
 @IServerEventHandler.registerEvent
 export class OnCharacterPlayerGroupUpdateEventHandler implements IServerEventHandler {
-	/**
-	 * Static callback the application registers. Leave `null` to
-	 * silently drop the event.
-	 */
-	public static onUpdate: Action1<CharacterPlayerGroupUpdate>;
+    /**
+     * Static callback the application registers. Leave `null` to
+     * silently drop the event.
+     */
+    public static onUpdate: Action1<CharacterPlayerGroupUpdate>;
 
-	/**
-	 * Returns {@link EventCode.OnCharacterPlayerGroupUpdate}.
-	 */
-	public getEventCode(): string {
-		return EventCode.OnCharacterPlayerGroupUpdate;
-	}
+    /**
+     * Returns {@link EventCode.OnCharacterPlayerGroupUpdate}.
+     */
+    public getEventCode(): string {
+        return EventCode.OnCharacterPlayerGroupUpdate;
+    }
 
-	/**
-	 * Deserialises the parameters into a
-	 * {@link CharacterPlayerGroupUpdate} and forwards to
-	 * {@link onUpdate}.
-	 */
-	public handle(operationEvent: OperationEvent): void {
-		if (OnCharacterPlayerGroupUpdateEventHandler.onUpdate != null)
-			OnCharacterPlayerGroupUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), CharacterPlayerGroupUpdate));
-	}
+    /**
+     * Deserialises the parameters into a
+     * {@link CharacterPlayerGroupUpdate} and forwards to
+     * {@link onUpdate}.
+     */
+    public handle(operationEvent: OperationEvent): void {
+        if (OnCharacterPlayerGroupUpdateEventHandler.onUpdate != null)
+            OnCharacterPlayerGroupUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), CharacterPlayerGroupUpdate));
+    }
 
 }

@@ -5,24 +5,24 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.masterPlayer`
-  - `GNNetwork.masterPlayer.server`
-  - `GNNetwork.masterPlayer.admin`
+    - `GNNetwork.masterPlayer`
+    - `GNNetwork.masterPlayer.server`
+    - `GNNetwork.masterPlayer.admin`
 - Toàn bộ method hiện tại của `MasterPlayerApi` đều gửi qua HTTP.
 - `MasterPlayerApi` có đủ 3 role thật:
-  - `GNNetwork.masterPlayer` -> `RequestRole.Client`
-  - `GNNetwork.masterPlayer.server` -> `RequestRole.Server`
-  - `GNNetwork.masterPlayer.admin` -> `RequestRole.Admin`
+    - `GNNetwork.masterPlayer` -> `RequestRole.Client`
+    - `GNNetwork.masterPlayer.server` -> `RequestRole.Server`
+    - `GNNetwork.masterPlayer.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - Với hầu hết flow thao tác trên một player cụ thể:
-  - `client` cho phép `userId?`
-  - `server/admin` bắt buộc `userId`
+    - `client` cho phép `userId?`
+    - `server/admin` bắt buộc `userId`
 - Rule thực tế:
-  - ở `client`, bỏ `userId` sẽ target master player hiện đang auth
-  - ở `server/admin`, phải truyền `userId` rõ ràng cho target player
+    - ở `client`, bỏ `userId` sẽ target master player hiện đang auth
+    - ở `server/admin`, phải truyền `userId` rõ ràng cho target player
 - `MasterPlayerApi` là nhóm account/profile/identity của master player. Không dùng nhóm này để thao tác game player, character player, group, inventory item hoặc matchmaking.
 - Public package hiện không export event handler socket riêng cho `MasterPlayerApi`.
 
@@ -32,9 +32,9 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
 - Không dùng socket transport cho các method của `MasterPlayerApi`.
 - Chọn namespace theo trust boundary:
-  - app/player -> `GNNetwork.masterPlayer`
-  - trusted backend/service -> `GNNetwork.masterPlayer.server`
-  - dashboard/ops/tooling -> `GNNetwork.masterPlayer.admin`
+    - app/player -> `GNNetwork.masterPlayer`
+    - trusted backend/service -> `GNNetwork.masterPlayer.server`
+    - dashboard/ops/tooling -> `GNNetwork.masterPlayer.admin`
 - Với `client`, chỉ nên bỏ `userId` khi thao tác trên master player hiện tại.
 - Với `server/admin`, mọi flow self-target có `userId` đều phải truyền giá trị này rõ ràng.
 - `getPlayerInformationAsync`, toàn bộ `getPlayersWith*Async`, `getStatisticsLeaderboardAroundPlayerAsync`, `getStatisticsLeaderboardAsync`, `getCurrencyLeaderboardAsync`, `getCreateLeaderboardAsync` và `getLastLoginLeaderboardAsync` đều bắt buộc có `infoRequestParam`.
@@ -52,6 +52,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | `userId` behavior | Dùng khi nào |
 | --- | --- | --- | --- |
 | `GNNetwork.masterPlayer` | `Client` | Có thể bỏ `userId` để target player hiện tại | player app thao tác trên account/profile của chính user hiện tại |
@@ -69,6 +70,7 @@ Rule nhanh:
 
 ### Đọc 1 master player hoặc 1 phần hồ sơ
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
 | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar | `userId?` | `MasterPlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `MasterPlayerNotFound` |
@@ -91,6 +93,7 @@ Rule nhanh:
 
 ### Search player, leaderboard và log
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getPlayersWithAppleAsync` | Tìm player theo `appleId` | `appleIds[]`, `infoRequestParam` | `GetPlayersWithAppleResponseData` | Mỗi phần tử trả `appleId`, `userId`, `infoResponseParameters` | `Ok` |
@@ -112,6 +115,7 @@ Rule nhanh:
 
 ### Link và unlink identity
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `linkAccountAsync` | Link account/password truyền thống | `userId?`, `username`, `password`, `forceLink?` | `MasterPlayerResponseData` | Dùng khi muốn gắn username/password vào player hiện tại | `Ok`, `ExternalLinkedOtherAccount`, `ExternalLinkedOtherValue`, `MasterPlayerNotFound`, `PlayerBan` |
@@ -149,6 +153,7 @@ Rule nhanh:
 
 ### Mutation hồ sơ, account và outbound operation
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addSegmentAsync` | Gắn thêm segment | `userId?`, `value` | `EmptyResponseData` | Thêm một segment value | `Ok`, `MasterPlayerNotFound`, `PlayerBan` |
@@ -208,11 +213,11 @@ Rule cứng:
 - Không bật toàn bộ field một cách mù quáng.
 - Chỉ bật field mà màn hình hoặc flow hiện tại thật sự cần.
 - Nếu cần filter dữ liệu con, dùng đúng field filter:
-  - `playerDataKeys`
-  - `playerCurrencyKeys`
-  - `playerStatisticsKeys`
-  - `customDataKeys`
-  - `tagKeys`
+    - `playerDataKeys`
+    - `playerCurrencyKeys`
+    - `playerStatisticsKeys`
+    - `customDataKeys`
+    - `tagKeys`
 - Nếu chỉ cần một field nhỏ như email, display name, player data hay statistics, ưu tiên getter chuyên biệt.
 
 Các field thường dùng:
@@ -315,11 +320,7 @@ Những response chính AI cần nhớ:
 ### Đọc thông tin master player hiện tại với `infoRequestParam` tối giản
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    MasterPlayerModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, MasterPlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new MasterPlayerModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -346,12 +347,7 @@ const playerInfo = response.responseData.infoResponseParameters;
 ### Link Google account với `GoogleLoginType`
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GoogleLoginType,
-    MasterPlayerModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GoogleLoginType, MasterPlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new MasterPlayerModels.LinkGoogleRequestData();
 request.token = "google-id-token";
@@ -374,11 +370,7 @@ const playerInfo = response.responseData.infoResponseParameters;
 ### Backend đọc leaderboard quanh một player cụ thể
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    MasterPlayerModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, MasterPlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new MasterPlayerModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -405,12 +397,7 @@ const leaderboard = response.responseData.results;
 ### Đăng ký push token với `PushPlatformType`
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    MasterPlayerModels,
-    PushPlatformType,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, MasterPlayerModels, PushPlatformType } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new MasterPlayerModels.AddPushNotificationRequestData();
 request.token = "device-push-token";

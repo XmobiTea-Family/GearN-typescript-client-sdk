@@ -12,8 +12,9 @@ Các khái niệm chung (áp dụng cho mọi group):
 
 ## API groups
 
+<!-- prettier-ignore -->
 | Group | File reference | Namespaces | Public methods | Chịu trách nhiệm |
-|-------|----------------|------------|----------------|------------------|
+| --- | --- | --- | --- | --- |
 | Authenticate | [API_AUTHENTICATE.md](/docs/reference/API_AUTHENTICATE.md) | `authenticate` | 18 | Player login (account, social, device id), register, refresh auth token. |
 | CharacterPlayer | [API_CHARACTER_PLAYER.md](/docs/reference/API_CHARACTER_PLAYER.md) | `characterPlayer`, `.server`, `.admin` | 159 (53/53/53) | Character-level gameplay: profile, inventory relation, friend/group relation, statistics, currency, segment, tag. |
 | CloudScript | [API_CLOUDSCRIPT.md](/docs/reference/API_CLOUDSCRIPT.md) | `cloudScript`, `.server`, `.admin` | 15 (5/5/5) | CloudScript function add/edit/execute + version/listing. |

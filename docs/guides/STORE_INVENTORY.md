@@ -5,14 +5,14 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.storeInventory`
-  - `GNNetwork.storeInventory.server`
-  - `GNNetwork.storeInventory.admin`
+    - `GNNetwork.storeInventory`
+    - `GNNetwork.storeInventory.server`
+    - `GNNetwork.storeInventory.admin`
 - Toàn bộ method hiện tại của `StoreInventoryApi` đều gửi qua HTTP.
 - `StoreInventoryApi` có đủ 3 role thật:
-  - `GNNetwork.storeInventory` -> `RequestRole.Client`
-  - `GNNetwork.storeInventory.server` -> `RequestRole.Server`
-  - `GNNetwork.storeInventory.admin` -> `RequestRole.Admin`
+    - `GNNetwork.storeInventory` -> `RequestRole.Client`
+    - `GNNetwork.storeInventory.server` -> `RequestRole.Server`
+    - `GNNetwork.storeInventory.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
@@ -32,6 +32,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | Dùng khi nào |
 | --- | --- | --- |
 | `GNNetwork.storeInventory` | `Client` | client/player mua item hoặc đọc store catalog cho chính session hiện tại |
@@ -48,6 +49,7 @@ Rule nhanh:
 
 ### Catalog và discovery
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `createStoreItemAsync` | Tạo store item mới | `storeId?`, `displayName?` | `CreateStoreItemResponseData` | Nếu bỏ `storeId`, backend có thể sinh id | `Ok`, `StoreItemExists` |
@@ -59,6 +61,7 @@ Rule nhanh:
 
 ### Purchase, gift và receipt
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `buyStoreItemAsync` | Mua store item bằng flow nội bộ | `storeId`, `id`, `type`, `log?` | `BuyStoreInventoryResponseData` | `type` nên map bằng `OwnerType` | `Ok`, `NotEnoughCurrency`, `StoreItemNotFound`, `BuyerNotFound`, `CanNotBuyThisStoreItem`, `StoreItemRemoved`, `StoreItemPurchasedAndNonConsumable` |
@@ -69,6 +72,7 @@ Rule nhanh:
 
 ### Audit và used state
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
 | --- | --- | --- | --- | --- |
 | `getStoreLogAsync` | Đọc transaction log của store | `storeId?`, `storeReceiveTypes?`, `id?`, `limit?`, `token?` | `GetStoreLogResponseData` | `token` là cursor cho page tiếp |
@@ -178,11 +182,7 @@ Những response chính AI cần nhớ:
 ### Đọc store item với infoRequestParam tối giản
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    StoreInventoryModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, StoreInventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new StoreInventoryModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -209,12 +209,7 @@ const storeInfo = response.responseData.infoResponseParameters;
 ### Mua store item
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    OwnerType,
-    StoreInventoryModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, OwnerType, StoreInventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new StoreInventoryModels.BuyStoreItemRequestData();
 request.storeId = "store-item-001";
@@ -238,12 +233,7 @@ const result = response.responseData;
 ### Validate Google Play receipt
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    OwnerType,
-    StoreInventoryModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, OwnerType, StoreInventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new StoreInventoryModels.ValidateGooglePlayStoreReceiptRequestData();
 request.receipt = googleReceiptPayload;
@@ -265,12 +255,7 @@ if (response.errorCode !== ErrorCode.Ok) {
 ### Đọc store log với filter và cursor
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    StoreInventoryModels,
-    StoreReceiveType,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, StoreInventoryModels, StoreReceiveType } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new StoreInventoryModels.GetStoreLogRequestData();
 request.storeId = "store-item-001";

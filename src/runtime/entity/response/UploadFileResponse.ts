@@ -11,13 +11,13 @@
  * `if (response.error) { ... }` check.
  */
 export class UploadFileResponse {
-	/**
-	 * Transport / authentication error captured by the SDK, or
-	 * `null` when the upload succeeded. Common values:
-	 * `"Auth token null"` (the cached token was empty),
-	 * `"Unknown Error"` (non-200 status with no captured detail),
-	 * or any Axios-thrown error message.
-	 */
-	public error: string;
+    /**
+     * Transport / authentication error captured by the SDK, or
+     * `null` when the upload succeeded. Common values:
+     * `"Auth token null"` (the cached token was empty),
+     * `"Unknown Error"` (non-200 status with no captured detail),
+     * or any Axios-thrown error message.
+     */
+    public error: string;
 
 }

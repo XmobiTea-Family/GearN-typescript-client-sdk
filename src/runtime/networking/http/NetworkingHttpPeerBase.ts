@@ -21,93 +21,93 @@ import { HttpAppResponse, PostType } from "./HttpPeer";
  *   every send.
  */
 export abstract class NetworkingHttpPeerBase {
-	/** Absolute base URL produced by {@link GNServerSettings.getHttpUrl}. */
-	protected httpUrl: string;
-	/**
-	 * SDK-issued `User-Agent` value emitted on every Node.js request
-	 * (`GN-ts-<platform>@<version>`). Browsers manage their own
-	 * `User-Agent` so the value is ignored there.
-	 */
-	protected userAgent: string;
+    /** Absolute base URL produced by {@link GNServerSettings.getHttpUrl}. */
+    protected httpUrl: string;
+    /**
+     * SDK-issued `User-Agent` value emitted on every Node.js request
+     * (`GN-ts-<platform>@<version>`). Browsers manage their own
+     * `User-Agent` so the value is ignored there.
+     */
+    protected userAgent: string;
 
-	/**
-	 * Mirror of {@link GNServerSettings.getUseReverseProxy}. When
-	 * `true`, concrete subclasses send relative URLs and forward the
-	 * captured base URL through the `X-BaseUrl` header so a
-	 * same-origin proxy can rewrite the destination without CORS
-	 * preflight.
-	 */
-	protected useReverseProxy: boolean;
+    /**
+     * Mirror of {@link GNServerSettings.getUseReverseProxy}. When
+     * `true`, concrete subclasses send relative URLs and forward the
+     * captured base URL through the `X-BaseUrl` header so a
+     * same-origin proxy can rewrite the destination without CORS
+     * preflight.
+     */
+    protected useReverseProxy: boolean;
 
-	/**
-	 * Performs an HTTP `GET` against `<httpUrl>/<subUri>`.
-	 *
-	 * @param subUri            Path appended to the base URL
-	 *                          (no leading slash).
-	 * @param onHttpAppResponse Callback receiving the normalised
-	 *                          {@link HttpAppResponse}.
-	 * @param timeout           Timeout in seconds (multiplied by
-	 *                          1000 inside the concrete call).
-	 * @param authToken         Optional auth token sent in the
-	 *                          `Auth-Token` header.
-	 * @param secretKey         Optional secret key sent in the
-	 *                          `Secret-Key` header.
-	 * @param gameId            Optional game id sent in the
-	 *                          `Game-Id` header.
-	 */
-	public abstract getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): void;
+    /**
+     * Performs an HTTP `GET` against `<httpUrl>/<subUri>`.
+     *
+     * @param subUri            Path appended to the base URL
+     *                          (no leading slash).
+     * @param onHttpAppResponse Callback receiving the normalised
+     *                          {@link HttpAppResponse}.
+     * @param timeout           Timeout in seconds (multiplied by
+     *                          1000 inside the concrete call).
+     * @param authToken         Optional auth token sent in the
+     *                          `Auth-Token` header.
+     * @param secretKey         Optional secret key sent in the
+     *                          `Secret-Key` header.
+     * @param gameId            Optional game id sent in the
+     *                          `Game-Id` header.
+     */
+    public abstract getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): void;
 
-	/**
-	 * Performs an HTTP `POST` against `<httpUrl>/<subUri>` with
-	 * either a JSON or MessagePack body.
-	 *
-	 * @param subUri            Path appended to the base URL.
-	 * @param param             Operation parameter bag.
-	 * @param postType          Encoding choice: JSON or MessagePack.
-	 * @param onHttpAppResponse Callback receiving the normalised
-	 *                          {@link HttpAppResponse}.
-	 * @param timeout           Timeout in seconds.
-	 * @param authToken         Optional auth token.
-	 * @param secretKey         Optional secret key.
-	 * @param customTags        Optional routing tags merged into
-	 *                          `param` under
-	 *                          {@link ParameterCode.CustomTags}.
-	 * @param gameId            Optional game id.
-	 */
-	public abstract postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void;
+    /**
+     * Performs an HTTP `POST` against `<httpUrl>/<subUri>` with
+     * either a JSON or MessagePack body.
+     *
+     * @param subUri            Path appended to the base URL.
+     * @param param             Operation parameter bag.
+     * @param postType          Encoding choice: JSON or MessagePack.
+     * @param onHttpAppResponse Callback receiving the normalised
+     *                          {@link HttpAppResponse}.
+     * @param timeout           Timeout in seconds.
+     * @param authToken         Optional auth token.
+     * @param secretKey         Optional secret key.
+     * @param customTags        Optional routing tags merged into
+     *                          `param` under
+     *                          {@link ParameterCode.CustomTags}.
+     * @param gameId            Optional game id.
+     */
+    public abstract postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void;
 
-	/**
-	 * Performs a multipart upload `POST`.
-	 *
-	 * @param subUri            Path appended to the base URL.
-	 * @param content           Binary payload.
-	 * @param filename          Display name written into the
-	 *                          multipart envelope.
-	 * @param mimetype          Content type for the file part.
-	 * @param onHttpAppResponse Callback receiving the normalised
-	 *                          {@link HttpAppResponse}.
-	 * @param timeout           Timeout in seconds.
-	 */
-	public abstract postRequestUpload(subUri: string, content: Uint8Array, filename: string, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): void;
+    /**
+     * Performs a multipart upload `POST`.
+     *
+     * @param subUri            Path appended to the base URL.
+     * @param content           Binary payload.
+     * @param filename          Display name written into the
+     *                          multipart envelope.
+     * @param mimetype          Content type for the file part.
+     * @param onHttpAppResponse Callback receiving the normalised
+     *                          {@link HttpAppResponse}.
+     * @param timeout           Timeout in seconds.
+     */
+    public abstract postRequestUpload(subUri: string, content: Uint8Array, filename: string, mimetype: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number): void;
 
-	/**
-	 * Captures the base URL and `User-Agent`. Called once during
-	 * {@link HttpPeer.initGNSocketObject}.
-	 */
-	public init(httpUrl: string, userAgent: string): void {
-		this.httpUrl = httpUrl;
-		this.userAgent = userAgent;
-	}
+    /**
+     * Captures the base URL and `User-Agent`. Called once during
+     * {@link HttpPeer.initGNSocketObject}.
+     */
+    public init(httpUrl: string, userAgent: string): void {
+        this.httpUrl = httpUrl;
+        this.userAgent = userAgent;
+    }
 
-	/**
-	 * Toggles reverse-proxy mode on the concrete HTTP client.
-	 *
-	 * Mirrors {@link GNServerSettings.setUseReverseProxy}; concrete
-	 * subclasses inspect the flag every request to decide whether
-	 * to send a relative or absolute URL.
-	 */
-	public setUseReverseProxy(useReverseProxy: boolean) {
-		this.useReverseProxy = useReverseProxy;
-	}
+    /**
+     * Toggles reverse-proxy mode on the concrete HTTP client.
+     *
+     * Mirrors {@link GNServerSettings.setUseReverseProxy}; concrete
+     * subclasses inspect the flag every request to decide whether
+     * to send a relative or absolute URL.
+     */
+    public setUseReverseProxy(useReverseProxy: boolean) {
+        this.useReverseProxy = useReverseProxy;
+    }
 
 }

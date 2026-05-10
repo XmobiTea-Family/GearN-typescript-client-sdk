@@ -19,16 +19,16 @@
  * returns — `LogType.All` until the application overrides it.
  */
 export enum LogType {
-	/** Suppress every category of log output. */
-	Off = 0,
-	/** Allow only `logException` calls to reach the console. */
-	Exception = 1,
-	/** Allow exceptions plus errors. */
-	Error = 2,
-	/** Allow exceptions, errors and warnings. */
-	Warning = 3,
-	/** Allow every category, including verbose `log` traces from the transports. */
-	All = 4,
+    /** Suppress every category of log output. */
+    Off = 0,
+    /** Allow only `logException` calls to reach the console. */
+    Exception = 1,
+    /** Allow exceptions plus errors. */
+    Error = 2,
+    /** Allow exceptions, errors and warnings. */
+    Warning = 3,
+    /** Allow every category, including verbose `log` traces from the transports. */
+    All = 4,
 }
 
 /**
@@ -59,95 +59,95 @@ export enum LogType {
  *   `_logType`. Mutations from inside event handlers are visible immediately.
  */
 export class GNDebug {
-	/**
-	 * Currently configured maximum verbosity level.
-	 *
-	 * Stays `undefined` until {@link setLogType} is called for the first
-	 * time, which is why the level comparisons in the `log*` helpers below
-	 * use `>=` against the requested category instead of relying on a
-	 * default value here.
-	 */
-	private static _logType: LogType;
+    /**
+     * Currently configured maximum verbosity level.
+     *
+     * Stays `undefined` until {@link setLogType} is called for the first
+     * time, which is why the level comparisons in the `log*` helpers below
+     * use `>=` against the requested category instead of relying on a
+     * default value here.
+     */
+    private static _logType: LogType;
 
-	/**
-	 * Replaces the global log verbosity level.
-	 *
-	 * Effect is immediate; the next call to any of the `log*` helpers uses
-	 * the new value. Passing {@link LogType.Off} silences the SDK
-	 * completely until a higher level is restored.
-	 *
-	 * @param logType New level to apply. Higher values include all lower
-	 *                categories (see the inclusion table on {@link LogType}).
-	 */
-	public static setLogType(logType: LogType) {
-		this._logType = logType;
-	}
+    /**
+     * Replaces the global log verbosity level.
+     *
+     * Effect is immediate; the next call to any of the `log*` helpers uses
+     * the new value. Passing {@link LogType.Off} silences the SDK
+     * completely until a higher level is restored.
+     *
+     * @param logType New level to apply. Higher values include all lower
+     *                categories (see the inclusion table on {@link LogType}).
+     */
+    public static setLogType(logType: LogType) {
+        this._logType = logType;
+    }
 
-	/**
-	 * Writes a verbose trace line.
-	 *
-	 * Used by the transports to surface every queued/sent/received frame
-	 * (see `[GN Socket SEND]`, `[GN RECV]`, ... prefixes in the networking
-	 * code) plus other low-frequency informational events like the SDK
-	 * banner emitted from `GNNetwork.init()`.
-	 *
-	 * Only fires when the current level is {@link LogType.All}.
-	 *
-	 * @param message Anything the host `console.log` accepts — strings,
-	 *                objects, errors, etc. The value is forwarded as-is so
-	 *                custom `toString()` implementations are honoured.
-	 */
-	public static log(message: any): void {
-		if (this._logType >= LogType.All)
-			console.log(message);
-	}
+    /**
+     * Writes a verbose trace line.
+     *
+     * Used by the transports to surface every queued/sent/received frame
+     * (see `[GN Socket SEND]`, `[GN RECV]`, ... prefixes in the networking
+     * code) plus other low-frequency informational events like the SDK
+     * banner emitted from `GNNetwork.init()`.
+     *
+     * Only fires when the current level is {@link LogType.All}.
+     *
+     * @param message Anything the host `console.log` accepts — strings,
+     *                objects, errors, etc. The value is forwarded as-is so
+     *                custom `toString()` implementations are honoured.
+     */
+    public static log(message: any): void {
+        if (this._logType >= LogType.All)
+            console.log(message);
+    }
 
-	/**
-	 * Writes a captured exception via `console.error`.
-	 *
-	 * Fires for every level except {@link LogType.Off}. Prefer this over
-	 * {@link logError} when you have an actual `Error` instance because it
-	 * preserves the stack trace produced by the host runtime.
-	 *
-	 * @param exception Error instance to print. The SDK never serialises
-	 *                  the value first — passing a plain object is allowed
-	 *                  but loses the formatted stack trace.
-	 */
-	public static logException(exception: Error): void {
-		if (this._logType >= LogType.Exception)
-			console.error(exception);
-	}
+    /**
+     * Writes a captured exception via `console.error`.
+     *
+     * Fires for every level except {@link LogType.Off}. Prefer this over
+     * {@link logError} when you have an actual `Error` instance because it
+     * preserves the stack trace produced by the host runtime.
+     *
+     * @param exception Error instance to print. The SDK never serialises
+     *                  the value first — passing a plain object is allowed
+     *                  but loses the formatted stack trace.
+     */
+    public static logException(exception: Error): void {
+        if (this._logType >= LogType.Exception)
+            console.error(exception);
+    }
 
-	/**
-	 * Writes a non-fatal warning via `console.warn`.
-	 *
-	 * Fires when the level is at least {@link LogType.Warning}. Used by the
-	 * SDK for recoverable issues like missing storage features in
-	 * {@link StorageService} or incoming events that no handler subscribed
-	 * to.
-	 *
-	 * @param message Anything the host `console.warn` accepts.
-	 */
-	public static logWarning(message: any): void {
-		if (this._logType >= LogType.Warning)
-			console.warn(message);
-	}
+    /**
+     * Writes a non-fatal warning via `console.warn`.
+     *
+     * Fires when the level is at least {@link LogType.Warning}. Used by the
+     * SDK for recoverable issues like missing storage features in
+     * {@link StorageService} or incoming events that no handler subscribed
+     * to.
+     *
+     * @param message Anything the host `console.warn` accepts.
+     */
+    public static logWarning(message: any): void {
+        if (this._logType >= LogType.Warning)
+            console.warn(message);
+    }
 
-	/**
-	 * Writes an error message via `console.error`.
-	 *
-	 * Fires when the level is at least {@link LogType.Error}. Used by the
-	 * SDK whenever a request cannot be sent (`isUse === false`), an unknown
-	 * `responseId` arrives, or any HTTP/socket failure surfaces from the
-	 * underlying transport.
-	 *
-	 * @param message Anything the host `console.error` accepts. For real
-	 *                exception objects prefer {@link logException} so the
-	 *                stack trace is preserved.
-	 */
-	public static logError(message: any): void {
-		if (this._logType >= LogType.Error)
-			console.error(message);
-	}
+    /**
+     * Writes an error message via `console.error`.
+     *
+     * Fires when the level is at least {@link LogType.Error}. Used by the
+     * SDK whenever a request cannot be sent (`isUse === false`), an unknown
+     * `responseId` arrives, or any HTTP/socket failure surfaces from the
+     * underlying transport.
+     *
+     * @param message Anything the host `console.error` accepts. For real
+     *                exception objects prefer {@link logException} so the
+     *                stack trace is preserved.
+     */
+    public static logError(message: any): void {
+        if (this._logType >= LogType.Error)
+            console.error(message);
+    }
 
 }

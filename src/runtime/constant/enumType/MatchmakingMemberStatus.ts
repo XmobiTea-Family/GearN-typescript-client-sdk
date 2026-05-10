@@ -11,22 +11,22 @@
  * `MultiplayerModels.TicketMember.matchmakingMemberStatus`.
  */
 export enum MatchmakingMemberStatus {
-	/**
-	 * The ticket creator declared the member but the player has
-	 * not joined / confirmed yet (e.g. invitation pending).
-	 */
-	Pending = 1,
+    /**
+     * The ticket creator declared the member but the player has
+     * not joined / confirmed yet (e.g. invitation pending).
+     */
+    Pending = 1,
 
-	/**
-	 * The member confirmed and is part of the active ticket.
-	 */
-	Joined = 2,
+    /**
+     * The member confirmed and is part of the active ticket.
+     */
+    Joined = 2,
 
-	/**
-	 * The member declined or left the ticket. The ticket may
-	 * still complete if it had enough remaining members; the SDK
-	 * keeps the cancelled entry in the roster for audit purposes.
-	 */
-	Canceled = 3,
+    /**
+     * The member declined or left the ticket. The ticket may
+     * still complete if it had enough remaining members; the SDK
+     * keeps the cancelled entry in the roster for audit purposes.
+     */
+    Canceled = 3,
 
 }

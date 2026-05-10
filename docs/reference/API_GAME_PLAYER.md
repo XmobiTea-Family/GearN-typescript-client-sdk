@@ -24,8 +24,9 @@ const res = await GNNetwork.gamePlayer.<method>Async(requestData, overrideAuthTo
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,11 +36,11 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.gamePlayer.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `userId` khác với `gamePlayer` đang authenticated |
-|--------|-------------|------------|----------------|--------------------------|-------------------------------------------------------------------------------|
+| --- | --- | --- | --- | --- | --- |
 | `addPlayerFriend` | `GamePlayerModels.AddPlayerFriendRequestData` | `addPlayerFriendAsync(...)` | `GamePlayerResponseModels.AddPlayerFriendOperationResponse` | `gamePlayer.addPlayerFriend.selfEnable` | `gamePlayer.addPlayerFriend.otherSelfEnable` |
 | `addSegment` | `GamePlayerModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `GamePlayerResponseModels.AddSegmentOperationResponse` | `gamePlayer.addSegment.selfEnable` | `gamePlayer.addSegment.otherSelfEnable` |
 | `getAvatar` | `GamePlayerModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `GamePlayerResponseModels.GetAvatarOperationResponse` | `gamePlayer.getAvatar.selfEnable` | `gamePlayer.getAvatar.otherSelfEnable` |
@@ -93,11 +94,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStatisticsLog` | `GamePlayerModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GamePlayerResponseModels.GetStatisticsLogOperationResponse` | `gamePlayer.getStatisticsLog.selfEnable` | `gamePlayer.getStatisticsLog.otherSelfEnable` |
 | `getCurrencyLog` | `GamePlayerModels.GetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GamePlayerResponseModels.GetCurrencyLogOperationResponse` | `gamePlayer.getCurrencyLog.selfEnable` | `gamePlayer.getCurrencyLog.otherSelfEnable` |
 
-
 ## Server methods (`GNNetwork.gamePlayer.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addPlayerFriend` | `GamePlayerModels.ServerAddPlayerFriendRequestData` | `addPlayerFriendAsync(...)` | `GamePlayerResponseModels.AddPlayerFriendOperationResponse` | `gamePlayer.addPlayerFriend.serverSelfEnable` |
 | `addSegment` | `GamePlayerModels.ServerAddSegmentRequestData` | `addSegmentAsync(...)` | `GamePlayerResponseModels.AddSegmentOperationResponse` | `gamePlayer.addSegment.serverSelfEnable` |
 | `getAvatar` | `GamePlayerModels.ServerGetAvatarRequestData` | `getAvatarAsync(...)` | `GamePlayerResponseModels.GetAvatarOperationResponse` | `gamePlayer.getAvatar.serverSelfEnable` |
@@ -151,11 +152,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStatisticsLog` | `GamePlayerModels.ServerGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GamePlayerResponseModels.GetStatisticsLogOperationResponse` | `gamePlayer.getStatisticsLog.serverSelfEnable` |
 | `getCurrencyLog` | `GamePlayerModels.ServerGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GamePlayerResponseModels.GetCurrencyLogOperationResponse` | `gamePlayer.getCurrencyLog.serverSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.gamePlayer.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addPlayerFriend` | `GamePlayerModels.AdminAddPlayerFriendRequestData` | `addPlayerFriendAsync(...)` | `GamePlayerResponseModels.AddPlayerFriendOperationResponse` | `gamePlayer.addPlayerFriend.adminSelfEnable` |
 | `addSegment` | `GamePlayerModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `GamePlayerResponseModels.AddSegmentOperationResponse` | `gamePlayer.addSegment.adminSelfEnable` |
 | `getAvatar` | `GamePlayerModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `GamePlayerResponseModels.GetAvatarOperationResponse` | `gamePlayer.getAvatar.adminSelfEnable` |
@@ -208,7 +209,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getCreateLeaderboard` | `GamePlayerModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `GamePlayerResponseModels.GetCreateLeaderboardOperationResponse` | `gamePlayer.getCreateLeaderboard.adminSelfEnable` |
 | `getStatisticsLog` | `GamePlayerModels.AdminGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GamePlayerResponseModels.GetStatisticsLogOperationResponse` | `gamePlayer.getStatisticsLog.adminSelfEnable` |
 | `getCurrencyLog` | `GamePlayerModels.AdminGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GamePlayerResponseModels.GetCurrencyLogOperationResponse` | `gamePlayer.getCurrencyLog.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

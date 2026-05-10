@@ -43,82 +43,82 @@ import { OperationResponse } from "./../OperationResponse";
  * ```
  */
 export abstract class CustomOperationResponse {
-	/** Operation code mirrored from the matching request. */
-	public operationCode: string;
-	/** Raw response parameter bag; usually consumed indirectly through the typed `responseData`. */
-	public parameters: GNHashtable;
-	/** Transport-level return code (from {@link ReturnCode}). */
-	public returnCode: number;
-	/** Backend-supplied debug message; populated mostly for failures. */
-	public debugMessage: string;
-	/**
-	 * Domain-level error code (from {@link ErrorCode}). Populated
-	 * only when {@link returnCode} is `Ok`. Read this **after**
-	 * {@link hasReturnCodeError} confirms transport success.
-	 */
-	public errorCode: number;
-	/**
-	 * Validation failure entries, populated when
-	 * {@link returnCode} equals
-	 * `ReturnCode.InvalidRequestParameters`.
-	 */
-	public invalidMembers: InvalidMember[];
+    /** Operation code mirrored from the matching request. */
+    public operationCode: string;
+    /** Raw response parameter bag; usually consumed indirectly through the typed `responseData`. */
+    public parameters: GNHashtable;
+    /** Transport-level return code (from {@link ReturnCode}). */
+    public returnCode: number;
+    /** Backend-supplied debug message; populated mostly for failures. */
+    public debugMessage: string;
+    /**
+     * Domain-level error code (from {@link ErrorCode}). Populated
+     * only when {@link returnCode} is `Ok`. Read this **after**
+     * {@link hasReturnCodeError} confirms transport success.
+     */
+    public errorCode: number;
+    /**
+     * Validation failure entries, populated when
+     * {@link returnCode} equals
+     * `ReturnCode.InvalidRequestParameters`.
+     */
+    public invalidMembers: InvalidMember[];
 
-	/**
-	 * Returns whether the transport-level return code indicates a
-	 * failure (anything other than `Ok`).
-	 *
-	 * Note: this does **not** consider {@link errorCode} — a
-	 * transport-successful response may still carry a domain
-	 * failure, which the caller has to check separately by
-	 * comparing `errorCode` to the relevant {@link ErrorCode}
-	 * constants.
-	 */
-	public hasReturnCodeError() {
-		return this.returnCode != ReturnCode.Ok;
-	}
+    /**
+     * Returns whether the transport-level return code indicates a
+     * failure (anything other than `Ok`).
+     *
+     * Note: this does **not** consider {@link errorCode} — a
+     * transport-successful response may still carry a domain
+     * failure, which the caller has to check separately by
+     * comparing `errorCode` to the relevant {@link ErrorCode}
+     * constants.
+     */
+    public hasReturnCodeError() {
+        return this.returnCode != ReturnCode.Ok;
+    }
 
-	/**
-	 * Copies the low-level {@link OperationResponse} fields into
-	 * the typed wrapper.
-	 *
-	 * Called by the SDK helpers
-	 * {@link GNNetwork.sendViaSocketTResponse} /
-	 * `sendViaHttpTResponse` after they receive the raw response
-	 * from the transport. Subclasses such as
-	 * {@link CustomOperationResponseAbstract} chain into this
-	 * implementation and then run their own DTO deserialisation.
-	 *
-	 * Side effect: when the response is transport-successful, this
-	 * method also reads `ParameterCode.ErrorCode` out of the
-	 * parameters and stores it on {@link errorCode} so call sites
-	 * can check the domain outcome without re-touching the
-	 * parameter bag.
-	 */
-	public setupOperationResponse(operationResponse: OperationResponse): void {
-		this.operationCode = operationResponse.getOperationCode();
-		this.returnCode = operationResponse.getReturnCode();
-		this.debugMessage = operationResponse.getDebugMessage();
+    /**
+     * Copies the low-level {@link OperationResponse} fields into
+     * the typed wrapper.
+     *
+     * Called by the SDK helpers
+     * {@link GNNetwork.sendViaSocketTResponse} /
+     * `sendViaHttpTResponse` after they receive the raw response
+     * from the transport. Subclasses such as
+     * {@link CustomOperationResponseAbstract} chain into this
+     * implementation and then run their own DTO deserialisation.
+     *
+     * Side effect: when the response is transport-successful, this
+     * method also reads `ParameterCode.ErrorCode` out of the
+     * parameters and stores it on {@link errorCode} so call sites
+     * can check the domain outcome without re-touching the
+     * parameter bag.
+     */
+    public setupOperationResponse(operationResponse: OperationResponse): void {
+        this.operationCode = operationResponse.getOperationCode();
+        this.returnCode = operationResponse.getReturnCode();
+        this.debugMessage = operationResponse.getDebugMessage();
 
-		this.parameters = operationResponse.getParameters();
-		this.invalidMembers = operationResponse.getInvalidMembers();
+        this.parameters = operationResponse.getParameters();
+        this.invalidMembers = operationResponse.getInvalidMembers();
 
-		if (!this.hasReturnCodeError()) {
-			this.errorCode = this.parameters.getNumber(ParameterCode.ErrorCode);
-		}
-	}
+        if (!this.hasReturnCodeError()) {
+            this.errorCode = this.parameters.getNumber(ParameterCode.ErrorCode);
+        }
+    }
 
-	/**
-	 * Returns a compact string useful for logging.
-	 *
-	 * Format: `"ReturnCode: <code> <parameters | debugMessage>"`.
-	 * Parameters are stringified through
-	 * {@link GNHashtable.toString} when available, otherwise the
-	 * raw debug message takes their place.
-	 */
-	public toString(): string {
-		return "ReturnCode: " + this.returnCode + " " + (this.parameters != null ? this.parameters.toString() : this.debugMessage);
-	}
+    /**
+     * Returns a compact string useful for logging.
+     *
+     * Format: `"ReturnCode: <code> <parameters | debugMessage>"`.
+     * Parameters are stringified through
+     * {@link GNHashtable.toString} when available, otherwise the
+     * raw debug message takes their place.
+     */
+    public toString(): string {
+        return "ReturnCode: " + this.returnCode + " " + (this.parameters != null ? this.parameters.toString() : this.debugMessage);
+    }
 
 }
 
@@ -136,35 +136,35 @@ export abstract class CustomOperationResponse {
  *                         resolve the field metadata.
  */
 export abstract class CustomOperationResponseAbstract<TResponseData> extends CustomOperationResponse {
-	/**
-	 * Typed response payload deserialised from
-	 * {@link parameters}. Stays `undefined` when the response
-	 * carried a transport error.
-	 */
-	public responseData: TResponseData;
-	/**
-	 * Reference to the DTO class. Required by
-	 * {@link ConverterService.deserializeObject} to resolve
-	 * decorator-driven field metadata.
-	 */
-	protected responseDataCls: Constructor<TResponseData>;
+    /**
+     * Typed response payload deserialised from
+     * {@link parameters}. Stays `undefined` when the response
+     * carried a transport error.
+     */
+    public responseData: TResponseData;
+    /**
+     * Reference to the DTO class. Required by
+     * {@link ConverterService.deserializeObject} to resolve
+     * decorator-driven field metadata.
+     */
+    protected responseDataCls: Constructor<TResponseData>;
 
-	/**
-	 * Chains into {@link CustomOperationResponse.setupOperationResponse}
-	 * and additionally deserialises the parameters into
-	 * {@link responseData} when the response has no transport
-	 * error.
-	 *
-	 * Skipped on transport failure: the caller must inspect
-	 * {@link hasReturnCodeError} / {@link debugMessage} /
-	 * {@link invalidMembers} instead.
-	 */
-	public setupOperationResponse(operationResponse: OperationResponse): void {
-		super.setupOperationResponse(operationResponse);
+    /**
+     * Chains into {@link CustomOperationResponse.setupOperationResponse}
+     * and additionally deserialises the parameters into
+     * {@link responseData} when the response has no transport
+     * error.
+     *
+     * Skipped on transport failure: the caller must inspect
+     * {@link hasReturnCodeError} / {@link debugMessage} /
+     * {@link invalidMembers} instead.
+     */
+    public setupOperationResponse(operationResponse: OperationResponse): void {
+        super.setupOperationResponse(operationResponse);
 
-		if (!this.hasReturnCodeError()) {
-			this.responseData = ConverterService.deserializeObject<TResponseData>(this.parameters, this.responseDataCls);
-		}
-	}
+        if (!this.hasReturnCodeError()) {
+            this.responseData = ConverterService.deserializeObject<TResponseData>(this.parameters, this.responseDataCls);
+        }
+    }
 
 }

@@ -24,8 +24,9 @@ const res = await GNNetwork.multiplayer.<method>Async(requestData, overrideAuthT
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,11 +36,11 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.multiplayer.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `cancelAllMatchmakingTicket` | `MultiplayerModels.CancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` | `multiplayer.cancelAllMatchmakingTicket.selfEnable` |
 | `cancelMatchmakingTicket` | `MultiplayerModels.CancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` | `multiplayer.cancelMatchmakingTicket.selfEnable` |
 | `createMatchmakingTicket` | `MultiplayerModels.CreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` | `multiplayer.createMatchmakingTicket.selfEnable` |
@@ -51,11 +52,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getAllMatch` | `MultiplayerModels.GetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` | `multiplayer.getAllMatch.selfEnable` |
 | `getAllMatchmakingTicket` | `MultiplayerModels.GetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` | `multiplayer.getAllMatchmakingTicket.selfEnable` |
 
-
 ## Server methods (`GNNetwork.multiplayer.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `cancelAllMatchmakingTicket` | `MultiplayerModels.ServerCancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` | `multiplayer.cancelAllMatchmakingTicket.serverSelfEnable` |
 | `cancelMatchmakingTicket` | `MultiplayerModels.ServerCancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` | `multiplayer.cancelMatchmakingTicket.serverSelfEnable` |
 | `createMatchmakingTicket` | `MultiplayerModels.ServerCreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` | `multiplayer.createMatchmakingTicket.serverSelfEnable` |
@@ -67,11 +68,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getAllMatch` | `MultiplayerModels.ServerGetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` | `multiplayer.getAllMatch.serverSelfEnable` |
 | `getAllMatchmakingTicket` | `MultiplayerModels.ServerGetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` | `multiplayer.getAllMatchmakingTicket.serverSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.multiplayer.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `cancelAllMatchmakingTicket` | `MultiplayerModels.AdminCancelAllMatchmakingTicketRequestData` | `cancelAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelAllMatchmakingTicketOperationResponse` | `multiplayer.cancelAllMatchmakingTicket.adminSelfEnable` |
 | `cancelMatchmakingTicket` | `MultiplayerModels.AdminCancelMatchmakingTicketRequestData` | `cancelMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CancelMatchmakingTicketOperationResponse` | `multiplayer.cancelMatchmakingTicket.adminSelfEnable` |
 | `createMatchmakingTicket` | `MultiplayerModels.AdminCreateMatchmakingTicketRequestData` | `createMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.CreateMatchmakingTicketOperationResponse` | `multiplayer.createMatchmakingTicket.adminSelfEnable` |
@@ -82,7 +83,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `listMatchmakingTicketsForPlayer` | `MultiplayerModels.AdminListMatchmakingTicketsForPlayerRequestData` | `listMatchmakingTicketsForPlayerAsync(...)` | `MultiplayerResponseModels.ListMatchmakingTicketsForPlayerOperationResponse` | `multiplayer.listMatchmakingTicketsForPlayer.adminSelfEnable` |
 | `getAllMatch` | `MultiplayerModels.AdminGetAllMatchRequestData` | `getAllMatchAsync(...)` | `MultiplayerResponseModels.GetAllMatchOperationResponse` | `multiplayer.getAllMatch.adminSelfEnable` |
 | `getAllMatchmakingTicket` | `MultiplayerModels.AdminGetAllMatchmakingTicketRequestData` | `getAllMatchmakingTicketAsync(...)` | `MultiplayerResponseModels.GetAllMatchmakingTicketOperationResponse` | `multiplayer.getAllMatchmakingTicket.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

@@ -7,24 +7,24 @@ import { GNNetwork, GNServerSettings, GNServerSettingsOptions, MessageType, LogT
 
 const settings = new GNServerSettings();
 settings.config({
-	serverAddress: "api.example.com",
-	serverPort: -1,
-	serverSocketPort: -1,
-	useSsl: true,
-	useSocket: true,
-	useHttp: true,
+    serverAddress: "api.example.com",
+    serverPort: -1,
+    serverSocketPort: -1,
+    useSsl: true,
+    useSocket: true,
+    useHttp: true,
 
-	defaultTimeoutInSeconds: 20,
-	messageType: MessageType.MsgPack,
-	sendRate: 20,
-	reconnectDelay: 5000,
-	pingInterval: 20000,
-	pingTimeout: 20000,
+    defaultTimeoutInSeconds: 20,
+    messageType: MessageType.MsgPack,
+    sendRate: 20,
+    reconnectDelay: 5000,
+    pingInterval: 20000,
+    pingTimeout: 20000,
 
-	secretKey: "<secret-key>",
-	gameId: "<game-id>",
+    secretKey: "<secret-key>",
+    gameId: "<game-id>",
 
-	logType: LogType.All,
+    logType: LogType.All,
 } satisfies GNServerSettingsOptions);
 
 GNNetwork.init(settings);
@@ -40,8 +40,9 @@ GNNetwork.init(settings);
 
 ## Bảng field
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Default | Unit | Notes |
-|-------|------|----------|---------|------|-------|
+| --- | --- | --- | --- | --- | --- |
 | `serverAddress` | `string` | yes | `"127.0.0.1"` | host | Host name hoặc IP public của GearN Server |
 | `serverPort` | `number` | yes | `2202` | port | HTTP port. Set `-1` khi proxy đã expose default port trực tiếp |
 | `serverSocketPort` | `number` | yes | `2901` | port | Socket port. Set `-1` khi proxy đã expose default port trực tiếp |
@@ -67,8 +68,8 @@ Default column phản ánh giá trị khởi tạo trong class `GNServerSettings
 SDK tự build base URL từ `serverAddress` + port + `useSsl`:
 
 - `getHttpUrl()`:
-  - `serverPort >= 0` → `{http|https}://{serverAddress}:{serverPort}`
-  - `serverPort < 0` → `{http|https}://{serverAddress}` (reverse proxy mode)
+    - `serverPort >= 0` → `{http|https}://{serverAddress}:{serverPort}`
+    - `serverPort < 0` → `{http|https}://{serverAddress}` (reverse proxy mode)
 - `getSocketUrl()`: same pattern dùng `serverSocketPort`.
 
 Set `serverPort: -1` hoặc `serverSocketPort: -1` khi proxy (nginx, ALB, Cloudflare) đã terminate port 80/443.

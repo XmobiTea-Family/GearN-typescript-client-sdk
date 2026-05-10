@@ -24,8 +24,9 @@ const res = await GNNetwork.masterPlayer.<method>Async(requestData, overrideAuth
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,11 +36,11 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.masterPlayer.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `userId` khác với `masterPlayer` đang authenticated |
-|--------|-------------|------------|----------------|--------------------------|---------------------------------------------------------------------------------|
+| --- | --- | --- | --- | --- | --- |
 | `addSegment` | `MasterPlayerModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `MasterPlayerResponseModels.AddSegmentOperationResponse` | `masterPlayer.addSegment.selfEnable` | `masterPlayer.addSegment.otherSelfEnable` |
 | `changeAccountPassword` | `MasterPlayerModels.ChangeAccountPasswordRequestData` | `changeAccountPasswordAsync(...)` | `MasterPlayerResponseModels.ChangeAccountPasswordOperationResponse` | `masterPlayer.changeAccountPassword.selfEnable` | `masterPlayer.changeAccountPassword.otherSelfEnable` |
 | `getAvatar` | `MasterPlayerModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `MasterPlayerResponseModels.GetAvatarOperationResponse` | `masterPlayer.getAvatar.selfEnable` | `masterPlayer.getAvatar.otherSelfEnable` |
@@ -127,11 +128,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getPushNotification` | `MasterPlayerModels.GetPushNotificationRequestData` | `getPushNotificationAsync(...)` | `MasterPlayerResponseModels.GetPushNotificationOperationResponse` | `masterPlayer.getPushNotification.selfEnable` | `masterPlayer.getPushNotification.otherSelfEnable` |
 | `sendPushNotification` | `MasterPlayerModels.SendPushNotificationRequestData` | `sendPushNotificationAsync(...)` | `MasterPlayerResponseModels.SendPushNotificationOperationResponse` | `masterPlayer.sendPushNotification.selfEnable` | `masterPlayer.sendPushNotification.otherSelfEnable` |
 
-
 ## Server methods (`GNNetwork.masterPlayer.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addSegment` | `MasterPlayerModels.ServerAddSegmentRequestData` | `addSegmentAsync(...)` | `MasterPlayerResponseModels.AddSegmentOperationResponse` | `masterPlayer.addSegment.serverSelfEnable` |
 | `getAvatar` | `MasterPlayerModels.ServerGetAvatarRequestData` | `getAvatarAsync(...)` | `MasterPlayerResponseModels.GetAvatarOperationResponse` | `masterPlayer.getAvatar.serverSelfEnable` |
 | `getCountryCode` | `MasterPlayerModels.ServerGetCountryCodeRequestData` | `getCountryCodeAsync(...)` | `MasterPlayerResponseModels.GetCountryCodeOperationResponse` | `masterPlayer.getCountryCode.serverSelfEnable` |
@@ -218,11 +219,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getPushNotification` | `MasterPlayerModels.ServerGetPushNotificationRequestData` | `getPushNotificationAsync(...)` | `MasterPlayerResponseModels.GetPushNotificationOperationResponse` | `masterPlayer.getPushNotification.serverSelfEnable` |
 | `sendPushNotification` | `MasterPlayerModels.ServerSendPushNotificationRequestData` | `sendPushNotificationAsync(...)` | `MasterPlayerResponseModels.SendPushNotificationOperationResponse` | `masterPlayer.sendPushNotification.serverSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.masterPlayer.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addSegment` | `MasterPlayerModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `MasterPlayerResponseModels.AddSegmentOperationResponse` | `masterPlayer.addSegment.adminSelfEnable` |
 | `getAvatar` | `MasterPlayerModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `MasterPlayerResponseModels.GetAvatarOperationResponse` | `masterPlayer.getAvatar.adminSelfEnable` |
 | `getCountryCode` | `MasterPlayerModels.AdminGetCountryCodeRequestData` | `getCountryCodeAsync(...)` | `MasterPlayerResponseModels.GetCountryCodeOperationResponse` | `masterPlayer.getCountryCode.adminSelfEnable` |
@@ -308,7 +309,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `removePushNotification` | `MasterPlayerModels.AdminRemovePushNotificationRequestData` | `removePushNotificationAsync(...)` | `MasterPlayerResponseModels.RemovePushNotificationOperationResponse` | `masterPlayer.removePushNotification.adminSelfEnable` |
 | `getPushNotification` | `MasterPlayerModels.AdminGetPushNotificationRequestData` | `getPushNotificationAsync(...)` | `MasterPlayerResponseModels.GetPushNotificationOperationResponse` | `masterPlayer.getPushNotification.adminSelfEnable` |
 | `sendPushNotification` | `MasterPlayerModels.AdminSendPushNotificationRequestData` | `sendPushNotificationAsync(...)` | `MasterPlayerResponseModels.SendPushNotificationOperationResponse` | `masterPlayer.sendPushNotification.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

@@ -46,8 +46,9 @@ useResult(res.responseData);
 
 ## 2. Decision tree: tôi cần làm gì?
 
+<!-- prettier-ignore -->
 | Tôi muốn... | Mở file |
-|---|---|
+| --- | --- |
 | Login / register / refresh token | [guides/AUTHENTICATE.md](/docs/guides/AUTHENTICATE.md) · [reference/API_AUTHENTICATE.md](/docs/reference/API_AUTHENTICATE.md) |
 | MasterPlayer account chung nhiều game: identity, external link/unlink, profile, statistics, currencies, player data, email/push, segment/tag/ban | [guides/MASTER_PLAYER.md](/docs/guides/MASTER_PLAYER.md) · [reference/API_MASTER_PLAYER.md](/docs/reference/API_MASTER_PLAYER.md) |
 | GamePlayer account theo game environment (`dev`/`live` hoặc custom): profile, friends, groups, inventory owner, online status, statistics/currencies/data | [guides/GAME_PLAYER.md](/docs/guides/GAME_PLAYER.md) · [reference/API_GAME_PLAYER.md](/docs/reference/API_GAME_PLAYER.md) |
@@ -73,8 +74,9 @@ useResult(res.responseData);
 
 ## Glossary bắt buộc
 
+<!-- prettier-ignore -->
 | Thuật ngữ | Nghĩa |
-|---|---|
+| --- | --- |
 | `route` | Trust boundary của caller: client, server, hoặc admin. |
 | `self` | Target thuộc user đang authenticate. |
 | `other-self` | Target không thuộc user đang authenticate nhưng vẫn gọi qua route client. |
@@ -98,6 +100,7 @@ Ngoại lệ: DashboardApi public wrapper vẫn đi RequestRole.Client; backend 
 ```
 
 `self / other-self` chỉ áp dụng trên route `client`:
+
 - `MasterPlayer` / `GamePlayer`: `self` = `userId` trong request trùng `userId` đã authenticate (hoặc bỏ trống).
 - `CharacterPlayer` / `Inventory` / `Group`: `self` = entity thuộc ownership của user đang authenticate.
 - `Content` / `StoreInventory` / `Multiplayer` / `CloudScript`: không có ownership rõ ràng — không ép self/other-self.
@@ -114,8 +117,9 @@ GNNetwork.<group>.<method>(requestData, onResponse?, overrideAuthToken?, overrid
 const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
 ```
 
+<!-- prettier-ignore -->
 | Param | Khi nào cần |
-|---|---|
+| --- | --- |
 | `overrideAuthToken` | Impersonate / multi-session / admin gọi trên user khác |
 | `overrideSecretKey` | Override secret cho 1 request, ví dụ tool migration |
 | `customTags` | Trace id, build version, A/B tag — backend có thể log/route |
@@ -174,8 +178,9 @@ Realtime KHÔNG tự chạy chỉ vì đã gọi HTTP (friend/group/...). Phải
 
 ## 7. Diagnose `ReturnCode` (nhanh)
 
+<!-- prettier-ignore -->
 | Code | Nghĩa | Fix |
-|---|---|---|
+| --- | --- | --- |
 | `Ok` | Sang tầng `errorCode` | — |
 | `OperationTimeout` | Network/backend chậm | Retry với backoff nếu idempotent |
 | `OperationNotAllow` | Permission rule cấm | Check route + permission flag (KHÔNG retry) |

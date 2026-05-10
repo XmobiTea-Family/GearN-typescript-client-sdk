@@ -17,8 +17,9 @@ SDK cung cấp 6 server event handler đẩy realtime update từ backend qua so
 
 ## Bảng event
 
+<!-- prettier-ignore -->
 | Handler | EventCode (logical) | Payload class | Trigger |
-|---------|---------------------|---------------|---------|
+| --- | --- | --- | --- |
 | `OnGroupMessageUpdateEventHandler` | `OnGroupMessageUpdate` | `GroupMessageUpdate` | Tin nhắn group mới, edit, hoặc stream sync |
 | `OnGroupMemberUpdateEventHandler` | `OnGroupMemberUpdate` | `GroupMemberUpdate` | Member join/leave/kick/role thay đổi |
 | `OnGamePlayerFriendUpdateEventHandler` | `OnGamePlayerFriendUpdate` | `GamePlayerFriendUpdate` | Friend relation của game player hiện tại đổi |
@@ -31,6 +32,7 @@ SDK cung cấp 6 server event handler đẩy realtime update từ backend qua so
 ## `OnGroupMessageUpdateEventHandler`
 
 **Import:**
+
 ```ts
 import { OnGroupMessageUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 ```
@@ -39,21 +41,23 @@ import { OnGroupMessageUpdateEventHandler } from "@xmobitea/gearn-typescript-cli
 
 **Payload `GroupMessageUpdate`:**
 
+<!-- prettier-ignore -->
 | Field | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `groupMessages` | `Array<GroupModels.GroupMessageResponseData>` | no | Batch message item mới/changed |
 | `groupId` | `string` | no | Group id có message stream đổi |
 | `characterId` | `string` | yes | Có khi update scope theo character context |
 
 **Ví dụ:**
+
 ```ts
 import { OnGroupMessageUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGroupMessageUpdateEventHandler.onUpdate = (payload) => {
-	console.log(`group ${payload.groupId} received ${payload.groupMessages.length} messages`);
-	for (const msg of payload.groupMessages) {
-		// render msg
-	}
+    console.log(`group ${payload.groupId} received ${payload.groupMessages.length} messages`);
+    for (const msg of payload.groupMessages) {
+        // render msg
+    }
 };
 
 // Cleanup copy-safe
@@ -70,18 +74,20 @@ OnGroupMessageUpdateEventHandler.onUpdate = () => {};
 
 **Payload `GroupMemberUpdate`:**
 
+<!-- prettier-ignore -->
 | Field | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `members` | `Array<GenericModels.MemberItem>` | no | Member relation item đổi trong batch |
 | `groupId` | `string` | no | Group id có member roster đổi |
 
 **Ví dụ:**
+
 ```ts
 OnGroupMemberUpdateEventHandler.onUpdate = (payload) => {
-	const groupId = payload.groupId;
-	for (const m of payload.members) {
-		// update member cache
-	}
+    const groupId = payload.groupId;
+    for (const m of payload.members) {
+        // update member cache
+    }
 };
 ```
 
@@ -95,17 +101,19 @@ OnGroupMemberUpdateEventHandler.onUpdate = (payload) => {
 
 **Payload `GamePlayerFriendUpdate`:**
 
+<!-- prettier-ignore -->
 | Field | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `playerFriends` | `Array<GenericModels.FriendItem>` | no | Friend relation item đổi (add/accept/remove/status) |
 | `characterId` | `string` | yes | Có khi update scope theo character context |
 
 **Ví dụ:**
+
 ```ts
 OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
-	for (const f of payload.playerFriends) {
-		// switch (f.status) { ... }
-	}
+    for (const f of payload.playerFriends) {
+        // switch (f.status) { ... }
+    }
 };
 ```
 
@@ -119,8 +127,9 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 
 **Payload `GamePlayerGroupUpdate`:**
 
+<!-- prettier-ignore -->
 | Field | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `playerGroups` | `Array<GenericModels.GroupItem>` | no | Group relation item đổi (join/leave/status) |
 | `characterId` | `string` | yes | Có khi update scope theo character context |
 
@@ -134,8 +143,9 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 
 **Payload `CharacterPlayerFriendUpdate`:**
 
+<!-- prettier-ignore -->
 | Field | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `characterId` | `string` | no | Character id có friend relation đổi |
 | `playerFriends` | `Array<GenericModels.FriendItem>` | no | Friend relation item đổi |
 
@@ -149,8 +159,9 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 
 **Payload `CharacterPlayerGroupUpdate`:**
 
+<!-- prettier-ignore -->
 | Field | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `characterId` | `string` | no | Character id có group relation đổi |
 | `playerGroups` | `Array<GenericModels.GroupItem>` | no | Group relation item đổi |
 
@@ -167,15 +178,15 @@ type Listener<T> = (payload: T) => void;
 const groupMessageListeners: Listener<GroupMessageUpdate>[] = [];
 
 OnGroupMessageUpdateEventHandler.onUpdate = (payload) => {
-	for (const l of groupMessageListeners) l(payload);
+    for (const l of groupMessageListeners) l(payload);
 };
 
 export function subscribeGroupMessage(l: Listener<GroupMessageUpdate>) {
-	groupMessageListeners.push(l);
-	return () => {
-		const i = groupMessageListeners.indexOf(l);
-		if (i >= 0) groupMessageListeners.splice(i, 1);
-	};
+    groupMessageListeners.push(l);
+    return () => {
+        const i = groupMessageListeners.indexOf(l);
+        if (i >= 0) groupMessageListeners.splice(i, 1);
+    };
 }
 ```
 

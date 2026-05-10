@@ -27,31 +27,31 @@ import { OperationEvent } from "./../../entity/OperationEvent";
  *   instance state.
  */
 export interface IServerEventHandler {
-	/**
-	 * Returns the {@link EventCode} this handler is responsible for.
-	 *
-	 * The SDK uses the returned value as the dictionary key inside
-	 * the per-event-code dispatch table. Multiple handlers may
-	 * return the same value; they are dispatched in registration
-	 * order.
-	 */
-	getEventCode(): string;
-	/**
-	 * Handles a single decoded {@link OperationEvent} delivered by
-	 * the socket transport.
-	 *
-	 * Implementations typically:
-	 * 1. Deserialise `operationEvent.getParameters()` into a typed
-	 *    payload class via
-	 *    {@link ConverterService.deserializeObject}.
-	 * 2. Forward the typed payload to a static callback slot the
-	 *    application registers ahead of time.
-	 *
-	 * Implementations should treat thrown errors as fatal — the
-	 * dispatcher in {@link SocketPeer.onEventHandler} does not
-	 * wrap the call in try/catch.
-	 */
-	handle(operationEvent: OperationEvent): void;
+    /**
+     * Returns the {@link EventCode} this handler is responsible for.
+     *
+     * The SDK uses the returned value as the dictionary key inside
+     * the per-event-code dispatch table. Multiple handlers may
+     * return the same value; they are dispatched in registration
+     * order.
+     */
+    getEventCode(): string;
+    /**
+     * Handles a single decoded {@link OperationEvent} delivered by
+     * the socket transport.
+     *
+     * Implementations typically:
+     * 1. Deserialise `operationEvent.getParameters()` into a typed
+     *    payload class via
+     *    {@link ConverterService.deserializeObject}.
+     * 2. Forward the typed payload to a static callback slot the
+     *    application registers ahead of time.
+     *
+     * Implementations should treat thrown errors as fatal — the
+     * dispatcher in {@link SocketPeer.onEventHandler} does not
+     * wrap the call in try/catch.
+     */
+    handle(operationEvent: OperationEvent): void;
 
 }
 
@@ -66,44 +66,44 @@ export interface IServerEventHandler {
  * dedup map) without requiring the application to wire them up.
  */
 export namespace IServerEventHandler {
-	/**
-	 * Constructor signature accepted by the registry — anything
-	 * `new`-able with arbitrary args that produces a `T`. The
-	 * `prototype` field is required by the registry call site.
-	 */
-	type Constructor<T> = {
-		new(...args: any[]): T;
-		readonly prototype: T;
-	}
-	const implementations: Constructor<IServerEventHandler>[] = [];
+    /**
+     * Constructor signature accepted by the registry — anything
+     * `new`-able with arbitrary args that produces a `T`. The
+     * `prototype` field is required by the registry call site.
+     */
+    type Constructor<T> = {
+        new(...args: any[]): T;
+        readonly prototype: T;
+    }
+    const implementations: Constructor<IServerEventHandler>[] = [];
 
-	/**
-	 * Returns every constructor currently registered with the
-	 * registry. Called once during {@link SocketPeer.initGNSocketObject}.
-	 */
-	export function getImplementations(): Constructor<IServerEventHandler>[] {
-		return implementations;
-	}
+    /**
+     * Returns every constructor currently registered with the
+     * registry. Called once during {@link SocketPeer.initGNSocketObject}.
+     */
+    export function getImplementations(): Constructor<IServerEventHandler>[] {
+        return implementations;
+    }
 
-	/**
-	 * Class decorator that registers a handler so the SDK
-	 * instantiates it automatically.
-	 *
-	 * @example
-	 * ```ts
-	 * @IServerEventHandler.registerEvent
-	 * export class OnSomethingHandler implements IServerEventHandler {
-	 *     public getEventCode(): string { return EventCode.OnSomething; }
-	 *     public handle(event: OperationEvent): void { ... }
-	 * }
-	 * ```
-	 *
-	 * Returns the constructor as-is so it can still be used as a
-	 * value (instantiated, type-checked, etc.).
-	 */
-	export function registerEvent<T extends Constructor<IServerEventHandler>>(ctor: T) {
-		implementations.push(ctor);
-		return ctor;
-	}
+    /**
+     * Class decorator that registers a handler so the SDK
+     * instantiates it automatically.
+     *
+     * @example
+     * ```ts
+     * @IServerEventHandler.registerEvent
+     * export class OnSomethingHandler implements IServerEventHandler {
+     *     public getEventCode(): string { return EventCode.OnSomething; }
+     *     public handle(event: OperationEvent): void { ... }
+     * }
+     * ```
+     *
+     * Returns the constructor as-is so it can still be used as a
+     * value (instantiated, type-checked, etc.).
+     */
+    export function registerEvent<T extends Constructor<IServerEventHandler>>(ctor: T) {
+        implementations.push(ctor);
+        return ctor;
+    }
 
 }

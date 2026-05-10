@@ -20,11 +20,11 @@ npm install @xmobitea/gearn-typescript-client-sdk
 
 ```json
 {
-  "compilerOptions": {
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+    "compilerOptions": {
+        "esModuleInterop": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
 }
 ```
 
@@ -65,11 +65,7 @@ Ghi chú:
 ### Authentication
 
 ```ts
-import {
-    AuthenticateModels,
-    ErrorCode,
-    GNNetwork,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { AuthenticateModels, ErrorCode, GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new AuthenticateModels.InfoRequestParam();
 infoRequestParam.displayName = true;

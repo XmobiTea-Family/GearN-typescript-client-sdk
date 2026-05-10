@@ -21,20 +21,12 @@ import { IServerEventHandler } from "./IServerEventHandler";
  * every connected device for the same account converges.
  */
 export class GamePlayerFriendUpdate {
-	/**
-	 * Optional character id when the backend scopes the update to
-	 * a specific character context (multi-character titles).
-	 * Absent for purely account-scoped friend changes.
-	 */
-	@StringDataMember({ code: ParameterCode.CharacterId, isOptional: true })
-	public characterId?: string;
-
-	/**
-	 * Authoritative friend roster after the change. Treat as a
-	 * complete replacement — the backend does not send deltas.
-	 */
-	@GNArrayDataMember({ code: ParameterCode.PlayerFriends, elementCls: GenericModels.FriendItem })
-	public playerFriends: Array<GenericModels.FriendItem>;
+    /**
+     * Authoritative friend roster after the change. Treat as a
+     * complete replacement — the backend does not send deltas.
+     */
+    @GNArrayDataMember({ code: ParameterCode.PlayerFriends, elementCls: GenericModels.FriendItem })
+    public playerFriends: Array<GenericModels.FriendItem>;
 }
 
 /**
@@ -55,27 +47,27 @@ export class GamePlayerFriendUpdate {
  */
 @IServerEventHandler.registerEvent
 export class OnGamePlayerFriendUpdateEventHandler implements IServerEventHandler {
-	/**
-	 * Static callback the application registers. Leave `null` to
-	 * silently drop the event.
-	 */
-	public static onUpdate: Action1<GamePlayerFriendUpdate>;
+    /**
+     * Static callback the application registers. Leave `null` to
+     * silently drop the event.
+     */
+    public static onUpdate: Action1<GamePlayerFriendUpdate>;
 
-	/**
-	 * Returns {@link EventCode.OnGamePlayerFriendUpdate}.
-	 */
-	public getEventCode(): string {
-		return EventCode.OnGamePlayerFriendUpdate;
-	}
+    /**
+     * Returns {@link EventCode.OnGamePlayerFriendUpdate}.
+     */
+    public getEventCode(): string {
+        return EventCode.OnGamePlayerFriendUpdate;
+    }
 
-	/**
-	 * Deserialises the parameters into a
-	 * {@link GamePlayerFriendUpdate} and forwards to
-	 * {@link onUpdate}.
-	 */
-	public handle(operationEvent: OperationEvent): void {
-		if (OnGamePlayerFriendUpdateEventHandler.onUpdate != null)
-			OnGamePlayerFriendUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GamePlayerFriendUpdate));
-	}
+    /**
+     * Deserialises the parameters into a
+     * {@link GamePlayerFriendUpdate} and forwards to
+     * {@link onUpdate}.
+     */
+    public handle(operationEvent: OperationEvent): void {
+        if (OnGamePlayerFriendUpdateEventHandler.onUpdate != null)
+            OnGamePlayerFriendUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GamePlayerFriendUpdate));
+    }
 
 }

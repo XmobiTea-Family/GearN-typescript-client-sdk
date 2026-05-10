@@ -12,18 +12,18 @@
  * matches the gameplay semantics of the item.
  */
 export enum ItemType {
-	/**
-	 * Each acquisition produces a unique inventory row with its
-	 * own item id. Use for items that need to track per-instance
-	 * state (durability, custom name, equipped slot, ...).
-	 */
-	NonStackable = 1,
+    /**
+     * Each acquisition produces a unique inventory row with its
+     * own item id. Use for items that need to track per-instance
+     * state (durability, custom name, equipped slot, ...).
+     */
+    NonStackable = 1,
 
-	/**
-	 * Repeated acquisitions accumulate into a single inventory
-	 * row whose `amount` field carries the count. Use for
-	 * fungible currencies-as-items, consumables, materials.
-	 */
-	Stackable = 2,
+    /**
+     * Repeated acquisitions accumulate into a single inventory
+     * row whose `amount` field carries the count. Use for
+     * fungible currencies-as-items, consumables, materials.
+     */
+    Stackable = 2,
 
 }

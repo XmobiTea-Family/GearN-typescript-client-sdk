@@ -13,8 +13,9 @@ Nếu docs và dashboard khác nhau, dashboard thắng ở runtime; docs cần �
 
 ## Route To Flag Matrix
 
+<!-- prettier-ignore -->
 | Caller | Target | Required flag |
-|---|---|---|
+| --- | --- | --- |
 | `GNNetwork.<group>.<method>Async(...)` | `self` | `selfEnable` |
 | `GNNetwork.<group>.<method>Async(...)` | `other-self` | `otherSelfEnable` |
 | `GNNetwork.<group>.server.<method>Async(...)` | any | `serverSelfEnable` |
@@ -24,8 +25,9 @@ Nếu docs và dashboard khác nhau, dashboard thắng ở runtime; docs cần �
 
 ## API Group Index
 
+<!-- prettier-ignore -->
 | Group | Operation list | Notes |
-|---|---|---|
+| --- | --- | --- |
 | Authenticate | [API_AUTHENTICATE.md](/docs/reference/API_AUTHENTICATE.md) | Chỉ có namespace client. Login/register thường là acting-on-unauth-user; xem rule trong dashboard. |
 | Dashboard | [API_DASHBOARD.md](/docs/reference/API_DASHBOARD.md) | Chỉ có namespace client wrapper; admin context resolve từ admin auth token. |
 | Content | [API_CONTENT.md](/docs/reference/API_CONTENT.md) | Có client/server/admin; ownership không rõ như player entity. |
