@@ -3,14 +3,16 @@
 Tổng cộng **2506** DTO class trên **12** domain.
 
 > **Cách dùng hiệu quả (đặc biệt cho AI consumer):**
+>
 > - File này chứa bảng flat 2506 dòng (about 438KB) — **đừng load nguyên file**.
 > - Dùng `grep` / ripgrep tìm class name cần: `rg "ClassName" docs/reference/DTO_INDEX.md`.
 > - Hoặc mở trực tiếp file domain tương ứng trong `docs/reference/dto/` (xem bảng "Theo domain" dưới).
 
 ## Theo domain
 
+<!-- prettier-ignore -->
 | Domain | File | Class count |
-|--------|------|-------------|
+| --- | --- | --- |
 | Authenticate | [dto/AUTHENTICATE.md](/docs/reference/dto/AUTHENTICATE.md) | 59 |
 | CharacterPlayer | [dto/CHARACTER_PLAYER.md](/docs/reference/dto/CHARACTER_PLAYER.md) | 390 |
 | CloudScript | [dto/CLOUDSCRIPT.md](/docs/reference/dto/CLOUDSCRIPT.md) | 41 |
@@ -33,8 +35,9 @@ Tổng cộng **2506** DTO class trên **12** domain.
 
 ## Bảng flat (grep-target)
 
+<!-- prettier-ignore -->
 | Domain | Namespace | Class | Fields | Extends |
-|--------|-----------|-------|--------|---------|
+| --- | --- | --- | --- | --- |
 | AUTHENTICATE | `AuthenticateModels` | [InfoRequestParam](/docs/reference/dto/AUTHENTICATE.md#inforequestparam) | 21 | — |
 | AUTHENTICATE | `AuthenticateModels` | [LoginByAccountRequestData](/docs/reference/dto/AUTHENTICATE.md#loginbyaccountrequestdata) | 3 | — |
 | AUTHENTICATE | `AuthenticateModels` | [LoginByAndroidDeviceIdRequestData](/docs/reference/dto/AUTHENTICATE.md#loginbyandroiddeviceidrequestdata) | 3 | — |

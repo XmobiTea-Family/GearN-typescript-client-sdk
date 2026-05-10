@@ -21,19 +21,19 @@ File này là canonical source cho mọi rule cross-cutting: route/permission, s
 Typed response (mọi `*Async()` và callback form) expose **PUBLIC FIELDS** — không phải getter:
 
 ```ts
-res.returnCode       // transport/gateway layer
-res.errorCode        // business/domain layer
-res.invalidMembers   // chỉ set khi returnCode === InvalidRequestParameters
-res.debugMessage     // backend debug string
-res.responseData     // typed payload, chỉ set khi returnCode === Ok
+res.returnCode; // transport/gateway layer
+res.errorCode; // business/domain layer
+res.invalidMembers; // chỉ set khi returnCode === InvalidRequestParameters
+res.debugMessage; // backend debug string
+res.responseData; // typed payload, chỉ set khi returnCode === Ok
 ```
 
 Pattern bắt buộc, đúng thứ tự:
 
 ```ts
 if (res.returnCode !== ReturnCode.Ok) return; // transport/permission fail
-if (res.errorCode  !== ErrorCode.Ok)  return; // business fail
-useResult(res.responseData);                  // happy path
+if (res.errorCode !== ErrorCode.Ok) return; // business fail
+useResult(res.responseData); // happy path
 ```
 
 Rule cứng:
@@ -52,8 +52,9 @@ Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.
 
 Route `client / server / admin` mô tả **bên gọi** thực sự ở đâu, không phải target của mình hay của người khác.
 
+<!-- prettier-ignore -->
 | Route | Dùng khi code chạy ở |
-|---|---|
+| --- | --- |
 | `client` (`GNNetwork.<group>`) | App / browser / mobile của player |
 | `server` (`GNNetwork.<group>.server`) | Trusted backend: game server, internal service, worker, cron, webhook |
 | `admin` (`GNNetwork.<group>.admin`) | Backoffice, dashboard, GM tool, migration tool, ops |
@@ -77,8 +78,9 @@ Rule cứng:
 
 Backend suy ra thêm target context `self / other-self` cho route `client`:
 
+<!-- prettier-ignore -->
 | Domain | `self` = |
-|---|---|
+| --- | --- |
 | `MasterPlayerApi`, `GamePlayerApi` | `userId` trong request trùng `userId` đã authenticate (hoặc request không truyền `userId`) |
 | `CharacterPlayerApi`, `InventoryApi`, `GroupApi` | Entity target thuộc ownership của `GamePlayer` có `userId` trùng user đang authenticate |
 | `ContentApi`, `StoreInventoryApi`, `MultiplayerApi`, `CloudScriptApi` | **Không có ownership rõ ràng** — không ép self/other-self; chọn route theo trust boundary + để backend áp permission theo contract operation |
@@ -88,17 +90,18 @@ Rule cứng:
 - `self / other-self` **không** phải `server / admin`. `server / admin` là route đặc quyền riêng.
 - Không vì muốn thao tác lên data user khác mà tự động chuyển sang `.server` / `.admin`.
 - Ví dụ đúng:
-  - App player gọi `masterPlayer.getPlayerInformationAsync()` cho user đang login → `client + self`.
-  - App player gọi `masterPlayer.getPlayerInformationAsync(otherUserId)` → `client + other-self`.
-  - Game server gọi `gamePlayer.server.changePlayerCurrencyAsync(...)` → `server` (không phải `client + other-self`).
-  - GM tool gọi `inventory.admin.setRemoveStatusAsync(...)` → `admin`.
+    - App player gọi `masterPlayer.getPlayerInformationAsync()` cho user đang login → `client + self`.
+    - App player gọi `masterPlayer.getPlayerInformationAsync(otherUserId)` → `client + other-self`.
+    - Game server gọi `gamePlayer.server.changePlayerCurrencyAsync(...)` → `server` (không phải `client + other-self`).
+    - GM tool gọi `inventory.admin.setRemoveStatusAsync(...)` → `admin`.
 
 ---
 
 ## 5. Phân biệt 3 ReturnCode dễ nhầm
 
+<!-- prettier-ignore -->
 | Code | Nghĩa | Fix |
-|---|---|---|
+| --- | --- | --- |
 | `SecretInvalid` | Secret key sai, thiếu, hoặc không khớp game context | Fix `GNServerSettings.secretKey`. **KHÔNG retry**. |
 | `OperationInvalid` | Operation code không tồn tại, hoặc không hợp lệ với `RequestType` + `RequestRole` hiện tại | Check namespace đang gọi + đúng method trong `API_<GROUP>.md`. |
 | `OperationNotAllow` | Secret hợp lệ **và** operation tồn tại, NHƯNG permission rule của secret không cho phép trong target context | Check route + flag `selfEnable`/`otherSelfEnable`/`serverSelfEnable`/`adminSelfEnable`. **KHÔNG retry**. |
@@ -111,8 +114,9 @@ Cùng gia đình nhưng ý nghĩa khác hẳn — đừng confuse "secret sai" v
 
 GearN Server map quyền theo từng domain + operation (ví dụ `masterPlayer.getPlayerInformation`, `group.sendGroupMessage`). Mỗi secret key có 4 flag chính:
 
+<!-- prettier-ignore -->
 | Flag | Nghĩa |
-|---|---|
+| --- | --- |
 | `selfEnable` | Cho phép thao tác trên tài nguyên thuộc user đã authenticate |
 | `otherSelfEnable` | Cho phép thao tác trên tài nguyên không thuộc user đã authenticate |
 | `serverSelfEnable` | Cho phép thực thi qua route `server` |
@@ -124,8 +128,9 @@ Danh sách operation/flag offline: [reference/PERMISSION_RULES.md](/docs/referen
 
 Đây là quy tắc **uniform** cho mọi operation. Kết hợp với [§ 4 self / other-self](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client) để xác định target.
 
+<!-- prettier-ignore -->
 | Caller gọi | Target | Flag cần trên secret key |
-|---|---|---|
+| --- | --- | --- |
 | `GNNetwork.<group>.<method>()` — bỏ userId hoặc userId trùng auth | Self | `selfEnable` của operation |
 | `GNNetwork.<group>.<method>(otherUserId)` | Other-self | `otherSelfEnable` của operation |
 | `GNNetwork.<group>.server.<method>(...)` | Bất kỳ | `serverSelfEnable` của operation |
@@ -137,15 +142,16 @@ Ngoại lệ: domain không có ownership (`ContentApi`, `StoreInventoryApi`, `M
 
 - Permission rule được **backend admin** config trên dashboard GearN Server theo **từng `secretKey` × từng operation × từng flag**.
 - Client **không** tự đổi được flag. Chỉ có 3 option khi thiếu quyền:
-  1. Dùng `secretKey` khác trong `GNServerSettings` (cấu hình từ bootstrap).
-  2. Truyền `overrideSecretKey` per-request.
-  3. Yêu cầu backend admin bật flag cho secret hiện tại.
+    1. Dùng `secretKey` khác trong `GNServerSettings` (cấu hình từ bootstrap).
+    2. Truyền `overrideSecretKey` per-request.
+    3. Yêu cầu backend admin bật flag cho secret hiện tại.
 - Danh sách operation theo domain: ưu tiên [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md) và `docs/reference/API_<GROUP>.md` trong repo; chỉ dùng external permission mirror khi cần đối chiếu online.
 
 ### 6.3 Scenario điển hình trigger `OperationNotAllow`
 
+<!-- prettier-ignore -->
 | # | Code thực tế | Root cause | Fix |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | App player: `masterPlayer.getPlayerInformationAsync(otherUserId)` | Secret client không có `otherSelfEnable` cho `masterPlayer.getPlayerInformation` | Backend admin bật `otherSelfEnable` trong GearN Dashboard, hoặc chuyển flow sang server-side |
 | 2 | Script dev: `inventory.admin.setAmountAsync(...)` với secret client thường | Secret không có `adminSelfEnable` cho `inventory.setAmount` | Dùng secret admin qua `overrideSecretKey`, hoặc cấu hình `GNServerSettings.secretKey` = secret admin |
 | 3 | Game server: `GNNetwork.gamePlayer.joinGroupAsync(...)` (route client) | Secret server không có `selfEnable` cho `gamePlayer.joinGroup` | Chuyển sang `GNNetwork.gamePlayer.server.joinGroupAsync(...)` — dùng `serverSelfEnable` |
@@ -184,8 +190,8 @@ Rule cứng:
 - **Không gộp** auth socket với auth HTTP. Socket auth là bước riêng sau HTTP.
 - Không bắt buộc gọi `sendRequestAuthSocket()` sau mỗi `connectSocket()`. SDK auto-auth nếu token đã có.
 - Gọi `sendRequestAuthSocket()` chỉ khi:
-  - Socket connect **trước** khi có `authToken` (login xảy ra sau socket up).
-  - Token vừa đổi và muốn re-auth ngay mà không reconnect socket.
+    - Socket connect **trước** khi có `authToken` (login xảy ra sau socket up).
+    - Token vừa đổi và muốn re-auth ngay mà không reconnect socket.
 - Không giả định realtime event tự chạy chỉ vì đã gọi method HTTP friend/group. Phải subscribe handler trong [reference/EVENTS.md](/docs/reference/EVENTS.md).
 - Subscribe event handler **trước** `connectSocket()` để không miss event ngay sau handshake.
 
@@ -217,8 +223,9 @@ const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken
 - Không dùng object literal rồi cast sang `RequestData`; pattern đó bỏ qua constructor/decorator và dễ làm AI sinh payload thiếu shape.
 - API reference có thể dùng tên biến `requestData` để rút gọn bảng method, nhưng guide/cookbook copy-paste phải dùng DTO instance cụ thể.
 
+<!-- prettier-ignore -->
 | Param | Khi nào cần |
-|---|---|
+| --- | --- |
 | `overrideAuthToken: string` | Impersonate / multi-session / admin thao tác trên user khác mà không dùng auth cache hiện tại |
 | `overrideSecretKey: string` | Override secret cho 1 request, ví dụ migration tool gọi `.admin` từ script ngoài |
 | `customTags: GNHashtable` | Tag trace id, build version, A/B bucket — backend có thể log/route |
@@ -227,10 +234,7 @@ const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken
 Ví dụ `customTags`:
 
 ```ts
-const tags = GNHashtable.builder()
-  .add("traceId", "trace-001")
-  .add("build", "qa")
-  .build();
+const tags = GNHashtable.builder().add("traceId", "trace-001").add("build", "qa").build();
 ```
 
 ---
@@ -248,8 +252,9 @@ const tags = GNHashtable.builder()
 
 Bảng hợp nhất — cột "Triệu chứng" mô tả lỗi runtime thường thấy, cột "Fix" là hành động đúng.
 
+<!-- prettier-ignore -->
 | # | Anti-pattern | Triệu chứng | Fix |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 1 | Giả định success là `0` | So sánh `=== 0` luôn false, code tưởng fail | `Ok === 1` cả `ReturnCode` và `ErrorCode`. So sánh bằng enum symbol. |
 | 2 | Skip tầng 1, đọc thẳng `errorCode` | Business code branching nhầm vì `errorCode` chưa valid | Check `returnCode !== Ok` **trước**, return sớm. |
 | 3 | Dùng getter `res.getReturnCode()` | `undefined is not a function` trên typed response | Typed response dùng PUBLIC FIELDS. Getter chỉ trên raw `OperationResponse`. |
@@ -289,6 +294,7 @@ Khi sinh code:
 6. **`dist/*.d.ts`** — fallback nếu docs chưa cover.
 
 Chỉ đọc `src/` khi:
+
 - Sửa chính SDK.
 - Debug behavior nội bộ.
 - Verify public contract mà docs + `dist` chưa đủ.

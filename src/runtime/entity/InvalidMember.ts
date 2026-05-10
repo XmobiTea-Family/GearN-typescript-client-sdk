@@ -17,20 +17,20 @@ import { InvalidMemberType } from "./../constant/enumType/InvalidMemberType";
  */
 export interface InvalidMember {
 
-	/**
-	 * Wire-level parameter key that failed validation. Matches the
-	 * `code` value declared by the corresponding
-	 * `@*DataMember({ code: ParameterCode.X })` decorator on the
-	 * request model, so the application can map the failure back
-	 * to a specific input field.
-	 */
-	code: string;
-	/**
-	 * Discriminator describing why the parameter was rejected
-	 * (missing, out of range, wrong type, ...). Decoded by
-	 * {@link CodeHelper.getInvalidMemberName} when the SDK needs a
-	 * human-readable label.
-	 */
-	invalidMemberType: InvalidMemberType;
+    /**
+     * Wire-level parameter key that failed validation. Matches the
+     * `code` value declared by the corresponding
+     * `@*DataMember({ code: ParameterCode.X })` decorator on the
+     * request model, so the application can map the failure back
+     * to a specific input field.
+     */
+    code: string;
+    /**
+     * Discriminator describing why the parameter was rejected
+     * (missing, out of range, wrong type, ...). Decoded by
+     * {@link CodeHelper.getInvalidMemberName} when the SDK needs a
+     * human-readable label.
+     */
+    invalidMemberType: InvalidMemberType;
 
 }

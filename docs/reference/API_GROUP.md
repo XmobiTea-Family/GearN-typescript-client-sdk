@@ -24,8 +24,9 @@ const res = await GNNetwork.group.<method>Async(requestData, overrideAuthToken?,
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,11 +36,11 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.group.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `groupId` mà `gamePlayer` đang authenticated và những `characterPlayer` có owner của `gamePlayer` đều không phải là member của `group` này |
-|--------|-------------|------------|----------------|--------------------------|-------------------------------------------------------------------------------|
+| --- | --- | --- | --- | --- | --- |
 | `addMember` | `GroupModels.AddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` | `group.addMember.selfEnable` | `group.addMember.otherSelfEnable` |
 | `addSegment` | `GroupModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` | `group.addSegment.selfEnable` | `group.addSegment.otherSelfEnable` |
 | `getAvatar` | `GroupModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` | `group.getAvatar.selfEnable` | `group.getAvatar.otherSelfEnable` |
@@ -81,11 +82,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStatisticsLog` | `GroupModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` | `group.getStatisticsLog.selfEnable` | `group.getStatisticsLog.otherSelfEnable` |
 | `getCurrencyLog` | `GroupModels.GetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` | `group.getCurrencyLog.selfEnable` | `group.getCurrencyLog.otherSelfEnable` |
 
-
 ## Server methods (`GNNetwork.group.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addMember` | `GroupModels.ServerAddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` | `group.addMember.serverSelfEnable` |
 | `addSegment` | `GroupModels.ServerAddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` | `group.addSegment.serverSelfEnable` |
 | `getAvatar` | `GroupModels.ServerGetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` | `group.getAvatar.serverSelfEnable` |
@@ -127,11 +128,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStatisticsLog` | `GroupModels.ServerGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` | `group.getStatisticsLog.serverSelfEnable` |
 | `getCurrencyLog` | `GroupModels.ServerGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` | `group.getCurrencyLog.serverSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.group.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addMember` | `GroupModels.AdminAddMemberRequestData` | `addMemberAsync(...)` | `GroupResponseModels.AddMemberOperationResponse` | `group.addMember.adminSelfEnable` |
 | `addSegment` | `GroupModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `GroupResponseModels.AddSegmentOperationResponse` | `group.addSegment.adminSelfEnable` |
 | `getAvatar` | `GroupModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `GroupResponseModels.GetAvatarOperationResponse` | `group.getAvatar.adminSelfEnable` |
@@ -172,7 +173,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getCreateLeaderboard` | `GroupModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `GroupResponseModels.GetCreateLeaderboardOperationResponse` | `group.getCreateLeaderboard.adminSelfEnable` |
 | `getStatisticsLog` | `GroupModels.AdminGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `GroupResponseModels.GetStatisticsLogOperationResponse` | `group.getStatisticsLog.adminSelfEnable` |
 | `getCurrencyLog` | `GroupModels.AdminGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `GroupResponseModels.GetCurrencyLogOperationResponse` | `group.getCurrencyLog.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

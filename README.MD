@@ -15,10 +15,10 @@ Package publish: `@xmobitea/gearn-typescript-client-sdk`. Rule canonical: [docs/
 
 ```json
 {
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
+    }
 }
 ```
 
@@ -33,31 +33,36 @@ npm install @xmobitea/gearn-typescript-client-sdk
 Flow chuẩn:
 
 1. Tạo `GNServerSettings`.
+
 ```ts
 const settings = new GNServerSettings();
 settings.config({
-  serverAddress: "api.example.com",
-  serverPort: 443,
-  serverSocketPort: 443,
-  useSsl: true,
-  useSocket: true,
-  useHttp: true,
-  defaultTimeoutInSeconds: 20,
-  messageType: MessageType.MsgPack,
-  sendRate: 20,
-  reconnectDelay: 5000,
-  pingInterval: 20000,
-  pingTimeout: 20000,
-  logType: LogType.Error,
-  secretKey: "<secret-key>",
-  gameId: "<game-id>",
+    serverAddress: "api.example.com",
+    serverPort: 443,
+    serverSocketPort: 443,
+    useSsl: true,
+    useSocket: true,
+    useHttp: true,
+    defaultTimeoutInSeconds: 20,
+    messageType: MessageType.MsgPack,
+    sendRate: 20,
+    reconnectDelay: 5000,
+    pingInterval: 20000,
+    pingTimeout: 20000,
+    logType: LogType.Error,
+    secretKey: "<secret-key>",
+    gameId: "<game-id>",
 });
 ```
+
 2. Gọi `GNNetwork.init(settings)` đúng 1 lần khi app chạy lần đầu tiên.
+
 ```ts
 GNNetwork.init(settings);
 ```
+
 3. Gọi API qua `GNNetwork.*`.
+
 ```ts
 const infoRequestParam = new AuthenticateModels.InfoRequestParam();
 infoRequestParam.countryCode = true;
@@ -71,14 +76,15 @@ loginRequest.infoRequestParam = infoRequestParam;
 const loginByCustomIdResponse = await GNNetwork.authenticate.loginByCustomIdAsync(loginRequest);
 
 if (loginByCustomIdResponse.returnCode != ReturnCode.Ok || loginByCustomIdResponse.errorCode != ErrorCode.Ok) {
-  console.log("login by custom id failed because the returnCode is " + loginByCustomIdResponse.returnCode + ", errorCode is " + loginByCustomIdResponse.errorCode);
-  return;
+    console.log("login by custom id failed because the returnCode is " + loginByCustomIdResponse.returnCode + ", errorCode is " + loginByCustomIdResponse.errorCode);
+    return;
 }
 
 console.log("Your userId: " + loginByCustomIdResponse.responseData.userId);
 console.log("Your countryCode: " + loginByCustomIdResponse.responseData.infoResponseParameters.countryCode);
 console.log("Your displayName: " + loginByCustomIdResponse.responseData.infoResponseParameters.displayName);
 ```
+
 4. Nếu app cần realtime, subscribe event handler **trước** rồi mới gọi `GNNetwork.connectSocket()` (subscribe sau sẽ miss event ngay sau handshake), đồng thời `GearN Server` phải settings options.socketAppSettings.enable = true.
 5. Socket auto-auth nếu token đã cache. Chỉ gọi `GNNetwork.sendRequestAuthSocket()` thủ công khi: (a) socket connect **trước** khi có `authToken` (login xảy ra sau socket up), hoặc (b) token vừa đổi và muốn re-auth ngay mà không reconnect socket.
 
@@ -99,30 +105,25 @@ console.log("Your displayName: " + loginByCustomIdResponse.responseData.infoResp
 ## 4. Khởi tạo cơ bản
 
 ```ts
-import {
-  GNNetwork,
-  GNServerSettings,
-  LogType,
-  MessageType,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, GNServerSettings, LogType, MessageType } from "@xmobitea/gearn-typescript-client-sdk";
 
 const settings = new GNServerSettings();
 settings.config({
-  serverAddress: "127.0.0.1",          // GearN Server host / IP
-  serverPort: 2202,                    // HTTP port, dựa vào options.applicationSettings.port và options.httpAppSettings.enable của GearN Server
-  serverSocketPort: 2901,              // Socket port, dựa vào options.applicationSettings.socketPort của GearN Server
-  useSsl: false,                       // true để build HTTPS/WSS URL. Khi proxy expose default port (80/443) trực tiếp thì set serverPort/serverSocketPort = -1; nếu dùng port tường minh (vd: 443) thì truyền đúng số đó. serverAddress phải là hostname hợp lệ (không có scheme)
-  useSocket: true,                     // client muốn sử dụng socket để nhận các gói tin chủ động từ phía GearN Server, dựa vào options.socketAppSettings.enable của GearN Server
-  useHttp: true,                       // luôn luôn là true, dựa vào options.httpAppSettings.enable của GearN Server
-  defaultTimeoutInSeconds: 20,         // default timeout tính bằng giây, thời gian để timeout tính từ lúc bắt đầu gửi OperationRequest và chờ OperationResponse từ phía server, nếu vượt quá thời gian này, 1 mã lỗi ReturnCode.OperationTimeout sẽ được trả về
-  messageType: MessageType.MsgPack,    // browser client sẽ tự fallback JSON cho HTTP, sử dụng msgPack giúp gói tin nhỏ nhẹ hơn nếu là client hoặc server, tăng tỉ lệ gửi thành công và tránh mất nhiều bandwidth, băng thông, dựa vào options.httpAppSettings.enablePostViaMsgPack và options.httpAppSettings.enablePostViaJson của GearN Server
-  sendRate: 20,                        // tỉ lệ gửi OperationRequest mỗi giây, 20 có nghĩa là gửi 20 OperationRequest mỗi giây
-  reconnectDelay: 5000,                // khi sử dụng socket, reconnectDelay socket io
-  pingInterval: 20000,                 // khi sử dụng socket, pingInterval socket io
-  pingTimeout: 20000,                  // khi sử dụng socket, pingTimeout socket io
-  secretKey: "secret-key",             // secretKey để có thể dùng client này, lấy từ GearN Dashboard tab Settings/SecretInfo, lựa chọn secretKey với các Permission Rules phù hợp
-  gameId: "game-id",                   // game id dành cho secretKey trong settings này hoặc override lại để chọn đúng game environment phù hợp, lấy từ GearN Dashboard từ tab Settings/SecretInfo
-  logType: LogType.All,                // console log ra tất cả vấn đề thuộc loại nào
+    serverAddress: "127.0.0.1", // GearN Server host / IP
+    serverPort: 2202, // HTTP port, dựa vào options.applicationSettings.port và options.httpAppSettings.enable của GearN Server
+    serverSocketPort: 2901, // Socket port, dựa vào options.applicationSettings.socketPort của GearN Server
+    useSsl: false, // true để build HTTPS/WSS URL. Khi proxy expose default port (80/443) trực tiếp thì set serverPort/serverSocketPort = -1; nếu dùng port tường minh (vd: 443) thì truyền đúng số đó. serverAddress phải là hostname hợp lệ (không có scheme)
+    useSocket: true, // client muốn sử dụng socket để nhận các gói tin chủ động từ phía GearN Server, dựa vào options.socketAppSettings.enable của GearN Server
+    useHttp: true, // luôn luôn là true, dựa vào options.httpAppSettings.enable của GearN Server
+    defaultTimeoutInSeconds: 20, // default timeout tính bằng giây, thời gian để timeout tính từ lúc bắt đầu gửi OperationRequest và chờ OperationResponse từ phía server, nếu vượt quá thời gian này, 1 mã lỗi ReturnCode.OperationTimeout sẽ được trả về
+    messageType: MessageType.MsgPack, // browser client sẽ tự fallback JSON cho HTTP, sử dụng msgPack giúp gói tin nhỏ nhẹ hơn nếu là client hoặc server, tăng tỉ lệ gửi thành công và tránh mất nhiều bandwidth, băng thông, dựa vào options.httpAppSettings.enablePostViaMsgPack và options.httpAppSettings.enablePostViaJson của GearN Server
+    sendRate: 20, // tỉ lệ gửi OperationRequest mỗi giây, 20 có nghĩa là gửi 20 OperationRequest mỗi giây
+    reconnectDelay: 5000, // khi sử dụng socket, reconnectDelay socket io
+    pingInterval: 20000, // khi sử dụng socket, pingInterval socket io
+    pingTimeout: 20000, // khi sử dụng socket, pingTimeout socket io
+    secretKey: "secret-key", // secretKey để có thể dùng client này, lấy từ GearN Dashboard tab Settings/SecretInfo, lựa chọn secretKey với các Permission Rules phù hợp
+    gameId: "game-id", // game id dành cho secretKey trong settings này hoặc override lại để chọn đúng game environment phù hợp, lấy từ GearN Dashboard từ tab Settings/SecretInfo
+    logType: LogType.All, // console log ra tất cả vấn đề thuộc loại nào
 });
 
 GNNetwork.init(settings);
@@ -133,12 +134,7 @@ Full field schema: [docs/reference/CONFIG.md](/docs/reference/CONFIG.md). Rule r
 ## 5. Quick start: login bằng custom device id
 
 ```ts
-import {
-  GNNetwork,
-  AuthenticateModels,
-  ReturnCode,
-  ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, AuthenticateModels, ReturnCode, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequest = new AuthenticateModels.InfoRequestParam();
 infoRequest.displayName = true;
@@ -153,24 +149,19 @@ request.infoRequestParam = infoRequest;
 const res = await GNNetwork.authenticate.loginByCustomDeviceIdAsync(request);
 
 if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
-if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
+if (res.errorCode !== ErrorCode.Ok) throw new Error(`Business error: ${res.errorCode}`);
 
-console.log("userId",    res.responseData.userId);
-console.log("userId",    GNNetwork.getAuthenticateStatus().getUserId());
+console.log("userId", res.responseData.userId);
+console.log("userId", GNNetwork.getAuthenticateStatus().getUserId());
 console.log("authToken", res.responseData.authToken);
 console.log("authToken", GNNetwork.getAuthenticateStatus().getAuthToken());
-console.log("player",    res.responseData);
+console.log("player", res.responseData);
 ```
 
 ## 6. Login bằng account
 
 ```ts
-import {
-  GNNetwork,
-  AuthenticateModels,
-  ReturnCode,
-  ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, AuthenticateModels, ReturnCode, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequest = new AuthenticateModels.InfoRequestParam();
 infoRequest.displayName = true;
@@ -183,7 +174,7 @@ request.infoRequestParam = infoRequest;
 
 const res = await GNNetwork.authenticate.loginByAccountAsync(request);
 if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
-if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
+if (res.errorCode !== ErrorCode.Ok) throw new Error(`Business error: ${res.errorCode}`);
 ```
 
 ## 7. Socket
@@ -193,16 +184,16 @@ import { GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 // Subscribe TRƯỚC connect để không miss event ngay sau handshake
 GNNetwork.subscriberOnConnectHandler(() => {
-  console.log("socket connected", GNNetwork.getSocketSId());
+    console.log("socket connected", GNNetwork.getSocketSId());
 });
 
 GNNetwork.subscriberOnDisconnectHandler(() => {
-  console.log("socket disconnected");
+    console.log("socket disconnected");
 });
 
 GNNetwork.setOnEventHandler((event) => {
-  console.log("eventCode", event.getEventCode());
-  console.log("parameters", event.getParameters()?.toData());
+    console.log("eventCode", event.getEventCode());
+    console.log("parameters", event.getParameters()?.toData());
 });
 
 // Gọi sau khi đã login HTTP thành công
@@ -213,7 +204,7 @@ Re-auth thủ công (nếu socket connect trước token hoặc token vừa đ�
 
 ```ts
 if (GNNetwork.isSocketConnected() && GNNetwork.getAuthenticateStatus().getAuthToken()) {
-  GNNetwork.sendRequestAuthSocket();
+    GNNetwork.sendRequestAuthSocket();
 }
 ```
 
@@ -230,12 +221,7 @@ Realtime event handler (6 handler, subscribe bằng gán `static onUpdate`): [do
 `DashboardApi` public wrapper đi `RequestRole.Client`. Sau `loginByAdminAccountAsync`, backend resolve admin context từ `authToken`.
 
 ```ts
-import {
-  GNNetwork,
-  DashboardModels,
-  ReturnCode,
-  ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, DashboardModels, ReturnCode, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new DashboardModels.LoginByAdminAccountRequestData();
 request.username = "gnadmin";
@@ -243,7 +229,7 @@ request.password = "123456";
 
 const res = await GNNetwork.dashboard.loginByAdminAccountAsync(request);
 if (res.returnCode !== ReturnCode.Ok) throw new Error(res.debugMessage);
-if (res.errorCode  !== ErrorCode.Ok)  throw new Error(`Business error: ${res.errorCode}`);
+if (res.errorCode !== ErrorCode.Ok) throw new Error(`Business error: ${res.errorCode}`);
 ```
 
 Rule chi tiết DashboardApi: [docs/guides/DASHBOARD.md](/docs/guides/DASHBOARD.md).
@@ -287,36 +273,22 @@ GNNetwork.getDownloadFileUrl("download-token-from-server");
 Chỉ dùng khi tự define DTO có decorator:
 
 ```ts
-import {
-  ConverterService,
-  StringDataMember,
-  NumberDataMember,
-  BooleanDataMember,
-  GNArrayDataMember,
-  GNHashtableDataMember,
-  DataMember,
-  GNHashtable,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ConverterService, StringDataMember, NumberDataMember, BooleanDataMember, GNArrayDataMember, GNHashtableDataMember, DataMember, GNHashtable } from "@xmobitea/gearn-typescript-client-sdk";
 
 class ProfileStats {
-  @NumberDataMember({ code: "level", defaultValue: 1, mustInt: true }) level: number;
-  @NumberDataMember({ code: "power", defaultValue: 0 }) power: number;
+    @NumberDataMember({ code: "level", defaultValue: 1, mustInt: true }) level: number;
+    @NumberDataMember({ code: "power", defaultValue: 0 }) power: number;
 }
 
 class CustomProfile {
-  @StringDataMember({ code: "displayName", mustNonNull: true }) displayName: string;
-  @NumberDataMember({ code: "age", isOptional: true, minValue: 0, mustInt: true }) age?: number;
-  @BooleanDataMember({ code: "isVip", defaultValue: false }) isVip: boolean;
-  @GNHashtableDataMember({ code: "stats" }) stats: ProfileStats;
-  @DataMember({ code: "metadata", isOptional: true }) metadata?: any;
+    @StringDataMember({ code: "displayName", mustNonNull: true }) displayName: string;
+    @NumberDataMember({ code: "age", isOptional: true, minValue: 0, mustInt: true }) age?: number;
+    @BooleanDataMember({ code: "isVip", defaultValue: false }) isVip: boolean;
+    @GNHashtableDataMember({ code: "stats" }) stats: ProfileStats;
+    @DataMember({ code: "metadata", isOptional: true }) metadata?: any;
 }
 
-const source = GNHashtable.builder()
-  .add("displayName", "Player 01")
-  .add("age", 20)
-  .add("isVip", true)
-  .add("stats", GNHashtable.builder().add("level", 12).add("power", 3456).build())
-  .build();
+const source = GNHashtable.builder().add("displayName", "Player 01").add("age", 20).add("isVip", true).add("stats", GNHashtable.builder().add("level", 12).add("power", 3456).build()).build();
 
 const profile = ConverterService.deserializeObject(source, CustomProfile) as CustomProfile;
 const serialized = ConverterService.serializeObject(profile, CustomProfile);
@@ -335,53 +307,38 @@ Rule:
 Low-level API để bọc operation chưa expose:
 
 ```ts
-import {
-  GNNetwork,
-  CustomOperationRequestAbstract,
-  CustomOperationResponseAbstract,
-  RequestRole,
-  RequestType,
-  OperationCode,
-  ParameterCode,
-  StringDataMember,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, CustomOperationRequestAbstract, CustomOperationResponseAbstract, RequestRole, RequestType, OperationCode, ParameterCode, StringDataMember } from "@xmobitea/gearn-typescript-client-sdk";
 
 class ExampleRequestData {
-  @StringDataMember({ code: ParameterCode.Key, mustNonNull: true }) public key: string;
+    @StringDataMember({ code: ParameterCode.Key, mustNonNull: true }) public key: string;
 }
 
 class ExampleResponseData {
-  @StringDataMember({ code: ParameterCode.Value, isOptional: true }) public value?: string;
+    @StringDataMember({ code: ParameterCode.Value, isOptional: true }) public value?: string;
 }
 
 class ExampleRequest extends CustomOperationRequestAbstract<ExampleRequestData> {
-  protected override operationCode: string = OperationCode.GetCustomData;
-  protected override requestType: RequestType = RequestType.CharacterPlayer;
-  protected override role: RequestRole = RequestRole.Client;
+    protected override operationCode: string = OperationCode.GetCustomData;
+    protected override requestType: RequestType = RequestType.CharacterPlayer;
+    protected override role: RequestRole = RequestRole.Client;
 
-  constructor(requestData: ExampleRequestData, timeout: number) {
-    super(requestData, timeout);
-    this.requestDataCls = ExampleRequestData;
-  }
+    constructor(requestData: ExampleRequestData, timeout: number) {
+        super(requestData, timeout);
+        this.requestDataCls = ExampleRequestData;
+    }
 }
 
 class ExampleResponse extends CustomOperationResponseAbstract<ExampleResponseData> {
-  constructor() {
-    super();
-    this.responseDataCls = ExampleResponseData;
-  }
+    constructor() {
+        super();
+        this.responseDataCls = ExampleResponseData;
+    }
 }
 
 const requestData = new ExampleRequestData();
 requestData.key = "tutorial";
 
-const res = await GNNetwork.sendViaHttpTRequestTResponseAsync(
-  new ExampleRequest(requestData, 20),
-  null,
-  null,
-  null,
-  ExampleResponse,
-);
+const res = await GNNetwork.sendViaHttpTRequestTResponseAsync(new ExampleRequest(requestData, 20), null, null, null, ExampleResponse);
 ```
 
 ## 14. Browser / Node / Cocos

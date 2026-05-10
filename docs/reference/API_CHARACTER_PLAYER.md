@@ -24,8 +24,9 @@ const res = await GNNetwork.characterPlayer.<method>Async(requestData, overrideA
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,11 +36,11 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.characterPlayer.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `characterId` mà `gamePlayer` đang authenticated không phải là owner của `characterPlayer` này |
-|--------|-------------|------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------|
+| --- | --- | --- | --- | --- | --- |
 | `addPlayerFriend` | `CharacterPlayerModels.AddPlayerFriendRequestData` | `addPlayerFriendAsync(...)` | `CharacterPlayerResponseModels.AddPlayerFriendOperationResponse` | `characterPlayer.addPlayerFriend.selfEnable` | `characterPlayer.addPlayerFriend.otherSelfEnable` |
 | `addSegment` | `CharacterPlayerModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `CharacterPlayerResponseModels.AddSegmentOperationResponse` | `characterPlayer.addSegment.selfEnable` | `characterPlayer.addSegment.otherSelfEnable` |
 | `getAvatar` | `CharacterPlayerModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `CharacterPlayerResponseModels.GetAvatarOperationResponse` | `characterPlayer.getAvatar.selfEnable` | `characterPlayer.getAvatar.otherSelfEnable` |
@@ -94,11 +95,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStatisticsLog` | `CharacterPlayerModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `CharacterPlayerResponseModels.GetStatisticsLogOperationResponse` | `characterPlayer.getStatisticsLog.selfEnable` | `characterPlayer.getStatisticsLog.otherSelfEnable` |
 | `getCurrencyLog` | `CharacterPlayerModels.GetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `CharacterPlayerResponseModels.GetCurrencyLogOperationResponse` | `characterPlayer.getCurrencyLog.selfEnable` | `characterPlayer.getCurrencyLog.otherSelfEnable` |
 
-
 ## Server methods (`GNNetwork.characterPlayer.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addPlayerFriend` | `CharacterPlayerModels.AddPlayerFriendRequestData` | `addPlayerFriendAsync(...)` | `CharacterPlayerResponseModels.AddPlayerFriendOperationResponse` | `characterPlayer.addPlayerFriend.selfEnable`, nếu dùng `characterId` thì cần rules `characterPlayer.addPlayerFriend.otherSelfEnable` |
 | `addSegment` | `CharacterPlayerModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `CharacterPlayerResponseModels.AddSegmentOperationResponse` | `characterPlayer.addSegment.selfEnable`, nếu dùng `characterId` thì cần rules `characterPlayer.addSegment.otherSelfEnable` |
 | `getAvatar` | `CharacterPlayerModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `CharacterPlayerResponseModels.GetAvatarOperationResponse` | `characterPlayer.getAvatar.selfEnable`, nếu dùng `characterId` thì cần rules `characterPlayer.getAvatar.otherSelfEnable` |
@@ -153,11 +154,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getStatisticsLog` | `CharacterPlayerModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `CharacterPlayerResponseModels.GetStatisticsLogOperationResponse` | `characterPlayer.getStatisticsLog.selfEnable`, nếu dùng `characterId` thì cần rules `characterPlayer.getStatisticsLog.otherSelfEnable` |
 | `getCurrencyLog` | `CharacterPlayerModels.GetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `CharacterPlayerResponseModels.GetCurrencyLogOperationResponse` | `characterPlayer.getCurrencyLog.selfEnable`, nếu dùng `characterId` thì cần rules `characterPlayer.getCurrencyLog.otherSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.characterPlayer.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addPlayerFriend` | `CharacterPlayerModels.AdminAddPlayerFriendRequestData` | `addPlayerFriendAsync(...)` | `CharacterPlayerResponseModels.AddPlayerFriendOperationResponse` | `characterPlayer.addPlayerFriend.adminSelfEnable` |
 | `addSegment` | `CharacterPlayerModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `CharacterPlayerResponseModels.AddSegmentOperationResponse` | `characterPlayer.addSegment.adminSelfEnable` |
 | `getAvatar` | `CharacterPlayerModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `CharacterPlayerResponseModels.GetAvatarOperationResponse` | `characterPlayer.getAvatar.adminSelfEnable` |
@@ -211,7 +212,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getLastLoginLeaderboard` | `CharacterPlayerModels.AdminGetLastLoginLeaderboardRequestData` | `getLastLoginLeaderboardAsync(...)` | `CharacterPlayerResponseModels.GetLastLoginLeaderboardOperationResponse` | `characterPlayer.getLastLoginLeaderboard.adminSelfEnable` |
 | `getStatisticsLog` | `CharacterPlayerModels.AdminGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `CharacterPlayerResponseModels.GetStatisticsLogOperationResponse` | `characterPlayer.getStatisticsLog.adminSelfEnable` |
 | `getCurrencyLog` | `CharacterPlayerModels.AdminGetCurrencyLogRequestData` | `getCurrencyLogAsync(...)` | `CharacterPlayerResponseModels.GetCurrencyLogOperationResponse` | `characterPlayer.getCurrencyLog.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

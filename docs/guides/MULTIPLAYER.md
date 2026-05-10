@@ -5,14 +5,14 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.multiplayer`
-  - `GNNetwork.multiplayer.server`
-  - `GNNetwork.multiplayer.admin`
+    - `GNNetwork.multiplayer`
+    - `GNNetwork.multiplayer.server`
+    - `GNNetwork.multiplayer.admin`
 - Toàn bộ method hiện tại của `MultiplayerApi` đều gửi qua HTTP.
 - `MultiplayerApi` có đủ 3 role thật:
-  - `GNNetwork.multiplayer` -> `RequestRole.Client`
-  - `GNNetwork.multiplayer.server` -> `RequestRole.Server`
-  - `GNNetwork.multiplayer.admin` -> `RequestRole.Admin`
+    - `GNNetwork.multiplayer` -> `RequestRole.Client`
+    - `GNNetwork.multiplayer.server` -> `RequestRole.Server`
+    - `GNNetwork.multiplayer.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
@@ -34,6 +34,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | Dùng khi nào |
 | --- | --- | --- |
 | `GNNetwork.multiplayer` | `Client` | player app tự thao tác ticket của chính user hiện tại |
@@ -48,6 +49,7 @@ Rule nhanh:
 
 ## 4. Chọn Method
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `createMatchmakingTicketAsync` | Tạo ticket mới để bắt đầu matchmaking | `giveUpAfterSeconds`, `queueName`, `attribute?`, `members?` | `CreateMatchmakingTicketResponseData` | Trả `ticketId`; với `server/admin` cần thêm `userId` | `Ok`, `MatchmakingPlayerJoinedOtherTicket`, `MatchmakingQueueNotFound`, `TicketSizeError` |
@@ -100,11 +102,11 @@ Rule cứng:
 - `GetAllMatchmakingTicketRequestData.status` là numeric field tùy chọn; nên map bằng `MatchmakingTicketStatus`, không đoán số bừa.
 - `returnMember` mặc định là `false`; chỉ bật khi thật sự cần member list.
 - Với `server/admin`, các model sau có thêm `userId`:
-  - `createMatchmakingTicket`
-  - `joinMatchmakingTicket`
-  - `cancelMatchmakingTicket`
-  - `cancelAllMatchmakingTicket`
-  - `listMatchmakingTicketsForPlayer`
+    - `createMatchmakingTicket`
+    - `joinMatchmakingTicket`
+    - `cancelMatchmakingTicket`
+    - `cancelAllMatchmakingTicket`
+    - `listMatchmakingTicketsForPlayer`
 
 ## 7. Response Rules
 
@@ -171,12 +173,7 @@ Ghi chú quan trọng:
 ### Client tạo ticket rồi poll tới khi có match
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    MultiplayerModels,
-    MatchmakingTicketStatus,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, MultiplayerModels, MatchmakingTicketStatus } from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new MultiplayerModels.CreateMatchmakingTicketRequestData();
 createRequest.giveUpAfterSeconds = 60;
@@ -229,11 +226,7 @@ if (ticket.status === MatchmakingTicketStatus.Matched && ticket.matchId) {
 ### Server tạo ticket cho user cụ thể
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    MultiplayerModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, MultiplayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new MultiplayerModels.ServerCreateMatchmakingTicketRequestData();
 request.userId = "1234567890";
@@ -256,12 +249,7 @@ const ticketId = response.responseData.ticketId;
 ### Admin list ticket theo status
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    MultiplayerModels,
-    MatchmakingTicketStatus,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, MultiplayerModels, MatchmakingTicketStatus } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new MultiplayerModels.AdminGetAllMatchmakingTicketRequestData();
 request.status = MatchmakingTicketStatus.WaitingForMatch;

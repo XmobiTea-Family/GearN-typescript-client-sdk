@@ -20,26 +20,26 @@ import { IServerEventHandler } from "./IServerEventHandler";
  * these to its own log.
  */
 export class GroupMessageUpdate {
-	/**
-	 * New group message items the application should append. Each
-	 * entry is a fully decoded {@link GroupModels.GroupMessageResponseData}
-	 * with sender id, timestamp, body and any embedded metadata.
-	 */
-	@GNArrayDataMember({ code: ParameterCode.GroupMessages, elementCls: GroupModels.GroupMessageResponseData })
-	public groupMessages: Array<GroupModels.GroupMessageResponseData>;
+    /**
+     * New group message items the application should append. Each
+     * entry is a fully decoded {@link GroupModels.GroupMessageResponseData}
+     * with sender id, timestamp, body and any embedded metadata.
+     */
+    @GNArrayDataMember({ code: ParameterCode.GroupMessages, elementCls: GroupModels.GroupMessageResponseData })
+    public groupMessages: Array<GroupModels.GroupMessageResponseData>;
 
-	/**
-	 * Identifier of the group whose message stream changed.
-	 */
-	@StringDataMember({ code: ParameterCode.GroupId })
-	public groupId: string;
+    /**
+     * Identifier of the group whose message stream changed.
+     */
+    @StringDataMember({ code: ParameterCode.GroupId })
+    public groupId: string;
 
-	/**
-	 * Optional character id when the message update is scoped to a
-	 * specific character context (multi-character titles).
-	 */
-	@StringDataMember({ code: ParameterCode.CharacterId, isOptional: true })
-	public characterId?: string;
+    /**
+     * Optional character id when the message update is scoped to a
+     * specific character context (multi-character titles).
+     */
+    @StringDataMember({ code: ParameterCode.CharacterId, isOptional: true })
+    public characterId?: string;
 
 }
 
@@ -56,26 +56,26 @@ export class GroupMessageUpdate {
  */
 @IServerEventHandler.registerEvent
 export class OnGroupMessageUpdateEventHandler implements IServerEventHandler {
-	/**
-	 * Static callback the application registers. Leave `null` to
-	 * silently drop incoming messages.
-	 */
-	public static onUpdate: Action1<GroupMessageUpdate>;
+    /**
+     * Static callback the application registers. Leave `null` to
+     * silently drop incoming messages.
+     */
+    public static onUpdate: Action1<GroupMessageUpdate>;
 
-	/**
-	 * Returns {@link EventCode.OnGroupMessageUpdate}.
-	 */
-	public getEventCode(): string {
-		return EventCode.OnGroupMessageUpdate;
-	}
+    /**
+     * Returns {@link EventCode.OnGroupMessageUpdate}.
+     */
+    public getEventCode(): string {
+        return EventCode.OnGroupMessageUpdate;
+    }
 
-	/**
-	 * Deserialises the parameters into a {@link GroupMessageUpdate}
-	 * and forwards to {@link onUpdate}.
-	 */
-	public handle(operationEvent: OperationEvent): void {
-		if (OnGroupMessageUpdateEventHandler.onUpdate != null)
-			OnGroupMessageUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GroupMessageUpdate));
-	}
+    /**
+     * Deserialises the parameters into a {@link GroupMessageUpdate}
+     * and forwards to {@link onUpdate}.
+     */
+    public handle(operationEvent: OperationEvent): void {
+        if (OnGroupMessageUpdateEventHandler.onUpdate != null)
+            OnGroupMessageUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GroupMessageUpdate));
+    }
 
 }

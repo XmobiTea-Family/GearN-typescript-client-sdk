@@ -22,86 +22,86 @@
  *   any of the above.
  */
 export enum InvalidMemberType {
-	/**
-	 * Catch-all category for backend-side validation rejections
-	 * that do not fit any of the structured cases below.
-	 */
-	UnknownError = 1,
+    /**
+     * Catch-all category for backend-side validation rejections
+     * that do not fit any of the structured cases below.
+     */
+    UnknownError = 1,
 
-	/**
-	 * The parameter is required but the request did not include
-	 * it (the wire payload had no entry for the matching `code`).
-	 */
-	DataRequired = 2,
+    /**
+     * The parameter is required but the request did not include
+     * it (the wire payload had no entry for the matching `code`).
+     */
+    DataRequired = 2,
 
-	/**
-	 * The parameter was present but had a runtime type the backend
-	 * did not expect (e.g. a number where a string was declared).
-	 */
-	TypeInvalid = 3,
+    /**
+     * The parameter was present but had a runtime type the backend
+     * did not expect (e.g. a number where a string was declared).
+     */
+    TypeInvalid = 3,
 
-	/**
-	 * `@StringDataMember({ mustNonNull: true })` was violated — the
-	 * value was `null`.
-	 */
-	StringNull = 4,
+    /**
+     * `@StringDataMember({ mustNonNull: true })` was violated — the
+     * value was `null`.
+     */
+    StringNull = 4,
 
-	/**
-	 * String length is below the configured `minLength`.
-	 */
-	StringMinLength = 5,
+    /**
+     * String length is below the configured `minLength`.
+     */
+    StringMinLength = 5,
 
-	/**
-	 * String length is above the configured `maxLength`.
-	 */
-	StringMaxLength = 6,
+    /**
+     * String length is above the configured `maxLength`.
+     */
+    StringMaxLength = 6,
 
-	/**
-	 * Numeric value is below the configured `minValue`.
-	 */
-	NumberMinValue = 7,
+    /**
+     * Numeric value is below the configured `minValue`.
+     */
+    NumberMinValue = 7,
 
-	/**
-	 * Numeric value is above the configured `maxValue`.
-	 */
-	NumberMaxValue = 8,
+    /**
+     * Numeric value is above the configured `maxValue`.
+     */
+    NumberMaxValue = 8,
 
-	/**
-	 * `@NumberDataMember({ mustInt: true })` was violated — the
-	 * value was a fractional number.
-	 */
-	NumberMustInt = 9,
+    /**
+     * `@NumberDataMember({ mustInt: true })` was violated — the
+     * value was a fractional number.
+     */
+    NumberMustInt = 9,
 
-	/**
-	 * `@GNHashtableDataMember({ mustNonNull: true })` was violated.
-	 */
-	GNHashtableNull = 10,
+    /**
+     * `@GNHashtableDataMember({ mustNonNull: true })` was violated.
+     */
+    GNHashtableNull = 10,
 
-	/**
-	 * `GNHashtable` member key count is below the configured
-	 * `minLength`.
-	 */
-	GNHashtableMinLength = 11,
+    /**
+     * `GNHashtable` member key count is below the configured
+     * `minLength`.
+     */
+    GNHashtableMinLength = 11,
 
-	/**
-	 * `GNHashtable` member key count is above the configured
-	 * `maxLength`.
-	 */
-	GNHashtableMaxLength = 12,
+    /**
+     * `GNHashtable` member key count is above the configured
+     * `maxLength`.
+     */
+    GNHashtableMaxLength = 12,
 
-	/**
-	 * `@GNArrayDataMember({ mustNonNull: true })` was violated.
-	 */
-	GNArrayNull = 13,
+    /**
+     * `@GNArrayDataMember({ mustNonNull: true })` was violated.
+     */
+    GNArrayNull = 13,
 
-	/**
-	 * `GNArray` element count is below the configured `minLength`.
-	 */
-	GNArrayMinLength = 14,
+    /**
+     * `GNArray` element count is below the configured `minLength`.
+     */
+    GNArrayMinLength = 14,
 
-	/**
-	 * `GNArray` element count is above the configured `maxLength`.
-	 */
-	GNArrayMaxLength = 15,
+    /**
+     * `GNArray` element count is above the configured `maxLength`.
+     */
+    GNArrayMaxLength = 15,
 
 }

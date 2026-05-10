@@ -11,19 +11,19 @@
  * and the matching `linkGoogle` model.
  */
 export enum GoogleLoginType {
-	/**
-	 * OAuth 2.0 access token obtained from a server-side or client
-	 * SDK login flow. Validated by the backend by introspecting
-	 * the token against Google's userinfo endpoint.
-	 */
-	AccessToken = 1,
+    /**
+     * OAuth 2.0 access token obtained from a server-side or client
+     * SDK login flow. Validated by the backend by introspecting
+     * the token against Google's userinfo endpoint.
+     */
+    AccessToken = 1,
 
-	/**
-	 * OpenID Connect ID token (JWT). Validated by the backend by
-	 * verifying the signature against Google's published JWKS.
-	 * Preferred for native sign-in flows because the JWT contains
-	 * the user identity directly.
-	 */
-	IdToken = 2,
+    /**
+     * OpenID Connect ID token (JWT). Validated by the backend by
+     * verifying the signature against Google's published JWKS.
+     * Preferred for native sign-in flows because the JWT contains
+     * the user identity directly.
+     */
+    IdToken = 2,
 
 }

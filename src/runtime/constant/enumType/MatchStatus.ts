@@ -11,23 +11,23 @@
  * Surfaced on `MultiplayerModels.MatchEntry.status`.
  */
 export enum MatchStatus {
-	/**
-	 * The match was created but the dedicated server allocation
-	 * has not yet completed. Connection details are unavailable.
-	 */
-	WaitingForServer = 1,
+    /**
+     * The match was created but the dedicated server allocation
+     * has not yet completed. Connection details are unavailable.
+     */
+    WaitingForServer = 1,
 
-	/**
-	 * The dedicated server is ready and the match record carries
-	 * connection details. The application can connect.
-	 */
-	Matched = 2,
+    /**
+     * The dedicated server is ready and the match record carries
+     * connection details. The application can connect.
+     */
+    Matched = 2,
 
-	/**
-	 * The match was cancelled before completion (server
-	 * allocation failure, manual cancel). Application should
-	 * abort the lobby flow.
-	 */
-	Canceled = 3,
+    /**
+     * The match was cancelled before completion (server
+     * allocation failure, manual cancel). Application should
+     * abort the lobby flow.
+     */
+    Canceled = 3,
 
 }

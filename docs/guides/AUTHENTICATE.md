@@ -22,6 +22,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 3. Chọn Method
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `loginByAccountAsync` | Đã có tài khoản username/password trong hệ thống | `username`, `password`, `infoRequestParam` | `AuthenticateResponseData` | Không dùng để tạo tài khoản mới | `Ok`, `AccountNotFound`, `AccountPasswordWrong` |
@@ -164,11 +165,7 @@ Field chính của `RefreshAuthTokenResponseData`:
 ### Login guest bằng custom device id
 
 ```ts
-import {
-    GNNetwork,
-    AuthenticateModels,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, AuthenticateModels, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new AuthenticateModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -196,11 +193,7 @@ const userId = GNNetwork.getAuthenticateStatus().getUserId();
 ### Refresh auth token
 
 ```ts
-import {
-    GNNetwork,
-    AuthenticateModels,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, AuthenticateModels, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new AuthenticateModels.RefreshAuthTokenRequestData();
 const response = await GNNetwork.authenticate.refreshAuthTokenAsync(request);

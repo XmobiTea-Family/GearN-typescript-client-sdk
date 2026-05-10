@@ -7,24 +7,24 @@ Nếu mục tiêu là viết phần source chạy trong CloudScript runtime, đ�
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.cloudScript`
-  - `GNNetwork.cloudScript.server`
-  - `GNNetwork.cloudScript.admin`
+    - `GNNetwork.cloudScript`
+    - `GNNetwork.cloudScript.server`
+    - `GNNetwork.cloudScript.admin`
 - Toàn bộ method hiện tại của `CloudScriptApi` đều gửi qua HTTP.
 - `CloudScriptApi` có đủ 3 role thật:
-  - `GNNetwork.cloudScript` -> `RequestRole.Client`
-  - `GNNetwork.cloudScript.server` -> `RequestRole.Server`
-  - `GNNetwork.cloudScript.admin` -> `RequestRole.Admin`
+    - `GNNetwork.cloudScript` -> `RequestRole.Client`
+    - `GNNetwork.cloudScript.server` -> `RequestRole.Server`
+    - `GNNetwork.cloudScript.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu semantics permission xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Với nhóm này, không tự suy diễn route chỉ từ target ownership.
 - Public surface hiện chỉ có 5 operation trên mỗi namespace:
-  - `addFunctionAsync`
-  - `editFunctionAsync`
-  - `executeFunctionAsync`
-  - `getFunctionAsync`
-  - `getFunctionsAsync`
+    - `addFunctionAsync`
+    - `editFunctionAsync`
+    - `executeFunctionAsync`
+    - `getFunctionAsync`
+    - `getFunctionsAsync`
 - `CloudScriptApi` không có public method `removeFunction` hoặc hard-delete version.
 - `CloudScriptApi` không có socket transport, không có realtime event handler riêng.
 - Từ contract hiện tại, `version` đại diện cho một snapshot script đã publish; `functionName` là tên function sẽ được gọi bên trong snapshot đó.
@@ -40,15 +40,15 @@ Nếu mục tiêu là viết phần source chạy trong CloudScript runtime, đ�
 - Không dùng literal `GNNetwork` trong `AddFunctionRequestData.script`; GearN Server reject script trước compile.
 - Không dùng `import`, `export`, `require`, `process`, `fetch`, timer primitive hoặc top-level side effect trong submitted script; xem [cloudScript/CLOUDSCRIPT_USAGE.md](/docs/cloudScript/CLOUDSCRIPT_USAGE.md).
 - Chọn namespace theo trust boundary:
-  - app/player execute function -> `GNNetwork.cloudScript`
-  - trusted backend/service -> `GNNetwork.cloudScript.server`
-  - dashboard/ops/tooling -> `GNNetwork.cloudScript.admin`
+    - app/player execute function -> `GNNetwork.cloudScript`
+    - trusted backend/service -> `GNNetwork.cloudScript.server`
+    - dashboard/ops/tooling -> `GNNetwork.cloudScript.admin`
 - Không dùng `GNNetwork.cloudScript` để quản trị version trong production trừ khi backend policy của bạn cho phép rõ ràng.
 - `AddFunctionRequestData.script` là bắt buộc và phải là source script hoàn chỉnh cho version mới.
 - `addFunctionAsync` tạo version mới từ `script`; không phải update tại chỗ một version cũ.
 - `editFunctionAsync` chỉ sửa metadata của version hiện có:
-  - `canExecute`
-  - `isLive`
+    - `canExecute`
+    - `isLive`
 - `editFunctionAsync` không có field `script`; AI không được giả định nó sửa source code.
 - Nếu cần thay đổi source code, phải publish version mới bằng `addFunctionAsync`.
 - `GetFunctionRequestData.version`, `EditFunctionRequestData.version` và `ExecuteFunctionRequestData.version` nếu có đều phải theo đúng version string dài `7` ký tự.
@@ -64,6 +64,7 @@ Nếu mục tiêu là viết phần source chạy trong CloudScript runtime, đ�
 
 ## 3. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | Dùng khi nào |
 | --- | --- | --- |
 | `GNNetwork.cloudScript` | `Client` | player app chỉ cần execute function đã được backend cho phép |
@@ -79,6 +80,7 @@ Rule nhanh:
 
 ## 4. Chọn Method
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addFunctionAsync` | Publish một script version mới | `script`, `canExecute`, `isLive` | `AddFunctionResponseData` | Trả `version` mới và `errorMessage` | `Ok`, `GameNotFound`, `ExecuteError` |
@@ -110,9 +112,9 @@ Rule nhanh:
 - `ExecuteFunctionRequestData.functionName` là bắt buộc.
 - `ExecuteFunctionRequestData.version` là optional.
 - `ExecuteFunctionRequestData.userId`:
-  - optional ở namespace `client`
-  - bắt buộc ở namespace `server`
-  - bắt buộc ở namespace `admin`
+    - optional ở namespace `client`
+    - bắt buộc ở namespace `server`
+    - bắt buộc ở namespace `admin`
 - `GetFunctionRequestData.version` là bắt buộc.
 - `GetFunctionsRequestData` hiện không có field nào; không được tự thêm `version`, `skip`, `limit`, `keyword` hoặc filter giả định.
 
@@ -141,23 +143,23 @@ if (response.errorCode !== ErrorCode.Ok) {
 Rule bổ sung theo từng operation:
 
 - `addFunctionAsync`:
-  - đọc `responseData.version` để lấy version mới
-  - kiểm tra `responseData.errorMessage` trước khi coi publish là thành công hoàn toàn
+    - đọc `responseData.version` để lấy version mới
+    - kiểm tra `responseData.errorMessage` trước khi coi publish là thành công hoàn toàn
 - `editFunctionAsync`:
-  - response chỉ có `errorMessage`
-  - không có `version` mới, không có `script`
+    - response chỉ có `errorMessage`
+    - không có `version` mới, không có `script`
 - `executeFunctionAsync`:
-  - đọc `responseData.status`
-  - đọc `responseData.functionResult`
-  - đọc `responseData.functionLogs`
-  - đọc `responseData.errorMessage`
-  - đọc `responseData.executionTimeInMs` và `memoryUsedInBytes` nếu cần telemetry
+    - đọc `responseData.status`
+    - đọc `responseData.functionResult`
+    - đọc `responseData.functionLogs`
+    - đọc `responseData.errorMessage`
+    - đọc `responseData.executionTimeInMs` và `memoryUsedInBytes` nếu cần telemetry
 - `getFunctionAsync`:
-  - trả `script`, `canExecute`, `isLive`, `tsCreate`
+    - trả `script`, `canExecute`, `isLive`, `tsCreate`
 - `getFunctionsAsync`:
-  - `results[]` chỉ là summary nhẹ
-  - dùng `latestVersion` để biết version mới nhất
-  - dùng `liveLatestVersion` để biết version live mới nhất
+    - `results[]` chỉ là summary nhẹ
+    - dùng `latestVersion` để biết version mới nhất
+    - dùng `liveLatestVersion` để biết version live mới nhất
 
 ## 8. Best Practices
 
@@ -176,11 +178,7 @@ Rule bổ sung theo từng operation:
 ### Admin publish version mới rồi lấy `version`
 
 ```ts
-import {
-    CloudScriptModels,
-    ErrorCode,
-    GNNetwork,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { CloudScriptModels, ErrorCode, GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new CloudScriptModels.AdminAddFunctionRequestData();
 request.script = `
@@ -215,11 +213,7 @@ const newVersion = response.responseData.version;
 ### Admin promote một version thành live
 
 ```ts
-import {
-    CloudScriptModels,
-    ErrorCode,
-    GNNetwork,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { CloudScriptModels, ErrorCode, GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new CloudScriptModels.AdminEditFunctionRequestData();
 request.version = "ABC1234";
@@ -244,11 +238,7 @@ if (response.responseData.errorMessage) {
 ### Server execute function cho một user cụ thể
 
 ```ts
-import {
-    CloudScriptModels,
-    ErrorCode,
-    GNNetwork,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { CloudScriptModels, ErrorCode, GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new CloudScriptModels.ServerExecuteFunctionRequestData();
 request.userId = "USER000001";
@@ -256,7 +246,7 @@ request.functionName = "grantDailyReward";
 request.version = "ABC1234";
 request.functionParameters = {
     rewardId: "daily_01",
-    amount: 1
+    amount: 1,
 };
 
 const response = await GNNetwork.cloudScript.server.executeFunctionAsync(request);
@@ -281,11 +271,7 @@ const executionTimeInMs = response.responseData.executionTimeInMs;
 ### Đọc summary version rồi lấy source của version live
 
 ```ts
-import {
-    CloudScriptModels,
-    ErrorCode,
-    GNNetwork,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { CloudScriptModels, ErrorCode, GNNetwork } from "@xmobitea/gearn-typescript-client-sdk";
 
 const listRequest = new CloudScriptModels.GetFunctionsRequestData();
 const listResponse = await GNNetwork.cloudScript.getFunctionsAsync(listRequest);

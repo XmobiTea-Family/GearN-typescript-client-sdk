@@ -20,43 +20,43 @@
  * `@IServerEventHandler.registerEvent`.
  */
 export class EventCode {
-	/**
-	 * Account-level (master-player) friend roster changed —
-	 * decoded by
-	 * {@link OnGamePlayerFriendUpdateEventHandler}.
-	 */
-	public static readonly OnGamePlayerFriendUpdate: string = "onGamePlayerFriendUpdate";
+    /**
+     * Account-level (master-player) friend roster changed —
+     * decoded by
+     * {@link OnGamePlayerFriendUpdateEventHandler}.
+     */
+    public static readonly OnGamePlayerFriendUpdate: string = "onGamePlayerFriendUpdate";
 
-	/**
-	 * Character-scoped friend roster changed — decoded by
-	 * {@link OnCharacterPlayerFriendUpdateEventHandler}.
-	 */
-	public static readonly OnCharacterPlayerFriendUpdate: string = "onCharacterPlayerFriendUpdate";
+    /**
+     * Character-scoped friend roster changed — decoded by
+     * {@link OnCharacterPlayerFriendUpdateEventHandler}.
+     */
+    public static readonly OnCharacterPlayerFriendUpdate: string = "onCharacterPlayerFriendUpdate";
 
-	/**
-	 * Account-level group membership changed — decoded by
-	 * {@link OnGamePlayerGroupUpdateEventHandler}.
-	 */
-	public static readonly OnGamePlayerGroupUpdate: string = "onGamePlayerGroupUpdate";
+    /**
+     * Account-level group membership changed — decoded by
+     * {@link OnGamePlayerGroupUpdateEventHandler}.
+     */
+    public static readonly OnGamePlayerGroupUpdate: string = "onGamePlayerGroupUpdate";
 
-	/**
-	 * Group member roster changed — decoded by
-	 * {@link OnGroupMemberUpdateEventHandler}. Pushed to every
-	 * client currently subscribed to the group.
-	 */
-	public static readonly OnGroupMemberUpdate: string = "onGroupMemberUpdate";
+    /**
+     * Group member roster changed — decoded by
+     * {@link OnGroupMemberUpdateEventHandler}. Pushed to every
+     * client currently subscribed to the group.
+     */
+    public static readonly OnGroupMemberUpdate: string = "onGroupMemberUpdate";
 
-	/**
-	 * Group message stream received new entries — decoded by
-	 * {@link OnGroupMessageUpdateEventHandler}. Payload is a
-	 * delta (only the new messages), not the full history.
-	 */
-	public static readonly OnGroupMessageUpdate: string = "onGroupMessageUpdate";
+    /**
+     * Group message stream received new entries — decoded by
+     * {@link OnGroupMessageUpdateEventHandler}. Payload is a
+     * delta (only the new messages), not the full history.
+     */
+    public static readonly OnGroupMessageUpdate: string = "onGroupMessageUpdate";
 
-	/**
-	 * Character-scoped group membership changed — decoded by
-	 * {@link OnCharacterPlayerGroupUpdateEventHandler}.
-	 */
-	public static readonly OnCharacterPlayerGroupUpdate: string = "onCharacterPlayerGroupUpdate";
+    /**
+     * Character-scoped group membership changed — decoded by
+     * {@link OnCharacterPlayerGroupUpdateEventHandler}.
+     */
+    public static readonly OnCharacterPlayerGroupUpdate: string = "onCharacterPlayerGroupUpdate";
 
 }

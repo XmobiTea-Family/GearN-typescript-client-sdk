@@ -30,6 +30,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Auth và quản trị admin account
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `loginByAdminAccountAsync` | Login dashboard/admin tool | `username`, `password` | `LoginByAdminAccountResponseData` | Response chỉ có `authToken` | `Ok`, `AccountNotFound` |
@@ -43,6 +44,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Quản lý game và cấu hình
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getGameListAsync` | Liệt kê game id hiện có | request rỗng | `GetGameListResponseData` | Dùng trước khi chọn `gameId` | `Ok` |
@@ -55,6 +57,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Secret key và permission
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getSecretInfoListAsync` | Liệt kê secret key theo role | request rỗng | `GetSecretInfoListResponseData` | Trả `secretKeys` | `Ok` |
@@ -64,6 +67,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Analytics, logs và callback
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAnalyticsAsync` | Lấy analytics tổng hợp | các boolean flag cần lấy, `timestamp?` | `GetAnalyticsResponseData` | Không bật tất cả flag một cách mù quáng | `Ok`, `ItemNotFound` |
@@ -74,6 +78,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ### Maintenance và thao tác phá hủy
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `resetStatisticsLeaderboardAsync` | Reset một version leaderboard | `type`, `key`, `version`, `gameId`, `log?`, `catalogId?` | `EmptyResponseData` | Destructive; chỉ dùng khi operator đã chốt loại leaderboard | `Ok`, `KeyNotFound`, `OwnerTypeNotSupport`, `VersionInvalid` |
@@ -155,11 +160,7 @@ Ghi chú quan trọng:
 ### Login admin
 
 ```ts
-import {
-    GNNetwork,
-    DashboardModels,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, DashboardModels, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new DashboardModels.LoginByAdminAccountRequestData();
 request.username = "gnadmin";
@@ -181,11 +182,7 @@ const adminAuthToken = GNNetwork.getAuthenticateStatus().getAuthToken();
 ### Tạo game rồi cập nhật metadata
 
 ```ts
-import {
-    GNNetwork,
-    DashboardModels,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, DashboardModels, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new DashboardModels.CreateGameRequestData();
 createRequest.gameId = "demo-game";
@@ -219,12 +216,7 @@ if (updateResponse.errorCode !== ErrorCode.Ok) {
 ### Tạo secret key cho server role
 
 ```ts
-import {
-    GNNetwork,
-    DashboardModels,
-    RequestRole,
-    ErrorCode,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { GNNetwork, DashboardModels, RequestRole, ErrorCode } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new DashboardModels.CreateSecretInfoRequestData();
 request.gameId = "demo-game";

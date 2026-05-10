@@ -40,11 +40,12 @@ Trong cloud script:
 
 Wrapper `database` đang expose các method:
 
-
 ### Raw collection
 
+412
 Dùng khi bạn muốn thao tác MongoDB native collection trực tiếp.
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `runtimeCollection<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string): mongodb.Collection<TSchema>` | `database.runtimeCollection(collectionName)` |
@@ -57,6 +58,7 @@ Dùng khi bạn muốn thao tác MongoDB native collection trực tiếp.
 
 Dùng khi bạn muốn ghi hoặc đọc log từ log database.
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `logRuntimeCollection<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string): mongodb.Collection<TSchema>` | `database.logRuntimeCollection(collectionName)` |
@@ -69,6 +71,7 @@ Dùng khi bạn muốn ghi hoặc đọc log từ log database.
 
 Dùng khi bạn cần tạo collection hoặc tạo index.
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `createCollection<TSchema extends mongodb.Document = mongodb.Document>(collectionName: string, options?: mongodb.CreateCollectionOptions): Promise<mongodb.Collection<TSchema>>` | `database.createCollection(collectionName, options?)` |
@@ -78,6 +81,7 @@ Dùng khi bạn cần tạo collection hoặc tạo index.
 
 ### for MasterPlayer
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `createMasterPlayerAsync(rawMasterPlayer: mongodb.WithId<mongodb.Document> & { userId: string; external: ExternalItem; segments: string[]; customDatas: Record<string, DataValueType>; displayName: string; displayNameNormalize: string; avatar: AvatarItem; tsCreate: number; tags: Record<string, string>; playerBan: BanItem; playerDatas: Record<string, DataValueType>; playerCurrencies: Record<string, CurrencyItem>; playerStatistics: Record<string, StatisticsItem>; tsLastLogin: number; ipAddressCreate: string; lastIPDetail: IPDetailItem; countryCode: string; email: string; pushNotifications: PushNotificationItem[];}): Promise<MasterPlayer>` | `database.masterPlayerRepository.createMasterPlayerAsync(rawMasterPlayer)` |
@@ -124,6 +128,7 @@ có thể tham khảo thêm
 
 ### for GamePlayer
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `createGamePlayerAsync(rawGamePlayer: mongodb.WithId<mongodb.Document> & { userId: string; socketId: string; playerCharacters: CharacterItem[]; playerInventories: InventoryItem[]; playerGroups: GroupItem[]; playerFriends: FriendItem[]; segments: string[]; customDatas: Record<string, DataValueType>; displayName: string; displayNameNormalize: string; avatar: AvatarItem; tsCreate: number; tags: Record<string, string>; playerBan: BanItem; playerDatas: Record<string, DataValueType>; playerCurrencies: Record<string, CurrencyItem>; playerStatistics: Record<string, StatisticsItem>; tsLastLogin: number; ipAddressCreate: string; countryCode: string;}, gameId: string): Promise<GamePlayer>` | `database.gamePlayerRepository.createGamePlayerAsync(rawGamePlayer, gameId)` |
@@ -150,6 +155,7 @@ có thể tham khảo thêm
 
 ### for CharacterPlayer
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `createCharacterPlayerAsync(rawCharacterPlayer: mongodb.WithId<mongodb.Document> & { characterId: string; catalogId: string; owner: OwnerItem; playerCharacters: CharacterItem[]; removeStatus: RemoveStatusItem; playerInventories: InventoryItem[]; playerGroups: GroupItem[]; playerFriends: FriendItem[]; playerBan: BanItem; playerCurrencies: Record<string, CurrencyItem>; playerStatistics: Record<string, StatisticsItem>; playerDatas: Record<string, DataValueType>; ipAddressCreate: string; countryCode: string; tsLastLogin: number; segments: string[]; customDatas: Record<string, DataValueType>; tsCreate: number; displayName: string; displayNameNormalize: string; avatar: AvatarItem; tags: Record<string, string>;}, gameId: string, session?: mongodb.ClientSession): Promise<CharacterPlayer>` | `database.characterPlayerRepository.createCharacterPlayerAsync(rawCharacterPlayer, gameId, session?)` |
@@ -175,6 +181,7 @@ có thể tham khảo thêm
 
 ### for Inventory
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `createInventoryAsync(rawInventory: mongodb.WithId<mongodb.Document> & { itemId: string; catalogId: string; classId: string; amount: number; itemType: ItemType; owner: OwnerItem; itemDatas: Record<string, DataValueType>; itemStatistics: Record<string, StatisticsItem>; removeStatus: RemoveStatusItem; segments: string[]; customDatas: Record<string, DataValueType>; tsCreate: number; displayName: string; displayNameNormalize: string; avatar: AvatarItem; tags: Record<string, string>;}, gameId: string, session?: mongodb.ClientSession): Promise<Inventory>` | `database.inventoryRepository.createInventoryAsync(rawInventory, gameId, session?)` |
@@ -195,6 +202,7 @@ có thể tham khảo thêm
 
 ### for Group
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `createGroupAsync(rawGroup: mongodb.WithId<mongodb.Document> & { groupId: string; groupType: OwnerType; catalogId: string; members: MemberItem[]; groupDatas: Record<string, DataValueType>; groupCurrencies: Record<string, CurrencyItem>; groupStatistics: Record<string, StatisticsItem>; groupInventories: InventoryItem[]; removeStatus: RemoveStatusItem; segments: string[]; customDatas: Record<string, DataValueType>; tsCreate: number; displayName: string; displayNameNormalize: string; avatar: AvatarItem; tags: Record<string, string>;}, gameId: string, session?: mongodb.ClientSession): Promise<Group>` | `database.groupRepository.createGroupAsync(rawGroup, gameId, session?)` |
@@ -219,6 +227,7 @@ có thể tham khảo thêm
 
 ### for StoreInventory
 
+<!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
 | `createStoreInventoryAsync(rawStoreInventory: mongodb.WithId<mongodb.Document> & { storeId: string; storeItems: { catalogId: string; classId: string; amount: number; }[]; storeItemType: StoreItemType; storeCurrencies: { key: string; value: number; }[]; priceCurrencies: { key: string; value: number; }[]; storeDatas: Record<string, DataValueType>; removeStatus: RemoveStatusItem; segments: string[]; customDatas: Record<string, DataValueType>; inAppPurchase: { appleAppStoreId: string; googlePlayStoreId: string; facebookStoreId: string; analyticsPrice: number; }; tsCreate: number; displayName: string; displayNameNormalize: string; avatar: AvatarItem; tags: Record<string, string>;}, gameId: string): Promise<StoreInventory>` | `database.storeInventoryRepository.createStoreInventoryAsync(rawStoreInventory, gameId)` |
@@ -308,20 +317,17 @@ handlers["dbSaveSample"] = async (args: any, context, log) => {
                 key: key,
                 value: value,
                 updatedByUserId: context.userId,
-                tsUpdate: Date.now()
-            }
+                tsUpdate: Date.now(),
+            },
         },
-        { upsert: true }
+        { upsert: true },
     );
 
-    const savedDocument = await sampleCollection.findOne(
-        { key: key },
-        { projection: { _id: 0 } }
-    );
+    const savedDocument = await sampleCollection.findOne({ key: key }, { projection: { _id: 0 } });
 
     return {
         gameId: gameId,
-        savedDocument: savedDocument
+        savedDocument: savedDocument,
     };
 };
 ```
@@ -344,10 +350,10 @@ handlers["dbNamespaceOverview"] = async (args: any, context, log) => {
         {
             $set: {
                 updatedByUserId: context.userId,
-                tsUpdate: Date.now()
-            }
+                tsUpdate: Date.now(),
+            },
         },
-        { upsert: true }
+        { upsert: true },
     );
 
     await database.systemCollection(collectionName).updateOne(
@@ -355,10 +361,10 @@ handlers["dbNamespaceOverview"] = async (args: any, context, log) => {
         {
             $set: {
                 updatedByUserId: context.userId,
-                tsUpdate: Date.now()
-            }
+                tsUpdate: Date.now(),
+            },
         },
-        { upsert: true }
+        { upsert: true },
     );
 
     await database.runtimeGameCollection("CloudScript.NamespaceDemo", gameId).updateOne(
@@ -366,10 +372,10 @@ handlers["dbNamespaceOverview"] = async (args: any, context, log) => {
         {
             $set: {
                 updatedByUserId: context.userId,
-                tsUpdate: Date.now()
-            }
+                tsUpdate: Date.now(),
+            },
         },
-        { upsert: true }
+        { upsert: true },
     );
 
     await database.metaGameCollection("CloudScript.NamespaceDemo", gameId).updateOne(
@@ -377,10 +383,10 @@ handlers["dbNamespaceOverview"] = async (args: any, context, log) => {
         {
             $set: {
                 updatedByUserId: context.userId,
-                tsUpdate: Date.now()
-            }
+                tsUpdate: Date.now(),
+            },
         },
-        { upsert: true }
+        { upsert: true },
     );
 
     await database.systemGameCollection("CloudScript.NamespaceDemo", gameId).updateOne(
@@ -388,17 +394,17 @@ handlers["dbNamespaceOverview"] = async (args: any, context, log) => {
         {
             $set: {
                 updatedByUserId: context.userId,
-                tsUpdate: Date.now()
-            }
+                tsUpdate: Date.now(),
+            },
         },
-        { upsert: true }
+        { upsert: true },
     );
 
     return {
         runtimeCollectionName: runtimeCollectionName,
         systemCollectionName: systemCollectionName,
         runtimeGameCollectionName: runtimeGameCollectionName,
-        systemGameCollectionName: systemGameCollectionName
+        systemGameCollectionName: systemGameCollectionName,
     };
 };
 
@@ -423,7 +429,7 @@ handlers["dbCreateCollectionAndIndex"] = async (args: any, context, log) => {
     return {
         collectionName: collectionName,
         logCollectionName: logCollectionName,
-        indexed: true
+        indexed: true,
     };
 };
 
@@ -453,7 +459,7 @@ handlers["dbLoadAndMutateGamePlayer"] = async (args: any, context, log) => {
         displayName: gamePlayer.getDisplayName(),
         tagValue: gamePlayer.getTag(tagKey),
         customData: gamePlayer.getCustomData(dataKey),
-        hasSegment: gamePlayer.hasSegment(segment)
+        hasSegment: gamePlayer.hasSegment(segment),
     };
 };
 
@@ -470,13 +476,13 @@ handlers["dbFindGamePlayersByTag"] = async (args: any, context, log) => {
             userId: gamePlayer.getUserId(),
             displayName: gamePlayer.getDisplayName(),
             tsCreate: gamePlayer.getTsCreate(),
-            tagValue: gamePlayer.getTag(tagKey)
+            tagValue: gamePlayer.getTag(tagKey),
         };
     });
 
     return {
         count: results.length,
-        results: results
+        results: results,
     };
 };
 
@@ -495,13 +501,13 @@ handlers["dbGamePlayerLeaderboard"] = async (args: any, context, log) => {
             userId: gamePlayer.getUserId(),
             displayName: gamePlayer.getDisplayName(),
             value: statistic?.value ?? 0,
-            tsLastUpdate: statistic?.tsLastUpdate ?? null
+            tsLastUpdate: statistic?.tsLastUpdate ?? null,
         };
     });
 
     return {
         statisticKey: statisticKey,
-        results: results
+        results: results,
     };
 };
 
@@ -513,12 +519,34 @@ handlers["dbInsertGamePlayerLog"] = async (args: any, context, log) => {
     const finalValue = typeof args?.finalValue === "number" ? args.finalValue : startValue + amount;
     const logMessage = typeof args?.logMessage === "string" && args.logMessage.length > 0 ? args.logMessage : "CloudScript statistic log";
 
-    await database.gamePlayerRepository.insertGamePlayerStatisticsLogsAsync([{
-        userId, key, amount, startValue, finalValue, log: logMessage, tsCreate: Date.now()
-    }], gameId);
-    await database.gamePlayerRepository.insertGamePlayerCurrencyLogsAsync([{
-        userId, key, amount, startValue, finalValue, log: logMessage, tsCreate: Date.now()
-    }], gameId);
+    await database.gamePlayerRepository.insertGamePlayerStatisticsLogsAsync(
+        [
+            {
+                userId,
+                key,
+                amount,
+                startValue,
+                finalValue,
+                log: logMessage,
+                tsCreate: Date.now(),
+            },
+        ],
+        gameId,
+    );
+    await database.gamePlayerRepository.insertGamePlayerCurrencyLogsAsync(
+        [
+            {
+                userId,
+                key,
+                amount,
+                startValue,
+                finalValue,
+                log: logMessage,
+                tsCreate: Date.now(),
+            },
+        ],
+        gameId,
+    );
 
     const statisticLogCursor = await database.gamePlayerRepository.loadGamePlayerStatisticsLogAsync({ userId: userId, key: key }, gameId, 5);
     const currencyLogCursor = await database.gamePlayerRepository.loadGamePlayerCurrencyLogAsync({ userId: userId, key: key }, gameId, 5);
@@ -529,7 +557,7 @@ handlers["dbInsertGamePlayerLog"] = async (args: any, context, log) => {
         userId: userId,
         key: key,
         statisticLogs: statisticLogs,
-        currencyLogs: currencyLogs
+        currencyLogs: currencyLogs,
     };
 };
 
@@ -546,7 +574,7 @@ handlers["dbGroupMessageDemo"] = async (args: any, context, log) => {
 
     return {
         groupId: groupId,
-        messages: messages
+        messages: messages,
     };
 };
 
@@ -562,10 +590,9 @@ handlers["dbStoreInventoryUsageDemo"] = async (args: any, context, log) => {
 
     return {
         count: count,
-        used: used
+        used: used,
     };
 };
-
 ```
 
 ## 8. Các dạng đang được cover trong file này
@@ -589,4 +616,3 @@ Nếu bạn chưa chắc nên dùng kiểu nào, chọn theo thứ tự:
 1. Dữ liệu custom riêng của bạn: dùng raw collection.
 2. Dữ liệu domain của GearN: ưu tiên helper `load...Async(...)` của `xDatabase`.
 3. Cần sửa object đã load: dùng setter của wrapper rồi `saveAsync()`.
-4. Cần log nghiệp vụ: ưu tiên `insert...LogAsync(...)`.

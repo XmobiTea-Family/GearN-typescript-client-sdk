@@ -24,8 +24,9 @@ const res = await GNNetwork.content.<method>Async(requestData, overrideAuthToken
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,11 +36,11 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.content.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `createNewFileUploadInfo` | `ContentModels.CreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` | `content.createNewFileUploadInfo.otherSelfEnable` |
 | `getContentData` | `ContentModels.GetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` | `content.getContentData.otherSelfEnable` |
 | `getFileUploadInfoList` | `ContentModels.GetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` | `content.getFileUploadInfoList.otherSelfEnable` |
@@ -48,11 +49,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `requestDownloadFileUploadInfo` | `ContentModels.RequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` | `content.requestDownloadFileUploadInfo.otherSelfEnable` |
 | `setContentData` | `ContentModels.SetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` | `content.setContentData.otherSelfEnable` |
 
-
 ## Server methods (`GNNetwork.content.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `createNewFileUploadInfo` | `ContentModels.ServerCreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` | `content.createNewFileUploadInfo.serverSelfEnable` |
 | `getContentData` | `ContentModels.ServerGetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` | `content.getContentData.serverSelfEnable` |
 | `getFileUploadInfoList` | `ContentModels.ServerGetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` | `content.getFileUploadInfoList.serverSelfEnable` |
@@ -61,11 +62,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `requestDownloadFileUploadInfo` | `ContentModels.ServerRequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` | `content.requestDownloadFileUploadInfo.serverSelfEnable` |
 | `setContentData` | `ContentModels.ServerSetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` | `content.setContentData.serverSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.content.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `createNewFileUploadInfo` | `ContentModels.AdminCreateNewFileUploadInfoRequestData` | `createNewFileUploadInfoAsync(...)` | `ContentResponseModels.CreateNewFileUploadInfoOperationResponse` | `content.createNewFileUploadInfo.adminSelfEnable` |
 | `getContentData` | `ContentModels.AdminGetContentDataRequestData` | `getContentDataAsync(...)` | `ContentResponseModels.GetContentDataOperationResponse` | `content.getContentData.adminSelfEnable` |
 | `getFileUploadInfoList` | `ContentModels.AdminGetFileUploadInfoListRequestData` | `getFileUploadInfoListAsync(...)` | `ContentResponseModels.GetFileUploadInfoListOperationResponse` | `content.getFileUploadInfoList.adminSelfEnable` |
@@ -73,7 +74,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `removeFileUploadInfo` | `ContentModels.AdminRemoveFileUploadInfoRequestData` | `removeFileUploadInfoAsync(...)` | `ContentResponseModels.RemoveFileUploadInfoOperationResponse` | `content.removeFileUploadInfo.adminSelfEnable` |
 | `requestDownloadFileUploadInfo` | `ContentModels.AdminRequestDownloadFileUploadInfoRequestData` | `requestDownloadFileUploadInfoAsync(...)` | `ContentResponseModels.RequestDownloadFileUploadInfoOperationResponse` | `content.requestDownloadFileUploadInfo.adminSelfEnable` |
 | `setContentData` | `ContentModels.AdminSetContentDataRequestData` | `setContentDataAsync(...)` | `ContentResponseModels.SetContentDataOperationResponse` | `content.setContentData.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

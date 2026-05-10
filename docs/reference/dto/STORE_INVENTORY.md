@@ -11,134 +11,134 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
 ## Danh sách
 
 - **StoreInventoryModels** (from `StoreInventoryModels.ts`)
-  - [AvatarParam](#avatarparam)
-  - [CurrencyParam](#currencyparam)
-  - [InAppPurchaseParam](#inapppurchaseparam)
-  - [InfoRequestParam](#inforequestparam)
-  - [StoreDataParam](#storedataparam)
-  - [StoreItemParam](#storeitemparam)
-  - [TagParam](#tagparam)
-  - [InAppPurchaseItem](#inapppurchaseitem)
-  - [PriceCurrencyItem](#pricecurrencyitem)
-  - [OwnerStoreInventoryItem](#ownerstoreinventoryitem)
-  - [StoreInventoryItem](#storeinventoryitem)
-  - [BuyStoreItemRequestData](#buystoreitemrequestdata)
-  - [ServerBuyStoreItemRequestData](#serverbuystoreitemrequestdata)
-  - [AdminBuyStoreItemRequestData](#adminbuystoreitemrequestdata)
-  - [PresentStoreItemRequestData](#presentstoreitemrequestdata)
-  - [ServerPresentStoreItemRequestData](#serverpresentstoreitemrequestdata)
-  - [AdminPresentStoreItemRequestData](#adminpresentstoreitemrequestdata)
-  - [GetStoreLogRequestData](#getstorelogrequestdata)
-  - [ServerGetStoreLogRequestData](#servergetstorelogrequestdata)
-  - [AdminGetStoreLogRequestData](#admingetstorelogrequestdata)
-  - [GetStoreUsedRequestData](#getstoreusedrequestdata)
-  - [ServerGetStoreUsedRequestData](#servergetstoreusedrequestdata)
-  - [AdminGetStoreUsedRequestData](#admingetstoreusedrequestdata)
-  - [RemoveStoreUsedRequestData](#removestoreusedrequestdata)
-  - [ServerRemoveStoreUsedRequestData](#serverremovestoreusedrequestdata)
-  - [AdminRemoveStoreUsedRequestData](#adminremovestoreusedrequestdata)
-  - [GetStoreItemInformationRequestData](#getstoreiteminformationrequestdata)
-  - [ServerGetStoreItemInformationRequestData](#servergetstoreiteminformationrequestdata)
-  - [AdminGetStoreItemInformationRequestData](#admingetstoreiteminformationrequestdata)
-  - [GetStoreItemsWithTagRequestData](#getstoreitemswithtagrequestdata)
-  - [ServerGetStoreItemsWithTagRequestData](#servergetstoreitemswithtagrequestdata)
-  - [AdminGetStoreItemsWithTagRequestData](#admingetstoreitemswithtagrequestdata)
-  - [CreateStoreItemRequestData](#createstoreitemrequestdata)
-  - [ServerCreateStoreItemRequestData](#servercreatestoreitemrequestdata)
-  - [AdminCreateStoreItemRequestData](#admincreatestoreitemrequestdata)
-  - [SetRemoveStatusRequestData](#setremovestatusrequestdata)
-  - [ServerSetRemoveStatusRequestData](#serversetremovestatusrequestdata)
-  - [AdminSetRemoveStatusRequestData](#adminsetremovestatusrequestdata)
-  - [SetStoreItemInformationRequestData](#setstoreiteminformationrequestdata)
-  - [ServerSetStoreItemInformationRequestData](#serversetstoreiteminformationrequestdata)
-  - [AdminSetStoreItemInformationRequestData](#adminsetstoreiteminformationrequestdata)
-  - [ValidateAppleAppStoreReceiptRequestData](#validateappleappstorereceiptrequestdata)
-  - [ServerValidateAppleAppStoreReceiptRequestData](#servervalidateappleappstorereceiptrequestdata)
-  - [AdminValidateAppleAppStoreReceiptRequestData](#adminvalidateappleappstorereceiptrequestdata)
-  - [ValidateFacebookStoreReceiptRequestData](#validatefacebookstorereceiptrequestdata)
-  - [ServerValidateFacebookStoreReceiptRequestData](#servervalidatefacebookstorereceiptrequestdata)
-  - [AdminValidateFacebookStoreReceiptRequestData](#adminvalidatefacebookstorereceiptrequestdata)
-  - [ValidateGooglePlayStoreReceiptRequestData](#validategoogleplaystorereceiptrequestdata)
-  - [ServerValidateGooglePlayStoreReceiptRequestData](#servervalidategoogleplaystorereceiptrequestdata)
-  - [AdminValidateGooglePlayStoreReceiptRequestData](#adminvalidategoogleplaystorereceiptrequestdata)
-  - [GetCreateLeaderboardRequestData](#getcreateleaderboardrequestdata)
-  - [ServerGetCreateLeaderboardRequestData](#servergetcreateleaderboardrequestdata)
-  - [AdminGetCreateLeaderboardRequestData](#admingetcreateleaderboardrequestdata)
-  - [InfoResponseParameters](#inforesponseparameters)
-  - [StoreInventoryResponseData](#storeinventoryresponsedata)
-  - [StoreInventoryWithStoreIdResponseData](#storeinventorywithstoreidresponsedata)
-  - [StoreInventoryLeaderboardResponseData](#storeinventoryleaderboardresponsedata)
-  - [StoreInventoriesWithStoreIdResponseData](#storeinventorieswithstoreidresponsedata)
-  - [CreateStoreItemResponseData](#createstoreitemresponsedata)
-  - [OwnerInfoResponseParameters](#ownerinforesponseparameters)
-  - [BuyStoreInventoryResponseData](#buystoreinventoryresponsedata)
-  - [PresentStoreInventoryResponseData](#presentstoreinventoryresponsedata)
-  - [CurrencyResponseData](#currencyresponsedata)
-  - [StoreItemResponseData](#storeitemresponsedata)
-  - [StoreLogResponseData](#storelogresponsedata)
-  - [StoreUsedResponseData](#storeusedresponsedata)
-  - [GetCreateLeaderboardResponseData](#getcreateleaderboardresponsedata)
-  - [GetStoreLogResponseData](#getstorelogresponsedata)
-  - [GetStoreUsedResponseData](#getstoreusedresponsedata)
-  - [EmptyResponseData](#emptyresponsedata)
+    - [AvatarParam](#avatarparam)
+    - [CurrencyParam](#currencyparam)
+    - [InAppPurchaseParam](#inapppurchaseparam)
+    - [InfoRequestParam](#inforequestparam)
+    - [StoreDataParam](#storedataparam)
+    - [StoreItemParam](#storeitemparam)
+    - [TagParam](#tagparam)
+    - [InAppPurchaseItem](#inapppurchaseitem)
+    - [PriceCurrencyItem](#pricecurrencyitem)
+    - [OwnerStoreInventoryItem](#ownerstoreinventoryitem)
+    - [StoreInventoryItem](#storeinventoryitem)
+    - [BuyStoreItemRequestData](#buystoreitemrequestdata)
+    - [ServerBuyStoreItemRequestData](#serverbuystoreitemrequestdata)
+    - [AdminBuyStoreItemRequestData](#adminbuystoreitemrequestdata)
+    - [PresentStoreItemRequestData](#presentstoreitemrequestdata)
+    - [ServerPresentStoreItemRequestData](#serverpresentstoreitemrequestdata)
+    - [AdminPresentStoreItemRequestData](#adminpresentstoreitemrequestdata)
+    - [GetStoreLogRequestData](#getstorelogrequestdata)
+    - [ServerGetStoreLogRequestData](#servergetstorelogrequestdata)
+    - [AdminGetStoreLogRequestData](#admingetstorelogrequestdata)
+    - [GetStoreUsedRequestData](#getstoreusedrequestdata)
+    - [ServerGetStoreUsedRequestData](#servergetstoreusedrequestdata)
+    - [AdminGetStoreUsedRequestData](#admingetstoreusedrequestdata)
+    - [RemoveStoreUsedRequestData](#removestoreusedrequestdata)
+    - [ServerRemoveStoreUsedRequestData](#serverremovestoreusedrequestdata)
+    - [AdminRemoveStoreUsedRequestData](#adminremovestoreusedrequestdata)
+    - [GetStoreItemInformationRequestData](#getstoreiteminformationrequestdata)
+    - [ServerGetStoreItemInformationRequestData](#servergetstoreiteminformationrequestdata)
+    - [AdminGetStoreItemInformationRequestData](#admingetstoreiteminformationrequestdata)
+    - [GetStoreItemsWithTagRequestData](#getstoreitemswithtagrequestdata)
+    - [ServerGetStoreItemsWithTagRequestData](#servergetstoreitemswithtagrequestdata)
+    - [AdminGetStoreItemsWithTagRequestData](#admingetstoreitemswithtagrequestdata)
+    - [CreateStoreItemRequestData](#createstoreitemrequestdata)
+    - [ServerCreateStoreItemRequestData](#servercreatestoreitemrequestdata)
+    - [AdminCreateStoreItemRequestData](#admincreatestoreitemrequestdata)
+    - [SetRemoveStatusRequestData](#setremovestatusrequestdata)
+    - [ServerSetRemoveStatusRequestData](#serversetremovestatusrequestdata)
+    - [AdminSetRemoveStatusRequestData](#adminsetremovestatusrequestdata)
+    - [SetStoreItemInformationRequestData](#setstoreiteminformationrequestdata)
+    - [ServerSetStoreItemInformationRequestData](#serversetstoreiteminformationrequestdata)
+    - [AdminSetStoreItemInformationRequestData](#adminsetstoreiteminformationrequestdata)
+    - [ValidateAppleAppStoreReceiptRequestData](#validateappleappstorereceiptrequestdata)
+    - [ServerValidateAppleAppStoreReceiptRequestData](#servervalidateappleappstorereceiptrequestdata)
+    - [AdminValidateAppleAppStoreReceiptRequestData](#adminvalidateappleappstorereceiptrequestdata)
+    - [ValidateFacebookStoreReceiptRequestData](#validatefacebookstorereceiptrequestdata)
+    - [ServerValidateFacebookStoreReceiptRequestData](#servervalidatefacebookstorereceiptrequestdata)
+    - [AdminValidateFacebookStoreReceiptRequestData](#adminvalidatefacebookstorereceiptrequestdata)
+    - [ValidateGooglePlayStoreReceiptRequestData](#validategoogleplaystorereceiptrequestdata)
+    - [ServerValidateGooglePlayStoreReceiptRequestData](#servervalidategoogleplaystorereceiptrequestdata)
+    - [AdminValidateGooglePlayStoreReceiptRequestData](#adminvalidategoogleplaystorereceiptrequestdata)
+    - [GetCreateLeaderboardRequestData](#getcreateleaderboardrequestdata)
+    - [ServerGetCreateLeaderboardRequestData](#servergetcreateleaderboardrequestdata)
+    - [AdminGetCreateLeaderboardRequestData](#admingetcreateleaderboardrequestdata)
+    - [InfoResponseParameters](#inforesponseparameters)
+    - [StoreInventoryResponseData](#storeinventoryresponsedata)
+    - [StoreInventoryWithStoreIdResponseData](#storeinventorywithstoreidresponsedata)
+    - [StoreInventoryLeaderboardResponseData](#storeinventoryleaderboardresponsedata)
+    - [StoreInventoriesWithStoreIdResponseData](#storeinventorieswithstoreidresponsedata)
+    - [CreateStoreItemResponseData](#createstoreitemresponsedata)
+    - [OwnerInfoResponseParameters](#ownerinforesponseparameters)
+    - [BuyStoreInventoryResponseData](#buystoreinventoryresponsedata)
+    - [PresentStoreInventoryResponseData](#presentstoreinventoryresponsedata)
+    - [CurrencyResponseData](#currencyresponsedata)
+    - [StoreItemResponseData](#storeitemresponsedata)
+    - [StoreLogResponseData](#storelogresponsedata)
+    - [StoreUsedResponseData](#storeusedresponsedata)
+    - [GetCreateLeaderboardResponseData](#getcreateleaderboardresponsedata)
+    - [GetStoreLogResponseData](#getstorelogresponsedata)
+    - [GetStoreUsedResponseData](#getstoreusedresponsedata)
+    - [EmptyResponseData](#emptyresponsedata)
 - **StoreInventoryRequestModels** (from `StoreInventoryRequestModels.ts`)
-  - [BuyStoreItemOperationRequest](#buystoreitemoperationrequest)
-  - [ServerBuyStoreItemOperationRequest](#serverbuystoreitemoperationrequest)
-  - [AdminBuyStoreItemOperationRequest](#adminbuystoreitemoperationrequest)
-  - [GetStoreItemInformationOperationRequest](#getstoreiteminformationoperationrequest)
-  - [ServerGetStoreItemInformationOperationRequest](#servergetstoreiteminformationoperationrequest)
-  - [AdminGetStoreItemInformationOperationRequest](#admingetstoreiteminformationoperationrequest)
-  - [GetStoreItemsWithTagOperationRequest](#getstoreitemswithtagoperationrequest)
-  - [ServerGetStoreItemsWithTagOperationRequest](#servergetstoreitemswithtagoperationrequest)
-  - [AdminGetStoreItemsWithTagOperationRequest](#admingetstoreitemswithtagoperationrequest)
-  - [CreateStoreItemOperationRequest](#createstoreitemoperationrequest)
-  - [ServerCreateStoreItemOperationRequest](#servercreatestoreitemoperationrequest)
-  - [AdminCreateStoreItemOperationRequest](#admincreatestoreitemoperationrequest)
-  - [SetRemoveStatusOperationRequest](#setremovestatusoperationrequest)
-  - [ServerSetRemoveStatusOperationRequest](#serversetremovestatusoperationrequest)
-  - [AdminSetRemoveStatusOperationRequest](#adminsetremovestatusoperationrequest)
-  - [SetStoreItemInformationOperationRequest](#setstoreiteminformationoperationrequest)
-  - [ServerSetStoreItemInformationOperationRequest](#serversetstoreiteminformationoperationrequest)
-  - [AdminSetStoreItemInformationOperationRequest](#adminsetstoreiteminformationoperationrequest)
-  - [ValidateAppleAppStoreReceiptOperationRequest](#validateappleappstorereceiptoperationrequest)
-  - [ServerValidateAppleAppStoreReceiptOperationRequest](#servervalidateappleappstorereceiptoperationrequest)
-  - [AdminValidateAppleAppStoreReceiptOperationRequest](#adminvalidateappleappstorereceiptoperationrequest)
-  - [ValidateFacebookStoreReceiptOperationRequest](#validatefacebookstorereceiptoperationrequest)
-  - [ServerValidateFacebookStoreReceiptOperationRequest](#servervalidatefacebookstorereceiptoperationrequest)
-  - [AdminValidateFacebookStoreReceiptOperationRequest](#adminvalidatefacebookstorereceiptoperationrequest)
-  - [ValidateGooglePlayStoreReceiptOperationRequest](#validategoogleplaystorereceiptoperationrequest)
-  - [ServerValidateGooglePlayStoreReceiptOperationRequest](#servervalidategoogleplaystorereceiptoperationrequest)
-  - [AdminValidateGooglePlayStoreReceiptOperationRequest](#adminvalidategoogleplaystorereceiptoperationrequest)
-  - [GetCreateLeaderboardOperationRequest](#getcreateleaderboardoperationrequest)
-  - [ServerGetCreateLeaderboardOperationRequest](#servergetcreateleaderboardoperationrequest)
-  - [AdminGetCreateLeaderboardOperationRequest](#admingetcreateleaderboardoperationrequest)
-  - [PresentStoreItemOperationRequest](#presentstoreitemoperationrequest)
-  - [ServerPresentStoreItemOperationRequest](#serverpresentstoreitemoperationrequest)
-  - [AdminPresentStoreItemOperationRequest](#adminpresentstoreitemoperationrequest)
-  - [GetStoreLogOperationRequest](#getstorelogoperationrequest)
-  - [ServerGetStoreLogOperationRequest](#servergetstorelogoperationrequest)
-  - [AdminGetStoreLogOperationRequest](#admingetstorelogoperationrequest)
-  - [GetStoreUsedOperationRequest](#getstoreusedoperationrequest)
-  - [ServerGetStoreUsedOperationRequest](#servergetstoreusedoperationrequest)
-  - [AdminGetStoreUsedOperationRequest](#admingetstoreusedoperationrequest)
-  - [RemoveStoreUsedOperationRequest](#removestoreusedoperationrequest)
-  - [ServerRemoveStoreUsedOperationRequest](#serverremovestoreusedoperationrequest)
-  - [AdminRemoveStoreUsedOperationRequest](#adminremovestoreusedoperationrequest)
+    - [BuyStoreItemOperationRequest](#buystoreitemoperationrequest)
+    - [ServerBuyStoreItemOperationRequest](#serverbuystoreitemoperationrequest)
+    - [AdminBuyStoreItemOperationRequest](#adminbuystoreitemoperationrequest)
+    - [GetStoreItemInformationOperationRequest](#getstoreiteminformationoperationrequest)
+    - [ServerGetStoreItemInformationOperationRequest](#servergetstoreiteminformationoperationrequest)
+    - [AdminGetStoreItemInformationOperationRequest](#admingetstoreiteminformationoperationrequest)
+    - [GetStoreItemsWithTagOperationRequest](#getstoreitemswithtagoperationrequest)
+    - [ServerGetStoreItemsWithTagOperationRequest](#servergetstoreitemswithtagoperationrequest)
+    - [AdminGetStoreItemsWithTagOperationRequest](#admingetstoreitemswithtagoperationrequest)
+    - [CreateStoreItemOperationRequest](#createstoreitemoperationrequest)
+    - [ServerCreateStoreItemOperationRequest](#servercreatestoreitemoperationrequest)
+    - [AdminCreateStoreItemOperationRequest](#admincreatestoreitemoperationrequest)
+    - [SetRemoveStatusOperationRequest](#setremovestatusoperationrequest)
+    - [ServerSetRemoveStatusOperationRequest](#serversetremovestatusoperationrequest)
+    - [AdminSetRemoveStatusOperationRequest](#adminsetremovestatusoperationrequest)
+    - [SetStoreItemInformationOperationRequest](#setstoreiteminformationoperationrequest)
+    - [ServerSetStoreItemInformationOperationRequest](#serversetstoreiteminformationoperationrequest)
+    - [AdminSetStoreItemInformationOperationRequest](#adminsetstoreiteminformationoperationrequest)
+    - [ValidateAppleAppStoreReceiptOperationRequest](#validateappleappstorereceiptoperationrequest)
+    - [ServerValidateAppleAppStoreReceiptOperationRequest](#servervalidateappleappstorereceiptoperationrequest)
+    - [AdminValidateAppleAppStoreReceiptOperationRequest](#adminvalidateappleappstorereceiptoperationrequest)
+    - [ValidateFacebookStoreReceiptOperationRequest](#validatefacebookstorereceiptoperationrequest)
+    - [ServerValidateFacebookStoreReceiptOperationRequest](#servervalidatefacebookstorereceiptoperationrequest)
+    - [AdminValidateFacebookStoreReceiptOperationRequest](#adminvalidatefacebookstorereceiptoperationrequest)
+    - [ValidateGooglePlayStoreReceiptOperationRequest](#validategoogleplaystorereceiptoperationrequest)
+    - [ServerValidateGooglePlayStoreReceiptOperationRequest](#servervalidategoogleplaystorereceiptoperationrequest)
+    - [AdminValidateGooglePlayStoreReceiptOperationRequest](#adminvalidategoogleplaystorereceiptoperationrequest)
+    - [GetCreateLeaderboardOperationRequest](#getcreateleaderboardoperationrequest)
+    - [ServerGetCreateLeaderboardOperationRequest](#servergetcreateleaderboardoperationrequest)
+    - [AdminGetCreateLeaderboardOperationRequest](#admingetcreateleaderboardoperationrequest)
+    - [PresentStoreItemOperationRequest](#presentstoreitemoperationrequest)
+    - [ServerPresentStoreItemOperationRequest](#serverpresentstoreitemoperationrequest)
+    - [AdminPresentStoreItemOperationRequest](#adminpresentstoreitemoperationrequest)
+    - [GetStoreLogOperationRequest](#getstorelogoperationrequest)
+    - [ServerGetStoreLogOperationRequest](#servergetstorelogoperationrequest)
+    - [AdminGetStoreLogOperationRequest](#admingetstorelogoperationrequest)
+    - [GetStoreUsedOperationRequest](#getstoreusedoperationrequest)
+    - [ServerGetStoreUsedOperationRequest](#servergetstoreusedoperationrequest)
+    - [AdminGetStoreUsedOperationRequest](#admingetstoreusedoperationrequest)
+    - [RemoveStoreUsedOperationRequest](#removestoreusedoperationrequest)
+    - [ServerRemoveStoreUsedOperationRequest](#serverremovestoreusedoperationrequest)
+    - [AdminRemoveStoreUsedOperationRequest](#adminremovestoreusedoperationrequest)
 - **StoreInventoryResponseModels** (from `StoreInventoryResponseModels.ts`)
-  - [BuyStoreItemOperationResponse](#buystoreitemoperationresponse)
-  - [GetStoreItemInformationOperationResponse](#getstoreiteminformationoperationresponse)
-  - [GetStoreItemsWithTagOperationResponse](#getstoreitemswithtagoperationresponse)
-  - [CreateStoreItemOperationResponse](#createstoreitemoperationresponse)
-  - [SetRemoveStatusOperationResponse](#setremovestatusoperationresponse)
-  - [SetStoreItemInformationOperationResponse](#setstoreiteminformationoperationresponse)
-  - [ValidateAppleAppStoreReceiptOperationResponse](#validateappleappstorereceiptoperationresponse)
-  - [ValidateFacebookStoreReceiptOperationResponse](#validatefacebookstorereceiptoperationresponse)
-  - [ValidateGooglePlayStoreReceiptOperationResponse](#validategoogleplaystorereceiptoperationresponse)
-  - [GetCreateLeaderboardOperationResponse](#getcreateleaderboardoperationresponse)
-  - [GetStoreLogOperationResponse](#getstorelogoperationresponse)
-  - [PresentStoreItemOperationResponse](#presentstoreitemoperationresponse)
-  - [GetStoreUsedOperationResponse](#getstoreusedoperationresponse)
-  - [RemoveStoreUsedOperationResponse](#removestoreusedoperationresponse)
+    - [BuyStoreItemOperationResponse](#buystoreitemoperationresponse)
+    - [GetStoreItemInformationOperationResponse](#getstoreiteminformationoperationresponse)
+    - [GetStoreItemsWithTagOperationResponse](#getstoreitemswithtagoperationresponse)
+    - [CreateStoreItemOperationResponse](#createstoreitemoperationresponse)
+    - [SetRemoveStatusOperationResponse](#setremovestatusoperationresponse)
+    - [SetStoreItemInformationOperationResponse](#setstoreiteminformationoperationresponse)
+    - [ValidateAppleAppStoreReceiptOperationResponse](#validateappleappstorereceiptoperationresponse)
+    - [ValidateFacebookStoreReceiptOperationResponse](#validatefacebookstorereceiptoperationresponse)
+    - [ValidateGooglePlayStoreReceiptOperationResponse](#validategoogleplaystorereceiptoperationresponse)
+    - [GetCreateLeaderboardOperationResponse](#getcreateleaderboardoperationresponse)
+    - [GetStoreLogOperationResponse](#getstorelogoperationresponse)
+    - [PresentStoreItemOperationResponse](#presentstoreitemoperationresponse)
+    - [GetStoreUsedOperationResponse](#getstoreusedoperationresponse)
+    - [RemoveStoreUsedOperationResponse](#removestoreusedoperationresponse)
 
 ---
 
@@ -148,8 +148,9 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
 
 Defines the reusable parameter block AvatarParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `type` | `number` | yes | — |
 | `value` | `string` | yes | _minLength=1, maxLength=128_ |
 
@@ -157,8 +158,9 @@ Defines the reusable parameter block AvatarParam.
 
 Defines the reusable parameter block CurrencyParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `number` | yes | — |
 
@@ -166,8 +168,9 @@ Defines the reusable parameter block CurrencyParam.
 
 Defines the reusable parameter block InAppPurchaseParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `facebookStoreId` | `string` | yes | _minLength=1, maxLength=128_ |
 | `googlePlayStoreId` | `string` | yes | _minLength=1, maxLength=128_ |
 | `appleAppStoreId` | `string` | yes | _minLength=1, maxLength=128_ |
@@ -177,8 +180,9 @@ Defines the reusable parameter block InAppPurchaseParam.
 
 Selects which optional store fields should be returned in `infoResponseParameters`. Boolean flags default to `false`.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeItems` | `boolean` | no | _default=false_ |
 | `storeItemType` | `boolean` | no | _default=false_ |
 | `storeCurrencies` | `boolean` | no | _default=false_ |
@@ -195,8 +199,9 @@ Selects which optional store fields should be returned in `infoResponseParameter
 
 Defines the reusable parameter block StoreDataParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `any` | yes | — |
 
@@ -204,8 +209,9 @@ Defines the reusable parameter block StoreDataParam.
 
 Defines the reusable parameter block StoreItemParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `classId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `amount` | `number` | yes | — |
@@ -214,8 +220,9 @@ Defines the reusable parameter block StoreItemParam.
 
 Defines the reusable parameter block TagParam.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 
@@ -223,8 +230,9 @@ Defines the reusable parameter block TagParam.
 
 Represents InAppPurchaseItem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `facebookStoreId` | `string` | yes | — |
 | `appleAppStoreId` | `string` | yes | — |
 | `googlePlayStoreId` | `string` | yes | — |
@@ -234,8 +242,9 @@ Represents InAppPurchaseItem.
 
 Represents PriceCurrencyItem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | — |
 | `value` | `number` | yes | — |
 
@@ -243,8 +252,9 @@ Represents PriceCurrencyItem.
 
 Represents OwnerStoreInventoryItem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `itemId` | `string` | yes | — |
 | `catalogId` | `string` | yes | — |
 | `classId` | `string` | yes | — |
@@ -253,8 +263,9 @@ Represents OwnerStoreInventoryItem.
 
 Represents StoreInventoryItem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `catalogId` | `string` | yes | — |
 | `classId` | `string` | yes | — |
 | `amount` | `number` | yes | — |
@@ -263,8 +274,9 @@ Represents StoreInventoryItem.
 
 Purchases one store item for a target owner.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `id` | `string` | yes | Target owner identifier. — _minLength=10, maxLength=11_ |
 | `type` | `number` | yes | Target owner type mapped by the public `OwnerType` enum. |
@@ -276,7 +288,7 @@ Extends: `BuyStoreItemRequestData`
 
 Defines the request payload for ServerBuyStoreItem.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminBuyStoreItemRequestData
 
@@ -284,14 +296,15 @@ Extends: `ServerBuyStoreItemRequestData`
 
 Defines the request payload for AdminBuyStoreItem.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### PresentStoreItemRequestData
 
 Grants one store item to a target owner without the normal purchase flow.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `id` | `string` | yes | _minLength=10, maxLength=11_ |
 | `type` | `number` | yes | — |
@@ -303,7 +316,7 @@ Extends: `PresentStoreItemRequestData`
 
 Defines the request payload for ServerPresentStoreItem.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminPresentStoreItemRequestData
 
@@ -311,14 +324,15 @@ Extends: `ServerPresentStoreItemRequestData`
 
 Defines the request payload for AdminPresentStoreItem.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreLogRequestData
 
 Reads store logs using token-based pagination.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `storeReceiveTypes` | `Array<number>` | yes | Filters by store receive types mapped by the public `StoreReceiveType` enum. — _minLength=1, maxLength=10, elementCls=Number_ |
 | `id` | `string` | yes | _minLength=10, maxLength=11_ |
@@ -331,7 +345,7 @@ Extends: `GetStoreLogRequestData`
 
 Defines the request payload for ServerGetStoreLog.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetStoreLogRequestData
 
@@ -339,14 +353,15 @@ Extends: `ServerGetStoreLogRequestData`
 
 Defines the request payload for AdminGetStoreLog.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreUsedRequestData
 
 Defines the request payload for GetStoreUsed.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 
 ### ServerGetStoreUsedRequestData
@@ -355,7 +370,7 @@ Extends: `GetStoreUsedRequestData`
 
 Defines the request payload for ServerGetStoreUsed.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetStoreUsedRequestData
 
@@ -363,14 +378,15 @@ Extends: `ServerGetStoreUsedRequestData`
 
 Defines the request payload for AdminGetStoreUsed.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### RemoveStoreUsedRequestData
 
 Defines the request payload for RemoveStoreUsed.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `ownerIds` | `Array<string>` | no | _elementCls=String_ |
 
@@ -380,7 +396,7 @@ Extends: `RemoveStoreUsedRequestData`
 
 Defines the request payload for ServerRemoveStoreUsed.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminRemoveStoreUsedRequestData
 
@@ -388,14 +404,15 @@ Extends: `ServerRemoveStoreUsedRequestData`
 
 Defines the request payload for AdminRemoveStoreUsed.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreItemInformationRequestData
 
 Defines the request payload for GetStoreItemInformation.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | — |
 
@@ -405,7 +422,7 @@ Extends: `GetStoreItemInformationRequestData`
 
 Defines the request payload for ServerGetStoreItemInformation.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetStoreItemInformationRequestData
 
@@ -413,14 +430,15 @@ Extends: `ServerGetStoreItemInformationRequestData`
 
 Defines the request payload for AdminGetStoreItemInformation.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreItemsWithTagRequestData
 
 Defines the request payload for GetStoreItemsWithTag.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | — |
@@ -433,7 +451,7 @@ Extends: `GetStoreItemsWithTagRequestData`
 
 Defines the request payload for ServerGetStoreItemsWithTag.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetStoreItemsWithTagRequestData
 
@@ -441,14 +459,15 @@ Extends: `ServerGetStoreItemsWithTagRequestData`
 
 Defines the request payload for AdminGetStoreItemsWithTag.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateStoreItemRequestData
 
 Defines the request payload for CreateStoreItem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `displayName` | `string` | no | _default=""_ |
 
@@ -458,7 +477,7 @@ Extends: `CreateStoreItemRequestData`
 
 Defines the request payload for ServerCreateStoreItem.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminCreateStoreItemRequestData
 
@@ -466,14 +485,15 @@ Extends: `ServerCreateStoreItemRequestData`
 
 Defines the request payload for AdminCreateStoreItem.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetRemoveStatusRequestData
 
 Defines the request payload for SetRemoveStatus.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `reason` | `string` | no | _default=""_ |
 
@@ -483,7 +503,7 @@ Extends: `SetRemoveStatusRequestData`
 
 Defines the request payload for ServerSetRemoveStatus.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminSetRemoveStatusRequestData
 
@@ -491,14 +511,15 @@ Extends: `ServerSetRemoveStatusRequestData`
 
 Defines the request payload for AdminSetRemoveStatus.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetStoreItemInformationRequestData
 
 Updates mutable store metadata for one store entry.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `storeItemType` | `number` | no | Store item type mapped by the public `StoreItemType` enum. — _min=1, max=2_ |
 | `storeDatas` | `Array<StoreDataParam>` | yes | _minLength=0, maxLength=32, elementCls=StoreDataParam_ |
@@ -516,7 +537,7 @@ Extends: `SetStoreItemInformationRequestData`
 
 Defines the request payload for ServerSetStoreItemInformation.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminSetStoreItemInformationRequestData
 
@@ -524,14 +545,15 @@ Extends: `ServerSetStoreItemInformationRequestData`
 
 Defines the request payload for AdminSetStoreItemInformation.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateAppleAppStoreReceiptRequestData
 
 Defines the request payload for ValidateAppleAppStoreReceipt.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `receipt` | `string` | yes | _minLength=10, maxLength=2048_ |
 | `id` | `string` | yes | _minLength=10, maxLength=11_ |
 | `type` | `number` | yes | — |
@@ -543,7 +565,7 @@ Extends: `ValidateAppleAppStoreReceiptRequestData`
 
 Defines the request payload for ServerValidateAppleAppStoreReceipt.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminValidateAppleAppStoreReceiptRequestData
 
@@ -551,14 +573,15 @@ Extends: `ServerValidateAppleAppStoreReceiptRequestData`
 
 Defines the request payload for AdminValidateAppleAppStoreReceipt.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateFacebookStoreReceiptRequestData
 
 Defines the request payload for ValidateFacebookStoreReceipt.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `receipt` | `string` | yes | _minLength=10, maxLength=2048_ |
 | `id` | `string` | yes | _minLength=10, maxLength=11_ |
 | `type` | `number` | yes | — |
@@ -570,7 +593,7 @@ Extends: `ValidateFacebookStoreReceiptRequestData`
 
 Defines the request payload for ServerValidateFacebookStoreReceipt.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminValidateFacebookStoreReceiptRequestData
 
@@ -578,14 +601,15 @@ Extends: `ServerValidateFacebookStoreReceiptRequestData`
 
 Defines the request payload for AdminValidateFacebookStoreReceipt.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateGooglePlayStoreReceiptRequestData
 
 Defines the request payload for ValidateGooglePlayStoreReceipt.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `receipt` | `string` | yes | _minLength=10, maxLength=2048_ |
 | `id` | `string` | yes | _minLength=10, maxLength=11_ |
 | `type` | `number` | yes | — |
@@ -597,7 +621,7 @@ Extends: `ValidateGooglePlayStoreReceiptRequestData`
 
 Defines the request payload for ServerValidateGooglePlayStoreReceipt.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminValidateGooglePlayStoreReceiptRequestData
 
@@ -605,14 +629,15 @@ Extends: `ServerValidateGooglePlayStoreReceiptRequestData`
 
 Defines the request payload for AdminValidateGooglePlayStoreReceipt.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetCreateLeaderboardRequestData
 
 Defines the request payload for GetCreateLeaderboard.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `infoRequestParam` | `InfoRequestParam` | yes | — |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
@@ -624,7 +649,7 @@ Extends: `GetCreateLeaderboardRequestData`
 
 Defines the request payload for ServerGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetCreateLeaderboardRequestData
 
@@ -632,14 +657,15 @@ Extends: `ServerGetCreateLeaderboardRequestData`
 
 Defines the request payload for AdminGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### InfoResponseParameters
 
 Contains the optional fields requested through `InfoRequestParam`.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeItems` | `Array<StoreInventoryItem>` | no | _elementCls=StoreInventoryItem_ |
 | `storeItemType` | `number` | no | — |
 | `storeCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
@@ -656,8 +682,9 @@ Contains the optional fields requested through `InfoRequestParam`.
 
 Base store-inventory response envelope.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `infoResponseParameters` | `InfoResponseParameters` | yes | Optional field bag controlled by the corresponding `InfoRequestParam`. |
 
 ### StoreInventoryWithStoreIdResponseData
@@ -666,8 +693,9 @@ Extends: `StoreInventoryResponseData`
 
 Defines the response payload for StoreInventoryWithStoreId.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | — |
 
 ### StoreInventoryLeaderboardResponseData
@@ -676,32 +704,36 @@ Extends: `StoreInventoryWithStoreIdResponseData`
 
 Defines the response payload for StoreInventoryLeaderboard.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `position` | `number` | yes | — |
 
 ### StoreInventoriesWithStoreIdResponseData
 
 Defines the response payload for StoreInventoriesWithStoreId.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<StoreInventoryWithStoreIdResponseData>` | yes | _elementCls=StoreInventoryWithStoreIdResponseData_ |
 
 ### CreateStoreItemResponseData
 
 Defines the response payload for CreateStoreItem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | — |
 
 ### OwnerInfoResponseParameters
 
 Describes the affected owner snapshot returned by buy/present flows.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `currencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
 | `inventories` | `Array<OwnerStoreInventoryItem>` | no | _elementCls=OwnerStoreInventoryItem_ |
 
@@ -709,8 +741,9 @@ Describes the affected owner snapshot returned by buy/present flows.
 
 Describes the result of a store purchase workflow.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeItems` | `Array<StoreInventoryItem>` | no | _elementCls=StoreInventoryItem_ |
 | `storeCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
 | `priceCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
@@ -720,8 +753,9 @@ Describes the result of a store purchase workflow.
 
 Describes the result of a store present workflow.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeItems` | `Array<StoreInventoryItem>` | no | _elementCls=StoreInventoryItem_ |
 | `storeCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
 | `priceCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
@@ -731,8 +765,9 @@ Describes the result of a store present workflow.
 
 Defines the response payload for Currency.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `key` | `string` | yes | — |
 | `value` | `number` | yes | — |
 
@@ -740,8 +775,9 @@ Defines the response payload for Currency.
 
 Defines the response payload for StoreItem.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `catalogId` | `string` | yes | — |
 | `classId` | `string` | yes | — |
 | `itemId` | `string` | yes | — |
@@ -750,8 +786,9 @@ Defines the response payload for StoreItem.
 
 Describes one store transaction log entry.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `storeId` | `string` | yes | — |
 | `id` | `string` | yes | — |
 | `type` | `number` | yes | Owner type mapped by the public `OwnerType` enum. |
@@ -771,8 +808,9 @@ Describes one store transaction log entry.
 
 Defines the response payload for StoreUsed.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `id` | `string` | yes | — |
 | `type` | `number` | yes | — |
 | `tsCreate` | `number` | yes | — |
@@ -781,16 +819,18 @@ Defines the response payload for StoreUsed.
 
 Defines the response payload for GetCreateLeaderboard.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<StoreInventoryLeaderboardResponseData>` | yes | _elementCls=StoreInventoryLeaderboardResponseData_ |
 
 ### GetStoreLogResponseData
 
 Returns one page of store logs.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<StoreLogResponseData>` | yes | _elementCls=StoreLogResponseData_ |
 | `token` | `string` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
 
@@ -798,15 +838,16 @@ Returns one page of store logs.
 
 Defines the response payload for GetStoreUsed.
 
+<!-- prettier-ignore -->
 | Field | Type | Required | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `results` | `Array<StoreUsedResponseData>` | yes | _elementCls=StoreUsedResponseData_ |
 
 ### EmptyResponseData
 
 Defines an intentionally empty response payload.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ## Namespace `StoreInventoryRequestModels`
 
@@ -816,7 +857,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.BuyStoreItemReques
 
 Maps the BuyStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerBuyStoreItemOperationRequest
 
@@ -824,7 +865,7 @@ Extends: `BuyStoreItemOperationRequest`
 
 Maps the ServerBuyStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminBuyStoreItemOperationRequest
 
@@ -832,7 +873,7 @@ Extends: `BuyStoreItemOperationRequest`
 
 Maps the AdminBuyStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreItemInformationOperationRequest
 
@@ -840,7 +881,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.GetStoreItemInform
 
 Maps the GetStoreItemInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerGetStoreItemInformationOperationRequest
 
@@ -848,7 +889,7 @@ Extends: `GetStoreItemInformationOperationRequest`
 
 Maps the ServerGetStoreItemInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetStoreItemInformationOperationRequest
 
@@ -856,7 +897,7 @@ Extends: `GetStoreItemInformationOperationRequest`
 
 Maps the AdminGetStoreItemInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreItemsWithTagOperationRequest
 
@@ -864,7 +905,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.GetStoreItemsWithT
 
 Maps the GetStoreItemsWithTag operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerGetStoreItemsWithTagOperationRequest
 
@@ -872,7 +913,7 @@ Extends: `GetStoreItemsWithTagOperationRequest`
 
 Maps the ServerGetStoreItemsWithTag operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetStoreItemsWithTagOperationRequest
 
@@ -880,7 +921,7 @@ Extends: `GetStoreItemsWithTagOperationRequest`
 
 Maps the AdminGetStoreItemsWithTag operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateStoreItemOperationRequest
 
@@ -888,7 +929,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.CreateStoreItemReq
 
 Maps the CreateStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerCreateStoreItemOperationRequest
 
@@ -896,7 +937,7 @@ Extends: `CreateStoreItemOperationRequest`
 
 Maps the ServerCreateStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminCreateStoreItemOperationRequest
 
@@ -904,7 +945,7 @@ Extends: `CreateStoreItemOperationRequest`
 
 Maps the AdminCreateStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetRemoveStatusOperationRequest
 
@@ -912,7 +953,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.SetRemoveStatusReq
 
 Maps the SetRemoveStatus operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerSetRemoveStatusOperationRequest
 
@@ -920,7 +961,7 @@ Extends: `SetRemoveStatusOperationRequest`
 
 Maps the ServerSetRemoveStatus operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminSetRemoveStatusOperationRequest
 
@@ -928,7 +969,7 @@ Extends: `SetRemoveStatusOperationRequest`
 
 Maps the AdminSetRemoveStatus operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetStoreItemInformationOperationRequest
 
@@ -936,7 +977,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.SetStoreItemInform
 
 Maps the SetStoreItemInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerSetStoreItemInformationOperationRequest
 
@@ -944,7 +985,7 @@ Extends: `SetStoreItemInformationOperationRequest`
 
 Maps the ServerSetStoreItemInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminSetStoreItemInformationOperationRequest
 
@@ -952,7 +993,7 @@ Extends: `SetStoreItemInformationOperationRequest`
 
 Maps the AdminSetStoreItemInformation operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateAppleAppStoreReceiptOperationRequest
 
@@ -960,7 +1001,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.ValidateAppleAppSt
 
 Maps the ValidateAppleAppStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerValidateAppleAppStoreReceiptOperationRequest
 
@@ -968,7 +1009,7 @@ Extends: `ValidateAppleAppStoreReceiptOperationRequest`
 
 Maps the ServerValidateAppleAppStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminValidateAppleAppStoreReceiptOperationRequest
 
@@ -976,7 +1017,7 @@ Extends: `ValidateAppleAppStoreReceiptOperationRequest`
 
 Maps the AdminValidateAppleAppStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateFacebookStoreReceiptOperationRequest
 
@@ -984,7 +1025,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.ValidateFacebookSt
 
 Maps the ValidateFacebookStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerValidateFacebookStoreReceiptOperationRequest
 
@@ -992,7 +1033,7 @@ Extends: `ValidateFacebookStoreReceiptOperationRequest`
 
 Maps the ServerValidateFacebookStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminValidateFacebookStoreReceiptOperationRequest
 
@@ -1000,7 +1041,7 @@ Extends: `ValidateFacebookStoreReceiptOperationRequest`
 
 Maps the AdminValidateFacebookStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateGooglePlayStoreReceiptOperationRequest
 
@@ -1008,7 +1049,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.ValidateGooglePlay
 
 Maps the ValidateGooglePlayStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerValidateGooglePlayStoreReceiptOperationRequest
 
@@ -1016,7 +1057,7 @@ Extends: `ValidateGooglePlayStoreReceiptOperationRequest`
 
 Maps the ServerValidateGooglePlayStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminValidateGooglePlayStoreReceiptOperationRequest
 
@@ -1024,7 +1065,7 @@ Extends: `ValidateGooglePlayStoreReceiptOperationRequest`
 
 Maps the AdminValidateGooglePlayStoreReceipt operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetCreateLeaderboardOperationRequest
 
@@ -1032,7 +1073,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.GetCreateLeaderboa
 
 Maps the GetCreateLeaderboard operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerGetCreateLeaderboardOperationRequest
 
@@ -1040,7 +1081,7 @@ Extends: `GetCreateLeaderboardOperationRequest`
 
 Maps the ServerGetCreateLeaderboard operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetCreateLeaderboardOperationRequest
 
@@ -1048,7 +1089,7 @@ Extends: `GetCreateLeaderboardOperationRequest`
 
 Maps the AdminGetCreateLeaderboard operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### PresentStoreItemOperationRequest
 
@@ -1056,7 +1097,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.PresentStoreItemRe
 
 Maps the PresentStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerPresentStoreItemOperationRequest
 
@@ -1064,7 +1105,7 @@ Extends: `PresentStoreItemOperationRequest`
 
 Maps the ServerPresentStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminPresentStoreItemOperationRequest
 
@@ -1072,7 +1113,7 @@ Extends: `PresentStoreItemOperationRequest`
 
 Maps the AdminPresentStoreItem operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreLogOperationRequest
 
@@ -1080,7 +1121,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.GetStoreLogRequest
 
 Maps the GetStoreLog operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerGetStoreLogOperationRequest
 
@@ -1088,7 +1129,7 @@ Extends: `GetStoreLogOperationRequest`
 
 Maps the ServerGetStoreLog operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetStoreLogOperationRequest
 
@@ -1096,7 +1137,7 @@ Extends: `GetStoreLogOperationRequest`
 
 Maps the AdminGetStoreLog operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreUsedOperationRequest
 
@@ -1104,7 +1145,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.GetStoreUsedReques
 
 Maps the GetStoreUsed operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerGetStoreUsedOperationRequest
 
@@ -1112,7 +1153,7 @@ Extends: `GetStoreUsedOperationRequest`
 
 Maps the ServerGetStoreUsed operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminGetStoreUsedOperationRequest
 
@@ -1120,7 +1161,7 @@ Extends: `GetStoreUsedOperationRequest`
 
 Maps the AdminGetStoreUsed operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### RemoveStoreUsedOperationRequest
 
@@ -1128,7 +1169,7 @@ Extends: `CustomOperationRequestAbstract<StoreInventoryModels.RemoveStoreUsedReq
 
 Maps the RemoveStoreUsed operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ServerRemoveStoreUsedOperationRequest
 
@@ -1136,7 +1177,7 @@ Extends: `RemoveStoreUsedOperationRequest`
 
 Maps the ServerRemoveStoreUsed operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### AdminRemoveStoreUsedOperationRequest
 
@@ -1144,7 +1185,7 @@ Extends: `RemoveStoreUsedOperationRequest`
 
 Maps the AdminRemoveStoreUsed operation to a typed request wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ## Namespace `StoreInventoryResponseModels`
 
@@ -1154,7 +1195,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.BuyStoreInventory
 
 Maps the BuyStoreItem operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreItemInformationOperationResponse
 
@@ -1162,7 +1203,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.StoreInventoryRes
 
 Maps the GetStoreItemInformation operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreItemsWithTagOperationResponse
 
@@ -1170,7 +1211,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.StoreInventoriesW
 
 Maps the GetStoreItemsWithTag operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### CreateStoreItemOperationResponse
 
@@ -1178,7 +1219,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.CreateStoreItemRe
 
 Maps the CreateStoreItem operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetRemoveStatusOperationResponse
 
@@ -1186,7 +1227,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.EmptyResponseData
 
 Maps the SetRemoveStatus operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### SetStoreItemInformationOperationResponse
 
@@ -1194,7 +1235,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.StoreInventoryRes
 
 Maps the SetStoreItemInformation operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateAppleAppStoreReceiptOperationResponse
 
@@ -1202,7 +1243,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.BuyStoreInventory
 
 Maps the ValidateAppleAppStoreReceipt operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateFacebookStoreReceiptOperationResponse
 
@@ -1210,7 +1251,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.BuyStoreInventory
 
 Maps the ValidateFacebookStoreReceipt operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### ValidateGooglePlayStoreReceiptOperationResponse
 
@@ -1218,7 +1259,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.BuyStoreInventory
 
 Maps the ValidateGooglePlayStoreReceipt operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetCreateLeaderboardOperationResponse
 
@@ -1226,7 +1267,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.GetCreateLeaderbo
 
 Maps the GetCreateLeaderboard operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreLogOperationResponse
 
@@ -1234,7 +1275,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.GetStoreLogRespon
 
 Maps the GetStoreLog operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### PresentStoreItemOperationResponse
 
@@ -1242,7 +1283,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.PresentStoreInven
 
 Maps the PresentStoreItem operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### GetStoreUsedOperationResponse
 
@@ -1250,7 +1291,7 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.GetStoreUsedRespo
 
 Maps the GetStoreUsed operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
+_Không có field public (payload rỗng)._
 
 ### RemoveStoreUsedOperationResponse
 
@@ -1258,5 +1299,4 @@ Extends: `CustomOperationResponseAbstract<StoreInventoryModels.EmptyResponseData
 
 Maps the RemoveStoreUsed operation to a typed response wrapper.
 
-_Không có field public (payload rỗng)._ 
-
+_Không có field public (payload rỗng)._

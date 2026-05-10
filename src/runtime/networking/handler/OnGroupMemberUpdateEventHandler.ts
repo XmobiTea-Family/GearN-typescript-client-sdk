@@ -21,22 +21,22 @@ import { IServerEventHandler } from "./IServerEventHandler";
  * through this event.
  */
 export class GroupMemberUpdate {
-	/**
-	 * Authoritative member roster after the change. Each
-	 * {@link GenericModels.MemberItem} carries the user id, role,
-	 * join timestamp and optional profile metadata. Treat the
-	 * array as a complete replacement.
-	 */
-	@GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.MemberItem })
-	public members: Array<GenericModels.MemberItem>;
+    /**
+     * Authoritative member roster after the change. Each
+     * {@link GenericModels.MemberItem} carries the user id, role,
+     * join timestamp and optional profile metadata. Treat the
+     * array as a complete replacement.
+     */
+    @GNArrayDataMember({ code: ParameterCode.Members, elementCls: GenericModels.MemberItem })
+    public members: Array<GenericModels.MemberItem>;
 
-	/**
-	 * Identifier of the group whose member roster changed. Use
-	 * this to route the update to the correct group view when the
-	 * application has multiple groups loaded.
-	 */
-	@StringDataMember({ code: ParameterCode.GroupId })
-	public groupId: string;
+    /**
+     * Identifier of the group whose member roster changed. Use
+     * this to route the update to the correct group view when the
+     * application has multiple groups loaded.
+     */
+    @StringDataMember({ code: ParameterCode.GroupId })
+    public groupId: string;
 }
 
 /**
@@ -52,27 +52,27 @@ export class GroupMemberUpdate {
  */
 @IServerEventHandler.registerEvent
 export class OnGroupMemberUpdateEventHandler implements IServerEventHandler {
-	/**
-	 * Static callback the application registers. Leave `null` to
-	 * silently drop the event.
-	 */
-	public static onUpdate: Action1<GroupMemberUpdate>;
+    /**
+     * Static callback the application registers. Leave `null` to
+     * silently drop the event.
+     */
+    public static onUpdate: Action1<GroupMemberUpdate>;
 
-	/**
-	 * Returns {@link EventCode.OnGroupMemberUpdate}.
-	 */
-	public getEventCode(): string {
-		return EventCode.OnGroupMemberUpdate;
-	}
+    /**
+     * Returns {@link EventCode.OnGroupMemberUpdate}.
+     */
+    public getEventCode(): string {
+        return EventCode.OnGroupMemberUpdate;
+    }
 
-	/**
-	 * Deserialises the parameters into a {@link GroupMemberUpdate}
-	 * and forwards to {@link onUpdate}.
-	 */
-	public handle(operationEvent: OperationEvent): void {
-		if (OnGroupMemberUpdateEventHandler.onUpdate != null)
-			OnGroupMemberUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GroupMemberUpdate));
+    /**
+     * Deserialises the parameters into a {@link GroupMemberUpdate}
+     * and forwards to {@link onUpdate}.
+     */
+    public handle(operationEvent: OperationEvent): void {
+        if (OnGroupMemberUpdateEventHandler.onUpdate != null)
+            OnGroupMemberUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), GroupMemberUpdate));
 
-	}
+    }
 
 }

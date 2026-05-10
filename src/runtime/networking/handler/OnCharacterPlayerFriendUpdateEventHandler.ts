@@ -23,28 +23,28 @@ import { IServerEventHandler } from "./IServerEventHandler";
  * roster back as this event so every connected device converges.
  */
 export class CharacterPlayerFriendUpdate {
-	/**
-	 * Identifier of the character whose friend list is being updated.
-	 *
-	 * Matches the character id the local SDK selected via
-	 * `GNNetwork.characterPlayer.selectCharacter*` (or whichever
-	 * method created it). When the application has multiple
-	 * characters loaded, dispatch on this field to update the right
-	 * roster.
-	 */
-	@StringDataMember({ code: ParameterCode.CharacterId })
-	public characterId: string;
+    /**
+     * Identifier of the character whose friend list is being updated.
+     *
+     * Matches the character id the local SDK selected via
+     * `GNNetwork.characterPlayer.selectCharacter*` (or whichever
+     * method created it). When the application has multiple
+     * characters loaded, dispatch on this field to update the right
+     * roster.
+     */
+    @StringDataMember({ code: ParameterCode.CharacterId })
+    public characterId: string;
 
-	/**
-	 * Authoritative friend roster after the change.
-	 *
-	 * Each {@link GenericModels.FriendItem} carries the full
-	 * relation state ({@link FriendStatus}, friend id, optional
-	 * profile data). Treat the array as a complete replacement —
-	 * the backend does not send delta updates here.
-	 */
-	@GNArrayDataMember({ code: ParameterCode.PlayerFriends, elementCls: GenericModels.FriendItem })
-	public playerFriends: Array<GenericModels.FriendItem>;
+    /**
+     * Authoritative friend roster after the change.
+     *
+     * Each {@link GenericModels.FriendItem} carries the full
+     * relation state ({@link FriendStatus}, friend id, optional
+     * profile data). Treat the array as a complete replacement —
+     * the backend does not send delta updates here.
+     */
+    @GNArrayDataMember({ code: ParameterCode.PlayerFriends, elementCls: GenericModels.FriendItem })
+    public playerFriends: Array<GenericModels.FriendItem>;
 }
 
 /**
@@ -70,31 +70,31 @@ export class CharacterPlayerFriendUpdate {
  */
 @IServerEventHandler.registerEvent
 export class OnCharacterPlayerFriendUpdateEventHandler implements IServerEventHandler {
-	/**
-	 * Static callback the application registers. The SDK calls it
-	 * with the deserialised payload whenever a matching event
-	 * arrives. Leave `null` to ignore the event.
-	 */
-	public static onUpdate: Action1<CharacterPlayerFriendUpdate>;
+    /**
+     * Static callback the application registers. The SDK calls it
+     * with the deserialised payload whenever a matching event
+     * arrives. Leave `null` to ignore the event.
+     */
+    public static onUpdate: Action1<CharacterPlayerFriendUpdate>;
 
-	/**
-	 * Returns {@link EventCode.OnCharacterPlayerFriendUpdate}, the
-	 * stable event code emitted by the GearN backend for this
-	 * push.
-	 */
-	public getEventCode(): string {
-		return EventCode.OnCharacterPlayerFriendUpdate;
-	}
+    /**
+     * Returns {@link EventCode.OnCharacterPlayerFriendUpdate}, the
+     * stable event code emitted by the GearN backend for this
+     * push.
+     */
+    public getEventCode(): string {
+        return EventCode.OnCharacterPlayerFriendUpdate;
+    }
 
-	/**
-	 * Deserialises the raw parameters into a typed
-	 * {@link CharacterPlayerFriendUpdate} and forwards it to
-	 * {@link onUpdate}. Skipped silently when the application has
-	 * not registered a callback.
-	 */
-	public handle(operationEvent: OperationEvent): void {
-		if (OnCharacterPlayerFriendUpdateEventHandler.onUpdate != null)
-			OnCharacterPlayerFriendUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), CharacterPlayerFriendUpdate));
-	}
+    /**
+     * Deserialises the raw parameters into a typed
+     * {@link CharacterPlayerFriendUpdate} and forwards it to
+     * {@link onUpdate}. Skipped silently when the application has
+     * not registered a callback.
+     */
+    public handle(operationEvent: OperationEvent): void {
+        if (OnCharacterPlayerFriendUpdateEventHandler.onUpdate != null)
+            OnCharacterPlayerFriendUpdateEventHandler.onUpdate(ConverterService.deserializeObject(operationEvent.getParameters(), CharacterPlayerFriendUpdate));
+    }
 
 }

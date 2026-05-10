@@ -41,8 +41,9 @@ Transport/gateway return code trả trong `OperationResponse.getReturnCode()`. *
 
 Class import: `import { ReturnCode } from "@xmobitea/gearn-typescript-client-sdk"` — các member là static readonly numbers.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `SecretInvalid` | -10 | Secret key sai / thiếu / không khớp route hoặc game context |
 | `MaxSizeRequestReject` | -9 | Payload vượt size tối đa backend chấp nhận |
 | `MaxRequestReject` | -8 | Caller vượt rate limit |
@@ -66,8 +67,9 @@ Business domain error code, nằm trong response payload khi `returnCode === Ret
 
 Class import: `import { ErrorCode } from "@xmobitea/gearn-typescript-client-sdk"` — các member là static readonly numbers.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning | Typical context |
-|------|-------|---------|-----------------|
+| --- | --- | --- | --- |
 | `Ok` | 1 | Business operation thành công | mọi response happy path |
 | `AccountNotFound` | 2 | Username/account không tồn tại | login flows |
 | `AccountPasswordWrong` | 3 | Password sai | login by account |
@@ -129,14 +131,15 @@ Trust boundary của caller. Chọn route theo caller thật (client app / trust
 
 ```ts
 export enum RequestRole {
-	Admin = 1,
-	Server = 2,
-	Client = 3,
+    Admin = 1,
+    Server = 2,
+    Client = 3,
 }
 ```
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `Admin` | 1 | Admin tool / backoffice / GM tool / migration tool |
 | `Server` | 2 | Trusted backend: game server, internal service, worker, cron, webhook |
 | `Client` | 3 | Player app / client code |
@@ -149,23 +152,24 @@ Top-level domain phân loại route khi build transport path.
 
 ```ts
 export enum RequestType {
-	Custom = 0,
-	Authenticate = 1,
-	CharacterPlayer = 2,
-	Content = 3,
-	GamePlayer = 4,
-	Group = 5,
-	Inventory = 6,
-	MasterPlayer = 7,
-	StoreInventory = 8,
-	Dashboard = 9,
-	Multiplayer = 10,
-	CloudScript = 11,
+    Custom = 0,
+    Authenticate = 1,
+    CharacterPlayer = 2,
+    Content = 3,
+    GamePlayer = 4,
+    Group = 5,
+    Inventory = 6,
+    MasterPlayer = 7,
+    StoreInventory = 8,
+    Dashboard = 9,
+    Multiplayer = 10,
+    CloudScript = 11,
 }
 ```
 
+<!-- prettier-ignore -->
 | Name | Value |
-|------|-------|
+| --- | --- |
 | `Custom` | 0 |
 | `Authenticate` | 1 |
 | `CharacterPlayer` | 2 |
@@ -187,13 +191,14 @@ Payload encoding preferred bởi transport.
 
 ```ts
 export enum MessageType {
-	Json = 1,
-	MsgPack = 2,
+    Json = 1,
+    MsgPack = 2,
 }
 ```
 
+<!-- prettier-ignore -->
 | Name | Value | Notes |
-|------|-------|-------|
+| --- | --- | --- |
 | `Json` | 1 | Browser-safe mọi trường hợp |
 | `MsgPack` | 2 | Compact binary; browser HTTP tự fallback sang JSON |
 
@@ -203,8 +208,9 @@ export enum MessageType {
 
 Low-level HTTP body encoding dùng bởi `HttpPeer`. App tích hợp thông thường không cần truyền trực tiếp enum này.
 
+<!-- prettier-ignore -->
 | Name | Value | Notes |
-|------|-------|-------|
+| --- | --- | --- |
 | `Json` | 0 | UTF-8 JSON request/response body |
 | `MsgPack` | 1 | Binary MessagePack request/response body |
 
@@ -216,16 +222,17 @@ Verbosity cho `GNDebug`.
 
 ```ts
 export enum LogType {
-	Off = 0,
-	Exception = 1,
-	Error = 2,
-	Warning = 3,
-	All = 4,
+    Off = 0,
+    Exception = 1,
+    Error = 2,
+    Warning = 3,
+    All = 4,
 }
 ```
 
+<!-- prettier-ignore -->
 | Name | Value |
-|------|-------|
+| --- | --- |
 | `Off` | 0 |
 | `Exception` | 1 |
 | `Error` | 2 |
@@ -238,8 +245,9 @@ export enum LogType {
 
 Lifecycle state của quan hệ bạn bè.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `Friend` | 1 | Đã là bạn |
 | `WaitingAccept` | 2 | Đang chờ mình accept incoming request |
 | `SentRequestAndWaitingAccept` | 3 | Mình đã gửi request, chờ bên kia accept |
@@ -251,8 +259,9 @@ Lifecycle state của quan hệ bạn bè.
 
 Lifecycle state của quan hệ group membership.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `Member` | 1 | Đã là member active |
 | `WaitingAccept` | 2 | Đang chờ group accept join request từ bên mình |
 | `SentRequestAndWaitingAccept` | 3 | Đã gửi join request, chờ group approve |
@@ -264,8 +273,9 @@ Lifecycle state của quan hệ group membership.
 
 Loại credential Google được cung cấp cho login/link flow.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `AccessToken` | 1 | OAuth access token |
 | `IdToken` | 2 | OpenID Connect ID token |
 
@@ -275,8 +285,9 @@ Loại credential Google được cung cấp cho login/link flow.
 
 Category lỗi validation expose qua `res.invalidMembers`. Chỉ xuất hiện khi `res.returnCode === ReturnCode.InvalidRequestParameters`.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `UnknownError` | 1 | Không map được category cụ thể |
 | `DataRequired` | 2 | Field required nhưng thiếu |
 | `TypeInvalid` | 3 | Runtime type không match expected |
@@ -299,8 +310,9 @@ Category lỗi validation expose qua `res.invalidMembers`. Chỉ xuất hiện k
 
 Kiểu inventory item hỗ trợ stacking hay không.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `NonStackable` | 1 | Mỗi instance unique, track riêng |
 | `Stackable` | 2 | Nhiều unit gộp chung amount |
 
@@ -310,8 +322,9 @@ Kiểu inventory item hỗ trợ stacking hay không.
 
 Top-level entity owner của resource.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `MasterPlayer` | 1 | Master-player account |
 | `GamePlayer` | 2 | Game-player entity |
 | `CharacterPlayer` | 3 | Character-player entity |
@@ -325,8 +338,9 @@ Top-level entity owner của resource.
 
 Mobile push platform.
 
+<!-- prettier-ignore -->
 | Name | Value |
-|------|-------|
+| --- | --- |
 | `Android` | 1 |
 | `iOS` | 2 |
 
@@ -336,8 +350,9 @@ Mobile push platform.
 
 State của 1 member trong matchmaking ticket.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `Pending` | 1 | Declared nhưng chưa join/confirm |
 | `Joined` | 2 | Đã join ticket |
 | `Canceled` | 3 | Hủy tham gia ticket |
@@ -348,8 +363,9 @@ State của 1 member trong matchmaking ticket.
 
 Lifecycle state của matchmaking ticket.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `WaitingForMembers` | 1 | Chờ tất cả member declared join |
 | `WaitingForMatch` | 2 | Đủ member, chờ matchmaking engine tìm match |
 | `WaitingForServer` | 3 | Đã có match, chờ server allocation |
@@ -362,8 +378,9 @@ Lifecycle state của matchmaking ticket.
 
 Lifecycle state của match record sau khi matchmaking tạo match.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `WaitingForServer` | 1 | Match đã tạo nhưng server allocation chưa sẵn sàng |
 | `Matched` | 2 | Server đã sẵn sàng; app có thể tiếp tục flow connect theo backend contract |
 | `Canceled` | 3 | Match bị hủy trước khi hoàn tất |
@@ -374,8 +391,9 @@ Lifecycle state của match record sau khi matchmaking tạo match.
 
 Status CloudScript execute function.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `Ok` | 1 | Execute thành công |
 | `Exception` | 2 | Execute nhưng function throw exception |
 | `FunctionNameNotFound` | 3 | Function name không tồn tại trong version |
@@ -388,8 +406,9 @@ Status CloudScript execute function.
 
 Kiểu store item: mua 1 lần hay nhiều lần.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `NonConsumable` | 1 | Chỉ own 1 bản persistent |
 | `Consumable` | 2 | Mua lại và tiêu thụ nhiều lần |
 
@@ -399,8 +418,9 @@ Kiểu store item: mua 1 lần hay nhiều lần.
 
 Cách store item được trao cho buyer.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `Buy` | 1 | Buy flow trong game bình thường |
 | `Present` | 2 | Present/gift flow |
 | `AppleAppStore` | 3 | Apple App Store receipt validation |
@@ -413,8 +433,9 @@ Cách store item được trao cho buyer.
 
 Cách config 1 data item có thể ghi lại sau khi tạo.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `ReadOnly` | 1 | Read được nhưng write flow thường không ghi đè |
 | `CanOverride` | 2 | Write được, ghi đè giá trị cũ |
 
@@ -424,8 +445,9 @@ Cách config 1 data item có thể ghi lại sau khi tạo.
 
 Runtime metadata type ghi nhận bởi decorator `DataMember`. App tích hợp SDK bình thường hiếm khi cần đọc trực tiếp enum này.
 
+<!-- prettier-ignore -->
 | Name | Value | Meaning |
-|------|-------|---------|
+| --- | --- | --- |
 | `Boolean` | 0 | Field boolean |
 | `Number` | 1 | Field number |
 | `String` | 2 | Field string |

@@ -11,18 +11,18 @@
  * the rule when the matching `set*` operation runs.
  */
 export enum PermissionDataItem {
-	/**
-	 * Once written, the value cannot be replaced through normal
-	 * write flows. Useful for first-creation timestamps,
-	 * commitment tokens, or values that should only be reset by
-	 * privileged admin operations.
-	 */
-	ReadOnly = 1,
+    /**
+     * Once written, the value cannot be replaced through normal
+     * write flows. Useful for first-creation timestamps,
+     * commitment tokens, or values that should only be reset by
+     * privileged admin operations.
+     */
+    ReadOnly = 1,
 
-	/**
-	 * Standard read/write semantics — subsequent writes replace
-	 * the previous value.
-	 */
-	CanOverride = 2,
+    /**
+     * Standard read/write semantics — subsequent writes replace
+     * the previous value.
+     */
+    CanOverride = 2,
 
 }

@@ -4,19 +4,19 @@
  */
 
 declare global {
-	/**
-	 * Cocos Creator 3.x global namespace
-	 */
-	const cc: CocosCreatorGlobal | undefined;
+    /**
+     * Cocos Creator 3.x global namespace
+     */
+    const cc: CocosCreatorGlobal | undefined;
 
-	interface CocosCreatorGlobal {
-		sys?: CocosCreatorSys;
-	}
+    interface CocosCreatorGlobal {
+        sys?: CocosCreatorSys;
+    }
 
-	interface CocosCreatorSys {
-		platform?: number;
-		localStorage?: Storage;
-	}
+    interface CocosCreatorSys {
+        platform?: number;
+        localStorage?: Storage;
+    }
 }
 
 export { };

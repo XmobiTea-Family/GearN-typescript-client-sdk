@@ -5,31 +5,31 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.gamePlayer`
-  - `GNNetwork.gamePlayer.server`
-  - `GNNetwork.gamePlayer.admin`
+    - `GNNetwork.gamePlayer`
+    - `GNNetwork.gamePlayer.server`
+    - `GNNetwork.gamePlayer.admin`
 - Toàn bộ method hiện tại của `GamePlayerApi` đều gửi qua HTTP.
 - `GamePlayerApi` có đủ 3 role thật:
-  - `GNNetwork.gamePlayer` -> `RequestRole.Client`
-  - `GNNetwork.gamePlayer.server` -> `RequestRole.Server`
-  - `GNNetwork.gamePlayer.admin` -> `RequestRole.Admin`
+    - `GNNetwork.gamePlayer` -> `RequestRole.Client`
+    - `GNNetwork.gamePlayer.server` -> `RequestRole.Server`
+    - `GNNetwork.gamePlayer.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Rule chuẩn để chọn `client/server/admin` và hiểu `self/other-self` xem [RULES](/docs/RULES.md#3-route--trust-boundary-của-caller). Không tự suy diễn route chỉ từ target ownership.
 - Với hầu hết flow thao tác trên một player cụ thể:
-  - `client` cho phép `userId?`
-  - `server/admin` bắt buộc `userId`
+    - `client` cho phép `userId?`
+    - `server/admin` bắt buộc `userId`
 - Rule thực tế:
-  - ở `client`, bỏ `userId` sẽ target game player hiện đang auth
-  - ở `server/admin`, phải truyền `userId` rõ ràng cho target player
+    - ở `client`, bỏ `userId` sẽ target game player hiện đang auth
+    - ở `server/admin`, phải truyền `userId` rõ ràng cho target player
 - `GamePlayerApi` là nhóm gameplay/profile của game player:
-  - đọc profile tổng hợp
-  - đọc relation nhẹ tới character, inventory, group, friend
-  - search player
-  - leaderboard toàn cục hoặc leaderboard trong mạng bạn bè
-  - create group, create character, create item
-  - add/remove friend, join/leave group
+    - đọc profile tổng hợp
+    - đọc relation nhẹ tới character, inventory, group, friend
+    - search player
+    - leaderboard toàn cục hoặc leaderboard trong mạng bạn bè
+    - create group, create character, create item
+    - add/remove friend, join/leave group
 - `GamePlayerApi` không thay thế `GroupApi`, `InventoryApi` hay `CharacterPlayerApi` cho các thao tác metadata chi tiết của entity con.
 - Realtime update friend/group là luồng riêng qua socket event handler, không phải transport của các method `GamePlayerApi`.
 
@@ -39,9 +39,9 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
 - Không dùng socket transport cho các method của `GamePlayerApi`.
 - Chọn namespace theo trust boundary:
-  - app/player -> `GNNetwork.gamePlayer`
-  - trusted backend/service -> `GNNetwork.gamePlayer.server`
-  - dashboard/ops/tooling -> `GNNetwork.gamePlayer.admin`
+    - app/player -> `GNNetwork.gamePlayer`
+    - trusted backend/service -> `GNNetwork.gamePlayer.server`
+    - dashboard/ops/tooling -> `GNNetwork.gamePlayer.admin`
 - Với `client`, chỉ nên bỏ `userId` khi thao tác trên game player hiện tại.
 - Với `server/admin`, mọi flow self-target có `userId` đều phải truyền giá trị này rõ ràng.
 - `getPlayerInformationAsync`, `getFriendStatisticsLeaderboardAroundPlayerAsync`, `getFriendStatisticsLeaderboardAsync`, `getPlayersWithDisplayNameAsync`, `getPlayersWithSegmentAsync`, `getPlayersWithTagAsync`, `getStatisticsLeaderboardAroundPlayerAsync`, `getStatisticsLeaderboardAsync`, `getCurrencyLeaderboardAsync`, `getLastLoginLeaderboardAsync` và `getCreateLeaderboardAsync` đều bắt buộc có `infoRequestParam`.
@@ -72,16 +72,17 @@ Realtime rule:
 
 - Muốn nhận event realtime, tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
 - `OnGamePlayerFriendUpdateEventHandler.onUpdate`:
-  - payload có `playerFriends`
-  - có thể có `characterId`
-  - không có `userId`
+    - payload có `playerFriends`
+    - có thể có `characterId`
+    - không có `userId`
 - `OnGamePlayerGroupUpdateEventHandler.onUpdate`:
-  - payload có `playerGroups`
-  - có thể có `characterId`
-  - không có `userId`
+    - payload có `playerGroups`
+    - có thể có `characterId`
+    - không có `userId`
 
 ## 4. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | `userId` behavior | Dùng khi nào |
 | --- | --- | --- | --- |
 | `GNNetwork.gamePlayer` | `Client` | Có thể bỏ `userId` để target player hiện tại | player app thao tác trên game profile của chính user hiện tại |
@@ -99,6 +100,7 @@ Rule nhanh:
 
 ### Đọc 1 game player hoặc 1 phần hồ sơ
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar | `userId?` | `GamePlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `GamePlayerNotFound` |
@@ -123,6 +125,7 @@ Rule nhanh:
 
 ### Search, leaderboard và log
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getPlayersWithDisplayNameAsync` | Tìm player theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `GamePlayersWithUserIdResponseData` | Phân trang bằng `skip/limit` | `Ok` |
@@ -140,6 +143,7 @@ Rule nhanh:
 
 ### Friend, group, character và item lifecycle
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addPlayerFriendAsync` | Thêm một quan hệ friend | `userId?`, `friendId`, `catalogId` | `EmptyResponseData` | Không được quên `catalogId` | `Ok`, `CatalogIdNotFound`, `GamePlayerNotFound`, `PlayerBan` |
@@ -154,6 +158,7 @@ Rule nhanh:
 
 ### Mutation profile
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addSegmentAsync` | Gắn thêm segment | `userId?`, `value` | `EmptyResponseData` | Thêm một segment value | `Ok`, `GamePlayerNotFound`, `PlayerBan` |
@@ -201,15 +206,15 @@ Rule cứng:
 - Không bật toàn bộ field một cách mù quáng.
 - Chỉ bật field mà flow hiện tại thật sự cần.
 - Nếu cần filter dữ liệu con, dùng đúng field filter:
-  - `playerDataKeys`
-  - `playerCurrencyKeys`
-  - `playerStatisticsKeys`
-  - `customDataKeys`
-  - `tagKeys`
-  - `characterCatalogIds`
-  - `itemCatalogIds`
-  - `groupCatalogIds`
-  - `friendCatalogIds`
+    - `playerDataKeys`
+    - `playerCurrencyKeys`
+    - `playerStatisticsKeys`
+    - `customDataKeys`
+    - `tagKeys`
+    - `characterCatalogIds`
+    - `itemCatalogIds`
+    - `groupCatalogIds`
+    - `friendCatalogIds`
 - Nếu chỉ cần relation nhẹ của một nhóm con, ưu tiên getter chuyên biệt như `getPlayerCharacterAsync`, `getPlayerInventoryAsync`, `getPlayerGroupAsync`, `getPlayerFriendAsync`.
 - Nếu bạn cần full metadata của character, item hoặc group, không được dừng ở relation item của `GamePlayerApi`; phải gọi API chuyên biệt tương ứng.
 
@@ -285,10 +290,10 @@ Những response chính AI cần nhớ:
 ## 10. Cảnh Báo Implementation Hiện Tại
 
 - `CharacterItem`, `InventoryItem`, `GroupItem`, `FriendItem` trong `GamePlayerApi` là relation item nhẹ:
-  - `CharacterItem` chỉ có `characterId`, `catalogId`
-  - `InventoryItem` chỉ có `itemId`, `catalogId`, `classId`
-  - `GroupItem` chỉ có `groupId`, `catalogId`, `status`, `tsLastStatusUpdate`
-  - `FriendItem` chỉ có `friendId`, `catalogId`, `status`, `tsLastStatusUpdate`
+    - `CharacterItem` chỉ có `characterId`, `catalogId`
+    - `InventoryItem` chỉ có `itemId`, `catalogId`, `classId`
+    - `GroupItem` chỉ có `groupId`, `catalogId`, `status`, `tsLastStatusUpdate`
+    - `FriendItem` chỉ có `friendId`, `catalogId`, `status`, `tsLastStatusUpdate`
 - Nếu bạn cần display name, amount, statistics, owner hoặc metadata sâu hơn, phải gọi API chuyên biệt tương ứng.
 - `createGroupAsync`, `createPlayerCharacterAsync`, `createPlayerItemAsync` hiện không có response field public riêng cho id vừa tạo.
 - Nếu flow sau đó cần id mới, bạn phải re-query hoặc verify backend contract riêng.
@@ -312,11 +317,7 @@ Những response chính AI cần nhớ:
 ### Đọc thông tin game player hiện tại với `infoRequestParam` tối giản
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GamePlayerModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GamePlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new GamePlayerModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -344,11 +345,7 @@ const playerInfo = response.responseData.infoResponseParameters;
 ### Backend đọc profile và tự tạo game player nếu chưa tồn tại
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GamePlayerModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GamePlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new GamePlayerModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -376,12 +373,7 @@ const playerInfo = response.responseData.infoResponseParameters;
 ### Add friend rồi đồng bộ UI bằng realtime event
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GamePlayerModels,
-    OnGamePlayerFriendUpdateEventHandler,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GamePlayerModels, OnGamePlayerFriendUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGamePlayerFriendUpdateEventHandler.onUpdate = (update) => {
     const friendItems = update.playerFriends;
@@ -408,11 +400,7 @@ if (response.errorCode !== ErrorCode.Ok) {
 ### Tạo item cho player rồi re-query relation item
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GamePlayerModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GamePlayerModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const createRequest = new GamePlayerModels.CreatePlayerItemRequestData();
 createRequest.catalogId = "weapon";

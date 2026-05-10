@@ -24,8 +24,9 @@ const res = await GNNetwork.inventory.<method>Async(requestData, overrideAuthTok
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -35,11 +36,11 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 ## Client methods (`GNNetwork.inventory.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `itemId` mà `gamePlayer` đang authenticated hoặc các `characterPlayer` thuộc về `gamePlayer` không phải là owner của `inventory` này |
-|--------|-------------|------------|----------------|--------------------------|----------------------------------------------------------------------------------------------------------------------|
+| --- | --- | --- | --- | --- | --- |
 | `addSegment` | `InventoryModels.AddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` | `inventory.addSegment.selfEnable` | `inventory.addSegment.otherSelfEnable` |
 | `getAmount` | `InventoryModels.GetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` | `inventory.getAmount.selfEnable` | `inventory.getAmount.otherSelfEnable` |
 | `getAvatar` | `InventoryModels.GetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` | `inventory.getAvatar.selfEnable` | `inventory.getAvatar.otherSelfEnable` |
@@ -75,11 +76,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getCreateLeaderboard` | `InventoryModels.GetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` | `inventory.getCreateLeaderboard.otherSelfEnable` | |
 | `getStatisticsLog` | `InventoryModels.GetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` | `inventory.getStatisticsLog.selfEnable` | `inventory.getStatisticsLog.otherSelfEnable` |
 
-
 ## Server methods (`GNNetwork.inventory.server.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addSegment` | `InventoryModels.ServerAddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` | `inventory.addSegment.serverSelfEnable` |
 | `getAmount` | `InventoryModels.ServerGetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` | `inventory.getAmount.serverSelfEnable` |
 | `getAvatar` | `InventoryModels.ServerGetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` | `inventory.getAvatar.serverSelfEnable` |
@@ -115,11 +116,11 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getCreateLeaderboard` | `InventoryModels.ServerGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` | `inventory.getCreateLeaderboard.serverSelfEnable` |
 | `getStatisticsLog` | `InventoryModels.ServerGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` | `inventory.getStatisticsLog.serverSelfEnable` |
 
-
 ## Admin methods (`GNNetwork.inventory.admin.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `addSegment` | `InventoryModels.AdminAddSegmentRequestData` | `addSegmentAsync(...)` | `InventoryResponseModels.AddSegmentOperationResponse` | `inventory.addSegment.adminSelfEnable` |
 | `getAmount` | `InventoryModels.AdminGetAmountRequestData` | `getAmountAsync(...)` | `InventoryResponseModels.GetAmountOperationResponse` | `inventory.getAmount.adminSelfEnable` |
 | `getAvatar` | `InventoryModels.AdminGetAvatarRequestData` | `getAvatarAsync(...)` | `InventoryResponseModels.GetAvatarOperationResponse` | `inventory.getAvatar.adminSelfEnable` |
@@ -154,7 +155,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `setTag` | `InventoryModels.AdminSetTagRequestData` | `setTagAsync(...)` | `InventoryResponseModels.SetTagOperationResponse` | `inventory.setTag.adminSelfEnable` |
 | `getCreateLeaderboard` | `InventoryModels.AdminGetCreateLeaderboardRequestData` | `getCreateLeaderboardAsync(...)` | `InventoryResponseModels.GetCreateLeaderboardOperationResponse` | `inventory.getCreateLeaderboard.adminSelfEnable` |
 | `getStatisticsLog` | `InventoryModels.AdminGetStatisticsLogRequestData` | `getStatisticsLogAsync(...)` | `InventoryResponseModels.GetStatisticsLogOperationResponse` | `inventory.getStatisticsLog.adminSelfEnable` |
-
 
 ## Ví dụ tối thiểu
 

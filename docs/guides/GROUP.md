@@ -5,14 +5,14 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 ## 1. Scope
 
 - Áp dụng cho:
-  - `GNNetwork.group`
-  - `GNNetwork.group.server`
-  - `GNNetwork.group.admin`
+    - `GNNetwork.group`
+    - `GNNetwork.group.server`
+    - `GNNetwork.group.admin`
 - Toàn bộ method hiện tại của `GroupApi` đều gửi qua HTTP.
 - `GroupApi` có đủ 3 role thật:
-  - `GNNetwork.group` -> `RequestRole.Client`
-  - `GNNetwork.group.server` -> `RequestRole.Server`
-  - `GNNetwork.group.admin` -> `RequestRole.Admin`
+    - `GNNetwork.group` -> `RequestRole.Client`
+    - `GNNetwork.group.server` -> `RequestRole.Server`
+    - `GNNetwork.group.admin` -> `RequestRole.Admin`
 - Nếu không truyền `overrideSecretKey`, SDK sẽ tự lấy secret key theo role tương ứng.
 - Chỉ dùng namespace `.server` khi bạn đã cấu hình `secretKey` với `permission rules` `server` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
 - Chỉ dùng namespace `.admin` khi bạn đã cấu hình `secretKey` với `permission rules` `admin` hợp lệ trong `GNServerSettings`, hoặc chủ động truyền `overrideSecretKey`.
@@ -25,9 +25,9 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Luôn ưu tiên `async/await`. Mặc định dùng `*Async()`.
 - Bắt buộc đã `GNNetwork.init(settings)` trước khi gọi.
 - Chọn namespace theo trust boundary:
-  - app/player -> `GNNetwork.group`
-  - trusted backend/service -> `GNNetwork.group.server`
-  - dashboard/ops/tooling -> `GNNetwork.group.admin`
+    - app/player -> `GNNetwork.group`
+    - trusted backend/service -> `GNNetwork.group.server`
+    - dashboard/ops/tooling -> `GNNetwork.group.admin`
 - Không được gọi `GroupApi` để tạo group hoặc join/leave group. Các flow đó nằm ở API player khác.
 - Toàn bộ operation trong `GroupApi` hiện đi qua HTTP, kể cả `sendGroupMessageAsync`.
 - Realtime update group tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
@@ -54,15 +54,16 @@ Event handler public: xem [reference/EVENTS.md](/docs/reference/EVENTS.md#ongrou
 Realtime rule:
 
 - `OnGroupMessageUpdateEventHandler.onUpdate`:
-  - payload có `groupId`
-  - có `groupMessages`
-  - có thể có `characterId` nếu người gửi là CharacterPlayer
+    - payload có `groupId`
+    - có `groupMessages`
+    - có thể có `characterId` nếu người gửi là CharacterPlayer
 - `OnGroupMemberUpdateEventHandler.onUpdate`:
-  - payload có `groupId`
-  - payload có `members`
+    - payload có `groupId`
+    - payload có `members`
 
 ## 4. Chọn Namespace
 
+<!-- prettier-ignore -->
 | Namespace | Role thật | Dùng khi nào |
 | --- | --- | --- |
 | `GNNetwork.group` | `Client` | player app thao tác với group thuộc session hiện tại |
@@ -79,6 +80,7 @@ Rule nhanh:
 
 ### Đọc 1 group hoặc 1 phần dữ liệu group
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar group | `groupId` | `GroupResponseData` | `avatar.type` hiện là số thô | `Ok`, `GroupNotFound` |
@@ -98,6 +100,7 @@ Rule nhanh:
 
 ### Query danh sách, leaderboard, log và message history
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getGroupsWithDisplayNameAsync` | Tìm group theo tên hiển thị | `keyword`, `infoRequestParam`, `skip?`, `limit?` | `GroupsWithGroupIdResponseData` | `keyword` tối thiểu 2 ký tự | `Ok` |
@@ -113,6 +116,7 @@ Rule nhanh:
 
 ### Mutation
 
+<!-- prettier-ignore -->
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `addMemberAsync` | Thêm một user vào group | `userId`, `groupId` | `EmptyResponseData` | Chỉ thêm 1 member mỗi lần | `Ok`, `GroupNotFound`, `MemberNotFound` |
@@ -139,8 +143,8 @@ Rule nhanh:
 - Enums: [GroupStatus](/docs/reference/ENUMS.md#groupstatus).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Group*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - Lưu ý:
-  - `GroupStatus` là enum publish có thật, nhưng `MemberItem.status` trong `GroupApi` không được ràng buộc bằng enum public riêng.
-  - `senderType`, `avatar.type` và `MemberItem.status` hiện vẫn là số thô trong public surface.
+    - `GroupStatus` là enum publish có thật, nhưng `MemberItem.status` trong `GroupApi` không được ràng buộc bằng enum public riêng.
+    - `senderType`, `avatar.type` và `MemberItem.status` hiện vẫn là số thô trong public surface.
 
 ## 7. InfoRequestParam Rules
 
@@ -161,12 +165,12 @@ Rule cứng:
 - Không bật toàn bộ field một cách mù quáng.
 - Chỉ bật field mà flow hiện tại thật sự cần.
 - Nếu cần filter dữ liệu con, dùng đúng field filter:
-  - `groupDataKeys`
-  - `groupCurrencyKeys`
-  - `groupStatisticsKeys`
-  - `customDataKeys`
-  - `tagKeys`
-  - `itemCatalogIds`
+    - `groupDataKeys`
+    - `groupCurrencyKeys`
+    - `groupStatisticsKeys`
+    - `customDataKeys`
+    - `tagKeys`
+    - `itemCatalogIds`
 - Nếu chỉ cần một mảng con riêng lẻ như members, group data, group currency, group statistics hoặc group inventory, ưu tiên getter chuyên biệt thay vì `getGroupInformationAsync`.
 
 Các field thường dùng:
@@ -259,11 +263,7 @@ Những response chính AI cần nhớ:
 ### Đọc group information với `infoRequestParam` tối giản
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GroupModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GroupModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const infoRequestParam = new GroupModels.InfoRequestParam();
 infoRequestParam.displayName = true;
@@ -291,12 +291,7 @@ const groupInfo = response.responseData.infoResponseParameters;
 ### Gửi message và nhận realtime update
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GroupModels,
-    OnGroupMessageUpdateEventHandler,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GroupModels, OnGroupMessageUpdateEventHandler } from "@xmobitea/gearn-typescript-client-sdk";
 
 OnGroupMessageUpdateEventHandler.onUpdate = (update) => {
     if (update.groupId !== "GROUP00001") {
@@ -330,11 +325,7 @@ const sentMessages = response.responseData.groupMessages;
 ### Tạo item cho group
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GroupModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GroupModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new GroupModels.CreateGroupItemRequestData();
 request.groupId = "GROUP00001";
@@ -359,11 +350,7 @@ const groupInfo = response.responseData.infoResponseParameters;
 ### Đọc currency log với cursor
 
 ```ts
-import {
-    ErrorCode,
-    GNNetwork,
-    GroupModels,
-} from "@xmobitea/gearn-typescript-client-sdk";
+import { ErrorCode, GNNetwork, GroupModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 const request = new GroupModels.GetCurrencyLogRequestData();
 request.groupId = "GROUP00001";

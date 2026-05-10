@@ -22,8 +22,9 @@ const res = await GNNetwork.authenticate.<method>Async(requestData, overrideAuth
 
 Param chung:
 
+<!-- prettier-ignore -->
 | Param | Type | Optional | Notes |
-|-------|------|----------|-------|
+| --- | --- | --- | --- |
 | `requestData` | domain-specific (xem bảng dưới) | no | Payload chính |
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
@@ -33,13 +34,13 @@ Param chung:
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
-
 > `server` / `admin` namespace hiện tại không có method public — giữ để đối xứng API.
 
 ## Client methods (`GNNetwork.authenticate.*`)
 
+<!-- prettier-ignore -->
 | Method | Request DTO | Async form | Response class | Default Permission Rules |
-|--------|-------------|------------|----------------|--------------------------|
+| --- | --- | --- | --- | --- |
 | `loginByAccount` | `AuthenticateModels.LoginByAccountRequestData` | `loginByAccountAsync(...)` | `AuthenticateResponseModels.LoginByAccountOperationResponse` | `authenticate.loginByAccount.selfEnable` |
 | `loginByAndroidDeviceId` | `AuthenticateModels.LoginByAndroidDeviceIdRequestData` | `loginByAndroidDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse` | `authenticate.loginByAndroidDeviceId.selfEnable` |
 | `loginByApple` | `AuthenticateModels.LoginByAppleRequestData` | `loginByAppleAsync(...)` | `AuthenticateResponseModels.LoginByAppleOperationResponse` | `authenticate.loginByApple.selfEnable` |
@@ -58,9 +59,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `loginByWindowsPhoneDeviceId` | `AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData` | `loginByWindowsPhoneDeviceIdAsync(...)` | `AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse` | `authenticate.loginByWindowsPhoneDeviceId.selfEnable` |
 | `registerAccount` | `AuthenticateModels.RegisterAccountRequestData` | `registerAccountAsync(...)` | `AuthenticateResponseModels.RegisterAccountOperationResponse` | `authenticate.registerAccount.selfEnable` |
 | `refreshAuthToken` | `AuthenticateModels.RefreshAuthTokenRequestData` | `refreshAuthTokenAsync(...)` | `AuthenticateResponseModels.RefreshAuthTokenOperationResponse` | `authenticate.refreshAuthToken.selfEnable` |
-
-
-
 
 ## Ví dụ tối thiểu
 

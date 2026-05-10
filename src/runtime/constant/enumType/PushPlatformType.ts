@@ -9,16 +9,16 @@
  * `MasterPlayerModels.PushNotificationRegistration.platformType`.
  */
 export enum PushPlatformType {
-	/**
-	 * Android — the registered token is an FCM token consumed by
-	 * the backend's Firebase integration.
-	 */
-	Android = 1,
+    /**
+     * Android — the registered token is an FCM token consumed by
+     * the backend's Firebase integration.
+     */
+    Android = 1,
 
-	/**
-	 * iOS — the registered token is an APNS token consumed by the
-	 * backend's Apple push integration.
-	 */
-	iOS = 2,
+    /**
+     * iOS — the registered token is an APNS token consumed by the
+     * backend's Apple push integration.
+     */
+    iOS = 2,
 
 }
