@@ -149,20 +149,6 @@ export namespace GamePlayerResponseModels {
     }
 
     /**
-     * Maps the GetOnlineStatus operation to a typed response wrapper.
-     */
-    export class GetOnlineStatusOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {
-
-        /**
-         * Creates a new GetOnlineStatusOperationResponse instance.
-         */
-        constructor() {
-            super();
-            this.responseDataCls = GamePlayerModels.GamePlayerResponseData;
-        }
-    }
-
-    /**
      * Maps the GetPlayerBan operation to a typed response wrapper.
      */
     export class GetPlayerBanOperationResponse extends CustomOperationResponseAbstract<GamePlayerModels.GamePlayerResponseData> {

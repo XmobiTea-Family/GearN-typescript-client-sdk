@@ -1266,6 +1266,20 @@ export class MasterPlayerApi {
         return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.SendPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
     }
 
+    /**
+     * Sends the getOnlineStatus operation and returns the typed response via callback.
+     */
+    public getOnlineStatus(requestData: MasterPlayerModels.GetOnlineStatusRequestData, onResponse: Action1<MasterPlayerResponseModels.GetOnlineStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.GetOnlineStatusOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetOnlineStatusOperationResponse);
+    }
+
+    /**
+     * Sends the getOnlineStatus operation and resolves with the typed response.
+     */
+    public async getOnlineStatusAsync(requestData: MasterPlayerModels.GetOnlineStatusRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetOnlineStatusOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.GetOnlineStatusOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetOnlineStatusOperationResponse);
+    }
+
 }
 
 /**
@@ -2467,6 +2481,20 @@ export class ServerMasterPlayerApi {
      */
     public async sendPushNotificationAsync(requestData: MasterPlayerModels.ServerSendPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendPushNotificationOperationResponse> {
         return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerSendPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
+    }
+
+    /**
+     * Sends the getOnlineStatus operation and returns the typed response via callback.
+     */
+    public getOnlineStatus(requestData: MasterPlayerModels.ServerGetOnlineStatusRequestData, onResponse: Action1<MasterPlayerResponseModels.GetOnlineStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.ServerGetOnlineStatusOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetOnlineStatusOperationResponse);
+    }
+
+    /**
+     * Sends the getOnlineStatus operation and resolves with the typed response.
+     */
+    public async getOnlineStatusAsync(requestData: MasterPlayerModels.ServerGetOnlineStatusRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetOnlineStatusOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.ServerGetOnlineStatusOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetOnlineStatusOperationResponse);
     }
 
 }
@@ -3671,6 +3699,20 @@ export class AdminMasterPlayerApi {
      */
     public async sendPushNotificationAsync(requestData: MasterPlayerModels.AdminSendPushNotificationRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.SendPushNotificationOperationResponse> {
         return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminSendPushNotificationOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.SendPushNotificationOperationResponse);
+    }
+
+    /**
+     * Sends the getOnlineStatus operation and returns the typed response via callback.
+     */
+    public getOnlineStatus(requestData: MasterPlayerModels.AdminGetOnlineStatusRequestData, onResponse: Action1<MasterPlayerResponseModels.GetOnlineStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new MasterPlayerRequestModels.AdminGetOnlineStatusOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetOnlineStatusOperationResponse);
+    }
+
+    /**
+     * Sends the getOnlineStatus operation and resolves with the typed response.
+     */
+    public async getOnlineStatusAsync(requestData: MasterPlayerModels.AdminGetOnlineStatusRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<MasterPlayerResponseModels.GetOnlineStatusOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new MasterPlayerRequestModels.AdminGetOnlineStatusOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, MasterPlayerResponseModels.GetOnlineStatusOperationResponse);
     }
 
 }

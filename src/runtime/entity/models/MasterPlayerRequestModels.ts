@@ -4035,4 +4035,51 @@ export namespace MasterPlayerRequestModels {
         }
     }
 
+    /**
+     * Maps the GetOnlineStatus operation to a typed request wrapper.
+     */
+    export class GetOnlineStatusOperationRequest extends CustomOperationRequestAbstract<MasterPlayerModels.GetOnlineStatusRequestData> {
+        protected override operationCode: string = OperationCode.GetOnlineStatus;
+        protected override requestType: RequestType = RequestType.MasterPlayer;
+        protected override role: RequestRole = RequestRole.Client;
+
+        /**
+         * Creates a new GetOnlineStatusOperationRequest instance.
+         */
+        constructor(requestData: MasterPlayerModels.GetOnlineStatusRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.GetOnlineStatusRequestData;
+        }
+    }
+
+    /**
+     * Maps the ServerGetOnlineStatus operation to a typed request wrapper.
+     */
+    export class ServerGetOnlineStatusOperationRequest extends GetOnlineStatusOperationRequest {
+        protected override role: RequestRole = RequestRole.Server;
+
+        /**
+         * Creates a new ServerGetOnlineStatusOperationRequest instance.
+         */
+        constructor(requestData: MasterPlayerModels.ServerGetOnlineStatusRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.ServerGetOnlineStatusRequestData;
+        }
+    }
+
+    /**
+     * Maps the AdminGetOnlineStatus operation to a typed request wrapper.
+     */
+    export class AdminGetOnlineStatusOperationRequest extends GetOnlineStatusOperationRequest {
+        protected override role: RequestRole = RequestRole.Admin;
+
+        /**
+         * Creates a new AdminGetOnlineStatusOperationRequest instance.
+         */
+        constructor(requestData: MasterPlayerModels.AdminGetOnlineStatusRequestData, timeout: number) {
+            super(requestData, timeout);
+            this.requestDataCls = MasterPlayerModels.AdminGetOnlineStatusRequestData;
+        }
+    }
+
 }

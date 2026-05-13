@@ -95,12 +95,6 @@ export namespace GamePlayerModels {
         public playerGroups?: boolean;
 
         /**
-         * Includes the player's online status, if supported by the connected game server
-         */
-        @BooleanDataMember({ code: ParameterCode.OnlineStatus, isOptional: true, defaultValue: false })
-        public onlineStatus?: boolean;
-
-        /**
          * Includes relation items for friends attached to the player, optionally filtered by `friendCatalogIds`.
          */
         @BooleanDataMember({ code: ParameterCode.PlayerFriends, isOptional: true, defaultValue: false })
@@ -470,30 +464,6 @@ export namespace GamePlayerModels {
      * Defines the request payload for AdminGetIpAddressCreate.
      */
     export class AdminGetIpAddressCreateRequestData extends ServerGetIpAddressCreateRequestData {
-    }
-
-    /**
-     * Defines the request payload for GetOnlineStatus.
-     */
-    export class GetOnlineStatusRequestData {
-        @StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
-        public userId?: string;
-
-    }
-
-    /**
-     * Defines the request payload for ServerGetOnlineStatus.
-     */
-    export class ServerGetOnlineStatusRequestData extends GetOnlineStatusRequestData {
-        @StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
-        public declare userId: string;
-
-    }
-
-    /**
-     * Defines the request payload for AdminGetOnlineStatus.
-     */
-    export class AdminGetOnlineStatusRequestData extends ServerGetOnlineStatusRequestData {
     }
 
     /**
@@ -1676,18 +1646,6 @@ export namespace GamePlayerModels {
     }
 
     /**
-     * Reports the latest known login timestamp and active socket identity for a player.
-     */
-    export class OnlineStatusItem {
-        @NumberDataMember({ code: ParameterCode.TsLastLogin })
-        public tsLastLogin: number;
-
-        @StringDataMember({ code: ParameterCode.SocketId })
-        public socketId: string;
-
-    }
-
-    /**
      * Contains the optional fields requested through `InfoRequestParam`.
      */
     export class InfoResponseParameters {
@@ -1720,9 +1678,6 @@ export namespace GamePlayerModels {
 
         @GNArrayDataMember({ code: ParameterCode.PlayerStatistics, isOptional: true, elementCls: GenericModels.StatisticsItem })
         public playerStatistics?: Array<GenericModels.StatisticsItem>;
-
-        @GNHashtableDataMember({ code: ParameterCode.OnlineStatus, isOptional: true })
-        public onlineStatus?: OnlineStatusItem;
 
         /**
          * Lightweight relation items for owned character players, not full character snapshots.

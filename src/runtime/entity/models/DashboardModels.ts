@@ -660,9 +660,6 @@ export namespace DashboardModels {
         @GNHashtableDataMember({ code: ParameterCode.RemovePlayerItem, isOptional: true })
         public removePlayerItem?: PermissionRulesParam;
 
-        @GNHashtableDataMember({ code: ParameterCode.GetOnlineStatus, isOptional: true })
-        public getOnlineStatus?: PermissionRulesParam;
-
         @GNHashtableDataMember({ code: ParameterCode.CreateGroup, isOptional: true })
         public createGroup?: PermissionRulesParam;
 
@@ -1427,6 +1424,9 @@ export namespace DashboardModels {
 
         @GNHashtableDataMember({ code: ParameterCode.GetPushNotification, isOptional: true })
         public getPushNotification?: PermissionRulesParam;
+
+        @GNHashtableDataMember({ code: ParameterCode.GetOnlineStatus, isOptional: true })
+        public getOnlineStatus?: PermissionRulesParam;
 
     }
 
