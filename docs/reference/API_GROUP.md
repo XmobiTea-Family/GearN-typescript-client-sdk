@@ -2,7 +2,11 @@
 
 Group metadata, member roster, message stream, group-level currency/inventory/statistics.
 
-Domain guide: [guides/GROUP.md](/docs/guides/GROUP.md). DTO shapes: [dto/GROUP.md](/docs/reference/dto/GROUP.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/GROUP.md](/docs/guides/GROUP.md)
+- DTO shapes: [dto/GROUP.md](/docs/reference/dto/GROUP.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 

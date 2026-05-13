@@ -36,6 +36,12 @@ GNNetwork.init(settings);
 - `GNServerSettings.config(options)` thay thế toàn bộ snapshot — không merge partial. Nếu muốn đổi từng field, dùng setter như `setServerAddress`.
 - Không commit `secretKey` chứa `permission rules` có permission `admin` hoặc `server` vào production.
 
+## Lấy `secretKey` và `gameId` ở đâu
+
+- Cả 2 do **GearN Dashboard** cấp. Tạo game → tạo secret key → copy chuỗi vào config. Mỗi secret có permission flag riêng (xem [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)).
+- Một game thường có nhiều secret theo trust boundary: 1 secret cho app client (chỉ `selfEnable`), 1 cho game server (`serverSelfEnable`), 1 cho admin tool (`adminSelfEnable`). KHÔNG dùng secret admin/server cho app client — secret sẽ bị expose.
+- `gameId` phải khớp game của `secretKey`; sai cặp → `ReturnCode.SecretInvalid`.
+
 ---
 
 ## Bảng field

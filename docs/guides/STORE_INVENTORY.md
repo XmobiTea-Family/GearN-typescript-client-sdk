@@ -73,16 +73,18 @@ Rule nhanh:
 ### Audit và used state
 
 <!-- prettier-ignore -->
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
-| `getStoreLogAsync` | Đọc transaction log của store | `storeId?`, `storeReceiveTypes?`, `id?`, `limit?`, `token?` | `GetStoreLogResponseData` | `token` là cursor cho page tiếp |
-| `getStoreUsedAsync` | Xem owner nào đã dùng store item | `storeId` | `GetStoreUsedResponseData` | Trả list owner id/type |
-| `removeStoreUsedAsync` | Xóa used state của một hoặc nhiều owner | `storeId`, `ownerIds?` | `EmptyResponseData` | Chỉ gọi khi hiểu rõ hậu quả |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
+| --- | --- | --- | --- | --- | --- |
+| `getStoreLogAsync` | Đọc transaction log của store | `storeId?`, `storeReceiveTypes?`, `id?`, `limit?`, `token?` | `GetStoreLogResponseData` | `token` là cursor cho page tiếp | `Ok` |
+| `getStoreUsedAsync` | Xem owner nào đã dùng store item | `storeId` | `GetStoreUsedResponseData` | Trả list owner id/type | `Ok` |
+| `removeStoreUsedAsync` | Xóa used state của một hoặc nhiều owner | `storeId`, `ownerIds?` | `EmptyResponseData` | Chỉ gọi khi hiểu rõ hậu quả | `Ok` |
 
 ## 5. Enum và Reference
 
 - DTO fields: [reference/dto/STORE_INVENTORY.md](/docs/reference/dto/STORE_INVENTORY.md). Method table: [reference/API_STORE_INVENTORY.md](/docs/reference/API_STORE_INVENTORY.md).
 - Enums: [StoreItemType](/docs/reference/ENUMS.md#storeitemtype), [StoreReceiveType](/docs/reference/ENUMS.md#storereceivetype), [OwnerType](/docs/reference/ENUMS.md#ownertype).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/StoreInventory*.d.ts`.
 - `SetStoreItemInformationRequestData.storeItemType` có range `1..2`, nên map bằng `StoreItemType`.
 - `GetStoreLogRequestData.storeReceiveTypes` nên map bằng `StoreReceiveType`.
@@ -138,17 +140,23 @@ Tất cả typed response của `StoreInventoryApi` đều có:
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 

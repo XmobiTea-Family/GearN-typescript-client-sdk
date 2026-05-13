@@ -2,7 +2,11 @@
 
 Content data key-value, file upload info, download token.
 
-Domain guide: [guides/CONTENT.md](/docs/guides/CONTENT.md). DTO shapes: [dto/CONTENT.md](/docs/reference/dto/CONTENT.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/CONTENT.md](/docs/guides/CONTENT.md)
+- DTO shapes: [dto/CONTENT.md](/docs/reference/dto/CONTENT.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 

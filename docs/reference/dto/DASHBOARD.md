@@ -4,9 +4,11 @@ Admin login, game/admin account/secret management, analytics, server log, mainte
 
 Related API reference: [API_DASHBOARD.md](/docs/reference/API_DASHBOARD.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new DashboardModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Route đặc biệt**: Public wrapper `GNNetwork.dashboard.*` đi `RequestRole.Client`; backend resolve admin context từ `authToken` sau `loginByAdminAccountAsync` — không cần secret admin riêng. `GNNetwork.dashboard.server` và `GNNetwork.dashboard.admin` hiện rỗng. Xem [RULES § 3 ngoại lệ DashboardApi](/docs/RULES.md#ngo%E1%BA%A1i-l%E1%BB%87-dashboardapi).
 
 ## Danh sách
 
@@ -194,8 +196,8 @@ Defines the reusable parameter block FriendCatalogSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
-| `forceAcceptFriend` | `boolean` | yes | — |
+| `description` | `string` | yes | Human-readable description of this friend catalog. |
+| `forceAcceptFriend` | `boolean` | yes | When `true`, friend requests are automatically accepted without explicit approval from the recipient. |
 
 ### ItemClassSettingsParam
 
@@ -205,7 +207,7 @@ Defines the reusable parameter block ItemClassSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `classId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
+| `description` | `string` | yes | Human-readable description of this item class. |
 
 ### ItemCatalogSettingsParam
 
@@ -215,8 +217,8 @@ Defines the reusable parameter block ItemCatalogSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `itemType` | `number` | yes | — |
-| `itemClassSettings` | `Array<ItemClassSettingsParam>` | yes | _elementCls=ItemClassSettingsParam_ |
+| `itemType` | `number` | yes | Item type identifier. Map with the public `ItemType` enum. |
+| `itemClassSettings` | `Array<ItemClassSettingsParam>` | yes | List of item class configurations belonging to this catalog. — _elementCls=ItemClassSettingsParam_ |
 
 ### GroupCatalogSettingsParam
 
@@ -226,8 +228,8 @@ Defines the reusable parameter block GroupCatalogSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
-| `forceAcceptMember` | `boolean` | yes | — |
+| `description` | `string` | yes | Human-readable description of this group catalog. |
+| `forceAcceptMember` | `boolean` | yes | When `true`, member join requests are automatically accepted without explicit approval from the group owner. |
 
 ### TagSettingsParam
 
@@ -237,8 +239,8 @@ Defines the reusable parameter block TagSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
-| `index` | `boolean` | yes | — |
+| `description` | `string` | yes | Human-readable description of this tag key. |
+| `index` | `boolean` | yes | Whether this tag key is indexed for query filtering (e.g. `getPlayersWithTag`). |
 
 ### DataSettingsParam
 
@@ -248,8 +250,8 @@ Defines the reusable parameter block DataSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
-| `permission` | `number` | yes | — |
+| `description` | `string` | yes | Human-readable description of this data key. |
+| `permission` | `number` | yes | Read/write permission level for this data key. Map with the public permission enum. |
 
 ### StatisticsSettingsParam
 
@@ -259,12 +261,12 @@ Defines the reusable parameter block StatisticsSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `statisticsAggregationMethod` | `number` | yes | — |
-| `maximumValue` | `number` | no | _default=0_ |
-| `minimumValue` | `number` | no | _default=0_ |
-| `initialValue` | `number` | yes | — |
-| `description` | `string` | yes | — |
-| `index` | `boolean` | yes | — |
+| `statisticsAggregationMethod` | `number` | yes | Aggregation method applied when updating this statistic. Map with the public `StatisticsAggregationMethod` enum. |
+| `maximumValue` | `number` | no | Maximum allowed value for this statistic; 0 means no upper bound. — _default=0_ |
+| `minimumValue` | `number` | no | Minimum allowed value for this statistic; 0 means no lower bound. — _default=0_ |
+| `initialValue` | `number` | yes | Initial value assigned to this statistic when a player/entity is first created. |
+| `description` | `string` | yes | Human-readable description of this statistic. |
+| `index` | `boolean` | yes | Whether this statistic is indexed for leaderboard queries. |
 
 ### CurrencySettingsParam
 
@@ -274,9 +276,9 @@ Defines the reusable parameter block CurrencySettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `initialValue` | `number` | yes | — |
-| `description` | `string` | yes | — |
-| `index` | `boolean` | yes | — |
+| `initialValue` | `number` | yes | Initial balance assigned when a player/entity is first created. |
+| `description` | `string` | yes | Human-readable description of this currency. |
+| `index` | `boolean` | yes | Whether this currency balance is indexed for leaderboard queries. |
 
 ### CharacterCatalogSettingsParam
 
@@ -286,7 +288,7 @@ Defines the reusable parameter block CharacterCatalogSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
+| `description` | `string` | yes | Human-readable description of this character catalog. |
 
 ### CharacterPlayerPermissionRulesParam
 
@@ -387,11 +389,11 @@ Defines the reusable parameter block ThirtPartyAppleSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `appleClientId` | `string` | yes | — |
-| `sandboxEnable` | `boolean` | yes | — |
-| `issuerId` | `string` | yes | — |
-| `keyId` | `string` | yes | — |
-| `p8Content` | `string` | yes | — |
+| `appleClientId` | `string` | yes | Apple client ID (Services ID) from App Store Connect, used for Sign in with Apple. |
+| `sandboxEnable` | `boolean` | yes | When `true`, use Apple's sandbox environment for in-app purchase validation. |
+| `issuerId` | `string` | yes | Issuer ID from App Store Connect used for JWT signing. |
+| `keyId` | `string` | yes | Key ID from App Store Connect corresponding to the `.p8` private key. |
+| `p8Content` | `string` | yes | Raw content of the `.p8` private key file downloaded from App Store Connect. |
 
 ### ThirtPartyFacebookSettingsParam
 
@@ -400,9 +402,9 @@ Defines the reusable parameter block ThirtPartyFacebookSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `facebookAppId` | `string` | yes | — |
-| `facebookAppToken` | `string` | yes | — |
-| `facebookInappSecret` | `string` | yes | — |
+| `facebookAppId` | `string` | yes | Facebook application ID from the Meta Developer Portal. |
+| `facebookAppToken` | `string` | yes | Facebook app access token used for server-side token validation. |
+| `facebookInappSecret` | `string` | yes | Facebook in-app purchase secret used for payment receipt validation. |
 
 ### ThirtPartyGoogleSettingsParam
 
@@ -411,9 +413,9 @@ Defines the reusable parameter block ThirtPartyGoogleSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `googleClientId` | `string` | yes | — |
-| `packageId` | `string` | yes | — |
-| `publicRSAKey` | `string` | yes | — |
+| `googleClientId` | `string` | yes | Google OAuth 2.0 client ID used to verify Google Sign-In tokens. |
+| `packageId` | `string` | yes | Android package name used for Google Play in-app purchase validation. |
+| `publicRSAKey` | `string` | yes | Google Play public RSA key used for receipt signature verification. |
 
 ### ThirtPartyGameCenterSettingsParam
 
@@ -422,7 +424,7 @@ Defines the reusable parameter block ThirtPartyGameCenterSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `packageId` | `string` | yes | — |
+| `packageId` | `string` | yes | iOS bundle ID used for Apple Game Center identity validation. |
 
 ### ThirtPartyGooglePlayGameSettingsParam
 
@@ -431,10 +433,10 @@ Defines the reusable parameter block ThirtPartyGooglePlayGameSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `redirectUri` | `string` | yes | — |
-| `clientId` | `string` | yes | — |
-| `clientSecret` | `string` | yes | — |
-| `applicationId` | `string` | yes | — |
+| `redirectUri` | `string` | yes | OAuth redirect URI configured in Google Cloud Console for Google Play Game Services. |
+| `clientId` | `string` | yes | Google OAuth 2.0 client ID for Google Play Game Services. |
+| `clientSecret` | `string` | yes | Google OAuth 2.0 client secret for Google Play Game Services. |
+| `applicationId` | `string` | yes | Google Play application ID. |
 
 ### ThirtPartyParam
 
@@ -456,23 +458,23 @@ Defines the reusable parameter block EmailSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `sendFrom` | `string` | yes | — |
-| `secure` | `boolean` | yes | — |
-| `host` | `string` | yes | — |
-| `port` | `number` | yes | — |
-| `username` | `string` | yes | — |
-| `password` | `string` | yes | — |
+| `sendFrom` | `string` | yes | Sender email address displayed in outgoing system emails. |
+| `secure` | `boolean` | yes | Whether to use TLS for the SMTP connection. |
+| `host` | `string` | yes | SMTP server hostname. |
+| `port` | `number` | yes | SMTP server port number (typically 465 for TLS, 587 for STARTTLS). |
+| `username` | `string` | yes | SMTP authentication username. |
+| `password` | `string` | yes | SMTP authentication password. |
 
 ### PushNotificationSettingsParam
 
-Defines the reusable parameter block PushNotificationSettingsParam.
+Defines the reusable parameter block PushNotificationSettingsParam. Uses Firebase Cloud Messaging (FCM) credentials.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `projectId` | `string` | yes | — |
-| `clientEmail` | `string` | yes | — |
-| `privateKey` | `string` | yes | — |
+| `projectId` | `string` | yes | Firebase project ID from the Firebase Console. |
+| `clientEmail` | `string` | yes | Firebase service account client email for authentication. |
+| `privateKey` | `string` | yes | Firebase service account private key for authentication. |
 
 ### GamePlayerPermissionRulesParam
 
@@ -1080,7 +1082,11 @@ _Không có field public (payload rỗng)._
 
 Defines the request payload for GetServerLog.
 
-_Không có field public (payload rỗng)._
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `skip` | `number` | no | Pagination offset. — _default=0, minValue=0, mustInt_ |
+| `limit` | `number` | no | Page size. — _default=50, minValue=5, maxValue=200, mustInt_ |
 
 ### CreateAdminAccountRequestData
 
@@ -1109,8 +1115,8 @@ Defines the request payload for `createSecretInfo`. `permissionParam` is the aut
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `secretKey` | `string` | yes | Optional custom secret key. If omitted, the backend may generate one. — _minLength=6, maxLength=64_ |
-| `gameId` | `string` | yes | Optional target game id when creating a secret for a specific game. — _minLength=2, maxLength=32_ |
+| `secretKey` | `string` | no | Optional custom secret key. If omitted, the backend may generate one. — _minLength=6, maxLength=64_ |
+| `gameId` | `string` | no | Optional target game id when creating a secret for a specific game. — _minLength=2, maxLength=32_ |
 | `permissionParam` | `PermissionParam` | no | Optional permission tree granted to the new secret key. |
 
 ### LoginByAdminAccountRequestData
@@ -1244,8 +1250,8 @@ Defines the request payload for ResetStatisticsLeaderboard.
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `version` | `string` | yes | _minLength=2, maxLength=32_ |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
+| `catalogId` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### DeleteInDatabaseRequestData
 
@@ -1257,7 +1263,7 @@ Defines the request payload for DeleteInDatabase.
 | `type` | `number` | yes | — |
 | `id` | `string` | yes | _minLength=2, maxLength=32_ |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### GetBackupStatisticsLeaderboardVersionRequestData
 

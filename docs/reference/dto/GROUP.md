@@ -4,9 +4,11 @@ Group metadata, member roster, message stream, group-level currency/inventory/st
 
 Related API reference: [API_GROUP.md](/docs/reference/API_GROUP.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new GroupModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Variant `Server`/`Admin` thường thêm field bắt buộc như `userId`/`groupId`. Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
 
 ## Danh sách
 
@@ -353,7 +355,7 @@ Defines the reusable parameter block CustomDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this custom data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### GroupCurrencyParam
 
@@ -363,7 +365,7 @@ Defines the reusable parameter block GroupCurrencyParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `amount` | `number` | yes | — |
+| `amount` | `number` | yes | Currency amount delta to apply (positive to add, negative to subtract). |
 
 ### GroupDataParam
 
@@ -373,7 +375,7 @@ Defines the reusable parameter block GroupDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this group data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### GroupMemberParam
 
@@ -392,7 +394,7 @@ Defines the reusable parameter block GroupStatisticsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `number` | yes | — |
+| `value` | `number` | yes | Statistic value to apply; interpretation depends on the configured aggregation method. |
 
 ### AddMemberRequestData
 
@@ -607,7 +609,7 @@ Defines the request payload for GetGroupInformation.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `groupId` | `string` | yes | _minLength=10, maxLength=10_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional group fields are included in the response. |
 
 ### ServerGetGroupInformationRequestData
 
@@ -712,7 +714,7 @@ Defines the request payload for GetGroupsWithDisplayName.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `keyword` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional group fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -740,7 +742,7 @@ Defines the request payload for GetGroupsWithSegment.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional group fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -769,7 +771,7 @@ Defines the request payload for GetGroupsWithTag.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional group fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -873,11 +875,11 @@ Defines the request payload for GetStatisticsLeaderboardAroundGroup.
 | --- | --- | --- | --- |
 | `groupId` | `string` | yes | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional group fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `catalogId` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardAroundGroupRequestData
 
@@ -903,12 +905,12 @@ Defines the request payload for GetStatisticsLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional group fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
-| `version` | `string` | yes | _minLength=2, maxLength=32_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `version` | `string` | no | _minLength=2, maxLength=32_ |
+| `catalogId` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardRequestData
 
@@ -933,7 +935,7 @@ Defines the request payload for GetCreateLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional group fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1173,8 +1175,8 @@ Defines the request payload for SetAvatar.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `groupId` | `string` | yes | _minLength=10, maxLength=10_ |
-| `type` | `number` | yes | — |
-| `value` | `string` | yes | _minLength=1, maxLength=128_ |
+| `type` | `number` | yes | Avatar type identifier. Map with the public avatar type enum. |
+| `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### ServerSetAvatarRequestData
 
@@ -1253,7 +1255,7 @@ Defines the request payload for ChangeGroupCurrency.
 | --- | --- | --- | --- |
 | `groupId` | `string` | yes | _minLength=10, maxLength=10_ |
 | `groupCurrencies` | `Array<GroupCurrencyParam>` | yes | _minLength=1, maxLength=32, elementCls=GroupCurrencyParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangeGroupCurrencyRequestData
 
@@ -1306,7 +1308,7 @@ Defines the request payload for ChangeGroupStatistics.
 | --- | --- | --- | --- |
 | `groupId` | `string` | yes | _minLength=10, maxLength=10_ |
 | `groupStatistics` | `Array<GroupStatisticsParam>` | yes | _minLength=1, maxLength=32, elementCls=GroupStatisticsParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangeGroupStatisticsRequestData
 
@@ -1440,18 +1442,18 @@ Contains the optional fields requested through `InfoRequestParam`.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `catalogId` | `string` | no | — |
+| `catalogId` | `string` | no | Catalog ID the group belongs to; present when requested. |
 | `members` | `Array<GenericModels.MemberItem>` | no | Lightweight member items for the group, not full player snapshots. — _elementCls=GenericModels.MemberItem_ |
-| `removeStatus` | `GenericModels.RemoveStatusItem` | no | — |
-| `segments` | `Array<string>` | no | _elementCls=String_ |
-| `customDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `displayName` | `string` | no | — |
-| `avatar` | `GenericModels.AvatarItem` | no | — |
-| `tsCreate` | `number` | no | — |
-| `tags` | `Array<GenericModels.TagItem>` | no | _elementCls=GenericModels.TagItem_ |
-| `groupDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `groupCurrencies` | `Array<GenericModels.CurrencyItem>` | no | _elementCls=GenericModels.CurrencyItem_ |
-| `groupStatistics` | `Array<GenericModels.StatisticsItem>` | no | _elementCls=GenericModels.StatisticsItem_ |
+| `removeStatus` | `GenericModels.RemoveStatusItem` | no | Soft-remove metadata; present when the group has been marked for removal. |
+| `segments` | `Array<string>` | no | Segment names currently assigned to the group. — _elementCls=String_ |
+| `customDatas` | `Array<GenericModels.DataItem>` | no | Custom data entries; present when `customDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
+| `displayName` | `string` | no | Display name of the group; present when requested. |
+| `avatar` | `GenericModels.AvatarItem` | no | Avatar descriptor of the group; present when requested. |
+| `tsCreate` | `number` | no | Creation timestamp of the group; present when requested. |
+| `tags` | `Array<GenericModels.TagItem>` | no | Tag entries assigned to the group. — _elementCls=GenericModels.TagItem_ |
+| `groupDatas` | `Array<GenericModels.DataItem>` | no | Group data entries; present when `groupDatas` is enabled. — _elementCls=GenericModels.DataItem_ |
+| `groupCurrencies` | `Array<GenericModels.CurrencyItem>` | no | Currency balances of the group; present when `groupCurrencies` is enabled. — _elementCls=GenericModels.CurrencyItem_ |
+| `groupStatistics` | `Array<GenericModels.StatisticsItem>` | no | Statistics values of the group; present when `groupStatistics` is enabled. — _elementCls=GenericModels.StatisticsItem_ |
 | `groupInventories` | `Array<GenericModels.InventoryItem>` | no | Lightweight inventory relation items owned by the group. — _elementCls=GenericModels.InventoryItem_ |
 
 ### GroupResponseData
@@ -1472,7 +1474,7 @@ Group envelope that also exposes the resolved group ID.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `groupId` | `string` | yes | — |
+| `groupId` | `string` | yes | Group identifier. |
 
 ### GroupLeaderboardResponseData
 
@@ -1483,8 +1485,8 @@ Defines the response payload for GroupLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `position` | `number` | yes | — |
-| `backupValue` | `number` | no | — |
+| `position` | `number` | yes | Zero-based leaderboard rank position of this group. |
+| `backupValue` | `number` | no | Backup statistic or currency value used as a tiebreaker when present. |
 
 ### GroupLogResponseData
 
@@ -1493,13 +1495,13 @@ Describes one group statistics or currency change log entry.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `groupId` | `string` | yes | — |
-| `tsCreate` | `number` | yes | — |
-| `log` | `string` | yes | — |
-| `key` | `string` | yes | — |
-| `amount` | `number` | yes | — |
-| `startValue` | `number` | yes | — |
-| `finalValue` | `number` | yes | — |
+| `groupId` | `string` | yes | Group identifier this log entry belongs to. |
+| `tsCreate` | `number` | yes | Timestamp when this log entry was recorded. |
+| `log` | `string` | yes | Human-readable log message describing the change. |
+| `key` | `string` | yes | Currency or statistics key that was changed. |
+| `amount` | `number` | yes | Delta amount applied in this change. |
+| `startValue` | `number` | yes | Value before the change was applied. |
+| `finalValue` | `number` | yes | Value after the change was applied. |
 
 ### GetStatisticsLeaderboardResponseData
 
@@ -1508,8 +1510,8 @@ Defines the response payload for GetStatisticsLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `results` | `Array<GroupLeaderboardResponseData>` | yes | _elementCls=GroupLeaderboardResponseData_ |
-| `tsCreate` | `number` | no | — |
+| `results` | `Array<GroupLeaderboardResponseData>` | yes | Ordered list of group leaderboard entries. — _elementCls=GroupLeaderboardResponseData_ |
+| `tsCreate` | `number` | no | Timestamp when this leaderboard snapshot was last generated; present when available. |
 
 ### GroupsWithGroupIdResponseData
 
@@ -1527,10 +1529,10 @@ Describes one persisted group-message entry.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `message` | `string` | yes | — |
-| `senderId` | `string` | yes | — |
+| `message` | `string` | yes | Message content text. |
+| `senderId` | `string` | yes | User or system ID of the sender. |
 | `senderType` | `number` | yes | Sender type value defined by backend message semantics. |
-| `tsCreate` | `number` | yes | — |
+| `tsCreate` | `number` | yes | Timestamp when the message was sent. |
 
 ### GroupMessagesResponseData
 
@@ -1549,11 +1551,11 @@ Defines the request payload for GetCurrencyLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional group fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `catalogId` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetCurrencyLeaderboardRequestData
 

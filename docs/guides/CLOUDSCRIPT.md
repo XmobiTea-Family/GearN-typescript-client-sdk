@@ -104,6 +104,8 @@ Rule nhanh:
 
 - DTO fields: [reference/dto/CLOUDSCRIPT.md](/docs/reference/dto/CLOUDSCRIPT.md). Method table: [reference/API_CLOUDSCRIPT.md](/docs/reference/API_CLOUDSCRIPT.md).
 - Enums: [ExecuteResponseStatus](/docs/reference/ENUMS.md#executeresponsestatus).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/CloudScript*.d.ts`.
 - `AddFunctionRequestData.script` là bắt buộc.
 - `AddFunctionRequestData.canExecute` và `AddFunctionRequestData.isLive` nên luôn set explicit, không dựa vào default ngầm.
@@ -128,17 +130,23 @@ Tất cả typed response của `CloudScriptApi` đều có:
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Rule bổ sung theo từng operation:
 

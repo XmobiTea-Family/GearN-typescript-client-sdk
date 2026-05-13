@@ -2,7 +2,11 @@
 
 Master-player account: identity linking, profile, contact info, external providers.
 
-Domain guide: [guides/MASTER_PLAYER.md](/docs/guides/MASTER_PLAYER.md). DTO shapes: [dto/MASTER_PLAYER.md](/docs/reference/dto/MASTER_PLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/MASTER_PLAYER.md](/docs/guides/MASTER_PLAYER.md)
+- DTO shapes: [dto/MASTER_PLAYER.md](/docs/reference/dto/MASTER_PLAYER.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 

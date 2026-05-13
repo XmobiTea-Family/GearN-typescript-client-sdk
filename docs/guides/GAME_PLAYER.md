@@ -73,11 +73,9 @@ Realtime rule:
 - Muốn nhận event realtime, tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
 - `OnGamePlayerFriendUpdateEventHandler.onUpdate`:
     - payload có `playerFriends`
-    - có thể có `characterId`
     - không có `userId`
 - `OnGamePlayerGroupUpdateEventHandler.onUpdate`:
     - payload có `playerGroups`
-    - có thể có `characterId`
     - không có `userId`
 
 ## 4. Chọn Namespace
@@ -179,6 +177,8 @@ Rule nhanh:
 - DTO fields: [reference/dto/GAME_PLAYER.md](/docs/reference/dto/GAME_PLAYER.md). Method table: [reference/API_GAME_PLAYER.md](/docs/reference/API_GAME_PLAYER.md).
 - Events: [reference/EVENTS.md](/docs/reference/EVENTS.md#ongameplayerfriendupdateeventhandler).
 - Enums: [FriendStatus](/docs/reference/ENUMS.md#friendstatus), [GroupStatus](/docs/reference/ENUMS.md#groupstatus).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/GamePlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `GenericModels.FriendItem.status` nên map bằng `FriendStatus`.
 - `GenericModels.GroupItem.status` nên map bằng `GroupStatus`.
@@ -255,25 +255,25 @@ Các field thường dùng:
 
 ## 9. Response Rules
 
-Tất cả typed response của `GamePlayerApi` đều có:
+Tất cả typed response của `GamePlayerApi` đều có public fields: `returnCode`, `debugMessage`, `invalidMembers`, `errorCode`, `responseData`.
 
-- `returnCode`
-- `debugMessage`
-- `invalidMembers`
-- `errorCode`
-- `responseData`
-
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 

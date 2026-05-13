@@ -42,9 +42,9 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 <!-- prettier-ignore -->
 | Namespace | Role thật | Dùng khi nào |
 | --- | --- | --- |
-| `GNNetwork.content` | `Client` | | flow từ client/player app |
-| `GNNetwork.content.server` | `Server` | | server worker, backend integration, trusted service |
-| `GNNetwork.content.admin` | `Admin` | | dashboard, backoffice, tooling quản trị |
+| `GNNetwork.content` | `Client` | flow từ client/player app |
+| `GNNetwork.content.server` | `Server` | server worker, backend integration, trusted service |
+| `GNNetwork.content.admin` | `Admin` | dashboard, backoffice, tooling quản trị |
 
 Rule nhanh:
 
@@ -79,6 +79,8 @@ Rule nhanh:
 ## 6. Request Rules và Reference
 
 - DTO fields: [reference/dto/CONTENT.md](/docs/reference/dto/CONTENT.md). Method table: [reference/API_CONTENT.md](/docs/reference/API_CONTENT.md).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Content*.d.ts`.
 - `GetContentDataRequestData.keys` là optional.
     - Suy luận từ model: nếu bỏ `keys`, backend có thể trả tập content rộng hơn theo `label` hoặc default scope.
@@ -120,17 +122,23 @@ Tất cả typed response của `ContentApi` đều có:
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 

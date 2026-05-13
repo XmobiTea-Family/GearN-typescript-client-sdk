@@ -71,8 +71,8 @@ Rule nhanh:
 ### Đọc 1 master player hoặc 1 phần hồ sơ
 
 <!-- prettier-ignore -->
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
+| --- | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar | `userId?` | `MasterPlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `MasterPlayerNotFound` |
 | `getCountryCodeAsync` | Cần đọc quốc gia | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.countryCode` | `Ok`, `MasterPlayerNotFound` |
 | `getCustomDataAsync` | Cần đọc custom data | `userId?`, `customDataKeys?` | `MasterPlayerResponseData` | Có thể filter theo key | `Ok`, `MasterPlayerNotFound` |
@@ -182,6 +182,8 @@ Rule nhanh:
 
 - DTO fields: [reference/dto/MASTER_PLAYER.md](/docs/reference/dto/MASTER_PLAYER.md). Method table: [reference/API_MASTER_PLAYER.md](/docs/reference/API_MASTER_PLAYER.md).
 - Enums: [GoogleLoginType](/docs/reference/ENUMS.md#googlelogintype), [PushPlatformType](/docs/reference/ENUMS.md#pushplatformtype).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/MasterPlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `LinkGoogleRequestData.type` nên map bằng `GoogleLoginType`.
 - `AddPushNotificationRequestData.platformType` và `PushNotificationItem.platformType` nên map bằng `PushPlatformType`.
@@ -268,17 +270,23 @@ Tất cả typed response của `MasterPlayerApi` đều có:
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 

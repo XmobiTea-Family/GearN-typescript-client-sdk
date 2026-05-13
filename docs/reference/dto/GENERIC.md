@@ -2,9 +2,11 @@
 
 Reusable embedded contracts shared by multiple domains (avatar, tag, currency, filter, pagination, …).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO embedded. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: Generic class là embedded item — nested trong parent DTO (vd `playerCurrencies: PlayerCurrencyParam[]`). Tạo qua `new GenericModels.<Class>()` và push vào collection của parent. Response cũng expose typed instance để đọc field theo schema dưới đây.
+
+> **Khi nào tra file này**: Khi parent DTO (`GamePlayer`/`MasterPlayer`/`CharacterPlayer`/...) tham chiếu field kiểu `AvatarItem`/`TagItem`/`CurrencyItem`/... — không lặp lại schema trong file domain mà link sang đây.
 
 ## Danh sách
 
@@ -55,7 +57,7 @@ Represents a ban state entry returned by player-auth or player-profile flows.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `tsExpire` | `number` | yes | Expiration timestamp of the current ban state. |
-| `reason` | `string` | yes | Human-readable ban reason when provided by the backend. |
+| `reason` | `string` | no | Human-readable ban reason when provided by the backend. |
 
 ### DataItem
 

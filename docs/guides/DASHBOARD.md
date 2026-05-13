@@ -62,7 +62,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 | --- | --- | --- | --- | --- | --- |
 | `getSecretInfoListAsync` | Liệt kê secret key theo role | request rỗng | `GetSecretInfoListResponseData` | Trả `secretKeys` | `Ok` |
 | `getSecretInfoInformationAsync` | Xem chi tiết một secret key | `secretKey` | `GetSecretInfoInformationResponseData` | Trả `gameId`, `permissionParam`, `tsExpire`, `remove` | `Ok`, `SecretInfoNotFound` |
-| `createSecretInfoAsync` | Tạo secret key mới và tùy chọn `secretKey`, `gameId`, `permissionParam` | `SecretInfoWithSecretKeyResponseData` | `secretKey` đang optional trong model; AI có thể bỏ qua nếu muốn backend sinh key | `Ok`, `SecretInfoExists` |
+| `createSecretInfoAsync` | Tạo secret key mới | `secretKey?`, `gameId?`, `permissionParam?` | `SecretInfoWithSecretKeyResponseData` | `secretKey` optional trong model; bỏ qua để backend sinh key tự động, đọc lại tại `responseData.secretKey` | `Ok`, `SecretInfoExists` |
 | `setSecretInfoInformationAsync` | Cập nhật expire, description, permission hoặc remove flag của secret key | `secretKey` và field cần đổi | `EmptyResponseData` | Dùng để revoke hoặc thay permission | `Ok`, `SecretInfoNotFound` |
 
 ### Analytics, logs và callback
@@ -100,6 +100,8 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 - DTO fields: [reference/dto/DASHBOARD.md](/docs/reference/dto/DASHBOARD.md). Method table: [reference/API_DASHBOARD.md](/docs/reference/API_DASHBOARD.md).
 - Enums: [OwnerType](/docs/reference/ENUMS.md#ownertype).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules cho secret key: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Dashboard*.d.ts`.
 - `DashboardApi` hiện `type` phải lấy từ `OwnerType` trong `resetStatisticsLeaderboard` hoặc `deleteInDatabase`.
 - Nếu codebase hiện tại không có constant nghiệp vụ cho các numeric field đó, AI không được tự bịa giá trị.
@@ -116,17 +118,23 @@ Tất cả typed response của `DashboardApi` đều có các field low-level g
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response quan trọng AI cần nhớ:
 

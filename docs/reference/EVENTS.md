@@ -2,6 +2,18 @@
 
 SDK cung cấp 6 server event handler đẩy realtime update từ backend qua socket. Mỗi handler expose 1 static callback `onUpdate: Action1<Payload>` — subscribe bằng cách gán function vào field này.
 
+## Chọn handler nhanh
+
+<!-- prettier-ignore -->
+| Tôi cần lắng nghe... | Handler |
+| --- | --- |
+| Tin nhắn mới/edit trong group | `OnGroupMessageUpdateEventHandler` |
+| Member join/leave/kick/role thay đổi trong group | `OnGroupMemberUpdateEventHandler` |
+| Quan hệ friend của **game player** hiện tại đổi | `OnGamePlayerFriendUpdateEventHandler` |
+| Quan hệ group của **game player** hiện tại đổi | `OnGamePlayerGroupUpdateEventHandler` |
+| Quan hệ friend của **character** hiện tại đổi | `OnCharacterPlayerFriendUpdateEventHandler` |
+| Quan hệ group của **character** hiện tại đổi | `OnCharacterPlayerGroupUpdateEventHandler` |
+
 ## Rule cứng
 
 - Event chỉ đến khi **socket đã connect + đã authenticate**. Xem [RULES.md § 7](/docs/RULES.md#7-auth--socket-flow).
@@ -105,7 +117,6 @@ OnGroupMemberUpdateEventHandler.onUpdate = (payload) => {
 | Field | Type | Optional | Notes |
 | --- | --- | --- | --- |
 | `playerFriends` | `Array<GenericModels.FriendItem>` | no | Friend relation item đổi (add/accept/remove/status) |
-| `characterId` | `string` | yes | Có khi update scope theo character context |
 
 **Ví dụ:**
 
@@ -131,7 +142,16 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 | Field | Type | Optional | Notes |
 | --- | --- | --- | --- |
 | `playerGroups` | `Array<GenericModels.GroupItem>` | no | Group relation item đổi (join/leave/status) |
-| `characterId` | `string` | yes | Có khi update scope theo character context |
+
+**Ví dụ:**
+
+```ts
+OnGamePlayerGroupUpdateEventHandler.onUpdate = (payload) => {
+    for (const g of payload.playerGroups) {
+        // update group relation cache
+    }
+};
+```
 
 ---
 
@@ -149,6 +169,17 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 | `characterId` | `string` | no | Character id có friend relation đổi |
 | `playerFriends` | `Array<GenericModels.FriendItem>` | no | Friend relation item đổi |
 
+**Ví dụ:**
+
+```ts
+OnCharacterPlayerFriendUpdateEventHandler.onUpdate = (payload) => {
+    const characterId = payload.characterId;
+    for (const f of payload.playerFriends) {
+        // switch (f.status) { ... }
+    }
+};
+```
+
 ---
 
 ## `OnCharacterPlayerGroupUpdateEventHandler`
@@ -164,6 +195,17 @@ OnGamePlayerFriendUpdateEventHandler.onUpdate = (payload) => {
 | --- | --- | --- | --- |
 | `characterId` | `string` | no | Character id có group relation đổi |
 | `playerGroups` | `Array<GenericModels.GroupItem>` | no | Group relation item đổi |
+
+**Ví dụ:**
+
+```ts
+OnCharacterPlayerGroupUpdateEventHandler.onUpdate = (payload) => {
+    const characterId = payload.characterId;
+    for (const g of payload.playerGroups) {
+        // update group relation cache cho character
+    }
+};
+```
 
 ---
 

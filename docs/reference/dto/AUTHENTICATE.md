@@ -4,9 +4,13 @@ Player login (account, social, device id), register, refresh auth token.
 
 Related API reference: [API_AUTHENTICATE.md](/docs/reference/API_AUTHENTICATE.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new AuthenticateModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Pitfall**: `infoRequestParam` — truyền instance dù chỉ bật vài field. Đừng `null` (backend không hydrate gì) và đừng bulk-set hết (payload bự, slow). Chỉ bật field bạn thật sự render. Xem [RULES § 10 #11-12](/docs/RULES.md#10-anti-patterns--pitfalls).
+
+> **Lưu ý route**: Login chỉ qua route `client` — không có Server/Admin variant cho login operation.
 
 ## Danh sách
 
@@ -89,17 +93,17 @@ Defines the reusable parameter block `infoRequestParam`. This object controls wh
 | `customDatas` | `boolean` | no | Include custom data entries, optionally filtered by `customDataKeys`. — _default=false_ |
 | `displayName` | `boolean` | no | Include display-name data. — _default=false_ |
 | `avatar` | `boolean` | no | Include avatar data. — _default=false_ |
-| `tsCreate` | `boolean` | no | _default=false_ |
-| `tags` | `boolean` | no | _default=false_ |
-| `playerBan` | `boolean` | no | _default=false_ |
-| `playerCurrencies` | `boolean` | no | _default=false_ |
-| `playerStatistics` | `boolean` | no | _default=false_ |
-| `playerDatas` | `boolean` | no | _default=false_ |
-| `ipAddressCreate` | `boolean` | no | _default=false_ |
-| `countryCode` | `boolean` | no | _default=false_ |
-| `email` | `boolean` | no | _default=false_ |
-| `tsLastLogin` | `boolean` | no | _default=false_ |
-| `pushNotifications` | `boolean` | no | _default=false_ |
+| `tsCreate` | `boolean` | no | Include account creation timestamp. — _default=false_ |
+| `tags` | `boolean` | no | Include tag entries, optionally filtered by `tagKeys`. — _default=false_ |
+| `playerBan` | `boolean` | no | Include ban state of the player. — _default=false_ |
+| `playerCurrencies` | `boolean` | no | Include currency balances, optionally filtered by `playerCurrencyKeys`. — _default=false_ |
+| `playerStatistics` | `boolean` | no | Include statistics values, optionally filtered by `playerStatisticsKeys`. — _default=false_ |
+| `playerDatas` | `boolean` | no | Include player data entries, optionally filtered by `playerDataKeys`. — _default=false_ |
+| `ipAddressCreate` | `boolean` | no | Include IP address recorded at the time of account creation. — _default=false_ |
+| `countryCode` | `boolean` | no | Include country code associated with the player account. — _default=false_ |
+| `email` | `boolean` | no | Include email address linked to the account. — _default=false_ |
+| `tsLastLogin` | `boolean` | no | Include timestamp of the player's last successful login. — _default=false_ |
+| `pushNotifications` | `boolean` | no | Include push notification token information registered for the player. — _default=false_ |
 | `playerDataKeys` | `Array<string>` | no | Filter the returned player data fields. — _elementCls=String_ |
 | `playerCurrencyKeys` | `Array<string>` | no | Filter the returned player currency fields. — _elementCls=String_ |
 | `playerStatisticsKeys` | `Array<string>` | no | Filter the returned player statistics fields. — _elementCls=String_ |
@@ -126,7 +130,7 @@ Defines the request payload for LoginByAndroidDeviceId.
 | --- | --- | --- | --- |
 | `androidDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByAppleRequestData
 
@@ -137,7 +141,7 @@ Defines the request payload for LoginByApple.
 | --- | --- | --- | --- |
 | `token` | `string` | yes | _minLength=32, maxLength=2048_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByCustomDeviceIdRequestData
 
@@ -148,7 +152,7 @@ Defines the request payload for LoginByCustomDeviceId.
 | --- | --- | --- | --- |
 | `customDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByCustomIdRequestData
 
@@ -159,7 +163,7 @@ Defines the request payload for LoginByCustomId.
 | --- | --- | --- | --- |
 | `customId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByEditorDeviceIdRequestData
 
@@ -170,7 +174,7 @@ Defines the request payload for LoginByEditorDeviceId.
 | --- | --- | --- | --- |
 | `editorDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByFacebookRequestData
 
@@ -181,7 +185,7 @@ Defines the request payload for LoginByFacebook.
 | --- | --- | --- | --- |
 | `token` | `string` | yes | _minLength=32, maxLength=2048_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByGenericServiceRequestData
 
@@ -193,7 +197,7 @@ Defines the request payload for `loginByGenericService`. `serviceData` is provid
 | `serviceName` | `string` | yes | _minLength=6, maxLength=32_ |
 | `serviceData` | `GNHashtable` | yes | Provider-defined payload consumed by the backend integration for `serviceName`. |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByGoogleRequestData
 
@@ -205,7 +209,7 @@ Defines the request payload for `loginByGoogle`. `type` should be mapped with th
 | `token` | `string` | yes | _minLength=32, maxLength=2048_ |
 | `type` | `number` | yes | _min=1, max=2_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByGooglePlayGameServiceRequestData
 
@@ -216,7 +220,7 @@ Defines the request payload for LoginByGooglePlayGameService.
 | --- | --- | --- | --- |
 | `token` | `string` | yes | _minLength=32, maxLength=2048_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByGameCenterRequestData
 
@@ -230,9 +234,9 @@ Defines the request payload for LoginByGameCenter.
 | `publicKeyUrl` | `string` | yes | _minLength=2, maxLength=2048_ |
 | `signature` | `string` | yes | _minLength=2, maxLength=2048_ |
 | `salt` | `string` | yes | _minLength=2, maxLength=256_ |
-| `timestamp` | `number` | yes | — |
+| `timestamp` | `number` | yes | Unix timestamp from the Game Center signature verification payload. |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByiOSDeviceIdRequestData
 
@@ -243,7 +247,7 @@ Defines the request payload for LoginByiOSDeviceId.
 | --- | --- | --- | --- |
 | `iOSDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByLinuxDeviceIdRequestData
 
@@ -254,7 +258,7 @@ Defines the request payload for LoginByLinuxDeviceId.
 | --- | --- | --- | --- |
 | `linuxDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByMacOSDeviceIdRequestData
 
@@ -265,7 +269,7 @@ Defines the request payload for LoginByMacOSDeviceId.
 | --- | --- | --- | --- |
 | `macOSDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByWindowsDeviceIdRequestData
 
@@ -276,7 +280,7 @@ Defines the request payload for LoginByWindowsDeviceId.
 | --- | --- | --- | --- |
 | `windowsDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### LoginByWindowsPhoneDeviceIdRequestData
 
@@ -287,7 +291,7 @@ Defines the request payload for LoginByWindowsPhoneDeviceId.
 | --- | --- | --- | --- |
 | `windowsPhoneDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 | `createPlayerIfNotExists` | `boolean` | no | _default=false_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 
 ### RegisterAccountRequestData
 

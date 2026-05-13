@@ -2,7 +2,11 @@
 
 Game-player profile, friend/group relation, currency, statistics, segment, tag, social identity.
 
-Domain guide: [guides/GAME_PLAYER.md](/docs/guides/GAME_PLAYER.md). DTO shapes: [dto/GAME_PLAYER.md](/docs/reference/dto/GAME_PLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/GAME_PLAYER.md](/docs/guides/GAME_PLAYER.md)
+- DTO shapes: [dto/GAME_PLAYER.md](/docs/reference/dto/GAME_PLAYER.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 
@@ -34,7 +38,7 @@ Param chung:
 | `customTags` | `GNHashtable` | yes | Tags gắn vào request, backend có thể log/route |
 | `timeout` | `number` | yes | Timeout giây; default = `OperationRequest.defaultTimeOut` |
 
-Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
+Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 ## Client methods (`GNNetwork.gamePlayer.*`)
 

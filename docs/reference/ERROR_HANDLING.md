@@ -45,6 +45,21 @@ Typed response (trả từ mọi `*Async()` và callback path) expose field `pub
 - Không hardcode số. Luôn so sánh bằng symbol `ReturnCode.*` / `ErrorCode.*`.
 - `Async` method vẫn return response object (không throw) — reject chỉ xảy ra khi transport layer lỗi thực sự (network down, serialization fail).
 
+**Helper method tương đương:**
+
+- `res.hasReturnCodeError(): boolean` — tương đương `res.returnCode !== ReturnCode.Ok`. Dùng cho code throw-style ngắn gọn.
+- Không có helper cho tầng 2 — dùng `res.errorCode !== ErrorCode.Ok` trực tiếp.
+
+```ts
+// Field public (early-return):
+if (res.returnCode !== ReturnCode.Ok) return;
+if (res.errorCode !== ErrorCode.Ok) return;
+
+// Helper method (throw-style):
+if (res.hasReturnCodeError()) throw new Error(res.debugMessage ?? res.toString());
+if (res.errorCode !== ErrorCode.Ok) throw new Error(`business error: ${res.errorCode}`);
+```
+
 ---
 
 ## Tầng 1: `ReturnCode`

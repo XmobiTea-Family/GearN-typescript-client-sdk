@@ -170,6 +170,8 @@ Rule nhanh:
 - DTO fields: [reference/dto/CHARACTER_PLAYER.md](/docs/reference/dto/CHARACTER_PLAYER.md). Method table: [reference/API_CHARACTER_PLAYER.md](/docs/reference/API_CHARACTER_PLAYER.md).
 - Events: [reference/EVENTS.md](/docs/reference/EVENTS.md#oncharacterplayerfriendupdateeventhandler).
 - Enums: [FriendStatus](/docs/reference/ENUMS.md#friendstatus), [GroupStatus](/docs/reference/ENUMS.md#groupstatus), [OwnerType](/docs/reference/ENUMS.md#ownertype).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/CharacterPlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `GenericModels.FriendItem.status` nên map bằng `FriendStatus`.
 - `GenericModels.GroupItem.status` nên map bằng `GroupStatus`.
@@ -255,17 +257,23 @@ Tất cả typed response của `CharacterPlayerApi` đều có:
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 

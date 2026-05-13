@@ -4,9 +4,13 @@ Master-player account: identity linking, profile, contact info, external provide
 
 Related API reference: [API_MASTER_PLAYER.md](/docs/reference/API_MASTER_PLAYER.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new MasterPlayerModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Variant `Server`/`Admin` thường thêm field bắt buộc như `userId`. Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
+
+> **Server variant `userId` override**: Every `Server*RequestData` class overrides the parent's optional `userId?: string` with a required `userId: string` (via `public declare userId: string` with `mustNonNull: true`). Sections marked "Không có field public (payload rỗng)" for `Server*` variants mean no _new_ fields — but `userId` changes from optional to **required** on those routes.
 
 ## Danh sách
 
@@ -667,7 +671,7 @@ Defines the reusable parameter block CustomDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this custom data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### InfoRequestParam
 
@@ -705,8 +709,8 @@ Defines the reusable parameter block PlayerCurrencyParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `amount` | `number` | yes | — |
+| `key` | `string` | yes | Currency key identifying the currency to change. — _minLength=2, maxLength=32_ |
+| `amount` | `number` | yes | Currency amount delta to apply (positive to add, negative to subtract). |
 
 ### PlayerDataParam
 
@@ -716,7 +720,7 @@ Defines the reusable parameter block PlayerDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this player data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### PlayerStatisticsParam
 
@@ -726,105 +730,105 @@ Defines the reusable parameter block PlayerStatisticsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `number` | yes | — |
+| `value` | `number` | yes | Statistic value to apply; interpretation depends on the configured aggregation method. |
 
 ### GenericService
 
-Represents GenericService.
+Represents one linked external generic service identity.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `serviceName` | `string` | yes | — |
-| `serviceId` | `string` | yes | — |
+| `serviceName` | `string` | yes | Name of the external service provider. |
+| `serviceId` | `string` | yes | Player identifier within the external service. |
 
 ### Device
 
-Represents Device.
+Represents all device IDs currently linked to the master player.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `customDeviceId` | `string` | no | — |
-| `androidDeviceId` | `string` | no | — |
-| `iOSDeviceId` | `string` | no | — |
-| `windowsPhoneDeviceId` | `string` | no | — |
-| `windowsDeviceId` | `string` | no | — |
-| `linuxDeviceId` | `string` | no | — |
-| `macOSDeviceId` | `string` | no | — |
-| `editorDeviceId` | `string` | no | — |
+| `customDeviceId` | `string` | no | Custom device identifier when linked. |
+| `androidDeviceId` | `string` | no | Android device identifier when linked. |
+| `iOSDeviceId` | `string` | no | iOS device identifier when linked. |
+| `windowsPhoneDeviceId` | `string` | no | Windows Phone device identifier when linked. |
+| `windowsDeviceId` | `string` | no | Windows PC device identifier when linked. |
+| `linuxDeviceId` | `string` | no | Linux device identifier when linked. |
+| `macOSDeviceId` | `string` | no | macOS device identifier when linked. |
+| `editorDeviceId` | `string` | no | Editor (development) device identifier when linked. |
 
 ### Account
 
-Represents Account.
+Represents a linked GearN account identity.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `username` | `string` | no | — |
+| `username` | `string` | no | GearN account username when an account credential is linked. |
 
 ### Custom
 
-Represents Custom.
+Represents a linked custom ID identity.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `customId` | `string` | no | — |
+| `customId` | `string` | no | Custom ID value when linked. |
 
 ### Apple
 
-Represents Apple.
+Represents a linked Apple identity (Sign in with Apple).
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `appleId` | `string` | yes | — |
-| `email` | `string` | yes | — |
+| `appleId` | `string` | yes | Apple user identifier from Sign in with Apple. |
+| `email` | `string` | yes | Email address from the Apple identity. |
 
 ### Google
 
-Represents Google.
+Represents a linked Google identity.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `googleId` | `string` | yes | — |
-| `displayName` | `string` | yes | — |
-| `email` | `string` | yes | — |
+| `googleId` | `string` | yes | Google user identifier (sub claim from the ID token). |
+| `displayName` | `string` | yes | Display name from the Google profile. |
+| `email` | `string` | yes | Email address from the Google identity. |
 
 ### Facebook
 
-Represents Facebook.
+Represents a linked Facebook identity.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `facebookId` | `string` | yes | — |
-| `displayName` | `string` | yes | — |
-| `email` | `string` | yes | — |
+| `facebookId` | `string` | yes | Facebook user ID from the access token. |
+| `displayName` | `string` | yes | Display name from the Facebook profile. |
+| `email` | `string` | yes | Email address from the Facebook identity. |
 
 ### GooglePlayGameService
 
-Represents GooglePlayGameService.
+Represents a linked Google Play Game Services identity.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `playerId` | `string` | yes | — |
-| `displayName` | `string` | yes | — |
-| `email` | `string` | yes | — |
+| `playerId` | `string` | yes | Google Play Games player ID. |
+| `displayName` | `string` | yes | Display name from the Google Play Games profile. |
+| `email` | `string` | yes | Email address associated with the Google Play Games account. |
 
 ### GameCenter
 
-Represents GameCenter.
+Represents a linked Apple Game Center identity.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `playerId` | `string` | yes | — |
-| `displayName` | `string` | yes | — |
-| `email` | `string` | yes | — |
+| `playerId` | `string` | yes | Apple Game Center player ID. |
+| `displayName` | `string` | yes | Display name from the Game Center profile. |
+| `email` | `string` | yes | Email address associated with the Game Center account. |
 
 ### ExternalItem
 
@@ -833,15 +837,15 @@ Groups all external identities that may be linked to one master player.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `device` | `Device` | no | — |
-| `account` | `Account` | no | — |
-| `custom` | `Custom` | no | — |
-| `apple` | `Apple` | no | — |
-| `google` | `Google` | no | — |
-| `facebook` | `Facebook` | no | — |
-| `genericServices` | `Array<GenericService>` | no | _elementCls=GenericService_ |
-| `googlePlayGameService` | `GooglePlayGameService` | no | — |
-| `gameCenter` | `GameCenter` | no | — |
+| `device` | `Device` | no | Linked device IDs; present when at least one device ID is linked. |
+| `account` | `Account` | no | Linked GearN account; present when an account credential is linked. |
+| `custom` | `Custom` | no | Linked custom ID; present when a custom ID is linked. |
+| `apple` | `Apple` | no | Linked Apple identity; present when Sign in with Apple is linked. |
+| `google` | `Google` | no | Linked Google identity; present when Google Sign-In is linked. |
+| `facebook` | `Facebook` | no | Linked Facebook identity; present when Facebook is linked. |
+| `genericServices` | `Array<GenericService>` | no | List of linked generic service identities. — _elementCls=GenericService_ |
+| `googlePlayGameService` | `GooglePlayGameService` | no | Linked Google Play Game Services identity; present when linked. |
+| `gameCenter` | `GameCenter` | no | Linked Apple Game Center identity; present when linked. |
 
 ### AddSegmentRequestData
 
@@ -1193,7 +1197,7 @@ Defines the request payload for GetPlayersWithApple.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `appleIds` | `Array<string>` | yes | _elementCls=String_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 
 ### ServerGetPlayersWithAppleRequestData
 
@@ -1219,7 +1223,7 @@ Defines the request payload for GetPlayersWithDisplayName.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `keyword` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1247,7 +1251,7 @@ Defines the request payload for GetPlayersWithFacebook.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `facebookIds` | `Array<string>` | yes | _elementCls=String_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 
 ### ServerGetPlayersWithFacebookRequestData
 
@@ -1274,7 +1278,7 @@ Defines the request payload for GetPlayersWithGenericService.
 | --- | --- | --- | --- |
 | `serviceName` | `string` | yes | _minLength=2, maxLength=32_ |
 | `genericIds` | `Array<string>` | yes | _elementCls=String_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 
 ### ServerGetPlayersWithGenericServiceRequestData
 
@@ -1300,7 +1304,7 @@ Defines the request payload for GetPlayersWithGoogle.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `googleIds` | `Array<string>` | yes | _elementCls=String_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 
 ### ServerGetPlayersWithGoogleRequestData
 
@@ -1326,7 +1330,7 @@ Defines the request payload for GetPlayersWithGooglePlayGameService.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `playerIds` | `Array<string>` | yes | _elementCls=String_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 
 ### ServerGetPlayersWithGooglePlayGameServiceRequestData
 
@@ -1352,7 +1356,7 @@ Defines the request payload for GetPlayersWithGameCenter.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `playerIds` | `Array<string>` | yes | _elementCls=String_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 
 ### ServerGetPlayersWithGameCenterRequestData
 
@@ -1378,7 +1382,7 @@ Defines the request payload for GetPlayersWithSegment.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1407,7 +1411,7 @@ Defines the request payload for GetPlayersWithTag.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1461,7 +1465,7 @@ Defines the request payload for GetStatisticsLeaderboardAroundPlayer.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1490,11 +1494,11 @@ Defines the request payload for GetStatisticsLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
-| `version` | `string` | yes | _minLength=2, maxLength=32_ |
+| `version` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardRequestData
 
@@ -1519,7 +1523,7 @@ Defines the request payload for GetCreateLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1547,7 +1551,7 @@ Defines the request payload for GetLastLoginLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1843,7 +1847,7 @@ Defines the request payload for LinkGenericService.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `serviceName` | `string` | yes | _minLength=6, maxLength=32_ |
-| `serviceData` | `GNHashtable` | yes | — |
+| `serviceData` | `GNHashtable` | yes | Service-specific credential or identity data required by the external generic service provider. |
 | `forceLink` | `boolean` | no | _default=false_ |
 
 ### ServerLinkGenericServiceRequestData
@@ -1930,7 +1934,7 @@ Defines the request payload for LinkGameCenter.
 | `publicKeyUrl` | `string` | yes | _minLength=2, maxLength=2048_ |
 | `signature` | `string` | yes | _minLength=2, maxLength=2048_ |
 | `salt` | `string` | yes | _minLength=2, maxLength=256_ |
-| `timestamp` | `number` | yes | — |
+| `timestamp` | `number` | yes | Unix timestamp from the Game Center signature verification payload. |
 | `forceLink` | `boolean` | no | _default=false_ |
 
 ### ServerLinkGameCenterRequestData
@@ -2170,7 +2174,7 @@ Defines the request payload for SetAvatar.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `type` | `number` | yes | — |
+| `type` | `number` | yes | Avatar type identifier. Maps to the public avatar type enum. |
 | `value` | `string` | yes | _minLength=1, maxLength=128_ |
 
 ### ServerSetAvatarRequestData
@@ -2302,8 +2306,8 @@ Defines the request payload for SetPlayerBan.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `tsExpire` | `number` | yes | — |
-| `reason` | `string` | yes | — |
+| `tsExpire` | `number` | yes | Expiration timestamp of the ban (Unix timestamp); use a far-future value for a permanent ban. |
+| `reason` | `string` | yes | Human-readable reason for the ban recorded on the backend. |
 
 ### ServerSetPlayerBanRequestData
 
@@ -2330,7 +2334,7 @@ Defines the request payload for ChangePlayerCurrency.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `playerCurrencies` | `Array<PlayerCurrencyParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerCurrencyParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerCurrencyRequestData
 
@@ -2383,7 +2387,7 @@ Defines the request payload for ChangePlayerStatistics.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `playerStatistics` | `Array<PlayerStatisticsParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerStatisticsParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerStatisticsRequestData
 
@@ -3066,11 +3070,11 @@ Triggers a push-notification send workflow for the current or target master play
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `title` | `string` | yes | — |
-| `body` | `string` | yes | — |
+| `title` | `string` | yes | Title text displayed as the push notification header. |
+| `body` | `string` | yes | Body text displayed as the push notification message. |
 | `badge` | `number` | no | _default=null_ |
-| `sound` | `string` | no | — |
-| `icon` | `string` | no | — |
+| `sound` | `string` | no | Sound file name played on notification receipt (platform-specific). |
+| `icon` | `string` | no | Icon resource name or URL shown in the notification (platform-specific). |
 | `data` | `GNHashtable` | no | Platform-specific custom payload forwarded to the push provider. |
 
 ### ServerSendPushNotificationRequestData
@@ -3096,8 +3100,8 @@ Describes one registered push endpoint stored for a player.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `token` | `string` | yes | — |
-| `pushId` | `string` | yes | — |
+| `token` | `string` | yes | FCM device registration token issued by the push provider. |
+| `pushId` | `string` | yes | Backend-assigned push endpoint identifier for this registration. |
 | `platformType` | `number` | yes | Push platform mapped by the public `PushPlatformType` enum. |
 
 ### InfoResponseParameters
@@ -3110,18 +3114,18 @@ Contains the optional fields requested through `InfoRequestParam`.
 | `external` | `ExternalItem` | no | Linked external identity snapshot. |
 | `segments` | `Array<string>` | no | _elementCls=String_ |
 | `customDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `displayName` | `string` | no | — |
-| `avatar` | `GenericModels.AvatarItem` | no | — |
-| `tsCreate` | `number` | no | — |
+| `displayName` | `string` | no | Display name of the master player. |
+| `avatar` | `GenericModels.AvatarItem` | no | Avatar data of the master player. |
+| `tsCreate` | `number` | no | Account creation timestamp of the master player. |
 | `tags` | `Array<GenericModels.TagItem>` | no | _elementCls=GenericModels.TagItem_ |
-| `playerBan` | `GenericModels.BanItem` | no | — |
+| `playerBan` | `GenericModels.BanItem` | no | Ban state of the master player; present when a ban is active. |
 | `playerDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
 | `playerCurrencies` | `Array<GenericModels.CurrencyItem>` | no | _elementCls=GenericModels.CurrencyItem_ |
 | `playerStatistics` | `Array<GenericModels.StatisticsItem>` | no | _elementCls=GenericModels.StatisticsItem_ |
-| `tsLastLogin` | `number` | no | — |
-| `ipAddressCreate` | `string` | no | — |
-| `countryCode` | `string` | no | — |
-| `email` | `string` | no | — |
+| `tsLastLogin` | `number` | no | Timestamp of the master player's last successful login. |
+| `ipAddressCreate` | `string` | no | IP address recorded at the time of account creation. |
+| `countryCode` | `string` | no | Country code associated with the master player account. |
+| `email` | `string` | no | Email address linked to the master player account. |
 | `pushNotifications` | `Array<MasterPlayerModels.PushNotificationItem>` | no | Registered push endpoints when `pushNotifications` was requested. — _elementCls=MasterPlayerModels.PushNotificationItem_ |
 
 ### MasterPlayerResponseData
@@ -3153,7 +3157,7 @@ Master-player envelope that also exposes the resolved master-player user ID.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | yes | — |
+| `userId` | `string` | yes | Master-player user identifier. |
 
 ### MasterPlayerWithAppleIdResponseData
 
@@ -3164,7 +3168,7 @@ Defines the response payload for MasterPlayerWithAppleId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `appleId` | `string` | yes | — |
+| `appleId` | `string` | yes | Apple user identifier from Sign in with Apple. |
 
 ### GetPlayersWithAppleResponseData
 
@@ -3193,7 +3197,7 @@ Defines the response payload for MasterPlayerWithFacebookId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `facebookId` | `string` | yes | — |
+| `facebookId` | `string` | yes | Facebook user identifier from the linked Facebook account. |
 
 ### GetPlayersWithFacebookResponseData
 
@@ -3213,7 +3217,7 @@ Defines the response payload for MasterPlayerWithGenericServiceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `serviceId` | `string` | yes | — |
+| `serviceId` | `string` | yes | Player identifier within the linked external generic service. |
 
 ### GetPlayersWithGenericServiceResponseData
 
@@ -3233,7 +3237,7 @@ Defines the response payload for MasterPlayerWithGoogleId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `googleId` | `string` | yes | — |
+| `googleId` | `string` | yes | Google account identifier from the linked Google account. |
 
 ### GetPlayersWithGoogleResponseData
 
@@ -3253,7 +3257,7 @@ Defines the response payload for MasterPlayerWithPlayerId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `playerId` | `string` | yes | — |
+| `playerId` | `string` | yes | Google Play Game Service or Game Center player identifier. |
 
 ### GetPlayersWithGooglePlayGameServiceResponseData
 
@@ -3292,13 +3296,13 @@ Describes one statistics or currency change log entry.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | yes | — |
-| `tsCreate` | `number` | yes | — |
-| `log` | `string` | yes | — |
-| `key` | `string` | yes | — |
-| `amount` | `number` | yes | — |
-| `startValue` | `number` | yes | — |
-| `finalValue` | `number` | yes | — |
+| `userId` | `string` | yes | User identifier of the master player who owns this log entry. |
+| `tsCreate` | `number` | yes | Timestamp when the change was recorded. |
+| `log` | `string` | yes | Log message or label describing the operation that caused the change. |
+| `key` | `string` | yes | Statistics or currency key that was changed. |
+| `amount` | `number` | yes | Delta applied to the value in this operation. |
+| `startValue` | `number` | yes | Value of the key before the change was applied. |
+| `finalValue` | `number` | yes | Value of the key after the change was applied. |
 
 ### GetStatisticsLeaderboardResponseData
 
@@ -3345,7 +3349,7 @@ Defines the request payload for GetCurrencyLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -3393,7 +3397,7 @@ Returns the backend-generated push endpoint ID.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `pushId` | `string` | yes | — |
+| `pushId` | `string` | yes | Backend-assigned push endpoint identifier for the newly registered device token. |
 
 ### SendPushNotificationResponseData
 
@@ -3402,7 +3406,7 @@ Returns the backend send status message for push-dispatch workflows.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `message` | `string` | yes | — |
+| `message` | `string` | yes | Status message returned by the backend after dispatching the push notification. |
 
 ### EmptyResponseData
 

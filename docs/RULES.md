@@ -199,7 +199,8 @@ Helper state:
 
 - `GNNetwork.isSocketConnected()` — check socket session id hiện tại.
 - `GNNetwork.getPing()` — ping trung bình từ active transport.
-- `GNNetwork.syncTs()` — sync local estimate của server timestamp.
+- `GNNetwork.getServerTimestamp()` — đọc local estimate (ms since epoch) của server clock; không gọi network.
+- `GNNetwork.syncTs()` / `syncTsAsync()` — hit endpoint timestamp để refresh local estimate; dùng khi cần time-sensitive call (ví dụ trước khi validate receipt).
 - `GNNetwork.getAuthenticateStatus().getAuthToken() / .getUserId()` — đọc auth cache.
 
 ---

@@ -4,9 +4,11 @@ Content data key-value, file upload info, download token.
 
 Related API reference: [API_CONTENT.md](/docs/reference/API_CONTENT.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new ContentModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3. Lưu ý: `Content` không có ownership rõ ràng nên không áp self/other-self trên route client.
 
 ## Danh sách
 
@@ -82,8 +84,8 @@ Defines the reusable parameter block ContentDataParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `data` | `GNHashtable` | yes | — |
+| `key` | `string` | yes | Content data key identifier. — _minLength=2, maxLength=32_ |
+| `data` | `GNHashtable` | yes | Arbitrary data blob associated with `key`; use `GNHashtable` to encode the content payload. |
 
 ### CreateNewFileUploadInfoRequestData
 
@@ -271,7 +273,7 @@ Returns the backend-generated file ID for follow-up upload or download workflows
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `fileId` | `string` | yes | — |
+| `fileId` | `string` | yes | Backend-assigned file identifier used in follow-up get/download/remove calls. |
 
 ### GetContentDataResponseData
 
@@ -280,7 +282,7 @@ Defines the response payload for GetContentData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `configs` | `Array<ContentDataParam>` | yes | _elementCls=ContentDataParam_ |
+| `configs` | `Array<ContentDataParam>` | yes | List of content data entries matching the request filters. — _elementCls=ContentDataParam_ |
 
 ### GetFileUploadInfoListResponseData
 
@@ -289,7 +291,7 @@ Defines the response payload for GetFileUploadInfoList.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `results` | `Array<FileIdUploadResponseData>` | yes | _elementCls=FileIdUploadResponseData_ |
+| `results` | `Array<FileIdUploadResponseData>` | yes | Paginated list of file IDs matching the query. — _elementCls=FileIdUploadResponseData_ |
 
 ### FileUploadItem
 
@@ -298,9 +300,9 @@ Describes upload metadata stored for one file entry.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `mimeType` | `string` | yes | — |
-| `size` | `number` | yes | — |
-| `folderFileName` | `string` | yes | — |
+| `mimeType` | `string` | yes | MIME type of the uploaded file (e.g. `image/png`, `application/json`). |
+| `size` | `number` | yes | File size in bytes. |
+| `folderFileName` | `string` | yes | Backend-stored path and file name for the uploaded binary. |
 
 ### GetFileUploadInfoResponseData
 
@@ -311,11 +313,11 @@ Returns metadata for one uploaded file entry.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `fileName` | `string` | yes | — |
-| `tsCreate` | `number` | yes | — |
-| `removeStatus` | `GenericModels.RemoveStatusItem` | yes | — |
+| `fileName` | `string` | yes | Original file name submitted when the upload slot was created. |
+| `tsCreate` | `number` | yes | Creation timestamp of the upload slot. |
+| `removeStatus` | `GenericModels.RemoveStatusItem` | yes | Soft-remove metadata; present when the file has been marked for removal. |
 | `tsUploadExpire` | `number` | no | Upload-expiration timestamp for unfinished uploads when present. |
-| `fileUpload` | `FileUploadItem` | no | — |
+| `fileUpload` | `FileUploadItem` | no | Detailed file metadata; present only after the binary has been successfully uploaded. |
 
 ### RequestDownloadFileUploadInfoResponseData
 
@@ -324,7 +326,7 @@ Returns the download token consumed by the SDK download helper.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `downloadToken` | `string` | yes | — |
+| `downloadToken` | `string` | yes | Short-lived token passed to the SDK download helper to fetch the file binary. |
 
 ### EmptyResponseData
 

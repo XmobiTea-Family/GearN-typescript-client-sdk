@@ -37,7 +37,7 @@ Toàn bộ enum public export từ `@xmobitea/gearn-typescript-client-sdk`. Mỗ
 
 ## ReturnCode
 
-Transport/gateway return code trả trong `OperationResponse.getReturnCode()`. **Luôn kiểm tra trước `errorCode`.**
+Transport/gateway return code. **Truy cập bằng field public `res.returnCode`** trên typed response (`*Async()` và callback form). Getter `OperationResponse.getReturnCode()` chỉ dùng khi xử lý raw `OperationResponse` (custom op). **Luôn kiểm tra trước `errorCode`.**
 
 Class import: `import { ReturnCode } from "@xmobitea/gearn-typescript-client-sdk"` — các member là static readonly numbers.
 
@@ -168,20 +168,20 @@ export enum RequestType {
 ```
 
 <!-- prettier-ignore -->
-| Name | Value |
-| --- | --- |
-| `Custom` | 0 |
-| `Authenticate` | 1 |
-| `CharacterPlayer` | 2 |
-| `Content` | 3 |
-| `GamePlayer` | 4 |
-| `Group` | 5 |
-| `Inventory` | 6 |
-| `MasterPlayer` | 7 |
-| `StoreInventory` | 8 |
-| `Dashboard` | 9 |
-| `Multiplayer` | 10 |
-| `CloudScript` | 11 |
+| Name | Value | Meaning |
+| --- | --- | --- |
+| `Custom` | 0 | Custom operation ngoài các domain tiêu chuẩn |
+| `Authenticate` | 1 | Login, register, token management |
+| `CharacterPlayer` | 2 | Character-player profile và data |
+| `Content` | 3 | Content data và file upload/download |
+| `GamePlayer` | 4 | Game-player profile và data |
+| `Group` | 5 | Group lifecycle, member, message |
+| `Inventory` | 6 | Inventory item management |
+| `MasterPlayer` | 7 | Master-player account và external identity |
+| `StoreInventory` | 8 | Store item, purchase, receipt validation |
+| `Dashboard` | 9 | Game settings và admin configuration |
+| `Multiplayer` | 10 | Matchmaking ticket và match lifecycle |
+| `CloudScript` | 11 | CloudScript function management và execute |
 
 ---
 
@@ -231,13 +231,13 @@ export enum LogType {
 ```
 
 <!-- prettier-ignore -->
-| Name | Value |
-| --- | --- |
-| `Off` | 0 |
-| `Exception` | 1 |
-| `Error` | 2 |
-| `Warning` | 3 |
-| `All` | 4 |
+| Name | Value | Meaning |
+| --- | --- | --- |
+| `Off` | 0 | Tắt hoàn toàn mọi output từ `GNDebug` |
+| `Exception` | 1 | Chỉ log unhandled exception |
+| `Error` | 2 | Exception + runtime error |
+| `Warning` | 3 | Error + cảnh báo potential issue |
+| `All` | 4 | Log toàn bộ bao gồm info/debug verbose |
 
 ---
 
@@ -339,10 +339,10 @@ Top-level entity owner của resource.
 Mobile push platform.
 
 <!-- prettier-ignore -->
-| Name | Value |
-| --- | --- |
-| `Android` | 1 |
-| `iOS` | 2 |
+| Name | Value | Meaning |
+| --- | --- | --- |
+| `Android` | 1 | Android device; sử dụng FCM (Firebase Cloud Messaging) |
+| `iOS` | 2 | Apple device; sử dụng APNs (Apple Push Notification service) |
 
 ---
 

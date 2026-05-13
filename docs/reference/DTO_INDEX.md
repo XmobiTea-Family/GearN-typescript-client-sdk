@@ -2370,7 +2370,7 @@ Tổng cộng **2506** DTO class trên **12** domain.
 | MULTIPLAYER | `MultiplayerModels` | [MatchMember](/docs/reference/dto/MULTIPLAYER.md#matchmember) | 3 | — |
 | MULTIPLAYER | `MultiplayerModels` | [PortInfo](/docs/reference/dto/MULTIPLAYER.md#portinfo) | 4 | — |
 | MULTIPLAYER | `MultiplayerModels` | [ServerDetail](/docs/reference/dto/MULTIPLAYER.md#serverdetail) | 2 | — |
-| MULTIPLAYER | `MultiplayerModels` | [MatchResponseData](/docs/reference/dto/MULTIPLAYER.md#matchresponsedata) | 4 | — |
+| MULTIPLAYER | `MultiplayerModels` | [MatchResponseData](/docs/reference/dto/MULTIPLAYER.md#matchresponsedata) | 5 | — |
 | MULTIPLAYER | `MultiplayerModels` | [MatchWithMatchIdResponseData](/docs/reference/dto/MULTIPLAYER.md#matchwithmatchidresponsedata) | 1 | `MatchResponseData` |
 | MULTIPLAYER | `MultiplayerModels` | [GetMatchResponseData](/docs/reference/dto/MULTIPLAYER.md#getmatchresponsedata) | 1 | — |
 | MULTIPLAYER | `MultiplayerModels` | [GetQueueStatisticsResponseData](/docs/reference/dto/MULTIPLAYER.md#getqueuestatisticsresponsedata) | 3 | — |

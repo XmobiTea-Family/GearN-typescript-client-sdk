@@ -52,14 +52,6 @@ Wrapper `socket` đang expose:
 ## 6. Ví dụ cơ bản
 
 ```ts
-const requireString = (value: unknown, fieldName: string): string => {
-    if (typeof value !== "string" || value.trim().length === 0) {
-        throw new Error(fieldName + " is required");
-    }
-
-    return value.trim();
-};
-
 const createDemoOperationEvent = (message: string, userId: string) => {
     return new OperationEvent("cloudScriptDemo", GNHashtable.builder().add("message", message).add("sourceUserId", userId).add("ts", Date.now()).build());
 };

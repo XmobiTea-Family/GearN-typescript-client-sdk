@@ -4,9 +4,11 @@ Character-level gameplay: profile, inventory relation, friend/group relation, st
 
 Related API reference: [API_CHARACTER_PLAYER.md](/docs/reference/API_CHARACTER_PLAYER.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new CharacterPlayerModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Variant `Server`/`Admin` thường thêm field bắt buộc như `userId`/`characterId`. Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
 
 ## Danh sách
 
@@ -452,7 +454,7 @@ Defines the reusable parameter block PlayerStatisticsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `number` | yes | — |
+| `value` | `number` | yes | Statistic value to apply; interpretation depends on the configured aggregation method. |
 
 ### PlayerDataParam
 
@@ -462,7 +464,7 @@ Defines the reusable parameter block PlayerDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this player data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### PlayerCurrencyParam
 
@@ -472,7 +474,7 @@ Defines the reusable parameter block PlayerCurrencyParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `amount` | `number` | yes | — |
+| `amount` | `number` | yes | Currency amount delta to apply (positive to add, negative to subtract). |
 
 ### CustomDataParam
 
@@ -482,7 +484,7 @@ Defines the reusable parameter block CustomDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this custom data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### GroupMemberParam
 
@@ -681,7 +683,7 @@ Defines the request payload for GetFriendStatisticsLeaderboardAroundPlayer.
 | --- | --- | --- | --- |
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -711,7 +713,7 @@ Defines the request payload for GetFriendStatisticsLeaderboard.
 | --- | --- | --- | --- |
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -997,7 +999,7 @@ Defines the request payload for GetPlayersWithDisplayName.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `keyword` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1025,7 +1027,7 @@ Defines the request payload for GetPlayersWithSegment.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1054,7 +1056,7 @@ Defines the request payload for GetPlayersWithTag.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1133,11 +1135,11 @@ Defines the request payload for GetStatisticsLeaderboardAroundPlayer.
 | --- | --- | --- | --- |
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `catalogId` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardAroundPlayerRequestData
 
@@ -1163,11 +1165,11 @@ Defines the request payload for GetCurrencyLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `catalogId` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetCurrencyLeaderboardRequestData
 
@@ -1193,12 +1195,12 @@ Defines the request payload for GetStatisticsLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
-| `version` | `string` | yes | _minLength=2, maxLength=32_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `version` | `string` | no | _minLength=2, maxLength=32_ |
+| `catalogId` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardRequestData
 
@@ -1223,7 +1225,7 @@ Defines the request payload for GetCreateLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1251,7 +1253,7 @@ Defines the request payload for GetLastLoginLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional character fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1569,8 +1571,8 @@ Defines the request payload for SetAvatar.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
-| `type` | `number` | yes | — |
-| `value` | `string` | yes | _minLength=1, maxLength=128_ |
+| `type` | `number` | yes | Avatar type identifier. Map with the public avatar type enum. |
+| `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### ServerSetAvatarRequestData
 
@@ -1701,8 +1703,8 @@ Defines the request payload for SetPlayerBan.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
-| `tsExpire` | `number` | yes | — |
-| `reason` | `string` | yes | — |
+| `tsExpire` | `number` | yes | Expiration timestamp of the ban (Unix timestamp); use a far-future value for a permanent ban. |
+| `reason` | `string` | yes | Human-readable reason for the ban recorded on the backend. |
 
 ### ServerSetPlayerBanRequestData
 
@@ -1729,7 +1731,7 @@ Defines the request payload for ChangePlayerCurrency.
 | --- | --- | --- | --- |
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
 | `playerCurrencies` | `Array<PlayerCurrencyParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerCurrencyParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerCurrencyRequestData
 
@@ -1782,7 +1784,7 @@ Defines the request payload for ChangePlayerStatistics.
 | --- | --- | --- | --- |
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
 | `playerStatistics` | `Array<PlayerStatisticsParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerStatisticsParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerStatisticsRequestData
 
@@ -1916,25 +1918,25 @@ Contains the optional fields requested through `InfoRequestParam`.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `catalogId` | `string` | no | — |
-| `owner` | `GenericModels.OwnerItem` | no | — |
-| `removeStatus` | `GenericModels.RemoveStatusItem` | no | — |
-| `segments` | `Array<string>` | no | _elementCls=String_ |
-| `customDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `displayName` | `string` | no | — |
-| `avatar` | `GenericModels.AvatarItem` | no | — |
-| `tsCreate` | `number` | no | — |
-| `tags` | `Array<GenericModels.TagItem>` | no | _elementCls=GenericModels.TagItem_ |
-| `playerBan` | `GenericModels.BanItem` | no | — |
-| `playerDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `playerCurrencies` | `Array<GenericModels.CurrencyItem>` | no | _elementCls=GenericModels.CurrencyItem_ |
-| `playerStatistics` | `Array<GenericModels.StatisticsItem>` | no | _elementCls=GenericModels.StatisticsItem_ |
+| `catalogId` | `string` | no | Catalog ID the character belongs to; present when requested. |
+| `owner` | `GenericModels.OwnerItem` | no | Owner of the character entity; present when requested. |
+| `removeStatus` | `GenericModels.RemoveStatusItem` | no | Soft-remove metadata; present when the character has been marked for removal. |
+| `segments` | `Array<string>` | no | Segment names currently assigned to the character. — _elementCls=String_ |
+| `customDatas` | `Array<GenericModels.DataItem>` | no | Custom data entries; present when `customDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
+| `displayName` | `string` | no | Display name of the character; present when requested. |
+| `avatar` | `GenericModels.AvatarItem` | no | Avatar descriptor; present when requested. |
+| `tsCreate` | `number` | no | Creation timestamp of the character; present when requested. |
+| `tags` | `Array<GenericModels.TagItem>` | no | Tag entries assigned to the character. — _elementCls=GenericModels.TagItem_ |
+| `playerBan` | `GenericModels.BanItem` | no | Ban state of the character; present when requested and a ban exists. |
+| `playerDatas` | `Array<GenericModels.DataItem>` | no | Player data entries; present when `playerDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
+| `playerCurrencies` | `Array<GenericModels.CurrencyItem>` | no | Currency balances; present when `playerCurrencies` is enabled. — _elementCls=GenericModels.CurrencyItem_ |
+| `playerStatistics` | `Array<GenericModels.StatisticsItem>` | no | Statistics values; present when `playerStatistics` is enabled. — _elementCls=GenericModels.StatisticsItem_ |
 | `playerInventories` | `Array<GenericModels.InventoryItem>` | no | Lightweight relation items for inventory owned by the character. — _elementCls=GenericModels.InventoryItem_ |
 | `playerGroups` | `Array<GenericModels.GroupItem>` | no | Lightweight relation items for groups attached to the character. — _elementCls=GenericModels.GroupItem_ |
 | `playerFriends` | `Array<GenericModels.FriendItem>` | no | Lightweight relation items for friends attached to the character. — _elementCls=GenericModels.FriendItem_ |
-| `tsLastLogin` | `number` | no | — |
-| `ipAddressCreate` | `string` | no | — |
-| `countryCode` | `string` | no | — |
+| `tsLastLogin` | `number` | no | Timestamp of the character's last login; present when requested. |
+| `ipAddressCreate` | `string` | no | IP address recorded at character creation; present when requested. |
+| `countryCode` | `string` | no | Country code associated with the character; present when requested. |
 
 ### CharacterPlayerResponseData
 
@@ -1954,7 +1956,7 @@ Character-player envelope that also exposes the resolved character ID.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `characterId` | `string` | yes | — |
+| `characterId` | `string` | yes | Character identifier. |
 
 ### CharacterPlayerLeaderboardResponseData
 
@@ -1965,8 +1967,8 @@ Defines the response payload for CharacterPlayerLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `position` | `number` | yes | — |
-| `backupValue` | `number` | no | — |
+| `position` | `number` | yes | Zero-based leaderboard rank position of this character. |
+| `backupValue` | `number` | no | Backup statistic or currency value used as a tiebreaker when present. |
 
 ### CharacterPlayerLogResponseData
 
@@ -1975,13 +1977,13 @@ Defines the response payload for CharacterPlayerLog.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `characterId` | `string` | yes | — |
-| `tsCreate` | `number` | yes | — |
-| `log` | `string` | yes | — |
-| `key` | `string` | yes | — |
-| `amount` | `number` | yes | — |
-| `startValue` | `number` | yes | — |
-| `finalValue` | `number` | yes | — |
+| `characterId` | `string` | yes | Character identifier this log entry belongs to. |
+| `tsCreate` | `number` | yes | Timestamp when this log entry was recorded. |
+| `log` | `string` | yes | Human-readable log message describing the change. |
+| `key` | `string` | yes | Currency or statistics key that was changed. |
+| `amount` | `number` | yes | Delta amount applied in this change. |
+| `startValue` | `number` | yes | Value before the change was applied. |
+| `finalValue` | `number` | yes | Value after the change was applied. |
 
 ### GetStatisticsLeaderboardResponseData
 
@@ -1991,7 +1993,7 @@ Defines the response payload for GetStatisticsLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<CharacterPlayerLeaderboardResponseData>` | yes | _elementCls=CharacterPlayerLeaderboardResponseData_ |
-| `tsCreate` | `number` | no | — |
+| `tsCreate` | `number` | no | Snapshot timestamp used for this leaderboard page when returned by the backend. |
 
 ### CharacterPlayersWithCharacterIdResponseData
 

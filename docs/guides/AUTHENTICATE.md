@@ -64,6 +64,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Chỉ request những field thật sự cần cho màn hình hoặc flow hiện tại.
 - Nếu chỉ cần một phần dữ liệu theo key, dùng các mảng filter như `playerDataKeys`, `playerCurrencyKeys`, `playerStatisticsKeys`, `customDataKeys`, `tagKeys`.
 - Schema `InfoRequestParam` nằm trong [reference/dto/AUTHENTICATE.md](/docs/reference/dto/AUTHENTICATE.md#inforequestparam); chỉ fallback sang [dist/runtime/entity/models/AuthenticateModels.d.ts](/dist/runtime/entity/models/AuthenticateModels.d.ts) nếu reference chưa đủ.
+- Tham khảo thêm: [reference/API_AUTHENTICATE.md](/docs/reference/API_AUTHENTICATE.md), [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md), [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md). Source: [src/runtime/GNNetworkAuthenticateApi.ts](/src/runtime/GNNetworkAuthenticateApi.ts).
 
 ### Ví dụ tối thiểu
 
@@ -115,17 +116,23 @@ Tất cả typed response của `AuthenticateApi` đều có các field low-leve
 - `errorCode`: business error từ backend
 - `responseData`: payload typed đã deserialize
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Kiểu `responseData` theo method:
 

@@ -61,6 +61,7 @@ Ghi chú:
 
 - Trên browser build của Cocos, nếu `messageType = MessageType.MsgPack` thì HTTP transport sẽ tự fallback sang JSON.
 - Chỉ dùng route `.server` hoặc `.admin` khi bạn đã cấu hình secret key tương ứng.
+- Reference đầy đủ cho `GNServerSettingsOptions`: [reference/CONFIG.md](/docs/reference/CONFIG.md). Permission rules cho secret key: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 
 ### Authentication
 

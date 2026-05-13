@@ -4,9 +4,13 @@ Game-player profile, friend/group relation, currency, statistics, segment, tag, 
 
 Related API reference: [API_GAME_PLAYER.md](/docs/reference/API_GAME_PLAYER.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Server variant `userId` override**: Every `Server*RequestData` class overrides the parent's optional `userId?: string` with a required `userId: string` (via `public declare userId: string` with `mustNonNull: true`). Sections marked "Không có field public (payload rỗng)" for `Server*` variants mean no *new* fields — but `userId` changes from optional to **required** on those routes.
+
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng.
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Variant `Server`/`Admin` thường thêm field bắt buộc như `userId`. Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
 
 ## Danh sách
 
@@ -168,6 +172,7 @@ Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field tab
     - [ServerGetStatisticsLogRequestData](#servergetstatisticslogrequestdata)
     - [AdminGetStatisticsLogRequestData](#admingetstatisticslogrequestdata)
     - [InfoResponseParameters](#inforesponseparameters)
+    - [OnlineStatusItem](#onlinestatusitem)
     - [GamePlayerResponseData](#gameplayerresponsedata)
     - [GamePlayerWithUserIdResponseData](#gameplayerwithuseridresponsedata)
     - [GamePlayerLeaderboardResponseData](#gameplayerleaderboardresponsedata)
@@ -425,6 +430,7 @@ Selects which optional game-player fields and lightweight relations should be re
 | `playerCharacters` | `boolean` | no | Includes relation items for characters owned by the player, optionally filtered by `characterCatalogIds`. — _default=false_ |
 | `playerInventories` | `boolean` | no | Includes relation items for inventory owned by the player, optionally filtered by `itemCatalogIds`. — _default=false_ |
 | `playerGroups` | `boolean` | no | Includes relation items for groups joined or owned by the player, optionally filtered by `groupCatalogIds`. — _default=false_ |
+| `onlineStatus` | `boolean` | no | Includes the player's online status, if supported by the connected game server. — _default=false_ |
 | `playerFriends` | `boolean` | no | Includes relation items for friends attached to the player, optionally filtered by `friendCatalogIds`. — _default=false_ |
 | `playerDataKeys` | `Array<string>` | no | _elementCls=String_ |
 | `playerCurrencyKeys` | `Array<string>` | no | _elementCls=String_ |
@@ -444,7 +450,7 @@ Defines the reusable parameter block CustomDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this custom data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### GroupMemberParam
 
@@ -463,7 +469,7 @@ Defines the reusable parameter block PlayerCurrencyParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `amount` | `number` | yes | — |
+| `amount` | `number` | yes | Currency amount delta to apply (positive to add, negative to subtract). |
 
 ### PlayerDataParam
 
@@ -473,7 +479,7 @@ Defines the reusable parameter block PlayerDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this player data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### PlayerStatisticsParam
 
@@ -483,7 +489,7 @@ Defines the reusable parameter block PlayerStatisticsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `number` | yes | — |
+| `value` | `number` | yes | Statistic value to apply; interpretation depends on the configured aggregation method. |
 
 ### AddPlayerFriendRequestData
 
@@ -648,7 +654,7 @@ Defines the request payload for GetFriendStatisticsLeaderboardAroundPlayer.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -678,7 +684,7 @@ Defines the request payload for GetFriendStatisticsLeaderboard.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -993,7 +999,7 @@ Defines the request payload for GetPlayersWithDisplayName.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `keyword` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1021,7 +1027,7 @@ Defines the request payload for GetPlayersWithSegment.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1050,7 +1056,7 @@ Defines the request payload for GetPlayersWithTag.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -1104,7 +1110,7 @@ Defines the request payload for GetStatisticsLeaderboardAroundPlayer.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1133,11 +1139,11 @@ Defines the request payload for GetStatisticsLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
-| `version` | `string` | yes | _minLength=2, maxLength=32_ |
+| `version` | `string` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardRequestData
 
@@ -1162,7 +1168,7 @@ Defines the request payload for GetCreateLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1296,7 +1302,7 @@ Defines the request payload for CreatePlayerCharacter.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `displayName` | `string` | yes | _default=""_ |
+| `displayName` | `string` | no | _default=""_ |
 | `uniqueDisplayName` | `boolean` | no | _default=false_ |
 
 ### ServerCreatePlayerCharacterRequestData
@@ -1534,8 +1540,8 @@ Defines the request payload for SetAvatar.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `type` | `number` | yes | — |
-| `value` | `string` | yes | _minLength=1, maxLength=128_ |
+| `type` | `number` | yes | Avatar type identifier. Map with the public avatar type enum. |
+| `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### ServerSetAvatarRequestData
 
@@ -1640,8 +1646,8 @@ Defines the request payload for SetPlayerBan.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `tsExpire` | `number` | yes | — |
-| `reason` | `string` | yes | — |
+| `tsExpire` | `number` | yes | Expiration timestamp of the ban (Unix timestamp); use a far-future value for a permanent ban. |
+| `reason` | `string` | yes | Human-readable reason for the ban recorded on the backend. |
 
 ### ServerSetPlayerBanRequestData
 
@@ -1668,7 +1674,7 @@ Defines the request payload for ChangePlayerCurrency.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `playerCurrencies` | `Array<PlayerCurrencyParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerCurrencyParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerCurrencyRequestData
 
@@ -1721,7 +1727,7 @@ Defines the request payload for ChangePlayerStatistics.
 | --- | --- | --- | --- |
 | `userId` | `string` | no | _minLength=10, maxLength=10_ |
 | `playerStatistics` | `Array<PlayerStatisticsParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerStatisticsParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerStatisticsRequestData
 
@@ -1829,23 +1835,34 @@ Contains the optional fields requested through `InfoRequestParam`.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `segments` | `Array<string>` | no | _elementCls=String_ |
-| `customDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `displayName` | `string` | no | — |
-| `avatar` | `GenericModels.AvatarItem` | no | — |
-| `tsCreate` | `number` | no | — |
-| `tags` | `Array<GenericModels.TagItem>` | no | _elementCls=GenericModels.TagItem_ |
-| `playerBan` | `GenericModels.BanItem` | no | — |
-| `playerDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `playerCurrencies` | `Array<GenericModels.CurrencyItem>` | no | _elementCls=GenericModels.CurrencyItem_ |
-| `playerStatistics` | `Array<GenericModels.StatisticsItem>` | no | _elementCls=GenericModels.StatisticsItem_ |
+| `segments` | `Array<string>` | no | Segment names currently assigned to the player. — _elementCls=String_ |
+| `customDatas` | `Array<GenericModels.DataItem>` | no | Custom data entries; present when `customDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
+| `displayName` | `string` | no | Display name of the player; present when requested. |
+| `avatar` | `GenericModels.AvatarItem` | no | Avatar descriptor; present when requested. |
+| `tsCreate` | `number` | no | Creation timestamp of the player account; present when requested. |
+| `tags` | `Array<GenericModels.TagItem>` | no | Tag entries assigned to the player. — _elementCls=GenericModels.TagItem_ |
+| `playerBan` | `GenericModels.BanItem` | no | Ban state of the player; present when requested and a ban exists. |
+| `playerDatas` | `Array<GenericModels.DataItem>` | no | Player data entries; present when `playerDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
+| `playerCurrencies` | `Array<GenericModels.CurrencyItem>` | no | Currency balances; present when `playerCurrencies` is enabled. — _elementCls=GenericModels.CurrencyItem_ |
+| `playerStatistics` | `Array<GenericModels.StatisticsItem>` | no | Statistics values; present when `playerStatistics` is enabled. — _elementCls=GenericModels.StatisticsItem_ |
 | `playerCharacters` | `Array<GenericModels.CharacterItem>` | no | Lightweight relation items for owned character players, not full character snapshots. — _elementCls=GenericModels.CharacterItem_ |
 | `playerInventories` | `Array<GenericModels.InventoryItem>` | no | Lightweight relation items for inventory owned by the player. — _elementCls=GenericModels.InventoryItem_ |
 | `playerGroups` | `Array<GenericModels.GroupItem>` | no | Lightweight relation items for groups attached to the player. — _elementCls=GenericModels.GroupItem_ |
 | `playerFriends` | `Array<GenericModels.FriendItem>` | no | Lightweight relation items for friends attached to the player. — _elementCls=GenericModels.FriendItem_ |
-| `tsLastLogin` | `number` | no | — |
-| `ipAddressCreate` | `string` | no | — |
-| `countryCode` | `string` | no | — |
+| `tsLastLogin` | `number` | no | Timestamp of the player's last login; present when requested. |
+| `ipAddressCreate` | `string` | no | IP address recorded at account creation; present when requested. |
+| `countryCode` | `string` | no | Country code associated with the player; present when requested. |
+| `onlineStatus` | `OnlineStatusItem` | no | Online status snapshot; present when `onlineStatus` is enabled in `InfoRequestParam`. |
+
+### OnlineStatusItem
+
+Online status snapshot returned when `InfoRequestParam.onlineStatus` is `true`.
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `tsLastLogin` | `number` | yes | Unix timestamp (ms) of the player's last login. |
+| `socketId` | `string` | yes | Active socket connection ID, or empty string if the player is offline. |
 
 ### GamePlayerResponseData
 
@@ -1865,7 +1882,7 @@ Game-player envelope that also exposes the resolved game-player user ID.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | yes | — |
+| `userId` | `string` | yes | Game-player user identifier. |
 
 ### GamePlayerLeaderboardResponseData
 
@@ -1876,8 +1893,8 @@ Defines the response payload for GamePlayerLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `position` | `number` | yes | — |
-| `backupValue` | `number` | no | — |
+| `position` | `number` | yes | Zero-based leaderboard rank position of this player. |
+| `backupValue` | `number` | no | Backup statistic or currency value used as a tiebreaker when present. |
 
 ### GamePlayerLogResponseData
 
@@ -1886,13 +1903,13 @@ Defines the response payload for GamePlayerLog.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | yes | — |
-| `tsCreate` | `number` | yes | — |
-| `log` | `string` | yes | — |
-| `key` | `string` | yes | — |
-| `amount` | `number` | yes | — |
-| `startValue` | `number` | yes | — |
-| `finalValue` | `number` | yes | — |
+| `userId` | `string` | yes | Game-player user ID this log entry belongs to. |
+| `tsCreate` | `number` | yes | Timestamp when this log entry was recorded. |
+| `log` | `string` | yes | Human-readable log message describing the change. |
+| `key` | `string` | yes | Currency or statistics key that was changed. |
+| `amount` | `number` | yes | Delta amount applied in this change. |
+| `startValue` | `number` | yes | Value before the change was applied. |
+| `finalValue` | `number` | yes | Value after the change was applied. |
 
 ### GetStatisticsLeaderboardResponseData
 
@@ -1901,8 +1918,8 @@ Defines the response payload for GetStatisticsLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `results` | `Array<GamePlayerLeaderboardResponseData>` | yes | _elementCls=GamePlayerLeaderboardResponseData_ |
-| `tsCreate` | `number` | no | — |
+| `results` | `Array<GamePlayerLeaderboardResponseData>` | yes | Ordered list of game-player leaderboard entries. — _elementCls=GamePlayerLeaderboardResponseData_ |
+| `tsCreate` | `number` | no | Timestamp when this leaderboard snapshot was last generated; present when available. |
 
 ### GetCurrencyLeaderboardResponseData
 
@@ -1947,8 +1964,8 @@ Reports the latest known login timestamp and active socket identity for a player
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `tsLastLogin` | `number` | yes | — |
-| `socketId` | `string` | yes | — |
+| `tsLastLogin` | `number` | yes | Unix timestamp of the player's last login. |
+| `socketId` | `string` | yes | Active socket connection ID, or empty string if the player is offline. |
 
 ### GetCurrencyLeaderboardRequestData
 
@@ -1958,7 +1975,7 @@ Defines the request payload for GetCurrencyLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -1986,7 +2003,7 @@ Defines the request payload for GetLastLoginLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |

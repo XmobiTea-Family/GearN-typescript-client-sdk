@@ -4,9 +4,11 @@ Store catalog, buy/present, receipt validation, store log.
 
 Related API reference: [API_STORE_INVENTORY.md](/docs/reference/API_STORE_INVENTORY.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new StoreInventoryModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Variant `Server`/`Admin` thường thêm field bắt buộc như `userId`. Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
 
 ## Danh sách
 
@@ -151,8 +153,8 @@ Defines the reusable parameter block AvatarParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `type` | `number` | yes | — |
-| `value` | `string` | yes | _minLength=1, maxLength=128_ |
+| `type` | `number` | yes | Avatar type identifier. Map with the public avatar type enum. |
+| `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### CurrencyParam
 
@@ -162,7 +164,7 @@ Defines the reusable parameter block CurrencyParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `number` | yes | — |
+| `value` | `number` | yes | Currency price value for this key. |
 
 ### InAppPurchaseParam
 
@@ -171,10 +173,10 @@ Defines the reusable parameter block InAppPurchaseParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `facebookStoreId` | `string` | yes | _minLength=1, maxLength=128_ |
-| `googlePlayStoreId` | `string` | yes | _minLength=1, maxLength=128_ |
-| `appleAppStoreId` | `string` | yes | _minLength=1, maxLength=128_ |
-| `analyticsPrice` | `number` | no | — |
+| `facebookStoreId` | `string` | yes | Product ID in the Facebook store. — _minLength=1, maxLength=128_ |
+| `googlePlayStoreId` | `string` | yes | Product ID in the Google Play store (SKU). — _minLength=1, maxLength=128_ |
+| `appleAppStoreId` | `string` | yes | Product ID in the Apple App Store. — _minLength=1, maxLength=128_ |
+| `analyticsPrice` | `number` | no | Estimated real-money price used for analytics reporting. |
 
 ### InfoRequestParam
 
@@ -203,7 +205,7 @@ Defines the reusable parameter block StoreDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this store data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### StoreItemParam
 
@@ -212,9 +214,9 @@ Defines the reusable parameter block StoreItemParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `classId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `amount` | `number` | yes | — |
+| `catalogId` | `string` | yes | Catalog ID of the item granted on purchase. — _minLength=2, maxLength=32_ |
+| `classId` | `string` | yes | Class ID of the item granted on purchase. — _minLength=2, maxLength=32_ |
+| `amount` | `number` | yes | Quantity of items granted on purchase. |
 
 ### TagParam
 
@@ -228,47 +230,47 @@ Defines the reusable parameter block TagParam.
 
 ### InAppPurchaseItem
 
-Represents InAppPurchaseItem.
+Represents in-app purchase product IDs and analytics price for a store item.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `facebookStoreId` | `string` | yes | — |
-| `appleAppStoreId` | `string` | yes | — |
-| `googlePlayStoreId` | `string` | yes | — |
-| `analyticsPrice` | `number` | yes | — |
+| `facebookStoreId` | `string` | yes | Product ID in the Facebook store. |
+| `appleAppStoreId` | `string` | yes | Product ID in the Apple App Store. |
+| `googlePlayStoreId` | `string` | yes | Product ID in the Google Play store (SKU). |
+| `analyticsPrice` | `number` | yes | Estimated real-money price used for analytics reporting. |
 
 ### PriceCurrencyItem
 
-Represents PriceCurrencyItem.
+Represents one in-game currency price entry for a store item.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `key` | `string` | yes | — |
-| `value` | `number` | yes | — |
+| `key` | `string` | yes | Currency key identifying the currency used for payment. |
+| `value` | `number` | yes | Currency amount charged when purchasing with this currency. |
 
 ### OwnerStoreInventoryItem
 
-Represents OwnerStoreInventoryItem.
+Represents one inventory item currently owned by the target entity.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `itemId` | `string` | yes | — |
-| `catalogId` | `string` | yes | — |
-| `classId` | `string` | yes | — |
+| `itemId` | `string` | yes | Inventory item identifier of the owned item. |
+| `catalogId` | `string` | yes | Catalog ID the owned item belongs to. |
+| `classId` | `string` | yes | Class ID of the owned item. |
 
 ### StoreInventoryItem
 
-Represents StoreInventoryItem.
+Represents one inventory item granted by a store purchase.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `catalogId` | `string` | yes | — |
-| `classId` | `string` | yes | — |
-| `amount` | `number` | yes | — |
+| `catalogId` | `string` | yes | Catalog ID of the granted item. |
+| `classId` | `string` | yes | Class ID of the granted item. |
+| `amount` | `number` | yes | Quantity of items granted. |
 
 ### BuyStoreItemRequestData
 
@@ -280,7 +282,7 @@ Purchases one store item for a target owner.
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `id` | `string` | yes | Target owner identifier. — _minLength=10, maxLength=11_ |
 | `type` | `number` | yes | Target owner type mapped by the public `OwnerType` enum. |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerBuyStoreItemRequestData
 
@@ -307,8 +309,8 @@ Grants one store item to a target owner without the normal purchase flow.
 | --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `id` | `string` | yes | _minLength=10, maxLength=11_ |
-| `type` | `number` | yes | — |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `type` | `number` | yes | Target owner type mapped by the public `OwnerType` enum. |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerPresentStoreItemRequestData
 
@@ -333,11 +335,11 @@ Reads store logs using token-based pagination.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
-| `storeReceiveTypes` | `Array<number>` | yes | Filters by store receive types mapped by the public `StoreReceiveType` enum. — _minLength=1, maxLength=10, elementCls=Number_ |
-| `id` | `string` | yes | _minLength=10, maxLength=11_ |
+| `storeId` | `string` | no | _minLength=10, maxLength=32_ |
+| `storeReceiveTypes` | `Array<number>` | no | Filters by store receive types mapped by the public `StoreReceiveType` enum. — _minLength=1, maxLength=10, elementCls=Number_ |
+| `id` | `string` | no | _minLength=10, maxLength=11_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
+| `token` | `string` | no | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetStoreLogRequestData
 
@@ -414,7 +416,7 @@ Defines the request payload for GetStoreItemInformation.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional store item fields are included in the response. |
 
 ### ServerGetStoreItemInformationRequestData
 
@@ -441,7 +443,7 @@ Defines the request payload for GetStoreItemsWithTag.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional store item fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 
@@ -468,7 +470,7 @@ Defines the request payload for CreateStoreItem.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
+| `storeId` | `string` | no | _minLength=10, maxLength=32_ |
 | `displayName` | `string` | no | _default=""_ |
 
 ### ServerCreateStoreItemRequestData
@@ -522,14 +524,14 @@ Updates mutable store metadata for one store entry.
 | --- | --- | --- | --- |
 | `storeId` | `string` | yes | _minLength=10, maxLength=32_ |
 | `storeItemType` | `number` | no | Store item type mapped by the public `StoreItemType` enum. — _min=1, max=2_ |
-| `storeDatas` | `Array<StoreDataParam>` | yes | _minLength=0, maxLength=32, elementCls=StoreDataParam_ |
-| `storeItems` | `Array<StoreItemParam>` | yes | _minLength=0, maxLength=32, elementCls=StoreItemParam_ |
-| `storeCurrencies` | `Array<CurrencyParam>` | yes | _minLength=0, maxLength=32, elementCls=CurrencyParam_ |
-| `priceCurrencies` | `Array<CurrencyParam>` | yes | _minLength=0, maxLength=32, elementCls=CurrencyParam_ |
-| `inAppPurchase` | `InAppPurchaseParam` | yes | — |
-| `displayName` | `string` | yes | — |
-| `avatar` | `AvatarParam` | yes | — |
-| `tags` | `Array<TagParam>` | yes | _minLength=0, maxLength=32, elementCls=TagParam_ |
+| `storeDatas` | `Array<StoreDataParam>` | no | _minLength=0, maxLength=32, elementCls=StoreDataParam_ |
+| `storeItems` | `Array<StoreItemParam>` | no | _minLength=0, maxLength=32, elementCls=StoreItemParam_ |
+| `storeCurrencies` | `Array<CurrencyParam>` | no | _minLength=0, maxLength=32, elementCls=CurrencyParam_ |
+| `priceCurrencies` | `Array<CurrencyParam>` | no | _minLength=0, maxLength=32, elementCls=CurrencyParam_ |
+| `inAppPurchase` | `InAppPurchaseParam` | no | In-app purchase product IDs; provide to enable real-money purchases for this store item. |
+| `displayName` | `string` | no | Display name of the store item. |
+| `avatar` | `AvatarParam` | no | Avatar descriptor for the store item. |
+| `tags` | `Array<TagParam>` | no | _minLength=0, maxLength=32, elementCls=TagParam_ |
 
 ### ServerSetStoreItemInformationRequestData
 
@@ -554,10 +556,10 @@ Defines the request payload for ValidateAppleAppStoreReceipt.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `receipt` | `string` | yes | _minLength=10, maxLength=2048_ |
-| `id` | `string` | yes | _minLength=10, maxLength=11_ |
-| `type` | `number` | yes | — |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `receipt` | `string` | yes | Apple App Store receipt data (base64-encoded). — _minLength=10, maxLength=2048_ |
+| `id` | `string` | yes | Target owner identifier who will receive the purchased items. — _minLength=10, maxLength=11_ |
+| `type` | `number` | yes | Target owner type mapped by the public `OwnerType` enum. |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerValidateAppleAppStoreReceiptRequestData
 
@@ -582,10 +584,10 @@ Defines the request payload for ValidateFacebookStoreReceipt.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `receipt` | `string` | yes | _minLength=10, maxLength=2048_ |
-| `id` | `string` | yes | _minLength=10, maxLength=11_ |
-| `type` | `number` | yes | — |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `receipt` | `string` | yes | Facebook purchase payload/receipt data. — _minLength=10, maxLength=2048_ |
+| `id` | `string` | yes | Target owner identifier who will receive the purchased items. — _minLength=10, maxLength=11_ |
+| `type` | `number` | yes | Target owner type mapped by the public `OwnerType` enum. |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerValidateFacebookStoreReceiptRequestData
 
@@ -610,10 +612,10 @@ Defines the request payload for ValidateGooglePlayStoreReceipt.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `receipt` | `string` | yes | _minLength=10, maxLength=2048_ |
-| `id` | `string` | yes | _minLength=10, maxLength=11_ |
-| `type` | `number` | yes | — |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `receipt` | `string` | yes | Google Play purchase token returned by the billing library. — _minLength=10, maxLength=2048_ |
+| `id` | `string` | yes | Target owner identifier who will receive the purchased items. — _minLength=10, maxLength=11_ |
+| `type` | `number` | yes | Target owner type mapped by the public `OwnerType` enum. |
+| `log` | `string` | no | _minLength=1, maxLength=256_ |
 
 ### ServerValidateGooglePlayStoreReceiptRequestData
 
@@ -638,7 +640,7 @@ Defines the request payload for GetCreateLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional store item fields are included in the response. |
 | `skip` | `number` | no | _min=0, default=0_ |
 | `limit` | `number` | no | _min=1, max=100, default=10_ |
 | `loadFromCache` | `boolean` | no | _default=true_ |
@@ -666,17 +668,17 @@ Contains the optional fields requested through `InfoRequestParam`.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `storeItems` | `Array<StoreInventoryItem>` | no | _elementCls=StoreInventoryItem_ |
-| `storeItemType` | `number` | no | — |
-| `storeCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
-| `priceCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
-| `inAppPurchase` | `InAppPurchaseItem` | no | — |
-| `removeStatus` | `GenericModels.RemoveStatusItem` | no | — |
-| `displayName` | `string` | no | — |
-| `avatar` | `GenericModels.AvatarItem` | no | — |
-| `tsCreate` | `number` | no | — |
-| `tags` | `Array<GenericModels.TagItem>` | no | _elementCls=GenericModels.TagItem_ |
-| `storeDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
+| `storeItems` | `Array<StoreInventoryItem>` | no | Items granted by purchasing this store entry. — _elementCls=StoreInventoryItem_ |
+| `storeItemType` | `number` | no | Store item type mapped by the public `StoreItemType` enum; present when requested. |
+| `storeCurrencies` | `Array<PriceCurrencyItem>` | no | In-game currencies granted by purchasing this store entry. — _elementCls=PriceCurrencyItem_ |
+| `priceCurrencies` | `Array<PriceCurrencyItem>` | no | In-game currency prices required to purchase this store entry. — _elementCls=PriceCurrencyItem_ |
+| `inAppPurchase` | `InAppPurchaseItem` | no | In-app purchase product IDs; present when real-money purchase is configured. |
+| `removeStatus` | `GenericModels.RemoveStatusItem` | no | Soft-remove metadata; present when the store item has been marked for removal. |
+| `displayName` | `string` | no | Display name of the store item; present when requested. |
+| `avatar` | `GenericModels.AvatarItem` | no | Avatar descriptor of the store item; present when requested. |
+| `tsCreate` | `number` | no | Creation timestamp of the store item; present when requested. |
+| `tags` | `Array<GenericModels.TagItem>` | no | Tag entries assigned to the store item. — _elementCls=GenericModels.TagItem_ |
+| `storeDatas` | `Array<GenericModels.DataItem>` | no | Store data entries; present when `storeDatas` is enabled. — _elementCls=GenericModels.DataItem_ |
 
 ### StoreInventoryResponseData
 
@@ -696,7 +698,7 @@ Defines the response payload for StoreInventoryWithStoreId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `storeId` | `string` | yes | — |
+| `storeId` | `string` | yes | Store item identifier. |
 
 ### StoreInventoryLeaderboardResponseData
 
@@ -707,7 +709,7 @@ Defines the response payload for StoreInventoryLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `position` | `number` | yes | — |
+| `position` | `number` | yes | Zero-based leaderboard rank position of this store item. |
 
 ### StoreInventoriesWithStoreIdResponseData
 
@@ -725,7 +727,7 @@ Defines the response payload for CreateStoreItem.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `storeId` | `string` | yes | — |
+| `storeId` | `string` | yes | Backend-assigned store item identifier for the newly created store item. |
 
 ### OwnerInfoResponseParameters
 
@@ -747,7 +749,7 @@ Describes the result of a store purchase workflow.
 | `storeItems` | `Array<StoreInventoryItem>` | no | _elementCls=StoreInventoryItem_ |
 | `storeCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
 | `priceCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
-| `infoResponseParameters` | `OwnerInfoResponseParameters` | no | — |
+| `infoResponseParameters` | `OwnerInfoResponseParameters` | no | Post-purchase owner snapshot; present when currencies or inventories changed. |
 
 ### PresentStoreInventoryResponseData
 
@@ -756,10 +758,10 @@ Describes the result of a store present workflow.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `storeItems` | `Array<StoreInventoryItem>` | no | _elementCls=StoreInventoryItem_ |
-| `storeCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
-| `priceCurrencies` | `Array<PriceCurrencyItem>` | no | _elementCls=PriceCurrencyItem_ |
-| `infoResponseParameters` | `OwnerInfoResponseParameters` | no | — |
+| `storeItems` | `Array<StoreInventoryItem>` | no | Inventory items granted by the present operation. — _elementCls=StoreInventoryItem_ |
+| `storeCurrencies` | `Array<PriceCurrencyItem>` | no | In-game currencies granted by the present operation. — _elementCls=PriceCurrencyItem_ |
+| `priceCurrencies` | `Array<PriceCurrencyItem>` | no | In-game currencies deducted as payment; typically empty for a present (no payment required). — _elementCls=PriceCurrencyItem_ |
+| `infoResponseParameters` | `OwnerInfoResponseParameters` | no | Post-present owner snapshot; present when currencies or inventories changed. |
 
 ### CurrencyResponseData
 
@@ -768,8 +770,8 @@ Defines the response payload for Currency.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `key` | `string` | yes | — |
-| `value` | `number` | yes | — |
+| `key` | `string` | yes | Currency key identifying the currency. |
+| `value` | `number` | yes | Currency amount for this entry. |
 
 ### StoreItemResponseData
 
@@ -778,9 +780,9 @@ Defines the response payload for StoreItem.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `catalogId` | `string` | yes | — |
-| `classId` | `string` | yes | — |
-| `itemId` | `string` | yes | — |
+| `catalogId` | `string` | yes | Catalog ID of the granted inventory item. |
+| `classId` | `string` | yes | Class ID of the granted inventory item. |
+| `itemId` | `string` | yes | Inventory item identifier of the granted item. |
 
 ### StoreLogResponseData
 
@@ -789,20 +791,20 @@ Describes one store transaction log entry.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `storeId` | `string` | yes | — |
-| `id` | `string` | yes | — |
+| `storeId` | `string` | yes | Store item identifier involved in this transaction. |
+| `id` | `string` | yes | Owner identifier who received the store item. |
 | `type` | `number` | yes | Owner type mapped by the public `OwnerType` enum. |
-| `transactionId` | `string` | no | — |
+| `transactionId` | `string` | no | External payment transaction ID (e.g. Apple, Google, Facebook receipt ID); present for real-money purchases. |
 | `storeReceiveType` | `number` | yes | Receive type mapped by the public `StoreReceiveType` enum. |
-| `priceCurrencyStartValues` | `Array<CurrencyResponseData>` | yes | _elementCls=CurrencyResponseData_ |
-| `priceCurrencyAmountValues` | `Array<CurrencyResponseData>` | yes | _elementCls=CurrencyResponseData_ |
-| `priceCurrencyFinalValues` | `Array<CurrencyResponseData>` | yes | _elementCls=CurrencyResponseData_ |
-| `storeCurrencyStartValues` | `Array<CurrencyResponseData>` | yes | _elementCls=CurrencyResponseData_ |
-| `storeCurrencyAmountValues` | `Array<CurrencyResponseData>` | yes | _elementCls=CurrencyResponseData_ |
-| `storeCurrencyFinalValues` | `Array<CurrencyResponseData>` | yes | _elementCls=CurrencyResponseData_ |
-| `storeItemFinalValues` | `Array<StoreItemResponseData>` | yes | _elementCls=StoreItemResponseData_ |
-| `tsCreate` | `number` | yes | — |
-| `log` | `string` | yes | — |
+| `priceCurrencyStartValues` | `Array<CurrencyResponseData>` | yes | Currency balances before the price was deducted. — _elementCls=CurrencyResponseData_ |
+| `priceCurrencyAmountValues` | `Array<CurrencyResponseData>` | yes | Currency amounts deducted as price payment. — _elementCls=CurrencyResponseData_ |
+| `priceCurrencyFinalValues` | `Array<CurrencyResponseData>` | yes | Currency balances after the price was deducted. — _elementCls=CurrencyResponseData_ |
+| `storeCurrencyStartValues` | `Array<CurrencyResponseData>` | yes | Currency balances before the store currencies were granted. — _elementCls=CurrencyResponseData_ |
+| `storeCurrencyAmountValues` | `Array<CurrencyResponseData>` | yes | Currency amounts granted as part of the purchase. — _elementCls=CurrencyResponseData_ |
+| `storeCurrencyFinalValues` | `Array<CurrencyResponseData>` | yes | Currency balances after the store currencies were granted. — _elementCls=CurrencyResponseData_ |
+| `storeItemFinalValues` | `Array<StoreItemResponseData>` | yes | Inventory items granted as part of the purchase. — _elementCls=StoreItemResponseData_ |
+| `tsCreate` | `number` | yes | Timestamp when this transaction was recorded. |
+| `log` | `string` | yes | Log message describing the transaction. |
 
 ### StoreUsedResponseData
 
@@ -811,9 +813,9 @@ Defines the response payload for StoreUsed.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `id` | `string` | yes | — |
-| `type` | `number` | yes | — |
-| `tsCreate` | `number` | yes | — |
+| `id` | `string` | yes | Owner identifier who received the store item. |
+| `type` | `number` | yes | Owner type mapped by the public `OwnerType` enum. |
+| `tsCreate` | `number` | yes | Timestamp when the store item was granted. |
 
 ### GetCreateLeaderboardResponseData
 

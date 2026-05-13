@@ -35,8 +35,12 @@ GNNetwork.init(settings);
 
 // Mọi call: 2-tier check
 const res = await GNNetwork.<group>.<method>Async(req);
+// Cách 1 — field public (throwable):
 if (res.returnCode !== ReturnCode.Ok) return; // transport / permission
 if (res.errorCode  !== ErrorCode.Ok)  return; // business
+// Cách 2 — helper method (equivalent):
+// if (res.hasReturnCodeError()) throw new Error(res.debugMessage);
+// if (res.errorCode !== ErrorCode.Ok) throw new Error(`Business error: ${res.errorCode}`);
 useResult(res.responseData);
 ```
 
@@ -64,7 +68,7 @@ useResult(res.responseData);
 | Tra DTO field theo class | [reference/DTO_INDEX.md](/docs/reference/DTO_INDEX.md) (grep) hoặc [reference/dto/](/docs/reference/dto/) |
 | Enum value numeric | [reference/ENUMS.md](/docs/reference/ENUMS.md) |
 | Config field của `GNServerSettings` | [reference/CONFIG.md](/docs/reference/CONFIG.md) |
-| Permission flag / `OperationNotAllow` | [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md) · [RULES.md § 6](RULES.md#6-permission-flags) |
+| Permission flag / `OperationNotAllow` | [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md) · [RULES.md § 6](/docs/RULES.md#6-permission-flags) |
 | Cách check error / retry / debug | [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md) |
 | Scenario end-to-end (16 case) | [COOKBOOK.md](/docs/COOKBOOK.md) |
 | Rule chung (route, permission, self/other-self, socket) | [RULES.md](/docs/RULES.md) |
@@ -135,7 +139,7 @@ const res = await GNNetwork.<group>.<method>Async(request);
 
 Không dùng object literal rồi cast sang `RequestData`. Chi tiết: [RULES.md § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
 
-Response field public (KHÔNG phải getter): `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`.
+Response field public (KHÔNG phải getter): `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Helper method hợp lệ: `hasReturnCodeError()` (equivalent `returnCode !== ReturnCode.Ok`).
 
 ---
 
@@ -170,7 +174,7 @@ Realtime KHÔNG tự chạy chỉ vì đã gọi HTTP (friend/group/...). Phải
 2. **Skip tầng `returnCode`, đọc thẳng `errorCode`** → khi `returnCode !== Ok`, `errorCode` + `responseData` không đáng tin.
 3. **Dùng getter `res.getReturnCode()`** → typed response dùng PUBLIC FIELDS.
 4. **Dùng `.server` / `.admin` từ frontend để vượt permission** → trust boundary leak.
-5. **`OperationNotAllow` = thiếu secret** → SAI. Secret hợp lệ nhưng permission rule cấm. Check route + flag.
+5. **`OperationNotAllow` = thiếu secret** → SAI. Secret hợp lệ nhưng permission rule cấm. Check route + flag. (`SecretInvalid` mới là lỗi secret sai.)
 
 18 anti-patterns đầy đủ + cột "Triệu chứng / Fix": [RULES.md § 10](/docs/RULES.md#10-anti-patterns--pitfalls).
 

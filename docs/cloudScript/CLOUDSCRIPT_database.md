@@ -42,7 +42,6 @@ Wrapper `database` đang expose các method:
 
 ### Raw collection
 
-412
 Dùng khi bạn muốn thao tác MongoDB native collection trực tiếp.
 
 <!-- prettier-ignore -->

@@ -40,12 +40,25 @@ Nếu docs và dashboard khác nhau, dashboard thắng ở runtime; docs cần �
 | CharacterPlayer | [API_CHARACTER_PLAYER.md](/docs/reference/API_CHARACTER_PLAYER.md) | Có client/server/admin; thường phải truyền `characterId`. |
 | CloudScript | [API_CLOUDSCRIPT.md](/docs/reference/API_CLOUDSCRIPT.md) | Có client/server/admin; execute/publish phải theo trust boundary. |
 
+## Operation name convention
+
+Operation name backend = method name SDK **bỏ hậu tố `Async`** (giữ camelCase). Ví dụ:
+
+<!-- prettier-ignore -->
+| SDK method | Operation name (dashboard) |
+| --- | --- |
+| `masterPlayer.getPlayerInformationAsync` | `masterPlayer.getPlayerInformation` |
+| `gamePlayer.server.changePlayerCurrencyAsync` | `gamePlayer.changePlayerCurrency` |
+| `inventory.admin.setRemoveStatusAsync` | `inventory.setRemoveStatus` |
+
+Route (`client`/`.server`/`.admin`) **không** xuất hiện trong operation name — route quyết định flag (`selfEnable` vs `serverSelfEnable` vs `adminSelfEnable`), không phải operation.
+
 ## Diagnose `OperationNotAllow`
 
 1. Xác định namespace đang gọi: client, `.server`, hay `.admin`.
 2. Nếu là client route, xác định target là `self` hay `other-self`.
 3. Map route + target sang flag theo bảng ở trên.
-4. Lấy operation name từ API reference, ví dụ `getPlayerInformationAsync` -> `getPlayerInformation`.
+4. Lấy operation name từ API reference theo convention `Operation name convention` ở trên.
 5. Kiểm secret active trong dashboard có flag đó cho operation đó không.
 
 Không retry cùng secret khi gặp `ReturnCode.OperationNotAllow`; đây là lỗi config permission. Các hướng xử lý hợp lệ:
