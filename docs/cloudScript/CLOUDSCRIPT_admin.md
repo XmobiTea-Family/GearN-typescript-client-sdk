@@ -30,8 +30,8 @@ Mapping chính:
 - `admin.masterPlayer` → `GNNetwork.masterPlayer.admin`
 - `admin.storeInventory` → `GNNetwork.storeInventory.admin`
 - `admin.multiplayer` → `GNNetwork.multiplayer.admin`
-- `admin.cloudScript` → `GNNetwork.cloudScript.admin`
-- `admin.dashboard` → map thủ công từ top-level `GNNetwork.dashboard` (xem §7)
+- `admin.cloudScript` → `GNNetwork.cloudScript.admin`, chỉ có những hàm sau: `executeFunction`, `executeFunctionAsync`.
+- `admin.dashboard` → map thủ công từ top-level `GNNetwork.dashboard` (xem §7), chỉ có những hàm sau: `getAdminAccountList`, `getAdminAccountListAsync`, `getGameInformation`, `getGameInformationAsync`, `getGameList`, `getGameListAsync`, `getMasterGameSettings`, `getMasterGameSettingsAsync`, `getSecretInfoInformation`, `getSecretInfoInformationAsync`, `getSecretInfoInformationAsync`, `getSecretInfoList`, `getSecretInfoListAsync`, `getServerLog`, `getServerLogAsync`, `setGameInformation`, `setGameInformationAsync`, `getUsernameAdminAccount`, `getUsernameAdminAccountAsync`, `getAnalytics`, `getAnalyticsAsync`, `resetStatisticsLeaderboard`, `resetStatisticsLeaderboardAsync`, `getBackupStatisticsLeaderboardVersion`, `getBackupStatisticsLeaderboardVersionAsync`, `getServerGameData`, `getServerGameDataAsync`, `deleteInDatabase`, `deleteInDatabaseAsync`.
 
 Ngoài ra còn có:
 
