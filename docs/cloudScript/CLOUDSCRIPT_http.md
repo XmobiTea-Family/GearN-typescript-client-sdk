@@ -181,4 +181,4 @@ handlers["httpSafeRequest"] = async (args: any, context, log) => {
 
 Nếu việc của bạn là gọi service ngoài hệ thống, dùng `http`.
 
-Nếu việc của bạn là xử lý dữ liệu nội bộ GearN, đừng lạm dụng `http`. Dùng `database` hoặc helper server-side sẵn có sẽ đúng hơn.
+Nếu việc của bạn là xử lý dữ liệu nội bộ GearN, đừng lạm dụng `http`. Dùng `admin` hoặc helper server-side sẵn có sẽ đúng hơn.
