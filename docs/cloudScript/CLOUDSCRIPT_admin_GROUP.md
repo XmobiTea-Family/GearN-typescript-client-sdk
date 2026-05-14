@@ -8,7 +8,48 @@ Mapping chính:
 
 - `admin.group` → `GNNetwork.group.admin`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const requireString = (value: unknown, fieldName: string): string => {
+    if (typeof value !== "string" || value.trim().length === 0) throw new Error(fieldName + " is required");
+    return value.trim();
+};
+
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Gắn tag cho group và cộng currency
+handlers["markGroupAndReward"] = async (args: any, context, log) => {
+    const groupId = requireString(args?.groupId, "groupId");
+
+    const tagRequest = new GroupModels.AdminSetTagRequestData();
+    tagRequest.groupId = groupId;
+    tagRequest.key = "status";
+    tagRequest.value = "rewarded";
+
+    const tagResponse = await admin.group.setTagAsync(tagRequest);
+    assertResponseOk(tagResponse, "setTagAsync");
+
+    const currency = new GroupModels.GroupCurrencyParam();
+    currency.key = "coin";
+    currency.value = typeof args?.amount === "number" ? args.amount : 500;
+
+    const currRequest = new GroupModels.AdminChangeGroupCurrencyRequestData();
+    currRequest.groupId = groupId;
+    currRequest.groupCurrencies = [currency];
+    currRequest.log = "markGroupAndReward, requestedBy=" + context.userId;
+
+    const currResponse = await admin.group.changeGroupCurrencyAsync(currRequest);
+    assertResponseOk(currResponse, "changeGroupCurrencyAsync");
+
+    return { groupId, ok: true };
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |

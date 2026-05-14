@@ -15,7 +15,7 @@ Dùng `database` khi:
 - Bạn cần đọc hoặc ghi MongoDB nội bộ của GearN.
 - Bạn cần query dữ liệu game theo đúng schema hiện tại.
 - Bạn cần dùng helper có sẵn của `xDatabase` như `gamePlayerRepository.loadGamePlayerAsync`, `groupRepository.loadGroupAsync`, `gamePlayerRepository.insertGamePlayerStatisticsLogsAsync`.
-- Bạn cần làm việc với runtime data, system data, meta data, hoặc log database.
+- Bạn cần làm việc với runtime data, system data, hoặc log database.
 
 Không nên dùng `database` khi:
 
@@ -209,17 +209,6 @@ handlers["dbNamespaceOverview"] = async (args: any, context, log) => {
 
     await database.runtimeGameCollection("CloudScript.NamespaceDemo", gameId).updateOne(
         { key: "runtimeGame" },
-        {
-            $set: {
-                updatedByUserId: context.userId,
-                tsUpdate: Date.now(),
-            },
-        },
-        { upsert: true },
-    );
-
-    await database.metaGameCollection("CloudScript.NamespaceDemo", gameId).updateOne(
-        { key: "metaGame" },
         {
             $set: {
                 updatedByUserId: context.userId,

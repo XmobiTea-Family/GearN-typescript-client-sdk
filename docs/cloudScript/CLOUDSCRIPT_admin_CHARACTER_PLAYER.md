@@ -8,7 +8,40 @@ Mapping chính:
 
 - `admin.characterPlayer` → `GNNetwork.characterPlayer.admin`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const requireString = (value: unknown, fieldName: string): string => {
+    if (typeof value !== "string" || value.trim().length === 0) throw new Error(fieldName + " is required");
+    return value.trim();
+};
+
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Đọc snapshot character player (statistics + inventory)
+handlers["getCharacterSnapshot"] = async (args: any, context, log) => {
+    const characterId = requireString(args?.characterId, "characterId");
+
+    const infoParam = new CharacterPlayerModels.InfoRequestParam();
+    infoParam.playerStatistics = true;
+    infoParam.playerStatisticsKeys = ["level", "exp"];
+    infoParam.playerInventories = true;
+
+    const request = new CharacterPlayerModels.AdminGetPlayerInformationRequestData();
+    request.userId = characterId;
+    request.infoRequestParam = infoParam;
+
+    const response = await admin.characterPlayer.getPlayerInformationAsync(request);
+    assertResponseOk(response, "getPlayerInformationAsync");
+
+    return response.responseData.infoResponseParameters;
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |

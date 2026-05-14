@@ -10,7 +10,44 @@ Mapping chính:
 
 - `admin.dashboard` → `GNNetwork.dashboard`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Đọc analytics cơ bản
+handlers["getLeanAnalytics"] = async (args: any, context, log) => {
+    const request = new DashboardModels.GetAnalyticsRequestData();
+    request.country = true;
+    request.requestComplete = true;
+
+    const response = await admin.dashboard.getAnalyticsAsync(request);
+    assertResponseOk(response, "getAnalyticsAsync");
+
+    return response.responseData;
+};
+
+// Hard delete một record trong DB — dùng thận trọng, không thể hoàn tác
+handlers["deleteRecord"] = async (args: any, context, log) => {
+    if (typeof args?.itemId !== "string" || args.itemId.length === 0) throw new Error("itemId is required");
+
+    const request = new DashboardModels.DeleteInDatabaseRequestData();
+    request.gameId = gameId;
+    request.type = OwnerType.Inventory;
+    request.id = args.itemId;
+    request.log = "manual delete from cloudscript, requestedBy=" + context.userId;
+
+    const response = await admin.dashboard.deleteInDatabaseAsync(request);
+    assertResponseOk(response, "deleteInDatabaseAsync");
+
+    return { deleted: true, id: args.itemId };
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |

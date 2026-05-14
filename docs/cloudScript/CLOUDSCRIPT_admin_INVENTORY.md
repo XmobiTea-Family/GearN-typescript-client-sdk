@@ -8,7 +8,44 @@ Mapping chính:
 
 - `admin.inventory` → `GNNetwork.inventory.admin`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const requireString = (value: unknown, fieldName: string): string => {
+    if (typeof value !== "string" || value.trim().length === 0) throw new Error(fieldName + " is required");
+    return value.trim();
+};
+
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Đọc thông tin item và cập nhật amount
+handlers["adjustInventoryAmount"] = async (args: any, context, log) => {
+    const itemId = requireString(args?.itemId, "itemId");
+    const delta = typeof args?.delta === "number" ? args.delta : 1;
+
+    const infoRequest = new InventoryModels.AdminGetItemInformationRequestData();
+    infoRequest.itemId = itemId;
+
+    const infoResponse = await admin.inventory.getItemInformationAsync(infoRequest);
+    assertResponseOk(infoResponse, "getItemInformationAsync");
+
+    const currentAmount = infoResponse.responseData.amount ?? 0;
+
+    const setRequest = new InventoryModels.AdminSetAmountRequestData();
+    setRequest.itemId = itemId;
+    setRequest.amount = currentAmount + delta;
+
+    const setResponse = await admin.inventory.setAmountAsync(setRequest);
+    assertResponseOk(setResponse, "setAmountAsync");
+
+    return { itemId, oldAmount: currentAmount, newAmount: setRequest.amount };
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |

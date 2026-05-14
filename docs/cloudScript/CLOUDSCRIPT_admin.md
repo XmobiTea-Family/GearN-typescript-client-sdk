@@ -191,7 +191,7 @@ const requireString = (value: unknown, fieldName: string): string => {
     return value.trim();
 };
 
-const assertResponseOk = (response: any, actionName: string): void => {
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
     if (response.hasReturnCodeError()) {
         throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
     }
@@ -208,7 +208,10 @@ const assertResponseOk = (response: any, actionName: string): void => {
 
 ```ts
 handlers["adminGetGameInfo"] = async (args: any, context, log) => {
-    const response = await admin.dashboard.getGameInformationAsync({ gameId: gameId });
+    const request = new DashboardModels.GetGameInformationRequestData();
+    request.gameId = gameId;
+
+    const response = await admin.dashboard.getGameInformationAsync(request);
 
     assertResponseOk(response, "admin.dashboard.getGameInformationAsync");
 
@@ -218,8 +221,8 @@ handlers["adminGetGameInfo"] = async (args: any, context, log) => {
 
 Điểm chính:
 
-- `dashboard` là case đặc biệt nên truyền `overrideSecretKey` rõ ràng là cách dễ hiểu nhất.
-- Không hard-code secret vào script.
+- Build request bằng `new DashboardModels.GetGameInformationRequestData()` rồi set field — giống mọi domain khác (xem §5.3 trong USAGE).
+- `dashboard` là case đặc biệt về mapping (xem §7), nhưng **không** phải exception về cách build request DTO.
 
 ### 10.2. Đọc snapshot game player và tự tạo nếu chưa có
 

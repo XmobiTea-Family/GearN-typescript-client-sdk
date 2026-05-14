@@ -8,7 +8,48 @@ Mapping chính:
 
 - `admin.multiplayer` → `GNNetwork.multiplayer.admin`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const requireString = (value: unknown, fieldName: string): string => {
+    if (typeof value !== "string" || value.trim().length === 0) throw new Error(fieldName + " is required");
+    return value.trim();
+};
+
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Tạo matchmaking ticket cho user
+handlers["createTicket"] = async (args: any, context, log) => {
+    const queueName = requireString(args?.queueName, "queueName");
+
+    const request = new MultiplayerModels.AdminCreateMatchmakingTicketRequestData();
+    request.userId = context.userId;
+    request.queueName = queueName;
+
+    const response = await admin.multiplayer.createMatchmakingTicketAsync(request);
+    assertResponseOk(response, "createMatchmakingTicketAsync");
+
+    return { ticketId: response.responseData.ticketId };
+};
+
+// Lấy trạng thái match theo matchId
+handlers["getMatchStatus"] = async (args: any, context, log) => {
+    const matchId = requireString(args?.matchId, "matchId");
+
+    const request = new MultiplayerModels.AdminGetMatchRequestData();
+    request.matchId = matchId;
+
+    const response = await admin.multiplayer.getMatchAsync(request);
+    assertResponseOk(response, "getMatchAsync");
+
+    return response.responseData;
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |

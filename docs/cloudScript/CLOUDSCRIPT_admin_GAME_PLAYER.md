@@ -8,7 +8,47 @@ Mapping chính:
 
 - `admin.gamePlayer` → `GNNetwork.gamePlayer.admin`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const requireString = (value: unknown, fieldName: string): string => {
+    if (typeof value !== "string" || value.trim().length === 0) throw new Error(fieldName + " is required");
+    return value.trim();
+};
+
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Đọc currency rồi cộng gem cho game player
+handlers["grantGem"] = async (args: any, context, log) => {
+    const userId = context.userId;
+
+    const currRequest = new GamePlayerModels.AdminGetPlayerCurrencyRequestData();
+    currRequest.userId = userId;
+    currRequest.playerCurrencyKeys = ["gem"];
+
+    const currResponse = await admin.gamePlayer.getPlayerCurrencyAsync(currRequest);
+    assertResponseOk(currResponse, "getPlayerCurrencyAsync");
+
+    const gem = new GamePlayerModels.PlayerCurrencyParam();
+    gem.key = "gem";
+    gem.value = typeof args?.amount === "number" ? args.amount : 100;
+
+    const changeRequest = new GamePlayerModels.AdminChangePlayerCurrencyRequestData();
+    changeRequest.userId = userId;
+    changeRequest.playerCurrencies = [gem];
+    changeRequest.log = "grantGem cloudscript, userId=" + userId;
+
+    const changeResponse = await admin.gamePlayer.changePlayerCurrencyAsync(changeRequest);
+    assertResponseOk(changeResponse, "changePlayerCurrencyAsync");
+
+    return { ok: true, granted: gem.value };
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |

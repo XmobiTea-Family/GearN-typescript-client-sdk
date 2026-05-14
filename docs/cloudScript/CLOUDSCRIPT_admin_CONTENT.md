@@ -8,7 +8,34 @@ Mapping chính:
 
 - `admin.content` → `GNNetwork.content.admin`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const requireString = (value: unknown, fieldName: string): string => {
+    if (typeof value !== "string" || value.trim().length === 0) throw new Error(fieldName + " is required");
+    return value.trim();
+};
+
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Đọc content data theo key
+handlers["getContentByKey"] = async (args: any, context, log) => {
+    const key = requireString(args?.key, "key");
+
+    const request = new ContentModels.AdminGetContentDataRequestData();
+    request.contentDataKeys = [key];
+
+    const response = await admin.content.getContentDataAsync(request);
+    assertResponseOk(response, "getContentDataAsync");
+
+    return response.responseData;
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |

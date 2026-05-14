@@ -8,7 +8,36 @@ Mapping chính:
 
 - `admin.storeInventory` → `GNNetwork.storeInventory.admin`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const requireString = (value: unknown, fieldName: string): string => {
+    if (typeof value !== "string" || value.trim().length === 0) throw new Error(fieldName + " is required");
+    return value.trim();
+};
+
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Mua store item thay mặt cho user (admin bypass)
+handlers["adminBuyStoreItem"] = async (args: any, context, log) => {
+    const storeId = requireString(args?.storeId, "storeId");
+    const targetUserId = typeof args?.userId === "string" && args.userId.length > 0 ? args.userId : context.userId;
+
+    const request = new StoreInventoryModels.AdminBuyStoreItemRequestData();
+    request.userId = targetUserId;
+    request.storeId = storeId;
+
+    const response = await admin.storeInventory.buyStoreItemAsync(request);
+    assertResponseOk(response, "buyStoreItemAsync");
+
+    return response.responseData;
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |

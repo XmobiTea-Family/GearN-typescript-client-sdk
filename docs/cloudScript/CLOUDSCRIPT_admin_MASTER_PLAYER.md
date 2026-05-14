@@ -8,7 +8,55 @@ Mapping chính:
 
 - `admin.masterPlayer` → `GNNetwork.masterPlayer.admin`
 
-## 2. Các hàm
+## 2. Ví dụ sử dụng
+
+```ts
+const requireString = (value: unknown, fieldName: string): string => {
+    if (typeof value !== "string" || value.trim().length === 0) throw new Error(fieldName + " is required");
+    return value.trim();
+};
+
+const assertResponseOk = (response: CustomOperationResponse, actionName: string): void => {
+    if (response.hasReturnCodeError()) throw new Error(actionName + " return-code error: " + (response.debugMessage ?? response.toString()));
+    if (response.errorCode !== ErrorCode.Ok) throw new Error(actionName + " business error: " + response.errorCode);
+};
+
+// Lấy thông tin account-level của player (display name, linked accounts, statistics)
+handlers["getMasterPlayerProfile"] = async (args: any, context, log) => {
+    const userId = requireString(args?.userId ?? context.userId, "userId");
+
+    const infoParam = new MasterPlayerModels.InfoRequestParam();
+    infoParam.playerStatistics = true;
+    infoParam.playerStatisticsKeys = ["totalWin", "totalLose"];
+    infoParam.linkedAccounts = true;
+
+    const request = new MasterPlayerModels.AdminGetPlayerInformationRequestData();
+    request.userId = userId;
+    request.infoRequestParam = infoParam;
+
+    const response = await admin.masterPlayer.getPlayerInformationAsync(request);
+    assertResponseOk(response, "getPlayerInformationAsync");
+
+    return response.responseData.infoResponseParameters;
+};
+
+// Cập nhật display name cho player
+handlers["updateDisplayName"] = async (args: any, context, log) => {
+    const userId = requireString(args?.userId ?? context.userId, "userId");
+    const displayName = requireString(args?.displayName, "displayName");
+
+    const request = new MasterPlayerModels.AdminUpdateUserTitleDisplayNameRequestData();
+    request.userId = userId;
+    request.displayName = displayName;
+
+    const response = await admin.masterPlayer.updateUserTitleDisplayNameAsync(request);
+    assertResponseOk(response, "updateUserTitleDisplayNameAsync");
+
+    return { ok: true, displayName: response.responseData.displayName };
+};
+```
+
+## 3. Các hàm
 
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào | Request Data DTO | Response DTO |
