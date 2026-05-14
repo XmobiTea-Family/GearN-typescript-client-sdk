@@ -405,32 +405,32 @@ Selects which optional game-player fields and lightweight relations should be re
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `segments` | `boolean` | no | _default=false_ |
-| `customDatas` | `boolean` | no | _default=false_ |
-| `displayName` | `boolean` | no | _default=false_ |
-| `avatar` | `boolean` | no | _default=false_ |
-| `tsCreate` | `boolean` | no | _default=false_ |
-| `tags` | `boolean` | no | _default=false_ |
-| `playerBan` | `boolean` | no | _default=false_ |
-| `playerCurrencies` | `boolean` | no | _default=false_ |
-| `playerStatistics` | `boolean` | no | _default=false_ |
-| `playerDatas` | `boolean` | no | _default=false_ |
-| `ipAddressCreate` | `boolean` | no | _default=false_ |
-| `countryCode` | `boolean` | no | _default=false_ |
-| `tsLastLogin` | `boolean` | no | _default=false_ |
-| `playerCharacters` | `boolean` | no | Includes relation items for characters owned by the player, optionally filtered by `characterCatalogIds`. — _default=false_ |
-| `playerInventories` | `boolean` | no | Includes relation items for inventory owned by the player, optionally filtered by `itemCatalogIds`. — _default=false_ |
-| `playerGroups` | `boolean` | no | Includes relation items for groups joined or owned by the player, optionally filtered by `groupCatalogIds`. — _default=false_ |
-| `playerFriends` | `boolean` | no | Includes relation items for friends attached to the player, optionally filtered by `friendCatalogIds`. — _default=false_ |
-| `playerDataKeys` | `Array<string>` | no | _elementCls=String_ |
-| `playerCurrencyKeys` | `Array<string>` | no | _elementCls=String_ |
-| `playerStatisticsKeys` | `Array<string>` | no | _elementCls=String_ |
-| `customDataKeys` | `Array<string>` | no | _elementCls=String_ |
-| `tagKeys` | `Array<string>` | no | _elementCls=String_ |
-| `characterCatalogIds` | `Array<string>` | no | Restricts `playerCharacters` to relation items whose catalog IDs match this list. — _elementCls=String_ |
-| `itemCatalogIds` | `Array<string>` | no | Restricts `playerInventories` to relation items whose catalog IDs match this list. — _elementCls=String_ |
-| `groupCatalogIds` | `Array<string>` | no | Restricts `playerGroups` to relation items whose catalog IDs match this list. — _elementCls=String_ |
-| `friendCatalogIds` | `Array<string>` | no | Restricts `playerFriends` to relation items whose catalog IDs match this list. — _elementCls=String_ |
+| `segments` | `boolean?` | no | _default=false_ |
+| `customDatas` | `boolean?` | no | _default=false_ |
+| `displayName` | `boolean?` | no | _default=false_ |
+| `avatar` | `boolean?` | no | _default=false_ |
+| `tsCreate` | `boolean?` | no | _default=false_ |
+| `tags` | `boolean?` | no | _default=false_ |
+| `playerBan` | `boolean?` | no | _default=false_ |
+| `playerCurrencies` | `boolean?` | no | _default=false_ |
+| `playerStatistics` | `boolean?` | no | _default=false_ |
+| `playerDatas` | `boolean?` | no | _default=false_ |
+| `ipAddressCreate` | `boolean?` | no | _default=false_ |
+| `countryCode` | `boolean?` | no | _default=false_ |
+| `tsLastLogin` | `boolean?` | no | _default=false_ |
+| `playerCharacters` | `boolean?` | no | Includes relation items for characters owned by the player, optionally filtered by `characterCatalogIds`. — _default=false_ |
+| `playerInventories` | `boolean?` | no | Includes relation items for inventory owned by the player, optionally filtered by `itemCatalogIds`. — _default=false_ |
+| `playerGroups` | `boolean?` | no | Includes relation items for groups joined or owned by the player, optionally filtered by `groupCatalogIds`. — _default=false_ |
+| `playerFriends` | `boolean?` | no | Includes relation items for friends attached to the player, optionally filtered by `friendCatalogIds`. — _default=false_ |
+| `playerDataKeys` | `Array<string>?` | no | _elementCls=String_ |
+| `playerCurrencyKeys` | `Array<string>?` | no | _elementCls=String_ |
+| `playerStatisticsKeys` | `Array<string>?` | no | _elementCls=String_ |
+| `customDataKeys` | `Array<string>?` | no | _elementCls=String_ |
+| `tagKeys` | `Array<string>?` | no | _elementCls=String_ |
+| `characterCatalogIds` | `Array<string>?` | no | Restricts `playerCharacters` to relation items whose catalog IDs match this list. — _elementCls=String_ |
+| `itemCatalogIds` | `Array<string>?` | no | Restricts `playerInventories` to relation items whose catalog IDs match this list. — _elementCls=String_ |
+| `groupCatalogIds` | `Array<string>?` | no | Restricts `playerGroups` to relation items whose catalog IDs match this list. — _elementCls=String_ |
+| `friendCatalogIds` | `Array<string>?` | no | Restricts `playerFriends` to relation items whose catalog IDs match this list. — _elementCls=String_ |
 
 ### CustomDataParam
 
@@ -488,7 +488,7 @@ Creates a friend relation between the current or target game player and another 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
 | `friendId` | `string` | yes | Target friend user ID. — _minLength=10, maxLength=10_ |
 | `catalogId` | `string` | yes | Friend catalog used to create the relation record. — _minLength=2, maxLength=32_ |
 
@@ -515,7 +515,7 @@ Defines the request payload for AddSegment.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `value` | `string` | yes | _minLength=6, maxLength=32_ |
 
 ### ServerAddSegmentRequestData
@@ -541,7 +541,7 @@ Defines the request payload for GetAvatar.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetAvatarRequestData
 
@@ -566,7 +566,7 @@ Defines the request payload for GetCountryCode.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetCountryCodeRequestData
 
@@ -591,8 +591,8 @@ Defines the request payload for GetCustomData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `customDataKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `customDataKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetCustomDataRequestData
 
@@ -617,7 +617,7 @@ Defines the request payload for GetDisplayName.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetDisplayNameRequestData
 
@@ -642,12 +642,12 @@ Defines the request payload for GetFriendStatisticsLeaderboardAroundPlayer.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetFriendStatisticsLeaderboardAroundPlayerRequestData
 
@@ -672,12 +672,12 @@ Defines the request payload for GetFriendStatisticsLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetFriendStatisticsLeaderboardRequestData
 
@@ -702,7 +702,7 @@ Defines the request payload for GetIpAddressCreate.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetIpAddressCreateRequestData
 
@@ -727,7 +727,7 @@ Defines the request payload for GetPlayerBan.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetPlayerBanRequestData
 
@@ -752,8 +752,8 @@ Defines the request payload for GetPlayerCharacter.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `characterCatalogIds` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `characterCatalogIds` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerCharacterRequestData
 
@@ -778,8 +778,8 @@ Defines the request payload for GetPlayerCurrency.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `playerCurrencyKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `playerCurrencyKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerCurrencyRequestData
 
@@ -804,8 +804,8 @@ Defines the request payload for GetPlayerData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `playerDataKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `playerDataKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerDataRequestData
 
@@ -830,8 +830,8 @@ Defines the request payload for GetPlayerFriend.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `friendCatalogIds` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `friendCatalogIds` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerFriendRequestData
 
@@ -856,8 +856,8 @@ Defines the request payload for GetPlayerGroup.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `groupCatalogIds` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `groupCatalogIds` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerGroupRequestData
 
@@ -882,7 +882,7 @@ Reads the current or target game-player profile using the requested projection. 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Required field projection that controls which optional data is returned. |
 
 ### ServerGetPlayerInformationRequestData
@@ -894,7 +894,7 @@ Reads a specific target game player on a trusted route.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `createPlayerIfNotExists` | `boolean` | no | Allows the backend to create the missing game-player record before returning it. — _default=false_ |
+| `createPlayerIfNotExists` | `boolean?` | no | Allows the backend to create the missing game-player record before returning it. — _default=false_ |
 
 ### AdminGetPlayerInformationRequestData
 
@@ -911,8 +911,8 @@ Defines the request payload for GetPlayerInventory.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `itemCatalogIds` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `itemCatalogIds` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerInventoryRequestData
 
@@ -937,8 +937,8 @@ Defines the request payload for GetPlayerStatistics.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `statisticsKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `statisticsKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerStatisticsRequestData
 
@@ -965,8 +965,8 @@ Defines the request payload for GetPlayersWithDisplayName.
 | --- | --- | --- | --- |
 | `keyword` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetPlayersWithDisplayNameRequestData
 
@@ -993,8 +993,8 @@ Defines the request payload for GetPlayersWithSegment.
 | --- | --- | --- | --- |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetPlayersWithSegmentRequestData
 
@@ -1022,8 +1022,8 @@ Defines the request payload for GetPlayersWithTag.
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetPlayersWithTagRequestData
 
@@ -1048,7 +1048,7 @@ Defines the request payload for GetSegment.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetSegmentRequestData
 
@@ -1073,12 +1073,12 @@ Defines the request payload for GetStatisticsLeaderboardAroundPlayer.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetStatisticsLeaderboardAroundPlayerRequestData
 
@@ -1105,10 +1105,10 @@ Defines the request payload for GetStatisticsLeaderboard.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
-| `version` | `string` | no | _minLength=2, maxLength=32_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
+| `version` | `string?` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardRequestData
 
@@ -1134,9 +1134,9 @@ Defines the request payload for GetCreateLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetCreateLeaderboardRequestData
 
@@ -1161,8 +1161,8 @@ Defines the request payload for GetTag.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `tagKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `tagKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetTagRequestData
 
@@ -1187,7 +1187,7 @@ Defines the request payload for GetTsCreate.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetTsCreateRequestData
 
@@ -1212,7 +1212,7 @@ Defines the request payload for GetTsLastLogin.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetTsLastLoginRequestData
 
@@ -1237,10 +1237,10 @@ Creates a group owned by or attached to the current or target game player.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `groupMembers` | `Array<GroupMemberParam>` | no | Additional game-player members expressed as user IDs, not character IDs. — _elementCls=GroupMemberParam_ |
-| `displayName` | `string` | no | _default=""_ |
+| `groupMembers` | `Array<GroupMemberParam>?` | no | Additional game-player members expressed as user IDs, not character IDs. — _elementCls=GroupMemberParam_ |
+| `displayName` | `string?` | no | _default=""_ |
 
 ### ServerCreateGroupRequestData
 
@@ -1265,10 +1265,10 @@ Defines the request payload for CreatePlayerCharacter.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `displayName` | `string` | no | _default=""_ |
-| `uniqueDisplayName` | `boolean` | no | _default=false_ |
+| `displayName` | `string?` | no | _default=""_ |
+| `uniqueDisplayName` | `boolean?` | no | _default=false_ |
 
 ### ServerCreatePlayerCharacterRequestData
 
@@ -1293,11 +1293,11 @@ Defines the request payload for CreatePlayerItem.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
 | `classId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `displayName` | `string` | no | _default=""_ |
-| `amount` | `number` | no | _default=1_ |
+| `displayName` | `string?` | no | _default=""_ |
+| `amount` | `number?` | no | _default=1_ |
 
 ### ServerCreatePlayerItemRequestData
 
@@ -1322,7 +1322,7 @@ Defines the request payload for JoinGroup.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `groupId` | `string` | yes | _minLength=10, maxLength=10_ |
 
 ### ServerJoinGroupRequestData
@@ -1348,7 +1348,7 @@ Defines the request payload for LeaveGroup.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `groupId` | `string` | yes | _minLength=10, maxLength=10_ |
 
 ### ServerLeaveGroupRequestData
@@ -1374,7 +1374,7 @@ Defines the request payload for RemovePlayerCharacter.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `characterId` | `string` | yes | _minLength=11, maxLength=11_ |
 
 ### ServerRemovePlayerCharacterRequestData
@@ -1400,7 +1400,7 @@ Defines the request payload for RemovePlayerFriend.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `friendId` | `string` | yes | _minLength=10, maxLength=10_ |
 
 ### ServerRemovePlayerFriendRequestData
@@ -1426,7 +1426,7 @@ Defines the request payload for RemovePlayerItem.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
 
 ### ServerRemovePlayerItemRequestData
@@ -1452,7 +1452,7 @@ Defines the request payload for RemoveSegment.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### ServerRemoveSegmentRequestData
@@ -1478,7 +1478,7 @@ Defines the request payload for RemoveTag.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### ServerRemoveTagRequestData
@@ -1504,8 +1504,8 @@ Defines the request payload for SetAvatar.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `type` | `number` | yes | Avatar type identifier. Map with the public avatar type enum. |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `type` | `number` | yes | Avatar type identifier. User custom this type enum. |
 | `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### ServerSetAvatarRequestData
@@ -1531,7 +1531,7 @@ Defines the request payload for SetCountryCode.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `countryCode` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### ServerSetCountryCodeRequestData
@@ -1557,7 +1557,7 @@ Defines the request payload for SetCustomData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `customDatas` | `Array<CustomDataParam>` | yes | _minLength=1, maxLength=32, elementCls=CustomDataParam_ |
 
 ### ServerSetCustomDataRequestData
@@ -1583,9 +1583,9 @@ Defines the request payload for SetDisplayName.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `displayName` | `string` | yes | _minLength=5, maxLength=32_ |
-| `uniqueDisplayName` | `boolean` | no | _default=false_ |
+| `uniqueDisplayName` | `boolean?` | no | _default=false_ |
 
 ### ServerSetDisplayNameRequestData
 
@@ -1610,7 +1610,7 @@ Defines the request payload for SetPlayerBan.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `tsExpire` | `number` | yes | Expiration timestamp of the ban (Unix timestamp); use a far-future value for a permanent ban. |
 | `reason` | `string` | yes | Human-readable reason for the ban recorded on the backend. |
 
@@ -1637,9 +1637,9 @@ Defines the request payload for ChangePlayerCurrency.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerCurrencies` | `Array<PlayerCurrencyParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerCurrencyParam_ |
-| `log` | `string` | no | _minLength=1, maxLength=256_ |
+| `log` | `string?` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerCurrencyRequestData
 
@@ -1664,7 +1664,7 @@ Defines the request payload for SetPlayerData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerDatas` | `Array<PlayerDataParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerDataParam_ |
 
 ### ServerSetPlayerDataRequestData
@@ -1690,9 +1690,9 @@ Defines the request payload for ChangePlayerStatistics.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerStatistics` | `Array<PlayerStatisticsParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerStatisticsParam_ |
-| `log` | `string` | no | _minLength=1, maxLength=256_ |
+| `log` | `string?` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerStatisticsRequestData
 
@@ -1717,7 +1717,7 @@ Defines the request payload for SetTag.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 
@@ -1746,7 +1746,7 @@ Reads currency change logs for the current or target game player. Pagination is 
 | --- | --- | --- | --- |
 | `keys` | `Array<string>` | yes | _minLength=1, maxLength=32, elementCls=String_ |
 | `userId` | `string` | yes | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 | `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetCurrencyLogRequestData
@@ -1774,7 +1774,7 @@ Reads statistic change logs for the current or target game player. Pagination is
 | --- | --- | --- | --- |
 | `keys` | `Array<string>` | yes | _minLength=1, maxLength=32, elementCls=String_ |
 | `userId` | `string` | yes | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 | `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetStatisticsLogRequestData
@@ -1800,23 +1800,23 @@ Contains the optional fields requested through `InfoRequestParam`.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `segments` | `Array<string>` | no | Segment names currently assigned to the player. — _elementCls=String_ |
-| `customDatas` | `Array<GenericModels.DataItem>` | no | Custom data entries; present when `customDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
-| `displayName` | `string` | no | Display name of the player; present when requested. |
-| `avatar` | `GenericModels.AvatarItem` | no | Avatar descriptor; present when requested. |
-| `tsCreate` | `number` | no | Creation timestamp of the player account; present when requested. |
-| `tags` | `Array<GenericModels.TagItem>` | no | Tag entries assigned to the player. — _elementCls=GenericModels.TagItem_ |
-| `playerBan` | `GenericModels.BanItem` | no | Ban state of the player; present when requested and a ban exists. |
-| `playerDatas` | `Array<GenericModels.DataItem>` | no | Player data entries; present when `playerDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
-| `playerCurrencies` | `Array<GenericModels.CurrencyItem>` | no | Currency balances; present when `playerCurrencies` is enabled. — _elementCls=GenericModels.CurrencyItem_ |
-| `playerStatistics` | `Array<GenericModels.StatisticsItem>` | no | Statistics values; present when `playerStatistics` is enabled. — _elementCls=GenericModels.StatisticsItem_ |
-| `playerCharacters` | `Array<GenericModels.CharacterItem>` | no | Lightweight relation items for owned character players, not full character snapshots. — _elementCls=GenericModels.CharacterItem_ |
-| `playerInventories` | `Array<GenericModels.InventoryItem>` | no | Lightweight relation items for inventory owned by the player. — _elementCls=GenericModels.InventoryItem_ |
-| `playerGroups` | `Array<GenericModels.GroupItem>` | no | Lightweight relation items for groups attached to the player. — _elementCls=GenericModels.GroupItem_ |
-| `playerFriends` | `Array<GenericModels.FriendItem>` | no | Lightweight relation items for friends attached to the player. — _elementCls=GenericModels.FriendItem_ |
-| `tsLastLogin` | `number` | no | Timestamp of the player's last login; present when requested. |
-| `ipAddressCreate` | `string` | no | IP address recorded at account creation; present when requested. |
-| `countryCode` | `string` | no | Country code associated with the player; present when requested. |
+| `segments` | `Array<string>?` | no | Segment names currently assigned to the player. — _elementCls=String_ |
+| `customDatas` | `Array<GenericModels.DataItem>?` | no | Custom data entries; present when `customDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
+| `displayName` | `string?` | no | Display name of the player; present when requested. |
+| `avatar` | `GenericModels.AvatarItem?` | no | Avatar descriptor; present when requested. |
+| `tsCreate` | `number?` | no | Creation timestamp of the player account; present when requested. |
+| `tags` | `Array<GenericModels.TagItem>?` | no | Tag entries assigned to the player. — _elementCls=GenericModels.TagItem_ |
+| `playerBan` | `GenericModels.BanItem?` | no | Ban state of the player; present when requested and a ban exists. |
+| `playerDatas` | `Array<GenericModels.DataItem>?` | no | Player data entries; present when `playerDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
+| `playerCurrencies` | `Array<GenericModels.CurrencyItem>?` | no | Currency balances; present when `playerCurrencies` is enabled. — _elementCls=GenericModels.CurrencyItem_ |
+| `playerStatistics` | `Array<GenericModels.StatisticsItem>?` | no | Statistics values; present when `playerStatistics` is enabled. — _elementCls=GenericModels.StatisticsItem_ |
+| `playerCharacters` | `Array<GenericModels.CharacterItem>?` | no | Lightweight relation items for owned character players, not full character snapshots. — _elementCls=GenericModels.CharacterItem_ |
+| `playerInventories` | `Array<GenericModels.InventoryItem>?` | no | Lightweight relation items for inventory owned by the player. — _elementCls=GenericModels.InventoryItem_ |
+| `playerGroups` | `Array<GenericModels.GroupItem>?` | no | Lightweight relation items for groups attached to the player. — _elementCls=GenericModels.GroupItem_ |
+| `playerFriends` | `Array<GenericModels.FriendItem>?` | no | Lightweight relation items for friends attached to the player. — _elementCls=GenericModels.FriendItem_ |
+| `tsLastLogin` | `number?` | no | Timestamp of the player's last login; present when requested. |
+| `ipAddressCreate` | `string?` | no | IP address recorded at account creation; present when requested. |
+| `countryCode` | `string?` | no | Country code associated with the player; present when requested. |
 
 ### GamePlayerResponseData
 
@@ -1848,7 +1848,7 @@ Defines the response payload for GamePlayerLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `position` | `number` | yes | Zero-based leaderboard rank position of this player. |
-| `backupValue` | `number` | no | Backup statistic or currency value used as a tiebreaker when present. |
+| `backupValue` | `number?` | no | Backup statistic or currency value used as a tiebreaker when present. |
 
 ### GamePlayerLogResponseData
 
@@ -1873,7 +1873,7 @@ Defines the response payload for GetStatisticsLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<GamePlayerLeaderboardResponseData>` | yes | Ordered list of game-player leaderboard entries. — _elementCls=GamePlayerLeaderboardResponseData_ |
-| `tsCreate` | `number` | no | Timestamp when this leaderboard snapshot was last generated; present when available. |
+| `tsCreate` | `number?` | no | Timestamp when this leaderboard snapshot was last generated; present when available. |
 
 ### GetCurrencyLeaderboardResponseData
 
@@ -1920,9 +1920,9 @@ Defines the request payload for GetCurrencyLeaderboard.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetCurrencyLeaderboardRequestData
 
@@ -1948,9 +1948,9 @@ Defines the request payload for GetLastLoginLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional player fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetLastLoginLeaderboardRequestData
 
@@ -1976,7 +1976,7 @@ Returns one page of statistics logs.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<GamePlayerLogResponseData>` | yes | _elementCls=GamePlayerLogResponseData_ |
-| `token` | `string` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
+| `token` | `string?` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
 
 ### GetCurrencyLogResponseData
 
@@ -1986,7 +1986,7 @@ Returns one page of currency logs.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<GamePlayerLogResponseData>` | yes | _elementCls=GamePlayerLogResponseData_ |
-| `token` | `string` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
+| `token` | `string?` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
 
 ### EmptyResponseData
 

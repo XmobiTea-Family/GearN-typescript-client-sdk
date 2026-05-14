@@ -30,7 +30,7 @@ export namespace GenericModels {
      * Represents a generic avatar payload.
      */
     export class AvatarItem {
-        /** Backend-defined avatar type identifier. The public SDK currently does not export a dedicated avatar enum. */
+        /** Avatar type identifier. User custom this type enum. */
         @NumberDataMember({ code: ParameterCode.Type })
         public type: number;
 

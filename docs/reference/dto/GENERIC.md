@@ -36,7 +36,7 @@ Represents a generic avatar payload.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `type` | `number` | yes | Backend-defined avatar type identifier. The public SDK currently does not export a dedicated avatar enum. |
+| `type` | `number` | yes | Avatar type identifier. User custom this type enum. |
 | `value` | `string` | yes | Avatar value, typically a URL, file id, or provider-specific string. |
 
 ### TagItem
@@ -57,7 +57,7 @@ Represents a ban state entry returned by player-auth or player-profile flows.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `tsExpire` | `number` | yes | Expiration timestamp of the current ban state. |
-| `reason` | `string` | no | Human-readable ban reason when provided by the backend. |
+| `reason` | `string` | yes | Human-readable ban reason when provided by the backend. |
 
 ### DataItem
 
@@ -117,7 +117,7 @@ Represents soft-remove metadata for an entity.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `tsRemove` | `number` | yes | Removal timestamp when the entity was soft-removed. |
-| `reason` | `string` | no | Removal reason when the backend provides one. |
+| `reason` | `string?` | no | Removal reason when the backend provides one. |
 
 ### InventoryItem
 

@@ -688,28 +688,28 @@ Selects which optional master-player fields should be returned in `infoResponseP
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `external` | `boolean` | no | Includes linked external identities such as account, device, Google, Facebook, or Apple. — _default=false_ |
-| `segments` | `boolean` | no | Includes the segment names currently attached to the player. — _default=false_ |
-| `customDatas` | `boolean` | no | Includes custom data entries. — _default=false_ |
-| `displayName` | `boolean` | no | Includes the player's display name. — _default=false_ |
-| `avatar` | `boolean` | no | Includes the avatar descriptor. — _default=false_ |
-| `tsCreate` | `boolean` | no | Includes the creation timestamp. — _default=false_ |
-| `tags` | `boolean` | no | Includes tag entries. — _default=false_ |
-| `playerBan` | `boolean` | no | Includes the active ban state when present. — _default=false_ |
-| `playerCurrencies` | `boolean` | no | Includes player currency entries. — _default=false_ |
-| `playerStatistics` | `boolean` | no | Includes player statistics entries. — _default=false_ |
-| `playerDatas` | `boolean` | no | Includes player data entries. — _default=false_ |
-| `ipAddressCreate` | `boolean` | no | Includes the creation IP address. — _default=false_ |
-| `countryCode` | `boolean` | no | Includes the country code currently stored for the player. — _default=false_ |
-| `email` | `boolean` | no | Includes the email currently stored for the player. — _default=false_ |
-| `tsLastLogin` | `boolean` | no | Includes the last-login timestamp. — _default=false_ |
-| `pushNotifications` | `boolean` | no | Includes registered push-notification endpoints. — _default=false_ |
-| `onlineStatus` | `boolean` | no | Includes the player's online status, if supported by the connected game server. — _default=false_ |
-| `playerDataKeys` | `Array<string>` | no | Restricts `playerDatas` to the specified keys when that field is requested. — _elementCls=String_ |
-| `playerCurrencyKeys` | `Array<string>` | no | Restricts `playerCurrencies` to the specified currency keys when that field is requested. — _elementCls=String_ |
-| `playerStatisticsKeys` | `Array<string>` | no | Restricts `playerStatistics` to the specified statistic keys when that field is requested. — _elementCls=String_ |
-| `customDataKeys` | `Array<string>` | no | Restricts `customDatas` to the specified keys when that field is requested. — _elementCls=String_ |
-| `tagKeys` | `Array<string>` | no | Restricts `tags` to the specified tag keys when that field is requested. — _elementCls=String_ |
+| `external` | `boolean?` | no | Includes linked external identities such as account, device, Google, Facebook, or Apple. — _default=false_ |
+| `segments` | `boolean?` | no | Includes the segment names currently attached to the player. — _default=false_ |
+| `customDatas` | `boolean?` | no | Includes custom data entries. — _default=false_ |
+| `displayName` | `boolean?` | no | Includes the player's display name. — _default=false_ |
+| `avatar` | `boolean?` | no | Includes the avatar descriptor. — _default=false_ |
+| `tsCreate` | `boolean?` | no | Includes the creation timestamp. — _default=false_ |
+| `tags` | `boolean?` | no | Includes tag entries. — _default=false_ |
+| `playerBan` | `boolean?` | no | Includes the active ban state when present. — _default=false_ |
+| `playerCurrencies` | `boolean?` | no | Includes player currency entries. — _default=false_ |
+| `playerStatistics` | `boolean?` | no | Includes player statistics entries. — _default=false_ |
+| `playerDatas` | `boolean?` | no | Includes player data entries. — _default=false_ |
+| `ipAddressCreate` | `boolean?` | no | Includes the creation IP address. — _default=false_ |
+| `countryCode` | `boolean?` | no | Includes the country code currently stored for the player. — _default=false_ |
+| `email` | `boolean?` | no | Includes the email currently stored for the player. — _default=false_ |
+| `tsLastLogin` | `boolean?` | no | Includes the last-login timestamp. — _default=false_ |
+| `pushNotifications` | `boolean?` | no | Includes registered push-notification endpoints. — _default=false_ |
+| `onlineStatus` | `boolean?` | no | Includes the player's online status, if supported by the connected game server. — _default=false_ |
+| `playerDataKeys` | `Array<string>?` | no | Restricts `playerDatas` to the specified keys when that field is requested. — _elementCls=String_ |
+| `playerCurrencyKeys` | `Array<string>?` | no | Restricts `playerCurrencies` to the specified currency keys when that field is requested. — _elementCls=String_ |
+| `playerStatisticsKeys` | `Array<string>?` | no | Restricts `playerStatistics` to the specified statistic keys when that field is requested. — _elementCls=String_ |
+| `customDataKeys` | `Array<string>?` | no | Restricts `customDatas` to the specified keys when that field is requested. — _elementCls=String_ |
+| `tagKeys` | `Array<string>?` | no | Restricts `tags` to the specified tag keys when that field is requested. — _elementCls=String_ |
 
 ### PlayerCurrencyParam
 
@@ -758,14 +758,14 @@ Represents all device IDs currently linked to the master player.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `customDeviceId` | `string` | no | Custom device identifier when linked. |
-| `androidDeviceId` | `string` | no | Android device identifier when linked. |
-| `iOSDeviceId` | `string` | no | iOS device identifier when linked. |
-| `windowsPhoneDeviceId` | `string` | no | Windows Phone device identifier when linked. |
-| `windowsDeviceId` | `string` | no | Windows PC device identifier when linked. |
-| `linuxDeviceId` | `string` | no | Linux device identifier when linked. |
-| `macOSDeviceId` | `string` | no | macOS device identifier when linked. |
-| `editorDeviceId` | `string` | no | Editor (development) device identifier when linked. |
+| `customDeviceId` | `string?` | no | Custom device identifier when linked. |
+| `androidDeviceId` | `string?` | no | Android device identifier when linked. |
+| `iOSDeviceId` | `string?` | no | iOS device identifier when linked. |
+| `windowsPhoneDeviceId` | `string?` | no | Windows Phone device identifier when linked. |
+| `windowsDeviceId` | `string?` | no | Windows PC device identifier when linked. |
+| `linuxDeviceId` | `string?` | no | Linux device identifier when linked. |
+| `macOSDeviceId` | `string?` | no | macOS device identifier when linked. |
+| `editorDeviceId` | `string?` | no | Editor (development) device identifier when linked. |
 
 ### Account
 
@@ -774,7 +774,7 @@ Represents a linked GearN account identity.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `username` | `string` | no | GearN account username when an account credential is linked. |
+| `username` | `string?` | no | GearN account username when an account credential is linked. |
 
 ### Custom
 
@@ -783,7 +783,7 @@ Represents a linked custom ID identity.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `customId` | `string` | no | Custom ID value when linked. |
+| `customId` | `string?` | no | Custom ID value when linked. |
 
 ### Apple
 
@@ -846,15 +846,15 @@ Groups all external identities that may be linked to one master player.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `device` | `Device` | no | Linked device IDs; present when at least one device ID is linked. |
-| `account` | `Account` | no | Linked GearN account; present when an account credential is linked. |
-| `custom` | `Custom` | no | Linked custom ID; present when a custom ID is linked. |
-| `apple` | `Apple` | no | Linked Apple identity; present when Sign in with Apple is linked. |
-| `google` | `Google` | no | Linked Google identity; present when Google Sign-In is linked. |
-| `facebook` | `Facebook` | no | Linked Facebook identity; present when Facebook is linked. |
-| `genericServices` | `Array<GenericService>` | no | List of linked generic service identities. — _elementCls=GenericService_ |
-| `googlePlayGameService` | `GooglePlayGameService` | no | Linked Google Play Game Services identity; present when linked. |
-| `gameCenter` | `GameCenter` | no | Linked Apple Game Center identity; present when linked. |
+| `device` | `Device?` | no | Linked device IDs; present when at least one device ID is linked. |
+| `account` | `Account?` | no | Linked GearN account; present when an account credential is linked. |
+| `custom` | `Custom?` | no | Linked custom ID; present when a custom ID is linked. |
+| `apple` | `Apple?` | no | Linked Apple identity; present when Sign in with Apple is linked. |
+| `google` | `Google?` | no | Linked Google identity; present when Google Sign-In is linked. |
+| `facebook` | `Facebook?` | no | Linked Facebook identity; present when Facebook is linked. |
+| `genericServices` | `Array<GenericService>?` | no | List of linked generic service identities. — _elementCls=GenericService_ |
+| `googlePlayGameService` | `GooglePlayGameService?` | no | Linked Google Play Game Services identity; present when linked. |
+| `gameCenter` | `GameCenter?` | no | Linked Apple Game Center identity; present when linked. |
 
 ### AddSegmentRequestData
 
@@ -863,7 +863,7 @@ Defines the request payload for AddSegment.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### ServerAddSegmentRequestData
@@ -889,7 +889,7 @@ Defines the request payload for ChangeAccountPassword.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `currentPassword` | `string` | yes | _minLength=6, maxLength=64_ |
 | `password` | `string` | yes | _minLength=6, maxLength=64_ |
 
@@ -900,7 +900,7 @@ Defines the request payload for GetAvatar.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetAvatarRequestData
 
@@ -925,7 +925,7 @@ Defines the request payload for GetCountryCode.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetCountryCodeRequestData
 
@@ -950,8 +950,8 @@ Defines the request payload for GetCustomData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `customDataKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `customDataKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetCustomDataRequestData
 
@@ -976,7 +976,7 @@ Defines the request payload for GetDisplayName.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetDisplayNameRequestData
 
@@ -1001,7 +1001,7 @@ Defines the request payload for GetEmail.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetEmailRequestData
 
@@ -1026,7 +1026,7 @@ Defines the request payload for GetExternal.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetExternalRequestData
 
@@ -1051,7 +1051,7 @@ Defines the request payload for GetIpAddressCreate.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetIpAddressCreateRequestData
 
@@ -1076,7 +1076,7 @@ Defines the request payload for GetPlayerBan.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetPlayerBanRequestData
 
@@ -1101,8 +1101,8 @@ Defines the request payload for GetPlayerCurrency.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `playerCurrencyKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `playerCurrencyKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerCurrencyRequestData
 
@@ -1127,8 +1127,8 @@ Defines the request payload for GetPlayerData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `playerDataKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `playerDataKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerDataRequestData
 
@@ -1153,7 +1153,7 @@ Reads the current or target master-player profile using the requested projection
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Required field projection that controls which optional data is returned. |
 
 ### ServerGetPlayerInformationRequestData
@@ -1179,8 +1179,8 @@ Defines the request payload for GetPlayerStatistics.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `playerStatisticsKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `playerStatisticsKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetPlayerStatisticsRequestData
 
@@ -1233,8 +1233,8 @@ Defines the request payload for GetPlayersWithDisplayName.
 | --- | --- | --- | --- |
 | `keyword` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetPlayersWithDisplayNameRequestData
 
@@ -1392,8 +1392,8 @@ Defines the request payload for GetPlayersWithSegment.
 | --- | --- | --- | --- |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetPlayersWithSegmentRequestData
 
@@ -1421,8 +1421,8 @@ Defines the request payload for GetPlayersWithTag.
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetPlayersWithTagRequestData
 
@@ -1447,7 +1447,7 @@ Defines the request payload for GetSegment.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetSegmentRequestData
 
@@ -1472,12 +1472,12 @@ Defines the request payload for GetStatisticsLeaderboardAroundPlayer.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetStatisticsLeaderboardAroundPlayerRequestData
 
@@ -1504,10 +1504,10 @@ Defines the request payload for GetStatisticsLeaderboard.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
-| `version` | `string` | no | _minLength=2, maxLength=32_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
+| `version` | `string?` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardRequestData
 
@@ -1533,9 +1533,9 @@ Defines the request payload for GetCreateLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetCreateLeaderboardRequestData
 
@@ -1561,9 +1561,9 @@ Defines the request payload for GetLastLoginLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetLastLoginLeaderboardRequestData
 
@@ -1588,8 +1588,8 @@ Defines the request payload for GetTag.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
-| `tagKeys` | `Array<string>` | no | _elementCls=String_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
+| `tagKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetTagRequestData
 
@@ -1614,7 +1614,7 @@ Defines the request payload for GetTsCreate.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetTsCreateRequestData
 
@@ -1639,7 +1639,7 @@ Defines the request payload for GetTsLastLogin.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetTsLastLoginRequestData
 
@@ -1664,10 +1664,10 @@ Defines the request payload for LinkAccount.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `username` | `string` | yes | _minLength=6, maxLength=32_ |
 | `password` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkAccountRequestData
 
@@ -1692,9 +1692,9 @@ Defines the request payload for LinkAndroidDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `androidDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkAndroidDeviceIdRequestData
 
@@ -1719,9 +1719,9 @@ Defines the request payload for LinkApple.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `token` | `string` | yes | _minLength=32, maxLength=2048_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkAppleRequestData
 
@@ -1746,9 +1746,9 @@ Defines the request payload for LinkCustomDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `customDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkCustomDeviceIdRequestData
 
@@ -1773,9 +1773,9 @@ Defines the request payload for LinkCustomId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `customId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkCustomIdRequestData
 
@@ -1800,9 +1800,9 @@ Defines the request payload for LinkEditorDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `editorDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkEditorDeviceIdRequestData
 
@@ -1827,9 +1827,9 @@ Defines the request payload for LinkFacebook.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `token` | `string` | yes | _minLength=32, maxLength=2048_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkFacebookRequestData
 
@@ -1854,10 +1854,10 @@ Defines the request payload for LinkGenericService.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `serviceName` | `string` | yes | _minLength=6, maxLength=32_ |
 | `serviceData` | `GNHashtable` | yes | Service-specific credential or identity data required by the external generic service provider. |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkGenericServiceRequestData
 
@@ -1882,10 +1882,10 @@ Defines the request payload for LinkGoogle.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `token` | `string` | yes | _minLength=32, maxLength=2048_ |
 | `type` | `number` | yes | _min=1, max=2_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkGoogleRequestData
 
@@ -1910,9 +1910,9 @@ Defines the request payload for LinkGooglePlayGameService.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `token` | `string` | yes | _minLength=32, maxLength=2048_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkGooglePlayGameServiceRequestData
 
@@ -1937,14 +1937,14 @@ Defines the request payload for LinkGameCenter.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerId` | `string` | yes | _minLength=2, maxLength=64_ |
 | `name` | `string` | yes | _minLength=2, maxLength=128_ |
 | `publicKeyUrl` | `string` | yes | _minLength=2, maxLength=2048_ |
 | `signature` | `string` | yes | _minLength=2, maxLength=2048_ |
 | `salt` | `string` | yes | _minLength=2, maxLength=256_ |
 | `timestamp` | `number` | yes | Unix timestamp from the Game Center signature verification payload. |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkGameCenterRequestData
 
@@ -1969,9 +1969,9 @@ Defines the request payload for LinkiOSDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `iOSDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkiOSDeviceIdRequestData
 
@@ -1996,9 +1996,9 @@ Defines the request payload for LinkLinuxDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `linuxDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkLinuxDeviceIdRequestData
 
@@ -2023,9 +2023,9 @@ Defines the request payload for LinkMacOSDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `macOSDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkMacOSDeviceIdRequestData
 
@@ -2050,9 +2050,9 @@ Defines the request payload for LinkWindowsDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `windowsDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkWindowsDeviceIdRequestData
 
@@ -2077,9 +2077,9 @@ Defines the request payload for LinkWindowsPhoneDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `windowsPhoneDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
-| `forceLink` | `boolean` | no | _default=false_ |
+| `forceLink` | `boolean?` | no | _default=false_ |
 
 ### ServerLinkWindowsPhoneDeviceIdRequestData
 
@@ -2104,7 +2104,7 @@ Defines the request payload for RemoveSegment.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### ServerRemoveSegmentRequestData
@@ -2130,7 +2130,7 @@ Defines the request payload for RemoveTag.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### ServerRemoveTagRequestData
@@ -2156,7 +2156,7 @@ Defines the request payload for ResetAccountPassword.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `password` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerResetAccountPasswordRequestData
@@ -2182,7 +2182,7 @@ Defines the request payload for SetAvatar.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `type` | `number` | yes | Avatar type identifier. Maps to the public avatar type enum. |
 | `value` | `string` | yes | _minLength=1, maxLength=128_ |
 
@@ -2209,7 +2209,7 @@ Defines the request payload for SetCountryCode.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `countryCode` | `string` | yes | _minLength=2, maxLength=32_ |
 
 ### ServerSetCountryCodeRequestData
@@ -2235,7 +2235,7 @@ Defines the request payload for SetCustomData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `customDatas` | `Array<CustomDataParam>` | yes | _minLength=1, maxLength=32, elementCls=CustomDataParam_ |
 
 ### ServerSetCustomDataRequestData
@@ -2261,9 +2261,9 @@ Defines the request payload for SetDisplayName.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `displayName` | `string` | yes | _minLength=5, maxLength=32_ |
-| `uniqueDisplayName` | `boolean` | no | _default=false_ |
+| `uniqueDisplayName` | `boolean?` | no | _default=false_ |
 
 ### ServerSetDisplayNameRequestData
 
@@ -2288,7 +2288,7 @@ Defines the request payload for SetEmail.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `email` | `string` | yes | _minLength=5, maxLength=128_ |
 
 ### ServerSetEmailRequestData
@@ -2314,7 +2314,7 @@ Defines the request payload for SetPlayerBan.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `tsExpire` | `number` | yes | Expiration timestamp of the ban (Unix timestamp); use a far-future value for a permanent ban. |
 | `reason` | `string` | yes | Human-readable reason for the ban recorded on the backend. |
 
@@ -2341,9 +2341,9 @@ Defines the request payload for ChangePlayerCurrency.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerCurrencies` | `Array<PlayerCurrencyParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerCurrencyParam_ |
-| `log` | `string` | no | _minLength=1, maxLength=256_ |
+| `log` | `string?` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerCurrencyRequestData
 
@@ -2368,7 +2368,7 @@ Defines the request payload for SetPlayerData.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerDatas` | `Array<PlayerDataParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerDataParam_ |
 
 ### ServerSetPlayerDataRequestData
@@ -2394,9 +2394,9 @@ Defines the request payload for ChangePlayerStatistics.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerStatistics` | `Array<PlayerStatisticsParam>` | yes | _minLength=1, maxLength=32, elementCls=PlayerStatisticsParam_ |
-| `log` | `string` | no | _minLength=1, maxLength=256_ |
+| `log` | `string?` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangePlayerStatisticsRequestData
 
@@ -2421,7 +2421,7 @@ Defines the request payload for SetTag.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
 
@@ -2450,7 +2450,7 @@ Reads currency change logs for the current or target master player. Pagination i
 | --- | --- | --- | --- |
 | `keys` | `Array<string>` | yes | _minLength=1, maxLength=32, elementCls=String_ |
 | `userId` | `string` | yes | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 | `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetCurrencyLogRequestData
@@ -2478,7 +2478,7 @@ Reads statistic change logs for the current or target master player. Pagination 
 | --- | --- | --- | --- |
 | `keys` | `Array<string>` | yes | _minLength=1, maxLength=32, elementCls=String_ |
 | `userId` | `string` | yes | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 | `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetStatisticsLogRequestData
@@ -2504,7 +2504,7 @@ Defines the request payload for UpdateTsLastLogin.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerUpdateTsLastLoginRequestData
 
@@ -2529,7 +2529,7 @@ Defines the request payload for UnlinkAccount.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `username` | `string` | yes | _minLength=6, maxLength=32_ |
 
 ### ServerUnlinkAccountRequestData
@@ -2555,7 +2555,7 @@ Defines the request payload for UnlinkAndroidDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `androidDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkAndroidDeviceIdRequestData
@@ -2581,7 +2581,7 @@ Defines the request payload for UnlinkApple.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `appleId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkAppleRequestData
@@ -2607,7 +2607,7 @@ Defines the request payload for UnlinkCustomDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `customDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkCustomDeviceIdRequestData
@@ -2633,7 +2633,7 @@ Defines the request payload for UnlinkCustomId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `customId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkCustomIdRequestData
@@ -2659,7 +2659,7 @@ Defines the request payload for UnlinkEditorDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `editorDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkEditorDeviceIdRequestData
@@ -2685,7 +2685,7 @@ Defines the request payload for UnlinkFacebook.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `facebookId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkFacebookRequestData
@@ -2711,7 +2711,7 @@ Defines the request payload for UnlinkGenericService.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `serviceName` | `string` | yes | _minLength=6, maxLength=32_ |
 | `serviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
@@ -2738,7 +2738,7 @@ Defines the request payload for UnlinkGoogle.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `googleId` | `string` | yes | _minLength=6, maxLength=32_ |
 
 ### ServerUnlinkGoogleRequestData
@@ -2764,7 +2764,7 @@ Defines the request payload for UnlinkGooglePlayGameService.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkGooglePlayGameServiceRequestData
@@ -2790,7 +2790,7 @@ Defines the request payload for UnlinkGameCenter.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `playerId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkGameCenterRequestData
@@ -2816,7 +2816,7 @@ Defines the request payload for UnlinkiOSDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `iOSDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkiOSDeviceIdRequestData
@@ -2842,7 +2842,7 @@ Defines the request payload for UnlinkLinuxDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `linuxDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkLinuxDeviceIdRequestData
@@ -2868,7 +2868,7 @@ Defines the request payload for UnlinkMacOSDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `macOSDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkMacOSDeviceIdRequestData
@@ -2894,7 +2894,7 @@ Defines the request payload for UnlinkWindowsDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `windowsDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkWindowsDeviceIdRequestData
@@ -2920,7 +2920,7 @@ Defines the request payload for UnlinkWindowsPhoneDeviceId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `windowsPhoneDeviceId` | `string` | yes | _minLength=6, maxLength=64_ |
 
 ### ServerUnlinkWindowsPhoneDeviceIdRequestData
@@ -2946,7 +2946,7 @@ Sends a backend-routed socket event to the current or target player's active soc
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
 | `eventCode` | `string` | yes | Backend-defined event code forwarded to socket listeners. — _minLength=1, maxLength=64_ |
 | `eventParameters` | `GNHashtable` | yes | Optional raw event payload delivered with the socket event. — _minLength=0, maxLength=128_ |
 
@@ -2973,7 +2973,7 @@ Defines the request payload for SendEmail.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `subject` | `string` | yes | _minLength=2, maxLength=256_ |
 | `contentHtml` | `string` | yes | _minLength=2, maxLength=8192_ |
 
@@ -3000,7 +3000,7 @@ Registers a push-notification endpoint for the current or target master player.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `token` | `string` | yes | Device push token issued by the push provider. — _minLength=10, maxLength=256_ |
 | `platformType` | `number` | yes | Push platform mapped by the public `PushPlatformType` enum. — _min=1_ |
 
@@ -3027,7 +3027,7 @@ Reads registered push-notification endpoints for the current or target master pl
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetPushNotificationRequestData
 
@@ -3052,7 +3052,7 @@ Defines the request payload for RemovePushNotification.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `pushId` | `string` | yes | _minLength=8, maxLength=8_ |
 
 ### ServerRemovePushNotificationRequestData
@@ -3078,13 +3078,13 @@ Triggers a push-notification send workflow for the current or target master play
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 | `title` | `string` | yes | Title text displayed as the push notification header. |
 | `body` | `string` | yes | Body text displayed as the push notification message. |
-| `badge` | `number` | no | _default=null_ |
-| `sound` | `string` | no | Sound file name played on notification receipt (platform-specific). |
-| `icon` | `string` | no | Icon resource name or URL shown in the notification (platform-specific). |
-| `data` | `GNHashtable` | no | Platform-specific custom payload forwarded to the push provider. |
+| `badge` | `number?` | no | _default=null_ |
+| `sound` | `string?` | no | Sound file name played on notification receipt (platform-specific). |
+| `icon` | `string?` | no | Icon resource name or URL shown in the notification (platform-specific). |
+| `data` | `GNHashtable?` | no | Platform-specific custom payload forwarded to the push provider. |
 
 ### ServerSendPushNotificationRequestData
 
@@ -3109,7 +3109,7 @@ Defines the request payload for GetOnlineStatus.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | _minLength=10, maxLength=10_ |
 
 ### ServerGetOnlineStatusRequestData
 
@@ -3145,23 +3145,23 @@ Contains the optional fields requested through `InfoRequestParam`.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `external` | `ExternalItem` | no | Linked external identity snapshot. |
-| `segments` | `Array<string>` | no | _elementCls=String_ |
-| `customDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `displayName` | `string` | no | Display name of the master player. |
-| `avatar` | `GenericModels.AvatarItem` | no | Avatar data of the master player. |
-| `tsCreate` | `number` | no | Account creation timestamp of the master player. |
-| `tags` | `Array<GenericModels.TagItem>` | no | _elementCls=GenericModels.TagItem_ |
-| `playerBan` | `GenericModels.BanItem` | no | Ban state of the master player; present when a ban is active. |
-| `playerDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `playerCurrencies` | `Array<GenericModels.CurrencyItem>` | no | _elementCls=GenericModels.CurrencyItem_ |
-| `playerStatistics` | `Array<GenericModels.StatisticsItem>` | no | _elementCls=GenericModels.StatisticsItem_ |
-| `tsLastLogin` | `number` | no | Timestamp of the master player's last successful login. |
-| `ipAddressCreate` | `string` | no | IP address recorded at the time of account creation. |
-| `countryCode` | `string` | no | Country code associated with the master player account. |
-| `email` | `string` | no | Email address linked to the master player account. |
-| `pushNotifications` | `Array<MasterPlayerModels.PushNotificationItem>` | no | Registered push endpoints when `pushNotifications` was requested. — _elementCls=MasterPlayerModels.PushNotificationItem_ |
-| `onlineStatus` | `OnlineStatusItem` | no | Online status snapshot; present when `onlineStatus` is enabled in `InfoRequestParam`. |
+| `external` | `ExternalItem?` | no | Linked external identity snapshot. |
+| `segments` | `Array<string>?` | no | _elementCls=String_ |
+| `customDatas` | `Array<GenericModels.DataItem>?` | no | _elementCls=GenericModels.DataItem_ |
+| `displayName` | `string?` | no | Display name of the master player. |
+| `avatar` | `GenericModels.AvatarItem?` | no | Avatar data of the master player. |
+| `tsCreate` | `number?` | no | Account creation timestamp of the master player. |
+| `tags` | `Array<GenericModels.TagItem>?` | no | _elementCls=GenericModels.TagItem_ |
+| `playerBan` | `GenericModels.BanItem?` | no | Ban state of the master player; present when a ban is active. |
+| `playerDatas` | `Array<GenericModels.DataItem>?` | no | _elementCls=GenericModels.DataItem_ |
+| `playerCurrencies` | `Array<GenericModels.CurrencyItem>?` | no | _elementCls=GenericModels.CurrencyItem_ |
+| `playerStatistics` | `Array<GenericModels.StatisticsItem>?` | no | _elementCls=GenericModels.StatisticsItem_ |
+| `tsLastLogin` | `number?` | no | Timestamp of the master player's last successful login. |
+| `ipAddressCreate` | `string?` | no | IP address recorded at the time of account creation. |
+| `countryCode` | `string?` | no | Country code associated with the master player account. |
+| `email` | `string?` | no | Email address linked to the master player account. |
+| `pushNotifications` | `Array<MasterPlayerModels.PushNotificationItem>?` | no | Registered push endpoints when `pushNotifications` was requested. — _elementCls=MasterPlayerModels.PushNotificationItem_ |
+| `onlineStatus` | `OnlineStatusItem?` | no | Online status snapshot; present when `onlineStatus` is enabled in `InfoRequestParam`. |
 
 ### OnlineStatusItem
 
@@ -3191,7 +3191,7 @@ Master-player envelope for generic-service link or lookup flows.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `errorMessage` | `string` | no | Provider-specific error text returned by the backend when available. |
+| `errorMessage` | `string?` | no | Provider-specific error text returned by the backend when available. |
 
 ### MasterPlayerWithUserIdResponseData
 
@@ -3332,7 +3332,7 @@ One leaderboard row for master-player ranking endpoints.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `position` | `number` | yes | Ranking position returned by the backend leaderboard implementation. |
-| `backupValue` | `number` | no | Optional archived score value from the last leaderboard backup. |
+| `backupValue` | `number?` | no | Optional archived score value from the last leaderboard backup. |
 
 ### MasterPlayerLogResponseData
 
@@ -3357,7 +3357,7 @@ Returns a statistics leaderboard page plus its optional snapshot timestamp.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<MasterPlayerLeaderboardResponseData>` | yes | _elementCls=MasterPlayerLeaderboardResponseData_ |
-| `tsCreate` | `number` | no | Snapshot timestamp used for this leaderboard page when returned by the backend. |
+| `tsCreate` | `number?` | no | Snapshot timestamp used for this leaderboard page when returned by the backend. |
 
 ### GetCurrencyLeaderboardResponseData
 
@@ -3395,9 +3395,9 @@ Defines the request payload for GetCurrencyLeaderboard.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields are included in the response. |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetCurrencyLeaderboardRequestData
 
@@ -3423,7 +3423,7 @@ Returns one page of statistics logs.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<MasterPlayerLogResponseData>` | yes | _elementCls=MasterPlayerLogResponseData_ |
-| `token` | `string` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
+| `token` | `string?` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
 
 ### GetCurrencyLogResponseData
 
@@ -3433,7 +3433,7 @@ Returns one page of currency logs.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<MasterPlayerLogResponseData>` | yes | _elementCls=MasterPlayerLogResponseData_ |
-| `token` | `string` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
+| `token` | `string?` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
 
 ### AddPushNotificationResponseData
 

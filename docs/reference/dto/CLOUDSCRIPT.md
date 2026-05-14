@@ -124,10 +124,10 @@ Executes one function from the selected CloudScript version.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | Optional self-target shortcut on the client route; trusted routes require it through derived classes. — _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | Optional self-target shortcut on the client route; trusted routes require it through derived classes. — _minLength=10, maxLength=10_ |
 | `functionName` | `string` | yes | Function name inside the script version, not the version identifier itself. — _minLength=3, maxLength=30_ |
-| `functionParameters` | `any` | no | Arbitrary payload forwarded to the CloudScript function. |
-| `version` | `string` | no | Optional version override; when omitted, backend execution rules decide which live version is used. — _minLength=7, maxLength=7_ |
+| `functionParameters` | `any` | yes | Arbitrary payload forwarded to the CloudScript function. You can use `null` for `functionParameters`. |
+| `version` | `string?` | no | Optional version override; when omitted, backend execution rules decide which live version is used. — _minLength=7, maxLength=7_ |
 
 ### ServerExecuteFunctionRequestData
 
