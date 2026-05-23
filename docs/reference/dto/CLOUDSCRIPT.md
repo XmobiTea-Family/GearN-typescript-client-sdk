@@ -14,6 +14,8 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
 
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
+
 ## Danh sách
 
 - **CloudScriptModels** (from `CloudScriptModels.ts`)
@@ -184,7 +186,7 @@ Extends: `GetFunctionsRequestData`
 
 Defines the request payload for ServerGetFunctions.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetFunctionsRequestData`._
 
 ### AdminGetFunctionsRequestData
 
@@ -192,7 +194,7 @@ Extends: `ServerGetFunctionsRequestData`
 
 Defines the request payload for AdminGetFunctions.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetFunctionsRequestData`._
 
 ### AddFunctionResponseData
 

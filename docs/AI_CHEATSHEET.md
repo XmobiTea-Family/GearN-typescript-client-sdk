@@ -66,6 +66,7 @@ useResult(res.responseData);
 | Admin login, secret/maintenance/analytics | [guides/DASHBOARD.md](/docs/guides/DASHBOARD.md) · [reference/API_DASHBOARD.md](/docs/reference/API_DASHBOARD.md) |
 | Realtime event (friend, group, message) | [reference/EVENTS.md](/docs/reference/EVENTS.md) |
 | Viết custom DTO / payload event bằng `@DataMember`, `@StringDataMember`, `@NumberDataMember`, `@BooleanDataMember`, `@GNHashtableDataMember`, `@GNArrayDataMember` | [reference/DATAMEMBER.md](/docs/reference/DATAMEMBER.md) |
+| Gặp `CustomOperationRequestAbstract<T>` / `CustomOperationResponseAbstract<T>` trong DTO reference | [reference/OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) |
 | Tra DTO field theo class | [reference/DTO_INDEX.md](/docs/reference/DTO_INDEX.md) (grep) hoặc [reference/dto/](/docs/reference/dto/) |
 | Enum value numeric | [reference/ENUMS.md](/docs/reference/ENUMS.md) |
 | Config field của `GNServerSettings` | [reference/CONFIG.md](/docs/reference/CONFIG.md) |
@@ -141,6 +142,7 @@ const res = await GNNetwork.<group>.<method>Async(request);
 Không dùng object literal rồi cast sang `RequestData`. Chi tiết: [RULES.md § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
 
 Response field public (KHÔNG phải getter): `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Helper method hợp lệ: `hasReturnCodeError()` (equivalent `returnCode !== ReturnCode.Ok`).
+Nếu DTO reference ghi `Extends: CustomOperationRequestAbstract<TRequestData>`, `TRequestData` là payload được serialize vào request bằng `requestDataCls`. Nếu ghi `Extends: CustomOperationResponseAbstract<TResponseData>`, `TResponseData` là kiểu của `responseData` được deserialize bằng `responseDataCls`. Xem [reference/OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md).
 
 ---
 

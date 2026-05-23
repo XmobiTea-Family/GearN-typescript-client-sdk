@@ -32,6 +32,7 @@ Tổng cộng **2506** DTO class trên **12** domain.
 - **Class** — tên class; click để xem field table chi tiết.
 - **Fields** — số field public của class (không tính field kế thừa từ parent).
 - **Extends** — parent class nếu có (để biết field kế thừa; xem thêm file của parent).
+Nếu `Extends` là `CustomOperationRequestAbstract<TRequestData>` hoặc `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md): `TRequestData` là kiểu `requestData` được serialize bằng `requestDataCls`; `TResponseData` là kiểu `responseData` được deserialize bằng `responseDataCls` và chỉ đáng tin sau khi `returnCode === ReturnCode.Ok`.
 
 ## Bảng flat (grep-target)
 

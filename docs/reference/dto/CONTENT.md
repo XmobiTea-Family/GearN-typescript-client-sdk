@@ -12,6 +12,8 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
 
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
+
 ## Danh sách
 
 - **ContentModels** (from `ContentModels.ts`)
@@ -104,7 +106,7 @@ Extends: `CreateNewFileUploadInfoRequestData`
 
 Defines the request payload for ServerCreateNewFileUploadInfo.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `CreateNewFileUploadInfoRequestData`._
 
 ### AdminCreateNewFileUploadInfoRequestData
 
@@ -112,7 +114,7 @@ Extends: `ServerCreateNewFileUploadInfoRequestData`
 
 Defines the request payload for AdminCreateNewFileUploadInfo.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCreateNewFileUploadInfoRequestData`._
 
 ### GetContentDataRequestData
 
@@ -130,7 +132,7 @@ Extends: `GetContentDataRequestData`
 
 Defines the request payload for ServerGetContentData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetContentDataRequestData`._
 
 ### AdminGetContentDataRequestData
 
@@ -138,7 +140,7 @@ Extends: `ServerGetContentDataRequestData`
 
 Defines the request payload for AdminGetContentData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetContentDataRequestData`._
 
 ### GetFileUploadInfoListRequestData
 
@@ -156,7 +158,7 @@ Extends: `GetFileUploadInfoListRequestData`
 
 Defines the request payload for ServerGetFileUploadInfoList.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetFileUploadInfoListRequestData`._
 
 ### AdminGetFileUploadInfoListRequestData
 
@@ -164,7 +166,7 @@ Extends: `ServerGetFileUploadInfoListRequestData`
 
 Defines the request payload for AdminGetFileUploadInfoList.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetFileUploadInfoListRequestData`._
 
 ### GetFileUploadInfoRequestData
 
@@ -181,7 +183,7 @@ Extends: `GetFileUploadInfoRequestData`
 
 Defines the request payload for ServerGetFileUploadInfo.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetFileUploadInfoRequestData`._
 
 ### AdminGetFileUploadInfoRequestData
 
@@ -189,7 +191,7 @@ Extends: `ServerGetFileUploadInfoRequestData`
 
 Defines the request payload for AdminGetFileUploadInfo.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetFileUploadInfoRequestData`._
 
 ### RemoveFileUploadInfoRequestData
 
@@ -207,7 +209,7 @@ Extends: `RemoveFileUploadInfoRequestData`
 
 Defines the request payload for ServerRemoveFileUploadInfo.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `RemoveFileUploadInfoRequestData`._
 
 ### AdminRemoveFileUploadInfoRequestData
 
@@ -215,7 +217,7 @@ Extends: `ServerRemoveFileUploadInfoRequestData`
 
 Defines the request payload for AdminRemoveFileUploadInfo.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveFileUploadInfoRequestData`._
 
 ### RequestDownloadFileUploadInfoRequestData
 
@@ -232,7 +234,7 @@ Extends: `RequestDownloadFileUploadInfoRequestData`
 
 Defines the request payload for ServerRequestDownloadFileUploadInfo.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `RequestDownloadFileUploadInfoRequestData`._
 
 ### AdminRequestDownloadFileUploadInfoRequestData
 
@@ -240,7 +242,7 @@ Extends: `ServerRequestDownloadFileUploadInfoRequestData`
 
 Defines the request payload for AdminRequestDownloadFileUploadInfo.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRequestDownloadFileUploadInfoRequestData`._
 
 ### SetContentDataRequestData
 
@@ -258,7 +260,7 @@ Extends: `SetContentDataRequestData`
 
 Defines the request payload for ServerSetContentData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetContentDataRequestData`._
 
 ### AdminSetContentDataRequestData
 
@@ -266,7 +268,7 @@ Extends: `ServerSetContentDataRequestData`
 
 Defines the request payload for AdminSetContentData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetContentDataRequestData`._
 
 ### FileIdUploadResponseData
 

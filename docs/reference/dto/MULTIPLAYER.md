@@ -14,6 +14,8 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
 
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
+
 ## Danh sách
 
 - **MultiplayerModels** (from `MultiplayerModels.ts`)
@@ -126,6 +128,8 @@ Extends: `CancelAllMatchmakingTicketRequestData`
 
 Defines the request payload for ServerCancelAllMatchmakingTicket.
 
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `CancelAllMatchmakingTicketRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
@@ -137,7 +141,7 @@ Extends: `ServerCancelAllMatchmakingTicketRequestData`
 
 Defines the request payload for AdminCancelAllMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCancelAllMatchmakingTicketRequestData` (bao gồm `userId` required)._
 
 ### CancelMatchmakingTicketRequestData
 
@@ -154,6 +158,8 @@ Extends: `CancelMatchmakingTicketRequestData`
 
 Defines the request payload for ServerCancelMatchmakingTicket.
 
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `CancelMatchmakingTicketRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
@@ -165,7 +171,7 @@ Extends: `ServerCancelMatchmakingTicketRequestData`
 
 Defines the request payload for AdminCancelMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCancelMatchmakingTicketRequestData` (bao gồm `userId` required)._
 
 ### CreateMatchmakingTicketRequestData
 
@@ -185,6 +191,8 @@ Extends: `CreateMatchmakingTicketRequestData`
 
 Defines the request payload for ServerCreateMatchmakingTicket.
 
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `CreateMatchmakingTicketRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
@@ -196,7 +204,7 @@ Extends: `ServerCreateMatchmakingTicketRequestData`
 
 Defines the request payload for AdminCreateMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCreateMatchmakingTicketRequestData` (bao gồm `userId` required)._
 
 ### GetMatchmakingTicketRequestData
 
@@ -214,7 +222,7 @@ Extends: `GetMatchmakingTicketRequestData`
 
 Defines the request payload for ServerGetMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetMatchmakingTicketRequestData`._
 
 ### AdminGetMatchmakingTicketRequestData
 
@@ -222,7 +230,7 @@ Extends: `ServerGetMatchmakingTicketRequestData`
 
 Defines the request payload for AdminGetMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetMatchmakingTicketRequestData`._
 
 ### GetMatchRequestData
 
@@ -240,7 +248,7 @@ Extends: `GetMatchRequestData`
 
 Defines the request payload for ServerGetMatch.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetMatchRequestData`._
 
 ### AdminGetMatchRequestData
 
@@ -248,7 +256,7 @@ Extends: `ServerGetMatchRequestData`
 
 Defines the request payload for AdminGetMatch.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetMatchRequestData`._
 
 ### GetAllMatchRequestData
 
@@ -267,7 +275,7 @@ Extends: `GetAllMatchRequestData`
 
 Defines the request payload for ServerGetAllMatch.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetAllMatchRequestData`._
 
 ### AdminGetAllMatchRequestData
 
@@ -275,7 +283,7 @@ Extends: `ServerGetAllMatchRequestData`
 
 Defines the request payload for AdminGetAllMatch.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAllMatchRequestData`._
 
 ### GetAllMatchmakingTicketRequestData
 
@@ -295,7 +303,7 @@ Extends: `GetAllMatchmakingTicketRequestData`
 
 Defines the request payload for ServerGetAllMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetAllMatchmakingTicketRequestData`._
 
 ### AdminGetAllMatchmakingTicketRequestData
 
@@ -303,7 +311,7 @@ Extends: `ServerGetAllMatchmakingTicketRequestData`
 
 Defines the request payload for AdminGetAllMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAllMatchmakingTicketRequestData`._
 
 ### GetQueueStatisticsRequestData
 
@@ -321,7 +329,7 @@ Extends: `GetQueueStatisticsRequestData`
 
 Defines the request payload for ServerGetQueueStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetQueueStatisticsRequestData`._
 
 ### AdminGetQueueStatisticsRequestData
 
@@ -329,7 +337,7 @@ Extends: `ServerGetQueueStatisticsRequestData`
 
 Defines the request payload for AdminGetQueueStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetQueueStatisticsRequestData`._
 
 ### JoinMatchmakingTicketRequestData
 
@@ -347,6 +355,8 @@ Extends: `JoinMatchmakingTicketRequestData`
 
 Defines the request payload for ServerJoinMatchmakingTicket.
 
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `JoinMatchmakingTicketRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
@@ -358,7 +368,7 @@ Extends: `ServerJoinMatchmakingTicketRequestData`
 
 Defines the request payload for AdminJoinMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerJoinMatchmakingTicketRequestData` (bao gồm `userId` required)._
 
 ### ListMatchmakingTicketsForPlayerRequestData
 
@@ -375,6 +385,8 @@ Extends: `ListMatchmakingTicketsForPlayerRequestData`
 
 Defines the request payload for ServerListMatchmakingTicketsForPlayer.
 
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `ListMatchmakingTicketsForPlayerRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
@@ -386,7 +398,7 @@ Extends: `ServerListMatchmakingTicketsForPlayerRequestData`
 
 Defines the request payload for AdminListMatchmakingTicketsForPlayer.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerListMatchmakingTicketsForPlayerRequestData` (bao gồm `userId` required)._
 
 ### CancelAllMatchmakingTicketResponseData
 
@@ -545,7 +557,7 @@ Defines the response payload for GetAllMatch.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `results` | `Array<MatchWithMatchIdResponseData>` | yes | List of all matches with their match IDs. — _elementCls=MatchWithMatchIdResponseData_ |
+| `results` | `Array<MatchWithMatchIdResponseData>?` | no | List of all matches with their match IDs. — _elementCls=MatchWithMatchIdResponseData_ |
 
 ### GetAllMatchmakingTicketResponseData
 
@@ -554,7 +566,7 @@ Defines the response payload for GetAllMatchmakingTicket.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `results` | `Array<MatchmakingTicketWithTicketIdResponseData>` | yes | List of all matchmaking tickets with their ticket IDs. — _elementCls=MatchmakingTicketWithTicketIdResponseData_ |
+| `results` | `Array<MatchmakingTicketWithTicketIdResponseData>?` | no | List of all matchmaking tickets with their ticket IDs. — _elementCls=MatchmakingTicketWithTicketIdResponseData_ |
 
 ### EmptyResponseData
 

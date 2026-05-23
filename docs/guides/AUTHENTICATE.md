@@ -15,7 +15,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - Tất cả method của `AuthenticateApi` hiện gửi qua HTTP, không login qua socket.
 - Trước khi gọi `AuthenticateApi`, bắt buộc đã `GNNetwork.init(settings)`.
 - `GNServerSettings` phải có `secretKey` hợp lệ.
-- Mọi method trừ `refreshAuthToken` đều phải truyền `infoRequestParam` khác `null`.
+- Mọi flow login/register phải truyền instance `infoRequestParam` khác `null`; riêng `refreshAuthTokenAsync` dùng request rỗng.
 - Không dùng `GNNetwork.authenticate.server.*` hoặc `GNNetwork.authenticate.admin.*` vì hiện chưa có method nào để gọi.
 - Sau khi login hoặc refresh token thành công, nếu backend trả `authToken` và `userId`, SDK sẽ tự cache vào `GNNetwork.getAuthenticateStatus()` và `StorageService`.
 - Nếu cần dùng socket sau login, tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow). Flow khuyến nghị là login HTTP thành công -> `GNNetwork.connectSocket()`, SDK sẽ auto-auth nếu `authToken` đã có trong cache.
@@ -57,7 +57,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 
 ## 5. InfoRequestParam
 
-`infoRequestParam` quyết định backend sẽ hydrate những phần nào vào `responseData.infoResponseParameters`. Đây là rule bắt buộc cho toàn bộ flow login/register, trừ `refreshAuthToken`.
+`infoRequestParam` quyết định backend hydrate phần nào vào `responseData.infoResponseParameters`. Đây là field required cho login/register; nếu chưa cần hydrate field nào, vẫn truyền `new AuthenticateModels.InfoRequestParam()` và không bật flag nào.
 
 - Không truyền `null`.
 - Không bật tất cả field một cách mù quáng.

@@ -8,11 +8,13 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
 
 > **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new AuthenticateModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
 
-> **Pitfall**: `infoRequestParam` — truyền instance dù chỉ bật vài field. Đừng `null` (backend không hydrate gì) và đừng bulk-set hết (payload bự, slow). Chỉ bật field bạn thật sự render. Xem [RULES § 10 #11-12](/docs/RULES.md#10-anti-patterns--pitfalls).
+> **Pitfall**: `infoRequestParam` là field required ở các flow login/register. Truyền một instance `new AuthenticateModels.InfoRequestParam()` kể cả khi không cần hydrate field nào, và chỉ bật field bạn thật sự render. Đừng `null` (request có thể invalid hoặc backend không hydrate gì) và đừng bulk-set hết (payload bự, slow). Xem [RULES § 10 #11-12](/docs/RULES.md#10-anti-patterns--pitfalls).
 
-> **Lưu ý route**: Login chỉ qua route `client` — không có Server/Admin variant cho login operation.
+> **Lưu ý route**: `AuthenticateApi` operations chỉ qua route `client` — không có Server/Admin variant cho các operation authenticate.
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
+
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
 
 ## Danh sách
 
@@ -85,7 +87,7 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
 
 ### InfoRequestParam
 
-Defines the reusable parameter block `infoRequestParam`. This object controls which optional profile fields should be returned together with the auth response. Every boolean flag defaults to `false`, so omit fields you do not need.
+Defines the reusable parameter block `infoRequestParam`. This object controls which optional profile fields should be returned together with the auth response. For login/register requests the `infoRequestParam` field itself is required, but every boolean flag inside it defaults to `false`, so pass an instance and omit flags you do not need.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
@@ -236,7 +238,7 @@ Defines the request payload for LoginByGameCenter.
 | `publicKeyUrl` | `string` | yes | _minLength=2, maxLength=2048_ |
 | `signature` | `string` | yes | _minLength=2, maxLength=2048_ |
 | `salt` | `string` | yes | _minLength=2, maxLength=256_ |
-| `timestamp` | `number` | yes | Unix timestamp from the Game Center signature verification payload. |
+| `timestamp` | `long` | yes | Game Center authentication timestamp from the platform payload. Keep the original unit/value returned by Apple's Game Center API so the backend can verify the signature. |
 | `createPlayerIfNotExists` | `boolean?` | no | _default=false_ |
 | `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional profile fields should be returned together with the auth payload. |
 

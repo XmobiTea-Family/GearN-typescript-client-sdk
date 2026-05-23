@@ -10,6 +10,8 @@ Mỗi section bên dưới là 1 class DTO embedded. Field table cho biết: tê
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
 
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
+
 ## Danh sách
 
 - **GenericModels** (from `GenericModels.ts`)
@@ -38,7 +40,7 @@ Represents a generic avatar payload.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `type` | `number` | yes | Avatar type identifier. User custom this type enum. |
+| `type` | `number` | yes | App-defined avatar type integer; not mapped to a built-in GearN enum. |
 | `value` | `string` | yes | Avatar value, typically a URL, file id, or provider-specific string. |
 
 ### TagItem

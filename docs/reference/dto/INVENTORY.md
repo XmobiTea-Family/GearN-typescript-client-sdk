@@ -12,6 +12,8 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
 
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
+
 ## Danh sách
 
 - **InventoryModels** (from `InventoryModels.ts`)
@@ -346,7 +348,7 @@ Extends: `AddSegmentRequestData`
 
 Defines the request payload for ServerAddSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `AddSegmentRequestData`._
 
 ### AdminAddSegmentRequestData
 
@@ -354,7 +356,7 @@ Extends: `ServerAddSegmentRequestData`
 
 Defines the request payload for AdminAddSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerAddSegmentRequestData`._
 
 ### GetAmountRequestData
 
@@ -371,7 +373,7 @@ Extends: `GetAmountRequestData`
 
 Defines the request payload for ServerGetAmount.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetAmountRequestData`._
 
 ### AdminGetAmountRequestData
 
@@ -379,7 +381,7 @@ Extends: `ServerGetAmountRequestData`
 
 Defines the request payload for AdminGetAmount.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAmountRequestData`._
 
 ### GetAvatarRequestData
 
@@ -396,7 +398,7 @@ Extends: `GetAvatarRequestData`
 
 Defines the request payload for ServerGetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetAvatarRequestData`._
 
 ### AdminGetAvatarRequestData
 
@@ -404,7 +406,7 @@ Extends: `ServerGetAvatarRequestData`
 
 Defines the request payload for AdminGetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAvatarRequestData`._
 
 ### GetCatalogIdRequestData
 
@@ -421,7 +423,7 @@ Extends: `GetCatalogIdRequestData`
 
 Defines the request payload for ServerGetCatalogId.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCatalogIdRequestData`._
 
 ### AdminGetCatalogIdRequestData
 
@@ -429,7 +431,7 @@ Extends: `ServerGetCatalogIdRequestData`
 
 Defines the request payload for AdminGetCatalogId.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCatalogIdRequestData`._
 
 ### GetClassIdRequestData
 
@@ -446,7 +448,7 @@ Extends: `GetClassIdRequestData`
 
 Defines the request payload for ServerGetClassId.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetClassIdRequestData`._
 
 ### AdminGetClassIdRequestData
 
@@ -454,7 +456,7 @@ Extends: `ServerGetClassIdRequestData`
 
 Defines the request payload for AdminGetClassId.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetClassIdRequestData`._
 
 ### GetCustomDataRequestData
 
@@ -472,7 +474,7 @@ Extends: `GetCustomDataRequestData`
 
 Defines the request payload for ServerGetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCustomDataRequestData`._
 
 ### AdminGetCustomDataRequestData
 
@@ -480,7 +482,7 @@ Extends: `ServerGetCustomDataRequestData`
 
 Defines the request payload for AdminGetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCustomDataRequestData`._
 
 ### GetDisplayNameRequestData
 
@@ -497,7 +499,7 @@ Extends: `GetDisplayNameRequestData`
 
 Defines the request payload for ServerGetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetDisplayNameRequestData`._
 
 ### AdminGetDisplayNameRequestData
 
@@ -505,7 +507,7 @@ Extends: `ServerGetDisplayNameRequestData`
 
 Defines the request payload for AdminGetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetDisplayNameRequestData`._
 
 ### GetItemDataRequestData
 
@@ -523,7 +525,7 @@ Extends: `GetItemDataRequestData`
 
 Defines the request payload for ServerGetItemData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemDataRequestData`._
 
 ### AdminGetItemDataRequestData
 
@@ -531,7 +533,7 @@ Extends: `ServerGetItemDataRequestData`
 
 Defines the request payload for AdminGetItemData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemDataRequestData`._
 
 ### GetItemInformationRequestData
 
@@ -549,7 +551,7 @@ Extends: `GetItemInformationRequestData`
 
 Defines the request payload for ServerGetItemInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemInformationRequestData`._
 
 ### AdminGetItemInformationRequestData
 
@@ -557,7 +559,7 @@ Extends: `ServerGetItemInformationRequestData`
 
 Defines the request payload for AdminGetItemInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemInformationRequestData`._
 
 ### GetItemStatisticsRequestData
 
@@ -575,7 +577,7 @@ Extends: `GetItemStatisticsRequestData`
 
 Defines the request payload for ServerGetItemStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemStatisticsRequestData`._
 
 ### AdminGetItemStatisticsRequestData
 
@@ -583,7 +585,7 @@ Extends: `ServerGetItemStatisticsRequestData`
 
 Defines the request payload for AdminGetItemStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemStatisticsRequestData`._
 
 ### GetItemsWithDisplayNameRequestData
 
@@ -603,7 +605,7 @@ Extends: `GetItemsWithDisplayNameRequestData`
 
 Defines the request payload for ServerGetItemsWithDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemsWithDisplayNameRequestData`._
 
 ### AdminGetItemsWithDisplayNameRequestData
 
@@ -611,7 +613,7 @@ Extends: `ServerGetItemsWithDisplayNameRequestData`
 
 Defines the request payload for AdminGetItemsWithDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemsWithDisplayNameRequestData`._
 
 ### GetItemsWithSegmentRequestData
 
@@ -631,7 +633,7 @@ Extends: `GetItemsWithSegmentRequestData`
 
 Defines the request payload for ServerGetItemsWithSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemsWithSegmentRequestData`._
 
 ### AdminGetItemsWithSegmentRequestData
 
@@ -639,7 +641,7 @@ Extends: `ServerGetItemsWithSegmentRequestData`
 
 Defines the request payload for AdminGetItemsWithSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemsWithSegmentRequestData`._
 
 ### GetItemsWithTagRequestData
 
@@ -660,7 +662,7 @@ Extends: `GetItemsWithTagRequestData`
 
 Defines the request payload for ServerGetItemsWithTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemsWithTagRequestData`._
 
 ### AdminGetItemsWithTagRequestData
 
@@ -668,7 +670,7 @@ Extends: `ServerGetItemsWithTagRequestData`
 
 Defines the request payload for AdminGetItemsWithTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemsWithTagRequestData`._
 
 ### GetItemTypeRequestData
 
@@ -685,7 +687,7 @@ Extends: `GetItemTypeRequestData`
 
 Defines the request payload for ServerGetItemType.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemTypeRequestData`._
 
 ### AdminGetItemTypeRequestData
 
@@ -693,7 +695,7 @@ Extends: `ServerGetItemTypeRequestData`
 
 Defines the request payload for AdminGetItemType.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemTypeRequestData`._
 
 ### GetOwnerRequestData
 
@@ -710,7 +712,7 @@ Extends: `GetOwnerRequestData`
 
 Defines the request payload for ServerGetOwner.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetOwnerRequestData`._
 
 ### AdminGetOwnerRequestData
 
@@ -718,7 +720,7 @@ Extends: `ServerGetOwnerRequestData`
 
 Defines the request payload for AdminGetOwner.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetOwnerRequestData`._
 
 ### GetRemoveStatusRequestData
 
@@ -735,7 +737,7 @@ Extends: `GetRemoveStatusRequestData`
 
 Defines the request payload for ServerGetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetRemoveStatusRequestData`._
 
 ### AdminGetRemoveStatusRequestData
 
@@ -743,7 +745,7 @@ Extends: `ServerGetRemoveStatusRequestData`
 
 Defines the request payload for AdminGetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetRemoveStatusRequestData`._
 
 ### GetSegmentRequestData
 
@@ -760,7 +762,7 @@ Extends: `GetSegmentRequestData`
 
 Defines the request payload for ServerGetSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetSegmentRequestData`._
 
 ### AdminGetSegmentRequestData
 
@@ -768,7 +770,7 @@ Extends: `ServerGetSegmentRequestData`
 
 Defines the request payload for AdminGetSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetSegmentRequestData`._
 
 ### GetStatisticsLeaderboardAroundItemRequestData
 
@@ -791,7 +793,7 @@ Extends: `GetStatisticsLeaderboardAroundItemRequestData`
 
 Defines the request payload for ServerGetStatisticsLeaderboardAroundItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStatisticsLeaderboardAroundItemRequestData`._
 
 ### AdminGetStatisticsLeaderboardAroundItemRequestData
 
@@ -799,7 +801,7 @@ Extends: `ServerGetStatisticsLeaderboardAroundItemRequestData`
 
 Defines the request payload for AdminGetStatisticsLeaderboardAroundItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLeaderboardAroundItemRequestData`._
 
 ### GetStatisticsLeaderboardRequestData
 
@@ -822,7 +824,7 @@ Extends: `GetStatisticsLeaderboardRequestData`
 
 Defines the request payload for ServerGetStatisticsLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStatisticsLeaderboardRequestData`._
 
 ### AdminGetStatisticsLeaderboardRequestData
 
@@ -830,7 +832,7 @@ Extends: `ServerGetStatisticsLeaderboardRequestData`
 
 Defines the request payload for AdminGetStatisticsLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLeaderboardRequestData`._
 
 ### GetCreateLeaderboardRequestData
 
@@ -850,7 +852,7 @@ Extends: `GetCreateLeaderboardRequestData`
 
 Defines the request payload for ServerGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCreateLeaderboardRequestData`._
 
 ### AdminGetCreateLeaderboardRequestData
 
@@ -858,7 +860,7 @@ Extends: `ServerGetCreateLeaderboardRequestData`
 
 Defines the request payload for AdminGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCreateLeaderboardRequestData`._
 
 ### GetTagRequestData
 
@@ -876,7 +878,7 @@ Extends: `GetTagRequestData`
 
 Defines the request payload for ServerGetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetTagRequestData`._
 
 ### AdminGetTagRequestData
 
@@ -884,7 +886,7 @@ Extends: `ServerGetTagRequestData`
 
 Defines the request payload for AdminGetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetTagRequestData`._
 
 ### GetTsCreateRequestData
 
@@ -901,7 +903,7 @@ Extends: `GetTsCreateRequestData`
 
 Defines the request payload for ServerGetTsCreate.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetTsCreateRequestData`._
 
 ### AdminGetTsCreateRequestData
 
@@ -909,7 +911,7 @@ Extends: `ServerGetTsCreateRequestData`
 
 Defines the request payload for AdminGetTsCreate.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetTsCreateRequestData`._
 
 ### RemoveSegmentRequestData
 
@@ -927,7 +929,7 @@ Extends: `RemoveSegmentRequestData`
 
 Defines the request payload for ServerRemoveSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `RemoveSegmentRequestData`._
 
 ### AdminRemoveSegmentRequestData
 
@@ -935,7 +937,7 @@ Extends: `ServerRemoveSegmentRequestData`
 
 Defines the request payload for AdminRemoveSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveSegmentRequestData`._
 
 ### RemoveTagRequestData
 
@@ -953,7 +955,7 @@ Extends: `RemoveTagRequestData`
 
 Defines the request payload for ServerRemoveTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `RemoveTagRequestData`._
 
 ### AdminRemoveTagRequestData
 
@@ -961,7 +963,7 @@ Extends: `ServerRemoveTagRequestData`
 
 Defines the request payload for AdminRemoveTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveTagRequestData`._
 
 ### SetAmountRequestData
 
@@ -979,7 +981,7 @@ Extends: `SetAmountRequestData`
 
 Defines the request payload for ServerSetAmount.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetAmountRequestData`._
 
 ### AdminSetAmountRequestData
 
@@ -987,7 +989,7 @@ Extends: `ServerSetAmountRequestData`
 
 Defines the request payload for AdminSetAmount.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetAmountRequestData`._
 
 ### SetAvatarRequestData
 
@@ -997,7 +999,7 @@ Defines the request payload for SetAvatar.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `type` | `number` | yes | Avatar type identifier. User custom this type enum. |
+| `type` | `number` | yes | App-defined avatar type integer; not mapped to a built-in GearN enum. |
 | `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### ServerSetAvatarRequestData
@@ -1006,7 +1008,7 @@ Extends: `SetAvatarRequestData`
 
 Defines the request payload for ServerSetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetAvatarRequestData`._
 
 ### AdminSetAvatarRequestData
 
@@ -1014,7 +1016,7 @@ Extends: `ServerSetAvatarRequestData`
 
 Defines the request payload for AdminSetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetAvatarRequestData`._
 
 ### SetCustomDataRequestData
 
@@ -1032,7 +1034,7 @@ Extends: `SetCustomDataRequestData`
 
 Defines the request payload for ServerSetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetCustomDataRequestData`._
 
 ### AdminSetCustomDataRequestData
 
@@ -1040,7 +1042,7 @@ Extends: `ServerSetCustomDataRequestData`
 
 Defines the request payload for AdminSetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetCustomDataRequestData`._
 
 ### SetDisplayNameRequestData
 
@@ -1058,7 +1060,7 @@ Extends: `SetDisplayNameRequestData`
 
 Defines the request payload for ServerSetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetDisplayNameRequestData`._
 
 ### AdminSetDisplayNameRequestData
 
@@ -1066,7 +1068,7 @@ Extends: `ServerSetDisplayNameRequestData`
 
 Defines the request payload for AdminSetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetDisplayNameRequestData`._
 
 ### SetItemDataRequestData
 
@@ -1084,7 +1086,7 @@ Extends: `SetItemDataRequestData`
 
 Defines the request payload for ServerSetItemData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetItemDataRequestData`._
 
 ### AdminSetItemDataRequestData
 
@@ -1092,7 +1094,7 @@ Extends: `ServerSetItemDataRequestData`
 
 Defines the request payload for AdminSetItemData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetItemDataRequestData`._
 
 ### ChangeItemStatisticsRequestData
 
@@ -1111,7 +1113,7 @@ Extends: `ChangeItemStatisticsRequestData`
 
 Defines the request payload for ServerChangeItemStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ChangeItemStatisticsRequestData`._
 
 ### AdminChangeItemStatisticsRequestData
 
@@ -1119,7 +1121,7 @@ Extends: `ServerChangeItemStatisticsRequestData`
 
 Defines the request payload for AdminChangeItemStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerChangeItemStatisticsRequestData`._
 
 ### SetOwnerRequestData
 
@@ -1138,7 +1140,7 @@ Extends: `SetOwnerRequestData`
 
 Defines the request payload for ServerSetOwner.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetOwnerRequestData`._
 
 ### AdminSetOwnerRequestData
 
@@ -1146,7 +1148,7 @@ Extends: `ServerSetOwnerRequestData`
 
 Defines the request payload for AdminSetOwner.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetOwnerRequestData`._
 
 ### SetRemoveStatusRequestData
 
@@ -1164,7 +1166,7 @@ Extends: `SetRemoveStatusRequestData`
 
 Defines the request payload for ServerSetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetRemoveStatusRequestData`._
 
 ### AdminSetRemoveStatusRequestData
 
@@ -1172,7 +1174,7 @@ Extends: `ServerSetRemoveStatusRequestData`
 
 Defines the request payload for AdminSetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetRemoveStatusRequestData`._
 
 ### SetTagRequestData
 
@@ -1191,7 +1193,7 @@ Extends: `SetTagRequestData`
 
 Defines the request payload for ServerSetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetTagRequestData`._
 
 ### AdminSetTagRequestData
 
@@ -1199,7 +1201,7 @@ Extends: `ServerSetTagRequestData`
 
 Defines the request payload for AdminSetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetTagRequestData`._
 
 ### GetStatisticsLogRequestData
 
@@ -1208,10 +1210,10 @@ Reads statistic change logs for one inventory item. Pagination is token-based ra
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `keys` | `Array<string>` | yes | _minLength=1, maxLength=32, elementCls=String_ |
-| `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
+| `keys` | `Array<string>?` | no | _minLength=1, maxLength=32, elementCls=String_ |
+| `itemId` | `string?` | no | _minLength=12, maxLength=12_ |
 | `limit` | `number?` | no | _min=1, max=100, default=10_ |
-| `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
+| `token` | `string?` | no | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetStatisticsLogRequestData
 
@@ -1219,7 +1221,7 @@ Extends: `GetStatisticsLogRequestData`
 
 Defines the request payload for ServerGetStatisticsLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStatisticsLogRequestData`._
 
 ### AdminGetStatisticsLogRequestData
 
@@ -1227,7 +1229,7 @@ Extends: `ServerGetStatisticsLogRequestData`
 
 Defines the request payload for AdminGetStatisticsLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLogRequestData`._
 
 ### InfoResponseParameters
 

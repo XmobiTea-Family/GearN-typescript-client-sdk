@@ -6,13 +6,15 @@ Related API reference: [API_GAME_PLAYER.md](/docs/reference/API_GAME_PLAYER.md).
 
 Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Server variant `userId` override**: Every `Server*RequestData` class overrides the parent's optional `userId?: string` with a required `userId: string` (via `public declare userId: string` with `mustNonNull: true`). Sections marked "Không có field public (payload rỗng)" for `Server*` variants mean no *new* fields — but `userId` changes from optional to **required** on those routes.
+> **Server variant `userId` override**: Many self-target `Server*RequestData` classes override the client DTO's `userId?: string` with required `userId: string` (via `public declare userId: string` with `mustNonNull: true`). Those sections list `userId` explicitly. `Server*` DTOs for global leaderboard/search/log routes may still have no required `userId`; verify the concrete DTO table instead of assuming from the prefix alone.
 
 > **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng.
 
 > **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Variant `Server`/`Admin` thường thêm field bắt buộc như `userId`. Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
+
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
 
 ## Danh sách
 
@@ -500,7 +502,12 @@ Extends: `AddPlayerFriendRequestData`
 
 Defines the request payload for ServerAddPlayerFriend.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `AddPlayerFriendRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminAddPlayerFriendRequestData
 
@@ -508,7 +515,7 @@ Extends: `ServerAddPlayerFriendRequestData`
 
 Defines the request payload for AdminAddPlayerFriend.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerAddPlayerFriendRequestData` (bao gồm `userId` required)._
 
 ### AddSegmentRequestData
 
@@ -526,7 +533,12 @@ Extends: `AddSegmentRequestData`
 
 Defines the request payload for ServerAddSegment.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `AddSegmentRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminAddSegmentRequestData
 
@@ -534,7 +546,7 @@ Extends: `ServerAddSegmentRequestData`
 
 Defines the request payload for AdminAddSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerAddSegmentRequestData` (bao gồm `userId` required)._
 
 ### GetAvatarRequestData
 
@@ -551,7 +563,12 @@ Extends: `GetAvatarRequestData`
 
 Defines the request payload for ServerGetAvatar.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetAvatarRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetAvatarRequestData
 
@@ -559,7 +576,7 @@ Extends: `ServerGetAvatarRequestData`
 
 Defines the request payload for AdminGetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAvatarRequestData` (bao gồm `userId` required)._
 
 ### GetCountryCodeRequestData
 
@@ -576,7 +593,12 @@ Extends: `GetCountryCodeRequestData`
 
 Defines the request payload for ServerGetCountryCode.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetCountryCodeRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetCountryCodeRequestData
 
@@ -584,7 +606,7 @@ Extends: `ServerGetCountryCodeRequestData`
 
 Defines the request payload for AdminGetCountryCode.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCountryCodeRequestData` (bao gồm `userId` required)._
 
 ### GetCustomDataRequestData
 
@@ -602,7 +624,12 @@ Extends: `GetCustomDataRequestData`
 
 Defines the request payload for ServerGetCustomData.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetCustomDataRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetCustomDataRequestData
 
@@ -610,7 +637,7 @@ Extends: `ServerGetCustomDataRequestData`
 
 Defines the request payload for AdminGetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCustomDataRequestData` (bao gồm `userId` required)._
 
 ### GetDisplayNameRequestData
 
@@ -627,7 +654,12 @@ Extends: `GetDisplayNameRequestData`
 
 Defines the request payload for ServerGetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetDisplayNameRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetDisplayNameRequestData
 
@@ -635,7 +667,7 @@ Extends: `ServerGetDisplayNameRequestData`
 
 Defines the request payload for AdminGetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetDisplayNameRequestData` (bao gồm `userId` required)._
 
 ### GetFriendStatisticsLeaderboardAroundPlayerRequestData
 
@@ -657,7 +689,12 @@ Extends: `GetFriendStatisticsLeaderboardAroundPlayerRequestData`
 
 Defines the request payload for ServerGetFriendStatisticsLeaderboardAroundPlayer.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetFriendStatisticsLeaderboardAroundPlayerRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetFriendStatisticsLeaderboardAroundPlayerRequestData
 
@@ -665,7 +702,7 @@ Extends: `ServerGetFriendStatisticsLeaderboardAroundPlayerRequestData`
 
 Defines the request payload for AdminGetFriendStatisticsLeaderboardAroundPlayer.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetFriendStatisticsLeaderboardAroundPlayerRequestData` (bao gồm `userId` required)._
 
 ### GetFriendStatisticsLeaderboardRequestData
 
@@ -687,7 +724,12 @@ Extends: `GetFriendStatisticsLeaderboardRequestData`
 
 Defines the request payload for ServerGetFriendStatisticsLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetFriendStatisticsLeaderboardRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetFriendStatisticsLeaderboardRequestData
 
@@ -695,7 +737,7 @@ Extends: `ServerGetFriendStatisticsLeaderboardRequestData`
 
 Defines the request payload for AdminGetFriendStatisticsLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetFriendStatisticsLeaderboardRequestData` (bao gồm `userId` required)._
 
 ### GetIpAddressCreateRequestData
 
@@ -712,7 +754,12 @@ Extends: `GetIpAddressCreateRequestData`
 
 Defines the request payload for ServerGetIpAddressCreate.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetIpAddressCreateRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetIpAddressCreateRequestData
 
@@ -720,7 +767,7 @@ Extends: `ServerGetIpAddressCreateRequestData`
 
 Defines the request payload for AdminGetIpAddressCreate.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetIpAddressCreateRequestData` (bao gồm `userId` required)._
 
 ### GetPlayerBanRequestData
 
@@ -737,7 +784,12 @@ Extends: `GetPlayerBanRequestData`
 
 Defines the request payload for ServerGetPlayerBan.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetPlayerBanRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetPlayerBanRequestData
 
@@ -745,7 +797,7 @@ Extends: `ServerGetPlayerBanRequestData`
 
 Defines the request payload for AdminGetPlayerBan.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerBanRequestData` (bao gồm `userId` required)._
 
 ### GetPlayerCharacterRequestData
 
@@ -763,7 +815,12 @@ Extends: `GetPlayerCharacterRequestData`
 
 Defines the request payload for ServerGetPlayerCharacter.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetPlayerCharacterRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetPlayerCharacterRequestData
 
@@ -771,7 +828,7 @@ Extends: `ServerGetPlayerCharacterRequestData`
 
 Defines the request payload for AdminGetPlayerCharacter.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerCharacterRequestData` (bao gồm `userId` required)._
 
 ### GetPlayerCurrencyRequestData
 
@@ -789,7 +846,12 @@ Extends: `GetPlayerCurrencyRequestData`
 
 Defines the request payload for ServerGetPlayerCurrency.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetPlayerCurrencyRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetPlayerCurrencyRequestData
 
@@ -797,7 +859,7 @@ Extends: `ServerGetPlayerCurrencyRequestData`
 
 Defines the request payload for AdminGetPlayerCurrency.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerCurrencyRequestData` (bao gồm `userId` required)._
 
 ### GetPlayerDataRequestData
 
@@ -815,7 +877,12 @@ Extends: `GetPlayerDataRequestData`
 
 Defines the request payload for ServerGetPlayerData.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetPlayerDataRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetPlayerDataRequestData
 
@@ -823,7 +890,7 @@ Extends: `ServerGetPlayerDataRequestData`
 
 Defines the request payload for AdminGetPlayerData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerDataRequestData` (bao gồm `userId` required)._
 
 ### GetPlayerFriendRequestData
 
@@ -841,7 +908,12 @@ Extends: `GetPlayerFriendRequestData`
 
 Defines the request payload for ServerGetPlayerFriend.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetPlayerFriendRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetPlayerFriendRequestData
 
@@ -849,7 +921,7 @@ Extends: `ServerGetPlayerFriendRequestData`
 
 Defines the request payload for AdminGetPlayerFriend.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerFriendRequestData` (bao gồm `userId` required)._
 
 ### GetPlayerGroupRequestData
 
@@ -867,7 +939,12 @@ Extends: `GetPlayerGroupRequestData`
 
 Defines the request payload for ServerGetPlayerGroup.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetPlayerGroupRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetPlayerGroupRequestData
 
@@ -875,7 +952,7 @@ Extends: `ServerGetPlayerGroupRequestData`
 
 Defines the request payload for AdminGetPlayerGroup.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerGroupRequestData` (bao gồm `userId` required)._
 
 ### GetPlayerInformationRequestData
 
@@ -893,9 +970,12 @@ Extends: `GetPlayerInformationRequestData`
 
 Reads a specific target game player on a trusted route.
 
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; khai báo thêm field `createPlayerIfNotExists`; các field còn lại kế thừa từ `GetPlayerInformationRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 | `createPlayerIfNotExists` | `boolean?` | no | Allows the backend to create the missing game-player record before returning it. — _default=false_ |
 
 ### AdminGetPlayerInformationRequestData
@@ -904,7 +984,7 @@ Extends: `ServerGetPlayerInformationRequestData`
 
 Defines the request payload for AdminGetPlayerInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerInformationRequestData` (bao gồm `userId` required và `createPlayerIfNotExists`)._
 
 ### GetPlayerInventoryRequestData
 
@@ -922,7 +1002,12 @@ Extends: `GetPlayerInventoryRequestData`
 
 Defines the request payload for ServerGetPlayerInventory.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetPlayerInventoryRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetPlayerInventoryRequestData
 
@@ -930,7 +1015,7 @@ Extends: `ServerGetPlayerInventoryRequestData`
 
 Defines the request payload for AdminGetPlayerInventory.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerInventoryRequestData` (bao gồm `userId` required)._
 
 ### GetPlayerStatisticsRequestData
 
@@ -948,7 +1033,12 @@ Extends: `GetPlayerStatisticsRequestData`
 
 Defines the request payload for ServerGetPlayerStatistics.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetPlayerStatisticsRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetPlayerStatisticsRequestData
 
@@ -956,7 +1046,7 @@ Extends: `ServerGetPlayerStatisticsRequestData`
 
 Defines the request payload for AdminGetPlayerStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayerStatisticsRequestData` (bao gồm `userId` required)._
 
 ### GetPlayersWithDisplayNameRequestData
 
@@ -976,7 +1066,7 @@ Extends: `GetPlayersWithDisplayNameRequestData`
 
 Defines the request payload for ServerGetPlayersWithDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetPlayersWithDisplayNameRequestData`._
 
 ### AdminGetPlayersWithDisplayNameRequestData
 
@@ -984,7 +1074,7 @@ Extends: `ServerGetPlayersWithDisplayNameRequestData`
 
 Defines the request payload for AdminGetPlayersWithDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayersWithDisplayNameRequestData`._
 
 ### GetPlayersWithSegmentRequestData
 
@@ -1004,7 +1094,7 @@ Extends: `GetPlayersWithSegmentRequestData`
 
 Defines the request payload for ServerGetPlayersWithSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetPlayersWithSegmentRequestData`._
 
 ### AdminGetPlayersWithSegmentRequestData
 
@@ -1012,7 +1102,7 @@ Extends: `ServerGetPlayersWithSegmentRequestData`
 
 Defines the request payload for AdminGetPlayersWithSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayersWithSegmentRequestData`._
 
 ### GetPlayersWithTagRequestData
 
@@ -1033,7 +1123,7 @@ Extends: `GetPlayersWithTagRequestData`
 
 Defines the request payload for ServerGetPlayersWithTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetPlayersWithTagRequestData`._
 
 ### AdminGetPlayersWithTagRequestData
 
@@ -1041,7 +1131,7 @@ Extends: `ServerGetPlayersWithTagRequestData`
 
 Defines the request payload for AdminGetPlayersWithTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetPlayersWithTagRequestData`._
 
 ### GetSegmentRequestData
 
@@ -1058,7 +1148,12 @@ Extends: `GetSegmentRequestData`
 
 Defines the request payload for ServerGetSegment.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetSegmentRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetSegmentRequestData
 
@@ -1066,7 +1161,7 @@ Extends: `ServerGetSegmentRequestData`
 
 Defines the request payload for AdminGetSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetSegmentRequestData` (bao gồm `userId` required)._
 
 ### GetStatisticsLeaderboardAroundPlayerRequestData
 
@@ -1088,7 +1183,12 @@ Extends: `GetStatisticsLeaderboardAroundPlayerRequestData`
 
 Defines the request payload for ServerGetStatisticsLeaderboardAroundPlayer.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetStatisticsLeaderboardAroundPlayerRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetStatisticsLeaderboardAroundPlayerRequestData
 
@@ -1096,7 +1196,7 @@ Extends: `ServerGetStatisticsLeaderboardAroundPlayerRequestData`
 
 Defines the request payload for AdminGetStatisticsLeaderboardAroundPlayer.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLeaderboardAroundPlayerRequestData` (bao gồm `userId` required)._
 
 ### GetStatisticsLeaderboardRequestData
 
@@ -1118,7 +1218,7 @@ Extends: `GetStatisticsLeaderboardRequestData`
 
 Defines the request payload for ServerGetStatisticsLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStatisticsLeaderboardRequestData`._
 
 ### AdminGetStatisticsLeaderboardRequestData
 
@@ -1126,7 +1226,7 @@ Extends: `ServerGetStatisticsLeaderboardRequestData`
 
 Defines the request payload for AdminGetStatisticsLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLeaderboardRequestData`._
 
 ### GetCreateLeaderboardRequestData
 
@@ -1146,7 +1246,7 @@ Extends: `GetCreateLeaderboardRequestData`
 
 Defines the request payload for ServerGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCreateLeaderboardRequestData`._
 
 ### AdminGetCreateLeaderboardRequestData
 
@@ -1154,7 +1254,7 @@ Extends: `ServerGetCreateLeaderboardRequestData`
 
 Defines the request payload for AdminGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCreateLeaderboardRequestData`._
 
 ### GetTagRequestData
 
@@ -1172,7 +1272,12 @@ Extends: `GetTagRequestData`
 
 Defines the request payload for ServerGetTag.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetTagRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetTagRequestData
 
@@ -1180,7 +1285,7 @@ Extends: `ServerGetTagRequestData`
 
 Defines the request payload for AdminGetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetTagRequestData` (bao gồm `userId` required)._
 
 ### GetTsCreateRequestData
 
@@ -1197,7 +1302,12 @@ Extends: `GetTsCreateRequestData`
 
 Defines the request payload for ServerGetTsCreate.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetTsCreateRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetTsCreateRequestData
 
@@ -1205,7 +1315,7 @@ Extends: `ServerGetTsCreateRequestData`
 
 Defines the request payload for AdminGetTsCreate.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetTsCreateRequestData` (bao gồm `userId` required)._
 
 ### GetTsLastLoginRequestData
 
@@ -1222,7 +1332,12 @@ Extends: `GetTsLastLoginRequestData`
 
 Defines the request payload for ServerGetTsLastLogin.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `GetTsLastLoginRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminGetTsLastLoginRequestData
 
@@ -1230,7 +1345,7 @@ Extends: `ServerGetTsLastLoginRequestData`
 
 Defines the request payload for AdminGetTsLastLogin.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetTsLastLoginRequestData` (bao gồm `userId` required)._
 
 ### CreateGroupRequestData
 
@@ -1250,7 +1365,12 @@ Extends: `CreateGroupRequestData`
 
 Defines the request payload for ServerCreateGroup.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `CreateGroupRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminCreateGroupRequestData
 
@@ -1258,7 +1378,7 @@ Extends: `ServerCreateGroupRequestData`
 
 Defines the request payload for AdminCreateGroup.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCreateGroupRequestData` (bao gồm `userId` required)._
 
 ### CreatePlayerCharacterRequestData
 
@@ -1278,7 +1398,12 @@ Extends: `CreatePlayerCharacterRequestData`
 
 Defines the request payload for ServerCreatePlayerCharacter.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `CreatePlayerCharacterRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminCreatePlayerCharacterRequestData
 
@@ -1286,7 +1411,7 @@ Extends: `ServerCreatePlayerCharacterRequestData`
 
 Defines the request payload for AdminCreatePlayerCharacter.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCreatePlayerCharacterRequestData` (bao gồm `userId` required)._
 
 ### CreatePlayerItemRequestData
 
@@ -1307,7 +1432,12 @@ Extends: `CreatePlayerItemRequestData`
 
 Defines the request payload for ServerCreatePlayerItem.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `CreatePlayerItemRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminCreatePlayerItemRequestData
 
@@ -1315,7 +1445,7 @@ Extends: `ServerCreatePlayerItemRequestData`
 
 Defines the request payload for AdminCreatePlayerItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCreatePlayerItemRequestData` (bao gồm `userId` required)._
 
 ### JoinGroupRequestData
 
@@ -1333,7 +1463,12 @@ Extends: `JoinGroupRequestData`
 
 Defines the request payload for ServerJoinGroup.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `JoinGroupRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminJoinGroupRequestData
 
@@ -1341,7 +1476,7 @@ Extends: `ServerJoinGroupRequestData`
 
 Defines the request payload for AdminJoinGroup.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerJoinGroupRequestData` (bao gồm `userId` required)._
 
 ### LeaveGroupRequestData
 
@@ -1359,7 +1494,12 @@ Extends: `LeaveGroupRequestData`
 
 Defines the request payload for ServerLeaveGroup.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `LeaveGroupRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminLeaveGroupRequestData
 
@@ -1367,7 +1507,7 @@ Extends: `ServerLeaveGroupRequestData`
 
 Defines the request payload for AdminLeaveGroup.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerLeaveGroupRequestData` (bao gồm `userId` required)._
 
 ### RemovePlayerCharacterRequestData
 
@@ -1385,7 +1525,12 @@ Extends: `RemovePlayerCharacterRequestData`
 
 Defines the request payload for ServerRemovePlayerCharacter.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `RemovePlayerCharacterRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminRemovePlayerCharacterRequestData
 
@@ -1393,7 +1538,7 @@ Extends: `ServerRemovePlayerCharacterRequestData`
 
 Defines the request payload for AdminRemovePlayerCharacter.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemovePlayerCharacterRequestData` (bao gồm `userId` required)._
 
 ### RemovePlayerFriendRequestData
 
@@ -1411,7 +1556,12 @@ Extends: `RemovePlayerFriendRequestData`
 
 Defines the request payload for ServerRemovePlayerFriend.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `RemovePlayerFriendRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminRemovePlayerFriendRequestData
 
@@ -1419,7 +1569,7 @@ Extends: `ServerRemovePlayerFriendRequestData`
 
 Defines the request payload for AdminRemovePlayerFriend.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemovePlayerFriendRequestData` (bao gồm `userId` required)._
 
 ### RemovePlayerItemRequestData
 
@@ -1437,7 +1587,12 @@ Extends: `RemovePlayerItemRequestData`
 
 Defines the request payload for ServerRemovePlayerItem.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `RemovePlayerItemRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminRemovePlayerItemRequestData
 
@@ -1445,7 +1600,7 @@ Extends: `ServerRemovePlayerItemRequestData`
 
 Defines the request payload for AdminRemovePlayerItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemovePlayerItemRequestData` (bao gồm `userId` required)._
 
 ### RemoveSegmentRequestData
 
@@ -1463,7 +1618,12 @@ Extends: `RemoveSegmentRequestData`
 
 Defines the request payload for ServerRemoveSegment.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `RemoveSegmentRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminRemoveSegmentRequestData
 
@@ -1471,7 +1631,7 @@ Extends: `ServerRemoveSegmentRequestData`
 
 Defines the request payload for AdminRemoveSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveSegmentRequestData` (bao gồm `userId` required)._
 
 ### RemoveTagRequestData
 
@@ -1489,7 +1649,12 @@ Extends: `RemoveTagRequestData`
 
 Defines the request payload for ServerRemoveTag.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `RemoveTagRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminRemoveTagRequestData
 
@@ -1497,7 +1662,7 @@ Extends: `ServerRemoveTagRequestData`
 
 Defines the request payload for AdminRemoveTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveTagRequestData` (bao gồm `userId` required)._
 
 ### SetAvatarRequestData
 
@@ -1507,7 +1672,7 @@ Defines the request payload for SetAvatar.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `userId` | `string?` | no | _minLength=10, maxLength=10_ |
-| `type` | `number` | yes | Avatar type identifier. User custom this type enum. |
+| `type` | `number` | yes | App-defined avatar type integer; not mapped to a built-in GearN enum. |
 | `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### ServerSetAvatarRequestData
@@ -1516,7 +1681,12 @@ Extends: `SetAvatarRequestData`
 
 Defines the request payload for ServerSetAvatar.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `SetAvatarRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminSetAvatarRequestData
 
@@ -1524,7 +1694,7 @@ Extends: `ServerSetAvatarRequestData`
 
 Defines the request payload for AdminSetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetAvatarRequestData` (bao gồm `userId` required)._
 
 ### SetCountryCodeRequestData
 
@@ -1542,7 +1712,12 @@ Extends: `SetCountryCodeRequestData`
 
 Defines the request payload for ServerSetCountryCode.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `SetCountryCodeRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminSetCountryCodeRequestData
 
@@ -1550,7 +1725,7 @@ Extends: `ServerSetCountryCodeRequestData`
 
 Defines the request payload for AdminSetCountryCode.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetCountryCodeRequestData` (bao gồm `userId` required)._
 
 ### SetCustomDataRequestData
 
@@ -1568,7 +1743,12 @@ Extends: `SetCustomDataRequestData`
 
 Defines the request payload for ServerSetCustomData.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `SetCustomDataRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminSetCustomDataRequestData
 
@@ -1576,7 +1756,7 @@ Extends: `ServerSetCustomDataRequestData`
 
 Defines the request payload for AdminSetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetCustomDataRequestData` (bao gồm `userId` required)._
 
 ### SetDisplayNameRequestData
 
@@ -1595,7 +1775,12 @@ Extends: `SetDisplayNameRequestData`
 
 Defines the request payload for ServerSetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `SetDisplayNameRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminSetDisplayNameRequestData
 
@@ -1603,7 +1788,7 @@ Extends: `ServerSetDisplayNameRequestData`
 
 Defines the request payload for AdminSetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetDisplayNameRequestData` (bao gồm `userId` required)._
 
 ### SetPlayerBanRequestData
 
@@ -1622,7 +1807,12 @@ Extends: `SetPlayerBanRequestData`
 
 Defines the request payload for ServerSetPlayerBan.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `SetPlayerBanRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminSetPlayerBanRequestData
 
@@ -1630,7 +1820,7 @@ Extends: `ServerSetPlayerBanRequestData`
 
 Defines the request payload for AdminSetPlayerBan.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetPlayerBanRequestData` (bao gồm `userId` required)._
 
 ### ChangePlayerCurrencyRequestData
 
@@ -1649,7 +1839,12 @@ Extends: `ChangePlayerCurrencyRequestData`
 
 Defines the request payload for ServerChangePlayerCurrency.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `ChangePlayerCurrencyRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminChangePlayerCurrencyRequestData
 
@@ -1657,7 +1852,7 @@ Extends: `ServerChangePlayerCurrencyRequestData`
 
 Defines the request payload for AdminChangePlayerCurrency.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerChangePlayerCurrencyRequestData` (bao gồm `userId` required)._
 
 ### SetPlayerDataRequestData
 
@@ -1675,7 +1870,12 @@ Extends: `SetPlayerDataRequestData`
 
 Defines the request payload for ServerSetPlayerData.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `SetPlayerDataRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminSetPlayerDataRequestData
 
@@ -1683,7 +1883,7 @@ Extends: `ServerSetPlayerDataRequestData`
 
 Defines the request payload for AdminSetPlayerData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetPlayerDataRequestData` (bao gồm `userId` required)._
 
 ### ChangePlayerStatisticsRequestData
 
@@ -1702,7 +1902,12 @@ Extends: `ChangePlayerStatisticsRequestData`
 
 Defines the request payload for ServerChangePlayerStatistics.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `ChangePlayerStatisticsRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminChangePlayerStatisticsRequestData
 
@@ -1710,7 +1915,7 @@ Extends: `ServerChangePlayerStatisticsRequestData`
 
 Defines the request payload for AdminChangePlayerStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerChangePlayerStatisticsRequestData` (bao gồm `userId` required)._
 
 ### SetTagRequestData
 
@@ -1729,7 +1934,12 @@ Extends: `SetTagRequestData`
 
 Defines the request payload for ServerSetTag.
 
-_Không có field public (payload rỗng)._
+_Khai báo lại field `userId` để đổi Required từ `no` sang `yes`; các field còn lại kế thừa từ `SetTagRequestData`._
+
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `userId` | `string` | yes | Overrides the client variant's optional `userId`; required on this server route. — _minLength=10, maxLength=10_ |
 
 ### AdminSetTagRequestData
 
@@ -1737,7 +1947,7 @@ Extends: `ServerSetTagRequestData`
 
 Defines the request payload for AdminSetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetTagRequestData` (bao gồm `userId` required)._
 
 ### GetCurrencyLogRequestData
 
@@ -1746,10 +1956,10 @@ Reads currency change logs for the current or target game player. Pagination is 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `keys` | `Array<string>` | yes | _minLength=1, maxLength=32, elementCls=String_ |
-| `userId` | `string` | yes | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
+| `keys` | `Array<string>?` | no | _minLength=1, maxLength=32, elementCls=String_ |
+| `userId` | `string?` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
 | `limit` | `number?` | no | _min=1, max=100, default=10_ |
-| `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
+| `token` | `string?` | no | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetCurrencyLogRequestData
 
@@ -1757,7 +1967,7 @@ Extends: `GetCurrencyLogRequestData`
 
 Defines the request payload for ServerGetCurrencyLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCurrencyLogRequestData`._
 
 ### AdminGetCurrencyLogRequestData
 
@@ -1765,7 +1975,7 @@ Extends: `ServerGetCurrencyLogRequestData`
 
 Defines the request payload for AdminGetCurrencyLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCurrencyLogRequestData`._
 
 ### GetStatisticsLogRequestData
 
@@ -1774,10 +1984,10 @@ Reads statistic change logs for the current or target game player. Pagination is
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `keys` | `Array<string>` | yes | _minLength=1, maxLength=32, elementCls=String_ |
-| `userId` | `string` | yes | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
+| `keys` | `Array<string>?` | no | _minLength=1, maxLength=32, elementCls=String_ |
+| `userId` | `string?` | no | Optional self-target shortcut on the client route. — _minLength=10, maxLength=10_ |
 | `limit` | `number?` | no | _min=1, max=100, default=10_ |
-| `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
+| `token` | `string?` | no | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetStatisticsLogRequestData
 
@@ -1785,7 +1995,7 @@ Extends: `GetStatisticsLogRequestData`
 
 Defines the request payload for ServerGetStatisticsLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStatisticsLogRequestData`._
 
 ### AdminGetStatisticsLogRequestData
 
@@ -1793,7 +2003,7 @@ Extends: `ServerGetStatisticsLogRequestData`
 
 Defines the request payload for AdminGetStatisticsLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLogRequestData`._
 
 ### InfoResponseParameters
 
@@ -1932,7 +2142,7 @@ Extends: `GetCurrencyLeaderboardRequestData`
 
 Defines the request payload for ServerGetCurrencyLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCurrencyLeaderboardRequestData`._
 
 ### AdminGetCurrencyLeaderboardRequestData
 
@@ -1940,7 +2150,7 @@ Extends: `ServerGetCurrencyLeaderboardRequestData`
 
 Defines the request payload for AdminGetCurrencyLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCurrencyLeaderboardRequestData`._
 
 ### GetLastLoginLeaderboardRequestData
 
@@ -1960,7 +2170,7 @@ Extends: `GetLastLoginLeaderboardRequestData`
 
 Defines the request payload for ServerGetLastLoginLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetLastLoginLeaderboardRequestData`._
 
 ### AdminGetLastLoginLeaderboardRequestData
 
@@ -1968,7 +2178,7 @@ Extends: `ServerGetLastLoginLeaderboardRequestData`
 
 Defines the request payload for AdminGetLastLoginLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetLastLoginLeaderboardRequestData`._
 
 ### GetStatisticsLogResponseData
 

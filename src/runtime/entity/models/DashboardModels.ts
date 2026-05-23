@@ -2472,8 +2472,8 @@ export namespace DashboardModels {
         @GNHashtableDataMember({ code: ParameterCode.MemoryUsage })
         public memoryUsage: MemoryUsageResponseData;
 
-        @GNArrayDataMember({ code: ParameterCode.StorageUsage, elementCls: StorageUsageResponseData })
-        public storageUsage: Array<StorageUsageResponseData>;
+        @GNArrayDataMember({ code: ParameterCode.StorageUsage, elementCls: StorageUsageResponseData, isOptional: true, })
+        public storageUsage?: Array<StorageUsageResponseData>;
 
     }
 

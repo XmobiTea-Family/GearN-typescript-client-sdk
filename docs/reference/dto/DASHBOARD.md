@@ -12,6 +12,8 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
 
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
+
 ## Danh sách
 
 - **DashboardModels** (from `DashboardModels.ts`)
@@ -1520,7 +1522,7 @@ Defines the response payload for OperationSystem.
 | --- | --- | --- | --- |
 | `cpuUsage` | `number` | yes | — |
 | `memoryUsage` | `MemoryUsageResponseData` | yes | — |
-| `storageUsage` | `Array<StorageUsageResponseData>` | yes | _elementCls=StorageUsageResponseData_ |
+| `storageUsage` | `Array<StorageUsageResponseData>?` | no | _elementCls=StorageUsageResponseData_ |
 
 ### RequestCompleteErrorCodeResponseData
 
@@ -1540,7 +1542,7 @@ Defines the response payload for RequestComplete.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `eventName` | `string` | yes | — |
-| `results` | `Array<RequestCompleteErrorCodeResponseData>` | yes | _elementCls=RequestCompleteErrorCodeResponseData_ |
+| `results` | `Array<RequestCompleteErrorCodeResponseData>?` | no | _elementCls=RequestCompleteErrorCodeResponseData_ |
 
 ### CostResponseData
 

@@ -12,6 +12,8 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
 
 > Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
 
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
+
 ## Danh sách
 
 - **StoreInventoryModels** (from `StoreInventoryModels.ts`)
@@ -155,7 +157,7 @@ Defines the reusable parameter block AvatarParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `type` | `number` | yes | Avatar type identifier. User custom this type enum. |
+| `type` | `number` | yes | App-defined avatar type integer; not mapped to a built-in GearN enum. |
 | `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### CurrencyParam
@@ -175,9 +177,9 @@ Defines the reusable parameter block InAppPurchaseParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `facebookStoreId` | `string` | yes | Product ID in the Facebook store. — _minLength=1, maxLength=128_ |
-| `googlePlayStoreId` | `string` | yes | Product ID in the Google Play store (SKU). — _minLength=1, maxLength=128_ |
-| `appleAppStoreId` | `string` | yes | Product ID in the Apple App Store. — _minLength=1, maxLength=128_ |
+| `facebookStoreId` | `string?` | no | Product ID in the Facebook store. — _minLength=1, maxLength=128_ |
+| `googlePlayStoreId` | `string?` | no | Product ID in the Google Play store (SKU). — _minLength=1, maxLength=128_ |
+| `appleAppStoreId` | `string?` | no | Product ID in the Apple App Store. — _minLength=1, maxLength=128_ |
 | `analyticsPrice` | `number?` | no | Estimated real-money price used for analytics reporting. |
 
 ### InfoRequestParam
@@ -292,7 +294,7 @@ Extends: `BuyStoreItemRequestData`
 
 Defines the request payload for ServerBuyStoreItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `BuyStoreItemRequestData`._
 
 ### AdminBuyStoreItemRequestData
 
@@ -300,7 +302,7 @@ Extends: `ServerBuyStoreItemRequestData`
 
 Defines the request payload for AdminBuyStoreItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerBuyStoreItemRequestData`._
 
 ### PresentStoreItemRequestData
 
@@ -320,7 +322,7 @@ Extends: `PresentStoreItemRequestData`
 
 Defines the request payload for ServerPresentStoreItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `PresentStoreItemRequestData`._
 
 ### AdminPresentStoreItemRequestData
 
@@ -328,7 +330,7 @@ Extends: `ServerPresentStoreItemRequestData`
 
 Defines the request payload for AdminPresentStoreItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerPresentStoreItemRequestData`._
 
 ### GetStoreLogRequestData
 
@@ -349,7 +351,7 @@ Extends: `GetStoreLogRequestData`
 
 Defines the request payload for ServerGetStoreLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStoreLogRequestData`._
 
 ### AdminGetStoreLogRequestData
 
@@ -357,7 +359,7 @@ Extends: `ServerGetStoreLogRequestData`
 
 Defines the request payload for AdminGetStoreLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStoreLogRequestData`._
 
 ### GetStoreUsedRequestData
 
@@ -374,7 +376,7 @@ Extends: `GetStoreUsedRequestData`
 
 Defines the request payload for ServerGetStoreUsed.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStoreUsedRequestData`._
 
 ### AdminGetStoreUsedRequestData
 
@@ -382,7 +384,7 @@ Extends: `ServerGetStoreUsedRequestData`
 
 Defines the request payload for AdminGetStoreUsed.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStoreUsedRequestData`._
 
 ### RemoveStoreUsedRequestData
 
@@ -400,7 +402,7 @@ Extends: `RemoveStoreUsedRequestData`
 
 Defines the request payload for ServerRemoveStoreUsed.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `RemoveStoreUsedRequestData`._
 
 ### AdminRemoveStoreUsedRequestData
 
@@ -408,7 +410,7 @@ Extends: `ServerRemoveStoreUsedRequestData`
 
 Defines the request payload for AdminRemoveStoreUsed.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveStoreUsedRequestData`._
 
 ### GetStoreItemInformationRequestData
 
@@ -426,7 +428,7 @@ Extends: `GetStoreItemInformationRequestData`
 
 Defines the request payload for ServerGetStoreItemInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStoreItemInformationRequestData`._
 
 ### AdminGetStoreItemInformationRequestData
 
@@ -434,7 +436,7 @@ Extends: `ServerGetStoreItemInformationRequestData`
 
 Defines the request payload for AdminGetStoreItemInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStoreItemInformationRequestData`._
 
 ### GetStoreItemsWithTagRequestData
 
@@ -455,7 +457,7 @@ Extends: `GetStoreItemsWithTagRequestData`
 
 Defines the request payload for ServerGetStoreItemsWithTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStoreItemsWithTagRequestData`._
 
 ### AdminGetStoreItemsWithTagRequestData
 
@@ -463,7 +465,7 @@ Extends: `ServerGetStoreItemsWithTagRequestData`
 
 Defines the request payload for AdminGetStoreItemsWithTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStoreItemsWithTagRequestData`._
 
 ### CreateStoreItemRequestData
 
@@ -481,7 +483,7 @@ Extends: `CreateStoreItemRequestData`
 
 Defines the request payload for ServerCreateStoreItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `CreateStoreItemRequestData`._
 
 ### AdminCreateStoreItemRequestData
 
@@ -489,7 +491,7 @@ Extends: `ServerCreateStoreItemRequestData`
 
 Defines the request payload for AdminCreateStoreItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCreateStoreItemRequestData`._
 
 ### SetRemoveStatusRequestData
 
@@ -507,7 +509,7 @@ Extends: `SetRemoveStatusRequestData`
 
 Defines the request payload for ServerSetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetRemoveStatusRequestData`._
 
 ### AdminSetRemoveStatusRequestData
 
@@ -515,7 +517,7 @@ Extends: `ServerSetRemoveStatusRequestData`
 
 Defines the request payload for AdminSetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetRemoveStatusRequestData`._
 
 ### SetStoreItemInformationRequestData
 
@@ -541,7 +543,7 @@ Extends: `SetStoreItemInformationRequestData`
 
 Defines the request payload for ServerSetStoreItemInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetStoreItemInformationRequestData`._
 
 ### AdminSetStoreItemInformationRequestData
 
@@ -549,7 +551,7 @@ Extends: `ServerSetStoreItemInformationRequestData`
 
 Defines the request payload for AdminSetStoreItemInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetStoreItemInformationRequestData`._
 
 ### ValidateAppleAppStoreReceiptRequestData
 
@@ -569,7 +571,7 @@ Extends: `ValidateAppleAppStoreReceiptRequestData`
 
 Defines the request payload for ServerValidateAppleAppStoreReceipt.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ValidateAppleAppStoreReceiptRequestData`._
 
 ### AdminValidateAppleAppStoreReceiptRequestData
 
@@ -577,7 +579,7 @@ Extends: `ServerValidateAppleAppStoreReceiptRequestData`
 
 Defines the request payload for AdminValidateAppleAppStoreReceipt.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerValidateAppleAppStoreReceiptRequestData`._
 
 ### ValidateFacebookStoreReceiptRequestData
 
@@ -597,7 +599,7 @@ Extends: `ValidateFacebookStoreReceiptRequestData`
 
 Defines the request payload for ServerValidateFacebookStoreReceipt.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ValidateFacebookStoreReceiptRequestData`._
 
 ### AdminValidateFacebookStoreReceiptRequestData
 
@@ -605,7 +607,7 @@ Extends: `ServerValidateFacebookStoreReceiptRequestData`
 
 Defines the request payload for AdminValidateFacebookStoreReceipt.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerValidateFacebookStoreReceiptRequestData`._
 
 ### ValidateGooglePlayStoreReceiptRequestData
 
@@ -625,7 +627,7 @@ Extends: `ValidateGooglePlayStoreReceiptRequestData`
 
 Defines the request payload for ServerValidateGooglePlayStoreReceipt.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ValidateGooglePlayStoreReceiptRequestData`._
 
 ### AdminValidateGooglePlayStoreReceiptRequestData
 
@@ -633,7 +635,7 @@ Extends: `ServerValidateGooglePlayStoreReceiptRequestData`
 
 Defines the request payload for AdminValidateGooglePlayStoreReceipt.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerValidateGooglePlayStoreReceiptRequestData`._
 
 ### GetCreateLeaderboardRequestData
 
@@ -653,7 +655,7 @@ Extends: `GetCreateLeaderboardRequestData`
 
 Defines the request payload for ServerGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCreateLeaderboardRequestData`._
 
 ### AdminGetCreateLeaderboardRequestData
 
@@ -661,7 +663,7 @@ Extends: `ServerGetCreateLeaderboardRequestData`
 
 Defines the request payload for AdminGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCreateLeaderboardRequestData`._
 
 ### InfoResponseParameters
 
