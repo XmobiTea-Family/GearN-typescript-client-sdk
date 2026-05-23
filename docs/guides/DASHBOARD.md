@@ -71,7 +71,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 | Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
 | --- | --- | --- | --- | --- | --- |
 | `getAnalyticsAsync` | Lấy analytics tổng hợp | các boolean flag cần lấy, `timestamp?` | `GetAnalyticsResponseData` | Không bật tất cả flag một cách mù quáng | `Ok`, `ItemNotFound` |
-| `getServerLogAsync` | Lấy log server dạng phân trang | `skip?`, `limit?` | `GetServerLogResponseData` | Model mặc định `skip = 0`, `limit = 50` | `Ok` |
+| `getServerLogAsync` | Lấy log server dạng phân trang | `skip?`, `limit?` | `GetServerLogResponseData` | Model mặc định `skip = 0`, `limit = 50` | `Ok`, `FileNotFound` |
 | `getEventCallbackCloudScriptAsync` | Liệt kê callback CloudScript theo event | request rỗng | `GetEventCallbackCloudScriptResponseData` | Dùng để inspect cấu hình hiện tại | `Ok` |
 | `setEventCallbackCloudScriptAsync` | Tạo hoặc sửa callback CloudScript theo event | `eventName`, `script` | `SetEventCallbackCloudScriptResponseData` | Response có `errorMessage` | `Ok`, `ExecuteError` |
 | `getBackupStatisticsLeaderboardVersionAsync` | Liệt kê version backup của leaderboard | `gameId`, `type`, `key` | `GetBackupStatisticsLeaderboardVersionResponseData` | `type` phải lấy từ `OwnerType` | `Ok`, `OwnerNotFound` |
