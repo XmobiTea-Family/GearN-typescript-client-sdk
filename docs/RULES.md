@@ -46,6 +46,20 @@ Rule cứng:
 
 Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md). Phân biệt `SecretInvalid` / `OperationInvalid` / `OperationNotAllow` → § 5.
 
+### 2.1 Operation base classes
+
+Các response class cụ thể trong API reference thường kế thừa `CustomOperationResponseAbstract<TResponseData>`, còn request wrapper cụ thể thường kế thừa `CustomOperationRequestAbstract<TRequestData>`.
+
+Rule cứng:
+
+- Khi tích hợp SDK bình thường, gọi public API qua `GNNetwork.<group>.<method>Async(requestData, ...)`; không tự build `CustomOperationRequestAbstract<T>` trừ khi đang viết/debug SDK cấp thấp.
+- `CustomOperationRequestAbstract<TRequestData>` expose `requestData`; `build()` serialize `requestData` bằng `requestDataCls` vào `OperationRequest.parameters`.
+- `CustomOperationResponseAbstract<TResponseData>` expose `responseData`; SDK chỉ deserialize `responseData` bằng `responseDataCls` khi `returnCode === ReturnCode.Ok`.
+- Helper check lỗi chung nên nhận `CustomOperationResponse`, không nhận `CustomOperationResponseAbstract<T>`. Chỉ dùng generic abstract/response class cụ thể khi thật sự cần đọc typed `responseData`.
+- Base class không quyết định route/permission. Route đến từ namespace gọi (`GNNetwork.<group>`, `.server`, `.admin`) và operation concrete.
+
+Chi tiết contract + ví dụ TypeScript: [reference/OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md).
+
 ---
 
 ## 3. Route = trust boundary của caller
@@ -199,7 +213,8 @@ Helper state:
 
 - `GNNetwork.isSocketConnected()` — check socket session id hiện tại.
 - `GNNetwork.getPing()` — ping trung bình từ active transport.
-- `GNNetwork.syncTs()` — sync local estimate của server timestamp.
+- `GNNetwork.getServerTimestamp()` — đọc local estimate (ms since epoch) của server clock; không gọi network.
+- `GNNetwork.syncTs()` / `syncTsAsync()` — hit endpoint timestamp để refresh local estimate; dùng khi cần time-sensitive call (ví dụ trước khi validate receipt).
 - `GNNetwork.getAuthenticateStatus().getAuthToken() / .getUserId()` — đọc auth cache.
 
 ---

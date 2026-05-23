@@ -660,9 +660,6 @@ export namespace DashboardModels {
         @GNHashtableDataMember({ code: ParameterCode.RemovePlayerItem, isOptional: true })
         public removePlayerItem?: PermissionRulesParam;
 
-        @GNHashtableDataMember({ code: ParameterCode.GetOnlineStatus, isOptional: true })
-        public getOnlineStatus?: PermissionRulesParam;
-
         @GNHashtableDataMember({ code: ParameterCode.CreateGroup, isOptional: true })
         public createGroup?: PermissionRulesParam;
 
@@ -1427,6 +1424,9 @@ export namespace DashboardModels {
 
         @GNHashtableDataMember({ code: ParameterCode.GetPushNotification, isOptional: true })
         public getPushNotification?: PermissionRulesParam;
+
+        @GNHashtableDataMember({ code: ParameterCode.GetOnlineStatus, isOptional: true })
+        public getOnlineStatus?: PermissionRulesParam;
 
     }
 
@@ -2472,8 +2472,8 @@ export namespace DashboardModels {
         @GNHashtableDataMember({ code: ParameterCode.MemoryUsage })
         public memoryUsage: MemoryUsageResponseData;
 
-        @GNArrayDataMember({ code: ParameterCode.StorageUsage, elementCls: StorageUsageResponseData })
-        public storageUsage: Array<StorageUsageResponseData>;
+        @GNArrayDataMember({ code: ParameterCode.StorageUsage, elementCls: StorageUsageResponseData, isOptional: true, })
+        public storageUsage?: Array<StorageUsageResponseData>;
 
     }
 

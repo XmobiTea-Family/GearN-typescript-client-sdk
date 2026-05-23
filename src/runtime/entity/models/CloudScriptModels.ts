@@ -200,7 +200,7 @@ export namespace CloudScriptModels {
     export class ExecuteFunctionResponseData {
         /**
          * Raw execution status code returned by the backend.
-         * The public package does not currently expose a dedicated enum for this field.
+         * This field map with enum ExecuteResponseStatus.
          */
         @NumberDataMember({ code: ParameterCode.Status })
         public status: number;

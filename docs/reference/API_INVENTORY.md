@@ -2,7 +2,11 @@
 
 Inventory item metadata, ownership, amount, statistics, activity log.
 
-Domain guide: [guides/INVENTORY.md](/docs/guides/INVENTORY.md). DTO shapes: [dto/INVENTORY.md](/docs/reference/dto/INVENTORY.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/INVENTORY.md](/docs/guides/INVENTORY.md)
+- DTO shapes: [dto/INVENTORY.md](/docs/reference/dto/INVENTORY.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 

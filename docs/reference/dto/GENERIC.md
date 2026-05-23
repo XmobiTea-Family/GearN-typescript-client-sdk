@@ -2,9 +2,15 @@
 
 Reusable embedded contracts shared by multiple domains (avatar, tag, currency, filter, pagination, …).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO embedded. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: Generic class là embedded item — nested trong parent DTO (vd `playerCurrencies: PlayerCurrencyParam[]`). Tạo qua `new GenericModels.<Class>()` và push vào collection của parent. Response cũng expose typed instance để đọc field theo schema dưới đây.
+
+> **Khi nào tra file này**: Khi parent DTO (`GamePlayer`/`MasterPlayer`/`CharacterPlayer`/...) tham chiếu field kiểu `AvatarItem`/`TagItem`/`CurrencyItem`/... — không lặp lại schema trong file domain mà link sang đây.
+
+> Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
+
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
 
 ## Danh sách
 
@@ -34,7 +40,7 @@ Represents a generic avatar payload.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `type` | `number` | yes | Backend-defined avatar type identifier. The public SDK currently does not export a dedicated avatar enum. |
+| `type` | `number` | yes | App-defined avatar type integer; not mapped to a built-in GearN enum. |
 | `value` | `string` | yes | Avatar value, typically a URL, file id, or provider-specific string. |
 
 ### TagItem
@@ -115,7 +121,7 @@ Represents soft-remove metadata for an entity.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `tsRemove` | `number` | yes | Removal timestamp when the entity was soft-removed. |
-| `reason` | `string` | no | Removal reason when the backend provides one. |
+| `reason` | `string?` | no | Removal reason when the backend provides one. |
 
 ### InventoryItem
 

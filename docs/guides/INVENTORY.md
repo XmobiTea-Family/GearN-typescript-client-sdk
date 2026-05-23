@@ -114,6 +114,8 @@ Rule nhanh:
 
 - DTO fields: [reference/dto/INVENTORY.md](/docs/reference/dto/INVENTORY.md). Method table: [reference/API_INVENTORY.md](/docs/reference/API_INVENTORY.md).
 - Enums: [ItemType](/docs/reference/ENUMS.md#itemtype), [OwnerType](/docs/reference/ENUMS.md#ownertype).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Inventory*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `InfoResponseParameters.itemType` nên map bằng `ItemType`.
 - `InfoResponseParameters.owner.type` và `SetOwnerRequestData.newOwnerType` nên map bằng `OwnerType`.
@@ -185,17 +187,23 @@ Tất cả typed response của `InventoryApi` đều có:
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 

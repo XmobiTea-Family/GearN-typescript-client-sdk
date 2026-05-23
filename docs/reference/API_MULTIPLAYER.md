@@ -2,7 +2,13 @@
 
 Matchmaking ticket lifecycle, queue statistics, match query.
 
-Domain guide: [guides/MULTIPLAYER.md](/docs/guides/MULTIPLAYER.md). DTO shapes: [dto/MULTIPLAYER.md](/docs/reference/dto/MULTIPLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/MULTIPLAYER.md](/docs/guides/MULTIPLAYER.md)
+- DTO shapes: [dto/MULTIPLAYER.md](/docs/reference/dto/MULTIPLAYER.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
+
+> **Transport**: HTTP, không qua socket. Flow chuẩn: `createMatchmakingTicket` → poll `getMatchmakingTicket` → `getMatch`. Xem [RULES § 10 #10](/docs/RULES.md#10-anti-patterns--pitfalls).
 
 ## Namespaces
 

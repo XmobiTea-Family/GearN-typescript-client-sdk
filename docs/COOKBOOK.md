@@ -807,7 +807,7 @@ Gặp returnCode === OperationNotAllow
 import { GNNetwork, ReturnCode, InventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function grantItem(userId: string, itemId: string, amount: number) {
-    const req = new InventoryModels.SetAmountRequestData();
+    const req = new InventoryModels.AdminSetAmountRequestData();
     req.itemId = itemId;
     req.amount = amount;
 

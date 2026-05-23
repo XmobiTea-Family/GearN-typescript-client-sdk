@@ -4,9 +4,15 @@ Admin login, game/admin account/secret management, analytics, server log, mainte
 
 Related API reference: [API_DASHBOARD.md](/docs/reference/API_DASHBOARD.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new DashboardModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Route đặc biệt**: Public wrapper `GNNetwork.dashboard.*` đi `RequestRole.Client`; backend resolve admin context từ `authToken` sau `loginByAdminAccountAsync` — không cần secret admin riêng. `GNNetwork.dashboard.server` và `GNNetwork.dashboard.admin` hiện rỗng. Xem [RULES § 3 ngoại lệ DashboardApi](/docs/RULES.md#ngo%E1%BA%A1i-l%E1%BB%87-dashboardapi).
+
+> Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
+
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
 
 ## Danh sách
 
@@ -181,10 +187,10 @@ Defines the reusable permission-rule block used by secret-info and master settin
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `selfEnable` | `boolean` | no | Allows the operation on resources that belong to the authenticated user context. |
-| `otherSelfEnable` | `boolean` | no | Allows the operation on resources that do not belong to the authenticated user context. |
-| `adminSelfEnable` | `boolean` | no | Allows the operation through admin-scoped execution context. |
-| `serverSelfEnable` | `boolean` | no | Allows the operation through server-scoped execution context. |
+| `selfEnable` | `boolean?` | no | Allows the operation on resources that belong to the authenticated user context. |
+| `otherSelfEnable` | `boolean?` | no | Allows the operation on resources that do not belong to the authenticated user context. |
+| `adminSelfEnable` | `boolean?` | no | Allows the operation through admin-scoped execution context. |
+| `serverSelfEnable` | `boolean?` | no | Allows the operation through server-scoped execution context. |
 
 ### FriendCatalogSettingsParam
 
@@ -194,8 +200,8 @@ Defines the reusable parameter block FriendCatalogSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
-| `forceAcceptFriend` | `boolean` | yes | — |
+| `description` | `string` | yes | Human-readable description of this friend catalog. |
+| `forceAcceptFriend` | `boolean` | yes | When `true`, friend requests are automatically accepted without explicit approval from the recipient. |
 
 ### ItemClassSettingsParam
 
@@ -205,7 +211,7 @@ Defines the reusable parameter block ItemClassSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `classId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
+| `description` | `string` | yes | Human-readable description of this item class. |
 
 ### ItemCatalogSettingsParam
 
@@ -215,8 +221,8 @@ Defines the reusable parameter block ItemCatalogSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `itemType` | `number` | yes | — |
-| `itemClassSettings` | `Array<ItemClassSettingsParam>` | yes | _elementCls=ItemClassSettingsParam_ |
+| `itemType` | `number` | yes | Item type identifier. Map with the public `ItemType` enum. |
+| `itemClassSettings` | `Array<ItemClassSettingsParam>` | yes | List of item class configurations belonging to this catalog. — _elementCls=ItemClassSettingsParam_ |
 
 ### GroupCatalogSettingsParam
 
@@ -226,8 +232,8 @@ Defines the reusable parameter block GroupCatalogSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
-| `forceAcceptMember` | `boolean` | yes | — |
+| `description` | `string` | yes | Human-readable description of this group catalog. |
+| `forceAcceptMember` | `boolean` | yes | When `true`, member join requests are automatically accepted without explicit approval from the group owner. |
 
 ### TagSettingsParam
 
@@ -237,8 +243,8 @@ Defines the reusable parameter block TagSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
-| `index` | `boolean` | yes | — |
+| `description` | `string` | yes | Human-readable description of this tag key. |
+| `index` | `boolean` | yes | Whether this tag key is indexed for query filtering (e.g. `getPlayersWithTag`). |
 
 ### DataSettingsParam
 
@@ -248,8 +254,8 @@ Defines the reusable parameter block DataSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
-| `permission` | `number` | yes | — |
+| `description` | `string` | yes | Human-readable description of this data key. |
+| `permission` | `number` | yes | Read/write permission level for this data key. Map with the public permission enum. |
 
 ### StatisticsSettingsParam
 
@@ -259,12 +265,12 @@ Defines the reusable parameter block StatisticsSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `statisticsAggregationMethod` | `number` | yes | — |
-| `maximumValue` | `number` | no | _default=0_ |
-| `minimumValue` | `number` | no | _default=0_ |
-| `initialValue` | `number` | yes | — |
-| `description` | `string` | yes | — |
-| `index` | `boolean` | yes | — |
+| `statisticsAggregationMethod` | `number` | yes | Aggregation method applied when updating this statistic. Map with the public `StatisticsAggregationMethod` enum. |
+| `maximumValue` | `number?` | no | Maximum allowed value for this statistic; 0 means no upper bound. — _default=0_ |
+| `minimumValue` | `number?` | no | Minimum allowed value for this statistic; 0 means no lower bound. — _default=0_ |
+| `initialValue` | `number` | yes | Initial value assigned to this statistic when a player/entity is first created. |
+| `description` | `string` | yes | Human-readable description of this statistic. |
+| `index` | `boolean` | yes | Whether this statistic is indexed for leaderboard queries. |
 
 ### CurrencySettingsParam
 
@@ -274,9 +280,9 @@ Defines the reusable parameter block CurrencySettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `initialValue` | `number` | yes | — |
-| `description` | `string` | yes | — |
-| `index` | `boolean` | yes | — |
+| `initialValue` | `number` | yes | Initial balance assigned when a player/entity is first created. |
+| `description` | `string` | yes | Human-readable description of this currency. |
+| `index` | `boolean` | yes | Whether this currency balance is indexed for leaderboard queries. |
 
 ### CharacterCatalogSettingsParam
 
@@ -286,7 +292,7 @@ Defines the reusable parameter block CharacterCatalogSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `description` | `string` | yes | — |
+| `description` | `string` | yes | Human-readable description of this character catalog. |
 
 ### CharacterPlayerPermissionRulesParam
 
@@ -295,59 +301,59 @@ Defines the reusable parameter block CharacterPlayerPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `addSegment` | `PermissionRulesParam` | no | — |
-| `removeSegment` | `PermissionRulesParam` | no | — |
-| `getSegment` | `PermissionRulesParam` | no | — |
-| `setTag` | `PermissionRulesParam` | no | — |
-| `removeTag` | `PermissionRulesParam` | no | — |
-| `getTag` | `PermissionRulesParam` | no | — |
-| `getDisplayName` | `PermissionRulesParam` | no | — |
-| `setDisplayName` | `PermissionRulesParam` | no | — |
-| `getTsCreate` | `PermissionRulesParam` | no | — |
-| `getIpAddressCreate` | `PermissionRulesParam` | no | — |
-| `getTsLastLogin` | `PermissionRulesParam` | no | — |
-| `setPlayerBan` | `PermissionRulesParam` | no | — |
-| `getPlayerBan` | `PermissionRulesParam` | no | — |
-| `setCountryCode` | `PermissionRulesParam` | no | — |
-| `getCountryCode` | `PermissionRulesParam` | no | — |
-| `setAvatar` | `PermissionRulesParam` | no | — |
-| `getAvatar` | `PermissionRulesParam` | no | — |
-| `changePlayerCurrency` | `PermissionRulesParam` | no | — |
-| `getPlayerCurrency` | `PermissionRulesParam` | no | — |
-| `changePlayerStatistics` | `PermissionRulesParam` | no | — |
-| `getPlayerStatistics` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam` | no | — |
-| `getCustomData` | `PermissionRulesParam` | no | — |
-| `setCustomData` | `PermissionRulesParam` | no | — |
-| `setPlayerData` | `PermissionRulesParam` | no | — |
-| `getPlayerData` | `PermissionRulesParam` | no | — |
-| `getPlayerInformation` | `PermissionRulesParam` | no | — |
-| `getPlayersWithSegment` | `PermissionRulesParam` | no | — |
-| `getPlayersWithTag` | `PermissionRulesParam` | no | — |
-| `getCatalogId` | `PermissionRulesParam` | no | — |
-| `getOwner` | `PermissionRulesParam` | no | — |
-| `getRemoveStatus` | `PermissionRulesParam` | no | — |
-| `getPlayerFriend` | `PermissionRulesParam` | no | — |
-| `getPlayerGroup` | `PermissionRulesParam` | no | — |
-| `getPlayerInventory` | `PermissionRulesParam` | no | — |
-| `removePlayerItem` | `PermissionRulesParam` | no | — |
-| `createPlayerItem` | `PermissionRulesParam` | no | — |
-| `createGroup` | `PermissionRulesParam` | no | — |
-| `joinGroup` | `PermissionRulesParam` | no | — |
-| `leaveGroup` | `PermissionRulesParam` | no | — |
-| `setOwner` | `PermissionRulesParam` | no | — |
-| `addPlayerFriend` | `PermissionRulesParam` | no | — |
-| `removePlayerFriend` | `PermissionRulesParam` | no | — |
-| `getPlayersWithDisplayName` | `PermissionRulesParam` | no | — |
-| `setRemoveStatus` | `PermissionRulesParam` | no | — |
-| `getFriendStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam` | no | — |
-| `getFriendStatisticsLeaderboard` | `PermissionRulesParam` | no | — |
-| `getCurrencyLeaderboard` | `PermissionRulesParam` | no | — |
-| `getCreateLeaderboard` | `PermissionRulesParam` | no | — |
-| `getLastLoginLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLog` | `PermissionRulesParam` | no | — |
-| `getCurrencyLog` | `PermissionRulesParam` | no | — |
+| `addSegment` | `PermissionRulesParam?` | no | — |
+| `removeSegment` | `PermissionRulesParam?` | no | — |
+| `getSegment` | `PermissionRulesParam?` | no | — |
+| `setTag` | `PermissionRulesParam?` | no | — |
+| `removeTag` | `PermissionRulesParam?` | no | — |
+| `getTag` | `PermissionRulesParam?` | no | — |
+| `getDisplayName` | `PermissionRulesParam?` | no | — |
+| `setDisplayName` | `PermissionRulesParam?` | no | — |
+| `getTsCreate` | `PermissionRulesParam?` | no | — |
+| `getIpAddressCreate` | `PermissionRulesParam?` | no | — |
+| `getTsLastLogin` | `PermissionRulesParam?` | no | — |
+| `setPlayerBan` | `PermissionRulesParam?` | no | — |
+| `getPlayerBan` | `PermissionRulesParam?` | no | — |
+| `setCountryCode` | `PermissionRulesParam?` | no | — |
+| `getCountryCode` | `PermissionRulesParam?` | no | — |
+| `setAvatar` | `PermissionRulesParam?` | no | — |
+| `getAvatar` | `PermissionRulesParam?` | no | — |
+| `changePlayerCurrency` | `PermissionRulesParam?` | no | — |
+| `getPlayerCurrency` | `PermissionRulesParam?` | no | — |
+| `changePlayerStatistics` | `PermissionRulesParam?` | no | — |
+| `getPlayerStatistics` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam?` | no | — |
+| `getCustomData` | `PermissionRulesParam?` | no | — |
+| `setCustomData` | `PermissionRulesParam?` | no | — |
+| `setPlayerData` | `PermissionRulesParam?` | no | — |
+| `getPlayerData` | `PermissionRulesParam?` | no | — |
+| `getPlayerInformation` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithSegment` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithTag` | `PermissionRulesParam?` | no | — |
+| `getCatalogId` | `PermissionRulesParam?` | no | — |
+| `getOwner` | `PermissionRulesParam?` | no | — |
+| `getRemoveStatus` | `PermissionRulesParam?` | no | — |
+| `getPlayerFriend` | `PermissionRulesParam?` | no | — |
+| `getPlayerGroup` | `PermissionRulesParam?` | no | — |
+| `getPlayerInventory` | `PermissionRulesParam?` | no | — |
+| `removePlayerItem` | `PermissionRulesParam?` | no | — |
+| `createPlayerItem` | `PermissionRulesParam?` | no | — |
+| `createGroup` | `PermissionRulesParam?` | no | — |
+| `joinGroup` | `PermissionRulesParam?` | no | — |
+| `leaveGroup` | `PermissionRulesParam?` | no | — |
+| `setOwner` | `PermissionRulesParam?` | no | — |
+| `addPlayerFriend` | `PermissionRulesParam?` | no | — |
+| `removePlayerFriend` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithDisplayName` | `PermissionRulesParam?` | no | — |
+| `setRemoveStatus` | `PermissionRulesParam?` | no | — |
+| `getFriendStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam?` | no | — |
+| `getFriendStatisticsLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getCurrencyLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getCreateLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getLastLoginLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLog` | `PermissionRulesParam?` | no | — |
+| `getCurrencyLog` | `PermissionRulesParam?` | no | — |
 
 ### CharacterPlayerSettingsParam
 
@@ -356,14 +362,14 @@ Defines the reusable parameter block CharacterPlayerSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `playerCurrenciesSettings` | `Array<CurrencySettingsParam>` | no | _elementCls=CurrencySettingsParam_ |
-| `playerStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
-| `playerDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `customDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `tagsSettings` | `Array<TagSettingsParam>` | no | _elementCls=TagSettingsParam_ |
-| `playerGroupCatalogSettings` | `Array<GroupCatalogSettingsParam>` | no | _elementCls=GroupCatalogSettingsParam_ |
-| `playerItemCatalogSettings` | `Array<ItemCatalogSettingsParam>` | no | _elementCls=ItemCatalogSettingsParam_ |
-| `playerFriendCatalogSettings` | `Array<FriendCatalogSettingsParam>` | no | _elementCls=FriendCatalogSettingsParam_ |
+| `playerCurrenciesSettings` | `Array<CurrencySettingsParam>?` | no | _elementCls=CurrencySettingsParam_ |
+| `playerStatisticsSettings` | `Array<StatisticsSettingsParam>?` | no | _elementCls=StatisticsSettingsParam_ |
+| `playerDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `customDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `tagsSettings` | `Array<TagSettingsParam>?` | no | _elementCls=TagSettingsParam_ |
+| `playerGroupCatalogSettings` | `Array<GroupCatalogSettingsParam>?` | no | _elementCls=GroupCatalogSettingsParam_ |
+| `playerItemCatalogSettings` | `Array<ItemCatalogSettingsParam>?` | no | _elementCls=ItemCatalogSettingsParam_ |
+| `playerFriendCatalogSettings` | `Array<FriendCatalogSettingsParam>?` | no | _elementCls=FriendCatalogSettingsParam_ |
 
 ### ContentPermissionRulesParam
 
@@ -372,13 +378,13 @@ Defines the reusable parameter block ContentPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `getContentData` | `PermissionRulesParam` | no | — |
-| `setContentData` | `PermissionRulesParam` | no | — |
-| `createNewFileUploadInfo` | `PermissionRulesParam` | no | — |
-| `getFileUploadInfoList` | `PermissionRulesParam` | no | — |
-| `getFileUploadInfo` | `PermissionRulesParam` | no | — |
-| `removeFileUploadInfo` | `PermissionRulesParam` | no | — |
-| `requestDownloadFileUploadInfo` | `PermissionRulesParam` | no | — |
+| `getContentData` | `PermissionRulesParam?` | no | — |
+| `setContentData` | `PermissionRulesParam?` | no | — |
+| `createNewFileUploadInfo` | `PermissionRulesParam?` | no | — |
+| `getFileUploadInfoList` | `PermissionRulesParam?` | no | — |
+| `getFileUploadInfo` | `PermissionRulesParam?` | no | — |
+| `removeFileUploadInfo` | `PermissionRulesParam?` | no | — |
+| `requestDownloadFileUploadInfo` | `PermissionRulesParam?` | no | — |
 
 ### ThirtPartyAppleSettingsParam
 
@@ -387,11 +393,11 @@ Defines the reusable parameter block ThirtPartyAppleSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `appleClientId` | `string` | yes | — |
-| `sandboxEnable` | `boolean` | yes | — |
-| `issuerId` | `string` | yes | — |
-| `keyId` | `string` | yes | — |
-| `p8Content` | `string` | yes | — |
+| `appleClientId` | `string` | yes | Apple client ID (Services ID) from App Store Connect, used for Sign in with Apple. |
+| `sandboxEnable` | `boolean` | yes | When `true`, use Apple's sandbox environment for in-app purchase validation. |
+| `issuerId` | `string` | yes | Issuer ID from App Store Connect used for JWT signing. |
+| `keyId` | `string` | yes | Key ID from App Store Connect corresponding to the `.p8` private key. |
+| `p8Content` | `string` | yes | Raw content of the `.p8` private key file downloaded from App Store Connect. |
 
 ### ThirtPartyFacebookSettingsParam
 
@@ -400,9 +406,9 @@ Defines the reusable parameter block ThirtPartyFacebookSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `facebookAppId` | `string` | yes | — |
-| `facebookAppToken` | `string` | yes | — |
-| `facebookInappSecret` | `string` | yes | — |
+| `facebookAppId` | `string` | yes | Facebook application ID from the Meta Developer Portal. |
+| `facebookAppToken` | `string` | yes | Facebook app access token used for server-side token validation. |
+| `facebookInappSecret` | `string` | yes | Facebook in-app purchase secret used for payment receipt validation. |
 
 ### ThirtPartyGoogleSettingsParam
 
@@ -411,9 +417,9 @@ Defines the reusable parameter block ThirtPartyGoogleSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `googleClientId` | `string` | yes | — |
-| `packageId` | `string` | yes | — |
-| `publicRSAKey` | `string` | yes | — |
+| `googleClientId` | `string` | yes | Google OAuth 2.0 client ID used to verify Google Sign-In tokens. |
+| `packageId` | `string` | yes | Android package name used for Google Play in-app purchase validation. |
+| `publicRSAKey` | `string` | yes | Google Play public RSA key used for receipt signature verification. |
 
 ### ThirtPartyGameCenterSettingsParam
 
@@ -422,7 +428,7 @@ Defines the reusable parameter block ThirtPartyGameCenterSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `packageId` | `string` | yes | — |
+| `packageId` | `string` | yes | iOS bundle ID used for Apple Game Center identity validation. |
 
 ### ThirtPartyGooglePlayGameSettingsParam
 
@@ -431,10 +437,10 @@ Defines the reusable parameter block ThirtPartyGooglePlayGameSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `redirectUri` | `string` | yes | — |
-| `clientId` | `string` | yes | — |
-| `clientSecret` | `string` | yes | — |
-| `applicationId` | `string` | yes | — |
+| `redirectUri` | `string` | yes | OAuth redirect URI configured in Google Cloud Console for Google Play Game Services. |
+| `clientId` | `string` | yes | Google OAuth 2.0 client ID for Google Play Game Services. |
+| `clientSecret` | `string` | yes | Google OAuth 2.0 client secret for Google Play Game Services. |
+| `applicationId` | `string` | yes | Google Play application ID. |
 
 ### ThirtPartyParam
 
@@ -443,11 +449,11 @@ Defines the reusable parameter block ThirtPartyParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `googleSettings` | `ThirtPartyGoogleSettingsParam` | no | — |
-| `facebookSettings` | `ThirtPartyFacebookSettingsParam` | no | — |
-| `appleSettings` | `ThirtPartyAppleSettingsParam` | no | — |
-| `googlePlayGameSettings` | `ThirtPartyGooglePlayGameSettingsParam` | no | — |
-| `gameCenterSettings` | `ThirtPartyGameCenterSettingsParam` | no | — |
+| `googleSettings` | `ThirtPartyGoogleSettingsParam?` | no | — |
+| `facebookSettings` | `ThirtPartyFacebookSettingsParam?` | no | — |
+| `appleSettings` | `ThirtPartyAppleSettingsParam?` | no | — |
+| `googlePlayGameSettings` | `ThirtPartyGooglePlayGameSettingsParam?` | no | — |
+| `gameCenterSettings` | `ThirtPartyGameCenterSettingsParam?` | no | — |
 
 ### EmailSettingsParam
 
@@ -456,23 +462,23 @@ Defines the reusable parameter block EmailSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `sendFrom` | `string` | yes | — |
-| `secure` | `boolean` | yes | — |
-| `host` | `string` | yes | — |
-| `port` | `number` | yes | — |
-| `username` | `string` | yes | — |
-| `password` | `string` | yes | — |
+| `sendFrom` | `string` | yes | Sender email address displayed in outgoing system emails. |
+| `secure` | `boolean` | yes | Whether to use TLS for the SMTP connection. |
+| `host` | `string` | yes | SMTP server hostname. |
+| `port` | `number` | yes | SMTP server port number (typically 465 for TLS, 587 for STARTTLS). |
+| `username` | `string` | yes | SMTP authentication username. |
+| `password` | `string` | yes | SMTP authentication password. |
 
 ### PushNotificationSettingsParam
 
-Defines the reusable parameter block PushNotificationSettingsParam.
+Defines the reusable parameter block PushNotificationSettingsParam. Uses Firebase Cloud Messaging (FCM) credentials.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `projectId` | `string` | yes | — |
-| `clientEmail` | `string` | yes | — |
-| `privateKey` | `string` | yes | — |
+| `projectId` | `string` | yes | Firebase project ID from the Firebase Console. |
+| `clientEmail` | `string` | yes | Firebase service account client email for authentication. |
+| `privateKey` | `string` | yes | Firebase service account private key for authentication. |
 
 ### GamePlayerPermissionRulesParam
 
@@ -481,58 +487,57 @@ Defines the reusable parameter block GamePlayerPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `addSegment` | `PermissionRulesParam` | no | — |
-| `removeSegment` | `PermissionRulesParam` | no | — |
-| `getSegment` | `PermissionRulesParam` | no | — |
-| `setTag` | `PermissionRulesParam` | no | — |
-| `removeTag` | `PermissionRulesParam` | no | — |
-| `getTag` | `PermissionRulesParam` | no | — |
-| `getDisplayName` | `PermissionRulesParam` | no | — |
-| `setDisplayName` | `PermissionRulesParam` | no | — |
-| `getTsCreate` | `PermissionRulesParam` | no | — |
-| `getIpAddressCreate` | `PermissionRulesParam` | no | — |
-| `getTsLastLogin` | `PermissionRulesParam` | no | — |
-| `setPlayerBan` | `PermissionRulesParam` | no | — |
-| `getPlayerBan` | `PermissionRulesParam` | no | — |
-| `setCountryCode` | `PermissionRulesParam` | no | — |
-| `getCountryCode` | `PermissionRulesParam` | no | — |
-| `setAvatar` | `PermissionRulesParam` | no | — |
-| `getAvatar` | `PermissionRulesParam` | no | — |
-| `changePlayerCurrency` | `PermissionRulesParam` | no | — |
-| `getPlayerCurrency` | `PermissionRulesParam` | no | — |
-| `changePlayerStatistics` | `PermissionRulesParam` | no | — |
-| `getPlayerStatistics` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam` | no | — |
-| `getCustomData` | `PermissionRulesParam` | no | — |
-| `setCustomData` | `PermissionRulesParam` | no | — |
-| `setPlayerData` | `PermissionRulesParam` | no | — |
-| `getPlayerData` | `PermissionRulesParam` | no | — |
-| `getPlayerInformation` | `PermissionRulesParam` | no | — |
-| `getPlayersWithSegment` | `PermissionRulesParam` | no | — |
-| `getPlayersWithTag` | `PermissionRulesParam` | no | — |
-| `getPlayerCharacter` | `PermissionRulesParam` | no | — |
-| `getPlayerInventory` | `PermissionRulesParam` | no | — |
-| `getPlayerGroup` | `PermissionRulesParam` | no | — |
-| `getPlayerFriend` | `PermissionRulesParam` | no | — |
-| `removePlayerItem` | `PermissionRulesParam` | no | — |
-| `getOnlineStatus` | `PermissionRulesParam` | no | — |
-| `createGroup` | `PermissionRulesParam` | no | — |
-| `createPlayerItem` | `PermissionRulesParam` | no | — |
-| `createPlayerCharacter` | `PermissionRulesParam` | no | — |
-| `addPlayerFriend` | `PermissionRulesParam` | no | — |
-| `removePlayerFriend` | `PermissionRulesParam` | no | — |
-| `removePlayerCharacter` | `PermissionRulesParam` | no | — |
-| `joinGroup` | `PermissionRulesParam` | no | — |
-| `leaveGroup` | `PermissionRulesParam` | no | — |
-| `getPlayersWithDisplayName` | `PermissionRulesParam` | no | — |
-| `getFriendStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam` | no | — |
-| `getFriendStatisticsLeaderboard` | `PermissionRulesParam` | no | — |
-| `getCurrencyLeaderboard` | `PermissionRulesParam` | no | — |
-| `getCreateLeaderboard` | `PermissionRulesParam` | no | — |
-| `getLastLoginLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLog` | `PermissionRulesParam` | no | — |
-| `getCurrencyLog` | `PermissionRulesParam` | no | — |
+| `addSegment` | `PermissionRulesParam?` | no | — |
+| `removeSegment` | `PermissionRulesParam?` | no | — |
+| `getSegment` | `PermissionRulesParam?` | no | — |
+| `setTag` | `PermissionRulesParam?` | no | — |
+| `removeTag` | `PermissionRulesParam?` | no | — |
+| `getTag` | `PermissionRulesParam?` | no | — |
+| `getDisplayName` | `PermissionRulesParam?` | no | — |
+| `setDisplayName` | `PermissionRulesParam?` | no | — |
+| `getTsCreate` | `PermissionRulesParam?` | no | — |
+| `getIpAddressCreate` | `PermissionRulesParam?` | no | — |
+| `getTsLastLogin` | `PermissionRulesParam?` | no | — |
+| `setPlayerBan` | `PermissionRulesParam?` | no | — |
+| `getPlayerBan` | `PermissionRulesParam?` | no | — |
+| `setCountryCode` | `PermissionRulesParam?` | no | — |
+| `getCountryCode` | `PermissionRulesParam?` | no | — |
+| `setAvatar` | `PermissionRulesParam?` | no | — |
+| `getAvatar` | `PermissionRulesParam?` | no | — |
+| `changePlayerCurrency` | `PermissionRulesParam?` | no | — |
+| `getPlayerCurrency` | `PermissionRulesParam?` | no | — |
+| `changePlayerStatistics` | `PermissionRulesParam?` | no | — |
+| `getPlayerStatistics` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam?` | no | — |
+| `getCustomData` | `PermissionRulesParam?` | no | — |
+| `setCustomData` | `PermissionRulesParam?` | no | — |
+| `setPlayerData` | `PermissionRulesParam?` | no | — |
+| `getPlayerData` | `PermissionRulesParam?` | no | — |
+| `getPlayerInformation` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithSegment` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithTag` | `PermissionRulesParam?` | no | — |
+| `getPlayerCharacter` | `PermissionRulesParam?` | no | — |
+| `getPlayerInventory` | `PermissionRulesParam?` | no | — |
+| `getPlayerGroup` | `PermissionRulesParam?` | no | — |
+| `getPlayerFriend` | `PermissionRulesParam?` | no | — |
+| `removePlayerItem` | `PermissionRulesParam?` | no | — |
+| `createGroup` | `PermissionRulesParam?` | no | — |
+| `createPlayerItem` | `PermissionRulesParam?` | no | — |
+| `createPlayerCharacter` | `PermissionRulesParam?` | no | — |
+| `addPlayerFriend` | `PermissionRulesParam?` | no | — |
+| `removePlayerFriend` | `PermissionRulesParam?` | no | — |
+| `removePlayerCharacter` | `PermissionRulesParam?` | no | — |
+| `joinGroup` | `PermissionRulesParam?` | no | — |
+| `leaveGroup` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithDisplayName` | `PermissionRulesParam?` | no | — |
+| `getFriendStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam?` | no | — |
+| `getFriendStatisticsLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getCurrencyLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getCreateLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getLastLoginLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLog` | `PermissionRulesParam?` | no | — |
+| `getCurrencyLog` | `PermissionRulesParam?` | no | — |
 
 ### GamePlayerSettingsParam
 
@@ -541,15 +546,15 @@ Defines the reusable parameter block GamePlayerSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `playerCurrenciesSettings` | `Array<CurrencySettingsParam>` | no | _elementCls=CurrencySettingsParam_ |
-| `playerStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
-| `playerDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `customDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `tagsSettings` | `Array<TagSettingsParam>` | no | _elementCls=TagSettingsParam_ |
-| `playerCharacterCatalogSettings` | `Array<CharacterCatalogSettingsParam>` | no | _elementCls=CharacterCatalogSettingsParam_ |
-| `playerGroupCatalogSettings` | `Array<GroupCatalogSettingsParam>` | no | _elementCls=GroupCatalogSettingsParam_ |
-| `playerItemCatalogSettings` | `Array<ItemCatalogSettingsParam>` | no | _elementCls=ItemCatalogSettingsParam_ |
-| `playerFriendCatalogSettings` | `Array<FriendCatalogSettingsParam>` | no | _elementCls=FriendCatalogSettingsParam_ |
+| `playerCurrenciesSettings` | `Array<CurrencySettingsParam>?` | no | _elementCls=CurrencySettingsParam_ |
+| `playerStatisticsSettings` | `Array<StatisticsSettingsParam>?` | no | _elementCls=StatisticsSettingsParam_ |
+| `playerDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `customDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `tagsSettings` | `Array<TagSettingsParam>?` | no | _elementCls=TagSettingsParam_ |
+| `playerCharacterCatalogSettings` | `Array<CharacterCatalogSettingsParam>?` | no | _elementCls=CharacterCatalogSettingsParam_ |
+| `playerGroupCatalogSettings` | `Array<GroupCatalogSettingsParam>?` | no | _elementCls=GroupCatalogSettingsParam_ |
+| `playerItemCatalogSettings` | `Array<ItemCatalogSettingsParam>?` | no | _elementCls=ItemCatalogSettingsParam_ |
+| `playerFriendCatalogSettings` | `Array<FriendCatalogSettingsParam>?` | no | _elementCls=FriendCatalogSettingsParam_ |
 
 ### GroupSettingsParam
 
@@ -558,12 +563,12 @@ Defines the reusable parameter block GroupSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `groupCurrenciesSettings` | `Array<CurrencySettingsParam>` | no | _elementCls=CurrencySettingsParam_ |
-| `groupStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
-| `groupDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `customDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `tagsSettings` | `Array<TagSettingsParam>` | no | _elementCls=TagSettingsParam_ |
-| `groupItemCatalogSettings` | `Array<ItemCatalogSettingsParam>` | no | _elementCls=ItemCatalogSettingsParam_ |
+| `groupCurrenciesSettings` | `Array<CurrencySettingsParam>?` | no | _elementCls=CurrencySettingsParam_ |
+| `groupStatisticsSettings` | `Array<StatisticsSettingsParam>?` | no | _elementCls=StatisticsSettingsParam_ |
+| `groupDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `customDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `tagsSettings` | `Array<TagSettingsParam>?` | no | _elementCls=TagSettingsParam_ |
+| `groupItemCatalogSettings` | `Array<ItemCatalogSettingsParam>?` | no | _elementCls=ItemCatalogSettingsParam_ |
 
 ### InventorySettingsParam
 
@@ -572,10 +577,10 @@ Defines the reusable parameter block InventorySettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `itemStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
-| `itemDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `customDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `tagsSettings` | `Array<TagSettingsParam>` | no | _elementCls=TagSettingsParam_ |
+| `itemStatisticsSettings` | `Array<StatisticsSettingsParam>?` | no | _elementCls=StatisticsSettingsParam_ |
+| `itemDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `customDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `tagsSettings` | `Array<TagSettingsParam>?` | no | _elementCls=TagSettingsParam_ |
 
 ### GameSettingsParam
 
@@ -584,10 +589,10 @@ Defines the reusable parameter block GameSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `gamePlayerSettings` | `GamePlayerSettingsParam` | no | — |
-| `characterPlayerSettings` | `CharacterPlayerSettingsParam` | no | — |
-| `groupSettings` | `GroupSettingsParam` | no | — |
-| `inventorySettings` | `InventorySettingsParam` | no | — |
+| `gamePlayerSettings` | `GamePlayerSettingsParam?` | no | — |
+| `characterPlayerSettings` | `CharacterPlayerSettingsParam?` | no | — |
+| `groupSettings` | `GroupSettingsParam?` | no | — |
+| `inventorySettings` | `InventorySettingsParam?` | no | — |
 
 ### GenericServiceSettingsParam
 
@@ -605,46 +610,46 @@ Defines the reusable parameter block GroupPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `addSegment` | `PermissionRulesParam` | no | — |
-| `removeSegment` | `PermissionRulesParam` | no | — |
-| `getSegment` | `PermissionRulesParam` | no | — |
-| `setTag` | `PermissionRulesParam` | no | — |
-| `removeTag` | `PermissionRulesParam` | no | — |
-| `getTag` | `PermissionRulesParam` | no | — |
-| `getDisplayName` | `PermissionRulesParam` | no | — |
-| `setDisplayName` | `PermissionRulesParam` | no | — |
-| `getTsCreate` | `PermissionRulesParam` | no | — |
-| `setAvatar` | `PermissionRulesParam` | no | — |
-| `getAvatar` | `PermissionRulesParam` | no | — |
-| `changeGroupCurrency` | `PermissionRulesParam` | no | — |
-| `getGroupCurrency` | `PermissionRulesParam` | no | — |
-| `changeGroupStatistics` | `PermissionRulesParam` | no | — |
-| `getGroupStatistics` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboardAroundGroup` | `PermissionRulesParam` | no | — |
-| `getCustomData` | `PermissionRulesParam` | no | — |
-| `setCustomData` | `PermissionRulesParam` | no | — |
-| `setGroupData` | `PermissionRulesParam` | no | — |
-| `getGroupData` | `PermissionRulesParam` | no | — |
-| `getGroupInformation` | `PermissionRulesParam` | no | — |
-| `getGroupsWithSegment` | `PermissionRulesParam` | no | — |
-| `getGroupsWithTag` | `PermissionRulesParam` | no | — |
-| `getCatalogId` | `PermissionRulesParam` | no | — |
-| `getRemoveStatus` | `PermissionRulesParam` | no | — |
-| `getGroupInventory` | `PermissionRulesParam` | no | — |
-| `removeGroupItem` | `PermissionRulesParam` | no | — |
-| `createGroupItem` | `PermissionRulesParam` | no | — |
-| `getMembers` | `PermissionRulesParam` | no | — |
-| `addMember` | `PermissionRulesParam` | no | — |
-| `removeMember` | `PermissionRulesParam` | no | — |
-| `sendGroupMessage` | `PermissionRulesParam` | no | — |
-| `getGroupMessage` | `PermissionRulesParam` | no | — |
-| `setRemoveStatus` | `PermissionRulesParam` | no | — |
-| `getGroupsWithDisplayName` | `PermissionRulesParam` | no | — |
-| `getCurrencyLeaderboard` | `PermissionRulesParam` | no | — |
-| `getCreateLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLog` | `PermissionRulesParam` | no | — |
-| `getCurrencyLog` | `PermissionRulesParam` | no | — |
+| `addSegment` | `PermissionRulesParam?` | no | — |
+| `removeSegment` | `PermissionRulesParam?` | no | — |
+| `getSegment` | `PermissionRulesParam?` | no | — |
+| `setTag` | `PermissionRulesParam?` | no | — |
+| `removeTag` | `PermissionRulesParam?` | no | — |
+| `getTag` | `PermissionRulesParam?` | no | — |
+| `getDisplayName` | `PermissionRulesParam?` | no | — |
+| `setDisplayName` | `PermissionRulesParam?` | no | — |
+| `getTsCreate` | `PermissionRulesParam?` | no | — |
+| `setAvatar` | `PermissionRulesParam?` | no | — |
+| `getAvatar` | `PermissionRulesParam?` | no | — |
+| `changeGroupCurrency` | `PermissionRulesParam?` | no | — |
+| `getGroupCurrency` | `PermissionRulesParam?` | no | — |
+| `changeGroupStatistics` | `PermissionRulesParam?` | no | — |
+| `getGroupStatistics` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboardAroundGroup` | `PermissionRulesParam?` | no | — |
+| `getCustomData` | `PermissionRulesParam?` | no | — |
+| `setCustomData` | `PermissionRulesParam?` | no | — |
+| `setGroupData` | `PermissionRulesParam?` | no | — |
+| `getGroupData` | `PermissionRulesParam?` | no | — |
+| `getGroupInformation` | `PermissionRulesParam?` | no | — |
+| `getGroupsWithSegment` | `PermissionRulesParam?` | no | — |
+| `getGroupsWithTag` | `PermissionRulesParam?` | no | — |
+| `getCatalogId` | `PermissionRulesParam?` | no | — |
+| `getRemoveStatus` | `PermissionRulesParam?` | no | — |
+| `getGroupInventory` | `PermissionRulesParam?` | no | — |
+| `removeGroupItem` | `PermissionRulesParam?` | no | — |
+| `createGroupItem` | `PermissionRulesParam?` | no | — |
+| `getMembers` | `PermissionRulesParam?` | no | — |
+| `addMember` | `PermissionRulesParam?` | no | — |
+| `removeMember` | `PermissionRulesParam?` | no | — |
+| `sendGroupMessage` | `PermissionRulesParam?` | no | — |
+| `getGroupMessage` | `PermissionRulesParam?` | no | — |
+| `setRemoveStatus` | `PermissionRulesParam?` | no | — |
+| `getGroupsWithDisplayName` | `PermissionRulesParam?` | no | — |
+| `getCurrencyLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getCreateLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLog` | `PermissionRulesParam?` | no | — |
+| `getCurrencyLog` | `PermissionRulesParam?` | no | — |
 
 ### InventoryPermissionRulesParam
 
@@ -653,40 +658,40 @@ Defines the reusable parameter block InventoryPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `addSegment` | `PermissionRulesParam` | no | — |
-| `removeSegment` | `PermissionRulesParam` | no | — |
-| `getSegment` | `PermissionRulesParam` | no | — |
-| `setTag` | `PermissionRulesParam` | no | — |
-| `removeTag` | `PermissionRulesParam` | no | — |
-| `getTag` | `PermissionRulesParam` | no | — |
-| `getDisplayName` | `PermissionRulesParam` | no | — |
-| `setDisplayName` | `PermissionRulesParam` | no | — |
-| `getTsCreate` | `PermissionRulesParam` | no | — |
-| `setAvatar` | `PermissionRulesParam` | no | — |
-| `getAvatar` | `PermissionRulesParam` | no | — |
-| `changeItemStatistics` | `PermissionRulesParam` | no | — |
-| `getItemStatistics` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboardAroundItem` | `PermissionRulesParam` | no | — |
-| `getCustomData` | `PermissionRulesParam` | no | — |
-| `setCustomData` | `PermissionRulesParam` | no | — |
-| `setItemData` | `PermissionRulesParam` | no | — |
-| `getItemData` | `PermissionRulesParam` | no | — |
-| `getItemInformation` | `PermissionRulesParam` | no | — |
-| `getItemsWithSegment` | `PermissionRulesParam` | no | — |
-| `getItemsWithTag` | `PermissionRulesParam` | no | — |
-| `getCatalogId` | `PermissionRulesParam` | no | — |
-| `getClassId` | `PermissionRulesParam` | no | — |
-| `getItemType` | `PermissionRulesParam` | no | — |
-| `getAmount` | `PermissionRulesParam` | no | — |
-| `getOwner` | `PermissionRulesParam` | no | — |
-| `getRemoveStatus` | `PermissionRulesParam` | no | — |
-| `setAmount` | `PermissionRulesParam` | no | — |
-| `setOwner` | `PermissionRulesParam` | no | — |
-| `setRemoveStatus` | `PermissionRulesParam` | no | — |
-| `getItemsWithDisplayName` | `PermissionRulesParam` | no | — |
-| `getCreateLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLog` | `PermissionRulesParam` | no | — |
+| `addSegment` | `PermissionRulesParam?` | no | — |
+| `removeSegment` | `PermissionRulesParam?` | no | — |
+| `getSegment` | `PermissionRulesParam?` | no | — |
+| `setTag` | `PermissionRulesParam?` | no | — |
+| `removeTag` | `PermissionRulesParam?` | no | — |
+| `getTag` | `PermissionRulesParam?` | no | — |
+| `getDisplayName` | `PermissionRulesParam?` | no | — |
+| `setDisplayName` | `PermissionRulesParam?` | no | — |
+| `getTsCreate` | `PermissionRulesParam?` | no | — |
+| `setAvatar` | `PermissionRulesParam?` | no | — |
+| `getAvatar` | `PermissionRulesParam?` | no | — |
+| `changeItemStatistics` | `PermissionRulesParam?` | no | — |
+| `getItemStatistics` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboardAroundItem` | `PermissionRulesParam?` | no | — |
+| `getCustomData` | `PermissionRulesParam?` | no | — |
+| `setCustomData` | `PermissionRulesParam?` | no | — |
+| `setItemData` | `PermissionRulesParam?` | no | — |
+| `getItemData` | `PermissionRulesParam?` | no | — |
+| `getItemInformation` | `PermissionRulesParam?` | no | — |
+| `getItemsWithSegment` | `PermissionRulesParam?` | no | — |
+| `getItemsWithTag` | `PermissionRulesParam?` | no | — |
+| `getCatalogId` | `PermissionRulesParam?` | no | — |
+| `getClassId` | `PermissionRulesParam?` | no | — |
+| `getItemType` | `PermissionRulesParam?` | no | — |
+| `getAmount` | `PermissionRulesParam?` | no | — |
+| `getOwner` | `PermissionRulesParam?` | no | — |
+| `getRemoveStatus` | `PermissionRulesParam?` | no | — |
+| `setAmount` | `PermissionRulesParam?` | no | — |
+| `setOwner` | `PermissionRulesParam?` | no | — |
+| `setRemoveStatus` | `PermissionRulesParam?` | no | — |
+| `getItemsWithDisplayName` | `PermissionRulesParam?` | no | — |
+| `getCreateLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLog` | `PermissionRulesParam?` | no | — |
 
 ### DashboardPermissionRulesParam
 
@@ -695,31 +700,31 @@ Defines the reusable parameter block DashboardPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `setMasterGameSettings` | `PermissionRulesParam` | no | — |
-| `createAdminAccount` | `PermissionRulesParam` | no | — |
-| `removeAdminAccount` | `PermissionRulesParam` | no | — |
-| `setPasswordAdminAccount` | `PermissionRulesParam` | no | — |
-| `setSecretKeyAdminAccount` | `PermissionRulesParam` | no | — |
-| `setGameInformation` | `PermissionRulesParam` | no | — |
-| `createGame` | `PermissionRulesParam` | no | — |
-| `changePasswordAdminAccount` | `PermissionRulesParam` | no | — |
-| `getAdminAccountList` | `PermissionRulesParam` | no | — |
-| `getGameInformation` | `PermissionRulesParam` | no | — |
-| `getGameList` | `PermissionRulesParam` | no | — |
-| `getMasterGameSettings` | `PermissionRulesParam` | no | — |
-| `getServerLog` | `PermissionRulesParam` | no | — |
-| `getSecretInfoInformation` | `PermissionRulesParam` | no | — |
-| `getSecretInfoList` | `PermissionRulesParam` | no | — |
-| `createSecretInfo` | `PermissionRulesParam` | no | — |
-| `setSecretInfoInformation` | `PermissionRulesParam` | no | — |
-| `getUsernameAdminAccount` | `PermissionRulesParam` | no | — |
-| `getAnalytics` | `PermissionRulesParam` | no | — |
-| `getEventCallbackCloudScript` | `PermissionRulesParam` | no | — |
-| `setEventCallbackCloudScript` | `PermissionRulesParam` | no | — |
-| `resetStatisticsLeaderboard` | `PermissionRulesParam` | no | — |
-| `getBackupStatisticsLeaderboardVersion` | `PermissionRulesParam` | no | — |
-| `getServerGameData` | `PermissionRulesParam` | no | — |
-| `deleteInDatabase` | `PermissionRulesParam` | no | — |
+| `setMasterGameSettings` | `PermissionRulesParam?` | no | — |
+| `createAdminAccount` | `PermissionRulesParam?` | no | — |
+| `removeAdminAccount` | `PermissionRulesParam?` | no | — |
+| `setPasswordAdminAccount` | `PermissionRulesParam?` | no | — |
+| `setSecretKeyAdminAccount` | `PermissionRulesParam?` | no | — |
+| `setGameInformation` | `PermissionRulesParam?` | no | — |
+| `createGame` | `PermissionRulesParam?` | no | — |
+| `changePasswordAdminAccount` | `PermissionRulesParam?` | no | — |
+| `getAdminAccountList` | `PermissionRulesParam?` | no | — |
+| `getGameInformation` | `PermissionRulesParam?` | no | — |
+| `getGameList` | `PermissionRulesParam?` | no | — |
+| `getMasterGameSettings` | `PermissionRulesParam?` | no | — |
+| `getServerLog` | `PermissionRulesParam?` | no | — |
+| `getSecretInfoInformation` | `PermissionRulesParam?` | no | — |
+| `getSecretInfoList` | `PermissionRulesParam?` | no | — |
+| `createSecretInfo` | `PermissionRulesParam?` | no | — |
+| `setSecretInfoInformation` | `PermissionRulesParam?` | no | — |
+| `getUsernameAdminAccount` | `PermissionRulesParam?` | no | — |
+| `getAnalytics` | `PermissionRulesParam?` | no | — |
+| `getEventCallbackCloudScript` | `PermissionRulesParam?` | no | — |
+| `setEventCallbackCloudScript` | `PermissionRulesParam?` | no | — |
+| `resetStatisticsLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getBackupStatisticsLeaderboardVersion` | `PermissionRulesParam?` | no | — |
+| `getServerGameData` | `PermissionRulesParam?` | no | — |
+| `deleteInDatabase` | `PermissionRulesParam?` | no | — |
 
 ### MultiplayerPermissionRulesParam
 
@@ -728,16 +733,16 @@ Defines the reusable parameter block MultiplayerPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `cancelAllMatchmakingTicket` | `PermissionRulesParam` | no | — |
-| `cancelMatchmakingTicket` | `PermissionRulesParam` | no | — |
-| `createMatchmakingTicket` | `PermissionRulesParam` | no | — |
-| `getMatchmakingTicket` | `PermissionRulesParam` | no | — |
-| `getMatch` | `PermissionRulesParam` | no | — |
-| `getQueueStatistics` | `PermissionRulesParam` | no | — |
-| `joinMatchmakingTicket` | `PermissionRulesParam` | no | — |
-| `listMatchmakingTicketsForPlayer` | `PermissionRulesParam` | no | — |
-| `getAllMatchmakingTicket` | `PermissionRulesParam` | no | — |
-| `getAllMatch` | `PermissionRulesParam` | no | — |
+| `cancelAllMatchmakingTicket` | `PermissionRulesParam?` | no | — |
+| `cancelMatchmakingTicket` | `PermissionRulesParam?` | no | — |
+| `createMatchmakingTicket` | `PermissionRulesParam?` | no | — |
+| `getMatchmakingTicket` | `PermissionRulesParam?` | no | — |
+| `getMatch` | `PermissionRulesParam?` | no | — |
+| `getQueueStatistics` | `PermissionRulesParam?` | no | — |
+| `joinMatchmakingTicket` | `PermissionRulesParam?` | no | — |
+| `listMatchmakingTicketsForPlayer` | `PermissionRulesParam?` | no | — |
+| `getAllMatchmakingTicket` | `PermissionRulesParam?` | no | — |
+| `getAllMatch` | `PermissionRulesParam?` | no | — |
 
 ### MasterPlayerPermissionRulesParam
 
@@ -746,92 +751,93 @@ Defines the reusable parameter block MasterPlayerPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `linkAccount` | `PermissionRulesParam` | no | — |
-| `linkAndroidDeviceId` | `PermissionRulesParam` | no | — |
-| `linkApple` | `PermissionRulesParam` | no | — |
-| `linkCustomDeviceId` | `PermissionRulesParam` | no | — |
-| `linkCustomId` | `PermissionRulesParam` | no | — |
-| `linkEditorDeviceId` | `PermissionRulesParam` | no | — |
-| `linkFacebook` | `PermissionRulesParam` | no | — |
-| `linkGenericService` | `PermissionRulesParam` | no | — |
-| `linkGoogle` | `PermissionRulesParam` | no | — |
-| `linkGooglePlayGameService` | `PermissionRulesParam` | no | — |
-| `linkGameCenter` | `PermissionRulesParam` | no | — |
-| `linkiOSDeviceId` | `PermissionRulesParam` | no | — |
-| `linkLinuxDeviceId` | `PermissionRulesParam` | no | — |
-| `linkMacOSDeviceId` | `PermissionRulesParam` | no | — |
-| `linkWindowsDeviceId` | `PermissionRulesParam` | no | — |
-| `linkWindowsPhoneDeviceId` | `PermissionRulesParam` | no | — |
-| `unlinkAccount` | `PermissionRulesParam` | no | — |
-| `unlinkAndroidDeviceId` | `PermissionRulesParam` | no | — |
-| `unlinkApple` | `PermissionRulesParam` | no | — |
-| `unlinkCustomDeviceId` | `PermissionRulesParam` | no | — |
-| `unlinkCustomId` | `PermissionRulesParam` | no | — |
-| `unlinkEditorDeviceId` | `PermissionRulesParam` | no | — |
-| `unlinkFacebook` | `PermissionRulesParam` | no | — |
-| `unlinkGenericService` | `PermissionRulesParam` | no | — |
-| `unlinkGoogle` | `PermissionRulesParam` | no | — |
-| `unlinkGooglePlayGameService` | `PermissionRulesParam` | no | — |
-| `unlinkGameCenter` | `PermissionRulesParam` | no | — |
-| `unlinkiOSDeviceId` | `PermissionRulesParam` | no | — |
-| `unlinkLinuxDeviceId` | `PermissionRulesParam` | no | — |
-| `unlinkMacOSDeviceId` | `PermissionRulesParam` | no | — |
-| `unlinkWindowsDeviceId` | `PermissionRulesParam` | no | — |
-| `unlinkWindowsPhoneDeviceId` | `PermissionRulesParam` | no | — |
-| `addSegment` | `PermissionRulesParam` | no | — |
-| `removeSegment` | `PermissionRulesParam` | no | — |
-| `getSegment` | `PermissionRulesParam` | no | — |
-| `setTag` | `PermissionRulesParam` | no | — |
-| `removeTag` | `PermissionRulesParam` | no | — |
-| `getTag` | `PermissionRulesParam` | no | — |
-| `getDisplayName` | `PermissionRulesParam` | no | — |
-| `setDisplayName` | `PermissionRulesParam` | no | — |
-| `getTsCreate` | `PermissionRulesParam` | no | — |
-| `getIpAddressCreate` | `PermissionRulesParam` | no | — |
-| `updateTsLastLogin` | `PermissionRulesParam` | no | — |
-| `getTsLastLogin` | `PermissionRulesParam` | no | — |
-| `setPlayerBan` | `PermissionRulesParam` | no | — |
-| `getPlayerBan` | `PermissionRulesParam` | no | — |
-| `setCountryCode` | `PermissionRulesParam` | no | — |
-| `getCountryCode` | `PermissionRulesParam` | no | — |
-| `changeAccountPassword` | `PermissionRulesParam` | no | — |
-| `resetAccountPassword` | `PermissionRulesParam` | no | — |
-| `setAvatar` | `PermissionRulesParam` | no | — |
-| `getAvatar` | `PermissionRulesParam` | no | — |
-| `changePlayerCurrency` | `PermissionRulesParam` | no | — |
-| `getPlayerCurrency` | `PermissionRulesParam` | no | — |
-| `changePlayerStatistics` | `PermissionRulesParam` | no | — |
-| `getPlayerStatistics` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam` | no | — |
-| `getCustomData` | `PermissionRulesParam` | no | — |
-| `setCustomData` | `PermissionRulesParam` | no | — |
-| `setPlayerData` | `PermissionRulesParam` | no | — |
-| `getPlayerData` | `PermissionRulesParam` | no | — |
-| `getPlayerInformation` | `PermissionRulesParam` | no | — |
-| `getPlayersWithApple` | `PermissionRulesParam` | no | — |
-| `getPlayersWithFacebook` | `PermissionRulesParam` | no | — |
-| `getPlayersWithGoogle` | `PermissionRulesParam` | no | — |
-| `getPlayersWithGenericService` | `PermissionRulesParam` | no | — |
-| `getPlayersWithSegment` | `PermissionRulesParam` | no | — |
-| `getPlayersWithTag` | `PermissionRulesParam` | no | — |
-| `getPlayersWithGooglePlayGameService` | `PermissionRulesParam` | no | — |
-| `getPlayersWithGameCenter` | `PermissionRulesParam` | no | — |
-| `getExternal` | `PermissionRulesParam` | no | — |
-| `getPlayersWithDisplayName` | `PermissionRulesParam` | no | — |
-| `getEmail` | `PermissionRulesParam` | no | — |
-| `setEmail` | `PermissionRulesParam` | no | — |
-| `getCurrencyLeaderboard` | `PermissionRulesParam` | no | — |
-| `getLastLoginLeaderboard` | `PermissionRulesParam` | no | — |
-| `getCreateLeaderboard` | `PermissionRulesParam` | no | — |
-| `getStatisticsLog` | `PermissionRulesParam` | no | — |
-| `getCurrencyLog` | `PermissionRulesParam` | no | — |
-| `sendSocketOperationEvent` | `PermissionRulesParam` | no | — |
-| `sendEmail` | `PermissionRulesParam` | no | — |
-| `sendPushNotification` | `PermissionRulesParam` | no | — |
-| `addPushNotification` | `PermissionRulesParam` | no | — |
-| `removePushNotification` | `PermissionRulesParam` | no | — |
-| `getPushNotification` | `PermissionRulesParam` | no | — |
+| `linkAccount` | `PermissionRulesParam?` | no | — |
+| `linkAndroidDeviceId` | `PermissionRulesParam?` | no | — |
+| `linkApple` | `PermissionRulesParam?` | no | — |
+| `linkCustomDeviceId` | `PermissionRulesParam?` | no | — |
+| `linkCustomId` | `PermissionRulesParam?` | no | — |
+| `linkEditorDeviceId` | `PermissionRulesParam?` | no | — |
+| `linkFacebook` | `PermissionRulesParam?` | no | — |
+| `linkGenericService` | `PermissionRulesParam?` | no | — |
+| `linkGoogle` | `PermissionRulesParam?` | no | — |
+| `linkGooglePlayGameService` | `PermissionRulesParam?` | no | — |
+| `linkGameCenter` | `PermissionRulesParam?` | no | — |
+| `linkiOSDeviceId` | `PermissionRulesParam?` | no | — |
+| `linkLinuxDeviceId` | `PermissionRulesParam?` | no | — |
+| `linkMacOSDeviceId` | `PermissionRulesParam?` | no | — |
+| `linkWindowsDeviceId` | `PermissionRulesParam?` | no | — |
+| `linkWindowsPhoneDeviceId` | `PermissionRulesParam?` | no | — |
+| `unlinkAccount` | `PermissionRulesParam?` | no | — |
+| `unlinkAndroidDeviceId` | `PermissionRulesParam?` | no | — |
+| `unlinkApple` | `PermissionRulesParam?` | no | — |
+| `unlinkCustomDeviceId` | `PermissionRulesParam?` | no | — |
+| `unlinkCustomId` | `PermissionRulesParam?` | no | — |
+| `unlinkEditorDeviceId` | `PermissionRulesParam?` | no | — |
+| `unlinkFacebook` | `PermissionRulesParam?` | no | — |
+| `unlinkGenericService` | `PermissionRulesParam?` | no | — |
+| `unlinkGoogle` | `PermissionRulesParam?` | no | — |
+| `unlinkGooglePlayGameService` | `PermissionRulesParam?` | no | — |
+| `unlinkGameCenter` | `PermissionRulesParam?` | no | — |
+| `unlinkiOSDeviceId` | `PermissionRulesParam?` | no | — |
+| `unlinkLinuxDeviceId` | `PermissionRulesParam?` | no | — |
+| `unlinkMacOSDeviceId` | `PermissionRulesParam?` | no | — |
+| `unlinkWindowsDeviceId` | `PermissionRulesParam?` | no | — |
+| `unlinkWindowsPhoneDeviceId` | `PermissionRulesParam?` | no | — |
+| `addSegment` | `PermissionRulesParam?` | no | — |
+| `removeSegment` | `PermissionRulesParam?` | no | — |
+| `getSegment` | `PermissionRulesParam?` | no | — |
+| `setTag` | `PermissionRulesParam?` | no | — |
+| `removeTag` | `PermissionRulesParam?` | no | — |
+| `getTag` | `PermissionRulesParam?` | no | — |
+| `getDisplayName` | `PermissionRulesParam?` | no | — |
+| `setDisplayName` | `PermissionRulesParam?` | no | — |
+| `getTsCreate` | `PermissionRulesParam?` | no | — |
+| `getIpAddressCreate` | `PermissionRulesParam?` | no | — |
+| `updateTsLastLogin` | `PermissionRulesParam?` | no | — |
+| `getTsLastLogin` | `PermissionRulesParam?` | no | — |
+| `setPlayerBan` | `PermissionRulesParam?` | no | — |
+| `getPlayerBan` | `PermissionRulesParam?` | no | — |
+| `setCountryCode` | `PermissionRulesParam?` | no | — |
+| `getCountryCode` | `PermissionRulesParam?` | no | — |
+| `changeAccountPassword` | `PermissionRulesParam?` | no | — |
+| `resetAccountPassword` | `PermissionRulesParam?` | no | — |
+| `setAvatar` | `PermissionRulesParam?` | no | — |
+| `getAvatar` | `PermissionRulesParam?` | no | — |
+| `changePlayerCurrency` | `PermissionRulesParam?` | no | — |
+| `getPlayerCurrency` | `PermissionRulesParam?` | no | — |
+| `changePlayerStatistics` | `PermissionRulesParam?` | no | — |
+| `getPlayerStatistics` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLeaderboardAroundPlayer` | `PermissionRulesParam?` | no | — |
+| `getCustomData` | `PermissionRulesParam?` | no | — |
+| `setCustomData` | `PermissionRulesParam?` | no | — |
+| `setPlayerData` | `PermissionRulesParam?` | no | — |
+| `getPlayerData` | `PermissionRulesParam?` | no | — |
+| `getPlayerInformation` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithApple` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithFacebook` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithGoogle` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithGenericService` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithSegment` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithTag` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithGooglePlayGameService` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithGameCenter` | `PermissionRulesParam?` | no | — |
+| `getExternal` | `PermissionRulesParam?` | no | — |
+| `getPlayersWithDisplayName` | `PermissionRulesParam?` | no | — |
+| `getEmail` | `PermissionRulesParam?` | no | — |
+| `setEmail` | `PermissionRulesParam?` | no | — |
+| `getCurrencyLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getLastLoginLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getCreateLeaderboard` | `PermissionRulesParam?` | no | — |
+| `getStatisticsLog` | `PermissionRulesParam?` | no | — |
+| `getCurrencyLog` | `PermissionRulesParam?` | no | — |
+| `sendSocketOperationEvent` | `PermissionRulesParam?` | no | — |
+| `sendEmail` | `PermissionRulesParam?` | no | — |
+| `sendPushNotification` | `PermissionRulesParam?` | no | — |
+| `addPushNotification` | `PermissionRulesParam?` | no | — |
+| `removePushNotification` | `PermissionRulesParam?` | no | — |
+| `getPushNotification` | `PermissionRulesParam?` | no | — |
+| `getOnlineStatus` | `PermissionRulesParam?` | no | — |
 
 ### MasterPlayerSettingsParam
 
@@ -840,12 +846,12 @@ Defines the reusable parameter block MasterPlayerSettingsParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `genericServiceSettings` | `Array<GenericServiceSettingsParam>` | no | _elementCls=GenericServiceSettingsParam_ |
-| `playerCurrenciesSettings` | `Array<CurrencySettingsParam>` | no | _elementCls=CurrencySettingsParam_ |
-| `playerStatisticsSettings` | `Array<StatisticsSettingsParam>` | no | _elementCls=StatisticsSettingsParam_ |
-| `playerDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `customDatasSettings` | `Array<DataSettingsParam>` | no | _elementCls=DataSettingsParam_ |
-| `tagsSettings` | `Array<TagSettingsParam>` | no | _elementCls=TagSettingsParam_ |
+| `genericServiceSettings` | `Array<GenericServiceSettingsParam>?` | no | _elementCls=GenericServiceSettingsParam_ |
+| `playerCurrenciesSettings` | `Array<CurrencySettingsParam>?` | no | _elementCls=CurrencySettingsParam_ |
+| `playerStatisticsSettings` | `Array<StatisticsSettingsParam>?` | no | _elementCls=StatisticsSettingsParam_ |
+| `playerDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `customDatasSettings` | `Array<DataSettingsParam>?` | no | _elementCls=DataSettingsParam_ |
+| `tagsSettings` | `Array<TagSettingsParam>?` | no | _elementCls=TagSettingsParam_ |
 
 ### SizeParam
 
@@ -875,8 +881,8 @@ Defines the reusable parameter block LinearExpansionsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `secondsBetweenExpansions` | `number` | yes | _min=1_ |
-| `delta` | `number` | no | — |
-| `limit` | `number` | no | — |
+| `delta` | `number?` | no | — |
+| `limit` | `number?` | no | — |
 
 ### CustomExpansionsParam
 
@@ -886,9 +892,9 @@ Defines the reusable parameter block CustomExpansionsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `secondsBetweenExpansions` | `number` | yes | _min=1_ |
-| `overrideValue` | `Array<any>` | no | _elementCls=Object_ |
-| `overrideMin` | `Array<any>` | no | _elementCls=Object_ |
-| `overrideMax` | `Array<any>` | no | _elementCls=Object_ |
+| `overrideValue` | `Array<any>?` | no | _elementCls=Object_ |
+| `overrideMin` | `Array<any>?` | no | _elementCls=Object_ |
+| `overrideMax` | `Array<any>?` | no | _elementCls=Object_ |
 
 ### AdvancedSettingsParam
 
@@ -898,9 +904,9 @@ Defines the reusable parameter block AdvancedSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `secondsUntilOptional` | `number` | yes | _min=1_ |
-| `expansionType` | `number` | no | _min=1, max=3_ |
-| `linearExpansions` | `LinearExpansionsParam` | no | — |
-| `customExpansions` | `CustomExpansionsParam` | no | — |
+| `expansionType` | `number?` | no | _min=1, max=3_ |
+| `linearExpansions` | `LinearExpansionsParam?` | no | — |
+| `customExpansions` | `CustomExpansionsParam?` | no | — |
 
 ### RuleParam
 
@@ -911,14 +917,14 @@ Defines the reusable parameter block RuleParam.
 | --- | --- | --- | --- |
 | `name` | `string` | yes | _minLength=1, maxLength=32_ |
 | `type` | `number` | yes | _min=1, max=8_ |
-| `attributeSource` | `number` | no | _min=1, max=2_ |
-| `attributePath` | `string` | no | _minLength=1, maxLength=32_ |
-| `defaultValue` | `any` | no | — |
-| `compairType` | `number` | no | _min=1, max=2_ |
-| `allowedDifference` | `number` | no | _min=0_ |
-| `min` | `number` | no | — |
-| `max` | `number` | no | — |
-| `advancedSettings` | `AdvancedSettingsParam` | no | — |
+| `attributeSource` | `number?` | no | _min=1, max=2_ |
+| `attributePath` | `string?` | no | _minLength=1, maxLength=32_ |
+| `defaultValue` | `any?` | no | — |
+| `compairType` | `number?` | no | _min=1, max=2_ |
+| `allowedDifference` | `number?` | no | _min=0_ |
+| `min` | `number?` | no | — |
+| `max` | `number?` | no | — |
+| `advancedSettings` | `AdvancedSettingsParam?` | no | — |
 
 ### ServerAllocationParam
 
@@ -940,9 +946,9 @@ Defines the reusable parameter block MatchmakingQueueSettingsParam.
 | `matchSize` | `SizeParam` | yes | — |
 | `ticketSize` | `SizeParam` | yes | — |
 | `serverAllocation` | `ServerAllocationParam` | yes | — |
-| `teams` | `Array<TeamParam>` | no | _elementCls=TeamParam_ |
-| `rules` | `Array<RuleParam>` | no | _elementCls=RuleParam_ |
-| `remove` | `boolean` | no | — |
+| `teams` | `Array<TeamParam>?` | no | _elementCls=TeamParam_ |
+| `rules` | `Array<RuleParam>?` | no | _elementCls=RuleParam_ |
+| `remove` | `boolean?` | no | — |
 
 ### AuthenticatePermissionRulesParam
 
@@ -951,24 +957,24 @@ Defines the reusable parameter block AuthenticatePermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `loginByAccount` | `PermissionRulesParam` | no | — |
-| `loginByAndroidDeviceId` | `PermissionRulesParam` | no | — |
-| `loginByApple` | `PermissionRulesParam` | no | — |
-| `loginByCustomDeviceId` | `PermissionRulesParam` | no | — |
-| `loginByCustomId` | `PermissionRulesParam` | no | — |
-| `loginByFacebook` | `PermissionRulesParam` | no | — |
-| `loginByGenericService` | `PermissionRulesParam` | no | — |
-| `loginByGoogle` | `PermissionRulesParam` | no | — |
-| `loginByGooglePlayGameService` | `PermissionRulesParam` | no | — |
-| `loginByGameCenter` | `PermissionRulesParam` | no | — |
-| `loginByiOSDeviceId` | `PermissionRulesParam` | no | — |
-| `loginByWindowsPhoneDeviceId` | `PermissionRulesParam` | no | — |
-| `registerAccount` | `PermissionRulesParam` | no | — |
-| `loginByEditorDeviceId` | `PermissionRulesParam` | no | — |
-| `loginByLinuxDeviceId` | `PermissionRulesParam` | no | — |
-| `loginByMacOSDeviceId` | `PermissionRulesParam` | no | — |
-| `loginByWindowsDeviceId` | `PermissionRulesParam` | no | — |
-| `refreshAuthToken` | `PermissionRulesParam` | no | — |
+| `loginByAccount` | `PermissionRulesParam?` | no | — |
+| `loginByAndroidDeviceId` | `PermissionRulesParam?` | no | — |
+| `loginByApple` | `PermissionRulesParam?` | no | — |
+| `loginByCustomDeviceId` | `PermissionRulesParam?` | no | — |
+| `loginByCustomId` | `PermissionRulesParam?` | no | — |
+| `loginByFacebook` | `PermissionRulesParam?` | no | — |
+| `loginByGenericService` | `PermissionRulesParam?` | no | — |
+| `loginByGoogle` | `PermissionRulesParam?` | no | — |
+| `loginByGooglePlayGameService` | `PermissionRulesParam?` | no | — |
+| `loginByGameCenter` | `PermissionRulesParam?` | no | — |
+| `loginByiOSDeviceId` | `PermissionRulesParam?` | no | — |
+| `loginByWindowsPhoneDeviceId` | `PermissionRulesParam?` | no | — |
+| `registerAccount` | `PermissionRulesParam?` | no | — |
+| `loginByEditorDeviceId` | `PermissionRulesParam?` | no | — |
+| `loginByLinuxDeviceId` | `PermissionRulesParam?` | no | — |
+| `loginByMacOSDeviceId` | `PermissionRulesParam?` | no | — |
+| `loginByWindowsDeviceId` | `PermissionRulesParam?` | no | — |
+| `refreshAuthToken` | `PermissionRulesParam?` | no | — |
 
 ### StoreInventoryPermissionRulesParam
 
@@ -977,20 +983,20 @@ Defines the reusable parameter block StoreInventoryPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `buyStoreItem` | `PermissionRulesParam` | no | — |
-| `getStoreItemInformation` | `PermissionRulesParam` | no | — |
-| `getStoreItemsWithTag` | `PermissionRulesParam` | no | — |
-| `createStoreItem` | `PermissionRulesParam` | no | — |
-| `setRemoveStatus` | `PermissionRulesParam` | no | — |
-| `setStoreItemInformation` | `PermissionRulesParam` | no | — |
-| `validateAppleAppStoreReceipt` | `PermissionRulesParam` | no | — |
-| `validateGooglePlayStoreReceipt` | `PermissionRulesParam` | no | — |
-| `validateFacebookStoreReceipt` | `PermissionRulesParam` | no | — |
-| `getCreateLeaderboard` | `PermissionRulesParam` | no | — |
-| `presentStoreItem` | `PermissionRulesParam` | no | — |
-| `getStoreLog` | `PermissionRulesParam` | no | — |
-| `getStoreUsed` | `PermissionRulesParam` | no | — |
-| `removeStoreUsed` | `PermissionRulesParam` | no | — |
+| `buyStoreItem` | `PermissionRulesParam?` | no | — |
+| `getStoreItemInformation` | `PermissionRulesParam?` | no | — |
+| `getStoreItemsWithTag` | `PermissionRulesParam?` | no | — |
+| `createStoreItem` | `PermissionRulesParam?` | no | — |
+| `setRemoveStatus` | `PermissionRulesParam?` | no | — |
+| `setStoreItemInformation` | `PermissionRulesParam?` | no | — |
+| `validateAppleAppStoreReceipt` | `PermissionRulesParam?` | no | — |
+| `validateGooglePlayStoreReceipt` | `PermissionRulesParam?` | no | — |
+| `validateFacebookStoreReceipt` | `PermissionRulesParam?` | no | — |
+| `getCreateLeaderboard` | `PermissionRulesParam?` | no | — |
+| `presentStoreItem` | `PermissionRulesParam?` | no | — |
+| `getStoreLog` | `PermissionRulesParam?` | no | — |
+| `getStoreUsed` | `PermissionRulesParam?` | no | — |
+| `removeStoreUsed` | `PermissionRulesParam?` | no | — |
 
 ### CloudScriptPermissionRulesParam
 
@@ -999,11 +1005,11 @@ Defines the reusable parameter block CloudScriptPermissionRulesParam.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `executeFunction` | `PermissionRulesParam` | no | — |
-| `addFunction` | `PermissionRulesParam` | no | — |
-| `getFunctions` | `PermissionRulesParam` | no | — |
-| `getFunction` | `PermissionRulesParam` | no | — |
-| `editFunction` | `PermissionRulesParam` | no | — |
+| `executeFunction` | `PermissionRulesParam?` | no | — |
+| `addFunction` | `PermissionRulesParam?` | no | — |
+| `getFunctions` | `PermissionRulesParam?` | no | — |
+| `getFunction` | `PermissionRulesParam?` | no | — |
+| `editFunction` | `PermissionRulesParam?` | no | — |
 
 ### PermissionParam
 
@@ -1012,17 +1018,17 @@ Defines the top-level permission tree assigned to one secret info entry. Each op
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `authenticate` | `AuthenticatePermissionRulesParam` | no | — |
-| `masterPlayer` | `MasterPlayerPermissionRulesParam` | no | — |
-| `gamePlayer` | `GamePlayerPermissionRulesParam` | no | — |
-| `characterPlayer` | `CharacterPlayerPermissionRulesParam` | no | — |
-| `content` | `ContentPermissionRulesParam` | no | — |
-| `group` | `GroupPermissionRulesParam` | no | — |
-| `inventory` | `InventoryPermissionRulesParam` | no | — |
-| `storeInventory` | `StoreInventoryPermissionRulesParam` | no | — |
-| `dashboard` | `DashboardPermissionRulesParam` | no | — |
-| `multiplayer` | `MultiplayerPermissionRulesParam` | no | — |
-| `cloudScript` | `CloudScriptPermissionRulesParam` | no | — |
+| `authenticate` | `AuthenticatePermissionRulesParam?` | no | — |
+| `masterPlayer` | `MasterPlayerPermissionRulesParam?` | no | — |
+| `gamePlayer` | `GamePlayerPermissionRulesParam?` | no | — |
+| `characterPlayer` | `CharacterPlayerPermissionRulesParam?` | no | — |
+| `content` | `ContentPermissionRulesParam?` | no | — |
+| `group` | `GroupPermissionRulesParam?` | no | — |
+| `inventory` | `InventoryPermissionRulesParam?` | no | — |
+| `storeInventory` | `StoreInventoryPermissionRulesParam?` | no | — |
+| `dashboard` | `DashboardPermissionRulesParam?` | no | — |
+| `multiplayer` | `MultiplayerPermissionRulesParam?` | no | — |
+| `cloudScript` | `CloudScriptPermissionRulesParam?` | no | — |
 
 ### ChangePasswordAdminAccountRequestData
 
@@ -1080,7 +1086,11 @@ _Không có field public (payload rỗng)._
 
 Defines the request payload for GetServerLog.
 
-_Không có field public (payload rỗng)._
+<!-- prettier-ignore -->
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `skip` | `number?` | no | Pagination offset. — _default=0, minValue=0, mustInt_ |
+| `limit` | `number?` | no | Page size. — _default=50, minValue=5, maxValue=200, mustInt_ |
 
 ### CreateAdminAccountRequestData
 
@@ -1109,9 +1119,9 @@ Defines the request payload for `createSecretInfo`. `permissionParam` is the aut
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `secretKey` | `string` | yes | Optional custom secret key. If omitted, the backend may generate one. — _minLength=6, maxLength=64_ |
-| `gameId` | `string` | yes | Optional target game id when creating a secret for a specific game. — _minLength=2, maxLength=32_ |
-| `permissionParam` | `PermissionParam` | no | Optional permission tree granted to the new secret key. |
+| `secretKey` | `string?` | no | Optional custom secret key. If omitted, the backend may generate one. — _minLength=6, maxLength=64_ |
+| `gameId` | `string?` | no | Optional target game id when creating a secret for a specific game. — _minLength=2, maxLength=32_ |
+| `permissionParam` | `PermissionParam?` | no | Optional permission tree granted to the new secret key. |
 
 ### LoginByAdminAccountRequestData
 
@@ -1140,11 +1150,11 @@ Defines the request payload for SetGameInformation.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `gameName` | `string` | no | — |
-| `gameDescription` | `string` | no | — |
-| `gameIconUrl` | `string` | no | — |
-| `gameSettings` | `GameSettingsParam` | no | — |
-| `matchmakingQueueSettings` | `Array<MatchmakingQueueSettingsParam>` | no | _elementCls=MatchmakingQueueSettingsParam_ |
+| `gameName` | `string?` | no | — |
+| `gameDescription` | `string?` | no | — |
+| `gameIconUrl` | `string?` | no | — |
+| `gameSettings` | `GameSettingsParam?` | no | — |
+| `matchmakingQueueSettings` | `Array<MatchmakingQueueSettingsParam>?` | no | _elementCls=MatchmakingQueueSettingsParam_ |
 
 ### SetMasterGameSettingsRequestData
 
@@ -1153,10 +1163,10 @@ Defines the request payload for SetMasterGameSettings.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `thirtPartySettings` | `ThirtPartyParam` | no | — |
-| `masterPlayerSettings` | `MasterPlayerSettingsParam` | no | — |
-| `emailSettings` | `EmailSettingsParam` | no | — |
-| `pushNotificationSettings` | `PushNotificationSettingsParam` | no | — |
+| `thirtPartySettings` | `ThirtPartyParam?` | no | — |
+| `masterPlayerSettings` | `MasterPlayerSettingsParam?` | no | — |
+| `emailSettings` | `EmailSettingsParam?` | no | — |
+| `pushNotificationSettings` | `PushNotificationSettingsParam?` | no | — |
 
 ### SetPasswordAdminAccountRequestData
 
@@ -1176,10 +1186,10 @@ Defines the request payload for SetSecretInfoInformation.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `secretKey` | `string` | yes | _minLength=6, maxLength=64_ |
-| `remove` | `boolean` | no | — |
-| `tsExpire` | `number` | no | — |
-| `description` | `string` | no | — |
-| `permissionParam` | `PermissionParam` | no | — |
+| `remove` | `boolean?` | no | — |
+| `tsExpire` | `number?` | no | — |
+| `description` | `string?` | no | — |
+| `permissionParam` | `PermissionParam?` | no | — |
 
 ### SetSecretKeyAdminAccountRequestData
 
@@ -1198,15 +1208,15 @@ Defines the request payload for GetAnalytics.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `timestamp` | `number` | no | _min=0_ |
-| `analyticsItem` | `boolean` | no | — |
-| `country` | `boolean` | no | — |
-| `requestComplete` | `boolean` | no | — |
-| `operationSystem` | `boolean` | no | — |
-| `databaseSystem` | `boolean` | no | — |
-| `logDatabaseSystem` | `boolean` | no | — |
-| `cost` | `boolean` | no | — |
-| `monthlyCost` | `boolean` | no | — |
+| `timestamp` | `number?` | no | _min=0_ |
+| `analyticsItem` | `boolean?` | no | — |
+| `country` | `boolean?` | no | — |
+| `requestComplete` | `boolean?` | no | — |
+| `operationSystem` | `boolean?` | no | — |
+| `databaseSystem` | `boolean?` | no | — |
+| `logDatabaseSystem` | `boolean?` | no | — |
+| `cost` | `boolean?` | no | — |
+| `monthlyCost` | `boolean?` | no | — |
 
 ### GetUsernameAdminAccountRequestData
 
@@ -1244,8 +1254,8 @@ Defines the request payload for ResetStatisticsLeaderboard.
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `version` | `string` | yes | _minLength=2, maxLength=32_ |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `log` | `string?` | no | _minLength=1, maxLength=256_ |
+| `catalogId` | `string?` | no | _minLength=2, maxLength=32_ |
 
 ### DeleteInDatabaseRequestData
 
@@ -1257,7 +1267,7 @@ Defines the request payload for DeleteInDatabase.
 | `type` | `number` | yes | — |
 | `id` | `string` | yes | _minLength=2, maxLength=32_ |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string?` | no | _minLength=1, maxLength=256_ |
 
 ### GetBackupStatisticsLeaderboardVersionRequestData
 
@@ -1278,14 +1288,14 @@ Defines the request payload for GetServerGameData.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `gameId` | `string` | yes | _minLength=2, maxLength=32_ |
-| `masterPlayerCount` | `boolean` | no | — |
-| `gamePlayerCount` | `boolean` | no | — |
-| `characterPlayerCount` | `boolean` | no | — |
-| `inventoryCount` | `boolean` | no | — |
-| `storeInventoryCount` | `boolean` | no | — |
-| `groupCount` | `boolean` | no | — |
-| `country` | `boolean` | no | — |
-| `version` | `boolean` | no | — |
+| `masterPlayerCount` | `boolean?` | no | — |
+| `gamePlayerCount` | `boolean?` | no | — |
+| `characterPlayerCount` | `boolean?` | no | — |
+| `inventoryCount` | `boolean?` | no | — |
+| `storeInventoryCount` | `boolean?` | no | — |
+| `groupCount` | `boolean?` | no | — |
+| `country` | `boolean?` | no | — |
+| `version` | `boolean?` | no | — |
 
 ### AdminAccountResponseData
 
@@ -1433,8 +1443,8 @@ Defines the response payload for CountryRegion.
 | `regionCode` | `string` | yes | — |
 | `regionName` | `string` | yes | — |
 | `ccu` | `number` | yes | — |
-| `latitude` | `number` | no | _default=0_ |
-| `longitude` | `number` | no | _default=0_ |
+| `latitude` | `number?` | no | _default=0_ |
+| `longitude` | `number?` | no | _default=0_ |
 
 ### CountryResponseData
 
@@ -1512,7 +1522,7 @@ Defines the response payload for OperationSystem.
 | --- | --- | --- | --- |
 | `cpuUsage` | `number` | yes | — |
 | `memoryUsage` | `MemoryUsageResponseData` | yes | — |
-| `storageUsage` | `Array<StorageUsageResponseData>` | yes | _elementCls=StorageUsageResponseData_ |
+| `storageUsage` | `Array<StorageUsageResponseData>?` | no | _elementCls=StorageUsageResponseData_ |
 
 ### RequestCompleteErrorCodeResponseData
 
@@ -1532,7 +1542,7 @@ Defines the response payload for RequestComplete.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `eventName` | `string` | yes | — |
-| `results` | `Array<RequestCompleteErrorCodeResponseData>` | yes | _elementCls=RequestCompleteErrorCodeResponseData_ |
+| `results` | `Array<RequestCompleteErrorCodeResponseData>?` | no | _elementCls=RequestCompleteErrorCodeResponseData_ |
 
 ### CostResponseData
 
@@ -1554,14 +1564,14 @@ Defines the response payload for GetAnalytics.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `analyticsItem` | `AnalyticsItemResponseData` | no | — |
-| `country` | `Array<CountryResponseData>` | no | _elementCls=CountryResponseData_ |
-| `operationSystem` | `OperationSystemResponseData` | no | — |
-| `requestComplete` | `Array<RequestCompleteResponseData>` | no | _elementCls=RequestCompleteResponseData_ |
-| `databaseSystem` | `DatabaseSystemResponseData` | no | — |
-| `logDatabaseSystem` | `DatabaseSystemResponseData` | no | — |
-| `cost` | `CostResponseData` | no | — |
-| `monthlyCost` | `CostResponseData` | no | — |
+| `analyticsItem` | `AnalyticsItemResponseData?` | no | — |
+| `country` | `Array<CountryResponseData>?` | no | _elementCls=CountryResponseData_ |
+| `operationSystem` | `OperationSystemResponseData?` | no | — |
+| `requestComplete` | `Array<RequestCompleteResponseData>?` | no | _elementCls=RequestCompleteResponseData_ |
+| `databaseSystem` | `DatabaseSystemResponseData?` | no | — |
+| `logDatabaseSystem` | `DatabaseSystemResponseData?` | no | — |
+| `cost` | `CostResponseData?` | no | — |
+| `monthlyCost` | `CostResponseData?` | no | — |
 
 ### GetUsernameAdminAccountResponseData
 
@@ -1640,14 +1650,14 @@ Defines the response payload for `getServerGameData`. This is a high-level telem
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `masterPlayerCount` | `number` | no | — |
-| `gamePlayerCount` | `number` | no | — |
-| `characterPlayerCount` | `number` | no | — |
-| `inventoryCount` | `number` | no | — |
-| `storeInventoryCount` | `number` | no | — |
-| `groupCount` | `number` | no | — |
-| `country` | `Array<CountryResponseData>` | no | Optional country-level breakdown returned by the backend. — _elementCls=CountryResponseData_ |
-| `version` | `string` | no | Optional server or game-data version string reported by the backend. |
+| `masterPlayerCount` | `number?` | no | — |
+| `gamePlayerCount` | `number?` | no | — |
+| `characterPlayerCount` | `number?` | no | — |
+| `inventoryCount` | `number?` | no | — |
+| `storeInventoryCount` | `number?` | no | — |
+| `groupCount` | `number?` | no | — |
+| `country` | `Array<CountryResponseData>?` | no | Optional country-level breakdown returned by the backend. — _elementCls=CountryResponseData_ |
+| `version` | `string?` | no | Optional server or game-data version string reported by the backend. |
 
 ### EmptyResponseData
 

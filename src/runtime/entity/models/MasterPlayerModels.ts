@@ -149,6 +149,12 @@ export namespace MasterPlayerModels {
         public pushNotifications?: boolean;
 
         /**
+         * Includes the player's online status, if supported by the connected game server
+         */
+        @BooleanDataMember({ code: ParameterCode.OnlineStatus, isOptional: true, defaultValue: false })
+        public onlineStatus?: boolean;
+
+        /**
          * Restricts `playerDatas` to the specified keys when that field is requested.
          */
         @GNArrayDataMember({ code: ParameterCode.PlayerDataKeys, isOptional: true, elementCls: String })
@@ -2834,6 +2840,18 @@ export namespace MasterPlayerModels {
     }
 
     /**
+     * Reports the latest known login timestamp and active socket identity for a player.
+     */
+    export class OnlineStatusItem {
+        @NumberDataMember({ code: ParameterCode.TsLastLogin })
+        public tsLastLogin: number;
+
+        @StringDataMember({ code: ParameterCode.SocketId })
+        public socketId: string;
+
+    }
+
+    /**
      * Contains the optional fields requested through `InfoRequestParam`.
      */
     export class InfoResponseParameters {
@@ -2890,6 +2908,9 @@ export namespace MasterPlayerModels {
          */
         @GNArrayDataMember({ code: ParameterCode.PushNotifications, isOptional: true, elementCls: MasterPlayerModels.PushNotificationItem })
         public pushNotifications?: Array<MasterPlayerModels.PushNotificationItem>;
+
+        @GNHashtableDataMember({ code: ParameterCode.OnlineStatus, isOptional: true })
+        public onlineStatus?: OnlineStatusItem;
 
     }
 
@@ -3200,6 +3221,30 @@ export namespace MasterPlayerModels {
         @StringDataMember({ code: ParameterCode.Message })
         public message: string;
 
+    }
+
+    /**
+     * Defines the request payload for GetOnlineStatus.
+     */
+    export class GetOnlineStatusRequestData {
+        @StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, isOptional: true })
+        public userId?: string;
+
+    }
+
+    /**
+     * Defines the request payload for ServerGetOnlineStatus.
+     */
+    export class ServerGetOnlineStatusRequestData extends GetOnlineStatusRequestData {
+        @StringDataMember({ code: ParameterCode.UserId, minLength: 10, maxLength: 10, mustNonNull: true })
+        public declare userId: string;
+
+    }
+
+    /**
+     * Defines the request payload for AdminGetOnlineStatus.
+     */
+    export class AdminGetOnlineStatusRequestData extends ServerGetOnlineStatusRequestData {
     }
 
     /**

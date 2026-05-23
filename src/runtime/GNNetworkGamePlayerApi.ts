@@ -22,7 +22,7 @@ import { GamePlayerResponseModels } from "./entity/models/GamePlayerResponseMode
  * 1. **Identity & profile** — `getDisplayName`, `setDisplayName`,
  *    `getAvatar`, `setAvatar`, `getCountryCode`,
  *    `getIpAddressCreate`, `getTsCreate`, `getTsLastLogin`,
- *    `getOnlineStatus`, `getPlayerInformation`,
+ *    `getPlayerInformation`,
  *    `getPlayerBan`, `getPlayersWithDisplayName`.
  * 2. **Custom data / tags / segments** — `getCustomData`,
  *    `setCustomData`, `getTag`, `setTag`, `getSegment`,
@@ -206,20 +206,6 @@ export class GamePlayerApi {
      */
     public async getIpAddressCreateAsync(requestData: GamePlayerModels.GetIpAddressCreateRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.GetIpAddressCreateOperationResponse> {
         return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.GetIpAddressCreateOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetIpAddressCreateOperationResponse);
-    }
-
-    /**
-     * Sends the getOnlineStatus operation and returns the typed response via callback.
-     */
-    public getOnlineStatus(requestData: GamePlayerModels.GetOnlineStatusRequestData, onResponse: Action1<GamePlayerResponseModels.GetOnlineStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new GamePlayerRequestModels.GetOnlineStatusOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetOnlineStatusOperationResponse);
-    }
-
-    /**
-     * Sends the getOnlineStatus operation and resolves with the typed response.
-     */
-    public async getOnlineStatusAsync(requestData: GamePlayerModels.GetOnlineStatusRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.GetOnlineStatusOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.GetOnlineStatusOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetOnlineStatusOperationResponse);
     }
 
     /**
@@ -954,20 +940,6 @@ export class ServerGamePlayerApi {
     }
 
     /**
-     * Sends the getOnlineStatus operation and returns the typed response via callback.
-     */
-    public getOnlineStatus(requestData: GamePlayerModels.ServerGetOnlineStatusRequestData, onResponse: Action1<GamePlayerResponseModels.GetOnlineStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new GamePlayerRequestModels.ServerGetOnlineStatusOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetOnlineStatusOperationResponse);
-    }
-
-    /**
-     * Sends the getOnlineStatus operation and resolves with the typed response.
-     */
-    public async getOnlineStatusAsync(requestData: GamePlayerModels.ServerGetOnlineStatusRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.GetOnlineStatusOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.ServerGetOnlineStatusOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetOnlineStatusOperationResponse);
-    }
-
-    /**
      * Sends the getPlayerBan operation and returns the typed response via callback.
      */
     public getPlayerBan(requestData: GamePlayerModels.ServerGetPlayerBanRequestData, onResponse: Action1<GamePlayerResponseModels.GetPlayerBanOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
@@ -1694,20 +1666,6 @@ export class AdminGamePlayerApi {
      */
     public async getIpAddressCreateAsync(requestData: GamePlayerModels.AdminGetIpAddressCreateRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.GetIpAddressCreateOperationResponse> {
         return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.AdminGetIpAddressCreateOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetIpAddressCreateOperationResponse);
-    }
-
-    /**
-     * Sends the getOnlineStatus operation and returns the typed response via callback.
-     */
-    public getOnlineStatus(requestData: GamePlayerModels.AdminGetOnlineStatusRequestData, onResponse: Action1<GamePlayerResponseModels.GetOnlineStatusOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new GamePlayerRequestModels.AdminGetOnlineStatusOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetOnlineStatusOperationResponse);
-    }
-
-    /**
-     * Sends the getOnlineStatus operation and resolves with the typed response.
-     */
-    public async getOnlineStatusAsync(requestData: GamePlayerModels.AdminGetOnlineStatusRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<GamePlayerResponseModels.GetOnlineStatusOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new GamePlayerRequestModels.AdminGetOnlineStatusOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, GamePlayerResponseModels.GetOnlineStatusOperationResponse);
     }
 
     /**

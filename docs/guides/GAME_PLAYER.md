@@ -50,7 +50,6 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - `InfoRequestParam` cũng có các field filter cùng tên để điều khiển payload của flow tổng hợp hoặc search; không được trộn lẫn getter chuyên biệt với `infoRequestParam`.
 - `getPlayersWithDisplayNameAsync`, `getPlayersWithSegmentAsync`, `getPlayersWithTagAsync` và các leaderboard dùng `skip/limit`.
 - `getCurrencyLogAsync` và `getStatisticsLogAsync` phân trang bằng `token`, không dùng `skip`.
-- `getOnlineStatusAsync` trả `socketId` và `tsLastLogin`, không trả boolean `isOnline`.
 - `addPlayerFriendAsync` bắt buộc có cả `friendId` và `catalogId`.
 - `ServerGetPlayerInformationRequestData` và `AdminGetPlayerInformationRequestData` có thêm `createPlayerIfNotExists`; `client` không có quyền này.
 - `createGroupAsync`, `createPlayerCharacterAsync`, `createPlayerItemAsync` không có contract public riêng để trả `groupId`, `characterId`, `itemId` vừa tạo.
@@ -73,11 +72,9 @@ Realtime rule:
 - Muốn nhận event realtime, tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow).
 - `OnGamePlayerFriendUpdateEventHandler.onUpdate`:
     - payload có `playerFriends`
-    - có thể có `characterId`
     - không có `userId`
 - `OnGamePlayerGroupUpdateEventHandler.onUpdate`:
     - payload có `playerGroups`
-    - có thể có `characterId`
     - không có `userId`
 
 ## 4. Chọn Namespace
@@ -108,7 +105,6 @@ Rule nhanh:
 | `getCustomDataAsync` | Cần đọc custom data | `userId?`, `customDataKeys?` | `GamePlayerResponseData` | Có thể filter theo key | `Ok`, `GamePlayerNotFound` |
 | `getDisplayNameAsync` | Cần đọc display name | `userId?` | `GamePlayerResponseData` | Kết quả ở `infoResponseParameters.displayName` | `Ok`, `GamePlayerNotFound` |
 | `getIpAddressCreateAsync` | Cần đọc IP lúc tạo player | `userId?` | `GamePlayerResponseData` | Trường này thường nhạy cảm, ưu tiên backend/admin | `Ok`, `GamePlayerNotFound` |
-| `getOnlineStatusAsync` | Cần biết trạng thái socket hiện tại | `userId?` | `OnlineStatusResponseData` | Payload là `socketId` và `tsLastLogin`, không có `infoResponseParameters` | `Ok`, `GamePlayerNotFound` |
 | `getPlayerBanAsync` | Cần đọc trạng thái ban | `userId?` | `GamePlayerResponseData` | Kết quả ở `infoResponseParameters.playerBan` | `Ok`, `GamePlayerNotFound` |
 | `getPlayerCharacterAsync` | Cần đọc relation character của player | `userId?`, `characterCatalogIds?` | `GamePlayerResponseData` | Mỗi phần tử chỉ có `characterId`, `catalogId` | `Ok`, `GamePlayerNotFound` |
 | `getPlayerCurrencyAsync` | Cần đọc currency | `userId?`, `playerCurrencyKeys?` | `GamePlayerResponseData` | Không dùng `infoRequestParam` | `Ok`, `GamePlayerNotFound` |
@@ -179,6 +175,8 @@ Rule nhanh:
 - DTO fields: [reference/dto/GAME_PLAYER.md](/docs/reference/dto/GAME_PLAYER.md). Method table: [reference/API_GAME_PLAYER.md](/docs/reference/API_GAME_PLAYER.md).
 - Events: [reference/EVENTS.md](/docs/reference/EVENTS.md#ongameplayerfriendupdateeventhandler).
 - Enums: [FriendStatus](/docs/reference/ENUMS.md#friendstatus), [GroupStatus](/docs/reference/ENUMS.md#groupstatus).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/GamePlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `GenericModels.FriendItem.status` nên map bằng `FriendStatus`.
 - `GenericModels.GroupItem.status` nên map bằng `GroupStatus`.
@@ -255,30 +253,29 @@ Các field thường dùng:
 
 ## 9. Response Rules
 
-Tất cả typed response của `GamePlayerApi` đều có:
+Tất cả typed response của `GamePlayerApi` đều có public fields: `returnCode`, `debugMessage`, `invalidMembers`, `errorCode`, `responseData`.
 
-- `returnCode`
-- `debugMessage`
-- `invalidMembers`
-- `errorCode`
-- `responseData`
-
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 
 - Hầu hết getter đơn lẻ trả `GamePlayerResponseData` và dữ liệu nằm trong `responseData.infoResponseParameters`.
-- `getOnlineStatusAsync` trả `OnlineStatusResponseData`, không có `infoResponseParameters`.
 - `getPlayersWithDisplayNameAsync`, `getPlayersWithSegmentAsync`, `getPlayersWithTagAsync` trả `GamePlayersWithUserIdResponseData`, mỗi phần tử có `userId` và `infoResponseParameters`.
 - `getFriendStatisticsLeaderboard*Async` và `getStatisticsLeaderboard*Async` trả `GetStatisticsLeaderboardResponseData`.
 - `getStatisticsLeaderboardAsync` còn có thêm `responseData.tsCreate`.
@@ -298,7 +295,6 @@ Những response chính AI cần nhớ:
 - `createGroupAsync`, `createPlayerCharacterAsync`, `createPlayerItemAsync` hiện không có response field public riêng cho id vừa tạo.
 - Nếu flow sau đó cần id mới, bạn phải re-query hoặc verify backend contract riêng.
 - Public event payload của `OnGamePlayerFriendUpdateEventHandler` và `OnGamePlayerGroupUpdateEventHandler` không có `userId`.
-- `getOnlineStatusAsync` không trả boolean `isOnline`; bạn phải tự diễn giải từ `socketId` theo contract backend thực tế.
 - `ServerGetPlayerInformationRequestData` và `AdminGetPlayerInformationRequestData` mới có `createPlayerIfNotExists`; `client` không có field này.
 - `setAvatarAsync` và `avatar.type` vẫn dùng số thô, chưa có enum public tương ứng.
 
@@ -443,7 +439,6 @@ const inventoryRelations = inventoryResponse.responseData.infoResponseParameters
 - Không dùng `playerStatisticsKeys` thay cho `statisticsKeys` của `getPlayerStatisticsAsync`.
 - Không dùng `skip` để phân trang log.
 - Không dùng `token` để phân trang search hoặc leaderboard.
-- Không giả định `getOnlineStatusAsync` trả boolean.
 - Không giả định `createGroupAsync`, `createPlayerCharacterAsync`, `createPlayerItemAsync` luôn trả id mới tạo trong response.
 - Không bỏ qua kiểm tra `hasReturnCodeError()` và `errorCode`.
 
@@ -456,6 +451,5 @@ const inventoryRelations = inventoryResponse.responseData.infoResponseParameters
 - Nếu method yêu cầu `infoRequestParam`, đã truyền object này chưa.
 - Nếu đang đọc relation nhẹ, có cần API chuyên biệt để lấy full metadata không.
 - Nếu đang làm friend/group realtime, đã tuân theo [rule socket chuẩn trong RULES](/docs/RULES.md#7-auth--socket-flow) chưa.
-- Nếu đang dùng `getOnlineStatusAsync`, có nhớ rằng response không có boolean `isOnline` không.
 - Nếu đang tạo player/item/group/character và cần id mới, đã chuẩn bị bước re-query chưa.
 - Có kiểm tra `hasReturnCodeError()` trước `errorCode` chưa.

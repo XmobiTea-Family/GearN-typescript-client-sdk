@@ -4,9 +4,17 @@ Matchmaking ticket lifecycle, queue statistics, match query.
 
 Related API reference: [API_MULTIPLAYER.md](/docs/reference/API_MULTIPLAYER.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new MultiplayerModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Variant `Server`/`Admin` thường thêm field bắt buộc như `userId`/`ticketId`. Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
+
+> **Lưu ý transport**: Multiplayer dùng HTTP, không qua socket. Flow: create ticket → poll `getMatchmakingTicket` → `getMatch`. Xem [RULES § 10 #10](/docs/RULES.md#10-anti-patterns--pitfalls).
+
+> Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
+
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
 
 ## Danh sách
 
@@ -120,6 +128,8 @@ Extends: `CancelAllMatchmakingTicketRequestData`
 
 Defines the request payload for ServerCancelAllMatchmakingTicket.
 
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `CancelAllMatchmakingTicketRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
@@ -131,7 +141,7 @@ Extends: `ServerCancelAllMatchmakingTicketRequestData`
 
 Defines the request payload for AdminCancelAllMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCancelAllMatchmakingTicketRequestData` (bao gồm `userId` required)._
 
 ### CancelMatchmakingTicketRequestData
 
@@ -148,6 +158,8 @@ Extends: `CancelMatchmakingTicketRequestData`
 
 Defines the request payload for ServerCancelMatchmakingTicket.
 
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `CancelMatchmakingTicketRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
@@ -159,7 +171,7 @@ Extends: `ServerCancelMatchmakingTicketRequestData`
 
 Defines the request payload for AdminCancelMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCancelMatchmakingTicketRequestData` (bao gồm `userId` required)._
 
 ### CreateMatchmakingTicketRequestData
 
@@ -170,14 +182,16 @@ Creates a new matchmaking ticket for the current or target player.
 | --- | --- | --- | --- |
 | `giveUpAfterSeconds` | `number` | yes | Maximum wait time before the ticket gives up. — _min=20_ |
 | `queueName` | `string` | yes | _minLength=6, maxLength=32_ |
-| `attribute` | `GNHashtable` | no | Backend-defined matchmaking attribute payload. |
-| `members` | `Array<string>` | no | Optional extra members joined into the same matchmaking party. — _elementCls=String_ |
+| `attribute` | `GNHashtable?` | no | Backend-defined matchmaking attribute payload. |
+| `members` | `Array<string>?` | no | Optional extra members joined into the same matchmaking party. — _elementCls=String_ |
 
 ### ServerCreateMatchmakingTicketRequestData
 
 Extends: `CreateMatchmakingTicketRequestData`
 
 Defines the request payload for ServerCreateMatchmakingTicket.
+
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `CreateMatchmakingTicketRequestData`._
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
@@ -190,7 +204,7 @@ Extends: `ServerCreateMatchmakingTicketRequestData`
 
 Defines the request payload for AdminCreateMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerCreateMatchmakingTicketRequestData` (bao gồm `userId` required)._
 
 ### GetMatchmakingTicketRequestData
 
@@ -200,7 +214,7 @@ Polls the current state of one matchmaking ticket.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `ticketId` | `string` | yes | _minLength=10, maxLength=10_ |
-| `returnMember` | `boolean` | no | Requests member details in addition to the ticket summary. — _default=false_ |
+| `returnMember` | `boolean?` | no | Requests member details in addition to the ticket summary. — _default=false_ |
 
 ### ServerGetMatchmakingTicketRequestData
 
@@ -208,7 +222,7 @@ Extends: `GetMatchmakingTicketRequestData`
 
 Defines the request payload for ServerGetMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetMatchmakingTicketRequestData`._
 
 ### AdminGetMatchmakingTicketRequestData
 
@@ -216,7 +230,7 @@ Extends: `ServerGetMatchmakingTicketRequestData`
 
 Defines the request payload for AdminGetMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetMatchmakingTicketRequestData`._
 
 ### GetMatchRequestData
 
@@ -226,7 +240,7 @@ Reads a match after matchmaking has produced a `matchId`.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `matchId` | `string` | yes | _minLength=15, maxLength=15_ |
-| `returnMember` | `boolean` | no | Requests member details in addition to the match summary. — _default=false_ |
+| `returnMember` | `boolean?` | no | Requests member details in addition to the match summary. — _default=false_ |
 
 ### ServerGetMatchRequestData
 
@@ -234,7 +248,7 @@ Extends: `GetMatchRequestData`
 
 Defines the request payload for ServerGetMatch.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetMatchRequestData`._
 
 ### AdminGetMatchRequestData
 
@@ -242,7 +256,7 @@ Extends: `ServerGetMatchRequestData`
 
 Defines the request payload for AdminGetMatch.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetMatchRequestData`._
 
 ### GetAllMatchRequestData
 
@@ -251,9 +265,9 @@ Defines the request payload for GetAllMatch.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `returnMember` | `boolean` | no | _default=false_ |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `returnMember` | `boolean?` | no | _default=false_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetAllMatchRequestData
 
@@ -261,7 +275,7 @@ Extends: `GetAllMatchRequestData`
 
 Defines the request payload for ServerGetAllMatch.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetAllMatchRequestData`._
 
 ### AdminGetAllMatchRequestData
 
@@ -269,7 +283,7 @@ Extends: `ServerGetAllMatchRequestData`
 
 Defines the request payload for AdminGetAllMatch.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAllMatchRequestData`._
 
 ### GetAllMatchmakingTicketRequestData
 
@@ -278,10 +292,10 @@ Lists matchmaking tickets with optional status filtering.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `status` | `number` | no | Ticket status filter mapped by the public `MatchmakingTicketStatus` enum. — _min=1, max=5_ |
-| `returnMember` | `boolean` | no | _default=false_ |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `status` | `number?` | no | Ticket status filter mapped by the public `MatchmakingTicketStatus` enum. — _min=1, max=5_ |
+| `returnMember` | `boolean?` | no | _default=false_ |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetAllMatchmakingTicketRequestData
 
@@ -289,7 +303,7 @@ Extends: `GetAllMatchmakingTicketRequestData`
 
 Defines the request payload for ServerGetAllMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetAllMatchmakingTicketRequestData`._
 
 ### AdminGetAllMatchmakingTicketRequestData
 
@@ -297,7 +311,7 @@ Extends: `ServerGetAllMatchmakingTicketRequestData`
 
 Defines the request payload for AdminGetAllMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAllMatchmakingTicketRequestData`._
 
 ### GetQueueStatisticsRequestData
 
@@ -315,7 +329,7 @@ Extends: `GetQueueStatisticsRequestData`
 
 Defines the request payload for ServerGetQueueStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetQueueStatisticsRequestData`._
 
 ### AdminGetQueueStatisticsRequestData
 
@@ -323,7 +337,7 @@ Extends: `ServerGetQueueStatisticsRequestData`
 
 Defines the request payload for AdminGetQueueStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetQueueStatisticsRequestData`._
 
 ### JoinMatchmakingTicketRequestData
 
@@ -333,13 +347,15 @@ Defines the request payload for JoinMatchmakingTicket.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `ticketId` | `string` | yes | _minLength=10, maxLength=10_ |
-| `attribute` | `GNHashtable` | no | — |
+| `attribute` | `GNHashtable?` | no | Matchmaking attributes for the joining member (e.g. skill rating, region). |
 
 ### ServerJoinMatchmakingTicketRequestData
 
 Extends: `JoinMatchmakingTicketRequestData`
 
 Defines the request payload for ServerJoinMatchmakingTicket.
+
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `JoinMatchmakingTicketRequestData`._
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
@@ -352,7 +368,7 @@ Extends: `ServerJoinMatchmakingTicketRequestData`
 
 Defines the request payload for AdminJoinMatchmakingTicket.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerJoinMatchmakingTicketRequestData` (bao gồm `userId` required)._
 
 ### ListMatchmakingTicketsForPlayerRequestData
 
@@ -369,6 +385,8 @@ Extends: `ListMatchmakingTicketsForPlayerRequestData`
 
 Defines the request payload for ServerListMatchmakingTicketsForPlayer.
 
+_Khai báo thêm field `userId`; các field còn lại kế thừa từ `ListMatchmakingTicketsForPlayerRequestData`._
+
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
@@ -380,7 +398,7 @@ Extends: `ServerListMatchmakingTicketsForPlayerRequestData`
 
 Defines the request payload for AdminListMatchmakingTicketsForPlayer.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerListMatchmakingTicketsForPlayerRequestData` (bao gồm `userId` required)._
 
 ### CancelAllMatchmakingTicketResponseData
 
@@ -398,7 +416,7 @@ Defines the response payload for CreateMatchmakingTicket.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `ticketId` | `string` | yes | — |
+| `ticketId` | `string` | yes | Ticket ID of the newly created matchmaking ticket. |
 
 ### MatchmakingTicketMember
 
@@ -409,7 +427,7 @@ Describes one member attached to a matchmaking ticket.
 | --- | --- | --- | --- |
 | `userId` | `string` | yes | _minLength=10, maxLength=10_ |
 | `status` | `number` | yes | Member status value defined by backend matchmaking semantics. |
-| `attribute` | `GNHashtable` | yes | — |
+| `attribute` | `GNHashtable` | yes | Matchmaking attributes for this member (e.g. skill rating, region). |
 
 ### MatchmakingTicketResponseData
 
@@ -418,13 +436,13 @@ Describes the current state of a matchmaking ticket.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `tsCreate` | `number` | yes | — |
-| `creatorId` | `string` | yes | _minLength=10, maxLength=10_ |
-| `giveUpAfterSeconds` | `number` | yes | — |
+| `tsCreate` | `number` | yes | Creation timestamp of the matchmaking ticket. |
+| `creatorId` | `string` | yes | User ID of the player who created the ticket. — _minLength=10, maxLength=10_ |
+| `giveUpAfterSeconds` | `number` | yes | Maximum wait time in seconds before the ticket gives up. |
 | `queueName` | `string` | yes | _minLength=6, maxLength=32_ |
 | `status` | `number` | yes | Ticket status mapped by the public `MatchmakingTicketStatus` enum. |
-| `matchId` | `string` | no | _minLength=15, maxLength=15_ |
-| `members` | `Array<MatchmakingTicketMember>` | no | _elementCls=MatchmakingTicketMember_ |
+| `matchId` | `string?` | no | Match ID assigned when the ticket is successfully matched. — _minLength=15, maxLength=15_ |
+| `members` | `Array<MatchmakingTicketMember>?` | no | Members included in this matchmaking party. — _elementCls=MatchmakingTicketMember_ |
 
 ### MatchmakingTicketWithTicketIdResponseData
 
@@ -435,7 +453,7 @@ Defines the response payload for MatchmakingTicketWithTicketId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `ticketId` | `string` | yes | — |
+| `ticketId` | `string` | yes | Ticket identifier for this matchmaking ticket. |
 
 ### GetMatchmakingTicketResponseData
 
@@ -444,7 +462,7 @@ Defines the response payload for GetMatchmakingTicket.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `matchmakingTicket` | `MatchmakingTicketResponseData` | yes | — |
+| `matchmakingTicket` | `MatchmakingTicketResponseData` | yes | Current state snapshot of the requested matchmaking ticket. |
 
 ### MatchMember
 
@@ -454,30 +472,30 @@ Describes one member attached to a resolved match.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `userId` | `string` | yes | _minLength=10, maxLength=10_ |
-| `teamId` | `string` | yes | — |
-| `attribute` | `GNHashtable` | yes | — |
+| `teamId` | `string` | yes | Team identifier assigned to this member by the matchmaking algorithm. |
+| `attribute` | `GNHashtable` | yes | Matchmaking attributes of this member at the time of match resolution. |
 
 ### PortInfo
 
-Represents PortInfo.
+Represents one port mapping exposed by a game server.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `name` | `string` | yes | — |
-| `publicPort` | `number` | yes | _min=0_ |
-| `privatePort` | `number` | yes | _min=0_ |
-| `protocol` | `number` | yes | _min=1, max=2_ |
+| `name` | `string` | yes | Port label used to identify the service (e.g. `game`, `voice`). |
+| `publicPort` | `number` | yes | Public port number exposed to players. — _min=0_ |
+| `privatePort` | `number` | yes | Internal port number used by the server process. — _min=0_ |
+| `protocol` | `number` | yes | Transport protocol (1=UDP, 2=TCP). — _min=1, max=2_ |
 
 ### ServerDetail
 
-Represents ServerDetail.
+Represents connection details for a dedicated game server.
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `ipV4Address` | `string` | yes | — |
-| `ports` | `Array<PortInfo>` | yes | _elementCls=PortInfo_ |
+| `ipV4Address` | `string` | yes | Public IPv4 address of the game server. |
+| `ports` | `Array<PortInfo>` | yes | List of port mappings exposed by the game server. — _elementCls=PortInfo_ |
 
 ### MatchResponseData
 
@@ -486,10 +504,11 @@ Describes one resolved match. The public contract exposes queue/member data but 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `tsCreate` | `number` | yes | — |
-| `queueName` | `string` | yes | _minLength=6, maxLength=32_ |
-| `members` | `Array<MatchMember>` | no | _elementCls=MatchMember_ |
-| `timeToMatchInSeconds` | `number` | yes | — |
+| `tsCreate` | `number` | yes | Creation timestamp of the match. |
+| `queueName` | `string` | yes | Name of the matchmaking queue that produced this match. — _minLength=6, maxLength=32_ |
+| `members` | `Array<MatchMember>?` | no | List of players assigned to this match. — _elementCls=MatchMember_ |
+| `timeToMatchInSeconds` | `number` | yes | Elapsed time in seconds from ticket creation to match resolution. |
+| `status` | `number` | yes | Match status mapped by the public `MatchStatus` enum. |
 
 ### MatchWithMatchIdResponseData
 
@@ -500,7 +519,7 @@ Defines the response payload for MatchWithMatchId.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `matchId` | `string` | yes | — |
+| `matchId` | `string` | yes | Unique match identifier. |
 
 ### GetMatchResponseData
 
@@ -509,7 +528,7 @@ Defines the response payload for GetMatch.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `match` | `MatchResponseData` | yes | — |
+| `match` | `MatchResponseData` | yes | Full snapshot of the requested match. |
 
 ### GetQueueStatisticsResponseData
 
@@ -518,9 +537,9 @@ Defines the response payload for GetQueueStatistics.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `pendingMemberCount` | `number` | yes | — |
-| `pendingTicketCount` | `number` | yes | — |
-| `averageMatchmakingTimeInSeconds` | `number` | yes | — |
+| `pendingMemberCount` | `number` | yes | Number of individual players currently waiting in this queue. |
+| `pendingTicketCount` | `number` | yes | Number of active matchmaking tickets currently waiting in this queue. |
+| `averageMatchmakingTimeInSeconds` | `number` | yes | Rolling average time in seconds for recent successful match formations. |
 
 ### ListMatchmakingTicketsForPlayerResponseData
 
@@ -529,7 +548,7 @@ Defines the response payload for ListMatchmakingTicketsForPlayer.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `ticketIds` | `Array<string>` | yes | _elementCls=String_ |
+| `ticketIds` | `Array<string>` | yes | List of active ticket IDs for the requested player. — _elementCls=String_ |
 
 ### GetAllMatchResponseData
 
@@ -538,7 +557,7 @@ Defines the response payload for GetAllMatch.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `results` | `Array<MatchWithMatchIdResponseData>` | yes | _elementCls=MatchWithMatchIdResponseData_ |
+| `results` | `Array<MatchWithMatchIdResponseData>?` | no | List of all matches with their match IDs. — _elementCls=MatchWithMatchIdResponseData_ |
 
 ### GetAllMatchmakingTicketResponseData
 
@@ -547,7 +566,7 @@ Defines the response payload for GetAllMatchmakingTicket.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `results` | `Array<MatchmakingTicketWithTicketIdResponseData>` | yes | _elementCls=MatchmakingTicketWithTicketIdResponseData_ |
+| `results` | `Array<MatchmakingTicketWithTicketIdResponseData>?` | no | List of all matchmaking tickets with their ticket IDs. — _elementCls=MatchmakingTicketWithTicketIdResponseData_ |
 
 ### EmptyResponseData
 

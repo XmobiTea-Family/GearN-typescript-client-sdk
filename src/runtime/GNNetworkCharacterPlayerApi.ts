@@ -18,7 +18,7 @@ import { CharacterPlayerResponseModels } from "./entity/models/CharacterPlayerRe
  *
  * 1. **Identity & profile** — `getDisplayName`,
  *    `setDisplayName`, `getAvatar`, `setAvatar`,
- *    `getCharacterInformation`, `getOnlineStatus`,
+ *    `getCharacterInformation`,
  *    `getTsCreate`, `getTsLastLogin`, `getCharacterBan`.
  * 2. **Custom data / tags / segments** — `getCustomData`,
  *    `setCustomData`, `getTag`, `setTag`, `getSegment`,

@@ -2,7 +2,11 @@
 
 Store catalog, buy/present, receipt validation, store log.
 
-Domain guide: [guides/STORE_INVENTORY.md](/docs/guides/STORE_INVENTORY.md). DTO shapes: [dto/STORE_INVENTORY.md](/docs/reference/dto/STORE_INVENTORY.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/STORE_INVENTORY.md](/docs/guides/STORE_INVENTORY.md)
+- DTO shapes: [dto/STORE_INVENTORY.md](/docs/reference/dto/STORE_INVENTORY.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 

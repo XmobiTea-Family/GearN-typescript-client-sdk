@@ -4,9 +4,17 @@ CloudScript function add/edit/execute + version/listing.
 
 Related API reference: [API_CLOUDSCRIPT.md](/docs/reference/API_CLOUDSCRIPT.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new CloudScriptModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
+
+> **Pitfall**: Muốn đổi source code của function → dùng `addFunctionAsync` tạo version mới, KHÔNG dùng `editFunctionAsync` (chỉ đổi flag/metadata). Xem [RULES § 10 #9](/docs/RULES.md#10-anti-patterns--pitfalls).
+
+> Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
+
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
 
 ## Danh sách
 
@@ -120,10 +128,10 @@ Executes one function from the selected CloudScript version.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `userId` | `string` | no | Optional self-target shortcut on the client route; trusted routes require it through derived classes. — _minLength=10, maxLength=10_ |
+| `userId` | `string?` | no | Optional self-target shortcut on the client route; trusted routes require it through derived classes. — _minLength=10, maxLength=10_ |
 | `functionName` | `string` | yes | Function name inside the script version, not the version identifier itself. — _minLength=3, maxLength=30_ |
-| `functionParameters` | `any` | no | Arbitrary payload forwarded to the CloudScript function. |
-| `version` | `string` | no | Optional version override; when omitted, backend execution rules decide which live version is used. — _minLength=7, maxLength=7_ |
+| `functionParameters` | `any` | yes | Arbitrary payload forwarded to the CloudScript function. You can use `null` for `functionParameters`. |
+| `version` | `string?` | no | Optional version override; when omitted, backend execution rules decide which live version is used. — _minLength=7, maxLength=7_ |
 
 ### ServerExecuteFunctionRequestData
 
@@ -178,7 +186,7 @@ Extends: `GetFunctionsRequestData`
 
 Defines the request payload for ServerGetFunctions.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetFunctionsRequestData`._
 
 ### AdminGetFunctionsRequestData
 
@@ -186,7 +194,7 @@ Extends: `ServerGetFunctionsRequestData`
 
 Defines the request payload for AdminGetFunctions.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetFunctionsRequestData`._
 
 ### AddFunctionResponseData
 
@@ -195,8 +203,8 @@ Returns the created version plus backend validation feedback.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `version` | `string` | yes | — |
-| `errorMessage` | `string` | yes | — |
+| `version` | `string` | yes | Version identifier assigned by the backend for the newly created CloudScript (format: 7 characters). |
+| `errorMessage` | `string` | yes | Error message when the script failed validation; empty string on success. |
 
 ### EditFunctionResponseData
 
@@ -205,7 +213,7 @@ Returns backend validation feedback for an edit workflow.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `errorMessage` | `string` | yes | — |
+| `errorMessage` | `string` | yes | Error message when the edit operation failed; empty string on success. |
 
 ### ExecuteFunctionResponseData
 
@@ -214,11 +222,11 @@ Returns runtime telemetry and function output for one execution.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `status` | `number` | yes | Raw execution status code returned by the backend. The public package does not currently expose a dedicated enum for this field. |
-| `executionTimeInMs` | `number` | yes | — |
-| `memoryUsedInBytes` | `number` | yes | — |
-| `functionResult` | `any` | yes | Arbitrary function return value. |
-| `errorMessage` | `string` | yes | — |
+| `status` | `number` | yes | Raw execution status code returned by the backend. This field map with enum `ExecuteResponseStatus`. |
+| `executionTimeInMs` | `number` | yes | Execution duration in milliseconds. |
+| `memoryUsedInBytes` | `number` | yes | Memory consumed during the function execution in bytes. |
+| `functionResult` | `any` | yes | Arbitrary function return value as returned by the handler. |
+| `errorMessage` | `string` | yes | Error message when the function threw an exception; empty string on success. |
 | `functionLogs` | `Array<string>` | yes | Ordered execution logs captured during the function run. — _elementCls=String_ |
 
 ### GetFunctionResponseData
@@ -228,10 +236,10 @@ Returns one full CloudScript version snapshot.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `script` | `string` | yes | — |
-| `canExecute` | `boolean` | yes | — |
-| `isLive` | `boolean` | yes | — |
-| `tsCreate` | `number` | yes | — |
+| `script` | `string` | yes | Raw CloudScript source code for this version. |
+| `canExecute` | `boolean` | yes | Whether this version is permitted to execute. |
+| `isLive` | `boolean` | yes | Whether this version is promoted as the live version. |
+| `tsCreate` | `number` | yes | Creation timestamp of this CloudScript version. |
 
 ### FunctionResponseData
 
@@ -240,8 +248,8 @@ Describes one lightweight function-version summary.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `version` | `string` | yes | — |
-| `canExecute` | `boolean` | yes | — |
+| `version` | `string` | yes | Version identifier of this CloudScript version (7-character string). |
+| `canExecute` | `boolean` | yes | Whether this version is permitted to execute. |
 
 ### GetFunctionsResponseData
 
@@ -250,9 +258,9 @@ Returns the available function-version list plus latest/live pointers.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `results` | `Array<FunctionResponseData>` | yes | _elementCls=FunctionResponseData_ |
-| `latestVersion` | `string` | yes | — |
-| `liveLatestVersion` | `string` | yes | — |
+| `results` | `Array<FunctionResponseData>` | yes | List of all CloudScript version summaries for this game. — _elementCls=FunctionResponseData_ |
+| `latestVersion` | `string` | yes | Version identifier of the most recently added CloudScript version. |
+| `liveLatestVersion` | `string` | yes | Version identifier of the most recently promoted live version. |
 
 ## Namespace `CloudScriptRequestModels`
 

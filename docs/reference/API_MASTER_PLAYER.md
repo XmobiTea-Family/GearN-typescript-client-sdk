@@ -2,7 +2,11 @@
 
 Master-player account: identity linking, profile, contact info, external providers.
 
-Domain guide: [guides/MASTER_PLAYER.md](/docs/guides/MASTER_PLAYER.md). DTO shapes: [dto/MASTER_PLAYER.md](/docs/reference/dto/MASTER_PLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/MASTER_PLAYER.md](/docs/guides/MASTER_PLAYER.md)
+- DTO shapes: [dto/MASTER_PLAYER.md](/docs/reference/dto/MASTER_PLAYER.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 
@@ -127,6 +131,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `removePushNotification` | `MasterPlayerModels.RemovePushNotificationRequestData` | `removePushNotificationAsync(...)` | `MasterPlayerResponseModels.RemovePushNotificationOperationResponse` | `masterPlayer.removePushNotification.selfEnable` | `masterPlayer.removePushNotification.otherSelfEnable` |
 | `getPushNotification` | `MasterPlayerModels.GetPushNotificationRequestData` | `getPushNotificationAsync(...)` | `MasterPlayerResponseModels.GetPushNotificationOperationResponse` | `masterPlayer.getPushNotification.selfEnable` | `masterPlayer.getPushNotification.otherSelfEnable` |
 | `sendPushNotification` | `MasterPlayerModels.SendPushNotificationRequestData` | `sendPushNotificationAsync(...)` | `MasterPlayerResponseModels.SendPushNotificationOperationResponse` | `masterPlayer.sendPushNotification.selfEnable` | `masterPlayer.sendPushNotification.otherSelfEnable` |
+| `getOnlineStatus` | `MasterPlayerModels.GetOnlineStatusRequestData` | `getOnlineStatusAsync(...)` | `MasterPlayerResponseModels.GetOnlineStatusOperationResponse` | `masterPlayer.getOnlineStatus.selfEnable` | `masterPlayer.getOnlineStatus.otherSelfEnable` |
 
 ## Server methods (`GNNetwork.masterPlayer.server.*`)
 
@@ -218,6 +223,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `removePushNotification` | `MasterPlayerModels.ServerRemovePushNotificationRequestData` | `removePushNotificationAsync(...)` | `MasterPlayerResponseModels.RemovePushNotificationOperationResponse` | `masterPlayer.removePushNotification.serverSelfEnable` |
 | `getPushNotification` | `MasterPlayerModels.ServerGetPushNotificationRequestData` | `getPushNotificationAsync(...)` | `MasterPlayerResponseModels.GetPushNotificationOperationResponse` | `masterPlayer.getPushNotification.serverSelfEnable` |
 | `sendPushNotification` | `MasterPlayerModels.ServerSendPushNotificationRequestData` | `sendPushNotificationAsync(...)` | `MasterPlayerResponseModels.SendPushNotificationOperationResponse` | `masterPlayer.sendPushNotification.serverSelfEnable` |
+| `getOnlineStatus` | `MasterPlayerModels.ServerGetOnlineStatusRequestData` | `getOnlineStatusAsync(...)` | `MasterPlayerResponseModels.GetOnlineStatusOperationResponse` | `masterPlayer.getOnlineStatus.serverSelfEnable` |
 
 ## Admin methods (`GNNetwork.masterPlayer.admin.*`)
 
@@ -309,6 +315,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `removePushNotification` | `MasterPlayerModels.AdminRemovePushNotificationRequestData` | `removePushNotificationAsync(...)` | `MasterPlayerResponseModels.RemovePushNotificationOperationResponse` | `masterPlayer.removePushNotification.adminSelfEnable` |
 | `getPushNotification` | `MasterPlayerModels.AdminGetPushNotificationRequestData` | `getPushNotificationAsync(...)` | `MasterPlayerResponseModels.GetPushNotificationOperationResponse` | `masterPlayer.getPushNotification.adminSelfEnable` |
 | `sendPushNotification` | `MasterPlayerModels.AdminSendPushNotificationRequestData` | `sendPushNotificationAsync(...)` | `MasterPlayerResponseModels.SendPushNotificationOperationResponse` | `masterPlayer.sendPushNotification.adminSelfEnable` |
+| `getOnlineStatus` | `MasterPlayerModels.AdminGetOnlineStatusRequestData` | `getOnlineStatusAsync(...)` | `MasterPlayerResponseModels.GetOnlineStatusOperationResponse` | `masterPlayer.getOnlineStatus.adminSelfEnable` |
 
 ## Ví dụ tối thiểu
 

@@ -2,7 +2,11 @@
 
 Player login (account, social, device id), register, refresh auth token.
 
-Domain guide: [guides/AUTHENTICATE.md](/docs/guides/AUTHENTICATE.md). DTO shapes: [dto/AUTHENTICATE.md](/docs/reference/dto/AUTHENTICATE.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/AUTHENTICATE.md](/docs/guides/AUTHENTICATE.md)
+- DTO shapes: [dto/AUTHENTICATE.md](/docs/reference/dto/AUTHENTICATE.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 

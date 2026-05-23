@@ -4,9 +4,15 @@ Inventory item metadata, ownership, amount, statistics, activity log.
 
 Related API reference: [API_INVENTORY.md](/docs/reference/API_INVENTORY.md).
 
-Mỗi section bên dưới là 1 class DTO trong namespace `<Models>`. Field table cho biết: tên field, TS type, có `required` hay không (suy từ decorator `mustNonNull` / `isOptional` / dấu `?` trong declaration), doc comment, và ràng buộc length/range/default nếu có.
+Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, TS type, `required`/optional, doc comment, ràng buộc length/range/default.
 
-> **Cách dùng**: khi gọi `*Async()`, bạn truyền object literal matching các field required (+ optional nếu cần). SDK sẽ serialize field dựa trên decorator `@<Type>DataMember({ code })`. Response class expose `responseData` là instance của class `*ResponseData` tương ứng, đọc theo field name dưới đây.
+> **Cách dùng**: khi gọi `*Async()`, bạn truyền instance DTO (`new InventoryModels.<Method>RequestData()`) với các field required (+ optional nếu cần). Response class expose `responseData` là instance của class `*ResponseData` tương ứng. Không dùng object literal cast — xem [RULES § 8.1](/docs/RULES.md#81-build-request-dto-trong-code-copy-paste).
+
+> **Naming pattern**: Mỗi method có 3 variant DTO — `XxxRequestData` (client), `ServerXxxRequestData` (server), `AdminXxxRequestData` (admin). Variant `Server`/`Admin` thường thêm field bắt buộc như `userId`/`inventoryId`. Khi tìm DTO cho một route cụ thể, nhảy thẳng tới section `[Server|Admin]XxxRequestData` tương ứng — không cần đọc cả 3.
+
+> Nếu cần sử dụng `GNArray` hoặc `GNHashtable` đọc [GNDATA.md](/docs/reference/GNDATA.md)
+
+> **Operation base**: Nếu class `*OperationRequest` extends `CustomOperationRequestAbstract<TRequestData>` hoặc class `*OperationResponse` extends `CustomOperationResponseAbstract<TResponseData>`, xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) để hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, và `responseDataCls`.
 
 ## Danh sách
 
@@ -278,7 +284,7 @@ Defines the reusable parameter block CustomDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this custom data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### InfoRequestParam
 
@@ -287,24 +293,24 @@ Selects which optional inventory fields should be returned in `infoResponseParam
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `catalogId` | `boolean` | no | Includes the catalog ID from which this inventory item was created. — _default=false_ |
-| `classId` | `boolean` | no | Includes the class ID of the inventory item. — _default=false_ |
-| `itemType` | `boolean` | no | Includes the item type mapped by the public `ItemType` enum. — _default=false_ |
-| `amount` | `boolean` | no | Includes the current item amount. — _default=false_ |
-| `owner` | `boolean` | no | Includes the current owner descriptor. — _default=false_ |
-| `removeStatus` | `boolean` | no | _default=false_ |
-| `segments` | `boolean` | no | _default=false_ |
-| `customDatas` | `boolean` | no | _default=false_ |
-| `displayName` | `boolean` | no | _default=false_ |
-| `avatar` | `boolean` | no | _default=false_ |
-| `tsCreate` | `boolean` | no | _default=false_ |
-| `tags` | `boolean` | no | _default=false_ |
-| `itemStatistics` | `boolean` | no | _default=false_ |
-| `itemDatas` | `boolean` | no | _default=false_ |
-| `itemDataKeys` | `Array<string>` | no | Restricts `itemDatas` to the specified keys when that field is requested. — _elementCls=String_ |
-| `itemStatisticsKeys` | `Array<string>` | no | Restricts `itemStatistics` to the specified statistic keys when that field is requested. — _elementCls=String_ |
-| `customDataKeys` | `Array<string>` | no | _elementCls=String_ |
-| `tagKeys` | `Array<string>` | no | _elementCls=String_ |
+| `catalogId` | `boolean?` | no | Includes the catalog ID from which this inventory item was created. — _default=false_ |
+| `classId` | `boolean?` | no | Includes the class ID of the inventory item. — _default=false_ |
+| `itemType` | `boolean?` | no | Includes the item type mapped by the public `ItemType` enum. — _default=false_ |
+| `amount` | `boolean?` | no | Includes the current item amount. — _default=false_ |
+| `owner` | `boolean?` | no | Includes the current owner descriptor. — _default=false_ |
+| `removeStatus` | `boolean?` | no | Includes soft-remove metadata for the item. — _default=false_ |
+| `segments` | `boolean?` | no | Includes segment names assigned to the item. — _default=false_ |
+| `customDatas` | `boolean?` | no | Includes custom data entries, optionally filtered by `customDataKeys`. — _default=false_ |
+| `displayName` | `boolean?` | no | Includes the item's display name. — _default=false_ |
+| `avatar` | `boolean?` | no | Includes the item's avatar descriptor. — _default=false_ |
+| `tsCreate` | `boolean?` | no | Includes the item creation timestamp. — _default=false_ |
+| `tags` | `boolean?` | no | Includes tag entries, optionally filtered by `tagKeys`. — _default=false_ |
+| `itemStatistics` | `boolean?` | no | Includes item statistics values, optionally filtered by `itemStatisticsKeys`. — _default=false_ |
+| `itemDatas` | `boolean?` | no | Includes item data entries, optionally filtered by `itemDataKeys`. — _default=false_ |
+| `itemDataKeys` | `Array<string>?` | no | Restricts `itemDatas` to the specified keys when that field is requested. — _elementCls=String_ |
+| `itemStatisticsKeys` | `Array<string>?` | no | Restricts `itemStatistics` to the specified statistic keys when that field is requested. — _elementCls=String_ |
+| `customDataKeys` | `Array<string>?` | no | Restricts `customDatas` to the specified keys when that field is requested. — _elementCls=String_ |
+| `tagKeys` | `Array<string>?` | no | Restricts `tags` to the specified tag keys when that field is requested. — _elementCls=String_ |
 
 ### ItemDataParam
 
@@ -314,7 +320,7 @@ Defines the reusable parameter block ItemDataParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `any` | yes | — |
+| `value` | `any` | yes | Arbitrary value to store for this item data key. May be a primitive, `GNHashtable`, or `GNArray`. |
 
 ### ItemStatisticsParam
 
@@ -324,7 +330,7 @@ Defines the reusable parameter block ItemStatisticsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `value` | `number` | yes | — |
+| `value` | `number` | yes | Statistic value to apply; interpretation depends on the configured aggregation method. |
 
 ### AddSegmentRequestData
 
@@ -342,7 +348,7 @@ Extends: `AddSegmentRequestData`
 
 Defines the request payload for ServerAddSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `AddSegmentRequestData`._
 
 ### AdminAddSegmentRequestData
 
@@ -350,7 +356,7 @@ Extends: `ServerAddSegmentRequestData`
 
 Defines the request payload for AdminAddSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerAddSegmentRequestData`._
 
 ### GetAmountRequestData
 
@@ -367,7 +373,7 @@ Extends: `GetAmountRequestData`
 
 Defines the request payload for ServerGetAmount.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetAmountRequestData`._
 
 ### AdminGetAmountRequestData
 
@@ -375,7 +381,7 @@ Extends: `ServerGetAmountRequestData`
 
 Defines the request payload for AdminGetAmount.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAmountRequestData`._
 
 ### GetAvatarRequestData
 
@@ -392,7 +398,7 @@ Extends: `GetAvatarRequestData`
 
 Defines the request payload for ServerGetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetAvatarRequestData`._
 
 ### AdminGetAvatarRequestData
 
@@ -400,7 +406,7 @@ Extends: `ServerGetAvatarRequestData`
 
 Defines the request payload for AdminGetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetAvatarRequestData`._
 
 ### GetCatalogIdRequestData
 
@@ -417,7 +423,7 @@ Extends: `GetCatalogIdRequestData`
 
 Defines the request payload for ServerGetCatalogId.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCatalogIdRequestData`._
 
 ### AdminGetCatalogIdRequestData
 
@@ -425,7 +431,7 @@ Extends: `ServerGetCatalogIdRequestData`
 
 Defines the request payload for AdminGetCatalogId.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCatalogIdRequestData`._
 
 ### GetClassIdRequestData
 
@@ -442,7 +448,7 @@ Extends: `GetClassIdRequestData`
 
 Defines the request payload for ServerGetClassId.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetClassIdRequestData`._
 
 ### AdminGetClassIdRequestData
 
@@ -450,7 +456,7 @@ Extends: `ServerGetClassIdRequestData`
 
 Defines the request payload for AdminGetClassId.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetClassIdRequestData`._
 
 ### GetCustomDataRequestData
 
@@ -460,7 +466,7 @@ Defines the request payload for GetCustomData.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `customDataKeys` | `Array<string>` | no | _elementCls=String_ |
+| `customDataKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetCustomDataRequestData
 
@@ -468,7 +474,7 @@ Extends: `GetCustomDataRequestData`
 
 Defines the request payload for ServerGetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCustomDataRequestData`._
 
 ### AdminGetCustomDataRequestData
 
@@ -476,7 +482,7 @@ Extends: `ServerGetCustomDataRequestData`
 
 Defines the request payload for AdminGetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCustomDataRequestData`._
 
 ### GetDisplayNameRequestData
 
@@ -493,7 +499,7 @@ Extends: `GetDisplayNameRequestData`
 
 Defines the request payload for ServerGetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetDisplayNameRequestData`._
 
 ### AdminGetDisplayNameRequestData
 
@@ -501,7 +507,7 @@ Extends: `ServerGetDisplayNameRequestData`
 
 Defines the request payload for AdminGetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetDisplayNameRequestData`._
 
 ### GetItemDataRequestData
 
@@ -511,7 +517,7 @@ Defines the request payload for GetItemData.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `itemDataKeys` | `Array<string>` | no | _elementCls=String_ |
+| `itemDataKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetItemDataRequestData
 
@@ -519,7 +525,7 @@ Extends: `GetItemDataRequestData`
 
 Defines the request payload for ServerGetItemData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemDataRequestData`._
 
 ### AdminGetItemDataRequestData
 
@@ -527,7 +533,7 @@ Extends: `ServerGetItemDataRequestData`
 
 Defines the request payload for AdminGetItemData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemDataRequestData`._
 
 ### GetItemInformationRequestData
 
@@ -537,7 +543,7 @@ Defines the request payload for GetItemInformation.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional inventory item fields are included in the response. |
 
 ### ServerGetItemInformationRequestData
 
@@ -545,7 +551,7 @@ Extends: `GetItemInformationRequestData`
 
 Defines the request payload for ServerGetItemInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemInformationRequestData`._
 
 ### AdminGetItemInformationRequestData
 
@@ -553,7 +559,7 @@ Extends: `ServerGetItemInformationRequestData`
 
 Defines the request payload for AdminGetItemInformation.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemInformationRequestData`._
 
 ### GetItemStatisticsRequestData
 
@@ -563,7 +569,7 @@ Reads statistics for one inventory item. Note that this request uses `statistics
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `statisticsKeys` | `Array<string>` | no | _elementCls=String_ |
+| `statisticsKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetItemStatisticsRequestData
 
@@ -571,7 +577,7 @@ Extends: `GetItemStatisticsRequestData`
 
 Defines the request payload for ServerGetItemStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemStatisticsRequestData`._
 
 ### AdminGetItemStatisticsRequestData
 
@@ -579,7 +585,7 @@ Extends: `ServerGetItemStatisticsRequestData`
 
 Defines the request payload for AdminGetItemStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemStatisticsRequestData`._
 
 ### GetItemsWithDisplayNameRequestData
 
@@ -589,9 +595,9 @@ Defines the request payload for GetItemsWithDisplayName.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `keyword` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional inventory item fields are included in the response. |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetItemsWithDisplayNameRequestData
 
@@ -599,7 +605,7 @@ Extends: `GetItemsWithDisplayNameRequestData`
 
 Defines the request payload for ServerGetItemsWithDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemsWithDisplayNameRequestData`._
 
 ### AdminGetItemsWithDisplayNameRequestData
 
@@ -607,7 +613,7 @@ Extends: `ServerGetItemsWithDisplayNameRequestData`
 
 Defines the request payload for AdminGetItemsWithDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemsWithDisplayNameRequestData`._
 
 ### GetItemsWithSegmentRequestData
 
@@ -617,9 +623,9 @@ Defines the request payload for GetItemsWithSegment.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional inventory item fields are included in the response. |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetItemsWithSegmentRequestData
 
@@ -627,7 +633,7 @@ Extends: `GetItemsWithSegmentRequestData`
 
 Defines the request payload for ServerGetItemsWithSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemsWithSegmentRequestData`._
 
 ### AdminGetItemsWithSegmentRequestData
 
@@ -635,7 +641,7 @@ Extends: `ServerGetItemsWithSegmentRequestData`
 
 Defines the request payload for AdminGetItemsWithSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemsWithSegmentRequestData`._
 
 ### GetItemsWithTagRequestData
 
@@ -646,9 +652,9 @@ Defines the request payload for GetItemsWithTag.
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
 | `value` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional inventory item fields are included in the response. |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
 
 ### ServerGetItemsWithTagRequestData
 
@@ -656,7 +662,7 @@ Extends: `GetItemsWithTagRequestData`
 
 Defines the request payload for ServerGetItemsWithTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemsWithTagRequestData`._
 
 ### AdminGetItemsWithTagRequestData
 
@@ -664,7 +670,7 @@ Extends: `ServerGetItemsWithTagRequestData`
 
 Defines the request payload for AdminGetItemsWithTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemsWithTagRequestData`._
 
 ### GetItemTypeRequestData
 
@@ -681,7 +687,7 @@ Extends: `GetItemTypeRequestData`
 
 Defines the request payload for ServerGetItemType.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetItemTypeRequestData`._
 
 ### AdminGetItemTypeRequestData
 
@@ -689,7 +695,7 @@ Extends: `ServerGetItemTypeRequestData`
 
 Defines the request payload for AdminGetItemType.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetItemTypeRequestData`._
 
 ### GetOwnerRequestData
 
@@ -706,7 +712,7 @@ Extends: `GetOwnerRequestData`
 
 Defines the request payload for ServerGetOwner.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetOwnerRequestData`._
 
 ### AdminGetOwnerRequestData
 
@@ -714,7 +720,7 @@ Extends: `ServerGetOwnerRequestData`
 
 Defines the request payload for AdminGetOwner.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetOwnerRequestData`._
 
 ### GetRemoveStatusRequestData
 
@@ -731,7 +737,7 @@ Extends: `GetRemoveStatusRequestData`
 
 Defines the request payload for ServerGetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetRemoveStatusRequestData`._
 
 ### AdminGetRemoveStatusRequestData
 
@@ -739,7 +745,7 @@ Extends: `ServerGetRemoveStatusRequestData`
 
 Defines the request payload for AdminGetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetRemoveStatusRequestData`._
 
 ### GetSegmentRequestData
 
@@ -756,7 +762,7 @@ Extends: `GetSegmentRequestData`
 
 Defines the request payload for ServerGetSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetSegmentRequestData`._
 
 ### AdminGetSegmentRequestData
 
@@ -764,7 +770,7 @@ Extends: `ServerGetSegmentRequestData`
 
 Defines the request payload for AdminGetSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetSegmentRequestData`._
 
 ### GetStatisticsLeaderboardAroundItemRequestData
 
@@ -775,11 +781,11 @@ Defines the request payload for GetStatisticsLeaderboardAroundItem.
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional inventory item fields are included in the response. |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
+| `catalogId` | `string?` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardAroundItemRequestData
 
@@ -787,7 +793,7 @@ Extends: `GetStatisticsLeaderboardAroundItemRequestData`
 
 Defines the request payload for ServerGetStatisticsLeaderboardAroundItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStatisticsLeaderboardAroundItemRequestData`._
 
 ### AdminGetStatisticsLeaderboardAroundItemRequestData
 
@@ -795,7 +801,7 @@ Extends: `ServerGetStatisticsLeaderboardAroundItemRequestData`
 
 Defines the request payload for AdminGetStatisticsLeaderboardAroundItem.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLeaderboardAroundItemRequestData`._
 
 ### GetStatisticsLeaderboardRequestData
 
@@ -805,12 +811,12 @@ Defines the request payload for GetStatisticsLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `key` | `string` | yes | _minLength=2, maxLength=32_ |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
-| `version` | `string` | yes | _minLength=2, maxLength=32_ |
-| `catalogId` | `string` | yes | _minLength=2, maxLength=32_ |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional inventory item fields are included in the response. |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
+| `version` | `string?` | no | _minLength=2, maxLength=32_ |
+| `catalogId` | `string?` | no | _minLength=2, maxLength=32_ |
 
 ### ServerGetStatisticsLeaderboardRequestData
 
@@ -818,7 +824,7 @@ Extends: `GetStatisticsLeaderboardRequestData`
 
 Defines the request payload for ServerGetStatisticsLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStatisticsLeaderboardRequestData`._
 
 ### AdminGetStatisticsLeaderboardRequestData
 
@@ -826,7 +832,7 @@ Extends: `ServerGetStatisticsLeaderboardRequestData`
 
 Defines the request payload for AdminGetStatisticsLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLeaderboardRequestData`._
 
 ### GetCreateLeaderboardRequestData
 
@@ -835,10 +841,10 @@ Defines the request payload for GetCreateLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `infoRequestParam` | `InfoRequestParam` | yes | — |
-| `skip` | `number` | no | _min=0, default=0_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `loadFromCache` | `boolean` | no | _default=true_ |
+| `infoRequestParam` | `InfoRequestParam` | yes | Controls which optional inventory item fields are included in the response. |
+| `skip` | `number?` | no | _min=0, default=0_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `loadFromCache` | `boolean?` | no | _default=true_ |
 
 ### ServerGetCreateLeaderboardRequestData
 
@@ -846,7 +852,7 @@ Extends: `GetCreateLeaderboardRequestData`
 
 Defines the request payload for ServerGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetCreateLeaderboardRequestData`._
 
 ### AdminGetCreateLeaderboardRequestData
 
@@ -854,7 +860,7 @@ Extends: `ServerGetCreateLeaderboardRequestData`
 
 Defines the request payload for AdminGetCreateLeaderboard.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetCreateLeaderboardRequestData`._
 
 ### GetTagRequestData
 
@@ -864,7 +870,7 @@ Defines the request payload for GetTag.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `tagKeys` | `Array<string>` | no | _elementCls=String_ |
+| `tagKeys` | `Array<string>?` | no | _elementCls=String_ |
 
 ### ServerGetTagRequestData
 
@@ -872,7 +878,7 @@ Extends: `GetTagRequestData`
 
 Defines the request payload for ServerGetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetTagRequestData`._
 
 ### AdminGetTagRequestData
 
@@ -880,7 +886,7 @@ Extends: `ServerGetTagRequestData`
 
 Defines the request payload for AdminGetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetTagRequestData`._
 
 ### GetTsCreateRequestData
 
@@ -897,7 +903,7 @@ Extends: `GetTsCreateRequestData`
 
 Defines the request payload for ServerGetTsCreate.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetTsCreateRequestData`._
 
 ### AdminGetTsCreateRequestData
 
@@ -905,7 +911,7 @@ Extends: `ServerGetTsCreateRequestData`
 
 Defines the request payload for AdminGetTsCreate.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetTsCreateRequestData`._
 
 ### RemoveSegmentRequestData
 
@@ -923,7 +929,7 @@ Extends: `RemoveSegmentRequestData`
 
 Defines the request payload for ServerRemoveSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `RemoveSegmentRequestData`._
 
 ### AdminRemoveSegmentRequestData
 
@@ -931,7 +937,7 @@ Extends: `ServerRemoveSegmentRequestData`
 
 Defines the request payload for AdminRemoveSegment.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveSegmentRequestData`._
 
 ### RemoveTagRequestData
 
@@ -949,7 +955,7 @@ Extends: `RemoveTagRequestData`
 
 Defines the request payload for ServerRemoveTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `RemoveTagRequestData`._
 
 ### AdminRemoveTagRequestData
 
@@ -957,7 +963,7 @@ Extends: `ServerRemoveTagRequestData`
 
 Defines the request payload for AdminRemoveTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveTagRequestData`._
 
 ### SetAmountRequestData
 
@@ -967,7 +973,7 @@ Replaces the stored amount with an absolute value. Use `ChangeItemStatistics` fo
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `amount` | `number` | yes | — |
+| `amount` | `number` | yes | Absolute item amount to set (replaces the current value, not a delta). |
 
 ### ServerSetAmountRequestData
 
@@ -975,7 +981,7 @@ Extends: `SetAmountRequestData`
 
 Defines the request payload for ServerSetAmount.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetAmountRequestData`._
 
 ### AdminSetAmountRequestData
 
@@ -983,7 +989,7 @@ Extends: `ServerSetAmountRequestData`
 
 Defines the request payload for AdminSetAmount.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetAmountRequestData`._
 
 ### SetAvatarRequestData
 
@@ -993,8 +999,8 @@ Defines the request payload for SetAvatar.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `type` | `number` | yes | — |
-| `value` | `string` | yes | _minLength=1, maxLength=128_ |
+| `type` | `number` | yes | App-defined avatar type integer; not mapped to a built-in GearN enum. |
+| `value` | `string` | yes | Avatar value such as a URL, file ID, or provider-specific string. — _minLength=1, maxLength=128_ |
 
 ### ServerSetAvatarRequestData
 
@@ -1002,7 +1008,7 @@ Extends: `SetAvatarRequestData`
 
 Defines the request payload for ServerSetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetAvatarRequestData`._
 
 ### AdminSetAvatarRequestData
 
@@ -1010,7 +1016,7 @@ Extends: `ServerSetAvatarRequestData`
 
 Defines the request payload for AdminSetAvatar.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetAvatarRequestData`._
 
 ### SetCustomDataRequestData
 
@@ -1028,7 +1034,7 @@ Extends: `SetCustomDataRequestData`
 
 Defines the request payload for ServerSetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetCustomDataRequestData`._
 
 ### AdminSetCustomDataRequestData
 
@@ -1036,7 +1042,7 @@ Extends: `ServerSetCustomDataRequestData`
 
 Defines the request payload for AdminSetCustomData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetCustomDataRequestData`._
 
 ### SetDisplayNameRequestData
 
@@ -1054,7 +1060,7 @@ Extends: `SetDisplayNameRequestData`
 
 Defines the request payload for ServerSetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetDisplayNameRequestData`._
 
 ### AdminSetDisplayNameRequestData
 
@@ -1062,7 +1068,7 @@ Extends: `ServerSetDisplayNameRequestData`
 
 Defines the request payload for AdminSetDisplayName.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetDisplayNameRequestData`._
 
 ### SetItemDataRequestData
 
@@ -1080,7 +1086,7 @@ Extends: `SetItemDataRequestData`
 
 Defines the request payload for ServerSetItemData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetItemDataRequestData`._
 
 ### AdminSetItemDataRequestData
 
@@ -1088,7 +1094,7 @@ Extends: `ServerSetItemDataRequestData`
 
 Defines the request payload for AdminSetItemData.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetItemDataRequestData`._
 
 ### ChangeItemStatisticsRequestData
 
@@ -1099,7 +1105,7 @@ Applies delta updates to one or more item statistics.
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
 | `itemStatistics` | `Array<ItemStatisticsParam>` | yes | _minLength=1, maxLength=32, elementCls=ItemStatisticsParam_ |
-| `log` | `string` | yes | _minLength=1, maxLength=256_ |
+| `log` | `string?` | no | _minLength=1, maxLength=256_ |
 
 ### ServerChangeItemStatisticsRequestData
 
@@ -1107,7 +1113,7 @@ Extends: `ChangeItemStatisticsRequestData`
 
 Defines the request payload for ServerChangeItemStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ChangeItemStatisticsRequestData`._
 
 ### AdminChangeItemStatisticsRequestData
 
@@ -1115,7 +1121,7 @@ Extends: `ServerChangeItemStatisticsRequestData`
 
 Defines the request payload for AdminChangeItemStatistics.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerChangeItemStatisticsRequestData`._
 
 ### SetOwnerRequestData
 
@@ -1134,7 +1140,7 @@ Extends: `SetOwnerRequestData`
 
 Defines the request payload for ServerSetOwner.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetOwnerRequestData`._
 
 ### AdminSetOwnerRequestData
 
@@ -1142,7 +1148,7 @@ Extends: `ServerSetOwnerRequestData`
 
 Defines the request payload for AdminSetOwner.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetOwnerRequestData`._
 
 ### SetRemoveStatusRequestData
 
@@ -1152,7 +1158,7 @@ Defines the request payload for SetRemoveStatus.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `reason` | `string` | no | _default=""_ |
+| `reason` | `string?` | no | _default=""_ |
 
 ### ServerSetRemoveStatusRequestData
 
@@ -1160,7 +1166,7 @@ Extends: `SetRemoveStatusRequestData`
 
 Defines the request payload for ServerSetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetRemoveStatusRequestData`._
 
 ### AdminSetRemoveStatusRequestData
 
@@ -1168,7 +1174,7 @@ Extends: `ServerSetRemoveStatusRequestData`
 
 Defines the request payload for AdminSetRemoveStatus.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetRemoveStatusRequestData`._
 
 ### SetTagRequestData
 
@@ -1187,7 +1193,7 @@ Extends: `SetTagRequestData`
 
 Defines the request payload for ServerSetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `SetTagRequestData`._
 
 ### AdminSetTagRequestData
 
@@ -1195,7 +1201,7 @@ Extends: `ServerSetTagRequestData`
 
 Defines the request payload for AdminSetTag.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetTagRequestData`._
 
 ### GetStatisticsLogRequestData
 
@@ -1204,10 +1210,10 @@ Reads statistic change logs for one inventory item. Pagination is token-based ra
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `keys` | `Array<string>` | yes | _minLength=1, maxLength=32, elementCls=String_ |
-| `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `limit` | `number` | no | _min=1, max=100, default=10_ |
-| `token` | `string` | yes | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
+| `keys` | `Array<string>?` | no | _minLength=1, maxLength=32, elementCls=String_ |
+| `itemId` | `string?` | no | _minLength=12, maxLength=12_ |
+| `limit` | `number?` | no | _min=1, max=100, default=10_ |
+| `token` | `string?` | no | Continuation token returned by the previous page. — _minLength=24, maxLength=24_ |
 
 ### ServerGetStatisticsLogRequestData
 
@@ -1215,7 +1221,7 @@ Extends: `GetStatisticsLogRequestData`
 
 Defines the request payload for ServerGetStatisticsLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `GetStatisticsLogRequestData`._
 
 ### AdminGetStatisticsLogRequestData
 
@@ -1223,7 +1229,7 @@ Extends: `ServerGetStatisticsLogRequestData`
 
 Defines the request payload for AdminGetStatisticsLog.
 
-_Không có field public (payload rỗng)._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerGetStatisticsLogRequestData`._
 
 ### InfoResponseParameters
 
@@ -1232,20 +1238,20 @@ Contains the optional fields requested through `InfoRequestParam`.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `catalogId` | `string` | no | — |
-| `classId` | `string` | no | — |
-| `itemType` | `number` | no | — |
-| `amount` | `number` | no | — |
-| `owner` | `GenericModels.OwnerItem` | no | Owner descriptor mapped by the public `OwnerType` enum. |
-| `removeStatus` | `GenericModels.RemoveStatusItem` | no | — |
-| `segments` | `Array<string>` | no | _elementCls=String_ |
-| `customDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `displayName` | `string` | no | — |
-| `avatar` | `GenericModels.AvatarItem` | no | — |
-| `tsCreate` | `number` | no | — |
-| `tags` | `Array<GenericModels.TagItem>` | no | _elementCls=GenericModels.TagItem_ |
-| `itemDatas` | `Array<GenericModels.DataItem>` | no | _elementCls=GenericModels.DataItem_ |
-| `itemStatistics` | `Array<GenericModels.StatisticsItem>` | no | _elementCls=GenericModels.StatisticsItem_ |
+| `catalogId` | `string?` | no | Catalog ID the item belongs to; present when requested. |
+| `classId` | `string?` | no | Class ID of the item; present when requested. |
+| `itemType` | `number?` | no | Item type mapped by the public `ItemType` enum; present when requested. |
+| `amount` | `number?` | no | Current item amount; present when requested. |
+| `owner` | `GenericModels.OwnerItem?` | no | Owner descriptor mapped by the public `OwnerType` enum. |
+| `removeStatus` | `GenericModels.RemoveStatusItem?` | no | Soft-remove metadata; present when the item has been marked for removal. |
+| `segments` | `Array<string>?` | no | Segment names assigned to the item. — _elementCls=String_ |
+| `customDatas` | `Array<GenericModels.DataItem>?` | no | Custom data entries; present when `customDatas` is enabled in `InfoRequestParam`. — _elementCls=GenericModels.DataItem_ |
+| `displayName` | `string?` | no | Display name of the item; present when requested. |
+| `avatar` | `GenericModels.AvatarItem?` | no | Avatar descriptor of the item; present when requested. |
+| `tsCreate` | `number?` | no | Creation timestamp of the item; present when requested. |
+| `tags` | `Array<GenericModels.TagItem>?` | no | Tag entries assigned to the item. — _elementCls=GenericModels.TagItem_ |
+| `itemDatas` | `Array<GenericModels.DataItem>?` | no | Item data entries; present when `itemDatas` is enabled. — _elementCls=GenericModels.DataItem_ |
+| `itemStatistics` | `Array<GenericModels.StatisticsItem>?` | no | Item statistics values; present when `itemStatistics` is enabled. — _elementCls=GenericModels.StatisticsItem_ |
 
 ### InventoryResponseData
 
@@ -1265,7 +1271,7 @@ Inventory envelope that also exposes the resolved item ID.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `itemId` | `string` | yes | — |
+| `itemId` | `string` | yes | Inventory item identifier. |
 
 ### InventoryLeaderboardResponseData
 
@@ -1276,8 +1282,8 @@ Defines the response payload for InventoryLeaderboard.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `position` | `number` | yes | — |
-| `backupValue` | `number` | no | — |
+| `position` | `number` | yes | Zero-based leaderboard rank position of this inventory item. |
+| `backupValue` | `number?` | no | Backup statistic value used as a tiebreaker when present. |
 
 ### InventoryLogResponseData
 
@@ -1286,13 +1292,13 @@ Describes one inventory-statistics change log entry.
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
-| `itemId` | `string` | yes | — |
-| `tsCreate` | `number` | yes | — |
-| `log` | `string` | yes | — |
-| `key` | `string` | yes | — |
-| `amount` | `number` | yes | — |
-| `startValue` | `number` | yes | — |
-| `finalValue` | `number` | yes | — |
+| `itemId` | `string` | yes | Inventory item ID this log entry belongs to. |
+| `tsCreate` | `number` | yes | Timestamp when this log entry was recorded. |
+| `log` | `string` | yes | Human-readable log message describing the change. |
+| `key` | `string` | yes | Statistics key that was changed. |
+| `amount` | `number` | yes | Delta amount applied in this change. |
+| `startValue` | `number` | yes | Value before the change was applied. |
+| `finalValue` | `number` | yes | Value after the change was applied. |
 
 ### GetStatisticsLeaderboardResponseData
 
@@ -1302,7 +1308,7 @@ Defines the response payload for GetStatisticsLeaderboard.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<InventoryLeaderboardResponseData>` | yes | _elementCls=InventoryLeaderboardResponseData_ |
-| `tsCreate` | `number` | no | — |
+| `tsCreate` | `number?` | no | Snapshot timestamp used for this leaderboard page when returned by the backend. |
 
 ### InventoriesWithItemIdResponseData
 
@@ -1330,7 +1336,7 @@ Returns one page of inventory statistics logs.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `results` | `Array<InventoryLogResponseData>` | yes | _elementCls=InventoryLogResponseData_ |
-| `token` | `string` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
+| `token` | `string?` | no | Continuation token for the next page, or `undefined` when pagination is exhausted. |
 
 ### EmptyResponseData
 

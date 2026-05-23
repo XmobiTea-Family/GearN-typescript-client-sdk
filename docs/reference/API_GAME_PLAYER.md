@@ -2,7 +2,11 @@
 
 Game-player profile, friend/group relation, currency, statistics, segment, tag, social identity.
 
-Domain guide: [guides/GAME_PLAYER.md](/docs/guides/GAME_PLAYER.md). DTO shapes: [dto/GAME_PLAYER.md](/docs/reference/dto/GAME_PLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/GAME_PLAYER.md](/docs/guides/GAME_PLAYER.md)
+- DTO shapes: [dto/GAME_PLAYER.md](/docs/reference/dto/GAME_PLAYER.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 
@@ -34,7 +38,7 @@ Param chung:
 | `customTags` | `GNHashtable` | yes | Tags gắn vào request, backend có thể log/route |
 | `timeout` | `number` | yes | Timeout giây; default = `OperationRequest.defaultTimeOut` |
 
-Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](ERROR_HANDLING.md).
+Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 ## Client methods (`GNNetwork.gamePlayer.*`)
 
@@ -50,7 +54,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getFriendStatisticsLeaderboardAroundPlayer` | `GamePlayerModels.GetFriendStatisticsLeaderboardAroundPlayerRequestData` | `getFriendStatisticsLeaderboardAroundPlayerAsync(...)` | `GamePlayerResponseModels.GetFriendStatisticsLeaderboardAroundPlayerOperationResponse` | `gamePlayer.getFriendStatisticsLeaderboardAroundPlayer.selfEnable` | `gamePlayer.getFriendStatisticsLeaderboardAroundPlayer.otherSelfEnable` |
 | `getFriendStatisticsLeaderboard` | `GamePlayerModels.GetFriendStatisticsLeaderboardRequestData` | `getFriendStatisticsLeaderboardAsync(...)` | `GamePlayerResponseModels.GetFriendStatisticsLeaderboardOperationResponse` | `gamePlayer.getFriendStatisticsLeaderboard.selfEnable` | `gamePlayer.getFriendStatisticsLeaderboard.otherSelfEnable` |
 | `getIpAddressCreate` | `GamePlayerModels.GetIpAddressCreateRequestData` | `getIpAddressCreateAsync(...)` | `GamePlayerResponseModels.GetIpAddressCreateOperationResponse` | `gamePlayer.getIpAddressCreate.selfEnable` | `gamePlayer.getIpAddressCreate.otherSelfEnable` |
-| `getOnlineStatus` | `GamePlayerModels.GetOnlineStatusRequestData` | `getOnlineStatusAsync(...)` | `GamePlayerResponseModels.GetOnlineStatusOperationResponse` | `gamePlayer.getOnlineStatus.selfEnable` | `gamePlayer.getOnlineStatus.otherSelfEnable` |
 | `getPlayerBan` | `GamePlayerModels.GetPlayerBanRequestData` | `getPlayerBanAsync(...)` | `GamePlayerResponseModels.GetPlayerBanOperationResponse` | `gamePlayer.getPlayerBan.selfEnable` | `gamePlayer.getPlayerBan.otherSelfEnable` |
 | `getPlayerCharacter` | `GamePlayerModels.GetPlayerCharacterRequestData` | `getPlayerCharacterAsync(...)` | `GamePlayerResponseModels.GetPlayerCharacterOperationResponse` | `gamePlayer.getPlayerCharacter.selfEnable` | `gamePlayer.getPlayerCharacter.otherSelfEnable` |
 | `getPlayerCurrency` | `GamePlayerModels.GetPlayerCurrencyRequestData` | `getPlayerCurrencyAsync(...)` | `GamePlayerResponseModels.GetPlayerCurrencyOperationResponse` | `gamePlayer.getPlayerCurrency.selfEnable` | `gamePlayer.getPlayerCurrency.otherSelfEnable` |
@@ -108,7 +111,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getFriendStatisticsLeaderboardAroundPlayer` | `GamePlayerModels.ServerGetFriendStatisticsLeaderboardAroundPlayerRequestData` | `getFriendStatisticsLeaderboardAroundPlayerAsync(...)` | `GamePlayerResponseModels.GetFriendStatisticsLeaderboardAroundPlayerOperationResponse` | `gamePlayer.getFriendStatisticsLeaderboardAroundPlayer.serverSelfEnable` |
 | `getFriendStatisticsLeaderboard` | `GamePlayerModels.ServerGetFriendStatisticsLeaderboardRequestData` | `getFriendStatisticsLeaderboardAsync(...)` | `GamePlayerResponseModels.GetFriendStatisticsLeaderboardOperationResponse` | `gamePlayer.getFriendStatisticsLeaderboard.serverSelfEnable` |
 | `getIpAddressCreate` | `GamePlayerModels.ServerGetIpAddressCreateRequestData` | `getIpAddressCreateAsync(...)` | `GamePlayerResponseModels.GetIpAddressCreateOperationResponse` | `gamePlayer.getIpAddressCreate.serverSelfEnable` |
-| `getOnlineStatus` | `GamePlayerModels.ServerGetOnlineStatusRequestData` | `getOnlineStatusAsync(...)` | `GamePlayerResponseModels.GetOnlineStatusOperationResponse` | `gamePlayer.getOnlineStatus.serverSelfEnable` |
 | `getPlayerBan` | `GamePlayerModels.ServerGetPlayerBanRequestData` | `getPlayerBanAsync(...)` | `GamePlayerResponseModels.GetPlayerBanOperationResponse` | `gamePlayer.getPlayerBan.serverSelfEnable` |
 | `getPlayerCharacter` | `GamePlayerModels.ServerGetPlayerCharacterRequestData` | `getPlayerCharacterAsync(...)` | `GamePlayerResponseModels.GetPlayerCharacterOperationResponse` | `gamePlayer.getPlayerCharacter.serverSelfEnable` |
 | `getPlayerCurrency` | `GamePlayerModels.ServerGetPlayerCurrencyRequestData` | `getPlayerCurrencyAsync(...)` | `GamePlayerResponseModels.GetPlayerCurrencyOperationResponse` | `gamePlayer.getPlayerCurrency.serverSelfEnable` |
@@ -166,7 +168,6 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getFriendStatisticsLeaderboardAroundPlayer` | `GamePlayerModels.AdminGetFriendStatisticsLeaderboardAroundPlayerRequestData` | `getFriendStatisticsLeaderboardAroundPlayerAsync(...)` | `GamePlayerResponseModels.GetFriendStatisticsLeaderboardAroundPlayerOperationResponse` | `gamePlayer.getFriendStatisticsLeaderboardAroundPlayer.adminSelfEnable` |
 | `getFriendStatisticsLeaderboard` | `GamePlayerModels.AdminGetFriendStatisticsLeaderboardRequestData` | `getFriendStatisticsLeaderboardAsync(...)` | `GamePlayerResponseModels.GetFriendStatisticsLeaderboardOperationResponse` | `gamePlayer.getFriendStatisticsLeaderboard.adminSelfEnable` |
 | `getIpAddressCreate` | `GamePlayerModels.AdminGetIpAddressCreateRequestData` | `getIpAddressCreateAsync(...)` | `GamePlayerResponseModels.GetIpAddressCreateOperationResponse` | `gamePlayer.getIpAddressCreate.adminSelfEnable` |
-| `getOnlineStatus` | `GamePlayerModels.AdminGetOnlineStatusRequestData` | `getOnlineStatusAsync(...)` | `GamePlayerResponseModels.GetOnlineStatusOperationResponse` | `gamePlayer.getOnlineStatus.adminSelfEnable` |
 | `getPlayerBan` | `GamePlayerModels.AdminGetPlayerBanRequestData` | `getPlayerBanAsync(...)` | `GamePlayerResponseModels.GetPlayerBanOperationResponse` | `gamePlayer.getPlayerBan.adminSelfEnable` |
 | `getPlayerCharacter` | `GamePlayerModels.AdminGetPlayerCharacterRequestData` | `getPlayerCharacterAsync(...)` | `GamePlayerResponseModels.GetPlayerCharacterOperationResponse` | `gamePlayer.getPlayerCharacter.adminSelfEnable` |
 | `getPlayerCurrency` | `GamePlayerModels.AdminGetPlayerCurrencyRequestData` | `getPlayerCurrencyAsync(...)` | `GamePlayerResponseModels.GetPlayerCurrencyOperationResponse` | `gamePlayer.getPlayerCurrency.adminSelfEnable` |

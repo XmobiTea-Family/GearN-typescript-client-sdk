@@ -71,8 +71,8 @@ Rule nhanh:
 ### Đọc 1 master player hoặc 1 phần hồ sơ
 
 <!-- prettier-ignore -->
-| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú |
-| --- | --- | --- | --- | --- |
+| Method | Dùng khi nào | Cần truyền gì | Nhận được gì | Ghi chú | ErrorCode |
+| --- | --- | --- | --- | --- | --- |
 | `getAvatarAsync` | Cần đọc avatar | `userId?` | `MasterPlayerResponseData` | `avatar.type` hiện là số thô | `Ok`, `MasterPlayerNotFound` |
 | `getCountryCodeAsync` | Cần đọc quốc gia | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.countryCode` | `Ok`, `MasterPlayerNotFound` |
 | `getCustomDataAsync` | Cần đọc custom data | `userId?`, `customDataKeys?` | `MasterPlayerResponseData` | Có thể filter theo key | `Ok`, `MasterPlayerNotFound` |
@@ -90,6 +90,7 @@ Rule nhanh:
 | `getTsCreateAsync` | Cần đọc thời điểm tạo account | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.tsCreate` | `Ok`, `MasterPlayerNotFound` |
 | `getTsLastLoginAsync` | Cần đọc lần login gần nhất | `userId?` | `MasterPlayerResponseData` | Kết quả ở `infoResponseParameters.tsLastLogin` | `Ok`, `MasterPlayerNotFound` |
 | `getPushNotificationAsync` | Cần đọc danh sách push token đã đăng ký | `userId?` | `MasterPlayerResponseData` | Dữ liệu nằm ở `infoResponseParameters.pushNotifications`, không phải `results` | `Ok`, `MasterPlayerNotFound` |
+| `getOnlineStatusAsync` | Cần biết trạng thái socket hiện tại | `userId?` | `MasterPlayerResponseData` | Dữ liệu nằm ở `infoResponseParameters.onlineStatus`, không phải `results` | `Ok`, `MasterPlayerNotFound` |
 
 ### Search player, leaderboard và log
 
@@ -182,6 +183,8 @@ Rule nhanh:
 
 - DTO fields: [reference/dto/MASTER_PLAYER.md](/docs/reference/dto/MASTER_PLAYER.md). Method table: [reference/API_MASTER_PLAYER.md](/docs/reference/API_MASTER_PLAYER.md).
 - Enums: [GoogleLoginType](/docs/reference/ENUMS.md#googlelogintype), [PushPlatformType](/docs/reference/ENUMS.md#pushplatformtype).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/MasterPlayer*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - `LinkGoogleRequestData.type` nên map bằng `GoogleLoginType`.
 - `AddPushNotificationRequestData.platformType` và `PushNotificationItem.platformType` nên map bằng `PushPlatformType`.
@@ -268,17 +271,24 @@ Tất cả typed response của `MasterPlayerApi` đều có:
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
+// Cách 1 — helper method (preferred trong guides)
 if (response.hasReturnCodeError()) {
+    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 
@@ -293,7 +303,7 @@ Những response chính AI cần nhớ:
 - `addPushNotificationAsync` trả `AddPushNotificationResponseData` với `pushId`.
 - `sendPushNotificationAsync` trả `SendPushNotificationResponseData` với `message`.
 - `addSegmentAsync`, `removeSegmentAsync`, `setTagAsync`, `removeTagAsync`, `changeAccountPasswordAsync`, `resetAccountPasswordAsync`, `setAvatarAsync`, `setCountryCodeAsync`, `setDisplayNameAsync`, `setEmailAsync`, `setPlayerBanAsync`, `updateTsLastLoginAsync`, toàn bộ `unlink*Async`, `sendSocketOperationEventAsync`, `sendEmailAsync`, `removePushNotificationAsync` trả `EmptyResponseData`.
-- `setCustomDataAsync`, `changePlayerCurrencyAsync`, `setPlayerDataAsync`, `changePlayerStatisticsAsync` và đa số `link*Async` trả `MasterPlayerResponseData`.
+- `setCustomDataAsync`, `changePlayerCurrencyAsync`, `setPlayerDataAsync`, `changePlayerStatisticsAsync`, `getOnlineStatusAsync` và đa số `link*Async` trả `MasterPlayerResponseData`.
 
 ## 9. Cảnh Báo Implementation Hiện Tại
 
@@ -303,6 +313,7 @@ Những response chính AI cần nhớ:
 - `linkGenericServiceAsync` là case đặc biệt vì response data có thể chứa `errorMessage`.
 - `getPushNotificationAsync` không trả `results`; dữ liệu nằm trong `infoResponseParameters.pushNotifications`.
 - Package có expose `sendEmailAsync`, `sendPushNotificationAsync`, `sendSocketOperationEventAsync` ở cả `client`, `server`, `admin`, nhưng trong production nên ưu tiên `server/admin` cho các flow có trust boundary cao.
+- `getOnlineStatusAsync` không trả boolean `isOnline`; bạn phải tự diễn giải từ `socketId` theo contract backend thực tế.
 
 ## 10. Best Practices
 
@@ -429,6 +440,7 @@ const pushId = response.responseData.pushId;
 - Không giả định `getPushNotificationAsync` trả `results`.
 - Không bật `forceLink` một cách mù quáng.
 - Không bỏ qua kiểm tra `hasReturnCodeError()` và `errorCode`.
+- Không giả định `getOnlineStatusAsync` trả boolean.
 
 ## 13. AI Checklist
 
@@ -443,3 +455,4 @@ const pushId = response.responseData.pushId;
 - Nếu đang lấy log, có dùng `token` cho page tiếp chưa.
 - Nếu đang gửi socket event, receiver có socket session hợp lệ không.
 - Có kiểm tra `hasReturnCodeError()` trước `errorCode` chưa.
+- Nếu đang dùng `getOnlineStatusAsync`, có nhớ rằng response không có boolean `isOnline` không.

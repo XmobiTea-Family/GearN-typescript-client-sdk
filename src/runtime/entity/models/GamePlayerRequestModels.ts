@@ -452,53 +452,6 @@ export namespace GamePlayerRequestModels {
     }
 
     /**
-     * Maps the GetOnlineStatus operation to a typed request wrapper.
-     */
-    export class GetOnlineStatusOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.GetOnlineStatusRequestData> {
-        protected override operationCode: string = OperationCode.GetOnlineStatus;
-        protected override requestType: RequestType = RequestType.GamePlayer;
-        protected override role: RequestRole = RequestRole.Client;
-
-        /**
-         * Creates a new GetOnlineStatusOperationRequest instance.
-         */
-        constructor(requestData: GamePlayerModels.GetOnlineStatusRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = GamePlayerModels.GetOnlineStatusRequestData;
-        }
-    }
-
-    /**
-     * Maps the ServerGetOnlineStatus operation to a typed request wrapper.
-     */
-    export class ServerGetOnlineStatusOperationRequest extends GetOnlineStatusOperationRequest {
-        protected override role: RequestRole = RequestRole.Server;
-
-        /**
-         * Creates a new ServerGetOnlineStatusOperationRequest instance.
-         */
-        constructor(requestData: GamePlayerModels.ServerGetOnlineStatusRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = GamePlayerModels.ServerGetOnlineStatusRequestData;
-        }
-    }
-
-    /**
-     * Maps the AdminGetOnlineStatus operation to a typed request wrapper.
-     */
-    export class AdminGetOnlineStatusOperationRequest extends GetOnlineStatusOperationRequest {
-        protected override role: RequestRole = RequestRole.Admin;
-
-        /**
-         * Creates a new AdminGetOnlineStatusOperationRequest instance.
-         */
-        constructor(requestData: GamePlayerModels.AdminGetOnlineStatusRequestData, timeout: number) {
-            super(requestData, timeout);
-            this.requestDataCls = GamePlayerModels.AdminGetOnlineStatusRequestData;
-        }
-    }
-
-    /**
      * Maps the GetPlayerBan operation to a typed request wrapper.
      */
     export class GetPlayerBanOperationRequest extends CustomOperationRequestAbstract<GamePlayerModels.GetPlayerBanRequestData> {

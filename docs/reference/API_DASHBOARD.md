@@ -2,7 +2,11 @@
 
 Admin login, game/admin account/secret management, analytics, server log, maintenance tools. Uses `RequestRole.Client` transport; admin context resolved from auth token.
 
-Domain guide: [guides/DASHBOARD.md](/docs/guides/DASHBOARD.md). DTO shapes: [dto/DASHBOARD.md](/docs/reference/dto/DASHBOARD.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/DASHBOARD.md](/docs/guides/DASHBOARD.md)
+- DTO shapes: [dto/DASHBOARD.md](/docs/reference/dto/DASHBOARD.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 

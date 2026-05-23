@@ -1221,4 +1221,18 @@ export namespace MasterPlayerResponseModels {
         }
     }
 
+    /**
+     * Maps the GetOnlineStatus operation to a typed response wrapper.
+     */
+    export class GetOnlineStatusOperationResponse extends CustomOperationResponseAbstract<MasterPlayerModels.MasterPlayerResponseData> {
+
+        /**
+         * Creates a new GetOnlineStatusOperationResponse instance.
+         */
+        constructor() {
+            super();
+            this.responseDataCls = MasterPlayerModels.MasterPlayerResponseData;
+        }
+    }
+
 }

@@ -141,6 +141,8 @@ Rule nhanh:
 - DTO fields: [reference/dto/GROUP.md](/docs/reference/dto/GROUP.md). Method table: [reference/API_GROUP.md](/docs/reference/API_GROUP.md).
 - Events: [reference/EVENTS.md](/docs/reference/EVENTS.md#ongroupmemberupdateeventhandler).
 - Enums: [GroupStatus](/docs/reference/ENUMS.md#groupstatus).
+- Error handling: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
+- Permission rules: [reference/PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md).
 - Fallback `dist` chỉ khi reference docs chưa đủ: `dist/runtime/entity/models/Group*.d.ts`, `dist/runtime/entity/models/GenericModels.d.ts`.
 - Lưu ý:
     - `GroupStatus` là enum publish có thật, nhưng `MemberItem.status` trong `GroupApi` không được ràng buộc bằng enum public riêng.
@@ -215,17 +217,23 @@ Tất cả typed response của `GroupApi` đều có:
 - `errorCode`
 - `responseData`
 
-Rule kiểm tra response:
+Rule kiểm tra response (2 cách equivalent):
 
 ```ts
-if (response.hasReturnCodeError()) {
+// Cách 1 — helper method (preferred trong guides)
+if (response.hasReturnCodeError()) {    // equivalent: returnCode !== ReturnCode.Ok
     throw new Error(response.debugMessage);
 }
-
 if (response.errorCode !== ErrorCode.Ok) {
     throw new Error(`Business error: ${response.errorCode}`);
 }
+
+// Cách 2 — field public trực tiếp (xem AI_CHEATSHEET)
+// if (response.returnCode !== ReturnCode.Ok) return;
+// if (response.errorCode !== ErrorCode.Ok) return;
 ```
+
+`Ok === 1` ở cả `ReturnCode` lẫn `ErrorCode`. Không bỏ qua tầng `returnCode`.
 
 Những response chính AI cần nhớ:
 

@@ -2,7 +2,11 @@
 
 Character-level gameplay: profile, inventory relation, friend/group relation, statistics, currency, segments, tags.
 
-Domain guide: [guides/CHARACTER_PLAYER.md](/docs/guides/CHARACTER_PLAYER.md). DTO shapes: [dto/CHARACTER_PLAYER.md](/docs/reference/dto/CHARACTER_PLAYER.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/CHARACTER_PLAYER.md](/docs/guides/CHARACTER_PLAYER.md)
+- DTO shapes: [dto/CHARACTER_PLAYER.md](/docs/reference/dto/CHARACTER_PLAYER.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 

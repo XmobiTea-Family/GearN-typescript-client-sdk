@@ -2,7 +2,11 @@
 
 CloudScript function add/edit/execute + version/listing.
 
-Domain guide: [guides/CLOUDSCRIPT.md](/docs/guides/CLOUDSCRIPT.md). DTO shapes: [dto/CLOUDSCRIPT.md](/docs/reference/dto/CLOUDSCRIPT.md) hoặc grep [DTO_INDEX.md](/docs/reference/DTO_INDEX.md).
+- Domain guide: [guides/CLOUDSCRIPT.md](/docs/guides/CLOUDSCRIPT.md)
+- DTO shapes: [dto/CLOUDSCRIPT.md](/docs/reference/dto/CLOUDSCRIPT.md)
+- Enums: [ENUMS.md](/docs/reference/ENUMS.md)
+- Error handling: [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md)
+- Permission rules: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md)
 
 ## Namespaces
 
@@ -39,7 +43,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 ## Client methods (`GNNetwork.cloudScript.*`)
 
 <!-- prettier-ignore -->
-| Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi dùng userId |
+| Method | Request DTO | Async form | Response class | Default Permission Rules | Permission Rules khi truyền `userId` khác với `masterPlayer` đang authenticated |
 | --- | --- | --- | --- | --- | --- |
 | `addFunction` | `CloudScriptModels.AddFunctionRequestData` | `addFunctionAsync(...)` | `CloudScriptResponseModels.AddFunctionOperationResponse` | `cloudScript.addFunction.otherSelfEnable` | |
 | `editFunction` | `CloudScriptModels.EditFunctionRequestData` | `editFunctionAsync(...)` | `CloudScriptResponseModels.EditFunctionOperationResponse` | `cloudScript.editFunction.otherSelfEnable` | |
