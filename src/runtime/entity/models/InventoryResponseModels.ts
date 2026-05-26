@@ -339,12 +339,12 @@ export namespace InventoryResponseModels {
     }
 
     /**
-     * Maps the SetAmount operation to a typed response wrapper.
+     * Maps the ChangeAmount operation to a typed response wrapper.
      */
-    export class SetAmountOperationResponse extends CustomOperationResponseAbstract<InventoryModels.InventoryResponseData> {
+    export class ChangeAmountOperationResponse extends CustomOperationResponseAbstract<InventoryModels.InventoryResponseData> {
 
         /**
-         * Creates a new SetAmountOperationResponse instance.
+         * Creates a new ChangeAmountOperationResponse instance.
          */
         constructor() {
             super();

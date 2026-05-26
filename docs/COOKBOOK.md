@@ -807,21 +807,21 @@ Gặp returnCode === OperationNotAllow
 import { GNNetwork, ReturnCode, InventoryModels } from "@xmobitea/gearn-typescript-client-sdk";
 
 async function grantItem(userId: string, itemId: string, amount: number) {
-    const req = new InventoryModels.AdminSetAmountRequestData();
+    const req = new InventoryModels.AdminChangeAmountRequestData();
     req.itemId = itemId;
     req.amount = amount;
 
     // Attempt 1: route admin với secret mặc định của app
-    let res = await GNNetwork.inventory.admin.setAmountAsync(req);
+    let res = await GNNetwork.inventory.admin.changeAmountAsync(req);
 
     if (res.returnCode === ReturnCode.OperationNotAllow) {
-        console.warn("OperationNotAllow on admin route — secret thiếu adminSelfEnable cho inventory.setAmount");
+        console.warn("OperationNotAllow on admin route — secret thiếu adminSelfEnable cho inventory.changeAmount");
         console.warn("debugMessage:", res.debugMessage);
 
         // Attempt 2: fallback override secret admin cho 1 request
         const ADMIN_SECRET = process.env.GEARN_ADMIN_SECRET; // KHÔNG hardcode
         if (ADMIN_SECRET) {
-            res = await GNNetwork.inventory.admin.setAmountAsync(
+            res = await GNNetwork.inventory.admin.changeAmountAsync(
                 req,
                 undefined, // overrideAuthToken
                 ADMIN_SECRET, // overrideSecretKey

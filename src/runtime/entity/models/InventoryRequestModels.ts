@@ -1104,49 +1104,49 @@ export namespace InventoryRequestModels {
     }
 
     /**
-     * Maps the SetAmount operation to a typed request wrapper.
+     * Maps the ChangeAmount operation to a typed request wrapper.
      */
-    export class SetAmountOperationRequest extends CustomOperationRequestAbstract<InventoryModels.SetAmountRequestData> {
-        protected override operationCode: string = OperationCode.SetAmount;
+    export class ChangeAmountOperationRequest extends CustomOperationRequestAbstract<InventoryModels.ChangeAmountRequestData> {
+        protected override operationCode: string = OperationCode.ChangeAmount;
         protected override requestType: RequestType = RequestType.Inventory;
         protected override role: RequestRole = RequestRole.Client;
 
         /**
-         * Creates a new SetAmountOperationRequest instance.
+         * Creates a new ChangeAmountOperationRequest instance.
          */
-        constructor(requestData: InventoryModels.SetAmountRequestData, timeout: number) {
+        constructor(requestData: InventoryModels.ChangeAmountRequestData, timeout: number) {
             super(requestData, timeout);
-            this.requestDataCls = InventoryModels.SetAmountRequestData;
+            this.requestDataCls = InventoryModels.ChangeAmountRequestData;
         }
     }
 
     /**
-     * Maps the ServerSetAmount operation to a typed request wrapper.
+     * Maps the ServerChangeAmount operation to a typed request wrapper.
      */
-    export class ServerSetAmountOperationRequest extends SetAmountOperationRequest {
+    export class ServerChangeAmountOperationRequest extends ChangeAmountOperationRequest {
         protected override role: RequestRole = RequestRole.Server;
 
         /**
-         * Creates a new ServerSetAmountOperationRequest instance.
+         * Creates a new ServerChangeAmountOperationRequest instance.
          */
-        constructor(requestData: InventoryModels.ServerSetAmountRequestData, timeout: number) {
+        constructor(requestData: InventoryModels.ServerChangeAmountRequestData, timeout: number) {
             super(requestData, timeout);
-            this.requestDataCls = InventoryModels.ServerSetAmountRequestData;
+            this.requestDataCls = InventoryModels.ServerChangeAmountRequestData;
         }
     }
 
     /**
-     * Maps the AdminSetAmount operation to a typed request wrapper.
+     * Maps the AdminChangeAmount operation to a typed request wrapper.
      */
-    export class AdminSetAmountOperationRequest extends SetAmountOperationRequest {
+    export class AdminChangeAmountOperationRequest extends ChangeAmountOperationRequest {
         protected override role: RequestRole = RequestRole.Admin;
 
         /**
-         * Creates a new AdminSetAmountOperationRequest instance.
+         * Creates a new AdminChangeAmountOperationRequest instance.
          */
-        constructor(requestData: InventoryModels.AdminSetAmountRequestData, timeout: number) {
+        constructor(requestData: InventoryModels.AdminChangeAmountRequestData, timeout: number) {
             super(requestData, timeout);
-            this.requestDataCls = InventoryModels.AdminSetAmountRequestData;
+            this.requestDataCls = InventoryModels.AdminChangeAmountRequestData;
         }
     }
 

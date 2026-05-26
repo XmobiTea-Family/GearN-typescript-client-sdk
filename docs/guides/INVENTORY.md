@@ -32,7 +32,7 @@ Tài liệu này dành cho AI code assistant và AI agent nội bộ. Mục tiê
 - `getItemInformationAsync`, `getItemsWithDisplayNameAsync`, `getItemsWithSegmentAsync`, `getItemsWithTagAsync`, `getStatisticsLeaderboardAroundItemAsync`, `getStatisticsLeaderboardAsync` và `getCreateLeaderboardAsync` đều bắt buộc có `infoRequestParam`.
 - `getItemStatisticsAsync` dùng `statisticsKeys`, còn `infoRequestParam` dùng `itemStatisticsKeys`. Không được dùng lẫn hai field này.
 - `getStatisticsLogAsync` phân trang bằng `token`, không dùng `skip`.
-- `setAmountAsync` là set giá trị tuyệt đối. `changeItemStatisticsAsync` là cộng/trừ delta theo từng key.
+- `changeAmountAsync` là thay đổi giá trị amount bằng cách cộng/trừ với amount truyền vào request data. `changeItemStatisticsAsync` là cộng/trừ delta theo từng key.
 - `setOwnerAsync` là chuyển owner của item, không phải clone item.
 - `setRemoveStatusAsync` là đánh dấu remove với `reason?`; trong `InventoryApi` hiện không có public method riêng để undo thao tác này.
 - `removeTagAsync` xóa theo `key`, không theo cặp `key/value`.
@@ -101,7 +101,7 @@ Rule nhanh:
 | `removeSegmentAsync` | Gỡ một segment khỏi item | `itemId`, `value` | `EmptyResponseData` | Xóa theo exact value | `Ok`, `ItemNotFound` |
 | `setTagAsync` | Set hoặc upsert một tag | `itemId`, `key`, `value` | `EmptyResponseData` | Thao tác theo một cặp key/value | `Ok`, `KeyNotFound`, `ItemNotFound` |
 | `removeTagAsync` | Xóa tag theo key | `itemId`, `key` | `EmptyResponseData` | Không truyền `value` | `Ok`, `ItemNotFound` |
-| `setAmountAsync` | Set lại amount tuyệt đối | `itemId`, `amount` | `InventoryResponseData` | Không phải delta | `Ok`, `ItemNotFound`, `ItemNotStackable` |
+| `changeAmountAsync` | Thay đổi giá trị amount bằng cách cộng/trừ với amount truyền vào request data | `itemId`, `amount` | `InventoryResponseData` | Không phải delta | `Ok`, `ItemNotFound`, `ItemNotStackable` |
 | `setAvatarAsync` | Set avatar của item | `itemId`, `type`, `value` | `EmptyResponseData` | `type` chưa có enum public | `Ok`, `ItemNotFound` |
 | `setCustomDataAsync` | Set custom data theo nhiều key | `itemId`, `customDatas[]` | `InventoryResponseData` | Mỗi phần tử là `key/value` | `Ok`, `KeyNotFound`, `ItemNotFound` |
 | `setDisplayNameAsync` | Set display name | `itemId`, `displayName` | `EmptyResponseData` | Display name có min length 5 | `Ok`, `ItemNotFound` |
@@ -173,7 +173,7 @@ Các field thường dùng:
 - Cần leaderboard quanh một item cụ thể: dùng `getStatisticsLeaderboardAroundItemAsync`.
 - Cần leaderboard theo thời điểm tạo: dùng `getCreateLeaderboardAsync`.
 - Cần cộng/trừ stats: dùng `changeItemStatisticsAsync`.
-- Cần set lại amount tuyệt đối: dùng `setAmountAsync`.
+- Cần cộng/trừ amount: dùng `changeAmountAsync`.
 - Cần chuyển item sang owner mới: dùng `setOwnerAsync`.
 - Cần audit biến động statistics: dùng `getStatisticsLogAsync`.
 
@@ -213,7 +213,7 @@ Những response chính AI cần nhớ:
 - `getCreateLeaderboardAsync` trả `responseData.results` cùng shape leaderboard item.
 - `getStatisticsLogAsync` trả `responseData.results` và có thể có `responseData.token` cho page tiếp.
 - `addSegmentAsync`, `removeSegmentAsync`, `removeTagAsync`, `setAvatarAsync`, `setDisplayNameAsync`, `setOwnerAsync`, `setRemoveStatusAsync`, `setTagAsync` trả `EmptyResponseData`.
-- `setAmountAsync`, `setCustomDataAsync`, `setItemDataAsync`, `changeItemStatisticsAsync` trả `InventoryResponseData`.
+- `changeAmountAsync`, `setCustomDataAsync`, `setItemDataAsync`, `changeItemStatisticsAsync` trả `InventoryResponseData`.
 
 ## 9. Cảnh Báo Implementation Hiện Tại
 
@@ -349,7 +349,7 @@ const nextToken = response.responseData.token;
 - Không gọi `getItemInformationAsync` chỉ để đọc một field đơn lẻ nếu getter chuyên biệt đã có.
 - Không bỏ `infoRequestParam` ở các method bắt buộc.
 - Không dùng `itemStatisticsKeys` thay cho `statisticsKeys` hoặc ngược lại.
-- Không dùng `setAmountAsync` khi ý đồ là tăng/giảm delta.
+- Không dùng `changeAmountAsync` khi ý đồ là tăng/giảm delta.
 - Không dùng `setOwnerAsync` nếu mục tiêu là duplicate item cho owner mới.
 - Không hardcode số cho `ItemType` hoặc `OwnerType`.
 - Không tự phát minh enum cho `avatar.type` nếu package chưa export.

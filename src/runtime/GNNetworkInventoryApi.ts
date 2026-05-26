@@ -373,17 +373,17 @@ export class InventoryApi {
     }
 
     /**
-     * Sends the setAmount operation and returns the typed response via callback.
+     * Sends the changeAmount operation and returns the typed response via callback.
      */
-    public setAmount(requestData: InventoryModels.SetAmountRequestData, onResponse: Action1<InventoryResponseModels.SetAmountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.SetAmountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetAmountOperationResponse);
+    public changeAmount(requestData: InventoryModels.ChangeAmountRequestData, onResponse: Action1<InventoryResponseModels.ChangeAmountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.ChangeAmountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeAmountOperationResponse);
     }
 
     /**
-     * Sends the setAmount operation and resolves with the typed response.
+     * Sends the changeAmount operation and resolves with the typed response.
      */
-    public async setAmountAsync(requestData: InventoryModels.SetAmountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.SetAmountOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.SetAmountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetAmountOperationResponse);
+    public async changeAmountAsync(requestData: InventoryModels.ChangeAmountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.ChangeAmountOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.ChangeAmountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeAmountOperationResponse);
     }
 
     /**
@@ -863,17 +863,17 @@ export class ServerInventoryApi {
     }
 
     /**
-     * Sends the setAmount operation and returns the typed response via callback.
+     * Sends the changeAmount operation and returns the typed response via callback.
      */
-    public setAmount(requestData: InventoryModels.ServerSetAmountRequestData, onResponse: Action1<InventoryResponseModels.SetAmountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.ServerSetAmountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetAmountOperationResponse);
+    public changeAmount(requestData: InventoryModels.ServerChangeAmountRequestData, onResponse: Action1<InventoryResponseModels.ChangeAmountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.ServerChangeAmountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeAmountOperationResponse);
     }
 
     /**
-     * Sends the setAmount operation and resolves with the typed response.
+     * Sends the changeAmount operation and resolves with the typed response.
      */
-    public async setAmountAsync(requestData: InventoryModels.ServerSetAmountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.SetAmountOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.ServerSetAmountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetAmountOperationResponse);
+    public async changeAmountAsync(requestData: InventoryModels.ServerChangeAmountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.ChangeAmountOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.ServerChangeAmountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeAmountOperationResponse);
     }
 
     /**
@@ -1353,17 +1353,17 @@ export class AdminInventoryApi {
     }
 
     /**
-     * Sends the setAmount operation and returns the typed response via callback.
+     * Sends the changeAmount operation and returns the typed response via callback.
      */
-    public setAmount(requestData: InventoryModels.AdminSetAmountRequestData, onResponse: Action1<InventoryResponseModels.SetAmountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.AdminSetAmountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetAmountOperationResponse);
+    public changeAmount(requestData: InventoryModels.AdminChangeAmountRequestData, onResponse: Action1<InventoryResponseModels.ChangeAmountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new InventoryRequestModels.AdminChangeAmountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeAmountOperationResponse);
     }
 
     /**
-     * Sends the setAmount operation and resolves with the typed response.
+     * Sends the changeAmount operation and resolves with the typed response.
      */
-    public async setAmountAsync(requestData: InventoryModels.AdminSetAmountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.SetAmountOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.AdminSetAmountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.SetAmountOperationResponse);
+    public async changeAmountAsync(requestData: InventoryModels.AdminChangeAmountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<InventoryResponseModels.ChangeAmountOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new InventoryRequestModels.AdminChangeAmountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, InventoryResponseModels.ChangeAmountOperationResponse);
     }
 
     /**

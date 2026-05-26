@@ -754,7 +754,7 @@ export namespace InventoryModels {
      * Replaces the stored amount with an absolute value.
      * Use `ChangeItemStatistics` for statistics deltas; this contract is not a delta operation.
      */
-    export class SetAmountRequestData {
+    export class ChangeAmountRequestData {
         @StringDataMember({ code: ParameterCode.ItemId, minLength: 12, maxLength: 12, mustNonNull: true })
         public itemId: string;
 
@@ -764,15 +764,15 @@ export namespace InventoryModels {
     }
 
     /**
-     * Defines the request payload for ServerSetAmount.
+     * Defines the request payload for ServerChangeAmount.
      */
-    export class ServerSetAmountRequestData extends SetAmountRequestData {
+    export class ServerChangeAmountRequestData extends ChangeAmountRequestData {
     }
 
     /**
-     * Defines the request payload for AdminSetAmount.
+     * Defines the request payload for AdminChangeAmount.
      */
-    export class AdminSetAmountRequestData extends ServerSetAmountRequestData {
+    export class AdminChangeAmountRequestData extends ServerChangeAmountRequestData {
     }
 
     /**

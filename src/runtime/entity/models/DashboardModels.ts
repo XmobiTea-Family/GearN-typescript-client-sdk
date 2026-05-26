@@ -1026,8 +1026,8 @@ export namespace DashboardModels {
         @GNHashtableDataMember({ code: ParameterCode.GetRemoveStatus, isOptional: true })
         public getRemoveStatus?: PermissionRulesParam;
 
-        @GNHashtableDataMember({ code: ParameterCode.SetAmount, isOptional: true })
-        public setAmount?: PermissionRulesParam;
+        @GNHashtableDataMember({ code: ParameterCode.ChangeAmount, isOptional: true })
+        public changeAmount?: PermissionRulesParam;
 
         @GNHashtableDataMember({ code: ParameterCode.SetOwner, isOptional: true })
         public setOwner?: PermissionRulesParam;

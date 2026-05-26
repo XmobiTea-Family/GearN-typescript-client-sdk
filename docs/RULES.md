@@ -167,7 +167,7 @@ Ngoại lệ: domain không có ownership (`ContentApi`, `StoreInventoryApi`, `M
 | # | Code thực tế | Root cause | Fix |
 | --- | --- | --- | --- |
 | 1 | App player: `masterPlayer.getPlayerInformationAsync(otherUserId)` | Secret client không có `otherSelfEnable` cho `masterPlayer.getPlayerInformation` | Backend admin bật `otherSelfEnable` trong GearN Dashboard, hoặc chuyển flow sang server-side |
-| 2 | Script dev: `inventory.admin.setAmountAsync(...)` với secret client thường | Secret không có `adminSelfEnable` cho `inventory.setAmount` | Dùng secret admin qua `overrideSecretKey`, hoặc cấu hình `GNServerSettings.secretKey` = secret admin |
+| 2 | Script dev: `inventory.admin.changeAmountAsync(...)` với secret client thường | Secret không có `adminSelfEnable` cho `inventory.changeAmount` | Dùng secret admin qua `overrideSecretKey`, hoặc cấu hình `GNServerSettings.secretKey` = secret admin |
 | 3 | Game server: `GNNetwork.gamePlayer.joinGroupAsync(...)` (route client) | Secret server không có `selfEnable` cho `gamePlayer.joinGroup` | Chuyển sang `GNNetwork.gamePlayer.server.joinGroupAsync(...)` — dùng `serverSelfEnable` |
 | 4 | Backend worker: `gamePlayer.server.changePlayerCurrencyAsync(...)` bỏ `userId` | Route `server`/`admin` yêu cầu `userId` rõ ràng (xem [§ 4](#4-self-vs-other-self-chỉ-áp-dụng-trên-route-client)) | Truyền `userId` target |
 | 5 | Admin tool: `masterPlayer.admin.setPlayerBanAsync(...)` | Secret admin bị backend giới hạn operation đó | Hỏi backend admin bật `adminSelfEnable` cho `masterPlayer.setPlayerBan` trong GearN Dashboard |

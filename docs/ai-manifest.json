@@ -299,7 +299,7 @@
       { "id": 13, "title": "Override authToken / secret", "anchor": "scenario-13-override-authtoken--secret-impersonate-cross-role" },
       { "id": 14, "title": "Admin login qua DashboardApi", "anchor": "scenario-14-admin-login-qua-dashboardapi", "apis": ["GNNetwork.dashboard.loginByAdminAccountAsync"] },
       { "id": 15, "title": "Cleanup & shutdown flow", "anchor": "scenario-15-cleanup--shutdown-flow", "apis": ["GNNetwork.disconnectSocket"] },
-      { "id": 16, "title": "Diagnose OperationNotAllow", "anchor": "scenario-16-diagnose-operationnotallow", "apis": ["GNNetwork.inventory.admin.setAmountAsync"] }
+      { "id": 16, "title": "Diagnose OperationNotAllow", "anchor": "scenario-16-diagnose-operationnotallow", "apis": ["GNNetwork.inventory.admin.changeAmountAsync"] }
     ]
   },
   "apiGroups": [
@@ -513,7 +513,7 @@
       "recommendedSecretPermissions": {
         "client": "selfEnable cho query/statistics item của chính user; otherSelfEnable nếu xem item user khác",
         "server": "serverSelfEnable cho grant/transfer/remove item từ trusted backend",
-        "admin": "adminSelfEnable cho GM tool setAmount, setOwner, setRemoveStatus"
+        "admin": "adminSelfEnable cho GM tool changeAmount, setOwner, setRemoveStatus"
       }
     },
     {
