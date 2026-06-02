@@ -93,9 +93,9 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
     - [RemoveTagRequestData](#removetagrequestdata)
     - [ServerRemoveTagRequestData](#serverremovetagrequestdata)
     - [AdminRemoveTagRequestData](#adminremovetagrequestdata)
-    - [SetAmountRequestData](#setamountrequestdata)
-    - [ServerSetAmountRequestData](#serversetamountrequestdata)
-    - [AdminSetAmountRequestData](#adminsetamountrequestdata)
+    - [ChangeAmountRequestData](#changeamountrequestdata)
+    - [ServerChangeAmountRequestData](#serverchangeamountrequestdata)
+    - [AdminChangeAmountRequestData](#adminchangeamountrequestdata)
     - [SetAvatarRequestData](#setavatarrequestdata)
     - [ServerSetAvatarRequestData](#serversetavatarrequestdata)
     - [AdminSetAvatarRequestData](#adminsetavatarrequestdata)
@@ -203,9 +203,9 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
     - [RemoveTagOperationRequest](#removetagoperationrequest)
     - [ServerRemoveTagOperationRequest](#serverremovetagoperationrequest)
     - [AdminRemoveTagOperationRequest](#adminremovetagoperationrequest)
-    - [SetAmountOperationRequest](#setamountoperationrequest)
-    - [ServerSetAmountOperationRequest](#serversetamountoperationrequest)
-    - [AdminSetAmountOperationRequest](#adminsetamountoperationrequest)
+    - [ChangeAmountOperationRequest](#changeamountoperationrequest)
+    - [ServerChangeAmountOperationRequest](#serverchangeamountoperationrequest)
+    - [AdminChangeAmountOperationRequest](#adminchangeamountoperationrequest)
     - [SetAvatarOperationRequest](#setavataroperationrequest)
     - [ServerSetAvatarOperationRequest](#serversetavataroperationrequest)
     - [AdminSetAvatarOperationRequest](#adminsetavataroperationrequest)
@@ -260,7 +260,7 @@ Mỗi section bên dưới là 1 class DTO. Field table cho biết: tên field, 
     - [GetTsCreateOperationResponse](#gettscreateoperationresponse)
     - [RemoveSegmentOperationResponse](#removesegmentoperationresponse)
     - [RemoveTagOperationResponse](#removetagoperationresponse)
-    - [SetAmountOperationResponse](#setamountoperationresponse)
+    - [ChangeAmountOperationResponse](#changeamountoperationresponse)
     - [SetAvatarOperationResponse](#setavataroperationresponse)
     - [SetCustomDataOperationResponse](#setcustomdataoperationresponse)
     - [SetDisplayNameOperationResponse](#setdisplaynameoperationresponse)
@@ -965,31 +965,31 @@ Defines the request payload for AdminRemoveTag.
 
 _Không khai báo field mới; kế thừa toàn bộ field từ `ServerRemoveTagRequestData`._
 
-### SetAmountRequestData
+### ChangeAmountRequestData
 
-Replaces the stored amount with an absolute value. Use `ChangeItemStatistics` for statistics deltas; this contract is not a delta operation.
+Replaces the stored amount by applying a delta value. Use `ChangeItemStatistics` for incremental statistic updates; this contract performs delta-based operations rather than absolute replacement
 
 <!-- prettier-ignore -->
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `itemId` | `string` | yes | _minLength=12, maxLength=12_ |
-| `amount` | `number` | yes | Absolute item amount to set (replaces the current value, not a delta). |
+| `amount` | `number` | yes | delta amount to change. |
 
-### ServerSetAmountRequestData
+### ServerChangeAmountRequestData
 
-Extends: `SetAmountRequestData`
+Extends: `ChangeAmountRequestData`
 
-Defines the request payload for ServerSetAmount.
+Defines the request payload for ServerChangeAmount.
 
-_Không khai báo field mới; kế thừa toàn bộ field từ `SetAmountRequestData`._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ChangeAmountRequestData`._
 
-### AdminSetAmountRequestData
+### AdminChangeAmountRequestData
 
-Extends: `ServerSetAmountRequestData`
+Extends: `ServerChangeAmountRequestData`
 
-Defines the request payload for AdminSetAmount.
+Defines the request payload for AdminChangeAmount.
 
-_Không khai báo field mới; kế thừa toàn bộ field từ `ServerSetAmountRequestData`._
+_Không khai báo field mới; kế thừa toàn bộ field từ `ServerChangeAmountRequestData`._
 
 ### SetAvatarRequestData
 
@@ -1898,27 +1898,27 @@ Maps the AdminRemoveTag operation to a typed request wrapper.
 
 _Không có field public (payload rỗng)._
 
-### SetAmountOperationRequest
+### ChangeAmountOperationRequest
 
-Extends: `CustomOperationRequestAbstract<InventoryModels.SetAmountRequestData>`
+Extends: `CustomOperationRequestAbstract<InventoryModels.ChangeAmountRequestData>`
 
-Maps the SetAmount operation to a typed request wrapper.
-
-_Không có field public (payload rỗng)._
-
-### ServerSetAmountOperationRequest
-
-Extends: `SetAmountOperationRequest`
-
-Maps the ServerSetAmount operation to a typed request wrapper.
+Maps the ChangeAmount operation to a typed request wrapper.
 
 _Không có field public (payload rỗng)._
 
-### AdminSetAmountOperationRequest
+### ServerChangeAmountOperationRequest
 
-Extends: `SetAmountOperationRequest`
+Extends: `ChangeAmountOperationRequest`
 
-Maps the AdminSetAmount operation to a typed request wrapper.
+Maps the ServerChangeAmount operation to a typed request wrapper.
+
+_Không có field public (payload rỗng)._
+
+### AdminChangeAmountOperationRequest
+
+Extends: `ChangeAmountOperationRequest`
+
+Maps the AdminChangeAmount operation to a typed request wrapper.
 
 _Không có field public (payload rỗng)._
 
@@ -2348,11 +2348,11 @@ Maps the RemoveTag operation to a typed response wrapper.
 
 _Không có field public (payload rỗng)._
 
-### SetAmountOperationResponse
+### ChangeAmountOperationResponse
 
 Extends: `CustomOperationResponseAbstract<InventoryModels.InventoryResponseData>`
 
-Maps the SetAmount operation to a typed response wrapper.
+Maps the ChangeAmount operation to a typed response wrapper.
 
 _Không có field public (payload rỗng)._
 

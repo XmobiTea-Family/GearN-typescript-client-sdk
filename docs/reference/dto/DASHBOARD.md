@@ -686,7 +686,7 @@ Defines the reusable parameter block InventoryPermissionRulesParam.
 | `getAmount` | `PermissionRulesParam?` | no | — |
 | `getOwner` | `PermissionRulesParam?` | no | — |
 | `getRemoveStatus` | `PermissionRulesParam?` | no | — |
-| `setAmount` | `PermissionRulesParam?` | no | — |
+| `changeAmount` | `PermissionRulesParam?` | no | — |
 | `setOwner` | `PermissionRulesParam?` | no | — |
 | `setRemoveStatus` | `PermissionRulesParam?` | no | — |
 | `getItemsWithDisplayName` | `PermissionRulesParam?` | no | — |
@@ -943,9 +943,9 @@ Defines the reusable parameter block MatchmakingQueueSettingsParam.
 | Field | Type | Required | Notes |
 | --- | --- | --- | --- |
 | `queueName` | `string` | yes | _minLength=6, maxLength=32_ |
-| `matchSize` | `SizeParam` | yes | — |
-| `ticketSize` | `SizeParam` | yes | — |
-| `serverAllocation` | `ServerAllocationParam` | yes | — |
+| `matchSize` | `SizeParam` | no | — |
+| `ticketSize` | `SizeParam` | no | — |
+| `serverAllocation` | `ServerAllocationParam` | no | — |
 | `teams` | `Array<TeamParam>?` | no | _elementCls=TeamParam_ |
 | `rules` | `Array<RuleParam>?` | no | _elementCls=RuleParam_ |
 | `remove` | `boolean?` | no | — |

@@ -68,7 +68,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getTsCreate` | `InventoryModels.GetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` | `inventory.getTsCreate.selfEnable` | `inventory.getTsCreate.otherSelfEnable` |
 | `removeSegment` | `InventoryModels.RemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` | `inventory.removeSegment.selfEnable` | `inventory.removeSegment.otherSelfEnable` |
 | `removeTag` | `InventoryModels.RemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` | `inventory.removeTag.selfEnable` | `inventory.removeTag.otherSelfEnable` |
-| `setAmount` | `InventoryModels.SetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` | `inventory.setAmount.selfEnable` | `inventory.setAmount.otherSelfEnable` |
+| `changeAmount` | `InventoryModels.ChangeAmountRequestData` | `changeAmountAsync(...)` | `InventoryResponseModels.ChangeAmountOperationResponse` | `inventory.changeAmount.selfEnable` | `inventory.changeAmount.otherSelfEnable` |
 | `setAvatar` | `InventoryModels.SetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` | `inventory.setAvatar.selfEnable` | `inventory.setAvatar.otherSelfEnable` |
 | `setCustomData` | `InventoryModels.SetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` | `inventory.setCustomData.selfEnable` | `inventory.setCustomData.otherSelfEnable` |
 | `setDisplayName` | `InventoryModels.SetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` | `inventory.setDisplayName.selfEnable` | `inventory.setDisplayName.otherSelfEnable` |
@@ -108,7 +108,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getTsCreate` | `InventoryModels.ServerGetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` | `inventory.getTsCreate.serverSelfEnable` |
 | `removeSegment` | `InventoryModels.ServerRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` | `inventory.removeSegment.serverSelfEnable` |
 | `removeTag` | `InventoryModels.ServerRemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` | `inventory.removeTag.serverSelfEnable` |
-| `setAmount` | `InventoryModels.ServerSetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` | `inventory.setAmount.serverSelfEnable` |
+| `changeAmount` | `InventoryModels.ServerChangeAmountRequestData` | `changeAmountAsync(...)` | `InventoryResponseModels.ChangeAmountOperationResponse` | `inventory.changeAmount.serverSelfEnable` |
 | `setAvatar` | `InventoryModels.ServerSetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` | `inventory.setAvatar.serverSelfEnable` |
 | `setCustomData` | `InventoryModels.ServerSetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` | `inventory.setCustomData.serverSelfEnable` |
 | `setDisplayName` | `InventoryModels.ServerSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` | `inventory.setDisplayName.serverSelfEnable` |
@@ -148,7 +148,7 @@ Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debug
 | `getTsCreate` | `InventoryModels.AdminGetTsCreateRequestData` | `getTsCreateAsync(...)` | `InventoryResponseModels.GetTsCreateOperationResponse` | `inventory.getTsCreate.adminSelfEnable` |
 | `removeSegment` | `InventoryModels.AdminRemoveSegmentRequestData` | `removeSegmentAsync(...)` | `InventoryResponseModels.RemoveSegmentOperationResponse` | `inventory.removeSegment.adminSelfEnable` |
 | `removeTag` | `InventoryModels.AdminRemoveTagRequestData` | `removeTagAsync(...)` | `InventoryResponseModels.RemoveTagOperationResponse` | `inventory.removeTag.adminSelfEnable` |
-| `setAmount` | `InventoryModels.AdminSetAmountRequestData` | `setAmountAsync(...)` | `InventoryResponseModels.SetAmountOperationResponse` | `inventory.setAmount.adminSelfEnable` |
+| `changeAmount` | `InventoryModels.AdminChangeAmountRequestData` | `changeAmountAsync(...)` | `InventoryResponseModels.ChangeAmountOperationResponse` | `inventory.changeAmount.adminSelfEnable` |
 | `setAvatar` | `InventoryModels.AdminSetAvatarRequestData` | `setAvatarAsync(...)` | `InventoryResponseModels.SetAvatarOperationResponse` | `inventory.setAvatar.adminSelfEnable` |
 | `setCustomData` | `InventoryModels.AdminSetCustomDataRequestData` | `setCustomDataAsync(...)` | `InventoryResponseModels.SetCustomDataOperationResponse` | `inventory.setCustomData.adminSelfEnable` |
 | `setDisplayName` | `InventoryModels.AdminSetDisplayNameRequestData` | `setDisplayNameAsync(...)` | `InventoryResponseModels.SetDisplayNameOperationResponse` | `inventory.setDisplayName.adminSelfEnable` |

@@ -1026,8 +1026,8 @@ export namespace DashboardModels {
         @GNHashtableDataMember({ code: ParameterCode.GetRemoveStatus, isOptional: true })
         public getRemoveStatus?: PermissionRulesParam;
 
-        @GNHashtableDataMember({ code: ParameterCode.SetAmount, isOptional: true })
-        public setAmount?: PermissionRulesParam;
+        @GNHashtableDataMember({ code: ParameterCode.ChangeAmount, isOptional: true })
+        public changeAmount?: PermissionRulesParam;
 
         @GNHashtableDataMember({ code: ParameterCode.SetOwner, isOptional: true })
         public setOwner?: PermissionRulesParam;
@@ -1583,14 +1583,14 @@ export namespace DashboardModels {
         @StringDataMember({ code: ParameterCode.QueueName, minLength: 6, maxLength: 32 })
         public queueName: string;
 
-        @GNHashtableDataMember({ code: ParameterCode.MatchSize })
-        public matchSize: SizeParam;
+        @GNHashtableDataMember({ code: ParameterCode.MatchSize, isOptional: true })
+        public matchSize?: SizeParam;
 
-        @GNHashtableDataMember({ code: ParameterCode.TicketSize })
-        public ticketSize: SizeParam;
+        @GNHashtableDataMember({ code: ParameterCode.TicketSize, isOptional: true })
+        public ticketSize?: SizeParam;
 
-        @GNHashtableDataMember({ code: ParameterCode.ServerAllocation })
-        public serverAllocation: ServerAllocationParam;
+        @GNHashtableDataMember({ code: ParameterCode.ServerAllocation, isOptional: true })
+        public serverAllocation?: ServerAllocationParam;
 
         @GNArrayDataMember({ code: ParameterCode.Teams, isOptional: true, elementCls: TeamParam })
         public teams?: Array<TeamParam>;
