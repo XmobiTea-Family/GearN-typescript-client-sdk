@@ -1507,9 +1507,9 @@ Nếu `Extends` là `CustomOperationRequestAbstract<TRequestData>` hoặc `Custo
 | INVENTORY | `InventoryModels` | [RemoveTagRequestData](/docs/reference/dto/INVENTORY.md#removetagrequestdata) | 2 | — |
 | INVENTORY | `InventoryModels` | [ServerRemoveTagRequestData](/docs/reference/dto/INVENTORY.md#serverremovetagrequestdata) | 0 | `RemoveTagRequestData` |
 | INVENTORY | `InventoryModels` | [AdminRemoveTagRequestData](/docs/reference/dto/INVENTORY.md#adminremovetagrequestdata) | 0 | `ServerRemoveTagRequestData` |
-| INVENTORY | `InventoryModels` | [ChangeAmountRequestData](/docs/reference/dto/INVENTORY.md#setamountrequestdata) | 2 | — |
-| INVENTORY | `InventoryModels` | [ServerChangeAmountRequestData](/docs/reference/dto/INVENTORY.md#serversetamountrequestdata) | 0 | `ChangeAmountRequestData` |
-| INVENTORY | `InventoryModels` | [AdminChangeAmountRequestData](/docs/reference/dto/INVENTORY.md#adminsetamountrequestdata) | 0 | `ServerChangeAmountRequestData` |
+| INVENTORY | `InventoryModels` | [ChangeAmountRequestData](/docs/reference/dto/INVENTORY.md#changeamountrequestdata) | 2 | — |
+| INVENTORY | `InventoryModels` | [ServerChangeAmountRequestData](/docs/reference/dto/INVENTORY.md#serverchangeamountrequestdata) | 0 | `ChangeAmountRequestData` |
+| INVENTORY | `InventoryModels` | [AdminChangeAmountRequestData](/docs/reference/dto/INVENTORY.md#adminchangeamountrequestdata) | 0 | `ServerChangeAmountRequestData` |
 | INVENTORY | `InventoryModels` | [SetAvatarRequestData](/docs/reference/dto/INVENTORY.md#setavatarrequestdata) | 3 | — |
 | INVENTORY | `InventoryModels` | [ServerSetAvatarRequestData](/docs/reference/dto/INVENTORY.md#serversetavatarrequestdata) | 0 | `SetAvatarRequestData` |
 | INVENTORY | `InventoryModels` | [AdminSetAvatarRequestData](/docs/reference/dto/INVENTORY.md#adminsetavatarrequestdata) | 0 | `ServerSetAvatarRequestData` |
@@ -1616,9 +1616,9 @@ Nếu `Extends` là `CustomOperationRequestAbstract<TRequestData>` hoặc `Custo
 | INVENTORY | `InventoryRequestModels` | [RemoveTagOperationRequest](/docs/reference/dto/INVENTORY.md#removetagoperationrequest) | 0 | `CustomOperationRequestAbstract<InventoryModels.RemoveTagRequestData>` |
 | INVENTORY | `InventoryRequestModels` | [ServerRemoveTagOperationRequest](/docs/reference/dto/INVENTORY.md#serverremovetagoperationrequest) | 0 | `RemoveTagOperationRequest` |
 | INVENTORY | `InventoryRequestModels` | [AdminRemoveTagOperationRequest](/docs/reference/dto/INVENTORY.md#adminremovetagoperationrequest) | 0 | `RemoveTagOperationRequest` |
-| INVENTORY | `InventoryRequestModels` | [ChangeAmountOperationRequest](/docs/reference/dto/INVENTORY.md#setamountoperationrequest) | 0 | `CustomOperationRequestAbstract<InventoryModels.ChangeAmountRequestData>` |
-| INVENTORY | `InventoryRequestModels` | [ServerChangeAmountOperationRequest](/docs/reference/dto/INVENTORY.md#serversetamountoperationrequest) | 0 | `ChangeAmountOperationRequest` |
-| INVENTORY | `InventoryRequestModels` | [AdminChangeAmountOperationRequest](/docs/reference/dto/INVENTORY.md#adminsetamountoperationrequest) | 0 | `ChangeAmountOperationRequest` |
+| INVENTORY | `InventoryRequestModels` | [ChangeAmountOperationRequest](/docs/reference/dto/INVENTORY.md#changeamountoperationrequest) | 0 | `CustomOperationRequestAbstract<InventoryModels.ChangeAmountRequestData>` |
+| INVENTORY | `InventoryRequestModels` | [ServerChangeAmountOperationRequest](/docs/reference/dto/INVENTORY.md#serverchangeamountoperationrequest) | 0 | `ChangeAmountOperationRequest` |
+| INVENTORY | `InventoryRequestModels` | [AdminChangeAmountOperationRequest](/docs/reference/dto/INVENTORY.md#adminchangeamountoperationrequest) | 0 | `ChangeAmountOperationRequest` |
 | INVENTORY | `InventoryRequestModels` | [SetAvatarOperationRequest](/docs/reference/dto/INVENTORY.md#setavataroperationrequest) | 0 | `CustomOperationRequestAbstract<InventoryModels.SetAvatarRequestData>` |
 | INVENTORY | `InventoryRequestModels` | [ServerSetAvatarOperationRequest](/docs/reference/dto/INVENTORY.md#serversetavataroperationrequest) | 0 | `SetAvatarOperationRequest` |
 | INVENTORY | `InventoryRequestModels` | [AdminSetAvatarOperationRequest](/docs/reference/dto/INVENTORY.md#adminsetavataroperationrequest) | 0 | `SetAvatarOperationRequest` |
@@ -1672,7 +1672,7 @@ Nếu `Extends` là `CustomOperationRequestAbstract<TRequestData>` hoặc `Custo
 | INVENTORY | `InventoryResponseModels` | [GetTsCreateOperationResponse](/docs/reference/dto/INVENTORY.md#gettscreateoperationresponse) | 0 | `CustomOperationResponseAbstract<InventoryModels.InventoryResponseData>` |
 | INVENTORY | `InventoryResponseModels` | [RemoveSegmentOperationResponse](/docs/reference/dto/INVENTORY.md#removesegmentoperationresponse) | 0 | `CustomOperationResponseAbstract<InventoryModels.EmptyResponseData>` |
 | INVENTORY | `InventoryResponseModels` | [RemoveTagOperationResponse](/docs/reference/dto/INVENTORY.md#removetagoperationresponse) | 0 | `CustomOperationResponseAbstract<InventoryModels.EmptyResponseData>` |
-| INVENTORY | `InventoryResponseModels` | [ChangeAmountOperationResponse](/docs/reference/dto/INVENTORY.md#setamountoperationresponse) | 0 | `CustomOperationResponseAbstract<InventoryModels.InventoryResponseData>` |
+| INVENTORY | `InventoryResponseModels` | [ChangeAmountOperationResponse](/docs/reference/dto/INVENTORY.md#changeamountoperationresponse) | 0 | `CustomOperationResponseAbstract<InventoryModels.InventoryResponseData>` |
 | INVENTORY | `InventoryResponseModels` | [SetAvatarOperationResponse](/docs/reference/dto/INVENTORY.md#setavataroperationresponse) | 0 | `CustomOperationResponseAbstract<InventoryModels.EmptyResponseData>` |
 | INVENTORY | `InventoryResponseModels` | [SetCustomDataOperationResponse](/docs/reference/dto/INVENTORY.md#setcustomdataoperationresponse) | 0 | `CustomOperationResponseAbstract<InventoryModels.InventoryResponseData>` |
 | INVENTORY | `InventoryResponseModels` | [SetDisplayNameOperationResponse](/docs/reference/dto/INVENTORY.md#setdisplaynameoperationresponse) | 0 | `CustomOperationResponseAbstract<InventoryModels.EmptyResponseData>` |
