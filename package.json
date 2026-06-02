@@ -1,6 +1,6 @@
 {
     "name": "@xmobitea/gearn-typescript-client-sdk",
-    "version": "2.6.2",
+    "version": "2.6.3-tsc",
     "description": "GearN Typescript Client SDK by XmobiTea (Pro)",
     "types": "dist/index.d.ts",
     "main": "dist/index.js",
@@ -74,6 +74,6 @@
     },
     "homepage": "https://gearn.net",
     "engines": {
-        "node": ">=20.0.0"
+        "node": ">=22.0.0"
     }
 }
