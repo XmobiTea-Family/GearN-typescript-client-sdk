@@ -48,7 +48,7 @@ Typed response (trả từ mọi `*Async()` và callback path) expose field `pub
 **Helper method tương đương:**
 
 - `res.hasReturnCodeError(): boolean` — tương đương `res.returnCode !== ReturnCode.Ok`. Dùng cho code throw-style ngắn gọn.
-- Không có helper cho tầng 2 — dùng `res.errorCode !== ErrorCode.Ok` trực tiếp.
+- Không có helper boolean cho tầng 2 — dùng `res.errorCode !== ErrorCode.Ok` trực tiếp. Nếu cần tên để log/display, import `CodeHelper` và dùng `CodeHelper.getErrorCodeName(res.errorCode)` sau khi đã pass tầng `returnCode`.
 
 ```ts
 // Field public (early-return):

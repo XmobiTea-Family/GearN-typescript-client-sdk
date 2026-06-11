@@ -1,6 +1,7 @@
 import { InvalidMemberType } from "./../constant/enumType/InvalidMemberType";
 import { RequestRole } from "./../constant/enumType/RequestRole";
 import { RequestType } from "./../constant/enumType/RequestType";
+import { ErrorCode } from "./../constant/errorCode/ErrorCode";
 import { ReturnCode } from "./../constant/ReturnCode";
 
 /**
@@ -46,6 +47,9 @@ class CodeHelperBase {
  * Categories:
  * - `getReturnCodeName(returnCode)` — translates the
  *   {@link ReturnCode} value carried by every response.
+ * - `getErrorCodeName(errorCode)` — translates the
+ *   {@link ErrorCode} business/domain value carried inside
+ *   successful responses.
  * - `getRequestTypeName(requestType)` — translates the
  *   {@link RequestType} enum to the camelCase string used in
  *   {@link OperationHelper.toSocketData} and the HTTP URL.
@@ -62,11 +66,13 @@ class CodeHelperBase {
  * Extensibility: each category exposes an `add*Dic` method so
  * downstream applications can extend the lookup table with their
  * own enum values without forking the SDK. This is mostly used by
- * white-label deployments that introduce custom return codes.
+ * white-label deployments that introduce custom return/error codes.
  */
 export class CodeHelper {
     /** Helper backing {@link getReturnCodeName}. */
     private static returnCodeHelper: CodeHelperBase;
+    /** Helper backing {@link getErrorCodeName}. */
+    private static errorCodeHelper: CodeHelperBase;
     /** Helper backing {@link getRequestTypeName}. */
     private static requestTypeHelper: CodeHelperBase;
     /** Helper backing {@link getRequestRoleName}. */
@@ -80,6 +86,14 @@ export class CodeHelper {
      */
     public static getReturnCodeName(returnCode: number): string {
         return CodeHelper.returnCodeHelper.getCodeName(returnCode);
+    }
+
+    /**
+     * Returns the display name for a backend business/domain error
+     * code (e.g. `ErrorCode.AccountNotFound` -> `"AccountNotFound"`).
+     */
+    public static getErrorCodeName(errorCode: number): string {
+        return CodeHelper.errorCodeHelper.getCodeName(errorCode);
     }
 
     /**
@@ -127,6 +141,7 @@ export class CodeHelper {
      */
     static init(): void {
         this.setReturnCodeDic();
+        this.setErrorCodeDic();
         this.setRequestTypeDic();
         this.setRequestRoleDic();
         this.setInvalidMemberDic();
@@ -159,6 +174,36 @@ export class CodeHelper {
 
         for (let i = 0; i < keys.length; i++) {
             this.returnCodeHelper.codeDict.set(values[i], keys[i]);
+        }
+    }
+
+    /**
+     * Resets the error-code helper to a fresh instance and seeds
+     * it from the canonical {@link ErrorCode} enum.
+     */
+    private static setErrorCodeDic(): void {
+        this.errorCodeHelper = new CodeHelperBase(new Map());
+
+        this.addErrorCodeDic(ErrorCode);
+    }
+
+    /**
+     * Adds entries from any enum-shaped object into the
+     * error-code helper without lowercasing the first letter.
+     *
+     * Used by white-label deployments that ship additional domain
+     * error codes. They call this method once after
+     * {@link GNNetwork.init} with their own enum.
+     *
+     * @param errorCode Enum-shaped object whose entries should be
+     *                  merged into the helper.
+     */
+    public static addErrorCodeDic(errorCode: any): void {
+        let keys = Object.keys(errorCode) as Array<string>;
+        let values = Object.values(errorCode) as Array<number>;
+
+        for (let i = 0; i < keys.length; i++) {
+            this.errorCodeHelper.codeDict.set(values[i], keys[i]);
         }
     }
 
