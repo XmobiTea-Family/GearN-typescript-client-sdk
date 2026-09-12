@@ -227,8 +227,8 @@ export abstract class NetworkingSocketPeerBase {
      * exists as a hook for future cross-cutting behaviour
      * (compression, telemetry).
      */
-    send(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string) {
-        this.emit(requestType, role, operationRequest, authToken, secretKey, customTags, gameId);
+    send(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number) {
+        this.emit(requestType, role, operationRequest, authToken, secretKey, gameId, customTags, retrialCount);
     }
 
     /**
@@ -238,7 +238,7 @@ export abstract class NetworkingSocketPeerBase {
      * no-op exists so the abstract class can still be instantiated
      * during partial implementations / mocking in tests.
      */
-    protected emit(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
+    protected emit(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number): void {
 
     }
 

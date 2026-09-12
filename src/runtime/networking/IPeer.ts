@@ -70,14 +70,14 @@ export interface IPeer {
      *                            {@link AuthenticateStatus} when the
      *                            override is `null`.
      * @param secretKey           Game-specific shared secret.
-     * @param customTags          Optional bag of routing / telemetry
-     *                            tags merged into the outbound
-     *                            payload.
      * @param gameId              Game identifier sent in the
      *                            `Game-Id` header / equivalent
      *                            socket frame.
+     * @param customTags          Optional bag of routing / telemetry
+     *                            tags merged into the outbound
+     *                            payload.
      */
-    enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void;
+    enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number): void;
 
     /**
      * Returns whether the transport is enabled by configuration.

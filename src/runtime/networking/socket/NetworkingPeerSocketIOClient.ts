@@ -236,8 +236,8 @@ export class NetworkingPeerSocketIOClient extends NetworkingSocketPeerBase {
      * any pending-with-callback request will eventually time out and
      * surface through the regular response handler.
      */
-    protected override emit(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
-        super.emit(requestType, role, operationRequest, authToken, secretKey, customTags, gameId);
+    protected override emit(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number): void {
+        super.emit(requestType, role, operationRequest, authToken, secretKey, gameId, customTags, retrialCount);
 
         if (this.socketManager == null) {
             // callback here

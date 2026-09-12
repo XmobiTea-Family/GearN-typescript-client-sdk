@@ -6,7 +6,7 @@ Các khái niệm chung (áp dụng cho mọi group):
 
 - Namespace gốc: `GNNetwork.<group>` (role `Client`); một số group có thêm `.server` (`Server`) và `.admin` (`Admin`).
 - Mỗi method có 2 form: callback (`method(data, onResponse?, ...)`) và Promise (`methodAsync(data, ...)`). Ưu tiên `*Async()`.
-- Param chung của mọi method: `(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?)` — xem chi tiết trong từng file.
+- Param chung của mọi method: `(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, overrideGameId?, customTags?, retrialCount?, timeout?)`. `overrideGameId` chỉ áp dụng cho request hiện tại; bỏ trống để dùng `GNServerSettings.gameId`. `retrialCount` là tổng số lần gửi tối đa; `-1` dùng config và `1` tắt retry. Xem chi tiết trong từng file.
 - Response class expose field PUBLIC: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Check 2 tầng (`ReturnCode` → `ErrorCode`); xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 - Request/response wrapper class thường kế thừa `CustomOperationRequestAbstract<TRequestData>` / `CustomOperationResponseAbstract<TResponseData>`; xem [OPERATION_BASES.md](/docs/reference/OPERATION_BASES.md) khi cần hiểu `requestData`, `requestDataCls`, `build()`, `setupOperationResponse()`, `responseData`, `responseDataCls`.
 - Enum value cụ thể: [ENUMS.md](/docs/reference/ENUMS.md). Config SDK: [CONFIG.md](/docs/reference/CONFIG.md). Permission flags: [PERMISSION_RULES.md](/docs/reference/PERMISSION_RULES.md). Realtime event: [EVENTS.md](/docs/reference/EVENTS.md). Custom DTO attribute: [DATAMEMBER.md](/docs/reference/DATAMEMBER.md). Dynamic payload container: [GNDATA.md](/docs/reference/GNDATA.md).

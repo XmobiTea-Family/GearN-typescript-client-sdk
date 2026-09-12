@@ -224,7 +224,7 @@ export class SocketPeer extends PeerBase {
      * Sends a queued operation through the underlying transport.
      *
      * Substitutes the SDK-wide
-     * {@link OperationRequest.defaultTimeOut} sentinel with the
+     * -1 sentinel with the
      * configured `defaultTimeoutInSeconds` so the timeout sweep on
      * {@link PeerBase.service} uses the real value rather than the
      * sentinel. Then chains into `super.send(...)` so the in-flight
@@ -236,7 +236,7 @@ export class SocketPeer extends PeerBase {
         let gnServerSettings = GNNetwork.getGNServerSettings();
         let operationRequest = operationPending.getOperationRequest();
 
-        if (operationRequest.getTimeout() == OperationRequest.defaultTimeOut) operationRequest.setTimeout(gnServerSettings.getDefaultTimeoutInSeconds());
+        if (operationRequest.getTimeout() == -1) operationRequest.setTimeout(gnServerSettings.getDefaultTimeoutInSeconds());
 
         super.send(operationPending);
 
@@ -246,8 +246,9 @@ export class SocketPeer extends PeerBase {
         let secretKey = operationPending.getSecretKey();
         let gameId = operationPending.getGameId();
         let customTags = operationPending.getCustomTags();
+        var retrialCount = operationPending.getRetrialCount();
 
-        this.networkingSocketPeerBase.send(operationPending.getRequestType(), operationPending.getRole(), operationPending.getOperationRequest(), authToken, secretKey, customTags, gameId);
+        this.networkingSocketPeerBase.send(operationPending.getRequestType(), operationPending.getRole(), operationPending.getOperationRequest(), authToken, secretKey, gameId, customTags, retrialCount);
     }
 
     /**

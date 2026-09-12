@@ -41,8 +41,8 @@ Ngoài ra còn có:
 <!-- prettier-ignore -->
 | Hàm gốc | Code trong cloudScript như thế nào |
 | --- | --- |
-| `send(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): void` | `admin.send(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, customTags)` |
-| `sendAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse>` | `admin.sendAsync(requestType, role, request, overrideAuthToken, overrideSecretKey, customTags)` |
+| `send(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number): void` | `admin.send(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount)` |
+| `sendAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number): Promise<OperationResponse>` | `admin.sendAsync(requestType, role, request, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount)` |
 
 ## 3. Khi nào dùng `admin`
 
@@ -66,13 +66,14 @@ Không nên dùng `admin` khi:
 const response = await admin.<domain>.<method>Async(requestData);
 
 // Full signature (optional params hiếm khi cần)
-const response = await admin.<domain>.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+const response = await admin.<domain>.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, overrideGameId?, customTags?, retrialCount?, timeout?);
 ```
 
 Rule:
 
 - Trong đa số case bạn chỉ cần truyền `requestData`.
 - Chỉ truyền optional params khi thật sự cần override context hoặc tracing.
+- `retrialCount` là tổng số lần gửi tối đa; `-1` dùng config mặc định, `1` tắt retry. SDK tự retry `OperationTimeout` và `UnknownError`.
 - Luôn check `response.hasReturnCodeError()` trước, rồi kiểm tra `response.errorCode === ErrorCode.Ok`.
 - Với route `admin`, phần lớn method yêu cầu `userId` (hoặc entity id) rõ ràng — không bỏ trống như route `client`.
 - **KHÔNG dùng `any` cho `response` / item array / `args`** — base type cho helper là `CustomOperationResponse`; item array dùng `GenericModels.CurrencyItem[]` / `StatisticsItem[]` / `DataItem[]` …; `args` dùng `unknown` rồi narrow. Đầy đủ pattern + bảng mapping: [CLOUDSCRIPT_USAGE.md § 5](/docs/cloudScript/CLOUDSCRIPT_USAGE.md#5-typing--không-dùng-any-vô-tội-vạ).
@@ -402,7 +403,7 @@ handlers["adminExecuteAnotherCloudScript"] = async (args: any, context, log) => 
         .add("source", "admin.cloudScript.executeFunctionAsync")
         .build();
 
-    const response = await admin.cloudScript.executeFunctionAsync(request, undefined, undefined, customTags);
+    const response = await admin.cloudScript.executeFunctionAsync(request, undefined, undefined, undefined, customTags);
 
     assertResponseOk(response, "admin.cloudScript.executeFunctionAsync");
 

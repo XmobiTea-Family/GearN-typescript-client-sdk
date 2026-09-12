@@ -42,8 +42,8 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
      * matches the abstract synchronous-looking signature. The helper
      * always invokes the callback exactly once.
      */
-    public override getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): void {
-        this.getRequestAxios(subUri, onHttpAppResponse, timeout, authToken, secretKey, gameId);
+    public override getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, requestId: string, authToken: string, secretKey: string, gameId: string, retrialCount: number): void {
+        this.getRequestAxios(subUri, onHttpAppResponse, timeout, requestId, authToken, secretKey, gameId, retrialCount);
     }
 
     /**
@@ -54,8 +54,8 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
      * response to either text (JSON) or `Uint8Array` + best-effort
      * UTF-8 text (MsgPack).
      */
-    public postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
-        this.postRequestAxios(subUri, param, postType, onHttpAppResponse, timeout, authToken, secretKey, customTags, gameId);
+    public postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, requestId: string, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number): void {
+        this.postRequestAxios(subUri, param, postType, onHttpAppResponse, timeout, requestId, authToken, secretKey, gameId, customTags, retrialCount);
     }
 
     /**
@@ -91,12 +91,13 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
      * an {@link HttpAppResponse} with `statusCode = -1` and
      * `text = "[-2]"`, then logs through {@link GNDebug.logError}.
      */
-    private async getRequestAxios(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): Promise<void> {
+    private async getRequestAxios(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, requestId: string, authToken: string, secretKey: string, gameId: string, retrialCount: number): Promise<void> {
         let headers: { [k: string]: any } = {};
 
         if (authToken) headers[Commands.RequestAuthTokenCmd] = authToken;
         if (secretKey) headers[Commands.RequestSecretCmd] = secretKey;
         if (gameId) headers[Commands.RequestGameIdCmd] = gameId;
+        if (requestId) headers[Commands.RequestRequestIdCmd] = requestId;
 
         if (!GNSupport.isBrowser())
             headers[Commands.USER_AGENT] = this.userAgent;
@@ -151,12 +152,13 @@ export class NetworkingPeerAxiosRequest extends NetworkingHttpPeerBase {
      *
      * Same error-handling shape as {@link getRequestAxios}.
      */
-    private async postRequestAxios(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): Promise<void> {
+    private async postRequestAxios(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, requestId: string, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number): Promise<void> {
         let headers: { [k: string]: any } = {};
 
         if (authToken) headers[Commands.RequestAuthTokenCmd] = authToken;
         if (secretKey) headers[Commands.RequestSecretCmd] = secretKey;
         if (gameId) headers[Commands.RequestGameIdCmd] = gameId;
+        if (requestId) headers[Commands.RequestRequestIdCmd] = requestId;
 
         if (!GNSupport.isBrowser())
             headers[Commands.USER_AGENT] = this.userAgent;

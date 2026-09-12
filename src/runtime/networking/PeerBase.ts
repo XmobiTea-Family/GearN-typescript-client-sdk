@@ -13,6 +13,7 @@ import { GNDebug } from "./../logger/GNDebug";
 import { IPeer } from "./IPeer";
 import { OperationPending } from "./OperationPending";
 import { StorageService } from "./../helper/StorageService";
+import { OperationHelper } from "./../helper/OperationHelper";
 
 /**
  * Shared scaffolding for both transports — owns the request queue,
@@ -58,15 +59,7 @@ export abstract class PeerBase implements IPeer {
      * are mandatory for response correlation, so fire-and-forget
      * entries are not tracked.
      */
-    private operationWaitingResponseDict: Map<number, OperationPending>;
-
-    /**
-     * Monotonic counter used to assign unique request ids to outgoing
-     * operations. Static so HTTP and socket peers share the same id
-     * space, which makes log lines easier to correlate when the SDK
-     * runs both transports concurrently.
-     */
-    private static requestId: number = 0;
+    private operationWaitingResponseDict: Map<string, OperationPending>;
 
     /**
      * Effective time between sends, derived from the configured
@@ -213,18 +206,19 @@ export abstract class PeerBase implements IPeer {
      *                            `null`.
      * @param secretKey           Shared secret for the
      *                            `Secret-Key` header.
-     * @param customTags          Optional routing tags.
      * @param gameId              Game id for the `Game-Id` header.
+     * @param customTags          Optional routing tags.
+     * @param retrialCount        Number of times to retry the request.
      */
-    public enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void {
+    public enqueue(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number): void {
         if (!this.isUse) {
             GNDebug.logError("[GearN] Server Settings dont setup to use this to send operation request.");
             return;
         }
 
-        if (operationRequest.getRequestId() != -1) operationRequest.setRequestId(++PeerBase.requestId);
+        if (operationRequest.getRequestId() == null) operationRequest.setRequestId(OperationHelper.randomRequestId());
 
-        let operationPending = new OperationPending(requestType, role, operationRequest, onOperationResponse, authToken, secretKey, customTags, gameId);
+        let operationPending = new OperationPending(requestType, role, operationRequest, onOperationResponse, authToken, secretKey, gameId, customTags, retrialCount);
         this.operationPendingQueue.push(operationPending);
 
         this.onEnqueue(operationPending);
@@ -271,8 +265,6 @@ export abstract class PeerBase implements IPeer {
             this.checkTimeoutOperationPending = nowSecond + 0.1;
 
             if (this.operationWaitingResponseDict.size != 0) {
-                let gnHashtableLst: GNHashtable[] = [];
-
                 this.operationWaitingResponseDict.forEach((operationPending, operationPendingKey) => {
                     if (operationPending.isTimeout()) {
                         let gnHashtable = new GNHashtable();
@@ -281,15 +273,9 @@ export abstract class PeerBase implements IPeer {
                         gnHashtable.add(ParameterCode.Parameters, null);
                         gnHashtable.add(ParameterCode.ResponseId, operationPending.getOperationRequest().getRequestId());
 
-                        gnHashtableLst.push(gnHashtable);
+                        this.onResponseHandler(gnHashtable);
                     }
                 });
-
-                if (gnHashtableLst.length != 0) {
-                    gnHashtableLst.forEach(gnHashtable => {
-                        this.onResponseHandler(gnHashtable);
-                    });
-                }
             }
         }
 
@@ -329,7 +315,9 @@ export abstract class PeerBase implements IPeer {
      *            `InvalidRequestParameters` array.
      */
     protected onResponseHandler(obj: GNHashtable): void {
-        let responseId = obj.getNumber(ParameterCode.ResponseId);
+        let responseId = obj.getString(ParameterCode.ResponseId);
+        if (responseId == null) return;
+
         if (this.operationWaitingResponseDict.has(responseId)) {
             let operationPending = this.operationWaitingResponseDict.get(responseId);
             operationPending.onRecv();
@@ -337,6 +325,16 @@ export abstract class PeerBase implements IPeer {
             this.operationWaitingResponseDict.delete(responseId);
 
             let returnCode = obj.getNumber(ParameterCode.ReturnCode);
+
+            if (returnCode == ReturnCode.OperationTimeout || returnCode == ReturnCode.UnknownError) {
+                if (operationPending.getRetrialCount() > 1) {
+                    GNDebug.log("[GN RETRY] for requestId " + responseId + " retrial remain " + (operationPending.getRetrialCount() - 1));
+
+                    this.enqueue(operationPending.getRequestType(), operationPending.getRole(), operationPending.getOperationRequest(), operationPending.getCallback(), operationPending.getAuthToken(), operationPending.getSecretKey(), operationPending.getGameId(), operationPending.getCustomTags(), operationPending.getRetrialCount() - 1);
+
+                    return;
+                }
+            }
 
             let parameters: GNHashtable = obj.getGNHashtable(ParameterCode.Parameters);
             let debugMessage: string = obj.getString(ParameterCode.DebugMessage);
@@ -406,7 +404,7 @@ export abstract class PeerBase implements IPeer {
      * Subclasses override this to perform the actual transport-level
      * dispatch, then call back into `super.send(...)` so the in-flight
      * map stays accurate. Fire-and-forget requests
-     * (`requestId === -1`) and entries with no callback are not
+     * (`requestId === null`) and entries with no callback are not
      * inserted into the map because there is nothing to resolve them
      * to.
      */
@@ -415,10 +413,8 @@ export abstract class PeerBase implements IPeer {
 
         let operationRequest = operationPending.getOperationRequest();
 
-        if (operationRequest.getRequestId() != -1) {
-            if (operationPending.getCallback() != null) {
-                this.operationWaitingResponseDict.set(operationRequest.getRequestId(), operationPending);
-            }
+        if (operationRequest.getRequestId() != null && operationPending.getCallback() != null) {
+            this.operationWaitingResponseDict.set(operationRequest.getRequestId(), operationPending);
         }
     }
 

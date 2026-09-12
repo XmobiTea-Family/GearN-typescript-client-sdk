@@ -41,7 +41,7 @@ Rule cứng:
 - `Ok === 1` ở **cả** `ReturnCode` và `ErrorCode`. Không giả định `Ok === 0`.
 - Không skip tầng 1 để đọc thẳng `errorCode`; khi `returnCode !== Ok`, `errorCode` và `responseData` **không đáng tin**.
 - Không hardcode số (`if (res.returnCode === 1)`). So sánh bằng enum symbol.
-- `*Async()` **không throw** business/transport error — reject Promise chỉ khi transport layer thật sự fail (network exception, serialization fail).
+- `*Async()` **không throw** business/transport error. HTTP network exception được map thành `ReturnCode.UnknownError` và tham gia automatic retry; Promise chỉ reject khi có exception thoát khỏi pipeline callback, ví dụ serialization fail.
 - Low-level raw `OperationResponse` (không dùng typed wrapper) có getter `getReturnCode()` etc. — chỉ dùng khi tự viết custom op.
 
 Full table ReturnCode/ErrorCode + recommended action: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md). Phân biệt `SecretInvalid` / `OperationInvalid` / `OperationNotAllow` → § 5.
@@ -225,10 +225,10 @@ Helper state:
 
 ```ts
 // Callback
-GNNetwork.<group>.<method>(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+GNNetwork.<group>.<method>(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, overrideGameId?, customTags?, retrialCount?, timeout?);
 
 // Async (preferred)
-const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, overrideGameId?, customTags?, retrialCount?, timeout?);
 ```
 
 ### 8.1 Build request DTO trong code copy-paste
@@ -243,8 +243,20 @@ const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken
 | --- | --- |
 | `overrideAuthToken: string` | Impersonate / multi-session / admin thao tác trên user khác mà không dùng auth cache hiện tại |
 | `overrideSecretKey: string` | Override secret cho 1 request, ví dụ migration tool gọi `.admin` từ script ngoài |
+| `overrideGameId: string` | Override game context cho đúng 1 request; truyền `null`/`undefined` để dùng `GNServerSettings.gameId` |
 | `customTags: GNHashtable` | Tag trace id, build version, A/B bucket — backend có thể log/route |
+| `retrialCount: number` | Số lần gửi tối đa. `-1` dùng `GNServerSettings.defaultRetrialCount`; `1` tắt retry |
 | `timeout: number` | Override `defaultTimeoutInSeconds` per-request (giây) |
+
+### 8.2 Automatic retry
+
+- SDK tự retry khi response có `ReturnCode.OperationTimeout` hoặc `ReturnCode.UnknownError`.
+- Cơ chế này nằm trong peer dùng chung nên áp dụng cho cả HTTP và socket.
+- `retrialCount` là **tổng số lần gửi tối đa**, không phải số lần retry sau lần đầu: `3` = 1 lần đầu + tối đa 2 lần gửi lại.
+- `-1` dùng `GNServerSettings.defaultRetrialCount` (default `3`); `1` chỉ gửi một lần. Không truyền `0` hoặc số âm khác `-1`.
+- Mỗi lần retry giữ nguyên request id, payload và các override; request được đưa lại vào queue gửi thông thường, không có exponential backoff riêng.
+- Callback/Promise chỉ nhận response cuối sau khi thành công hoặc hết số lần gửi.
+- SDK không phân loại operation idempotent. Với create/change/remove/purchase hoặc operation có side effect khác, caller phải xác nhận backend có deduplicate theo request id; nếu không, truyền `retrialCount: 1`.
 
 Ví dụ `customTags`:
 
@@ -286,7 +298,7 @@ Bảng hợp nhất — cột "Triệu chứng" mô tả lỗi runtime thường
 | 14 | `OperationNotAllow` = thiếu secret | Fix sai hướng, thay secret vô nghĩa | Xem § 5: secret hợp lệ nhưng permission rule cấm. |
 | 15 | Bịa method / field không có trong `dist/*.d.ts` | Compile fail hoặc runtime `undefined` | Tra `API_<GROUP>.md` / `dto/<DOMAIN>.md` / `dist/*.d.ts`. Không suy diễn. |
 | 16 | Giả định realtime tự chạy sau HTTP call | Không nhận event | Phải subscribe handler trong [reference/EVENTS.md](/docs/reference/EVENTS.md). |
-| 17 | Bỏ qua `overrideAuthToken` / `overrideSecretKey` / `customTags` / `timeout` khi cần | Impersonate fail, timeout mặc định không đủ | Xem § 8. |
+| 17 | Bỏ qua `overrideAuthToken` / `overrideSecretKey` / `overrideGameId` / `customTags` / `timeout` khi cần | Impersonate fail, gửi nhầm game context, hoặc timeout mặc định không đủ | Xem § 8. |
 | 18 | Dùng `src/` làm nguồn public contract | Phụ thuộc internal, rot nhanh | `src/` chỉ khi sửa SDK / debug nội bộ. |
 
 ---

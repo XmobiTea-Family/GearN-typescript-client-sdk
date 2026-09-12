@@ -17,6 +17,20 @@ import { CodeHelper } from "./CodeHelper";
  * directly to {@link GNHashtable.toData}.
  */
 export class OperationHelper {
+    private static readonly RequestIdCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    private static readonly LengthCharacters = 16;
+
+    public static randomRequestId(): string {
+        let result = "";
+
+        for (let i = 0; i < OperationHelper.LengthCharacters; i++) {
+            const randomIndex = Math.floor(Math.random() * OperationHelper.RequestIdCharacters.length);
+            result += OperationHelper.RequestIdCharacters[randomIndex];
+        }
+
+        return result;
+    }
+
     /**
      * Builds the wire-format array sent over the socket.
      *
@@ -28,7 +42,7 @@ export class OperationHelper {
      * - Index 3: parameter bag dumped via
      *   {@link GNHashtable.toData}, or `null` when the request has
      *   no parameters.
-     * - Index 4 (only when `requestId !== -1`): request id used by
+     * - Index 4 (only when `requestId !== null`): request id used by
      *   the backend to correlate the response. Omitted entirely
      *   for fire-and-forget calls.
      *
@@ -45,7 +59,7 @@ export class OperationHelper {
     public static toSocketData(requestType: RequestType, role: RequestRole, request: OperationRequest): any {
         let requestId = request.getRequestId();
 
-        if (requestId == -1)
+        if (requestId == null)
             return [
                 CodeHelper.getRequestTypeName(requestType),
                 CodeHelper.getRequestRoleName(role),

@@ -156,7 +156,7 @@ export class HttpPeer extends PeerBase {
      *
      * Steps:
      * 1. Substitute the SDK-wide
-     *    {@link OperationRequest.defaultTimeOut} sentinel with the
+     *    -1 sentinel with the
      *    configured `defaultTimeoutInSeconds`.
      * 2. Chain into {@link PeerBase.send} so the in-flight map
      *    records the request id.
@@ -175,7 +175,7 @@ export class HttpPeer extends PeerBase {
         let gnServerSettings = GNNetwork.getGNServerSettings();
         let operationRequest = operationPending.getOperationRequest();
 
-        if (operationRequest.getTimeout() == OperationRequest.defaultTimeOut) operationRequest.setTimeout(gnServerSettings.getDefaultTimeoutInSeconds());
+        if (operationRequest.getTimeout() == -1) operationRequest.setTimeout(gnServerSettings.getDefaultTimeoutInSeconds());
 
         super.send(operationPending);
 
@@ -185,6 +185,7 @@ export class HttpPeer extends PeerBase {
         let secretKey = operationPending.getSecretKey();
         let gameId = operationPending.getGameId();
         let customTags = operationPending.getCustomTags();
+        let retrialCount = operationPending.getRetrialCount();
 
         let postType = gnServerSettings.getMessageType() == MessageType.Json ? PostType.Json : PostType.MsgPack;
 
@@ -198,7 +199,7 @@ export class HttpPeer extends PeerBase {
 
         this.networkingHttpPeerBase.postRequest(subUri, operationRequest.getParameters(), postType, (httpAppResponse: HttpAppResponse) => {
             thiz.onSendOperationRequestResponse(operationPending, httpAppResponse);
-        }, operationRequest.getTimeout(), authToken, secretKey, customTags, gameId);
+        }, operationRequest.getTimeout(), operationRequest.getRequestId(), authToken, secretKey, gameId, customTags, retrialCount);
     }
 
     /**
@@ -287,13 +288,13 @@ export class HttpPeer extends PeerBase {
      * @param onHttpAppResponse Callback receiving the typed
      *                          {@link HttpAppResponse}.
      * @param timeout         Optional timeout in seconds. Defaults
-     *                        to {@link OperationRequest.defaultTimeOut}.
+     *                        to -1.
      * @param authToken       Optional auth token override.
      * @param secretKey       Optional secret key override.
      * @param gameId          Optional game id override.
      */
-    getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = OperationRequest.defaultTimeOut, authToken: string = null, secretKey: string = null, gameId: string = null): void {
-        this.networkingHttpPeerBase.getRequest(subUri, onHttpAppResponse, timeout, authToken, secretKey, gameId);
+    getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number = -1, requestId: string = null, authToken: string = null, secretKey: string = null, gameId: string = null, retrialCount: number = -1): void {
+        this.networkingHttpPeerBase.getRequest(subUri, onHttpAppResponse, timeout, requestId, authToken, secretKey, gameId, retrialCount);
     }
 
     /**

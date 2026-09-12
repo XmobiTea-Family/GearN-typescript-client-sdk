@@ -516,10 +516,9 @@ export class GNNetwork {
      * a hand-built `OperationRequest` (custom op-codes, replay tooling,
      * advanced testing) and explicitly want the socket transport.
      *
-     * The peer fills the `authToken` and `secretKey` slots from the
-     * shared {@link AuthenticateStatus} / {@link GNServerSettings} when
-     * the corresponding override parameter is `null`, and always attaches
-     * the configured `gameId` from `GNServerSettings.getGameId()`.
+     * The peer fills the `authToken`, `secretKey`, and `gameId` slots from
+     * the shared {@link AuthenticateStatus} / {@link GNServerSettings} when
+     * the corresponding override parameter is `null`.
      *
      * @param requestType        Logical request category (Authenticate /
      *                           CharacterPlayer / ...). Embedded in the
@@ -542,11 +541,14 @@ export class GNNetwork {
      * @param overrideSecretKey  Use a one-shot secret key instead of the
      *                           configured one. Pass `null` for the
      *                           default.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @param customTags         Optional bag of routing / telemetry tags
      *                           merged into the outbound payload.
      */
-    public static sendViaSocket(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): void {
-        GNNetwork.peer.sendViaSocket(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, customTags);
+    public static sendViaSocket(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number): void {
+        GNNetwork.peer.sendViaSocket(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount);
     }
 
     /**
@@ -557,14 +559,16 @@ export class GNNetwork {
      * non-zero `returnCode` that callers should check via
      * `response.hasError()`.
      *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @returns Promise of the typed response.
      */
-    public static async sendViaSocketAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse> {
+    public static async sendViaSocketAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number): Promise<OperationResponse> {
         return new Promise((resolve) => {
             GNNetwork.sendViaSocket(requestType, role, request,
                 (response: OperationResponse) => {
                     resolve(response);
-                }, overrideAuthToken, overrideSecretKey, customTags
+                }, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount
             );
         });
     }
@@ -589,10 +593,12 @@ export class GNNetwork {
      * @param onResponse         See {@link sendViaSocket}.
      * @param overrideAuthToken  See {@link sendViaSocket}.
      * @param overrideSecretKey  See {@link sendViaSocket}.
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @param customTags         See {@link sendViaSocket}.
      */
-    public static sendViaHttp(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): void {
-        GNNetwork.peer.sendViaHttp(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, customTags);
+    public static sendViaHttp(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse>, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number): void {
+        GNNetwork.peer.sendViaHttp(requestType, role, request, onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount);
     }
 
     /**
@@ -602,14 +608,16 @@ export class GNNetwork {
      * resolves; transport errors and timeouts surface through
      * `response.hasError()`.
      *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @returns Promise of the typed response.
      */
-    public static async sendViaHttpAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable): Promise<OperationResponse> {
+    public static async sendViaHttpAsync(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number): Promise<OperationResponse> {
         return new Promise((resolve) => {
             GNNetwork.sendViaHttp(requestType, role, request,
                 (response: OperationResponse) => {
                     resolve(response);
-                }, overrideAuthToken, overrideSecretKey, customTags
+                }, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount
             );
         });
     }
@@ -631,6 +639,8 @@ export class GNNetwork {
      * @param onResponse                    Optional typed callback.
      * @param overrideAuthToken             Optional one-shot auth token.
      * @param overrideSecretKey             Optional one-shot secret key.
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @param customTags                    Optional routing tags.
      * @param customOperationResponseCls    Concrete response class — the
      *                                      SDK instantiates it via
@@ -639,22 +649,24 @@ export class GNNetwork {
      *                                      `setupOperationResponse(...)`
      *                                      on the result.
      */
-    public static sendViaSocketTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): void {
-        GNNetwork.sendViaSocketTResponse(request.getRequestType(), request.getRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+    public static sendViaSocketTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number, customOperationResponseCls: Constructor<TResponse>): void {
+        GNNetwork.sendViaSocketTResponse(request.getRequestType(), request.getRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, customOperationResponseCls);
     }
 
     /**
      * Promise-based wrapper around
      * {@link sendViaSocketTRequestTResponse}.
      *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @returns Promise of the typed response.
      */
-    public static async sendViaSocketTRequestTResponseAsync<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
+    public static async sendViaSocketTRequestTResponseAsync<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
         return new Promise((resolve) => {
             GNNetwork.sendViaSocketTRequestTResponse(request,
                 (response: TResponse) => {
                     resolve(response);
-                }, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+                }, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, customOperationResponseCls);
         });
     }
 
@@ -665,23 +677,28 @@ export class GNNetwork {
      * Same contract as {@link sendViaSocketTRequestTResponse} but routes
      * the request through Axios instead of socket.io. This is the
      * helper invoked by every method on the generated `*Api` classes.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public static sendViaHttpTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): void {
-        GNNetwork.sendViaHttpTResponse(request.getRequestType(), request.getRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+    public static sendViaHttpTRequestTResponse<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number, customOperationResponseCls: Constructor<TResponse>): void {
+        GNNetwork.sendViaHttpTResponse(request.getRequestType(), request.getRole(), request.build(), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, customOperationResponseCls);
     }
 
     /**
      * Promise-based wrapper around
      * {@link sendViaHttpTRequestTResponse}.
      *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @returns Promise of the typed response.
      */
-    public static async sendViaHttpTRequestTResponseAsync<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, overrideAuthToken: string, overrideSecretKey: string, customTags: GNHashtable, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
+    public static async sendViaHttpTRequestTResponseAsync<TRequest extends CustomOperationRequest, TResponse extends CustomOperationResponse>(request: TRequest, overrideAuthToken: string, overrideSecretKey: string, overrideGameId: string, customTags: GNHashtable, retrialCount: number, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
         return new Promise((resolve) => {
             GNNetwork.sendViaHttpTRequestTResponse(request,
                 (response: TResponse) => {
                     resolve(response);
-                }, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+                }, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, customOperationResponseCls);
         });
     }
 
@@ -706,10 +723,12 @@ export class GNNetwork {
      *                                   `null` for fire-and-forget.
      * @param overrideAuthToken          Optional one-shot auth token.
      * @param overrideSecretKey          Optional one-shot secret key.
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @param customTags                 Optional routing tags.
      * @param customOperationResponseCls Concrete response class.
      */
-    public static sendViaSocketTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): void {
+    public static sendViaSocketTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, customOperationResponseCls: Constructor<TResponse>): void {
         GNNetwork.sendViaSocket(requestType, role, request, response => {
             if (response == null) return;
 
@@ -717,7 +736,7 @@ export class GNNetwork {
             customOperationResponse.setupOperationResponse(response);
 
             if (onResponse != null) onResponse(customOperationResponse);
-        }, overrideAuthToken, overrideSecretKey, customTags);
+        }, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount);
     }
 
     /**
@@ -728,14 +747,16 @@ export class GNNetwork {
      * triggering a timeout. Pair with `Promise.race` against an
      * application-side timer when that matters.
      *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @returns Promise of the typed response.
      */
-    public static async sendViaSocketTResponseAsync<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
+    public static async sendViaSocketTResponseAsync<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
         return new Promise((resolve) => {
             GNNetwork.sendViaSocketTResponse(requestType, role, request,
                 (response: TResponse) => {
                     resolve(response);
-                }, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+                }, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, customOperationResponseCls);
         });
     }
 
@@ -754,10 +775,12 @@ export class GNNetwork {
      * @param onResponse                 Optional typed callback.
      * @param overrideAuthToken          Optional one-shot auth token.
      * @param overrideSecretKey          Optional one-shot secret key.
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @param customTags                 Optional routing tags.
      * @param customOperationResponseCls Concrete response class.
      */
-    public static sendViaHttpTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): void {
+    public static sendViaHttpTResponse<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<TResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, customOperationResponseCls: Constructor<TResponse>): void {
         GNNetwork.sendViaHttp(requestType, role, request, response => {
             if (response == null) return;
 
@@ -765,20 +788,22 @@ export class GNNetwork {
             customOperationResponse.setupOperationResponse(response);
 
             if (onResponse != null) onResponse(customOperationResponse);
-        }, overrideAuthToken, overrideSecretKey, customTags);
+        }, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount);
     }
 
     /**
      * Promise-based wrapper around {@link sendViaHttpTResponse}.
      *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @returns Promise of the typed response.
      */
-    public static async sendViaHttpTResponseAsync<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
+    public static async sendViaHttpTResponseAsync<TResponse extends CustomOperationResponse>(requestType: RequestType, role: RequestRole, request: OperationRequest, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, customOperationResponseCls: Constructor<TResponse>): Promise<TResponse> {
         return new Promise((resolve) => {
             GNNetwork.sendViaHttpTResponse(requestType, role, request,
                 (response: TResponse) => {
                     resolve(response);
-                }, overrideAuthToken, overrideSecretKey, customTags, customOperationResponseCls);
+                }, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, customOperationResponseCls);
         });
     }
 

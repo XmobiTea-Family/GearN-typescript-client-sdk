@@ -27,7 +27,7 @@ import { AuthenticateResponseModels } from "./entity/models/AuthenticateResponse
  *   {@link StorageService} automatically — subsequent calls do
  *   not need to repeat the credential.
  * - The standard parameter set
- *   (`overrideAuthToken`, `overrideSecretKey`, `customTags`,
+ *   (`overrideAuthToken`, `overrideSecretKey`, `overrideGameId`, `customTags`,
  *   `timeout`) is documented on {@link GNNetwork.sendViaHttp} and
  *   applies identically here.
  *
@@ -72,13 +72,15 @@ export class AuthenticateApi {
      * @param overrideAuthToken Optional one-shot auth token. Pass
      *                          `null` to use the cached token.
      * @param overrideSecretKey Optional one-shot secret key.
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      * @param customTags        Optional routing / telemetry tags.
      * @param timeout           Per-request timeout in seconds.
      *                          Defaults to
-     *                          {@link OperationRequest.defaultTimeOut}.
+     *                          -1.
      */
-    public loginByAccount(requestData: AuthenticateModels.LoginByAccountRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByAccountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByAccountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByAccountOperationResponse);
+    public loginByAccount(requestData: AuthenticateModels.LoginByAccountRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByAccountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByAccountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByAccountOperationResponse);
     }
 
     /**
@@ -87,9 +89,12 @@ export class AuthenticateApi {
      * The promise always resolves; transport / domain failures
      * surface through `response.hasReturnCodeError()` and
      * `response.errorCode`.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByAccountAsync(requestData: AuthenticateModels.LoginByAccountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByAccountOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByAccountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByAccountOperationResponse);
+    public async loginByAccountAsync(requestData: AuthenticateModels.LoginByAccountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByAccountOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByAccountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByAccountOperationResponse);
     }
 
     /**
@@ -106,16 +111,22 @@ export class AuthenticateApi {
      * `GNNetwork.masterPlayer`) to attach an existing GearN
      * account to a device id, and with `unlinkAndroidDeviceId` to
      * detach it.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByAndroidDeviceId(requestData: AuthenticateModels.LoginByAndroidDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByAndroidDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse);
+    public loginByAndroidDeviceId(requestData: AuthenticateModels.LoginByAndroidDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByAndroidDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByAndroidDeviceId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByAndroidDeviceIdAsync(requestData: AuthenticateModels.LoginByAndroidDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByAndroidDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse);
+    public async loginByAndroidDeviceIdAsync(requestData: AuthenticateModels.LoginByAndroidDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByAndroidDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByAndroidDeviceIdOperationResponse);
     }
 
     /**
@@ -132,16 +143,22 @@ export class AuthenticateApi {
      * the token cannot be decoded,
      * {@link ErrorCode.VerifyFailed} when Apple rejects the
      * verification.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByApple(requestData: AuthenticateModels.LoginByAppleRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByAppleOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByAppleOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByAppleOperationResponse);
+    public loginByApple(requestData: AuthenticateModels.LoginByAppleRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByAppleOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByAppleOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByAppleOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByApple}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByAppleAsync(requestData: AuthenticateModels.LoginByAppleRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByAppleOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByAppleOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByAppleOperationResponse);
+    public async loginByAppleAsync(requestData: AuthenticateModels.LoginByAppleRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByAppleOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByAppleOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByAppleOperationResponse);
     }
 
     /**
@@ -154,16 +171,22 @@ export class AuthenticateApi {
      * device-fingerprint algorithm (game-specific salt, blended
      * hardware ids, ...). Constraints: `minLength: 6,
      * maxLength: 64, mustNonNull: true`.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByCustomDeviceId(requestData: AuthenticateModels.LoginByCustomDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByCustomDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse);
+    public loginByCustomDeviceId(requestData: AuthenticateModels.LoginByCustomDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByCustomDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByCustomDeviceId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByCustomDeviceIdAsync(requestData: AuthenticateModels.LoginByCustomDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByCustomDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse);
+    public async loginByCustomDeviceIdAsync(requestData: AuthenticateModels.LoginByCustomDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByCustomDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByCustomDeviceIdOperationResponse);
     }
 
     /**
@@ -175,16 +198,22 @@ export class AuthenticateApi {
      * is treated as a stable user identifier (e.g. an external
      * account id from a federated identity service) rather than a
      * device fingerprint.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByCustomId(requestData: AuthenticateModels.LoginByCustomIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByCustomIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByCustomIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByCustomIdOperationResponse);
+    public loginByCustomId(requestData: AuthenticateModels.LoginByCustomIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByCustomIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByCustomIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByCustomIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByCustomId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByCustomIdAsync(requestData: AuthenticateModels.LoginByCustomIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByCustomIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByCustomIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByCustomIdOperationResponse);
+    public async loginByCustomIdAsync(requestData: AuthenticateModels.LoginByCustomIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByCustomIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByCustomIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByCustomIdOperationResponse);
     }
 
     /**
@@ -195,16 +224,22 @@ export class AuthenticateApi {
      * Reserved for the GearN-supported editor / development
      * runtime so QA accounts can sign in without a production
      * device id.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByEditorDeviceId(requestData: AuthenticateModels.LoginByEditorDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByEditorDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse);
+    public loginByEditorDeviceId(requestData: AuthenticateModels.LoginByEditorDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByEditorDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByEditorDeviceId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByEditorDeviceIdAsync(requestData: AuthenticateModels.LoginByEditorDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByEditorDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse);
+    public async loginByEditorDeviceIdAsync(requestData: AuthenticateModels.LoginByEditorDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByEditorDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByEditorDeviceIdOperationResponse);
     }
 
     /**
@@ -215,16 +250,22 @@ export class AuthenticateApi {
      * Token constrained to `minLength: 32, maxLength: 2048,
      * mustNonNull: true`. Backend introspects the token against
      * Facebook's Graph API.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByFacebook(requestData: AuthenticateModels.LoginByFacebookRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByFacebookOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByFacebookOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByFacebookOperationResponse);
+    public loginByFacebook(requestData: AuthenticateModels.LoginByFacebookRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByFacebookOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByFacebookOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByFacebookOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByFacebook}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByFacebookAsync(requestData: AuthenticateModels.LoginByFacebookRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByFacebookOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByFacebookOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByFacebookOperationResponse);
+    public async loginByFacebookAsync(requestData: AuthenticateModels.LoginByFacebookRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByFacebookOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByFacebookOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByFacebookOperationResponse);
     }
 
     /**
@@ -244,16 +285,22 @@ export class AuthenticateApi {
      * shape via
      * {@link AuthenticateResponseModels.LoginByGenericServiceOperationResponse}
      * so provider-specific error messages can be surfaced.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByGenericService(requestData: AuthenticateModels.LoginByGenericServiceRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByGenericServiceOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByGenericServiceOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByGenericServiceOperationResponse);
+    public loginByGenericService(requestData: AuthenticateModels.LoginByGenericServiceRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByGenericServiceOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByGenericServiceOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByGenericServiceOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByGenericService}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByGenericServiceAsync(requestData: AuthenticateModels.LoginByGenericServiceRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByGenericServiceOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByGenericServiceOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByGenericServiceOperationResponse);
+    public async loginByGenericServiceAsync(requestData: AuthenticateModels.LoginByGenericServiceRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByGenericServiceOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByGenericServiceOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByGenericServiceOperationResponse);
     }
 
     /**
@@ -264,16 +311,22 @@ export class AuthenticateApi {
      * `type` field on the DTO must be a {@link GoogleLoginType}
      * value (`AccessToken` or `IdToken`) so the backend uses the
      * correct validation path.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByGoogle(requestData: AuthenticateModels.LoginByGoogleRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByGoogleOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByGoogleOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByGoogleOperationResponse);
+    public loginByGoogle(requestData: AuthenticateModels.LoginByGoogleRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByGoogleOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByGoogleOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByGoogleOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByGoogle}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByGoogleAsync(requestData: AuthenticateModels.LoginByGoogleRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByGoogleOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByGoogleOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByGoogleOperationResponse);
+    public async loginByGoogleAsync(requestData: AuthenticateModels.LoginByGoogleRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByGoogleOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByGoogleOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByGoogleOperationResponse);
     }
 
     /**
@@ -285,17 +338,23 @@ export class AuthenticateApi {
      * Distinct from {@link loginByGoogle} because the Play Games
      * token comes from a different OAuth surface and is
      * validated against a separate Google endpoint.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByGooglePlayGameService(requestData: AuthenticateModels.LoginByGooglePlayGameServiceRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByGooglePlayGameServiceOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse);
+    public loginByGooglePlayGameService(requestData: AuthenticateModels.LoginByGooglePlayGameServiceRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByGooglePlayGameServiceOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse);
     }
 
     /**
      * Promise-based wrapper around
      * {@link loginByGooglePlayGameService}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByGooglePlayGameServiceAsync(requestData: AuthenticateModels.LoginByGooglePlayGameServiceRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByGooglePlayGameServiceOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse);
+    public async loginByGooglePlayGameServiceAsync(requestData: AuthenticateModels.LoginByGooglePlayGameServiceRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByGooglePlayGameServiceOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByGooglePlayGameServiceOperationResponse);
     }
 
     /**
@@ -308,16 +367,22 @@ export class AuthenticateApi {
      * the signature, the salt, and the timestamp produced by the
      * iOS Game Center SDK. The backend re-validates the signature
      * against Apple's published public key.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByGameCenter(requestData: AuthenticateModels.LoginByGameCenterRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByGameCenterOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByGameCenterOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByGameCenterOperationResponse);
+    public loginByGameCenter(requestData: AuthenticateModels.LoginByGameCenterRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByGameCenterOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByGameCenterOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByGameCenterOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByGameCenter}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByGameCenterAsync(requestData: AuthenticateModels.LoginByGameCenterRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByGameCenterOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByGameCenterOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByGameCenterOperationResponse);
+    public async loginByGameCenterAsync(requestData: AuthenticateModels.LoginByGameCenterRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByGameCenterOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByGameCenterOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByGameCenterOperationResponse);
     }
 
     /**
@@ -328,16 +393,22 @@ export class AuthenticateApi {
      * Same constraints / behaviour as
      * {@link loginByAndroidDeviceId} but for iOS device
      * identifiers (typically the Identifier-for-Vendor).
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByiOSDeviceId(requestData: AuthenticateModels.LoginByiOSDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByiOSDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse);
+    public loginByiOSDeviceId(requestData: AuthenticateModels.LoginByiOSDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByiOSDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByiOSDeviceId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByiOSDeviceIdAsync(requestData: AuthenticateModels.LoginByiOSDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByiOSDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse);
+    public async loginByiOSDeviceIdAsync(requestData: AuthenticateModels.LoginByiOSDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByiOSDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByiOSDeviceIdOperationResponse);
     }
 
     /**
@@ -347,16 +418,22 @@ export class AuthenticateApi {
      * {@link AuthenticateModels.LoginByLinuxDeviceIdRequestData}.
      * Same shape as the other device-id flows — primarily used
      * by dedicated-server clients or Linux-based desktop builds.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByLinuxDeviceId(requestData: AuthenticateModels.LoginByLinuxDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByLinuxDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse);
+    public loginByLinuxDeviceId(requestData: AuthenticateModels.LoginByLinuxDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByLinuxDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByLinuxDeviceId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByLinuxDeviceIdAsync(requestData: AuthenticateModels.LoginByLinuxDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByLinuxDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse);
+    public async loginByLinuxDeviceIdAsync(requestData: AuthenticateModels.LoginByLinuxDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByLinuxDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByLinuxDeviceIdOperationResponse);
     }
 
     /**
@@ -364,16 +441,22 @@ export class AuthenticateApi {
      *
      * Backed by {@link OperationCode.LoginByMacOSDeviceId} with
      * {@link AuthenticateModels.LoginByMacOSDeviceIdRequestData}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByMacOSDeviceId(requestData: AuthenticateModels.LoginByMacOSDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByMacOSDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse);
+    public loginByMacOSDeviceId(requestData: AuthenticateModels.LoginByMacOSDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByMacOSDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByMacOSDeviceId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByMacOSDeviceIdAsync(requestData: AuthenticateModels.LoginByMacOSDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByMacOSDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse);
+    public async loginByMacOSDeviceIdAsync(requestData: AuthenticateModels.LoginByMacOSDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByMacOSDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByMacOSDeviceIdOperationResponse);
     }
 
     /**
@@ -381,16 +464,22 @@ export class AuthenticateApi {
      *
      * Backed by {@link OperationCode.LoginByWindowsDeviceId} with
      * {@link AuthenticateModels.LoginByWindowsDeviceIdRequestData}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByWindowsDeviceId(requestData: AuthenticateModels.LoginByWindowsDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByWindowsDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse);
+    public loginByWindowsDeviceId(requestData: AuthenticateModels.LoginByWindowsDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByWindowsDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link loginByWindowsDeviceId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByWindowsDeviceIdAsync(requestData: AuthenticateModels.LoginByWindowsDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByWindowsDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse);
+    public async loginByWindowsDeviceIdAsync(requestData: AuthenticateModels.LoginByWindowsDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByWindowsDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByWindowsDeviceIdOperationResponse);
     }
 
     /**
@@ -402,17 +491,23 @@ export class AuthenticateApi {
      * Kept for backward compatibility; new integrations should
      * prefer {@link loginByWindowsDeviceId} on Windows Mobile
      * targets.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public loginByWindowsPhoneDeviceId(requestData: AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByWindowsPhoneDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse);
+    public loginByWindowsPhoneDeviceId(requestData: AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData, onResponse: Action1<AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.LoginByWindowsPhoneDeviceIdOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse);
     }
 
     /**
      * Promise-based wrapper around
      * {@link loginByWindowsPhoneDeviceId}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async loginByWindowsPhoneDeviceIdAsync(requestData: AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByWindowsPhoneDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse);
+    public async loginByWindowsPhoneDeviceIdAsync(requestData: AuthenticateModels.LoginByWindowsPhoneDeviceIdRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.LoginByWindowsPhoneDeviceIdOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.LoginByWindowsPhoneDeviceIdOperationResponse);
     }
 
     /**
@@ -425,16 +520,22 @@ export class AuthenticateApi {
      *
      * Domain failure: {@link ErrorCode.AccountUsernameExists}
      * when the username is already taken.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public registerAccount(requestData: AuthenticateModels.RegisterAccountRequestData, onResponse: Action1<AuthenticateResponseModels.RegisterAccountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.RegisterAccountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.RegisterAccountOperationResponse);
+    public registerAccount(requestData: AuthenticateModels.RegisterAccountRequestData, onResponse: Action1<AuthenticateResponseModels.RegisterAccountOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.RegisterAccountOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.RegisterAccountOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link registerAccount}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async registerAccountAsync(requestData: AuthenticateModels.RegisterAccountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.RegisterAccountOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.RegisterAccountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.RegisterAccountOperationResponse);
+    public async registerAccountAsync(requestData: AuthenticateModels.RegisterAccountRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.RegisterAccountOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.RegisterAccountOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.RegisterAccountOperationResponse);
     }
 
     /**
@@ -454,16 +555,22 @@ export class AuthenticateApi {
      * The {@link PeerBase.onResponseHandler} mirror keeps both the
      * cache and the persistent {@link StorageService} entry up to
      * date automatically.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public refreshAuthToken(requestData: AuthenticateModels.RefreshAuthTokenRequestData, onResponse: Action1<AuthenticateResponseModels.RefreshAuthTokenOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.RefreshAuthTokenOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.RefreshAuthTokenOperationResponse);
+    public refreshAuthToken(requestData: AuthenticateModels.RefreshAuthTokenRequestData, onResponse: Action1<AuthenticateResponseModels.RefreshAuthTokenOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new AuthenticateRequestModels.RefreshAuthTokenOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.RefreshAuthTokenOperationResponse);
     }
 
     /**
      * Promise-based wrapper around {@link refreshAuthToken}.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async refreshAuthTokenAsync(requestData: AuthenticateModels.RefreshAuthTokenRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<AuthenticateResponseModels.RefreshAuthTokenOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.RefreshAuthTokenOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, AuthenticateResponseModels.RefreshAuthTokenOperationResponse);
+    public async refreshAuthTokenAsync(requestData: AuthenticateModels.RefreshAuthTokenRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<AuthenticateResponseModels.RefreshAuthTokenOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new AuthenticateRequestModels.RefreshAuthTokenOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, AuthenticateResponseModels.RefreshAuthTokenOperationResponse);
     }
 }
 

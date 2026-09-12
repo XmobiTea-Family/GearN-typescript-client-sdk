@@ -213,14 +213,17 @@ export class NetworkingPeer {
      *                       Pass `null` to use the cached token.
      * @param secretKey      Optional one-shot secret key override.
      *                       Pass `null` to use the configured key.
+     * @param gameId         Optional one-shot game id override.
+     *                       Pass `null` to use the configured id.
      * @param customTags     Optional routing tags.
      */
-    sendViaSocket(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
+    sendViaSocket(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, gameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1): void {
         if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
         if (secretKey == null) secretKey = GNNetwork.getGNServerSettings().getSecretKey();
-        const gameId = GNNetwork.getGNServerSettings().getGameId();
+        if (gameId == null) gameId = GNNetwork.getGNServerSettings().getGameId();
+        if (retrialCount == -1) retrialCount = GNNetwork.getGNServerSettings().getDefaultRetrialCount();
 
-        this.socketPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, customTags, gameId);
+        this.socketPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, gameId, customTags, retrialCount);
     }
 
     /**
@@ -229,13 +232,18 @@ export class NetworkingPeer {
      * Substitutes missing authentication data the same way
      * {@link sendViaSocket} does. The only behavioural difference is
      * the choice of transport.
+     *
+     * @param gameId     Optional one-shot game id override. Pass
+     *                   `null` to use the configured id.
+     * @param customTags Optional routing tags.
      */
-    sendViaHttp(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, customTags: GNHashtable = null): void {
+    sendViaHttp(requestType: RequestType, role: RequestRole, request: OperationRequest, onResponse: Action1<OperationResponse> = null, authToken: string = null, secretKey: string = null, gameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1): void {
         if (authToken == null) authToken = this.authenticateStatus.getAuthToken();
         if (secretKey == null) secretKey = GNNetwork.getGNServerSettings().getSecretKey();
-        const gameId = GNNetwork.getGNServerSettings().getGameId();
+        if (gameId == null) gameId = GNNetwork.getGNServerSettings().getGameId();
+        if (retrialCount == -1) retrialCount = GNNetwork.getGNServerSettings().getDefaultRetrialCount();
 
-        this.httpPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, customTags, gameId);
+        this.httpPeer.enqueue(requestType, role, request, onResponse, authToken, secretKey, gameId, customTags, retrialCount);
     }
 
     /**

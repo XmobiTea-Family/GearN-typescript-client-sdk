@@ -23,7 +23,7 @@ import { InvalidMember } from "./InvalidMember";
  */
 export class OperationResponse {
     private operationCode: string;
-    private responseId: number;
+    private responseId: string;
     private returnCode: number;
     private debugMessage: string;
     private parameters: GNHashtable;
@@ -38,7 +38,7 @@ export class OperationResponse {
      *                      Matches the request's id assigned by
      *                      {@link PeerBase.enqueue}.
      */
-    constructor(operationCode: string, responseId: number) {
+    constructor(operationCode: string, responseId: string) {
         this.operationCode = operationCode;
         this.responseId = responseId;
         this.parameters = new GNHashtable();
@@ -78,7 +78,7 @@ export class OperationResponse {
      * Used internally by the in-flight tracking machinery. Most
      * application code can ignore it.
      */
-    public getResponseId(): number {
+    public getResponseId(): string {
         return this.responseId;
     }
 

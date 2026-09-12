@@ -22,19 +22,6 @@ import { GNHashtable } from "./../common/GNData";
  */
 export class OperationRequest {
     /**
-     * Sentinel used by the SDK in two unrelated places:
-     *
-     * - As the **default timeout in seconds** when application code
-     *   does not pass an explicit timeout — the transport replaces
-     *   it with `GNServerSettings.getDefaultTimeoutInSeconds()` at
-     *   send time.
-     * - As the magic value `20` shared with the same default in
-     *   {@link GNServerSettings} so the two places agree by
-     *   construction.
-     */
-    public static readonly defaultTimeOut: number = 20;
-
-    /**
      * Operation code carried in every wire frame. Values come from
      * {@link OperationCode}.
      */
@@ -44,11 +31,11 @@ export class OperationRequest {
      * Stays `undefined` until {@link PeerBase.enqueue} assigns one
      * (or remains `-1` for fire-and-forget calls).
      */
-    private requestId: number;
+    private requestId: string;
     /** Optional parameter bag, lazily allocated on first {@link setParameter}. */
     private parameters: GNHashtable;
     /**
-     * Timeout in **seconds**. The {@link defaultTimeOut} sentinel
+     * Timeout in **seconds**. The 15 sentinel
      * is replaced with the configured default at send time.
      */
     private timeout: number;
@@ -57,11 +44,11 @@ export class OperationRequest {
      * @param operationCode Operation code from
      *                      {@link OperationCode}.
      * @param timeout       Optional per-request timeout in seconds.
-     *                      Defaults to {@link defaultTimeOut} so
+     *                      Defaults to 15 so
      *                      the transport can substitute the
      *                      configured value.
      */
-    constructor(operationCode: string, timeout: number = OperationRequest.defaultTimeOut) {
+    constructor(operationCode: string, timeout: number = -1) {
         this.operationCode = operationCode;
         this.timeout = timeout;
     }
@@ -80,7 +67,7 @@ export class OperationRequest {
      *          fire-and-forget requests, or `undefined` before
      *          {@link PeerBase.enqueue} runs.
      */
-    public getRequestId(): number {
+    public getRequestId(): string {
         return this.requestId;
     }
 
@@ -107,7 +94,7 @@ export class OperationRequest {
      * @param requestId  New id. Use `-1` to opt into the
      *                   fire-and-forget path.
      */
-    public setRequestId(requestId: number): OperationRequest {
+    public setRequestId(requestId: string): OperationRequest {
         this.requestId = requestId;
         return this;
     }

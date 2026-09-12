@@ -15,6 +15,7 @@ settings.config({
     useHttp: true,
 
     defaultTimeoutInSeconds: 20,
+    defaultRetrialCount: 3,
     messageType: MessageType.MsgPack,
     sendRate: 20,
     reconnectDelay: 5000,
@@ -56,13 +57,14 @@ GNNetwork.init(settings);
 | `useSocket` | `boolean` | yes | `true` | — | Bật socket transport và realtime feature |
 | `useHttp` | `boolean` | yes | `true` | — | Bật HTTP transport (mọi public API wrapper đều dựa vào) |
 | `defaultTimeoutInSeconds` | `number` | yes | `20` | giây | Timeout mặc định cho request không override `timeout` |
+| `defaultRetrialCount` | `number` | yes | `3` | lần gửi | Tổng số lần gửi tối đa khi gặp `OperationTimeout`/`UnknownError`; `1` tắt retry |
 | `messageType` | `MessageType` | yes | `MessageType.MsgPack` | enum | Payload format. Browser HTTP với MsgPack tự fallback JSON |
 | `sendRate` | `number` | yes | `20` | msg/giây | Max send rate request bởi transport loop |
 | `reconnectDelay` | `number` | yes | `5000` | ms | Reconnect delay của socket client |
 | `pingInterval` | `number` | yes | `20000` | ms | Ping interval socket client |
 | `pingTimeout` | `number` | yes | `20000` | ms | Timeout phát hiện socket stale |
 | `secretKey` | `string` | yes | — | — | Auto gắn cho mọi route nếu không dùng overrideSecretKey |
-| `gameId` | `string` | yes | — | — | Game/application id khớp với `secretKey`; dùng để chọn đúng game context trên GearN Server |
+| `gameId` | `string` | yes | — | — | Game/application id mặc định khớp với `secretKey`; từng request có thể thay bằng `overrideGameId` |
 | `logType` | `LogType` | yes | `LogType.All` | enum | Verbosity `GNDebug` |
 
 Default column phản ánh giá trị khởi tạo trong class `GNServerSettings` trước khi gọi `config()`. `config()` yêu cầu cung cấp đầy đủ mọi field (strict replace).
@@ -88,6 +90,7 @@ Set `serverPort: -1` hoặc `serverSocketPort: -1` khi proxy (nginx, ALB, Cloudf
 
 ```ts
 settings.setServerAddress("prod-api.example.com");
+settings.setDefaultRetrialCount(1); // tắt auto-retry cho request tạo ra sau đó
 settings.setLogType(LogType.Error);
 ```
 

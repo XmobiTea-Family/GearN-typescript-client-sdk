@@ -44,72 +44,102 @@ export class CloudScriptApi {
 
     /**
      * Sends the addFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public addFunction(requestData: CloudScriptModels.AddFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.AddFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AddFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.AddFunctionOperationResponse);
+    public addFunction(requestData: CloudScriptModels.AddFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.AddFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AddFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.AddFunctionOperationResponse);
     }
 
     /**
      * Sends the addFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async addFunctionAsync(requestData: CloudScriptModels.AddFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.AddFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AddFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.AddFunctionOperationResponse);
+    public async addFunctionAsync(requestData: CloudScriptModels.AddFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.AddFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AddFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.AddFunctionOperationResponse);
     }
 
     /**
      * Sends the editFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public editFunction(requestData: CloudScriptModels.EditFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.EditFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.EditFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.EditFunctionOperationResponse);
+    public editFunction(requestData: CloudScriptModels.EditFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.EditFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.EditFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.EditFunctionOperationResponse);
     }
 
     /**
      * Sends the editFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async editFunctionAsync(requestData: CloudScriptModels.EditFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.EditFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.EditFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.EditFunctionOperationResponse);
+    public async editFunctionAsync(requestData: CloudScriptModels.EditFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.EditFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.EditFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.EditFunctionOperationResponse);
     }
 
     /**
      * Sends the executeFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public executeFunction(requestData: CloudScriptModels.ExecuteFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.ExecuteFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ExecuteFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
+    public executeFunction(requestData: CloudScriptModels.ExecuteFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.ExecuteFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ExecuteFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
     }
 
     /**
      * Sends the executeFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async executeFunctionAsync(requestData: CloudScriptModels.ExecuteFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.ExecuteFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ExecuteFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
+    public async executeFunctionAsync(requestData: CloudScriptModels.ExecuteFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.ExecuteFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ExecuteFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public getFunction(requestData: CloudScriptModels.GetFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.GetFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionOperationResponse);
+    public getFunction(requestData: CloudScriptModels.GetFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.GetFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async getFunctionAsync(requestData: CloudScriptModels.GetFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.GetFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.GetFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionOperationResponse);
+    public async getFunctionAsync(requestData: CloudScriptModels.GetFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.GetFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.GetFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunctions operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public getFunctions(requestData: CloudScriptModels.GetFunctionsRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.GetFunctionsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionsOperationResponse);
+    public getFunctions(requestData: CloudScriptModels.GetFunctionsRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.GetFunctionsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionsOperationResponse);
     }
 
     /**
      * Sends the getFunctions operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async getFunctionsAsync(requestData: CloudScriptModels.GetFunctionsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.GetFunctionsOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.GetFunctionsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionsOperationResponse);
+    public async getFunctionsAsync(requestData: CloudScriptModels.GetFunctionsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.GetFunctionsOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.GetFunctionsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionsOperationResponse);
     }
 
 }
@@ -127,72 +157,102 @@ export class CloudScriptApi {
 export class ServerCloudScriptApi {
     /**
      * Sends the addFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public addFunction(requestData: CloudScriptModels.ServerAddFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.AddFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerAddFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.AddFunctionOperationResponse);
+    public addFunction(requestData: CloudScriptModels.ServerAddFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.AddFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerAddFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.AddFunctionOperationResponse);
     }
 
     /**
      * Sends the addFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async addFunctionAsync(requestData: CloudScriptModels.ServerAddFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.AddFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerAddFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.AddFunctionOperationResponse);
+    public async addFunctionAsync(requestData: CloudScriptModels.ServerAddFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.AddFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerAddFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.AddFunctionOperationResponse);
     }
 
     /**
      * Sends the editFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public editFunction(requestData: CloudScriptModels.ServerEditFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.EditFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerEditFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.EditFunctionOperationResponse);
+    public editFunction(requestData: CloudScriptModels.ServerEditFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.EditFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerEditFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.EditFunctionOperationResponse);
     }
 
     /**
      * Sends the editFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async editFunctionAsync(requestData: CloudScriptModels.ServerEditFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.EditFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerEditFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.EditFunctionOperationResponse);
+    public async editFunctionAsync(requestData: CloudScriptModels.ServerEditFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.EditFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerEditFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.EditFunctionOperationResponse);
     }
 
     /**
      * Sends the executeFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public executeFunction(requestData: CloudScriptModels.ServerExecuteFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.ExecuteFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerExecuteFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
+    public executeFunction(requestData: CloudScriptModels.ServerExecuteFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.ExecuteFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerExecuteFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
     }
 
     /**
      * Sends the executeFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async executeFunctionAsync(requestData: CloudScriptModels.ServerExecuteFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.ExecuteFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerExecuteFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
+    public async executeFunctionAsync(requestData: CloudScriptModels.ServerExecuteFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.ExecuteFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerExecuteFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public getFunction(requestData: CloudScriptModels.ServerGetFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerGetFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionOperationResponse);
+    public getFunction(requestData: CloudScriptModels.ServerGetFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerGetFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async getFunctionAsync(requestData: CloudScriptModels.ServerGetFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.GetFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerGetFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionOperationResponse);
+    public async getFunctionAsync(requestData: CloudScriptModels.ServerGetFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.GetFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerGetFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunctions operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public getFunctions(requestData: CloudScriptModels.ServerGetFunctionsRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerGetFunctionsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionsOperationResponse);
+    public getFunctions(requestData: CloudScriptModels.ServerGetFunctionsRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.ServerGetFunctionsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionsOperationResponse);
     }
 
     /**
      * Sends the getFunctions operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async getFunctionsAsync(requestData: CloudScriptModels.ServerGetFunctionsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.GetFunctionsOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerGetFunctionsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionsOperationResponse);
+    public async getFunctionsAsync(requestData: CloudScriptModels.ServerGetFunctionsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.GetFunctionsOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.ServerGetFunctionsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionsOperationResponse);
     }
 
 }
@@ -210,72 +270,102 @@ export class ServerCloudScriptApi {
 export class AdminCloudScriptApi {
     /**
      * Sends the addFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public addFunction(requestData: CloudScriptModels.AdminAddFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.AddFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminAddFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.AddFunctionOperationResponse);
+    public addFunction(requestData: CloudScriptModels.AdminAddFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.AddFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminAddFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.AddFunctionOperationResponse);
     }
 
     /**
      * Sends the addFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async addFunctionAsync(requestData: CloudScriptModels.AdminAddFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.AddFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminAddFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.AddFunctionOperationResponse);
+    public async addFunctionAsync(requestData: CloudScriptModels.AdminAddFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.AddFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminAddFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.AddFunctionOperationResponse);
     }
 
     /**
      * Sends the editFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public editFunction(requestData: CloudScriptModels.AdminEditFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.EditFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminEditFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.EditFunctionOperationResponse);
+    public editFunction(requestData: CloudScriptModels.AdminEditFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.EditFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminEditFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.EditFunctionOperationResponse);
     }
 
     /**
      * Sends the editFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async editFunctionAsync(requestData: CloudScriptModels.AdminEditFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.EditFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminEditFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.EditFunctionOperationResponse);
+    public async editFunctionAsync(requestData: CloudScriptModels.AdminEditFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.EditFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminEditFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.EditFunctionOperationResponse);
     }
 
     /**
      * Sends the executeFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public executeFunction(requestData: CloudScriptModels.AdminExecuteFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.ExecuteFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminExecuteFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
+    public executeFunction(requestData: CloudScriptModels.AdminExecuteFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.ExecuteFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminExecuteFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
     }
 
     /**
      * Sends the executeFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async executeFunctionAsync(requestData: CloudScriptModels.AdminExecuteFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.ExecuteFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminExecuteFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
+    public async executeFunctionAsync(requestData: CloudScriptModels.AdminExecuteFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.ExecuteFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminExecuteFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.ExecuteFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunction operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public getFunction(requestData: CloudScriptModels.AdminGetFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminGetFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionOperationResponse);
+    public getFunction(requestData: CloudScriptModels.AdminGetFunctionRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminGetFunctionOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunction operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async getFunctionAsync(requestData: CloudScriptModels.AdminGetFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.GetFunctionOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminGetFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionOperationResponse);
+    public async getFunctionAsync(requestData: CloudScriptModels.AdminGetFunctionRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.GetFunctionOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminGetFunctionOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionOperationResponse);
     }
 
     /**
      * Sends the getFunctions operation and returns the typed response via callback.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public getFunctions(requestData: CloudScriptModels.AdminGetFunctionsRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): void {
-        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminGetFunctionsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionsOperationResponse);
+    public getFunctions(requestData: CloudScriptModels.AdminGetFunctionsRequestData, onResponse: Action1<CloudScriptResponseModels.GetFunctionsOperationResponse> = null, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): void {
+        GNNetwork.sendViaHttpTRequestTResponse(new CloudScriptRequestModels.AdminGetFunctionsOperationRequest(requestData, timeout), onResponse, overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionsOperationResponse);
     }
 
     /**
      * Sends the getFunctions operation and resolves with the typed response.
+     *
+     * @param overrideGameId Optional one-shot game id. Pass `null`
+     *                       to use the configured game id.
      */
-    public async getFunctionsAsync(requestData: CloudScriptModels.AdminGetFunctionsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, customTags: GNHashtable = null, timeout: number = OperationRequest.defaultTimeOut): Promise<CloudScriptResponseModels.GetFunctionsOperationResponse> {
-        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminGetFunctionsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, customTags, CloudScriptResponseModels.GetFunctionsOperationResponse);
+    public async getFunctionsAsync(requestData: CloudScriptModels.AdminGetFunctionsRequestData, overrideAuthToken: string = null, overrideSecretKey: string = null, overrideGameId: string = null, customTags: GNHashtable = null, retrialCount: number = -1, timeout: number = -1): Promise<CloudScriptResponseModels.GetFunctionsOperationResponse> {
+        return GNNetwork.sendViaHttpTRequestTResponseAsync(new CloudScriptRequestModels.AdminGetFunctionsOperationRequest(requestData, timeout), overrideAuthToken, overrideSecretKey, overrideGameId, customTags, retrialCount, CloudScriptResponseModels.GetFunctionsOperationResponse);
     }
 
 }

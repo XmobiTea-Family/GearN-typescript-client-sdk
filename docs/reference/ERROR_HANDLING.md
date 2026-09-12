@@ -70,8 +70,8 @@ Kiểm tra bằng `res.returnCode`. So sánh bằng enum symbol. Giá trị nume
 | ReturnCode | Khi nào gặp | Recommended action |
 | --- | --- | --- |
 | `Ok` | Happy path | Sang tầng 2 check `errorCode` |
-| `UnknownError` | Backend fail nhưng không map code cụ thể | Log + show lỗi chung; không retry tự động |
-| `OperationTimeout` | Request timeout (SDK hoặc backend) | Retry với backoff nếu operation idempotent; báo user nếu không |
+| `UnknownError` | Backend/transport fail nhưng không map code cụ thể | SDK tự retry theo `retrialCount`; sau response cuối thì log + show lỗi chung |
+| `OperationTimeout` | Request timeout (SDK hoặc backend) | SDK tự retry theo `retrialCount`; sau response cuối thì báo user |
 | `OperationNotAllow` | Permission rule của secret key không cho chạy operation ở target context | Sai route (`client/server/admin`) hoặc secret thiếu `selfEnable`/`otherSelfEnable`/`serverSelfEnable`/`adminSelfEnable`. Không retry — fix config. Checklist chi tiết: [RULES.md § 6](/docs/RULES.md#6-permission-flags) |
 | `InternalServerError` | Backend crash internal | Log + show lỗi chung; có thể retry 1 lần rồi escalate |
 | `OperationInvalid` | Operation code không tồn tại / sai với request type + role | Sai namespace: kiểm tra đang gọi đúng `GNNetwork.<domain>.<method>`. Không retry |
@@ -131,9 +131,9 @@ Bảng đầy đủ 50 giá trị xem [ENUMS.md § ErrorCode](/docs/reference/EN
 <!-- prettier-ignore -->
 | Tình huống | Layer | Xử lý |
 | --- | --- | --- |
-| User offline, request không đến server | — (reject Promise / transport exception) | Retry với backoff |
+| User offline, request không đến server | HTTP: `UnknownError`; socket: thường `OperationTimeout` | SDK tự retry theo `retrialCount`; sau response cuối thì báo offline |
 | SSL/cert fail | — (reject Promise) | Báo ops; không retry tự động |
-| Timeout | `ReturnCode.OperationTimeout` | Retry nếu idempotent |
+| Timeout | `ReturnCode.OperationTimeout` | SDK tự retry theo `retrialCount`; dùng `1` cho operation không idempotent |
 | Sai secret key | `ReturnCode.SecretInvalid` | Fix config |
 | Thiếu permission | `ReturnCode.OperationNotAllow` / `OperationNotAuthorized` | Fix route + secret permission |
 | Field invalid | `ReturnCode.InvalidRequestParameters` | Parse `invalidMembers` |

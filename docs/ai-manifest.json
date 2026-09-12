@@ -71,11 +71,31 @@
     },
     "doNotAssumeSuccessIsZero": true,
     "doNotReadSrcForNormalPackageUsage": true,
-    "responseFieldAccess": "public_fields_not_getters"
+    "responseFieldAccess": "public_fields_not_getters",
+    "apiMethodOptionalParameterOrder": [
+      "overrideAuthToken",
+      "overrideSecretKey",
+      "overrideGameId",
+      "customTags",
+      "retrialCount",
+      "timeout"
+    ],
+    "retrialCountSemantics": {
+      "meaning": "maximum_total_attempts",
+      "sentinel": -1,
+      "sentinelFallback": "GNServerSettings.defaultRetrialCount",
+      "disableRetry": 1,
+      "automaticReturnCodes": ["OperationTimeout", "UnknownError"],
+      "transports": ["http", "socket"],
+      "backoff": "none_beyond_normal_send_queue",
+      "reusesRequestIdAndPayload": true
+    },
+    "overrideGameIdFallback": "null_or_undefined_uses_GNServerSettings.gameId"
   },
   "returnCodeMeanings": {
     "Ok": "success, sang tầng errorCode để check business",
-    "OperationTimeout": "timeout từ SDK hoặc backend; retry với backoff nếu operation idempotent",
+    "UnknownError": "backend hoặc transport fail không map code cụ thể; SDK tự retry theo retrialCount",
+    "OperationTimeout": "timeout từ SDK hoặc backend; SDK tự retry theo retrialCount",
     "OperationNotAllow": "secretKey hợp lệ nhưng permission rules không cho phép operation trong target context; check route + flag self/other/server/admin",
     "InternalServerError": "backend exception; có thể retry 1 lần rồi escalate",
     "OperationInvalid": "operation code không tồn tại hoặc không hợp lệ với request type/role",
@@ -256,6 +276,7 @@
       { "name": "useSocket", "type": "boolean", "default": true },
       { "name": "useHttp", "type": "boolean", "default": true },
       { "name": "defaultTimeoutInSeconds", "type": "number", "default": 20, "unit": "seconds" },
+      { "name": "defaultRetrialCount", "type": "number", "default": 3, "unit": "maximum_total_attempts" },
       { "name": "messageType", "type": "MessageType", "default": "MsgPack" },
       { "name": "sendRate", "type": "number", "default": 20, "unit": "messages_per_second" },
       { "name": "reconnectDelay", "type": "number", "default": 5000, "unit": "milliseconds" },
@@ -296,7 +317,7 @@
       { "id": 10, "title": "Inventory query + grant item (server role)", "anchor": "scenario-10-inventory-query--grant-item-server-role", "apis": ["GNNetwork.gamePlayer.getPlayerInventoryAsync", "GNNetwork.gamePlayer.server.createPlayerItemAsync"] },
       { "id": 11, "title": "Store list → purchase → validate receipt", "anchor": "scenario-11-store-list-catalog--purchase--validate-receipt", "apis": ["GNNetwork.storeInventory.getStoreItemsWithTagAsync", "GNNetwork.storeInventory.buyStoreItemAsync", "GNNetwork.storeInventory.server.validateGooglePlayStoreReceiptAsync"] },
       { "id": 12, "title": "CloudScript execute + customTags", "anchor": "scenario-12-cloudscript-execute-function--customtags", "apis": ["GNNetwork.cloudScript.executeFunctionAsync"] },
-      { "id": 13, "title": "Override authToken / secret", "anchor": "scenario-13-override-authtoken--secret-impersonate-cross-role" },
+      { "id": 13, "title": "Override authToken / secret / gameId", "anchor": "scenario-13-override-authtoken--secret--gameid-impersonate-cross-role-cross-game" },
       { "id": 14, "title": "Admin login qua DashboardApi", "anchor": "scenario-14-admin-login-qua-dashboardapi", "apis": ["GNNetwork.dashboard.loginByAdminAccountAsync"] },
       { "id": 15, "title": "Cleanup & shutdown flow", "anchor": "scenario-15-cleanup--shutdown-flow", "apis": ["GNNetwork.disconnectSocket"] },
       { "id": 16, "title": "Diagnose OperationNotAllow", "anchor": "scenario-16-diagnose-operationnotallow", "apis": ["GNNetwork.inventory.admin.changeAmountAsync"] }

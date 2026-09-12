@@ -260,7 +260,8 @@ const response = await GNNetwork.cloudScript.executeFunctionAsync(
     request,
     undefined, // overrideAuthToken
     undefined, // overrideSecretKey
-    customTags,
+    undefined, // overrideGameId
+    customTags, // customTags
 );
 ```
 

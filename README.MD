@@ -44,6 +44,7 @@ settings.config({
     useSocket: true,
     useHttp: true,
     defaultTimeoutInSeconds: 20,
+    defaultRetrialCount: 3,
     messageType: MessageType.MsgPack,
     sendRate: 20,
     reconnectDelay: 5000,
@@ -116,6 +117,7 @@ settings.config({
     useSocket: true, // client muốn sử dụng socket để nhận các gói tin chủ động từ phía GearN Server, dựa vào options.socketAppSettings.enable của GearN Server
     useHttp: true, // luôn luôn là true, dựa vào options.httpAppSettings.enable của GearN Server
     defaultTimeoutInSeconds: 20, // default timeout tính bằng giây, thời gian để timeout tính từ lúc bắt đầu gửi OperationRequest và chờ OperationResponse từ phía server, nếu vượt quá thời gian này, 1 mã lỗi ReturnCode.OperationTimeout sẽ được trả về
+    defaultRetrialCount: 3, // số lần gửi tối đa cho mỗi request; SDK tự gửi lại khi OperationTimeout hoặc UnknownError
     messageType: MessageType.MsgPack, // browser client sẽ tự fallback JSON cho HTTP, sử dụng msgPack giúp gói tin nhỏ nhẹ hơn nếu là client hoặc server, tăng tỉ lệ gửi thành công và tránh mất nhiều bandwidth, băng thông, dựa vào options.httpAppSettings.enablePostViaMsgPack và options.httpAppSettings.enablePostViaJson của GearN Server
     sendRate: 20, // tỉ lệ gửi OperationRequest mỗi giây, 20 có nghĩa là gửi 20 OperationRequest mỗi giây
     reconnectDelay: 5000, // khi sử dụng socket, reconnectDelay socket io
@@ -236,7 +238,7 @@ Rule chi tiết DashboardApi: [docs/guides/DASHBOARD.md](/docs/guides/DASHBOARD.
 
 ## 9. Method signature
 
-Signature đầy đủ + bảng override param (`overrideAuthToken`, `overrideSecretKey`, `customTags`, `timeout`): [docs/RULES.md § 8](/docs/RULES.md#8-method-signature--override-params).
+Signature đầy đủ + bảng override param (`overrideAuthToken`, `overrideSecretKey`, `overrideGameId`, `customTags`, `timeout`): [docs/RULES.md § 8](/docs/RULES.md#8-method-signature--override-params).
 
 ## 10. Response model
 
@@ -338,7 +340,14 @@ class ExampleResponse extends CustomOperationResponseAbstract<ExampleResponseDat
 const requestData = new ExampleRequestData();
 requestData.key = "tutorial";
 
-const res = await GNNetwork.sendViaHttpTRequestTResponseAsync(new ExampleRequest(requestData, 20), null, null, null, ExampleResponse);
+const res = await GNNetwork.sendViaHttpTRequestTResponseAsync(
+    new ExampleRequest(requestData, 20),
+    null, // overrideAuthToken
+    null, // overrideSecretKey
+    null, // overrideGameId
+    null, // customTags
+    ExampleResponse,
+);
 ```
 
 ## 14. Browser / Node / Cocos

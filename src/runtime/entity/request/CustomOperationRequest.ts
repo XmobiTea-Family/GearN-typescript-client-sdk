@@ -64,7 +64,7 @@ export abstract class CustomOperationRequest {
 
     /**
      * @param timeout Per-request timeout in seconds. Pass
-     *                {@link OperationRequest.defaultTimeOut} to opt
+     *                -1 to opt
      *                into the transport's configured default.
      */
     constructor(timeout: number) {

@@ -8,6 +8,7 @@
         "useSocket": true,
         "useHttp": true,
         "defaultTimeoutInSeconds": 20,
+        "defaultRetrialCount": 3,
         "messageType": 2,
         "sendRate": 20,
         "reconnectDelay": 5000,

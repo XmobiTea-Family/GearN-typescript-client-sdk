@@ -12,7 +12,7 @@ import { OperationResponse } from "./../entity/OperationResponse";
  * 1. Constructed inside {@link PeerBase.enqueue} when caller code
  *    issues a request. The constructor seeds an absolute timeout
  *    deadline using the SDK-wide
- *    {@link OperationRequest.defaultTimeOut} fallback, plus copies
+ *    -1 fallback, plus copies
  *    every per-request override (auth token, secret key, custom tags,
  *    game id) into private fields so the queue can be drained without
  *    another lookup against the shared {@link AuthenticateStatus}.
@@ -40,6 +40,7 @@ export class OperationPending {
     private secretKey: string;
     private gameId: string;
     private customTags: GNHashtable;
+    private retrialCount: number;
     private onOperationResponse: Action1<OperationResponse>;
     private timeout: number;
 
@@ -62,16 +63,17 @@ export class OperationPending {
      *                            notified of the timeout response.
      * @param authToken           Auth token to send with this request.
      * @param secretKey           Game-specific shared secret.
-     * @param customTags          Routing / telemetry tags merged into
-     *                            the outbound payload.
      * @param gameId              Game identifier for the `Game-Id`
      *                            header.
+     * @param customTags          Routing / telemetry tags merged into
+     *                            the outbound payload.
+     * @param retrialCount        Number of times to retry the request.
      */
-    constructor(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string) {
+    constructor(requestType: RequestType, role: RequestRole, operationRequest: OperationRequest, onOperationResponse: Action1<OperationResponse>, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number) {
         this.operationRequest = operationRequest;
         this.onOperationResponse = onOperationResponse;
 
-        this.timeout = Date.now() + OperationRequest.defaultTimeOut * 1000;
+        this.timeout = Date.now() + 20 * 1000;
         this.firstSend = 0;
         this.secondsSend = 0;
 
@@ -81,6 +83,7 @@ export class OperationPending {
         this.secretKey = secretKey;
         this.gameId = gameId;
         this.customTags = customTags;
+        this.retrialCount = retrialCount;
     }
 
     /**
@@ -128,6 +131,13 @@ export class OperationPending {
      */
     public getCustomTags(): GNHashtable {
         return this.customTags;
+    }
+
+    /**
+     * Returns the number of times to retry the request.
+     */
+    public getRetrialCount(): number {
+        return this.retrialCount;
     }
 
     /**

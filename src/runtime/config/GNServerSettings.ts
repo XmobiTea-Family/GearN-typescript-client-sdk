@@ -85,11 +85,17 @@ export interface GNServerSettingsOptions {
     /**
      * Default request timeout (in **seconds**) applied by both transports
      * whenever an `OperationRequest` is constructed without an explicit
-     * timeout override. The shared `OperationRequest.defaultTimeOut`
+     * timeout override. The shared -1
      * sentinel (also `20`) is what triggers this fallback inside
      * {@link SocketPeer.send}.
      */
     defaultTimeoutInSeconds: number;
+
+    /**
+     * Default number of times to retry a failed request before giving up.
+     */
+    defaultRetrialCount: number;
+
     /**
      * Preferred wire format. See {@link MessageType} for the runtime caveats
      * (the browser HTTP path may downgrade MsgPack responses to JSON).
@@ -190,6 +196,7 @@ export class GNServerSettings {
     private useHttp: boolean = true;
 
     private defaultTimeoutInSeconds: number = 20;
+    private defaultRetrialCount: number = 3;
     private messageType: MessageType = MessageType.MsgPack;
     private sendRate: number = 20;
     private reconnectDelay: number = 5000;
@@ -229,6 +236,7 @@ export class GNServerSettings {
         this.useHttp = options.useHttp;
 
         this.defaultTimeoutInSeconds = options.defaultTimeoutInSeconds;
+        this.defaultRetrialCount = options.defaultRetrialCount;
         this.messageType = options.messageType;
         this.sendRate = options.sendRate;
         this.reconnectDelay = options.reconnectDelay;
@@ -382,7 +390,7 @@ export class GNServerSettings {
      * Returns the default request timeout in **seconds**.
      *
      * Applied by {@link SocketPeer.send} to any operation request whose
-     * timeout still equals the {@link OperationRequest.defaultTimeOut}
+     * timeout still equals the -1
      * sentinel.
      *
      * @returns Timeout in seconds. Defaults to `20`.
@@ -403,6 +411,31 @@ export class GNServerSettings {
      */
     public setDefaultTimeoutInSeconds(defaultTimeoutInSeconds: number): void {
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
+    }
+
+    /**
+     * Returns the retrial count.
+     *
+     * Applied by {@link SocketPeer.send} to any operation request whose
+     * timeout still equals the -1
+     * sentinel.
+     *
+     * @returns Timeout in seconds. Defaults to `20`.
+     */
+    public getDefaultRetrialCount(): number {
+        return this.defaultRetrialCount;
+    }
+
+    /**
+     * Updates the default request timeout in **seconds**.
+     *
+     * Only affects operations that did not specify their own timeout when
+     * they were created.
+     *
+     * @param defaultRetrialCount Number of times to retry a failed request.
+     */
+    public setDefaultRetrialCount(defaultRetrialCount: number): void {
+        this.defaultRetrialCount = defaultRetrialCount;
     }
 
     /**

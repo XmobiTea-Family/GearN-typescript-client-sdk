@@ -20,10 +20,10 @@ Mỗi method dưới đây có 2 form — callback và `*Async()` Promise. Ưu t
 
 ```ts
 // Callback
-GNNetwork.cloudScript.<method>(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+GNNetwork.cloudScript.<method>(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, overrideGameId?, customTags?, retrialCount?, timeout?);
 
 // Async
-const res = await GNNetwork.cloudScript.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+const res = await GNNetwork.cloudScript.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, overrideGameId?, customTags?, retrialCount?, timeout?);
 ```
 
 Param chung:
@@ -35,8 +35,10 @@ Param chung:
 | `onResponse` | `Action1<TResponse>` | yes | Chỉ có ở callback form |
 | `overrideAuthToken` | `string` | yes | Override `authToken` cache cho request này |
 | `overrideSecretKey` | `string` | yes | Override secret key mặc định của route |
+| `overrideGameId` | `string` | yes | Override game id cho request này; mặc định dùng `GNServerSettings.gameId` |
 | `customTags` | `GNHashtable` | yes | Tags gắn vào request, backend có thể log/route |
-| `timeout` | `number` | yes | Timeout giây; default = `OperationRequest.defaultTimeOut` |
+| `retrialCount` | `number` | yes | Tổng số lần gửi tối đa; `-1` dùng `defaultRetrialCount`, `1` tắt retry |
+| `timeout` | `number` | yes | Timeout giây; default = -1 |
 
 Response class expose field: `returnCode`, `errorCode`, `invalidMembers`, `debugMessage`, `responseData`. Xem [ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 

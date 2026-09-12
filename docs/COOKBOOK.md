@@ -18,7 +18,7 @@
 10. [Inventory: query + grant item (server role)](#scenario-10-inventory-query--grant-item-server-role)
 11. [Store: list catalog → purchase → validate receipt](#scenario-11-store-list-catalog--purchase--validate-receipt)
 12. [CloudScript: execute function + customTags](#scenario-12-cloudscript-execute-function--customtags)
-13. [Override authToken / secret (impersonate, cross-role)](#scenario-13-override-authtoken--secret-impersonate-cross-role)
+13. [Override authToken / secret / gameId (impersonate, cross-role, cross-game)](#scenario-13-override-authtoken--secret--gameid-impersonate-cross-role-cross-game)
 14. [Admin login qua DashboardApi](#scenario-14-admin-login-qua-dashboardapi)
 15. [Cleanup & shutdown flow](#scenario-15-cleanup--shutdown-flow)
 16. [Diagnose `OperationNotAllow`](#scenario-16-diagnose-operationnotallow)
@@ -92,7 +92,7 @@ async function loginWithAccount(username: string, password: string) {
 ### Return paths
 
 - Happy: `ReturnCode.Ok` + `ErrorCode.Ok` → SDK cache `authToken` + `userId`; response có profile fields enabled trong `InfoRequestParam`.
-- `ReturnCode.OperationTimeout` (-1) → retry sau nếu idempotent.
+- `ReturnCode.OperationTimeout` (-1) hoặc `ReturnCode.UnknownError` → SDK tự retry theo `retrialCount`. Với login có thể giữ default; với operation không idempotent, truyền `1` để chỉ gửi một lần.
 - `ErrorCode.AccountNotFound` (2) hoặc `ErrorCode.AccountPasswordWrong` → báo user.
 - `ReturnCode.InvalidRequestParameters` với `invalidMembers` → có field request sai format (ví dụ username < 6 chars).
 
@@ -592,6 +592,7 @@ async function claimDailyReward() {
         request,
         undefined, // overrideAuthToken
         undefined, // overrideSecretKey
+        undefined, // overrideGameId — dùng game id trong GNServerSettings
         GNHashtable.builder().add("source", "daily_popup").build(), // customTags
         30, // timeout (seconds)
     );
@@ -620,11 +621,11 @@ async function claimDailyReward() {
 
 ---
 
-## Scenario 13: Override authToken / secret (impersonate, cross-role)
+## Scenario 13: Override authToken / secret / gameId (impersonate, cross-role, cross-game)
 
-**Problem:** Đang ở role admin/server, cần gọi API như một player cụ thể (impersonate) hoặc override secret key của request cụ thể.
+**Problem:** Đang ở role admin/server, cần gọi API như một player cụ thể (impersonate), hoặc override cặp secret key/game id của request cụ thể.
 
-**APIs used:** mọi method — async form nhận `overrideAuthToken`, `overrideSecretKey` là param thứ 2-3; callback form là param thứ 3-4 vì có `onResponse`.
+**APIs used:** mọi method — async form nhận `overrideAuthToken`, `overrideSecretKey`, `overrideGameId` là param thứ 2-4; callback form là param thứ 3-5 vì có `onResponse`.
 
 ### Code
 
@@ -645,6 +646,7 @@ async function fetchProfileAs(playerAuthToken: string, playerId: string) {
         request,
         playerAuthToken, // overrideAuthToken — thay token cache
         undefined, // overrideSecretKey — giữ secret key mặc định của role
+        undefined, // overrideGameId — giữ game id trong GNServerSettings
         undefined, // customTags
         undefined, // timeout
     );
@@ -652,11 +654,11 @@ async function fetchProfileAs(playerAuthToken: string, playerId: string) {
 }
 
 // Dùng secret key khác (ví dụ một game khác cùng backend)
-async function callOtherGame(gameSecret: string) {
+async function callOtherGame(gameSecret: string, gameId: string) {
     const request = new ContentModels.GetContentDataRequestData();
     request.keys = ["config"];
 
-    return GNNetwork.content.getContentDataAsync(request, undefined, gameSecret);
+    return GNNetwork.content.getContentDataAsync(request, undefined, gameSecret, gameId);
 }
 ```
 
@@ -664,10 +666,12 @@ async function callOtherGame(gameSecret: string) {
 
 - Token override bypass cache; request này KHÔNG update cached token.
 - Secret override bypass `secretKey` mặc định.
+- Game-id override bypass `gameId` mặc định và chỉ áp dụng cho request hiện tại.
 
 ### Pitfalls
 
 - Override không persist — mỗi request phải truyền lại.
+- Khi gọi game khác, truyền `overrideSecretKey` và `overrideGameId` tương ứng để tránh cặp secret/game context không khớp.
 - Truyền `overrideAuthToken = ""` (rỗng) → request đi KHÔNG CÓ auth header, thường fail với `ReturnCode.OperationNotAuthorized`. Muốn dùng auth cache hiện tại thì truyền `null`/`undefined`.
 
 ---

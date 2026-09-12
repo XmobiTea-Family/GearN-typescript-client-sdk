@@ -55,7 +55,7 @@ export abstract class NetworkingHttpPeerBase {
      * @param gameId            Optional game id sent in the
      *                          `Game-Id` header.
      */
-    public abstract getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, gameId: string): void;
+    public abstract getRequest(subUri: string, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, requestId: string, authToken: string, secretKey: string, gameId: string, retrialCount: number): void;
 
     /**
      * Performs an HTTP `POST` against `<httpUrl>/<subUri>` with
@@ -74,7 +74,7 @@ export abstract class NetworkingHttpPeerBase {
      *                          {@link ParameterCode.CustomTags}.
      * @param gameId            Optional game id.
      */
-    public abstract postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, authToken: string, secretKey: string, customTags: GNHashtable, gameId: string): void;
+    public abstract postRequest(subUri: string, param: GNHashtable, postType: PostType, onHttpAppResponse: Action1<HttpAppResponse>, timeout: number, requestId: string, authToken: string, secretKey: string, gameId: string, customTags: GNHashtable, retrialCount: number): void;
 
     /**
      * Performs a multipart upload `POST`.

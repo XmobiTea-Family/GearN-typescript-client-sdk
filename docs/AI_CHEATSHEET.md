@@ -20,6 +20,7 @@ settings.config({
   useSocket: true,
   useHttp: true,
   defaultTimeoutInSeconds: 20,
+  defaultRetrialCount: 3,
   messageType: MessageType.MsgPack,
   sendRate: 20,
   reconnectDelay: 5000,
@@ -117,10 +118,10 @@ Ngoại lệ: DashboardApi public wrapper vẫn đi RequestRole.Client; backend 
 
 ```ts
 // Callback form
-GNNetwork.<group>.<method>(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+GNNetwork.<group>.<method>(requestData, onResponse?, overrideAuthToken?, overrideSecretKey?, overrideGameId?, customTags?, retrialCount?, timeout?);
 
 // Async form (preferred)
-const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, customTags?, timeout?);
+const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken?, overrideSecretKey?, overrideGameId?, customTags?, retrialCount?, timeout?);
 ```
 
 <!-- prettier-ignore -->
@@ -128,7 +129,9 @@ const res = await GNNetwork.<group>.<method>Async(requestData, overrideAuthToken
 | --- | --- |
 | `overrideAuthToken` | Impersonate / multi-session / admin gọi trên user khác |
 | `overrideSecretKey` | Override secret cho 1 request, ví dụ tool migration |
+| `overrideGameId` | Override game context cho đúng 1 request; `null`/`undefined` dùng `GNServerSettings.gameId` |
 | `customTags` | Trace id, build version, A/B tag — backend có thể log/route |
+| `retrialCount` | Số lần gửi tối đa. `-1` dùng `defaultRetrialCount`; `1` tắt retry |
 | `timeout` | Override default per-request (giây) |
 
 Trong code copy-paste, build `requestData` bằng DTO class public:
@@ -189,7 +192,8 @@ Realtime KHÔNG tự chạy chỉ vì đã gọi HTTP (friend/group/...). Phải
 | Code | Nghĩa | Fix |
 | --- | --- | --- |
 | `Ok` | Sang tầng `errorCode` | — |
-| `OperationTimeout` | Network/backend chậm | Retry với backoff nếu idempotent |
+| `UnknownError` | Backend/transport fail không map code cụ thể | SDK tự retry theo `retrialCount` |
+| `OperationTimeout` | Network/backend chậm | SDK tự retry theo `retrialCount` |
 | `OperationNotAllow` | Permission rule cấm | Check route + permission flag (KHÔNG retry) |
 | `InternalServerError` | Backend exception | Báo ops, có thể retry 1 lần |
 | `OperationInvalid` | Operation không tồn tại với role hiện tại | Đang gọi sai namespace, sai `RequestType`/`RequestRole` |
@@ -203,6 +207,8 @@ Realtime KHÔNG tự chạy chỉ vì đã gọi HTTP (friend/group/...). Phải
 So sánh bằng enum symbol, không hardcode số. Giá trị numeric: [reference/ENUMS.md](/docs/reference/ENUMS.md). Full table + `ErrorCode`: [reference/ERROR_HANDLING.md](/docs/reference/ERROR_HANDLING.md).
 
 Gặp `OperationNotAllow` — decision tree + code fallback: [COOKBOOK Scenario 16](/docs/COOKBOOK.md#scenario-16-diagnose-operationnotallow). Mapping route → flag cần: [RULES § 6.1](/docs/RULES.md#61-mapping-route-target--required-flag).
+
+Retry tự động áp dụng cho cả HTTP và socket, đi lại qua queue gửi bình thường và không có backoff riêng. SDK dùng lại request id/payload và chỉ resolve callback/Promise sau response cuối. Với operation không idempotent, truyền `retrialCount: 1` nếu không chấp nhận gửi lại.
 
 ---
 
